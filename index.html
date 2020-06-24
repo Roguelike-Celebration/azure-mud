@@ -7,14 +7,52 @@
     <script src="./src/index.ts"></script>
 
     <style>
-      #wrapper {
+      body {
+        font-family: Helvetica, Arial, sans-serif;
+      }
+
+      #videos {
         position: relative;
+        width: 80vw;
+      }
+
+      #chat {
+        border: 1px solid #999;
+        background-color: #aaa;
+        float: right;
+        padding: 10px;
+        width: 20vw;
+        height: 100vh;
+      }
+
+      #chat-input {
+        width: 70%;
+      }
+
+      #send {
+        float: right;
+        width: 20%;
+      }
+
+      video {
+        width: 100%;
+      }
+
+      .video-wrapper {
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+        width: 30%;
       }
     </style>
   </head>
   <body>
-    <div id="wrapper">
-      <video id="webcam"></video>
+    <div id="chat">
+      <input type="text" id="chat-input" />
+      <button id="send">Send</button>
+      <div id="messages"></div>
     </div>
+
+    <div id="videos"></div>
   </body>
 </html>
