@@ -1,0 +1,25 @@
+{
+  "name": "minimum-viable-webrtc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "npm run typecheck && parcel build index.html --no-source-maps",
+    "deploy-server": "pushd ./functions; npm run deploy; popd",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aspnet/signalr": "^1.1.4",
+    "paper": "^0.12.4",
+    "simple-peer": "^9.7.2",
+    "uuid": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/simple-peer": "^9.6.0",
+    "parcel": "^1.12.4",
+    "typescript": "^3.9.2"
+  }
+}

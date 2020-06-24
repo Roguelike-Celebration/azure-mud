@@ -1,0 +1,25 @@
+{
+  "bindings": [{
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "signalRConnectionInfo",
+      "name": "connectionInfo",
+      "hubName": "chat",
+      "userId": "{headers.x-ms-client-principal-id}",
+      "direction": "in"
+    }
+  ],
+  "scriptFile": "../dist/negotiate/index.js"
+}
