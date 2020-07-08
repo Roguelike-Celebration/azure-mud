@@ -1,4 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { roomPresenceKey, getCache, setCache } from "../src/redis";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -19,6 +20,12 @@ const httpTrigger: AzureFunction = async function (
   context.res = {
     status: 200,
   };
+
+  const presenceKey = roomPresenceKey(roomName);
+  const roomOccupants: string[] = JSON.parse(await getCache(presenceKey)) || [];
+
+  const newPresence = roomOccupants.filter((n) => n !== userId);
+  setCache(presenceKey, JSON.stringify(newPresence));
 
   context.bindings.signalRGroupActions = [
     {
