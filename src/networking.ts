@@ -7,7 +7,8 @@ let myUserId: string | undefined;
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
   updatedPresenceInfo: (users: string[]) => void;
-  playerJoined: (name: string) => void;
+  playerConnected: (name: string) => void;
+  playerDisconnected: (name: string) => void;
   chatMessageReceived: (name: string, message: string) => void;
 }
 
@@ -44,9 +45,14 @@ async function connectSignalR(uuid: string, delegate: NetworkingDelegate) {
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
-  connection.on("playerJoined", (userId) => {
+  connection.on("playerConnected", (userId) => {
     console.log("Player joined!", userId);
-    delegate.playerJoined(userId);
+    delegate.playerConnected(userId);
+  });
+
+  connection.on("playerDisconnected", (userId) => {
+    console.log("Player left!", userId);
+    delegate.playerDisconnected(userId);
   });
 
   connection.on("chat", (userId, message) => {
@@ -54,7 +60,18 @@ async function connectSignalR(uuid: string, delegate: NetworkingDelegate) {
     delegate.chatMessageReceived(userId, message);
   });
 
-  connection.onclose(() => console.log("disconnected"));
+  connection.onclose(() => {
+    console.log("disconnected");
+    callAzureFunction("disconnect", {
+      userId: myUserId,
+    });
+  });
+
+  window.addEventListener("beforeunload", (e) => {
+    callAzureFunction("disconnect", {
+      userId: myUserId,
+    });
+  });
 
   console.log("connecting...");
   return await connection

@@ -14,31 +14,21 @@ const httpTrigger: AzureFunction = async function (
   }
 
   const roomName = "kitchen";
-  const roomFriendlyName = "GitHub HQ: Kitchen";
-  const roomDescription = `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. On the island are a few samovars of Sightglass coffee — don't worry, there's plenty of decaf too — and hot water for tea, plus a few trays of Arizmendi pastries.`;
-  const roomOccupants = ["lazerwalker", "swartzcr", "kawa"];
 
   context.res = {
     status: 200,
-    body: {
-      userId,
-      roomName,
-      roomFriendlyName,
-      roomDescription,
-      roomOccupants,
-    } as ConnectResponse,
   };
 
   context.bindings.signalRGroupActions = [
     {
       userId,
       groupName: "users",
-      action: "add",
+      action: "remove",
     },
     {
       userId,
       groupName: roomName,
-      action: "add",
+      action: "remove",
     },
   ];
 
@@ -47,7 +37,7 @@ const httpTrigger: AzureFunction = async function (
   context.bindings.signalRMessages = [
     {
       groupName: roomName,
-      target: "playerConnected",
+      target: "playerDisconnected",
       arguments: [userId],
     },
   ];

@@ -41,13 +41,21 @@ const delegate: NetworkingDelegate = {
     renderPresence(users);
   },
 
-  playerJoined: (name: string) => {
+  playerConnected: (name: string) => {
     let truncatedName = truncatePeerId(name);
     console.log("In playerJoined", name);
     if (currentOtherPlayers.indexOf(truncatedName) === -1) {
       currentOtherPlayers.push(truncatedName);
     }
 
+    renderPresence(currentOtherPlayers);
+  },
+
+  playerDisconnected: (name: string) => {
+    let truncatedName = truncatePeerId(name);
+    currentOtherPlayers = currentOtherPlayers.filter(
+      (p) => p !== truncatedName
+    );
     renderPresence(currentOtherPlayers);
   },
 
