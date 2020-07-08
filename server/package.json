@@ -10,9 +10,7 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {
-    "uuid": "^8.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
     "typescript": "^3.3.3"

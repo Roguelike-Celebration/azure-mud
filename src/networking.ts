@@ -23,6 +23,10 @@ export async function connect(userId: string, delegate: NetworkingDelegate) {
   connectSignalR(userId, delegate);
 }
 
+export function sendChatMessage(text: string) {
+  callAzureFunction("sendChatMessage", { text });
+}
+
 async function connectSignalR(userId: string, delegate: NetworkingDelegate) {
   class CustomHttpClient extends SignalR.DefaultHttpClient {
     public send(request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
@@ -51,8 +55,9 @@ async function connectSignalR(userId: string, delegate: NetworkingDelegate) {
     delegate.playerDisconnected(otherId);
   });
 
-  connection.on("chat", (otherId, message) => {
+  connection.on("chatMessage", (otherId, message) => {
     console.log(otherId, message);
+    if (otherId === userId) return;
     delegate.chatMessageReceived(otherId, message);
   });
 

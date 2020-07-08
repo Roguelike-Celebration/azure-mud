@@ -1,4 +1,4 @@
-import { connect, NetworkingDelegate } from "./networking";
+import { connect, NetworkingDelegate, sendChatMessage } from "./networking";
 
 let currentOtherPlayers: string[] = [];
 
@@ -57,14 +57,14 @@ const delegate: NetworkingDelegate = {
   },
 };
 
-const sendChatMessage = () => {
+const sendMessage = () => {
   const input: HTMLInputElement = document.querySelector("#chat-input");
   const text = input.value;
 
   if (text === "" || text === undefined) return;
 
-  //broadcastToPeers(text);
-  displayChatMessage("you", text);
+  sendChatMessage(text);
+  delegate.chatMessageReceived(localStorage.getItem("name"), text);
 
   input.value = "";
 };
@@ -78,4 +78,6 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("name", name);
   }
   connect(name, delegate);
+
+  document.getElementById("send").addEventListener("click", sendMessage);
 });
