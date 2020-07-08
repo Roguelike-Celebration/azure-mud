@@ -1,10 +1,5 @@
 import { connect, NetworkingDelegate } from "./networking";
 
-function truncatePeerId(peerId: string): string {
-  let split = peerId.split("-");
-  return split[0];
-}
-
 let currentOtherPlayers: string[] = [];
 
 function renderPresence(users: string[]) {
@@ -42,26 +37,22 @@ const delegate: NetworkingDelegate = {
   },
 
   playerConnected: (name: string) => {
-    let truncatedName = truncatePeerId(name);
     console.log("In playerJoined", name);
-    if (currentOtherPlayers.indexOf(truncatedName) === -1) {
-      currentOtherPlayers.push(truncatedName);
+    if (currentOtherPlayers.indexOf(name) === -1) {
+      currentOtherPlayers.push(name);
     }
 
     renderPresence(currentOtherPlayers);
   },
 
   playerDisconnected: (name: string) => {
-    let truncatedName = truncatePeerId(name);
-    currentOtherPlayers = currentOtherPlayers.filter(
-      (p) => p !== truncatedName
-    );
+    currentOtherPlayers = currentOtherPlayers.filter((p) => p !== name);
     renderPresence(currentOtherPlayers);
   },
 
   chatMessageReceived: (name: string, message: string) => {
     const el = document.createElement("div");
-    el.innerHTML = `<strong>${truncatePeerId(name)}:</strong> ${message}`;
+    el.innerHTML = `<strong>${name}:</strong> ${message}`;
     document.getElementById("messages").append(el);
   },
 };
@@ -81,5 +72,10 @@ const sendChatMessage = () => {
 const displayChatMessage = (peerId: string, msg: string) => {};
 
 window.addEventListener("DOMContentLoaded", () => {
-  connect(delegate);
+  let name = localStorage.getItem("name");
+  if (!name) {
+    name = prompt("What is your user ID?");
+    localStorage.setItem("name", name);
+  }
+  connect(name, delegate);
 });

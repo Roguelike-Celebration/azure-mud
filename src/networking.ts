@@ -1,8 +1,5 @@
 import * as SignalR from "@aspnet/signalr";
-import { v4 as uuidv4 } from "uuid";
 import { ConnectResponse } from "../server/types";
-
-let myUserId: string | undefined;
 
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
@@ -12,27 +9,26 @@ export interface NetworkingDelegate {
   chatMessageReceived: (name: string, message: string) => void;
 }
 
-export async function connect(delegate: NetworkingDelegate) {
+export async function connect(userId: string, delegate: NetworkingDelegate) {
   delegate = delegate;
-  myUserId = uuidv4();
 
   const result: ConnectResponse = await callAzureFunction("connect", {
-    userId: myUserId,
+    userId: userId,
   });
 
   console.log(result);
   delegate.updatedRoom(result.roomFriendlyName, result.roomDescription);
   delegate.updatedPresenceInfo(result.roomOccupants);
 
-  connectSignalR(myUserId, delegate);
+  connectSignalR(userId, delegate);
 }
 
-async function connectSignalR(uuid: string, delegate: NetworkingDelegate) {
+async function connectSignalR(userId: string, delegate: NetworkingDelegate) {
   class CustomHttpClient extends SignalR.DefaultHttpClient {
     public send(request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
       request.headers = {
         ...request.headers,
-        "x-ms-client-principal-id": uuid,
+        "x-ms-client-principal-id": userId,
       };
       return super.send(request);
     }
@@ -45,32 +41,28 @@ async function connectSignalR(uuid: string, delegate: NetworkingDelegate) {
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
-  connection.on("playerConnected", (userId) => {
-    console.log("Player joined!", userId);
-    delegate.playerConnected(userId);
+  connection.on("playerConnected", (otherId) => {
+    console.log("Player joined!", otherId);
+    delegate.playerConnected(otherId);
   });
 
-  connection.on("playerDisconnected", (userId) => {
-    console.log("Player left!", userId);
-    delegate.playerDisconnected(userId);
+  connection.on("playerDisconnected", (otherId) => {
+    console.log("Player left!", otherId);
+    delegate.playerDisconnected(otherId);
   });
 
-  connection.on("chat", (userId, message) => {
-    console.log(userId, message);
-    delegate.chatMessageReceived(userId, message);
+  connection.on("chat", (otherId, message) => {
+    console.log(otherId, message);
+    delegate.chatMessageReceived(otherId, message);
   });
 
   connection.onclose(() => {
     console.log("disconnected");
-    callAzureFunction("disconnect", {
-      userId: myUserId,
-    });
+    callAzureFunction("disconnect", { userId });
   });
 
   window.addEventListener("beforeunload", (e) => {
-    callAzureFunction("disconnect", {
-      userId: myUserId,
-    });
+    callAzureFunction("disconnect", { userId });
   });
 
   console.log("connecting...");

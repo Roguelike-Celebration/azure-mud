@@ -1,5 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { v4 as uuidv4 } from "uuid";
 import { ConnectResponse } from "../types";
 
 const httpTrigger: AzureFunction = async function (
@@ -10,7 +9,10 @@ const httpTrigger: AzureFunction = async function (
 
   let userId = req.body && req.body.userId;
   if (!userId) {
-    userId = uuidv4();
+    context.res = {
+      status: 500,
+      body: "You did not include a user ID",
+    };
   }
 
   const roomName = "kitchen";
