@@ -128,6 +128,7 @@ const displayChatMessage = (msg: string, name?: string) => {
   }
 
   document.getElementById("messages").append(el);
+  el.scrollIntoView();
 };
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -139,4 +140,9 @@ window.addEventListener("DOMContentLoaded", () => {
   connect(name, delegate);
 
   document.getElementById("send").addEventListener("click", sendMessage);
+  document.addEventListener("keypress", (e) => {
+    if (e.code === "Enter") {
+      sendMessage();
+    }
+  });
 });

@@ -23,3 +23,14 @@ a.room-link {
 a.room-link:visited {
   color: lightgreen;
 }
+
+input {
+  width: 90%;
+  margin-top: 2em;
+}
+
+#messages {
+  max-height: 40vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
