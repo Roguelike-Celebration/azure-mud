@@ -1,10 +1,17 @@
-import { connect, NetworkingDelegate, sendChatMessage } from "./networking";
+import {
+  connect,
+  NetworkingDelegate,
+  sendChatMessage,
+  moveToRoom,
+} from "./networking";
 
 let currentOtherPlayers: string[] = [];
 
 function renderPresence(users: string[]) {
   console.log("Rendering presence", users);
+  users = users.filter((u) => u !== localStorage.getItem("name"));
   let names = "";
+
   if (users.length === 0) {
     document.getElementById("dynamic-room-description").innerText =
       "You are all alone here.";
@@ -20,15 +27,41 @@ function renderPresence(users: string[]) {
       users[users.length - 1]
     }`;
   }
-  document.getElementById(
-    "dynamic-room-description"
-  ).innerHTML = `Also here are ${names}`;
+  document.getElementById("dynamic-room-description").innerHTML = `Also here ${
+    users.length === 1 ? "is" : "are"
+  } ${names}`;
 }
 
 const delegate: NetworkingDelegate = {
   updatedRoom: (name: string, description: string) => {
+    const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g;
+    const simpleLinkRegex = /\[\[(.+?)\]\]/g;
+
+    console.log("Updating room", name, description);
+    description = description.replace(
+      complexLinkRegex,
+      (match, text, roomId) => {
+        console.log("Replacing complex", match, text, roomId);
+        return `<a class='room-link' href='#' data-room='${roomId}'>${text}</a>`;
+      }
+    );
+
+    description = description.replace(simpleLinkRegex, (match, roomId) => {
+      console.log("Replacing simple", match, roomId);
+      return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}</a>`;
+    });
+
     document.getElementById("room-name").innerText = name;
     document.getElementById("static-room-description").innerHTML = description;
+
+    document
+      .querySelectorAll("#static-room-description .room-link")
+      .forEach((el) =>
+        el.addEventListener("click", (e) => {
+          const roomId = el.getAttribute("data-room");
+          moveToRoom(roomId);
+        })
+      );
   },
 
   updatedPresenceInfo: (users: string[]) => {
@@ -48,6 +81,22 @@ const delegate: NetworkingDelegate = {
 
   playerDisconnected: (name: string) => {
     displayChatMessage(`<strong>${name}</strong> has left.`);
+    currentOtherPlayers = currentOtherPlayers.filter((p) => p !== name);
+    renderPresence(currentOtherPlayers);
+  },
+
+  playerEntered: (name: string, from: string) => {
+    console.log("In playerJoined", name);
+    if (currentOtherPlayers.indexOf(name) === -1) {
+      currentOtherPlayers.push(name);
+      displayChatMessage(`<strong>${name}</strong> walks in from ${from}.`);
+    }
+
+    renderPresence(currentOtherPlayers);
+  },
+
+  playerLeft: (name: string, to: string) => {
+    displayChatMessage(`<strong>${name}</strong> wanders to ${to}.`);
     currentOtherPlayers = currentOtherPlayers.filter((p) => p !== name);
     renderPresence(currentOtherPlayers);
   },

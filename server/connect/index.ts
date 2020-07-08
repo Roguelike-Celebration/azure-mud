@@ -1,7 +1,14 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 
-import { ConnectResponse } from "../types";
-import { getCache, setCache, roomPresenceKey } from "../src/redis";
+import { RoomResponse } from "../src/types";
+import {
+  getCache,
+  setCache,
+  roomPresenceKey,
+  roomKeyForUser,
+  addUserToRoomPresence,
+} from "../src/redis";
+import { roomData } from "../src/room";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -17,28 +24,22 @@ const httpTrigger: AzureFunction = async function (
     };
   }
 
-  const roomName = "kitchen";
-  const roomFriendlyName = "GitHub HQ: Kitchen";
-  const roomDescription = `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. On the island are a few samovars of Sightglass coffee — don't worry, there's plenty of decaf too — and hot water for tea, plus a few trays of Arizmendi pastries.`;
-
-  // TODO: This can be made more efficient using a Redis list instead of a JSON'd array
-  const presenceKey = roomPresenceKey(roomName);
-  const roomOccupants: string[] = JSON.parse(await getCache(presenceKey)) || [];
-
-  if (roomOccupants.indexOf(userId) === -1) {
-    const newPresence = roomOccupants.concat([userId]);
-    setCache(presenceKey, JSON.stringify(newPresence));
+  let roomId = await getCache(roomKeyForUser(userId));
+  if (!roomId) {
+    roomId = "kitchen";
+    await setCache(roomKeyForUser(userId), roomId);
   }
+
+  const room = roomData[roomId];
+
+  const roomOccupants = await addUserToRoomPresence(userId, roomId);
 
   context.res = {
     status: 200,
     body: {
-      userId,
-      roomName,
-      roomFriendlyName,
-      roomDescription,
+      room,
       roomOccupants,
-    } as ConnectResponse,
+    } as RoomResponse,
   };
 
   context.bindings.signalRGroupActions = [
@@ -49,7 +50,7 @@ const httpTrigger: AzureFunction = async function (
     },
     {
       userId,
-      groupName: roomName,
+      groupName: roomId,
       action: "add",
     },
   ];
@@ -58,7 +59,7 @@ const httpTrigger: AzureFunction = async function (
 
   context.bindings.signalRMessages = [
     {
-      groupName: roomName,
+      groupName: roomId,
       target: "playerConnected",
       arguments: [userId],
     },

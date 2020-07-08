@@ -1,5 +1,5 @@
 import * as SignalR from "@aspnet/signalr";
-import { ConnectResponse } from "../server/types";
+import { RoomResponse } from "../server/src/types";
 
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
@@ -7,20 +7,36 @@ export interface NetworkingDelegate {
   playerConnected: (name: string) => void;
   playerDisconnected: (name: string) => void;
   chatMessageReceived: (name: string, message: string) => void;
+  playerEntered: (name: string, from: string) => void;
+  playerLeft: (name: string, to: string) => void;
 }
 
 let myUserId: string;
+let myDelegate: NetworkingDelegate;
 
 export async function connect(userId: string, delegate: NetworkingDelegate) {
   myUserId = userId;
+  myDelegate = delegate;
 
-  const result: ConnectResponse = await callAzureFunction("connect");
+  const result: RoomResponse = await callAzureFunction("connect");
 
   console.log(result);
-  delegate.updatedRoom(result.roomFriendlyName, result.roomDescription);
+  delegate.updatedRoom(result.room.displayName, result.room.description);
   delegate.updatedPresenceInfo(result.roomOccupants);
 
   connectSignalR(userId, delegate);
+}
+
+export async function moveToRoom(roomId: string) {
+  // TODO: Show some progress updates here
+
+  const result: RoomResponse = await callAzureFunction("moveRoom", {
+    to: roomId,
+  });
+
+  console.log(result);
+  myDelegate.updatedRoom(result.room.displayName, result.room.description);
+  myDelegate.updatedPresenceInfo(result.roomOccupants);
 }
 
 export function sendChatMessage(text: string) {
@@ -59,6 +75,16 @@ async function connectSignalR(userId: string, delegate: NetworkingDelegate) {
     console.log(otherId, message);
     if (otherId === userId) return;
     delegate.chatMessageReceived(otherId, message);
+  });
+
+  connection.on("playerEntered", (otherId, from) => {
+    if (otherId === userId) return;
+    delegate.playerEntered(otherId, from);
+  });
+
+  connection.on("playerLeft", (otherId, to) => {
+    if (otherId === userId) return;
+    delegate.playerLeft(otherId, to);
   });
 
   connection.onclose(() => {

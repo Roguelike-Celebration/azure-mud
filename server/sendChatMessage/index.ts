@@ -1,6 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { v4 as uuidv4 } from "uuid";
-import { ConnectResponse } from "../types";
+import { getCache, roomKeyForUser } from "../src/redis";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -18,7 +17,7 @@ const httpTrigger: AzureFunction = async function (
     return;
   }
 
-  const roomName = "kitchen";
+  const roomId = await getCache(roomKeyForUser(userId));
 
   context.res = {
     status: 200,
@@ -27,7 +26,7 @@ const httpTrigger: AzureFunction = async function (
 
   context.bindings.signalRMessages = [
     {
-      groupName: roomName,
+      groupName: roomId,
       target: "chatMessage",
       arguments: [userId, message],
     },

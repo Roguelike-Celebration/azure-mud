@@ -1,5 +1,11 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { roomPresenceKey, getCache, setCache } from "../src/redis";
+import {
+  roomPresenceKey,
+  getCache,
+  setCache,
+  removeUserFromRoomPresence,
+  roomKeyForUser,
+} from "../src/redis";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -15,17 +21,13 @@ const httpTrigger: AzureFunction = async function (
     };
   }
 
-  const roomName = "kitchen";
+  const roomId = await getCache(roomKeyForUser(userId));
 
   context.res = {
     status: 200,
   };
 
-  const presenceKey = roomPresenceKey(roomName);
-  const roomOccupants: string[] = JSON.parse(await getCache(presenceKey)) || [];
-
-  const newPresence = roomOccupants.filter((n) => n !== userId);
-  setCache(presenceKey, JSON.stringify(newPresence));
+  await removeUserFromRoomPresence(userId, roomId);
 
   context.bindings.signalRGroupActions = [
     {
@@ -35,7 +37,7 @@ const httpTrigger: AzureFunction = async function (
     },
     {
       userId,
-      groupName: roomName,
+      groupName: roomId,
       action: "remove",
     },
   ];
@@ -44,7 +46,7 @@ const httpTrigger: AzureFunction = async function (
 
   context.bindings.signalRMessages = [
     {
-      groupName: roomName,
+      groupName: roomId,
       target: "playerDisconnected",
       arguments: [userId],
     },
