@@ -9,12 +9,12 @@ export interface NetworkingDelegate {
   chatMessageReceived: (name: string, message: string) => void;
 }
 
-export async function connect(userId: string, delegate: NetworkingDelegate) {
-  delegate = delegate;
+let myUserId: string;
 
-  const result: ConnectResponse = await callAzureFunction("connect", {
-    userId: userId,
-  });
+export async function connect(userId: string, delegate: NetworkingDelegate) {
+  myUserId = userId;
+
+  const result: ConnectResponse = await callAzureFunction("connect");
 
   console.log(result);
   delegate.updatedRoom(result.roomFriendlyName, result.roomDescription);
@@ -58,11 +58,11 @@ async function connectSignalR(userId: string, delegate: NetworkingDelegate) {
 
   connection.onclose(() => {
     console.log("disconnected");
-    callAzureFunction("disconnect", { userId });
+    callAzureFunction("disconnect");
   });
 
   window.addEventListener("beforeunload", (e) => {
-    callAzureFunction("disconnect", { userId });
+    callAzureFunction("disconnect");
   });
 
   console.log("connecting...");
@@ -83,9 +83,7 @@ async function callAzureFunction(
     ...options,
   };
 
-  if (body) {
-    opts.body = JSON.stringify(body);
-  }
+  opts.body = JSON.stringify({ ...(body || {}), userId: myUserId });
 
   return fetch(`https://mud.azurewebsites.net/api/${endpoint}`, opts).then(
     (r) => {
