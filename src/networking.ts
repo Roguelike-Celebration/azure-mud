@@ -7,9 +7,9 @@ let myUserId: string | undefined;
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
   updatedPresenceInfo: (users: string[]) => void;
+  playerJoined: (name: string) => void;
+  chatMessageReceived: (name: string, message: string) => void;
 }
-
-let delegate: NetworkingDelegate;
 
 export async function connect(delegate: NetworkingDelegate) {
   delegate = delegate;
@@ -23,10 +23,10 @@ export async function connect(delegate: NetworkingDelegate) {
   delegate.updatedRoom(result.roomFriendlyName, result.roomDescription);
   delegate.updatedPresenceInfo(result.roomOccupants);
 
-  connectSignalR(myUserId);
+  connectSignalR(myUserId, delegate);
 }
 
-async function connectSignalR(uuid: string) {
+async function connectSignalR(uuid: string, delegate: NetworkingDelegate) {
   class CustomHttpClient extends SignalR.DefaultHttpClient {
     public send(request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
       request.headers = {
@@ -44,8 +44,14 @@ async function connectSignalR(uuid: string) {
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
-  connection.on("playerjoined", (userId) => {
-    console.log("New player joined", userId);
+  connection.on("playerJoined", (userId) => {
+    console.log("Player joined!", userId);
+    delegate.playerJoined(userId);
+  });
+
+  connection.on("chat", (userId, message) => {
+    console.log(userId, message);
+    delegate.chatMessageReceived(userId, message);
   });
 
   connection.onclose(() => console.log("disconnected"));
