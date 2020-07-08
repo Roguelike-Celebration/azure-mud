@@ -1,0 +1,39 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: Monaco, "Courier New", Courier, monospace;
+}
+
+#main {
+  max-width: 1200px;
+  margin: auto;
+}
+
+#dynamic-room-description {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+a.room-link {
+  color: lightgreen;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a.room-link:visited {
+  color: lightgreen;
+}
+
+input {
+  width: 90%;
+  margin-top: 2em;
+}
+
+#messages {
+  max-height: 40vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */
