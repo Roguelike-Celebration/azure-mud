@@ -40,20 +40,20 @@ const delegate: NetworkingDelegate = {
     console.log("In playerJoined", name);
     if (currentOtherPlayers.indexOf(name) === -1) {
       currentOtherPlayers.push(name);
+      displayChatMessage(`<strong>${name}</strong> has joined.`);
     }
 
     renderPresence(currentOtherPlayers);
   },
 
   playerDisconnected: (name: string) => {
+    displayChatMessage(`<strong>${name}</strong> has left.`);
     currentOtherPlayers = currentOtherPlayers.filter((p) => p !== name);
     renderPresence(currentOtherPlayers);
   },
 
   chatMessageReceived: (name: string, message: string) => {
-    const el = document.createElement("div");
-    el.innerHTML = `<strong>${name}:</strong> ${message}`;
-    document.getElementById("messages").append(el);
+    displayChatMessage(message, name);
   },
 };
 
@@ -69,7 +69,17 @@ const sendMessage = () => {
   input.value = "";
 };
 
-const displayChatMessage = (peerId: string, msg: string) => {};
+const displayChatMessage = (msg: string, name?: string) => {
+  const el = document.createElement("div");
+
+  if (name) {
+    el.innerHTML = `<strong>${name}:</strong> ${msg}`;
+  } else {
+    el.innerHTML = msg;
+  }
+
+  document.getElementById("messages").append(el);
+};
 
 window.addEventListener("DOMContentLoaded", () => {
   let name = localStorage.getItem("name");
