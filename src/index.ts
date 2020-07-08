@@ -1,97 +1,40 @@
-import {
-  broadcastToPeers,
-  registerAsClient,
-  ReceivedDataHandler,
-  ReceivedStreamHandler,
-} from "./networking";
-
-let mediaStream: MediaStream | undefined;
+import { connect, NetworkingDelegate } from "./networking";
 
 function truncatePeerId(peerId: string): string {
   let split = peerId.split("-");
   return split[0];
 }
 
-/******************************************************************************
- * Video chat functions
- ******************************************************************************/
+const delegate: NetworkingDelegate = {
+  updatedRoom: (name: string, description: string) => {
+    document.getElementById("room-name").innerText = name;
+    document.getElementById("static-room-description").innerHTML = description;
+  },
 
-const receivedStream: ReceivedStreamHandler = (
-  peerId: string,
-  stream: MediaStream
-) => {
-  const name = truncatePeerId(peerId);
+  updatedPresenceInfo: (users: string[]) => {
+    let names = "";
+    if (users.length === 0) {
+      document.getElementById("dynamic-room-description").innerText =
+        "You are all alone here.";
+      return;
+    }
 
-  const wrapper = document.createElement("div");
-  const video = document.createElement("video");
-  const text = document.createElement("div");
-
-  text.innerText = name;
-
-  wrapper.className = "video-wrapper";
-  wrapper.appendChild(video);
-  wrapper.appendChild(text);
-  wrapper.id = `wrapper-${name}`;
-
-  video.id = `video-${name}`;
-  video.srcObject = stream;
-  video.play();
-
-  document.getElementById("videos").appendChild(wrapper);
+    if (users.length === 1) {
+      names = users[0];
+    } else if (users.length === 2) {
+      names = `${users[0]} and ${users[1]}`;
+    } else {
+      names = `${users.slice(0, users.length - 1).join(", ")}, and ${
+        users[users.length - 1]
+      }`;
+    }
+    document.getElementById(
+      "dynamic-room-description"
+    ).innerHTML = `Also here are ${names}`;
+  },
 };
 
-const getMediaStream = async (): Promise<MediaStream | undefined> => {
-  console.log("Getting media stream");
-  if (mediaStream) {
-    return mediaStream;
-  }
-
-  let stream = null;
-
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: { facingMode: "user" },
-    });
-
-    const name = "you";
-
-    const wrapper = document.createElement("div");
-    const video = document.createElement("video");
-    const text = document.createElement("div");
-
-    text.innerText = name;
-
-    wrapper.className = "video-wrapper";
-    wrapper.appendChild(video);
-    wrapper.appendChild(text);
-    wrapper.id = `wrapper-${name}`;
-
-    video.id = `video-${name}`;
-    video.srcObject = stream;
-
-    document.getElementById("videos").appendChild(wrapper);
-
-    video.onloadedmetadata = async (e) => {
-      video.play();
-
-      registerAsClient(stream, { receivedData, receivedStream });
-    };
-  } catch (err) {
-    console.log("Video error", err);
-    /* handle the error */
-  }
-
-  mediaStream = stream;
-
-  return stream;
-};
-
-/******************************************************************************
- * Text chat functions
- ******************************************************************************/
-
-const receivedData: ReceivedDataHandler = (peerId: string, data: string) => {
+const receivedData = (peerId: string, data: string) => {
   console.log(`Received data from ${peerId}`, data);
   displayChatMessage(truncatePeerId(peerId), data);
 };
@@ -102,7 +45,7 @@ const sendChatMessage = () => {
 
   if (text === "" || text === undefined) return;
 
-  broadcastToPeers(text);
+  //broadcastToPeers(text);
   displayChatMessage("you", text);
 
   input.value = "";
@@ -117,11 +60,5 @@ const displayChatMessage = (peerId: string, msg: string) => {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-  getMediaStream();
-  document.getElementById("send").addEventListener("click", sendChatMessage);
-  document.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      sendChatMessage();
-    }
-  });
+  connect(delegate);
 });

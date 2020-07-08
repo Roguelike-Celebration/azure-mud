@@ -2,57 +2,23 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
-    <title>Minimum Viable WebRTC</title>
+    <title>Yet Another Browser MUD</title>
 
+    <link rel="stylesheet" href="style.css" />
     <script src="./src/index.ts"></script>
-
-    <style>
-      body {
-        font-family: Helvetica, Arial, sans-serif;
-      }
-
-      #videos {
-        position: relative;
-        width: 80vw;
-      }
-
-      #chat {
-        border: 1px solid #999;
-        background-color: #aaa;
-        float: right;
-        padding: 10px;
-        width: 20vw;
-        height: 100vh;
-      }
-
-      #chat-input {
-        width: 70%;
-      }
-
-      #send {
-        float: right;
-        width: 20%;
-      }
-
-      video {
-        width: 100%;
-      }
-
-      .video-wrapper {
-        display: inline-block;
-        margin: 10px;
-        text-align: center;
-        width: 30%;
-      }
-    </style>
   </head>
   <body>
-    <div id="chat">
-      <input type="text" id="chat-input" />
-      <button id="send">Send</button>
+    <div id="main">
+      <h1 id="room-name">Current Room</h1>
+      <div id="static-room-description">
+        Loading current room...
+      </div>
+      <div id="dynamic-room-description"></div>
       <div id="messages"></div>
+      <div id="input">
+        <input type="text" id="chat-input" />
+        <button id="send">Send</button>
+      </div>
     </div>
-
-    <div id="videos"></div>
   </body>
 </html>

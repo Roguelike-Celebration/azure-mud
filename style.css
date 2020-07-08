@@ -1,0 +1,10 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: Monaco, "Courier New", Courier, monospace;
+}
+
+#main {
+  max-width: 1200px;
+  margin: auto;
+}

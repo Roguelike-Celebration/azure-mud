@@ -1,13 +1,11 @@
 {
-  "bindings": [{
+  "bindings": [
+    {
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "methods": [
-        "get",
-        "post"
-      ]
+      "methods": ["get", "post"]
     },
     {
       "type": "signalR",
@@ -27,5 +25,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/broadcastPeerId/index.js"
+  "scriptFile": "../dist/connect/index.js"
 }
