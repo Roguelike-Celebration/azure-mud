@@ -62,6 +62,8 @@ const delegate: NetworkingDelegate = {
           moveToRoom(roomId);
         })
       );
+
+    document.getElementById("chat-input").focus();
   },
 
   updatedPresenceInfo: (users: string[]) => {
