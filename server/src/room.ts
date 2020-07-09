@@ -34,14 +34,14 @@ export const roomData: { [name: string]: Room } = {
     id: "bar",
     displayName: "GitHub HQ: Bar",
     shortName: "the bar",
-    description: `A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight's specials: the Tourist (a non-alcoholic drink with lots of fruit and a fun umbrella), the Berlin Interpretation (a mojito made with some sort of hyper-caffeinated soda), and the Walls Are Shifting (a Long Island Iced Tea). You're a stone's throw away from both the [[kitchen]], the [[theatre]], and the [[arcade]].`,
+    description: `A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight's specials: the Tourist (a non-alcoholic drink with lots of fruit and a fun umbrella), the Berlin Interpretation (a mojito made with some sort of hyper-caffeinated soda), and the Walls Are Shifting (a Long Island Iced Tea).<br/><br/>You're a stone's throw away from the [[kitchen]], the [[theatre]], and the [[arcade]].`,
     exits: ["theatre", "kitchen", "arcade"],
   },
   arcade: {
     id: "arcade",
     displayName: "GitHub HQ: Arcade Entryway",
     shortName: "the arcade",
-    description: `The entryway of the GitHub office has been turned into a makeshift arcade of sorts, spotted with developers standing by foldable tables with laptops on them to show off their work-in-progress games.<br/><br/>
+    description: `The entryway of the GitHub office has been turned into a makeshift arcade of sorts. Developers are standing at folding tables with laptops, eager to show off their works-in-progress.<br/><br/>
       You are currently looking at <a href="https://krystman.itch.io/porklike" target="_blank">Porklike</a> by <a href="https://twitter.com/krystman" target="_blank">Krystian Majewski</a>.<br/><br/>
       
       <center><iframe src="https://www.lexaloffle.com/bbs/widget.php?pid=porklike" allowfullscreen width="621" height="513" style="border:none; overflow:hidden"></iframe></center><br/><br/>

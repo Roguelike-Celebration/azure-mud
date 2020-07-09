@@ -1,5 +1,5 @@
 import * as SignalR from "@aspnet/signalr";
-import { RoomResponse } from "../server/src/types";
+import { RoomResponse, ErrorResponse } from "../server/src/types";
 
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
@@ -9,6 +9,7 @@ export interface NetworkingDelegate {
   chatMessageReceived: (name: string, message: string) => void;
   playerEntered: (name: string, from: string) => void;
   playerLeft: (name: string, to: string) => void;
+  statusMessageReceived: (message: string) => void;
 }
 
 let myUserId: string;
@@ -30,17 +31,40 @@ export async function connect(userId: string, delegate: NetworkingDelegate) {
 export async function moveToRoom(roomId: string) {
   // TODO: Show some progress updates here
 
-  const result: RoomResponse = await callAzureFunction("moveRoom", {
-    to: roomId,
-  });
+  const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
+    "moveRoom",
+    {
+      to: roomId,
+    }
+  );
 
   console.log(result);
-  myDelegate.updatedRoom(result.room.displayName, result.room.description);
-  myDelegate.updatedPresenceInfo(result.roomOccupants);
+
+  if (result.error) {
+    myDelegate.statusMessageReceived(result.error);
+  } else {
+    myDelegate.updatedRoom(result.room.displayName, result.room.description);
+    myDelegate.updatedPresenceInfo(result.roomOccupants);
+  }
 }
 
-export function sendChatMessage(text: string) {
-  callAzureFunction("sendChatMessage", { text });
+export async function sendChatMessage(text: string) {
+  const result: RoomResponse | Error | any = await callAzureFunction(
+    "sendChatMessage",
+    {
+      text,
+    }
+  );
+
+  console.log(result);
+
+  // If it's a /move command
+  if (result && result.room && result.roomOccupants) {
+    myDelegate.updatedRoom(result.room.displayName, result.room.description);
+    myDelegate.updatedPresenceInfo(result.roomOccupants);
+  } else if (result && result.error) {
+    myDelegate.statusMessageReceived(result.error);
+  }
 }
 
 async function connectSignalR(userId: string, delegate: NetworkingDelegate) {

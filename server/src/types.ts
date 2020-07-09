@@ -4,3 +4,7 @@ export interface RoomResponse {
   room: Room;
   roomOccupants: string[];
 }
+
+export interface ErrorResponse {
+  error: string;
+}

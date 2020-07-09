@@ -104,6 +104,10 @@ const delegate: NetworkingDelegate = {
   chatMessageReceived: (name: string, message: string) => {
     displayChatMessage(message, name);
   },
+
+  statusMessageReceived: (message: string) => {
+    displayChatMessage(message);
+  },
 };
 
 const sendMessage = () => {
@@ -113,7 +117,10 @@ const sendMessage = () => {
   if (text === "" || text === undefined) return;
 
   sendChatMessage(text);
-  delegate.chatMessageReceived(localStorage.getItem("name"), text);
+
+  if (!/^\/(.+?) (.+)/.exec(text)) {
+    delegate.chatMessageReceived(localStorage.getItem("name"), text);
+  }
 
   input.value = "";
 };

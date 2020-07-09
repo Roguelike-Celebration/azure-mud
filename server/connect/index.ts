@@ -9,6 +9,7 @@ import {
   addUserToRoomPresence,
 } from "../src/redis";
 import { roomData } from "../src/room";
+import { hydrateUser } from "../src/hydrate";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -24,20 +25,14 @@ const httpTrigger: AzureFunction = async function (
     };
   }
 
-  let roomId = await getCache(roomKeyForUser(userId));
-  if (!roomId) {
-    roomId = "kitchen";
-    await setCache(roomKeyForUser(userId), roomId);
-  }
+  const user = await hydrateUser(userId);
 
-  const room = roomData[roomId];
-
-  const roomOccupants = await addUserToRoomPresence(userId, roomId);
+  const roomOccupants = await addUserToRoomPresence(userId, user.roomId);
 
   context.res = {
     status: 200,
     body: {
-      room,
+      room: user.room,
       roomOccupants,
     } as RoomResponse,
   };
@@ -50,7 +45,7 @@ const httpTrigger: AzureFunction = async function (
     },
     {
       userId,
-      groupName: roomId,
+      groupName: user.roomId,
       action: "add",
     },
   ];
@@ -59,7 +54,7 @@ const httpTrigger: AzureFunction = async function (
 
   context.bindings.signalRMessages = [
     {
-      groupName: roomId,
+      groupName: user.roomId,
       target: "playerConnected",
       arguments: [userId],
     },

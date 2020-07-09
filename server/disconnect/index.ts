@@ -6,6 +6,7 @@ import {
   removeUserFromRoomPresence,
   roomKeyForUser,
 } from "../src/redis";
+import { hydrateUser } from "../src/hydrate";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -21,13 +22,13 @@ const httpTrigger: AzureFunction = async function (
     };
   }
 
-  const roomId = await getCache(roomKeyForUser(userId));
+  const user = await hydrateUser(userId);
 
   context.res = {
     status: 200,
   };
 
-  await removeUserFromRoomPresence(userId, roomId);
+  await removeUserFromRoomPresence(userId, user.roomId);
 
   context.bindings.signalRGroupActions = [
     {
@@ -37,16 +38,14 @@ const httpTrigger: AzureFunction = async function (
     },
     {
       userId,
-      groupName: roomId,
+      groupName: user.roomId,
       action: "remove",
     },
   ];
 
-  console.log("Setting messages");
-
   context.bindings.signalRMessages = [
     {
-      groupName: roomId,
+      groupName: user.roomId,
       target: "playerDisconnected",
       arguments: [userId],
     },

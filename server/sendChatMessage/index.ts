@@ -1,5 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { getCache, roomKeyForUser } from "../src/redis";
+import { hydrateUser } from "../src/hydrate";
+import { moveToRoom } from "../src/moveToRoom";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -9,15 +11,20 @@ const httpTrigger: AzureFunction = async function (
 
   let userId = req.body && req.body.userId;
   let message = req.body && req.body.text;
-  if (!userId) {
+  if (!userId || !message) {
     context.res = {
       status: 500,
-      body: "Include a user ID!",
+      body: "Include a user ID and a message!",
     };
     return;
   }
 
-  const roomId = await getCache(roomKeyForUser(userId));
+  const user = await hydrateUser(userId);
+
+  const commandMatch = /^\/(go|move) (.+)/.exec(message);
+  if (commandMatch) {
+    return await moveToRoom(userId, commandMatch[2], context);
+  }
 
   context.res = {
     status: 200,
@@ -26,7 +33,7 @@ const httpTrigger: AzureFunction = async function (
 
   context.bindings.signalRMessages = [
     {
-      groupName: roomId,
+      groupName: user.roomId,
       target: "chatMessage",
       arguments: [userId, message],
     },
