@@ -152,4 +152,6 @@ window.addEventListener("DOMContentLoaded", () => {
       sendMessage();
     }
   });
+
+  document.getElementById("chat-input").focus();
 });
