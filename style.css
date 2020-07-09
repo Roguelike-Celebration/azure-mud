@@ -14,10 +14,18 @@ body {
   margin-bottom: 1em;
 }
 
+a {
+  color: lightseagreen;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:visited {
+  color: lightseagreen;
+}
+
 a.room-link {
   color: lightgreen;
-  font-weight: bold;
-  text-decoration: none;
 }
 
 a.room-link:visited {
