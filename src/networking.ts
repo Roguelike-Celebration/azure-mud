@@ -3,7 +3,6 @@ import { RoomResponse, ErrorResponse } from "../server/src/types";
 import { Dispatch } from "react";
 import {
   Action,
-  ActionType,
   UpdatedRoomAction,
   UpdatedPresenceAction,
   ErrorAction,

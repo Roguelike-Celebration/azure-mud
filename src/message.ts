@@ -17,72 +17,80 @@ export enum MessageType {
   Error = "ERROR",
 }
 
-interface ConnectedMessage {
+export interface ConnectedMessage {
   type: MessageType.Connected;
   name: string;
 }
 
-export const ConnectedMessage = (name: string): ConnectedMessage => {
+export const createConnectedMessage = (name: string): ConnectedMessage => {
   return { type: MessageType.Connected, name };
 };
 
-interface DisconnectedMessage {
+export interface DisconnectedMessage {
   type: MessageType.Disconnected;
   name: string;
 }
 
-export const DisconnectedMessage = (name: string): DisconnectedMessage => {
+export const createDisconnectedMessage = (
+  name: string
+): DisconnectedMessage => {
   return { type: MessageType.Disconnected, name };
 };
 
-interface EnteredMessage {
+export interface EnteredMessage {
   type: MessageType.Entered;
   name: string;
   from: string;
 }
 
-export const EnteredMessage = (name: string, from: string): EnteredMessage => {
+export const createEnteredMessage = (
+  name: string,
+  from: string
+): EnteredMessage => {
   return { type: MessageType.Entered, name, from };
 };
 
-interface LeftMessage {
+export interface LeftMessage {
   type: MessageType.Left;
   name: string;
   to: string;
 }
 
-export const LeftMessage = (name: string, to: string): LeftMessage => {
+export const createLeftMessage = (name: string, to: string): LeftMessage => {
   return { type: MessageType.Left, name, to };
 };
 
-interface ChatMessage {
+export interface ChatMessage {
   type: MessageType.Chat;
   name: string;
   message: string;
 }
 
-export const ChatMessage = (name: string, message: string): ChatMessage => {
+export const createChatMessage = (
+  name: string,
+  message: string
+): ChatMessage => {
   return { type: MessageType.Chat, name, message };
 };
 
-interface WhisperMessage {
+export interface WhisperMessage {
   type: MessageType.Whisper;
   name: string;
   message: string;
 }
 
-export const WhisperMessage = (
+export const createWhisperMessage = (
   name: string,
   message: string
 ): WhisperMessage => {
   return { type: MessageType.Whisper, name, message };
 };
 
-interface ErrorMessage {
+export interface ErrorMessage {
   type: MessageType.Error;
   error: string;
 }
 
-export const ErrorMessage = (error: string): ErrorMessage => {
+export const createErrorMessage = (error: string): ErrorMessage => {
   return { type: MessageType.Error, error };
 };

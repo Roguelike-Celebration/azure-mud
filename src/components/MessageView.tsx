@@ -1,5 +1,15 @@
 import React from "react";
-import { Message, MessageType } from "../message";
+import {
+  Message,
+  MessageType,
+  ConnectedMessage,
+  DisconnectedMessage,
+  EnteredMessage,
+  LeftMessage,
+  ChatMessage,
+  WhisperMessage,
+  ErrorMessage,
+} from "../message";
 
 export default (props: { message: Message }) => {
   const { message } = props;
