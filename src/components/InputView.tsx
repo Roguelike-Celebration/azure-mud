@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { DispatchContext } from "../App";
 import { SendMessageAction } from "../Actions";
 
@@ -18,6 +18,10 @@ export default () => {
     dispatch(SendMessageAction(input));
     setInput("");
   };
+
+  useEffect(() => {
+    document.getElementById("chat-input").focus();
+  });
 
   return (
     <div id="input">
