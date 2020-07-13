@@ -45,8 +45,10 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.PlayerConnected) {
-    state.room.users.push(action.value);
-    state.messages.push(createConnectedMessage(action.value));
+    if (!state.room.users.includes(action.value)) {
+      state.room.users.push(action.value);
+      state.messages.push(createConnectedMessage(action.value));
+    }
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
@@ -55,10 +57,12 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.PlayerEntered) {
-    state.room.users.push(action.value.name);
-    state.messages.push(
-      createEnteredMessage(action.value.name, action.value.from)
-    );
+    if (!state.room.users.includes(action.value.name)) {
+      state.room.users.push(action.value.name);
+      state.messages.push(
+        createEnteredMessage(action.value.name, action.value.from)
+      );
+    }
   }
 
   if (action.type === ActionType.PlayerLeft) {
