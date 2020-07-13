@@ -1,11 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import {
-  roomPresenceKey,
-  getCache,
-  setCache,
-  removeUserFromRoomPresence,
-  roomKeyForUser,
-} from "../src/redis";
+import { removeUserFromRoomPresence } from "../src/redis";
 import { hydrateUser } from "../src/hydrate";
 
 const httpTrigger: AzureFunction = async function (

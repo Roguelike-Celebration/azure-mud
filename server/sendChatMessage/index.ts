@@ -42,6 +42,8 @@ const httpTrigger: AzureFunction = async function (
     body: {},
   };
 
+  console.log(`Sending to ${user.roomId}: ${message} from ${user.id}`);
+
   context.bindings.signalRMessages = [
     {
       groupName: user.roomId,

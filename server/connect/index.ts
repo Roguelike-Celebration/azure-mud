@@ -10,6 +10,7 @@ import {
 } from "../src/redis";
 import { roomData } from "../src/room";
 import { hydrateUser } from "../src/hydrate";
+import removeUserFromAllRooms from "../src/removeUserFromAllRooms";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -38,6 +39,7 @@ const httpTrigger: AzureFunction = async function (
   };
 
   context.bindings.signalRGroupActions = [
+    ...removeUserFromAllRooms(user.id, user.roomId),
     {
       userId,
       groupName: "users",
