@@ -82,12 +82,6 @@ export default (oldState: State, action: Action): State => {
     );
   }
 
-  if (action.type === ActionType.Whisper) {
-    state.messages.push(
-      createWhisperMessage(action.value.name, action.value.message)
-    );
-  }
-
   if (action.type === ActionType.Shout) {
     state.messages.push(
       createShoutMessage(action.value.name, action.value.message)
