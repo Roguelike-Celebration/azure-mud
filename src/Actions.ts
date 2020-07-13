@@ -5,6 +5,7 @@ export type Action =
   | PlayerDisconnectedAction
   | ChatMessageAction
   | WhisperAction
+  | ShoutAction
   | PlayerEnteredAction
   | PlayerLeftAction
   | ErrorAction
@@ -20,6 +21,7 @@ export enum ActionType {
   PlayerDisconnected = "PLAYER_DISCONNECTED",
   ChatMessage = "CHAT_MESSAGE",
   Whisper = "WHISPER",
+  Shout = "SHOUT",
   PlayerEntered = "PLAYER_ENTERED",
   PlayerLeft = "PLAYER_LEFT",
   Error = "ERROR",
@@ -119,6 +121,21 @@ export const WhisperAction = (name: string, message: string): WhisperAction => {
     value: { name, message },
   };
 };
+
+export const ShoutAction = (name: string, message: string): ShoutAction => {
+  return {
+    type: ActionType.Shout,
+    value: { name, message },
+  };
+};
+
+interface ShoutAction {
+  type: ActionType.Shout;
+  value: {
+    name: string;
+    message: string;
+  };
+}
 
 interface PlayerEnteredAction {
   type: ActionType.PlayerEntered;

@@ -5,6 +5,7 @@ export type Message =
   | LeftMessage
   | ChatMessage
   | WhisperMessage
+  | ShoutMessage
   | ErrorMessage;
 
 export enum MessageType {
@@ -14,6 +15,7 @@ export enum MessageType {
   Left = "LEFT",
   Chat = "CHAT",
   Whisper = "WHISPER",
+  Shout = "SHOUT",
   Error = "ERROR",
 }
 
@@ -86,6 +88,19 @@ export const createWhisperMessage = (
   senderIsSelf = false
 ): WhisperMessage => {
   return { type: MessageType.Whisper, name, message, senderIsSelf };
+};
+
+export interface ShoutMessage {
+  type: MessageType.Shout;
+  name: string;
+  message: string;
+}
+
+export const createShoutMessage = (
+  name: string,
+  message: string
+): ShoutMessage => {
+  return { type: MessageType.Shout, name, message };
 };
 
 export interface ErrorMessage {

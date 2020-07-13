@@ -12,6 +12,7 @@ import {
   PlayerEnteredAction,
   WhisperAction,
   PlayerLeftAction,
+  ShoutAction,
 } from "./Actions";
 
 export interface NetworkingDelegate {
@@ -55,7 +56,9 @@ export async function moveToRoom(roomId: string) {
   if (result.error) {
     myDispatch(ErrorAction(result.error));
   } else {
-    myDispatch(UpdatedRoomAction(result.room.displayName, result.room.description));
+    myDispatch(
+      UpdatedRoomAction(result.room.displayName, result.room.description)
+    );
     myDispatch(UpdatedPresenceAction(result.roomOccupants));
   }
 }
@@ -120,16 +123,22 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
 
   connection.on("playerEntered", (name, from) => {
     if (name === userId) return;
-    dispatch(PlayerEnteredAction(name, from))
+    dispatch(PlayerEnteredAction(name, from));
   });
 
   connection.on("whisper", (otherId, message) => {
-    dispatch(WhisperAction(otherId, message)
+    dispatch(WhisperAction(otherId, message));
   });
 
   connection.on("playerLeft", (name, to) => {
     if (name === userId) return;
-    dispatch(PlayerLeftAction(name, to))
+    dispatch(PlayerLeftAction(name, to));
+  });
+
+  connection.on("shout", (name, message) => {
+    // We don't gate on your own userId here.
+    // Because shouting can fail at the server level, we don't show it preemptively.
+    dispatch(ShoutAction(name, message));
   });
 
   connection.onclose(() => {

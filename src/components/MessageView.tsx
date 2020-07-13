@@ -9,6 +9,7 @@ import {
   ChatMessage,
   WhisperMessage,
   ErrorMessage,
+  ShoutMessage,
 } from "../message";
 import NameView from "./NameView";
 
@@ -22,6 +23,7 @@ export default (props: { message: Message; id: string }) => {
     [MessageType.Left]: LeftView,
     [MessageType.Chat]: ChatMessageView,
     [MessageType.Whisper]: WhisperView,
+    [MessageType.Shout]: ShoutView,
     [MessageType.Error]: ErrorView,
   };
 
@@ -88,6 +90,14 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
       </div>
     );
   }
+};
+
+const ShoutView = (props: ShoutMessage & { id: string }) => {
+  return (
+    <div>
+      <NameView name={props.name} id={props.id} /> shouts: {props.message}
+    </div>
+  );
 };
 
 const ErrorView = (props: ErrorMessage & { id: string }) => {

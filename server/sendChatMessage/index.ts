@@ -1,8 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { getCache, roomKeyForUser } from "../src/redis";
 import { hydrateUser } from "../src/hydrate";
 import { moveToRoom } from "../src/moveToRoom";
 import { whisper } from "../src/whisper";
+import { shout } from "../src/shout";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -30,6 +30,11 @@ const httpTrigger: AzureFunction = async function (
   const whisperMatch = /^\/(whisper) (.+?) (.+)/.exec(message);
   if (whisperMatch) {
     return await whisper(user, whisperMatch[2], whisperMatch[3], context);
+  }
+
+  const shoutMatch = /^\/(shout) (.+)/.exec(message);
+  if (shoutMatch) {
+    return await shout(user, shoutMatch[2], context);
   }
 
   context.res = {

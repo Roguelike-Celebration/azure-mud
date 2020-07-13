@@ -54,3 +54,7 @@ export function roomKeyForUser(user: string): string {
 export function roomKey(name: string) {
   return `${name}RoomData`;
 }
+
+export function shoutKeyForUser(user: string): string {
+  return `${user}Shout`;
+}
