@@ -56,12 +56,8 @@ export async function moveToRoom(roomId: string) {
   if (result.error) {
     myDispatch(ErrorAction(result.error));
   } else {
-    myDispatch(ErrorAction(result.error));
-    (
-      UpdatedRoomAction(result.room.displayName, result.room.description)
-    );
-    myDispatch(ErrorAction(result.error));
-    (UpdatedPresenceAction(result.roomOccupants));
+    myDispatch(UpdatedRoomAction(result.room.displayName, result.room.description));
+    myDispatch(UpdatedPresenceAction(result.roomOccupants));
   }
 }
 

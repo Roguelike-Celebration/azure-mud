@@ -30,8 +30,6 @@ export default (oldState: State, action: Action): State => {
 
     description = parseDescription(description);
 
-    // TODO: RoomView should have an onClick handler for these links
-
     state.room = {
       name,
       description,

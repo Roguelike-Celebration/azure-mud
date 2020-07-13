@@ -1,13 +1,27 @@
 import * as React from "react";
 import { Room } from "../Room";
+import { moveToRoom } from "../networking";
 
 export default (props: { room?: Room }) => {
   const { room } = props;
+
+  // This is very silly.
+  // Since we're manually setting raw HTML, we can't get refs to add proper click handlers
+  // Instead, we just hijack ALL clicks in the description, and check if they're for a link
+  const descriptionClick = (e) => {
+    const roomId =
+      e.target && e.target.getAttribute && e.target.getAttribute("data-room");
+    if (roomId) {
+      moveToRoom(roomId);
+    }
+  };
+
   return (
     <div id="room">
       <h1 id="room-name">{room ? room.name : "Loading..."}</h1>
       <div
         id="static-room-description"
+        onClick={descriptionClick}
         dangerouslySetInnerHTML={{
           __html: room ? room.description : "Loading current room...",
         }}
