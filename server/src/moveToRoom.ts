@@ -44,19 +44,6 @@ export async function moveToRoom(
     return;
   }
 
-  if (!user.room.exits.includes(to.id)) {
-    // TODO: This might reveal the existence of hidden rooms, if they exist.
-    // Might be safer to (conditionally?) display whatever the user typed,
-    // rather than the actual shortname
-    context.res = {
-      status: 200,
-      body: {
-        error: `You cannot reach ${to.shortName} from ${user.room.shortName}`,
-      },
-    };
-    return;
-  }
-
   await removeUserFromRoomPresence(userId, user.roomId);
 
   context.res = {
