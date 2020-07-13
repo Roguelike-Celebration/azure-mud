@@ -10,6 +10,9 @@ import {
   PlayerConnectedAction,
   PlayerDisconnectedAction,
   ChatMessageAction,
+  PlayerEnteredAction,
+  WhisperAction,
+  PlayerLeftAction,
 } from "./Actions";
 
 export interface NetworkingDelegate {
@@ -40,11 +43,7 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
   connectSignalR(userId, dispatch);
 }
 
-// TODO: This needs to be fixed
-// It should be called when clicking a moveToRoom link
-export async function moveToRoom(roomId: string, dispatch: Dispatch<Action>) {
-  // TODO: Show some progress updates here
-
+export async function moveToRoom(roomId: string) {
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
     "moveRoom",
     {
@@ -55,12 +54,14 @@ export async function moveToRoom(roomId: string, dispatch: Dispatch<Action>) {
   console.log(result);
 
   if (result.error) {
-    dispatch(ErrorAction(result.error));
+    myDispatch(ErrorAction(result.error));
   } else {
-    dispatch(
+    myDispatch(ErrorAction(result.error));
+    (
       UpdatedRoomAction(result.room.displayName, result.room.description)
     );
-    dispatch(UpdatedPresenceAction(result.roomOccupants));
+    myDispatch(ErrorAction(result.error));
+    (UpdatedPresenceAction(result.roomOccupants));
   }
 }
 
@@ -124,25 +125,16 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
 
   connection.on("playerEntered", (name, from) => {
     if (name === userId) return;
-    dispatch({
-      type: ActionType.PlayerEntered,
-      value: { name, from },
-    });
+    dispatch(PlayerEnteredAction(name, from))
   });
 
   connection.on("whisper", (otherId, message) => {
-    dispatch({
-      type: ActionType.Whisper,
-      value: { name: otherId, message },
-    });
+    dispatch(WhisperAction(otherId, message)
   });
 
   connection.on("playerLeft", (name, to) => {
     if (name === userId) return;
-    dispatch({
-      type: ActionType.PlayerLeft,
-      value: { name, to },
-    });
+    dispatch(PlayerLeftAction(name, to))
   });
 
   connection.onclose(() => {
