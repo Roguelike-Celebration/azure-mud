@@ -16,6 +16,7 @@ export default () => {
 
   const onClick = () => {
     dispatch(SendMessageAction(input));
+    setInput("");
   };
 
   return (
@@ -25,6 +26,7 @@ export default () => {
         id="chat-input"
         onChange={handleInputChange}
         onKeyPress={checkEnter}
+        value={input}
       />
       <button id="send" onClick={onClick}>
         Send
