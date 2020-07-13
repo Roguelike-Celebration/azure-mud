@@ -5,7 +5,7 @@ import ChatView from "./components/ChatView";
 import InputView from "./components/InputView";
 import { connect } from "./networking";
 import reducer from "./reducer";
-import { ActionType, SetNameAction } from "./Actions";
+import { SetNameAction } from "./Actions";
 
 export const DispatchContext = createContext(null);
 

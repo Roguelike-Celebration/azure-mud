@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { DispatchContext } from "../App";
-import { ActionType, SendMessageAction } from "../Actions";
+import { SendMessageAction } from "../Actions";
 
 export default () => {
   const dispatch = useContext(DispatchContext);

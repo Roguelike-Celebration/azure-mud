@@ -1,6 +1,5 @@
-import { ActionType, Action } from "./Actions";
+import { Action, ActionType } from "./Actions";
 import {
-  MessageType,
   Message,
   ConnectedMessage,
   DisconnectedMessage,
