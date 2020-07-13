@@ -8,13 +8,24 @@ export default () => {
 
   const handleInputChange = (e) => setInput(e.currentTarget.value);
 
+  const checkEnter = (e) => {
+    if (e.key === "Enter") {
+      onClick();
+    }
+  };
+
   const onClick = () => {
     dispatch(SendMessageAction(input));
   };
 
   return (
     <div id="input">
-      <input type="text" id="chat-input" onChange={handleInputChange} />
+      <input
+        type="text"
+        id="chat-input"
+        onChange={handleInputChange}
+        onKeyPress={checkEnter}
+      />
       <button id="send" onClick={onClick}>
         Send
       </button>
