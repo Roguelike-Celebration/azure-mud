@@ -1,5 +1,7 @@
 import * as SignalR from "@aspnet/signalr";
 import { RoomResponse, ErrorResponse } from "../server/src/types";
+import { Dispatch } from "react";
+import { Action, ActionType } from "./Actions";
 
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
@@ -14,22 +16,33 @@ export interface NetworkingDelegate {
 }
 
 let myUserId: string;
-let myDelegate: NetworkingDelegate;
+let myDispatch: Dispatch<Action>;
 
-export async function connect(userId: string, delegate: NetworkingDelegate) {
+export async function connect(userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId;
-  myDelegate = delegate;
+  myDispatch = dispatch;
 
   const result: RoomResponse = await callAzureFunction("connect");
 
   console.log(result);
-  delegate.updatedRoom(result.room.displayName, result.room.description);
-  delegate.updatedPresenceInfo(result.roomOccupants);
+  dispatch({
+    type: ActionType.UpdatedRoom,
+    value: {
+      name: result.room.displayName,
+      description: result.room.description,
+    },
+  });
+  dispatch({
+    type: ActionType.UpdatedPresence,
+    value: result.roomOccupants,
+  });
 
-  connectSignalR(userId, delegate);
+  connectSignalR(userId, dispatch);
 }
 
-export async function moveToRoom(roomId: string) {
+// TODO: This needs to be fixed
+// It should be called when clicking a moveToRoom link
+export async function moveToRoom(roomId: string, dispatch: Dispatch<Action>) {
   // TODO: Show some progress updates here
 
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
@@ -42,10 +55,22 @@ export async function moveToRoom(roomId: string) {
   console.log(result);
 
   if (result.error) {
-    myDelegate.statusMessageReceived(result.error);
+    dispatch({
+      type: ActionType.Error,
+      value: result.error,
+    });
   } else {
-    myDelegate.updatedRoom(result.room.displayName, result.room.description);
-    myDelegate.updatedPresenceInfo(result.roomOccupants);
+    dispatch({
+      type: ActionType.UpdatedRoom,
+      value: {
+        name: result.room.displayName,
+        description: result.room.description,
+      },
+    });
+    dispatch({
+      type: ActionType.UpdatedPresence,
+      value: result.roomOccupants,
+    });
   }
 }
 
@@ -61,14 +86,26 @@ export async function sendChatMessage(text: string) {
 
   // If it's a /move command
   if (result && result.room && result.roomOccupants) {
-    myDelegate.updatedRoom(result.room.displayName, result.room.description);
-    myDelegate.updatedPresenceInfo(result.roomOccupants);
+    myDispatch({
+      type: ActionType.UpdatedRoom,
+      value: {
+        name: result.room.displayName,
+        description: result.room.description,
+      },
+    });
+    myDispatch({
+      type: ActionType.UpdatedPresence,
+      value: result.roomOccupants,
+    });
   } else if (result && result.error) {
-    myDelegate.statusMessageReceived(result.error);
+    myDispatch({
+      type: ActionType.Error,
+      value: result.error,
+    });
   }
 }
 
-async function connectSignalR(userId: string, delegate: NetworkingDelegate) {
+async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   class CustomHttpClient extends SignalR.DefaultHttpClient {
     public send(request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
       request.headers = {
@@ -88,32 +125,52 @@ async function connectSignalR(userId: string, delegate: NetworkingDelegate) {
 
   connection.on("playerConnected", (otherId) => {
     console.log("Player joined!", otherId);
-    delegate.playerConnected(otherId);
+
+    dispatch({
+      type: ActionType.PlayerConnected,
+      value: otherId,
+    });
   });
 
   connection.on("playerDisconnected", (otherId) => {
     console.log("Player left!", otherId);
-    delegate.playerDisconnected(otherId);
+    dispatch({
+      type: ActionType.PlayerDisconnected,
+      value: otherId,
+    });
   });
 
   connection.on("chatMessage", (otherId, message) => {
     console.log(otherId, message);
     if (otherId === userId) return;
-    delegate.chatMessageReceived(otherId, message);
+
+    dispatch({
+      type: ActionType.ChatMessage,
+      value: { name: otherId, message },
+    });
   });
 
-  connection.on("playerEntered", (otherId, from) => {
-    if (otherId === userId) return;
-    delegate.playerEntered(otherId, from);
+  connection.on("playerEntered", (name, from) => {
+    if (name === userId) return;
+    dispatch({
+      type: ActionType.PlayerEntered,
+      value: { name, from },
+    });
   });
 
   connection.on("whisper", (otherId, message) => {
-    delegate.whisperReceived(otherId, message);
+    dispatch({
+      type: ActionType.Whisper,
+      value: { name: otherId, message },
+    });
   });
 
-  connection.on("playerLeft", (otherId, to) => {
-    if (otherId === userId) return;
-    delegate.playerLeft(otherId, to);
+  connection.on("playerLeft", (name, to) => {
+    if (name === userId) return;
+    dispatch({
+      type: ActionType.PlayerLeft,
+      value: { name, to },
+    });
   });
 
   connection.onclose(() => {

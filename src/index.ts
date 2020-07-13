@@ -7,31 +7,6 @@ import {
 
 let currentOtherPlayers: string[] = [];
 
-function renderPresence(users: string[]) {
-  console.log("Rendering presence", users);
-  users = users.filter((u) => u !== localStorage.getItem("name"));
-  let names = "";
-
-  if (users.length === 0) {
-    document.getElementById("dynamic-room-description").innerText =
-      "You are all alone here.";
-    return;
-  }
-
-  if (users.length === 1) {
-    names = users[0];
-  } else if (users.length === 2) {
-    names = `${users[0]} and ${users[1]}`;
-  } else {
-    names = `${users.slice(0, users.length - 1).join(", ")}, and ${
-      users[users.length - 1]
-    }`;
-  }
-  document.getElementById("dynamic-room-description").innerHTML = `Also here ${
-    users.length === 1 ? "is" : "are"
-  } ${names}`;
-}
-
 const delegate: NetworkingDelegate = {
   updatedRoom: (name: string, description: string) => {
     const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g;
