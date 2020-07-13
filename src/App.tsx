@@ -17,12 +17,13 @@ const App = () => {
 
   useEffect(() => {
     console.log("Connecting");
+    let name = state.name;
     if (!state.name) {
-      const name = prompt("What is your user ID?");
+      name = prompt("What is your user ID?");
       localStorage.setItem("name", name);
       dispatch({ type: ActionType.SetName, value: name });
     }
-    connect("lazerwalker", dispatch);
+    connect(name, dispatch);
   }, []);
 
   return (
