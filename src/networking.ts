@@ -1,7 +1,16 @@
 import * as SignalR from "@aspnet/signalr";
 import { RoomResponse, ErrorResponse } from "../server/src/types";
 import { Dispatch } from "react";
-import { Action, ActionType } from "./Actions";
+import {
+  Action,
+  ActionType,
+  UpdatedRoomAction,
+  UpdatedPresenceAction,
+  ErrorAction,
+  PlayerConnectedAction,
+  PlayerDisconnectedAction,
+  ChatMessageAction,
+} from "./Actions";
 
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
@@ -25,17 +34,8 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
   const result: RoomResponse = await callAzureFunction("connect");
 
   console.log(result);
-  dispatch({
-    type: ActionType.UpdatedRoom,
-    value: {
-      name: result.room.displayName,
-      description: result.room.description,
-    },
-  });
-  dispatch({
-    type: ActionType.UpdatedPresence,
-    value: result.roomOccupants,
-  });
+  dispatch(UpdatedRoomAction(result.room.displayName, result.room.description));
+  dispatch(UpdatedPresenceAction(result.roomOccupants));
 
   connectSignalR(userId, dispatch);
 }
@@ -55,22 +55,12 @@ export async function moveToRoom(roomId: string, dispatch: Dispatch<Action>) {
   console.log(result);
 
   if (result.error) {
-    dispatch({
-      type: ActionType.Error,
-      value: result.error,
-    });
+    dispatch(ErrorAction(result.error));
   } else {
-    dispatch({
-      type: ActionType.UpdatedRoom,
-      value: {
-        name: result.room.displayName,
-        description: result.room.description,
-      },
-    });
-    dispatch({
-      type: ActionType.UpdatedPresence,
-      value: result.roomOccupants,
-    });
+    dispatch(
+      UpdatedRoomAction(result.room.displayName, result.room.description)
+    );
+    dispatch(UpdatedPresenceAction(result.roomOccupants));
   }
 }
 
@@ -86,22 +76,12 @@ export async function sendChatMessage(text: string) {
 
   // If it's a /move command
   if (result && result.room && result.roomOccupants) {
-    myDispatch({
-      type: ActionType.UpdatedRoom,
-      value: {
-        name: result.room.displayName,
-        description: result.room.description,
-      },
-    });
-    myDispatch({
-      type: ActionType.UpdatedPresence,
-      value: result.roomOccupants,
-    });
+    myDispatch(
+      UpdatedRoomAction(result.room.displayName, result.room.description)
+    );
+    myDispatch(UpdatedPresenceAction(result.roomOccupants));
   } else if (result && result.error) {
-    myDispatch({
-      type: ActionType.Error,
-      value: result.error,
-    });
+    myDispatch(ErrorAction(result.error));
   }
 }
 
@@ -126,28 +106,20 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   connection.on("playerConnected", (otherId) => {
     console.log("Player joined!", otherId);
 
-    dispatch({
-      type: ActionType.PlayerConnected,
-      value: otherId,
-    });
+    dispatch(PlayerConnectedAction(otherId));
   });
 
   connection.on("playerDisconnected", (otherId) => {
     console.log("Player left!", otherId);
-    dispatch({
-      type: ActionType.PlayerDisconnected,
-      value: otherId,
-    });
+    dispatch(PlayerDisconnectedAction(otherId));
   });
 
   connection.on("chatMessage", (otherId, message) => {
+    console.log("Received chat", otherId, message);
     console.log(otherId, message);
     if (otherId === userId) return;
 
-    dispatch({
-      type: ActionType.ChatMessage,
-      value: { name: otherId, message },
-    });
+    dispatch(ChatMessageAction(otherId, message));
   });
 
   connection.on("playerEntered", (name, from) => {

@@ -5,7 +5,7 @@ import ChatView from "./components/ChatView";
 import InputView from "./components/InputView";
 import { connect } from "./networking";
 import reducer from "./reducer";
-import { ActionType } from "./Actions";
+import { ActionType, SetNameAction } from "./Actions";
 
 export const DispatchContext = createContext(null);
 
@@ -21,7 +21,7 @@ const App = () => {
     if (!state.name) {
       name = prompt("What is your user ID?");
       localStorage.setItem("name", name);
-      dispatch({ type: ActionType.SetName, value: name });
+      dispatch(SetNameAction(name));
     }
     connect(name, dispatch);
   }, []);

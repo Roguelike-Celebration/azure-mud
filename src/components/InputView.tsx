@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { DispatchContext } from "../App";
-import { ActionType } from "../Actions";
+import { ActionType, SendMessageAction } from "../Actions";
 
 export default () => {
   const dispatch = useContext(DispatchContext);
@@ -9,7 +9,7 @@ export default () => {
   const handleInputChange = (e) => setInput(e.currentTarget.value);
 
   const onClick = () => {
-    dispatch({ type: ActionType.SendMessage, value: input });
+    dispatch(SendMessageAction(input));
   };
 
   return (

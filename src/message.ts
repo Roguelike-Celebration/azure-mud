@@ -17,41 +17,72 @@ export enum MessageType {
   Error = "ERROR",
 }
 
-export interface ConnectedMessage {
+interface ConnectedMessage {
   type: MessageType.Connected;
   name: string;
 }
 
-export interface DisconnectedMessage {
+export const ConnectedMessage = (name: string): ConnectedMessage => {
+  return { type: MessageType.Connected, name };
+};
+
+interface DisconnectedMessage {
   type: MessageType.Disconnected;
   name: string;
 }
 
-export interface EnteredMessage {
+export const DisconnectedMessage = (name: string): DisconnectedMessage => {
+  return { type: MessageType.Disconnected, name };
+};
+
+interface EnteredMessage {
   type: MessageType.Entered;
   name: string;
   from: string;
 }
 
-export interface LeftMessage {
+export const EnteredMessage = (name: string, from: string): EnteredMessage => {
+  return { type: MessageType.Entered, name, from };
+};
+
+interface LeftMessage {
   type: MessageType.Left;
   name: string;
   to: string;
 }
 
-export interface ChatMessage {
+export const LeftMessage = (name: string, to: string): LeftMessage => {
+  return { type: MessageType.Left, name, to };
+};
+
+interface ChatMessage {
   type: MessageType.Chat;
   name: string;
   message: string;
 }
 
-export interface WhisperMessage {
+export const ChatMessage = (name: string, message: string): ChatMessage => {
+  return { type: MessageType.Chat, name, message };
+};
+
+interface WhisperMessage {
   type: MessageType.Whisper;
   name: string;
   message: string;
 }
 
-export interface ErrorMessage {
+export const WhisperMessage = (
+  name: string,
+  message: string
+): WhisperMessage => {
+  return { type: MessageType.Whisper, name, message };
+};
+
+interface ErrorMessage {
   type: MessageType.Error;
   error: string;
 }
+
+export const ErrorMessage = (error: string): ErrorMessage => {
+  return { type: MessageType.Error, error };
+};
