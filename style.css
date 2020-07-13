@@ -1,7 +1,7 @@
 body {
   background-color: black;
   color: white;
-  font-family: Monaco, "Courier New", Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 
 #main {
@@ -41,4 +41,15 @@ input {
   max-height: 40vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+nav.react-contextmenu {
+  background-color: black;
+  border: 1px solid white;
+  padding: 2px 5px;
+  cursor: pointer;
+}
+
+span.name {
+  cursor: pointer;
 }

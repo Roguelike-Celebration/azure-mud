@@ -19,6 +19,7 @@
     "@types/react-dom": "^16.9.8",
     "paper": "^0.12.4",
     "react": "^16.13.1",
+    "react-contextmenu": "^2.14.0",
     "react-dom": "^16.13.1",
     "simple-peer": "^9.7.2"
   },

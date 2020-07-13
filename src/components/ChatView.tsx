@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MessageView from "./MessageView";
 import { Message } from "../message";
 
@@ -15,7 +15,8 @@ export default (props: { messages: Message[] }) => {
   return (
     <div id="messages">
       {props.messages.map((m, idx) => {
-        return <MessageView message={m} key={`message-${idx}`} />;
+        const id = `message-${idx}`;
+        return <MessageView message={m} key={id} id={id} />;
       })}
     </div>
   );

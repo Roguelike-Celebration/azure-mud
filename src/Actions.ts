@@ -9,7 +9,8 @@ export type Action =
   | PlayerLeftAction
   | ErrorAction
   | SendMessageAction
-  | SetNameAction;
+  | SetNameAction
+  | StartWhisperAction;
 
 export enum ActionType {
   // Server-driven action
@@ -25,6 +26,7 @@ export enum ActionType {
   // UI actions
   SendMessage = "SEND_MESSAGE",
   SetName = "SET_NAME",
+  StartWhisper = "START_WHISPER",
 }
 
 interface UpdatedRoomAction {
@@ -190,4 +192,13 @@ export const SetNameAction = (name: string): SetNameAction => {
     type: ActionType.SetName,
     value: name,
   };
+};
+
+interface StartWhisperAction {
+  type: ActionType.StartWhisper;
+  value: string;
+}
+
+export const StartWhisperAction = (name: string): StartWhisperAction => {
+  return { type: ActionType.StartWhisper, value: name };
 };

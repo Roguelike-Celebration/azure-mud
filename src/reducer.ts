@@ -16,6 +16,7 @@ export interface State {
   room?: Room;
   messages: Message[];
   name?: string;
+  prepopulatedInput?: string;
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -24,6 +25,7 @@ export default (oldState: State, action: Action): State => {
 
   // TODO: This could hurt perf when we have a lot of messages
   let state: State = JSON.parse(JSON.stringify(oldState));
+  state.prepopulatedInput = undefined;
 
   if (action.type === ActionType.UpdatedRoom) {
     let { name, description } = action.value;
@@ -87,11 +89,16 @@ export default (oldState: State, action: Action): State => {
     if (isCommand) {
       if (isCommand[1] === "whisper") {
         const [_, to, message] = /^(.+?) (.+)/.exec(isCommand[2]);
-        state.messages.push(createWhisperMessage(to, message));
+        state.messages.push(createWhisperMessage(to, message, true));
       }
     } else {
       state.messages.push(createChatMessage(state.name, action.value));
     }
+  }
+
+  if (action.type === ActionType.StartWhisper) {
+    console.log("Preopopulating");
+    state.prepopulatedInput = `/whisper ${action.value} `;
   }
 
   return state;

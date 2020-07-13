@@ -77,13 +77,15 @@ export interface WhisperMessage {
   type: MessageType.Whisper;
   name: string;
   message: string;
+  senderIsSelf: boolean;
 }
 
 export const createWhisperMessage = (
   name: string,
-  message: string
+  message: string,
+  senderIsSelf = false
 ): WhisperMessage => {
-  return { type: MessageType.Whisper, name, message };
+  return { type: MessageType.Whisper, name, message, senderIsSelf };
 };
 
 export interface ErrorMessage {

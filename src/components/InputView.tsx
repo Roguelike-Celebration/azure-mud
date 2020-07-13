@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { DispatchContext } from "../App";
 import { SendMessageAction } from "../Actions";
 
-export default () => {
+export default (props: { prepopulated?: string }) => {
   const dispatch = useContext(DispatchContext);
   const [input, setInput] = useState("");
 
@@ -20,8 +20,12 @@ export default () => {
   };
 
   useEffect(() => {
+    console.log("useEffect");
     document.getElementById("chat-input").focus();
-  });
+    if (props.prepopulated) {
+      setInput(props.prepopulated);
+    }
+  }, [props.prepopulated]);
 
   return (
     <div id="input">

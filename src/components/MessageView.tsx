@@ -10,8 +10,9 @@ import {
   WhisperMessage,
   ErrorMessage,
 } from "../message";
+import NameView from "./NameView";
 
-export default (props: { message: Message }) => {
+export default (props: { message: Message; id: string }) => {
   const { message } = props;
 
   const messageMap = {
@@ -30,51 +31,65 @@ export default (props: { message: Message }) => {
     return <div />;
   }
 
-  return React.createElement(component, message);
+  return React.createElement(component, { ...message, id: props.id });
 };
 
-const ConnectedMessageView = (props: ConnectedMessage) => (
+const ConnectedMessageView = (props: ConnectedMessage & { id: string }) => (
   <div>
-    <strong>{props.name}</strong> has connected.
+    <NameView name={props.name} id={props.id} /> has connected.
   </div>
 );
 
-const DisconnectedMessageView = (props: DisconnectedMessage) => (
+const DisconnectedMessageView = (
+  props: DisconnectedMessage & { id: string }
+) => (
   <div>
-    <strong>{props.name}</strong> has disconnected.
+    <NameView name={props.name} id={props.id} /> has disconnected.
   </div>
 );
 
-const EnteredView = (props: EnteredMessage) => {
+const EnteredView = (props: EnteredMessage & { id: string }) => {
   return (
     <div>
-      <strong>{props.name}</strong> has entered from {props.from}.
+      <NameView name={props.name} id={props.id} /> has entered from {props.from}
+      .
     </div>
   );
 };
 
-const LeftView = (props: LeftMessage) => (
+const LeftView = (props: LeftMessage & { id: string }) => (
   <div>
-    <strong>{props.name}</strong> has wandered off to {props.to}.
+    <NameView id={props.id} name={props.name} /> has wandered off to {props.to}.
   </div>
 );
 
-const ChatMessageView = (props: ChatMessage) => (
+const ChatMessageView = (props: ChatMessage & { id: string }) => (
   <div>
-    <strong>{props.name}</strong>: {props.message}
+    <NameView name={props.name} id={props.id} />: {props.message}
   </div>
 );
 
-const WhisperView = (props: WhisperMessage) => {
-  return (
-    <div>
-      <em>
-        <strong>{props.name}</strong> whispers: {props.message}
-      </em>
-    </div>
-  );
+const WhisperView = (props: WhisperMessage & { id: string }) => {
+  if (props.senderIsSelf) {
+    return (
+      <div>
+        <em>
+          You whisper to <NameView id={props.id} name={props.name} />:{" "}
+          {props.message}
+        </em>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <em>
+          <NameView name={props.name} id={props.id} /> whispers: {props.message}
+        </em>
+      </div>
+    );
+  }
 };
 
-const ErrorView = (props: ErrorMessage) => {
+const ErrorView = (props: ErrorMessage & { id: string }) => {
   return <div>{props.error}</div>;
 };

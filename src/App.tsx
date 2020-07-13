@@ -31,7 +31,7 @@ const App = () => {
       <div id="main">
         <RoomView room={state.room} />
         <ChatView messages={state.messages} />
-        <InputView />
+        <InputView prepopulated={state.prepopulatedInput} />
       </div>
     </DispatchContext.Provider>
   );
