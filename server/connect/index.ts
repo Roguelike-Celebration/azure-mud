@@ -1,16 +1,10 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 
 import { RoomResponse } from "../src/types";
-import {
-  getCache,
-  setCache,
-  roomPresenceKey,
-  roomKeyForUser,
-  addUserToRoomPresence,
-} from "../src/redis";
-import { roomData } from "../src/room";
 import { hydrateUser } from "../src/hydrate";
 import removeUserFromAllRooms from "../src/removeUserFromAllRooms";
+import { addUserToRoomPresence } from "../src/roomPresence";
+import { setUserHeartbeat } from "../src/heartbeat";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -29,6 +23,7 @@ const httpTrigger: AzureFunction = async function (
   const user = await hydrateUser(userId);
 
   const roomOccupants = await addUserToRoomPresence(userId, user.roomId);
+  await setUserHeartbeat(userId);
 
   context.res = {
     status: 200,

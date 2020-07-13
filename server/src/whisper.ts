@@ -1,18 +1,25 @@
 import { User } from "./user";
 import { Context } from "@azure/functions";
+import { getActiveUsers } from "./heartbeat";
 
-export function whisper(
+export async function whisper(
   from: User,
   toId: string,
   message: string,
   context: Context
 ) {
-  // For now, we naively assume the 'to' user exists,
-  // and if they don't their message disappears.
+  const activeUsers = await getActiveUsers();
 
-  // Ideally we'd tell a player if they whispered someone who doesn't exist.
-  // We don't currently have infrastructure around "is this player online?"
-  // (but should!)
+  // TODO: Make this its own action so we can NameView-ify the name
+  if (!activeUsers.includes(toId)) {
+    context.res = {
+      status: 200,
+      body: {
+        error: `${toId} is not online and will not receive your message.`,
+      },
+    };
+    return;
+  }
 
   context.bindings.signalRMessages = [
     {

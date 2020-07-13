@@ -146,6 +146,11 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
     callAzureFunction("disconnect");
   });
 
+  connection.on("ping", () => {
+    console.log("Received heartbeat ping");
+    callAzureFunction("pong");
+  });
+
   window.addEventListener("beforeunload", (e) => {
     callAzureFunction("disconnect");
   });

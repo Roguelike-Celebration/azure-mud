@@ -1,6 +1,7 @@
-import { getCache, roomKeyForUser, setCache, shoutKeyForUser } from "./redis";
+import { getCache, setCache, shoutKeyForUser } from "./redis";
 import { User } from "./user";
 import { roomData } from "./room";
+import { roomKeyForUser } from "./roomPresence";
 
 export async function hydrateUser(userId: string): Promise<User> {
   let roomId = await getCache(roomKeyForUser(userId));

@@ -1,8 +1,11 @@
 import { Context } from "@azure/functions";
 import { roomData } from "./room";
-import { removeUserFromRoomPresence, addUserToRoomPresence } from "./redis";
 import { RoomResponse } from "./types";
 import { hydrateUser } from "./hydrate";
+import {
+  removeUserFromRoomPresence,
+  addUserToRoomPresence,
+} from "./roomPresence";
 
 export async function moveToRoom(
   userId: string,

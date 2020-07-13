@@ -1,6 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { removeUserFromRoomPresence } from "../src/redis";
+import { removeUserFromRoomPresence } from "../src/roomPresence";
 import { hydrateUser } from "../src/hydrate";
+import { getActiveUsers, setActiveUsers } from "../src/heartbeat";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -23,6 +24,12 @@ const httpTrigger: AzureFunction = async function (
   };
 
   await removeUserFromRoomPresence(userId, user.roomId);
+
+  let activeUsers = await getActiveUsers();
+  if (activeUsers.includes(userId)) {
+    activeUsers = activeUsers.filter((u) => u !== userId);
+    await setActiveUsers(activeUsers);
+  }
 
   context.bindings.signalRGroupActions = [
     {
