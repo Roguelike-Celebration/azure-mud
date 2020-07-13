@@ -43,7 +43,8 @@ const PresenceView = (props: { users?: string[] }) => {
     }
 
     const userViews = users.map((u, idx) => {
-      return <NameView name={u} id={`presence-${idx}`} />;
+      const id = `presence-${idx}`;
+      return <NameView name={u} id={id} key={id} />;
     });
 
     if (users.length === 1) {
