@@ -40,7 +40,7 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.UpdatedPresence) {
-    state.room.users = action.value;
+    state.room.users = action.value.filter((u) => u !== state.name);
   }
 
   if (action.type === ActionType.PlayerConnected) {

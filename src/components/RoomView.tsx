@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Room } from "../Room";
 import { moveToRoom } from "../networking";
+import NameView from "./NameView";
 
 export default (props: { room?: Room }) => {
   const { room } = props;
@@ -26,33 +27,69 @@ export default (props: { room?: Room }) => {
           __html: room ? room.description : "Loading current room...",
         }}
       />
-
-      <div id="dynamic-room-description">
-        {room ? presenceString(room.users) : ""}
-      </div>
+      {room ? <PresenceView users={room.users} /> : ""}
     </div>
   );
 };
 
-function presenceString(users: string[]): string {
-  console.log("Rendering presence", users);
-  users = users.filter((u) => u !== localStorage.getItem("name"));
-  let names = "";
+const PresenceView = (props: { users?: string[] }) => {
+  const { users } = props;
+  if (users) {
+    // TODO: This should happen in the reducer
+    let names;
 
-  if (users.length === 0) {
-    return "You are all alone here.";
-  }
+    if (users.length === 0) {
+      return <div id="dynamic-room-description">You are all alone here.</div>;
+    }
 
-  if (users.length === 1) {
-    names = users[0];
-  } else if (users.length === 2) {
-    names = `${users[0]} and ${users[1]}`;
+    const userViews = users.map((u, idx) => {
+      return <NameView name={u} id={`presence-${idx}`} />;
+    });
+
+    if (users.length === 1) {
+      names = userViews[0];
+    } else if (users.length === 2) {
+      names = (
+        <span>
+          {userViews[0]} and {userViews[1]}
+        </span>
+      );
+    } else {
+      names = (
+        <span>
+          {intersperse(userViews.slice(0, users.length - 1), ", ")}, and{" "}
+          {userViews[userViews.length - 1]}
+        </span>
+      );
+    }
+
+    // TODO: Bold these
+    return (
+      <div id="dynamic-room-description">
+        Also here {users.length === 1 ? "is" : "are"} {names}.
+      </div>
+    );
   } else {
-    names = `${users.slice(0, users.length - 1).join(", ")}, and ${
-      users[users.length - 1]
-    }`;
+    return <div id="dynamic-room-description" />;
+  }
+};
+
+// https://stackoverflow.com/questions/23618744/rendering-comma-separated-list-of-links
+/* intersperse: Return an array with the separator interspersed between
+ * each element of the input array.
+ *
+ * > _([1,2,3]).intersperse(0)
+ * [1,0,2,0,3]
+ */
+function intersperse(arr, sep) {
+  if (arr.length === 0) {
+    return [];
   }
 
-  // TODO: Bold these
-  return `Also here ${users.length === 1 ? "is" : "are"} ${names}.`;
+  return arr.slice(1).reduce(
+    function (xs, x, i) {
+      return xs.concat([sep, x]);
+    },
+    [arr[0]]
+  );
 }
