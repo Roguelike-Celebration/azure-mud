@@ -107,6 +107,12 @@ const delegate: NetworkingDelegate = {
     displayChatMessage(message, name);
   },
 
+  whisperReceived: (name: string, message: string) => {
+    displayChatMessage(
+      `<em><strong>${name}</strong> whispers: ${message}</em>`
+    );
+  },
+
   statusMessageReceived: (message: string) => {
     displayChatMessage(message);
   },
@@ -120,8 +126,17 @@ const sendMessage = () => {
 
   sendChatMessage(text);
 
-  if (!/^\/(.+?) (.+)/.exec(text)) {
-    delegate.chatMessageReceived(localStorage.getItem("name"), text);
+  const isCommand = /^\/(.+?) (.+)/.exec(text);
+  console.log(text, isCommand);
+  if (isCommand) {
+    if (isCommand[1] === "whisper") {
+      const [_, to, message] = /^(.+?) (.+)/.exec(isCommand[2]);
+      displayChatMessage(
+        `<em>you whisper to <strong>${to}</strong>: ${message}`
+      );
+    }
+  } else {
+    displayChatMessage(text, localStorage.getItem("name"));
   }
 
   input.value = "";

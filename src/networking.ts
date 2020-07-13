@@ -7,6 +7,7 @@ export interface NetworkingDelegate {
   playerConnected: (name: string) => void;
   playerDisconnected: (name: string) => void;
   chatMessageReceived: (name: string, message: string) => void;
+  whisperReceived: (name: string, message: string) => void;
   playerEntered: (name: string, from: string) => void;
   playerLeft: (name: string, to: string) => void;
   statusMessageReceived: (message: string) => void;
@@ -104,6 +105,10 @@ async function connectSignalR(userId: string, delegate: NetworkingDelegate) {
   connection.on("playerEntered", (otherId, from) => {
     if (otherId === userId) return;
     delegate.playerEntered(otherId, from);
+  });
+
+  connection.on("whisper", (otherId, message) => {
+    delegate.whisperReceived(otherId, message);
   });
 
   connection.on("playerLeft", (otherId, to) => {
