@@ -13,7 +13,7 @@ export default (props: { user: PublicUser }) => {
   const twitterHandle = user.twitterHandle ? (
     <div id="profile-twitter">
       <strong>Twitter</strong>:{" "}
-      <a href="https://twitter.com/{user.twitterHandle}">
+      <a href={`https://twitter.com/${user.twitterHandle}`} target="_blank">
         @{user.twitterHandle}
       </a>
     </div>
@@ -23,7 +23,10 @@ export default (props: { user: PublicUser }) => {
 
   const url = user.url ? (
     <div id="profile-url">
-      <strong>Web Site</strong>: <a href="{user.url}">{user.url}</a>
+      <strong>Web Site</strong>:{" "}
+      <a href={user.url} target="_blank">
+        {user.url}
+      </a>
     </div>
   ) : (
     ""
