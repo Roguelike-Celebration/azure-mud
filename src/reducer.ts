@@ -18,11 +18,16 @@ export interface State {
   messages: Message[];
   name?: string;
   prepopulatedInput?: string;
+  isOnboarding?: boolean;
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
 export default (oldState: State, action: Action): State => {
   console.log("In reducer", action);
+
+  if (oldState.isOnboarding) {
+    return onboardingReducer(oldState, action);
+  }
 
   // TODO: This could hurt perf when we have a lot of messages
   let state: State = JSON.parse(JSON.stringify(oldState));

@@ -1,0 +1,62 @@
+# Start
+bot: Hi there!
+bot: My name's Floyd. I'm here to help get you registered for Roguelike Celebration.
+bot: You'll have to bear with me — I'm a pretty simple robot, so I can't really help you out with anything complicated.
+bot: But I just have a few questions to ask you before I can get you set up with a profile and send you on your way!
+wait: 2
+bot: Let's start with the basics. 
+bot: What username would you like? This is what people will see in the chat interface, like a Twitter handle or an IRC nickname.
+-> realName: [username isnt empty and valid is true]
+<-> [username isnt empty and valid is false]
+    bot: I'm so sorry, but the username '{username}' has already been taken! Try another one?
+
+# realName
+bot: Great! Nice to meet you, {username}
+bot: Next, I need to know your real name. This doesn't need to be your legal name, but we think being able to see what somebody goes by offline will help create a sense of community.
+-> pronouns: [username isnt empty]
+
+# pronouns
+bot: Perfect, noted!
+bot: Next, what pronouns would you like other people to call you? This might be something like "she/her" or "he/him or they/them", but all forms of gender identity are welcome here.
+-> description: [pronouns isnt empty]
+
+# description
+bot: Ooh, good choice!
+bot: When other players look at you, what do they see? Enter a short text description of your character. This doesn't need to be what you look like in real life, or even a description of a human!
+-> twitter: [description isnt empty]
+
+# twitter
+bot: Fantastic!
+bot: Do you have a Twitter handle you would like to display on your profile? You can type "skip" if not.
+-> url: [twitter isnt empty]
+
+# url
+bot: something that's clever based on whether you entered something or not
+bot: Do you have another URL you want to publicize on your profile? Maybe a personal site, a Twitch stream, or anything else you want people to check out. Again, you can type "skip" if you're not interested.
+-> askMeAbout: [url isnt empty]
+
+# askMeAbout
+bot: We're almost done, thanks for hanging in there!
+bot: Is there anything you're particularly excited to talk to people about? Say a few words about what excites you here, or again feel free to type "skip".
+-> confirmation: [askMeAbout is true]
+
+# confirmation
+bot: And that's all my questions!
+revealProfile
+bot: Check out your profile on the side here, and change any answers you want. When you're ready to head on in, type "okay" into the chat box.
+-> coc: [confirmed is true]
+<-> [confirmed is false]
+    bot: Say the word "okay" when you're ready to move on.
+
+# coc
+hideProfile
+bot: Whew! We did it! 
+bot: Just ONE last thing, but the most important one. 
+bot: I need you to read our [code of conduct]() and type "yes" to signify that you've read it before I can let you in.
+-> done: [coc is true]
+
+# done
+bot: 🎉
+bot: Fantastic! I hope you have an amazing conference.
+bot: To head on into the conference, just type "/move bar" to move to the bar area just inside.
+
