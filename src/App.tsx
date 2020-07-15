@@ -4,13 +4,15 @@ import RoomView from "./components/RoomView";
 import ChatView from "./components/ChatView";
 import InputView from "./components/InputView";
 import { connect } from "./networking";
-import reducer from "./reducer";
+import reducer, { State } from "./reducer";
 import { SetNameAction } from "./Actions";
+import ProfileView from "./components/ProfileView";
+import { useReducerWithThunk } from "./useReducerWithThunk";
 
 export const DispatchContext = createContext(null);
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = useReducerWithThunk<State>(reducer, {
     messages: [],
     name: localStorage.getItem("name"),
   });
@@ -32,6 +34,7 @@ const App = () => {
         <RoomView room={state.room} />
         <ChatView messages={state.messages} />
         <InputView prepopulated={state.prepopulatedInput} />
+        {state.visibleProfile ? <ProfileView user={} /> : ""}
       </div>
     </DispatchContext.Provider>
   );

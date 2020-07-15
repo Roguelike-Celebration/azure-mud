@@ -14,6 +14,7 @@ import {
   PlayerLeftAction,
   ShoutAction,
 } from "./Actions";
+import { User } from "../server/src/user";
 
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
@@ -81,6 +82,18 @@ export async function sendChatMessage(text: string) {
     myDispatch(UpdatedPresenceAction(result.roomOccupants));
   } else if (result && result.error) {
     myDispatch(ErrorAction(result.error));
+  }
+}
+
+export async function fetchProfile(userId: string): Promise<User | undefined> {
+  return undefined;
+  const result = await callAzureFunction("fetchProfile", {
+    userIdToFetch: userId,
+  });
+  if (result.error) {
+    console.log("Could not fetch profile", result.erroc);
+  } else {
+    return result.user;
   }
 }
 

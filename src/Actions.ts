@@ -1,3 +1,8 @@
+import { ThunkDispatch } from "./useReducerWithThunk";
+import { State } from "./reducer";
+import { fetchProfile } from "./networking";
+import { User } from "../server/src/user";
+
 export type Action =
   | UpdatedRoomAction
   | UpdatedPresenceAction
@@ -11,7 +16,8 @@ export type Action =
   | ErrorAction
   | SendMessageAction
   | SetNameAction
-  | StartWhisperAction;
+  | StartWhisperAction
+  | ShowProfileAction;
 
 export enum ActionType {
   // Server-driven action
@@ -29,6 +35,7 @@ export enum ActionType {
   SendMessage = "SEND_MESSAGE",
   SetName = "SET_NAME",
   StartWhisper = "START_WHISPER",
+  ShowProfile = "SHOW_PROFILE",
 }
 
 interface UpdatedRoomAction {
@@ -218,4 +225,27 @@ interface StartWhisperAction {
 
 export const StartWhisperAction = (name: string): StartWhisperAction => {
   return { type: ActionType.StartWhisper, value: name };
+};
+
+interface ShowProfileAction {
+  type: ActionType.ShowProfile;
+  value: User;
+}
+
+export const ShowProfileAction = (
+  name: string
+): ((dispatch: ThunkDispatch<Action, State>) => void) => {
+  return async (dispatch: ThunkDispatch<Action, State>) => {
+    console.log("lol");
+    const user = await fetchProfile(name);
+    if (!user) {
+      console.log("No user");
+      return;
+    }
+    const action: ShowProfileAction = {
+      type: ActionType.ShowProfile,
+      value: user,
+    };
+    dispatch(action);
+  };
 };

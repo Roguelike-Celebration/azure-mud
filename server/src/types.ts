@@ -8,3 +8,7 @@ export interface RoomResponse {
 export interface ErrorResponse {
   error: string;
 }
+
+export interface ProfileResponse {
+  user: User;
+}

@@ -18,6 +18,9 @@ export interface State {
   messages: Message[];
   name?: string;
   prepopulatedInput?: string;
+
+  // User ID of whose profile should be shwon
+  visibleProfile?: string;
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -110,6 +113,10 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.StartWhisper) {
     console.log("Preopopulating");
     state.prepopulatedInput = `/whisper ${action.value} `;
+  }
+
+  if (action.type === ActionType.ShowProfile) {
+    state.visibleProfile = action.value;
   }
 
   return state;
