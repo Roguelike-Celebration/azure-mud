@@ -12,6 +12,7 @@ import {
 } from "./message";
 import { Room } from "./Room";
 import { sendChatMessage } from "./networking";
+import { PublicUser } from "../server/src/user";
 
 export interface State {
   room?: Room;
@@ -20,7 +21,7 @@ export interface State {
   prepopulatedInput?: string;
 
   // User ID of whose profile should be shwon
-  visibleProfile?: string;
+  visibleProfile?: PublicUser;
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?

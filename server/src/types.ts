@@ -1,4 +1,5 @@
 import { Room } from "./room";
+import { User } from "./user";
 
 export interface RoomResponse {
   room: Room;

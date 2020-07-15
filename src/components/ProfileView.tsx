@@ -1,7 +1,7 @@
 import React from "react";
-import { User } from "../../server/src/user";
+import { PublicUser } from "../../server/src/user";
 
-export default (props: { user: User }) => {
+export default (props: { user: PublicUser }) => {
   const { user } = props;
 
   const realName = user.realName ? (
@@ -45,13 +45,13 @@ export default (props: { user: User }) => {
   );
 
   return (
-    <div>
+    <div id="profile">
       <h1>{user.id}</h1>
       {realName}
       <div id="profile-pronouns">{user.pronouns}</div>
+      {description}
       {twitterHandle}
       {url}
-      {description}
       {askMeAbout}
     </div>
   );

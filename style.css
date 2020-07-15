@@ -44,12 +44,26 @@ input {
 }
 
 nav.react-contextmenu {
-  background-color: black;
+  background-color: #333;
   border: 1px solid white;
-  padding: 2px 5px;
   cursor: pointer;
+}
+
+.react-contextmenu-item {
+  padding: 2px 5px;
+}
+
+.react-contextmenu-item--selected {
+  background-color: #aaa !important;
 }
 
 span.name {
   cursor: pointer;
+}
+
+#profile {
+  position: absolute;
+  right: 70px;
+  width: 600px;
+  top: 50px;
 }

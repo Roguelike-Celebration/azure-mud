@@ -86,7 +86,6 @@ export async function sendChatMessage(text: string) {
 }
 
 export async function fetchProfile(userId: string): Promise<User | undefined> {
-  return undefined;
   const result = await callAzureFunction("fetchProfile", {
     userIdToFetch: userId,
   });

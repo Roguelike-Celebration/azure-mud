@@ -1,7 +1,22 @@
 import { Room } from "./room";
 
-export interface User {
+// TODO: pronouns (and realName?) shouldn't be optional
+// but leaving like this til they actually exist in the DB.
+
+// A user profile. Users may fetch this about other users.
+export interface PublicUser {
   id: string;
+  realName?: string;
+  pronouns?: string;
+  description?: string;
+  askMeAbout?: string;
+  twitterHandle?: string;
+  url?: string;
+}
+
+// A private representation of the current user
+// contains info we may not want to publicly expose.
+export interface User extends PublicUser {
   roomId: string;
   lastShouted?: Date;
 

@@ -242,10 +242,9 @@ export const ShowProfileAction = (
       console.log("No user");
       return;
     }
-    const action: ShowProfileAction = {
+    dispatch({
       type: ActionType.ShowProfile,
       value: user,
-    };
-    dispatch(action);
+    });
   };
 };
