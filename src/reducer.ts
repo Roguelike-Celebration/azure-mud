@@ -122,6 +122,11 @@ export default (oldState: State, action: Action): State => {
     state.visibleProfile = action.value;
   }
 
+  if (action.type === ActionType.Authenticate) {
+    state.authenticated = true;
+    state.name = action.value;
+  }
+
   return state;
 };
 

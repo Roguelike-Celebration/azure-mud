@@ -99,16 +99,6 @@ export async function fetchProfile(userId: string): Promise<User | undefined> {
 }
 
 async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
-  class CustomHttpClient extends SignalR.DefaultHttpClient {
-    public send(request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
-      request.headers = {
-        ...request.headers,
-        "x-ms-client-principal-id": userId,
-      };
-      return super.send(request);
-    }
-  }
-
   const connection = new SignalR.HubConnectionBuilder()
     .withUrl(`https://mud.azurewebsites.net/api`)
     .configureLogging(SignalR.LogLevel.Information)
@@ -196,7 +186,7 @@ export async function getLoginInfo() {
       withCredentials: true,
     });
     console.log(r);
-    return r.data;
+    return r.data[0];
   } catch (e) {
     console.log(e);
     return undefined;

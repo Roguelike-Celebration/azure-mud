@@ -10,7 +10,7 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<any> {
   context.log("In connect");
 
-  let userId = req.body && req.body.userId;
+  let userId = req.headers && req.headers["x-ms-client-principal-name"];
   let message = req.body && req.body.text;
   if (!userId || !message) {
     context.res = {

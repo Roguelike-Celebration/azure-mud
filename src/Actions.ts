@@ -17,7 +17,8 @@ export type Action =
   | SendMessageAction
   | SetNameAction
   | StartWhisperAction
-  | ShowProfileAction;
+  | ShowProfileAction
+  | AuthenticateAction;
 
 export enum ActionType {
   // Server-driven action
@@ -36,6 +37,7 @@ export enum ActionType {
   SetName = "SET_NAME",
   StartWhisper = "START_WHISPER",
   ShowProfile = "SHOW_PROFILE",
+  Authenticate = "AUTHENTICATE",
 }
 
 interface UpdatedRoomAction {
@@ -247,4 +249,13 @@ export const ShowProfileAction = (
       value: user,
     });
   };
+};
+
+interface AuthenticateAction {
+  type: ActionType.Authenticate;
+  value: string;
+}
+
+export const AuthenticateAction = (name: string): AuthenticateAction => {
+  return { type: ActionType.Authenticate, value: name };
 };

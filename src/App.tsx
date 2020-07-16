@@ -5,7 +5,7 @@ import ChatView from "./components/ChatView";
 import InputView from "./components/InputView";
 import { connect, getLoginInfo } from "./networking";
 import reducer, { State } from "./reducer";
-import { SetNameAction, Action } from "./Actions";
+import { AuthenticateAction, Action } from "./Actions";
 import ProfileView from "./components/ProfileView";
 import { useReducerWithThunk } from "./useReducerWithThunk";
 
@@ -20,16 +20,12 @@ const App = () => {
 
   useEffect(() => {
     getLoginInfo().then((r) => {
-      console.log(r);
+      if (r) {
+        const name = r.user_id;
+        connect(name, dispatch);
+        dispatch(AuthenticateAction(name));
+      }
     });
-    console.log("Connecting");
-    let name = state.name;
-    // if (!state.name) {
-    //   name = prompt("What is your user ID?");
-    //   localStorage.setItem("name", name);
-    //   dispatch(SetNameAction(name));
-    // }
-    // connect(name, dispatch);
   }, []);
 
   const profile = state.visibleProfile ? (
