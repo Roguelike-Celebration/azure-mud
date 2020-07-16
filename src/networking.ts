@@ -197,7 +197,9 @@ async function callAzureFunction(
 
 export async function getLoginInfo() {
   console.log("Fetching");
-  const r = await fetch(`https://mud.azurewebsites.net/.auth/me`);
+  const r = await fetch(`https://mud.azurewebsites.net/.auth/me`, {
+    credentials: "include",
+  });
   if (r.ok) {
     console.log("Data", r);
   } else {
