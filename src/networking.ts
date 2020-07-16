@@ -108,9 +108,7 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   }
 
   const connection = new SignalR.HubConnectionBuilder()
-    .withUrl(`https://mud.azurewebsites.net/api`, {
-      httpClient: new CustomHttpClient(console),
-    })
+    .withUrl(`https://mud.azurewebsites.net/api`)
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
@@ -187,15 +185,23 @@ async function callAzureFunction(
 
   opts.body = JSON.stringify({ ...(body || {}), userId: myUserId });
 
-  return fetch(`https://mud.azurewebsites.net/api/${endpoint}`, opts).then(
-    (r) => {
-      if (r.ok) {
-        console.log("Updated", r);
-      } else {
-        console.error("Update failed", r);
-      }
+  const r = await fetch(`https://mud.azurewebsites.net/api/${endpoint}`, opts);
+  if (r.ok) {
+    console.log("Updated", r);
+  } else {
+    console.error("Update failed", r);
+  }
 
-      return r.json();
-    }
-  );
+  return r.json();
+}
+
+export async function getLoginInfo() {
+  console.log("Fetching");
+  const r = await fetch(`https://mud.azurewebsites.net/.auth/me`);
+  if (r.ok) {
+    console.log("Data", r);
+  } else {
+    console.log("Error", r);
+  }
+  return r.json();
 }

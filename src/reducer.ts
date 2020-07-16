@@ -15,6 +15,8 @@ import { sendChatMessage } from "./networking";
 import { PublicUser } from "../server/src/user";
 
 export interface State {
+  authenticated: boolean;
+
   room?: Room;
   messages: Message[];
   name?: string;
