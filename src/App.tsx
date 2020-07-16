@@ -29,7 +29,7 @@ const App = () => {
     //   localStorage.setItem("name", name);
     //   dispatch(SetNameAction(name));
     // }
-    connect(name, dispatch);
+    // connect(name, dispatch);
   }, []);
 
   const profile = state.visibleProfile ? (

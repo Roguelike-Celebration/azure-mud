@@ -199,6 +199,7 @@ export async function getLoginInfo() {
   console.log("Fetching");
   const r = await fetch(`https://mud.azurewebsites.net/.auth/me`, {
     credentials: "include",
+    method: "post",
   });
   if (r.ok) {
     console.log("Data", r);
