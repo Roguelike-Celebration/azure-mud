@@ -24,11 +24,11 @@ const App = () => {
     });
     console.log("Connecting");
     let name = state.name;
-    if (!state.name) {
-      name = prompt("What is your user ID?");
-      localStorage.setItem("name", name);
-      dispatch(SetNameAction(name));
-    }
+    // if (!state.name) {
+    //   name = prompt("What is your user ID?");
+    //   localStorage.setItem("name", name);
+    //   dispatch(SetNameAction(name));
+    // }
     connect(name, dispatch);
   }, []);
 
@@ -41,7 +41,7 @@ const App = () => {
   if (!state.authenticated) {
     return (
       <a
-        href={`https://mud.azurewebsites.net/.auth/login/twitter/?post_login_redirect_url=${encodeURIComponent(
+        href={`https://mud.azurewebsites.net/.auth/login/twitter?post_login_redirect_url=${encodeURIComponent(
           window.location.href
         )}`}
       >
