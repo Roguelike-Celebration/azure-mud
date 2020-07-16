@@ -1,4 +1,6 @@
 import * as SignalR from "@aspnet/signalr";
+const axios = require("axios").default;
+
 import { RoomResponse, ErrorResponse } from "../server/src/types";
 import { Dispatch } from "react";
 import {
@@ -172,39 +174,31 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
     .catch(console.error);
 }
 
-async function callAzureFunction(
-  endpoint: string,
-  body?: any,
-  options?: Partial<RequestInit>
-): Promise<any> {
-  let opts = {
-    method: "POST",
-    credentials: "include" as RequestCredentials, // sigh
-    ...options,
-  };
-
-  opts.body = JSON.stringify({ ...(body || {}), userId: myUserId });
-
-  const r = await fetch(`https://mud.azurewebsites.net/api/${endpoint}`, opts);
-  if (r.ok) {
-    console.log("Updated", r);
-  } else {
-    console.error("Update failed", r);
+async function callAzureFunction(endpoint: string, body?: any): Promise<any> {
+  try {
+    const r = await axios.post(
+      `https://mud.azurewebsites.net/api/${endpoint}`,
+      body,
+      { withCredentials: true }
+    );
+    console.log(r);
+    return r.data;
+  } catch (e) {
+    console.log("Error", e);
+    return undefined;
   }
-
-  return r.json();
 }
 
 export async function getLoginInfo() {
-  console.log("Fetching");
-  const r = await fetch(`https://mud.azurewebsites.net/.auth/me`, {
-    credentials: "include",
-    method: "post",
-  });
-  if (r.ok) {
-    console.log("Data", r);
-  } else {
-    console.log("Error", r);
+  try {
+    console.log("Fetching");
+    const r = await axios.post(`https://mud.azurewebsites.net/.auth/me`, null, {
+      withCredentials: true,
+    });
+    console.log(r);
+    return r.data;
+  } catch (e) {
+    console.log(e);
+    return undefined;
   }
-  return r.json();
 }
