@@ -3,6 +3,7 @@ import { hydrateUser } from "../src/hydrate";
 import { moveToRoom } from "../src/moveToRoom";
 import { whisper } from "../src/whisper";
 import { shout } from "../src/shout";
+import { look } from "../src/look";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -35,6 +36,11 @@ const httpTrigger: AzureFunction = async function (
   const shoutMatch = /^\/(shout) (.+)/.exec(message);
   if (shoutMatch) {
     return await shout(user, shoutMatch[2], context);
+  }
+
+  const lookMatch = /^\/(look) (.+)/.exec(message);
+  if (lookMatch) {
+    return await look(lookMatch[2], context);
   }
 
   context.res = {

@@ -1,24 +1,20 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { PublicUser } from "../src/user";
+import { look } from "../src/look";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  const user: PublicUser = {
-    id: "lazerwalker",
-    realName: "Em Lazer-Walker",
-    pronouns: "she/her or they/them",
-    description:
-      "She looks around bewildered, clearly not used to seeing the world in text form",
-    askMeAbout: "Proc gen, tool-building, non-traditional interfaces!",
-    twitterHandle: "lazerwalker",
-    url: "https://lazerwalker.com",
-  };
-
-  context.res = {
-    body: { user },
-  };
+  const userId = req.body && req.body.userId;
+  if (!userId) {
+    context.res = {
+      status: 200,
+      body: { error: "You did not include a userId to fetch" },
+    };
+    return;
+  }
+  return look(userId, context);
 };
 
 export default httpTrigger;
