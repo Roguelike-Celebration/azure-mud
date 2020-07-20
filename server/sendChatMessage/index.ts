@@ -22,7 +22,7 @@ const httpTrigger: AzureFunction = async function (
   }
 
   const user = await hydrateUser(userId);
-
+  console.log("Got a user", JSON.stringify(user));
   const moveMatch = /^\/(go|move) (.+)/.exec(message);
   if (moveMatch) {
     return await moveToRoom(userId, moveMatch[2], context);

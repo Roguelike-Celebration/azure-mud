@@ -1,7 +1,7 @@
-import { ThunkDispatch } from "./useReducerWithThunk";
+import { ThunkDispatch, useReducerWithThunk } from "./useReducerWithThunk";
 import { State } from "./reducer";
 import { fetchProfile } from "./networking";
-import { User } from "../server/src/user";
+import { PublicUser } from "../server/src/user";
 
 export type Action =
   | UpdatedRoomAction
@@ -13,6 +13,9 @@ export type Action =
   | ShoutAction
   | PlayerEnteredAction
   | PlayerLeftAction
+  | P2PDataReceivedAction
+  | P2PStreamReceivedAction
+  | LocalMediaStreamOpenedAction
   | ErrorAction
   | SendMessageAction
   | SetNameAction
@@ -32,6 +35,10 @@ export enum ActionType {
   PlayerEntered = "PLAYER_ENTERED",
   PlayerLeft = "PLAYER_LEFT",
   Error = "ERROR",
+  // WebRTC
+  P2PDataReceived = "P2P_DATA_RECEIVED",
+  P2PStreamReceived = "P2P_STREAM_RECEIVED",
+  LocalMediaStreamOpened = "LOCAL_MEDIASTREAM_OPENED",
   // UI actions
   SendMessage = "SEND_MESSAGE",
   SetName = "SET_NAME",
@@ -45,16 +52,18 @@ interface UpdatedRoomAction {
   value: {
     name: string;
     description: string;
+    allowsMedia: boolean;
   };
 }
 
 export const UpdatedRoomAction = (
   name: string,
-  description: string
+  description: string,
+  allowsMedia: boolean = false
 ): UpdatedRoomAction => {
   return {
     type: ActionType.UpdatedRoom,
-    value: { name, description },
+    value: { name, description, allowsMedia },
   };
 };
 
@@ -182,6 +191,53 @@ export const PlayerLeftAction = (
   };
 };
 
+interface P2PDataReceivedAction {
+  type: ActionType.P2PDataReceived;
+  value: {
+    peerId: string;
+    data: string;
+  };
+}
+
+export const P2PDataReceivedAction = (
+  peerId: string,
+  data: string
+): P2PDataReceivedAction => {
+  return {
+    type: ActionType.P2PDataReceived,
+    value: { peerId, data },
+  };
+};
+
+interface P2PStreamReceivedAction {
+  type: ActionType.P2PStreamReceived;
+  value: {
+    peerId: string;
+    stream: MediaStream;
+  };
+}
+
+export const P2PStreamReceivedAction = (
+  peerId: string,
+  stream: MediaStream
+): P2PStreamReceivedAction => {
+  return {
+    type: ActionType.P2PStreamReceived,
+    value: { peerId, stream },
+  };
+};
+
+interface LocalMediaStreamOpenedAction {
+  type: ActionType.LocalMediaStreamOpened;
+  value: MediaStream;
+}
+
+export const LocalMediaStreamOpenedAction = (
+  stream: MediaStream
+): LocalMediaStreamOpenedAction => {
+  return { type: ActionType.LocalMediaStreamOpened, value: stream };
+};
+
 interface ErrorAction {
   type: ActionType.Error;
   value: string;
@@ -231,7 +287,7 @@ export const StartWhisperAction = (name: string): StartWhisperAction => {
 
 interface ShowProfileAction {
   type: ActionType.ShowProfile;
-  value: User;
+  value: PublicUser;
 }
 
 export const ShowProfileAction = (
@@ -244,10 +300,16 @@ export const ShowProfileAction = (
       console.log("No user");
       return;
     }
-    dispatch({
-      type: ActionType.ShowProfile,
-      value: user,
-    });
+    dispatch(ShowProfileActionForFetchedUser(user));
+  };
+};
+
+export const ShowProfileActionForFetchedUser = (
+  user: PublicUser
+): ShowProfileAction => {
+  return {
+    type: ActionType.ShowProfile,
+    value: user,
   };
 };
 

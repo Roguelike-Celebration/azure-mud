@@ -14,6 +14,7 @@ export const DispatchContext = createContext(null);
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(reducer, {
     authenticated: false,
+    inMediaChat: false,
     messages: [],
     name: localStorage.getItem("name"),
   });

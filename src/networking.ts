@@ -15,8 +15,10 @@ import {
   WhisperAction,
   PlayerLeftAction,
   ShoutAction,
+  ShowProfileActionForFetchedUser,
 } from "./Actions";
 import { User } from "../server/src/user";
+import { startSignaling, receiveSignalData } from "./webRTC";
 
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
@@ -60,7 +62,11 @@ export async function moveToRoom(roomId: string) {
     myDispatch(ErrorAction(result.error));
   } else {
     myDispatch(
-      UpdatedRoomAction(result.room.displayName, result.room.description)
+      UpdatedRoomAction(
+        result.room.displayName,
+        result.room.description,
+        result.room.allowsMedia
+      )
     );
     myDispatch(UpdatedPresenceAction(result.roomOccupants));
   }
@@ -82,6 +88,8 @@ export async function sendChatMessage(text: string) {
       UpdatedRoomAction(result.room.displayName, result.room.description)
     );
     myDispatch(UpdatedPresenceAction(result.roomOccupants));
+  } else if (result && result.user) {
+    myDispatch(ShowProfileActionForFetchedUser(result.user));
   } else if (result && result.error) {
     myDispatch(ErrorAction(result.error));
   }
@@ -95,6 +103,14 @@ export async function fetchProfile(userId: string): Promise<User | undefined> {
     return result.user;
   }
 }
+
+// WebRTC
+
+export async function sendSignalData(peerId: string, data: string) {
+  return await callAzureFunction("sendSignalData", { peerId, data });
+}
+
+// Setup
 
 async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   const connection = new SignalR.HubConnectionBuilder()
@@ -141,6 +157,16 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
     dispatch(ShoutAction(name, message));
   });
 
+  connection.on("webrtcSignalData", (peerId, data) => {
+    console.log("Received signaling data from", peerId);
+    receiveSignalData(peerId, data, dispatch);
+  });
+
+  connection.on("webrtcPeerId", (peerId) => {
+    console.log("Starting signaling with", peerId);
+    startSignaling(peerId, dispatch);
+  });
+
   connection.onclose(() => {
     console.log("disconnected");
     callAzureFunction("disconnect");
@@ -158,7 +184,10 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   console.log("connecting...");
   return await connection
     .start()
-    .then(() => console.log("Connected!"))
+    .then(() => {
+      console.log("Connected!");
+      callAzureFunction("broadcastPeerId");
+    })
     .catch(console.error);
 }
 

@@ -16,11 +16,15 @@ import { PublicUser } from "../server/src/user";
 
 export interface State {
   authenticated: boolean;
+  inMediaChat: boolean;
 
   room?: Room;
   messages: Message[];
   name?: string;
   prepopulatedInput?: string;
+
+  localMediaStream?: MediaStream;
+  otherMediaStreams?: { [peerId: string]: MediaStream };
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -35,7 +39,7 @@ export default (oldState: State, action: Action): State => {
   state.prepopulatedInput = undefined;
 
   if (action.type === ActionType.UpdatedRoom) {
-    let { name, description } = action.value;
+    let { name, description, allowsMedia } = action.value;
 
     description = parseDescription(description);
 
@@ -43,6 +47,7 @@ export default (oldState: State, action: Action): State => {
       name,
       description,
       users: [],
+      allowsMedia,
     };
   }
 
@@ -96,6 +101,22 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.Error) {
     state.messages.push(createErrorMessage(action.value));
+  }
+
+  // WebRTC
+  if (action.type === ActionType.LocalMediaStreamOpened) {
+    state.localMediaStream = action.value;
+  }
+
+  if (action.type === ActionType.P2PStreamReceived) {
+    if (!state.otherMediaStreams) {
+      state.otherMediaStreams = {};
+    }
+    state.otherMediaStreams[action.value.peerId] = action.value.stream;
+  }
+
+  if (action.type === ActionType.P2PDataReceived) {
+    console.log("Received P2P data!", action.value.peerId, action.value.data);
   }
 
   // UI Actions

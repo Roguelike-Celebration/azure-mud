@@ -18,10 +18,11 @@ const httpTrigger: AzureFunction = async function (
       status: 500,
       body: "You did not include a user ID",
     };
+    return;
   }
 
   const user = await hydrateUser(userId);
-
+  console.log("We have a user!", user.id, userId);
   const roomOccupants = await addUserToRoomPresence(userId, user.roomId);
   await setUserHeartbeat(userId);
 

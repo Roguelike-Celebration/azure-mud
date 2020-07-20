@@ -9,6 +9,9 @@ export interface Room {
   shortName: string;
 
   description: string;
+
+  // If true, webRTC audio/video chat can happen
+  allowsMedia?: boolean;
 }
 
 export const roomData: { [name: string]: Room } = {
@@ -18,6 +21,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: "the kitchen",
     description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. On the island are a few samovars of Sightglass coffee — don't worry, there's plenty of decaf too — and hot water for tea, plus a few trays of Arizmendi pastries.
       From here, you can walk over to the [[bar]] or grab a seat in the [[main theatre area->theatre]].`,
+    allowsMedia: true,
   },
   theatre: {
     id: "theatre",
