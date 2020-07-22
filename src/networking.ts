@@ -19,8 +19,7 @@ import {
 } from "./Actions";
 import { User } from "../server/src/user";
 import { startSignaling, receiveSignalData } from "./webRTC";
-import Config from "../config"
-
+import Config from "./config";
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
   updatedPresenceInfo: (users: string[]) => void;
