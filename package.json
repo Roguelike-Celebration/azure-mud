@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
+    "@types/node": "^14.0.24",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "axios": "^0.19.2",

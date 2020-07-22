@@ -114,7 +114,7 @@ export async function sendSignalData(peerId: string, data: string) {
 
 async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   const connection = new SignalR.HubConnectionBuilder()
-    .withUrl(`https://mud.azurewebsites.net/api`)
+    .withUrl(`${process.env.SERVER_HOSTNAME}/api`)
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
@@ -194,7 +194,7 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
 async function callAzureFunction(endpoint: string, body?: any): Promise<any> {
   try {
     const r = await axios.post(
-      `https://mud.azurewebsites.net/api/${endpoint}`,
+      `${process.env.SERVER_HOSTNAME}/api/${endpoint}`,
       body,
       { withCredentials: true }
     );
@@ -209,7 +209,7 @@ async function callAzureFunction(endpoint: string, body?: any): Promise<any> {
 export async function getLoginInfo() {
   try {
     console.log("Fetching");
-    const r = await axios.post(`https://mud.azurewebsites.net/.auth/me`, null, {
+    const r = await axios.post(`${process.env.SERVER_HOSTNAME}/.auth/me`, null, {
       withCredentials: true,
     });
     console.log(r);
