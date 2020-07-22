@@ -19,6 +19,7 @@ import {
 } from "./Actions";
 import { User } from "../server/src/user";
 import { startSignaling, receiveSignalData } from "./webRTC";
+import Config from "../config"
 
 export interface NetworkingDelegate {
   updatedRoom: (name: string, description: string) => void;
@@ -114,7 +115,7 @@ export async function sendSignalData(peerId: string, data: string) {
 
 async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   const connection = new SignalR.HubConnectionBuilder()
-    .withUrl(`https://mud.azurewebsites.net/api`)
+    .withUrl(`${Config.SERVER_HOSTNAME}/api`)
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
@@ -194,7 +195,7 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
 async function callAzureFunction(endpoint: string, body?: any): Promise<any> {
   try {
     const r = await axios.post(
-      `https://mud.azurewebsites.net/api/${endpoint}`,
+      `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
       body,
       { withCredentials: true }
     );
@@ -209,7 +210,7 @@ async function callAzureFunction(endpoint: string, body?: any): Promise<any> {
 export async function getLoginInfo() {
   try {
     console.log("Fetching");
-    const r = await axios.post(`https://mud.azurewebsites.net/.auth/me`, null, {
+    const r = await axios.post(`${Config.SERVER_HOSTNAME}/.auth/me`, null, {
       withCredentials: true,
     });
     console.log(r);
