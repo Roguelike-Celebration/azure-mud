@@ -8,6 +8,7 @@ import reducer, { State } from "./reducer";
 import { AuthenticateAction, Action } from "./Actions";
 import ProfileView from "./components/ProfileView";
 import { useReducerWithThunk } from "./useReducerWithThunk";
+import config from "./config";
 
 export const DispatchContext = createContext(null);
 
@@ -38,7 +39,9 @@ const App = () => {
   if (!state.authenticated) {
     return (
       <a
-        href={`https://mud.azurewebsites.net/.auth/login/twitter?post_login_redirect_url=${encodeURIComponent(
+        href={`${
+          config.SERVER_HOSTNAME
+        }/.auth/login/twitter?post_login_redirect_url=${encodeURIComponent(
           window.location.href
         )}`}
       >
