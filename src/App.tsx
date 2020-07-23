@@ -24,7 +24,7 @@ const App = () => {
 
   useEffect(() => {
     getLoginInfo().then((r) => {
-      let userId, name
+      let userId, name;
       if (r) {
         userId = r.user_claims[0].val;
         name = r.user_id;
@@ -40,8 +40,10 @@ const App = () => {
     ""
   );
 
+  console.log(state.checkedAuthentication, state.authenticated);
+
   if (!state.checkedAuthentication) {
-    return <div />
+    return <div />;
   }
 
   if (state.checkedAuthentication && !state.authenticated) {

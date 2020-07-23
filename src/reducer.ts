@@ -66,7 +66,6 @@ export default (oldState: State, action: Action): State => {
       state.messages.push(createConnectedMessage(action.value.userId));
     }
     state.userMap[action.value.userId] = action.value.username;
-    console.log(action.value.userId, action.value.username, state.userMap);
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
@@ -139,7 +138,6 @@ export default (oldState: State, action: Action): State => {
       if (isCommand[1] === "whisper") {
         const [_, username, message] = /^(.+?) (.+)/.exec(isCommand[2]);
         const userId = invert(state.userMap)[username];
-        console.log("Invert", username, userId);
         if (userId) {
           state.messages.push(createWhisperMessage(userId, message, true));
         }
@@ -150,16 +148,14 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.StartWhisper) {
-    console.log("Preopopulating");
     state.prepopulatedInput = `/whisper ${action.value} `;
   }
 
   if (action.type === ActionType.ShowProfile) {
     state.visibleProfile = action.value;
   }
-
   if (action.type === ActionType.Authenticate) {
-    state.checkedAuthentication = true
+    state.checkedAuthentication = true;
 
     if (action.value.userId && action.value.name) {
       state.authenticated = true;
@@ -176,12 +172,10 @@ function parseDescription(description: string): string {
   const simpleLinkRegex = /\[\[(.+?)\]\]/g;
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    console.log("Replacing complex", match, text, roomId);
     return `<a class='room-link' href='#' data-room='${roomId}'>${text}</a>`;
   });
 
   description = description.replace(simpleLinkRegex, (match, roomId) => {
-    console.log("Replacing simple", match, roomId);
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}</a>`;
   });
   return description;
