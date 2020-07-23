@@ -338,8 +338,8 @@ interface AuthenticateAction {
 }
 
 export const AuthenticateAction = (
-  userId: string,
-  name: string
+  userId: string|undefined,
+  name: string|undefined
 ): AuthenticateAction => {
   return { type: ActionType.Authenticate, value: { userId, name } };
 };

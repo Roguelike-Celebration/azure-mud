@@ -16,6 +16,7 @@ export const UserMapContext = createContext(null);
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(reducer, {
     authenticated: false,
+    checkedAuthentication: false,
     inMediaChat: false,
     messages: [],
     userMap: {},
@@ -23,13 +24,13 @@ const App = () => {
 
   useEffect(() => {
     getLoginInfo().then((r) => {
+      let userId, name
       if (r) {
-        const userId = r.user_claims[0].val;
-        const name = r.user_id;
-        console.log("CConnecting signalr", r, userId);
+        userId = r.user_claims[0].val;
+        name = r.user_id;
         connect(userId, dispatch);
-        dispatch(AuthenticateAction(userId, name));
       }
+      dispatch(AuthenticateAction(userId, name));
     });
   }, []);
 
@@ -39,7 +40,11 @@ const App = () => {
     ""
   );
 
-  if (!state.authenticated) {
+  if (!state.checkedAuthentication) {
+    return <div />
+  }
+
+  if (state.checkedAuthentication && !state.authenticated) {
     return (
       <a
         href={`${

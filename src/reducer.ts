@@ -18,6 +18,7 @@ import { invert } from "lodash";
 
 export interface State {
   authenticated: boolean;
+  checkedAuthentication: boolean;
   inMediaChat: boolean;
 
   room?: Room;
@@ -158,9 +159,13 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.Authenticate) {
-    state.authenticated = true;
-    state.userId = action.value.userId;
-    state.userMap[action.value.userId] = action.value.name;
+    state.checkedAuthentication = true
+
+    if (action.value.userId && action.value.name) {
+      state.authenticated = true;
+      state.userId = action.value.userId;
+      state.userMap[action.value.userId] = action.value.name;
+    }
   }
 
   return state;
