@@ -3,7 +3,10 @@ import { User } from "./user";
 import { roomData } from "./room";
 import { roomKeyForUser } from "./roomPresence";
 
-export async function hydrateUser(userId: string): Promise<User> {
+export async function hydrateUser(
+  userId: string,
+  username?: string
+): Promise<User> {
   let roomId = await getCache(roomKeyForUser(userId));
   if (!roomId) {
     roomId = "kitchen";
@@ -17,6 +20,7 @@ export async function hydrateUser(userId: string): Promise<User> {
 
   return {
     id: userId,
+    username,
     roomId,
     room: roomData[roomId],
     lastShouted,

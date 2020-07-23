@@ -17,7 +17,7 @@ const timerTrigger: AzureFunction = async function (
   context.log("Timer function ran!", timeStamp);
 
   const data = await getHeartbeatData();
-  console.log("HEARTBEAT DATA", data);
+  context.log("HEARTBEAT DATA", data);
 
   const now = new Date();
   const nowValue = now.valueOf();
@@ -54,7 +54,7 @@ const timerTrigger: AzureFunction = async function (
   }
 
   if (usersToRemove.length > 0) {
-    console.log(
+    context.log(
       `Removing the following inactive users: ${usersToRemove.join(", ")}`
     );
   }

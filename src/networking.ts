@@ -115,7 +115,7 @@ export async function sendSignalData(peerId: string, data: string) {
 async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   const connection = new SignalR.HubConnectionBuilder()
     .withUrl(`${Config.SERVER_HOSTNAME}/api`)
-    .configureLogging(SignalR.LogLevel.Information)
+    .configureLogging(SignalR.LogLevel.Debug)
     .build();
 
   connection.on("playerConnected", (otherId) => {

@@ -1,56 +1,46 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { removeUserFromRoomPresence } from "../src/roomPresence";
-import { hydrateUser } from "../src/hydrate";
 import { getActiveUsers, setActiveUsers } from "../src/heartbeat";
+import authenticate from "../src/authenticate";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<any> {
-  context.log("In connect");
-
-  let userId = req.headers && req.headers["x-ms-client-principal-name"];
-  if (!userId) {
+  await authenticate(context, req, async (user) => {
     context.res = {
-      status: 500,
-      body: "You did not include a user ID",
+      status: 200,
     };
-  }
 
-  const user = await hydrateUser(userId);
+    await removeUserFromRoomPresence(user.id, user.roomId);
 
-  context.res = {
-    status: 200,
-  };
+    let activeUsers = await getActiveUsers();
+    if (activeUsers.includes(user.id)) {
+      activeUsers = activeUsers.filter((u) => u !== user.id);
+      await setActiveUsers(activeUsers);
+    }
 
-  await removeUserFromRoomPresence(userId, user.roomId);
+    context.bindings.signalRGroupActions = [
+      {
+        userId: user.id,
+        groupName: "users",
+        action: "remove",
+      },
+      {
+        userId: user.id,
+        groupName: user.roomId,
+        action: "remove",
+      },
+    ];
 
-  let activeUsers = await getActiveUsers();
-  if (activeUsers.includes(userId)) {
-    activeUsers = activeUsers.filter((u) => u !== userId);
-    await setActiveUsers(activeUsers);
-  }
-
-  context.bindings.signalRGroupActions = [
-    {
-      userId,
-      groupName: "users",
-      action: "remove",
-    },
-    {
-      userId,
-      groupName: user.roomId,
-      action: "remove",
-    },
-  ];
-
-  context.bindings.signalRMessages = [
-    {
-      groupName: user.roomId,
-      target: "playerDisconnected",
-      arguments: [userId],
-    },
-  ];
+    context.bindings.signalRMessages = [
+      {
+        groupName: user.roomId,
+        target: "playerDisconnected",
+        arguments: [user.id],
+      },
+    ];
+  });
 };
 
 export default httpTrigger;

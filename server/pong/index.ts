@@ -5,7 +5,7 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  let userId = req.headers && req.headers["x-ms-client-principal-name"];
+  let userId = req.headers && req.headers["x-ms-client-principal-id"];
   if (!userId) {
     context.res = {
       status: 500,

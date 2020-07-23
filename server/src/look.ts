@@ -3,7 +3,8 @@ import { User, PublicUser } from "./user";
 
 export function look(target: string, context: Context) {
   const profile: PublicUser = {
-    id: "lazerwalker",
+    id: "123456789",
+    username: "lazerwalker",
     realName: "Em Lazer-Walker",
     pronouns: "she/her or they/them",
     description:

@@ -6,6 +6,7 @@ import { Room } from "./room";
 // A user profile. Users may fetch this about other users.
 export interface PublicUser {
   id: string;
+  username: string;
   realName?: string;
   pronouns?: string;
   description?: string;
