@@ -11,6 +11,8 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@types/lodash": "^4.14.158",
+    "lodash": "^4.17.19",
     "redis": "^3.0.2"
   },
   "devDependencies": {

@@ -11,21 +11,24 @@ import { useReducerWithThunk } from "./useReducerWithThunk";
 import config from "./config";
 
 export const DispatchContext = createContext(null);
+export const UserMapContext = createContext(null);
 
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(reducer, {
     authenticated: false,
     inMediaChat: false,
     messages: [],
-    name: localStorage.getItem("name"),
+    userMap: {},
   });
 
   useEffect(() => {
     getLoginInfo().then((r) => {
       if (r) {
+        const userId = r.user_claims[0].val;
         const name = r.user_id;
-        connect(name, dispatch);
-        dispatch(AuthenticateAction(name));
+        console.log("CConnecting signalr", r, userId);
+        connect(userId, dispatch);
+        dispatch(AuthenticateAction(userId, name));
       }
     });
   }, []);
@@ -52,12 +55,14 @@ const App = () => {
 
   return (
     <DispatchContext.Provider value={dispatch}>
-      <div id="main">
-        <RoomView room={state.room} />
-        {profile}
-        <ChatView messages={state.messages} />
-        <InputView prepopulated={state.prepopulatedInput} />
-      </div>
+      <UserMapContext.Provider value={state.userMap}>
+        <div id="main">
+          <RoomView room={state.room} />
+          {profile}
+          <ChatView messages={state.messages} />
+          <InputView prepopulated={state.prepopulatedInput} />
+        </div>
+      </UserMapContext.Provider>
     </DispatchContext.Provider>
   );
 };

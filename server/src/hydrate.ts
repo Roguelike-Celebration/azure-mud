@@ -1,7 +1,13 @@
-import { getCache, setCache, shoutKeyForUser } from "./redis";
+import {
+  getCache,
+  setCache,
+  shoutKeyForUser,
+  usernameKeyForUser,
+} from "./redis";
 import { User } from "./user";
 import { roomData } from "./room";
 import { roomKeyForUser } from "./roomPresence";
+import { getActiveUsers } from "./heartbeat";
 
 export async function hydrateUser(
   userId: string,
@@ -18,6 +24,12 @@ export async function hydrateUser(
     lastShouted = new Date(JSON.parse(lastShouted));
   }
 
+  if (username) {
+    await setCache(usernameKeyForUser(userId), username);
+  } else {
+    username = await getCache(usernameKeyForUser(userId));
+  }
+
   return {
     id: userId,
     username,
@@ -25,4 +37,18 @@ export async function hydrateUser(
     room: roomData[roomId],
     lastShouted,
   };
+}
+
+export async function activeUserMap(): Promise<{ [userId: string]: string }> {
+  const userIds = await getActiveUsers();
+  let names = await Promise.all(
+    userIds.map(async (u) => await getCache(usernameKeyForUser(u)))
+  );
+
+  let map = {};
+  for (let i = 0; i < userIds.length; i++) {
+    map[userIds[i]] = names[i];
+  }
+
+  return map;
 }

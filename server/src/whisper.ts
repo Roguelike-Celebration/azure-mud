@@ -1,21 +1,23 @@
-import { User } from "./user";
 import { Context } from "@azure/functions";
-import { getActiveUsers } from "./heartbeat";
+import { invert } from "lodash";
+
+import { User } from "./user";
+import { activeUserMap } from "./hydrate";
 
 export async function whisper(
   from: User,
-  toId: string,
+  toUsername: string,
   message: string,
   context: Context
 ) {
-  const activeUsers = await getActiveUsers();
+  const userMap = invert(await activeUserMap());
 
-  // TODO: Make this its own action so we can NameView-ify the name
-  if (!activeUsers.includes(toId)) {
+  // TODO: Return this as metadata so the client can NameView the username
+  if (!userMap[toUsername]) {
     context.res = {
       status: 200,
       body: {
-        error: `${toId} is not online and will not receive your message.`,
+        error: `${toUsername} is not online and will not receive your message.`,
       },
     };
     return;
@@ -23,7 +25,7 @@ export async function whisper(
 
   context.bindings.signalRMessages = [
     {
-      userId: toId,
+      userId: userMap[toUsername],
       target: "whisper",
       arguments: [from.id, message],
     },

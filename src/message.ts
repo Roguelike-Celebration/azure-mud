@@ -21,86 +21,86 @@ export enum MessageType {
 
 export interface ConnectedMessage {
   type: MessageType.Connected;
-  name: string;
+  userId: string;
 }
 
-export const createConnectedMessage = (name: string): ConnectedMessage => {
-  return { type: MessageType.Connected, name };
+export const createConnectedMessage = (userId: string): ConnectedMessage => {
+  return { type: MessageType.Connected, userId };
 };
 
 export interface DisconnectedMessage {
   type: MessageType.Disconnected;
-  name: string;
+  userId: string;
 }
 
 export const createDisconnectedMessage = (
-  name: string
+  userId: string
 ): DisconnectedMessage => {
-  return { type: MessageType.Disconnected, name };
+  return { type: MessageType.Disconnected, userId };
 };
 
 export interface EnteredMessage {
   type: MessageType.Entered;
-  name: string;
+  userId: string;
   from: string;
 }
 
 export const createEnteredMessage = (
-  name: string,
+  userId: string,
   from: string
 ): EnteredMessage => {
-  return { type: MessageType.Entered, name, from };
+  return { type: MessageType.Entered, userId, from };
 };
 
 export interface LeftMessage {
   type: MessageType.Left;
-  name: string;
+  userId: string;
   to: string;
 }
 
-export const createLeftMessage = (name: string, to: string): LeftMessage => {
-  return { type: MessageType.Left, name, to };
+export const createLeftMessage = (userId: string, to: string): LeftMessage => {
+  return { type: MessageType.Left, userId, to };
 };
 
 export interface ChatMessage {
   type: MessageType.Chat;
-  name: string;
+  userId: string;
   message: string;
 }
 
 export const createChatMessage = (
-  name: string,
+  userId: string,
   message: string
 ): ChatMessage => {
-  return { type: MessageType.Chat, name, message };
+  return { type: MessageType.Chat, userId, message };
 };
 
 export interface WhisperMessage {
   type: MessageType.Whisper;
-  name: string;
+  userId: string;
   message: string;
   senderIsSelf: boolean;
 }
 
 export const createWhisperMessage = (
-  name: string,
+  userId: string,
   message: string,
   senderIsSelf = false
 ): WhisperMessage => {
-  return { type: MessageType.Whisper, name, message, senderIsSelf };
+  return { type: MessageType.Whisper, userId, message, senderIsSelf };
 };
 
 export interface ShoutMessage {
   type: MessageType.Shout;
-  name: string;
+  userId: string;
   message: string;
 }
 
 export const createShoutMessage = (
-  name: string,
+  userId: string,
   message: string
 ): ShoutMessage => {
-  return { type: MessageType.Shout, name, message };
+  return { type: MessageType.Shout, userId, message };
 };
 
 export interface ErrorMessage {

@@ -14,13 +14,17 @@ import { Room } from "./Room";
 import { sendChatMessage } from "./networking";
 import { PublicUser } from "../server/src/user";
 
+import { invert } from "lodash";
+
 export interface State {
   authenticated: boolean;
   inMediaChat: boolean;
 
   room?: Room;
   messages: Message[];
-  name?: string;
+  userId?: string;
+  userMap: { [userId: string]: string };
+
   prepopulatedInput?: string;
 
   localMediaStream?: MediaStream;
@@ -52,14 +56,16 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.UpdatedPresence) {
-    state.room.users = action.value.filter((u) => u !== state.name);
+    state.room.users = action.value.filter((u) => u !== state.userId);
   }
 
   if (action.type === ActionType.PlayerConnected) {
-    if (!state.room.users.includes(action.value)) {
-      state.room.users.push(action.value);
-      state.messages.push(createConnectedMessage(action.value));
+    if (!state.room.users.includes(action.value.userId)) {
+      state.room.users.push(action.value.userId);
+      state.messages.push(createConnectedMessage(action.value.userId));
     }
+    state.userMap[action.value.userId] = action.value.username;
+    console.log(action.value.userId, action.value.username, state.userMap);
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
@@ -99,6 +105,10 @@ export default (oldState: State, action: Action): State => {
     );
   }
 
+  if (action.type === ActionType.UserMap) {
+    state.userMap = { ...state.userMap, ...action.value };
+  }
+
   if (action.type === ActionType.Error) {
     state.messages.push(createErrorMessage(action.value));
   }
@@ -126,11 +136,15 @@ export default (oldState: State, action: Action): State => {
     const isCommand = /^\/(.+?) (.+)/.exec(action.value);
     if (isCommand) {
       if (isCommand[1] === "whisper") {
-        const [_, to, message] = /^(.+?) (.+)/.exec(isCommand[2]);
-        state.messages.push(createWhisperMessage(to, message, true));
+        const [_, username, message] = /^(.+?) (.+)/.exec(isCommand[2]);
+        const userId = invert(state.userMap)[username];
+        console.log("Invert", username, userId);
+        if (userId) {
+          state.messages.push(createWhisperMessage(userId, message, true));
+        }
       }
     } else {
-      state.messages.push(createChatMessage(state.name, action.value));
+      state.messages.push(createChatMessage(state.userId, action.value));
     }
   }
 
@@ -145,7 +159,8 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.Authenticate) {
     state.authenticated = true;
-    state.name = action.value;
+    state.userId = action.value.userId;
+    state.userMap[action.value.userId] = action.value.name;
   }
 
   return state;

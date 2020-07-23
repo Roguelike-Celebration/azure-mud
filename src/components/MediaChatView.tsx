@@ -27,7 +27,7 @@ export default function (props: MediaProps) {
     otherVideos = Object.entries(otherStreams).map(([peerId, stream]) => {
       return (
         <div>
-          <NameView name={peerId} id={`stream-${peerId}`} />:
+          <NameView userId={peerId} id={`stream-${peerId}`} />:
           <Video srcObject={stream} />
         </div>
       );

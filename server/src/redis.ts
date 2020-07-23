@@ -16,3 +16,7 @@ export const setCache = promisify(cache.set).bind(cache);
 export function shoutKeyForUser(user: string): string {
   return `${user}Shout`;
 }
+
+export function usernameKeyForUser(userId: string): string {
+  return `${userId}Handle`;
+}

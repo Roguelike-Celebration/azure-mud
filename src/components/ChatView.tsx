@@ -3,8 +3,6 @@ import MessageView from "./MessageView";
 import { Message } from "../message";
 
 export default (props: { messages: Message[] }) => {
-  console.log(props.messages);
-
   React.useEffect(() => {
     const lastMessage = document.querySelector("#messages div:last-of-type");
     if (lastMessage) {

@@ -23,6 +23,6 @@ export default async function authenticate(
   const username = req.headers && req.headers["x-ms-client-principal-name"];
 
   const user = await hydrateUser(userId, username);
-
+  context.log("TESTING USERNAME?", username, user.username);
   return await handler(user);
 }

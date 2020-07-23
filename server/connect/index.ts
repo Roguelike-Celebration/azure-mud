@@ -5,6 +5,7 @@ import removeUserFromAllRooms from "../src/removeUserFromAllRooms";
 import { addUserToRoomPresence } from "../src/roomPresence";
 import { setUserHeartbeat } from "../src/heartbeat";
 import authenticate from "../src/authenticate";
+import { activeUserMap } from "../src/hydrate";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -17,11 +18,13 @@ const httpTrigger: AzureFunction = async function (
     const roomOccupants = await addUserToRoomPresence(user.id, user.roomId);
     await setUserHeartbeat(user.id);
 
+    const userMap = await activeUserMap();
     context.res = {
       status: 200,
       body: {
         room: user.room,
         roomOccupants,
+        users: userMap,
       } as RoomResponse,
     };
 
@@ -45,7 +48,7 @@ const httpTrigger: AzureFunction = async function (
       {
         groupName: user.roomId,
         target: "playerConnected",
-        arguments: [user.id],
+        arguments: [user.id, user.username],
       },
     ];
 

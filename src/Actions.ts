@@ -13,6 +13,7 @@ export type Action =
   | ShoutAction
   | PlayerEnteredAction
   | PlayerLeftAction
+  | UserMapAction
   | P2PDataReceivedAction
   | P2PStreamReceivedAction
   | LocalMediaStreamOpenedAction
@@ -35,6 +36,7 @@ export enum ActionType {
   PlayerEntered = "PLAYER_ENTERED",
   PlayerLeft = "PLAYER_LEFT",
   Error = "ERROR",
+  UserMap = "USER_MAP",
   // WebRTC
   P2PDataReceived = "P2P_DATA_RECEIVED",
   P2PStreamReceived = "P2P_STREAM_RECEIVED",
@@ -83,13 +85,16 @@ export const UpdatedPresenceAction = (
 
 interface PlayerConnectedAction {
   type: ActionType.PlayerConnected;
-  value: string;
+  value: { userId: string; username: string };
 }
 
-export const PlayerConnectedAction = (name: string): PlayerConnectedAction => {
+export const PlayerConnectedAction = (
+  userId: string,
+  username: string
+): PlayerConnectedAction => {
   return {
     type: ActionType.PlayerConnected,
-    value: name,
+    value: { userId, username },
   };
 };
 
@@ -188,6 +193,20 @@ export const PlayerLeftAction = (
   return {
     type: ActionType.PlayerLeft,
     value: { name, to },
+  };
+};
+
+interface UserMapAction {
+  type: ActionType.UserMap;
+  value: { [userId: string]: string };
+}
+
+export const UserMapAction = (map: {
+  [userId: string]: string;
+}): UserMapAction => {
+  return {
+    type: ActionType.UserMap,
+    value: map,
   };
 };
 
@@ -315,9 +334,12 @@ export const ShowProfileActionForFetchedUser = (
 
 interface AuthenticateAction {
   type: ActionType.Authenticate;
-  value: string;
+  value: { name: string; userId: string };
 }
 
-export const AuthenticateAction = (name: string): AuthenticateAction => {
-  return { type: ActionType.Authenticate, value: name };
+export const AuthenticateAction = (
+  userId: string,
+  name: string
+): AuthenticateAction => {
+  return { type: ActionType.Authenticate, value: { userId, name } };
 };

@@ -16,21 +16,11 @@ import {
   PlayerLeftAction,
   ShoutAction,
   ShowProfileActionForFetchedUser,
+  UserMapAction,
 } from "./Actions";
 import { User } from "../server/src/user";
 import { startSignaling, receiveSignalData } from "./webRTC";
 import Config from "./config";
-export interface NetworkingDelegate {
-  updatedRoom: (name: string, description: string) => void;
-  updatedPresenceInfo: (users: string[]) => void;
-  playerConnected: (name: string) => void;
-  playerDisconnected: (name: string) => void;
-  chatMessageReceived: (name: string, message: string) => void;
-  whisperReceived: (name: string, message: string) => void;
-  playerEntered: (name: string, from: string) => void;
-  playerLeft: (name: string, to: string) => void;
-  statusMessageReceived: (message: string) => void;
-}
 
 let myUserId: string;
 let myDispatch: Dispatch<Action>;
@@ -44,6 +34,7 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
   console.log(result);
   dispatch(UpdatedRoomAction(result.room.displayName, result.room.description));
   dispatch(UpdatedPresenceAction(result.roomOccupants));
+  dispatch(UserMapAction(result.users));
 
   connectSignalR(userId, dispatch);
 }
@@ -118,10 +109,10 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
     .configureLogging(SignalR.LogLevel.Debug)
     .build();
 
-  connection.on("playerConnected", (otherId) => {
-    console.log("Player joined!", otherId);
+  connection.on("playerConnected", (otherId, otherName) => {
+    console.log("Player joined!", otherId, otherName);
 
-    dispatch(PlayerConnectedAction(otherId));
+    dispatch(PlayerConnectedAction(otherId, otherName));
   });
 
   connection.on("playerDisconnected", (otherId) => {
@@ -131,7 +122,7 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
 
   connection.on("chatMessage", (otherId, message) => {
     console.log("Received chat", otherId, message);
-    console.log(otherId, message);
+    console.log(otherId, message, userId);
     if (otherId === userId) return;
 
     dispatch(ChatMessageAction(otherId, message));
@@ -149,6 +140,11 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   connection.on("playerLeft", (name, to) => {
     if (name === userId) return;
     dispatch(PlayerLeftAction(name, to));
+  });
+
+  connection.on("usernameMap", (map) => {
+    console.log("Received map", map);
+    dispatch(UserMapAction(map));
   });
 
   connection.on("shout", (name, message) => {

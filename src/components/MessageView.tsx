@@ -38,7 +38,7 @@ export default (props: { message: Message; id: string }) => {
 
 const ConnectedMessageView = (props: ConnectedMessage & { id: string }) => (
   <div>
-    <NameView name={props.name} id={props.id} /> has connected.
+    <NameView userId={props.userId} id={props.id} /> has connected.
   </div>
 );
 
@@ -46,28 +46,29 @@ const DisconnectedMessageView = (
   props: DisconnectedMessage & { id: string }
 ) => (
   <div>
-    <NameView name={props.name} id={props.id} /> has disconnected.
+    <NameView userId={props.userId} id={props.id} /> has disconnected.
   </div>
 );
 
 const EnteredView = (props: EnteredMessage & { id: string }) => {
   return (
     <div>
-      <NameView name={props.name} id={props.id} /> has entered from {props.from}
-      .
+      <NameView userId={props.userId} id={props.id} /> has entered from{" "}
+      {props.from}.
     </div>
   );
 };
 
 const LeftView = (props: LeftMessage & { id: string }) => (
   <div>
-    <NameView id={props.id} name={props.name} /> has wandered off to {props.to}.
+    <NameView id={props.id} userId={props.userId} /> has wandered off to{" "}
+    {props.to}.
   </div>
 );
 
 const ChatMessageView = (props: ChatMessage & { id: string }) => (
   <div>
-    <NameView name={props.name} id={props.id} />: {props.message}
+    <NameView userId={props.userId} id={props.id} />: {props.message}
   </div>
 );
 
@@ -76,7 +77,7 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
     return (
       <div>
         <em>
-          You whisper to <NameView id={props.id} name={props.name} />:{" "}
+          You whisper to <NameView id={props.id} userId={props.userId} />:{" "}
           {props.message}
         </em>
       </div>
@@ -85,7 +86,8 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
     return (
       <div>
         <em>
-          <NameView name={props.name} id={props.id} /> whispers: {props.message}
+          <NameView userId={props.userId} id={props.id} /> whispers:{" "}
+          {props.message}
         </em>
       </div>
     );
@@ -95,7 +97,7 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
 const ShoutView = (props: ShoutMessage & { id: string }) => {
   return (
     <div>
-      <NameView name={props.name} id={props.id} /> shouts: {props.message}
+      <NameView userId={props.userId} id={props.id} /> shouts: {props.message}
     </div>
   );
 };
