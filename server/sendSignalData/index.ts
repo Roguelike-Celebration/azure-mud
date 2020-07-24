@@ -26,7 +26,7 @@ const httpTrigger: AzureFunction = async function (
     {
       userId: peerId,
       target: "webrtcSignalData",
-      message: [userId, data],
+      arguments: [userId, data],
     },
   ];
 };

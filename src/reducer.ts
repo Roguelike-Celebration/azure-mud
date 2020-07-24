@@ -15,6 +15,7 @@ import { sendChatMessage } from "./networking";
 import { PublicUser } from "../server/src/user";
 
 import { invert } from "lodash";
+import { otherMediaStreams } from "./webRTC";
 
 export interface State {
   authenticated: boolean;
@@ -28,8 +29,8 @@ export interface State {
 
   prepopulatedInput?: string;
 
-  localMediaStream?: MediaStream;
-  otherMediaStreams?: { [peerId: string]: MediaStream };
+  hasLocalMediaStream: boolean;
+  otherMediaStreamPeerIds?: string[];
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -115,14 +116,13 @@ export default (oldState: State, action: Action): State => {
 
   // WebRTC
   if (action.type === ActionType.LocalMediaStreamOpened) {
-    state.localMediaStream = action.value;
+    state.hasLocalMediaStream = true;
   }
 
   if (action.type === ActionType.P2PStreamReceived) {
-    if (!state.otherMediaStreams) {
-      state.otherMediaStreams = {};
+    if (!state.otherMediaStreamPeerIds.includes(action.value)) {
+      state.otherMediaStreamPeerIds.push(action.value);
     }
-    state.otherMediaStreams[action.value.peerId] = action.value.stream;
   }
 
   if (action.type === ActionType.P2PDataReceived) {

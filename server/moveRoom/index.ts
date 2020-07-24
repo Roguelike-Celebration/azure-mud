@@ -7,20 +7,19 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<any> {
-  await logSignalR(context, async () => {
-    await authenticate(context, req, async (user) => {
-      let toId = req.body && req.body.to;
-      if (!toId) {
-        context.res = {
-          status: 500,
-          body: "Include a room ID!",
-        };
-        return;
-      }
+  await authenticate(context, req, async (user) => {
+    let toId = req.body && req.body.to;
+    if (!toId) {
+      context.res = {
+        status: 500,
+        body: "Include a room ID!",
+      };
+      return;
+    }
 
-      await moveToRoom(user, toId, context);
-    });
+    await moveToRoom(user, toId, context);
   });
+  logSignalR(context);
 };
 
 export default httpTrigger;

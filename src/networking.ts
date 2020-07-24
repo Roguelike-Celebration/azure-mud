@@ -25,6 +25,8 @@ import Config from "./config";
 let myUserId: string;
 let myDispatch: Dispatch<Action>;
 
+// TODO: All you need to start a webrtc session is `callAzureFunction("broadcastPeerId");`
+
 export async function connect(userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId;
   myDispatch = dispatch;
@@ -159,6 +161,7 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   });
 
   connection.on("webrtcPeerId", (peerId) => {
+    if (peerId === userId) return;
     console.log("Starting signaling with", peerId);
     startSignaling(peerId, dispatch);
   });
@@ -182,7 +185,6 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
     .start()
     .then(() => {
       console.log("Connected!");
-      callAzureFunction("broadcastPeerId");
     })
     .catch(console.error);
 }

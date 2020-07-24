@@ -9,6 +9,7 @@ import { AuthenticateAction, Action } from "./Actions";
 import ProfileView from "./components/ProfileView";
 import { useReducerWithThunk } from "./useReducerWithThunk";
 import config from "./config";
+import MediaChatView from "./components/MediaChatView";
 
 export const DispatchContext = createContext(null);
 export const UserMapContext = createContext(null);
@@ -58,10 +59,16 @@ const App = () => {
     );
   }
 
+  let videoChatView;
+  if (state.hasLocalMediaStream) {
+    videoChatView = <MediaChatView peerIds={state.otherMediaStreamPeerIds} />;
+  }
+
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserMapContext.Provider value={state.userMap}>
         <div id="main">
+          {videoChatView}
           <RoomView room={state.room} />
           {profile}
           <ChatView messages={state.messages} />

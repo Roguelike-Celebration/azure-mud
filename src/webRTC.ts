@@ -1,20 +1,34 @@
 import Peer from "simple-peer";
 import { sendSignalData } from "./networking";
 import { Dispatch } from "react";
-import { Action } from "./Actions";
+import {
+  Action,
+  LocalMediaStreamOpenedAction,
+  P2PDataReceivedAction,
+  P2PStreamReceivedAction,
+} from "./Actions";
 
 // TODO: How am I threading through a dispatch function to this?
 
 let mediaStream: MediaStream;
+
+export function localMediaStream(): MediaStream | undefined {
+  return mediaStream;
+}
+
+export function otherMediaStreams(): { [id: string]: Peer } {
+  return peerStreams;
+}
+
 const getMediaStream = async (
   dispatch: Dispatch<Action>
 ): Promise<MediaStream | undefined> => {
-  console.log("Getting media stream");
+  console.log("Trying to open media stream");
   if (mediaStream) {
     return mediaStream;
   }
 
-  let stream = null;
+  let stream: MediaStream = null;
 
   try {
     stream = await navigator.mediaDevices.getUserMedia({
@@ -28,7 +42,7 @@ const getMediaStream = async (
 
   mediaStream = stream;
 
-  // TODO: Dispatch a stream action that sets the media stream
+  dispatch(LocalMediaStreamOpenedAction());
 
   return stream;
 };
@@ -60,6 +74,7 @@ export async function receiveSignalData(
 }
 
 let peers: { [id: string]: Peer } = {};
+let peerStreams: { [id: string]: MediaStream } = {};
 
 export function sendToPeer(id: string, msg: string) {
   peers[id].send(msg);
@@ -84,13 +99,13 @@ function setUpPeer(peerId: string, peer: Peer, dispatch: Dispatch<Action>) {
   });
 
   peer.on("data", (data) => {
-    // TODO: Dispatch a data action
-    // receivedDataHandler(peerId, data);
+    console.log("Received data from peer", data);
+    dispatch(P2PDataReceivedAction(peerId, data));
   });
 
   peer.on("stream", (stream) => {
     console.log("Received stream", peerId);
-    // TODO: Dispatch a stream action that sets the media stream
-    // receivedStreamHandler(peerId, stream);
+    peerStreams[peerId] = stream;
+    dispatch(P2PStreamReceivedAction(peerId));
   });
 }

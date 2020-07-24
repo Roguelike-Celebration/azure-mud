@@ -230,31 +230,24 @@ export const P2PDataReceivedAction = (
 
 interface P2PStreamReceivedAction {
   type: ActionType.P2PStreamReceived;
-  value: {
-    peerId: string;
-    stream: MediaStream;
-  };
+  value: string;
 }
 
 export const P2PStreamReceivedAction = (
-  peerId: string,
-  stream: MediaStream
+  peerId: string
 ): P2PStreamReceivedAction => {
   return {
     type: ActionType.P2PStreamReceived,
-    value: { peerId, stream },
+    value: peerId,
   };
 };
 
 interface LocalMediaStreamOpenedAction {
   type: ActionType.LocalMediaStreamOpened;
-  value: MediaStream;
 }
 
-export const LocalMediaStreamOpenedAction = (
-  stream: MediaStream
-): LocalMediaStreamOpenedAction => {
-  return { type: ActionType.LocalMediaStreamOpened, value: stream };
+export const LocalMediaStreamOpenedAction = (): LocalMediaStreamOpenedAction => {
+  return { type: ActionType.LocalMediaStreamOpened };
 };
 
 interface ErrorAction {
@@ -338,8 +331,8 @@ interface AuthenticateAction {
 }
 
 export const AuthenticateAction = (
-  userId: string|undefined,
-  name: string|undefined
+  userId: string | undefined,
+  name: string | undefined
 ): AuthenticateAction => {
   return { type: ActionType.Authenticate, value: { userId, name } };
 };

@@ -6,33 +6,32 @@ import React, {
   useRef,
 } from "react";
 import NameView from "./NameView";
+import { localMediaStream, otherMediaStreams } from "../webRTC";
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
-  playerStream: MediaStream;
-  otherStreams?: { [peerId: string]: MediaStream };
+  peerIds?: string[];
 }
 
 export default function (props: MediaProps) {
-  const { playerStream, otherStreams } = props;
   let playerVideo, otherVideos;
   playerVideo = (
     <div id="my-video">
       You:
-      <Video srcObject={playerStream} />
+      <Video srcObject={localMediaStream()} />
     </div>
   );
 
-  if (otherStreams) {
-    otherVideos = Object.entries(otherStreams).map(([peerId, stream]) => {
-      return (
-        <div>
-          <NameView userId={peerId} id={`stream-${peerId}`} />:
-          <Video srcObject={stream} />
-        </div>
-      );
-    });
-  }
+  // We don't actually use `peerIds` other than as a way to force the component to update.
+  // That might change?
+  otherVideos = Object.entries(otherMediaStreams()).map(([peerId, stream]) => {
+    return (
+      <div>
+        <NameView userId={peerId} id={`stream-nameview-${peerId}`} />:
+        <Video srcObject={stream} id={`stream-${peerId}`} />
+      </div>
+    );
+  });
 
   return (
     <div>
@@ -51,8 +50,9 @@ export function Video({ srcObject, ...props }: PropsType) {
 
   useEffect(() => {
     if (!refVideo.current) return;
+    console.log(srcObject);
     refVideo.current.srcObject = srcObject;
   }, [srcObject]);
 
-  return <video ref={refVideo} {...props} />;
+  return <video ref={refVideo} {...props} autoPlay />;
 }
