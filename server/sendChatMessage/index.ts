@@ -21,7 +21,7 @@ const httpTrigger: AzureFunction = async function (
 
     const moveMatch = /^\/(go|move) (.+)/.exec(message);
     if (moveMatch) {
-      return await moveToRoom(user.id, moveMatch[2], context);
+      return await moveToRoom(user, moveMatch[2], context);
     }
 
     const whisperMatch = /^\/(whisper) (.+?) (.+)/.exec(message);

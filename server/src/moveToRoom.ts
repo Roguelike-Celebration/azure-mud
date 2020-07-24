@@ -1,19 +1,17 @@
 import { Context } from "@azure/functions";
 import { roomData } from "./room";
 import { RoomResponse } from "./types";
-import { hydrateUser } from "./hydrate";
 import {
   removeUserFromRoomPresence,
   addUserToRoomPresence,
 } from "./roomPresence";
+import { User } from "./user";
 
 export async function moveToRoom(
-  userId: string,
+  user: User,
   newRoomId: string,
   context: Context
 ) {
-  const user = await hydrateUser(userId);
-
   let to = roomData[newRoomId];
   if (!to) {
     // If the user typed a command, rather than clicking a link,
@@ -47,13 +45,13 @@ export async function moveToRoom(
     return;
   }
 
-  await removeUserFromRoomPresence(userId, user.roomId);
+  await removeUserFromRoomPresence(user.id, user.roomId);
 
   context.res = {
     status: 200,
     body: {
       room: to,
-      roomOccupants: await addUserToRoomPresence(userId, to.id),
+      roomOccupants: await addUserToRoomPresence(user.id, to.id),
     } as RoomResponse,
   };
 
@@ -61,24 +59,24 @@ export async function moveToRoom(
     {
       groupName: user.room.id,
       target: "playerLeft",
-      arguments: [userId, to.shortName],
+      arguments: [user.id, to.shortName],
     },
     {
       groupName: to.id,
       target: "playerEntered",
-      arguments: [userId, user.room.shortName],
+      arguments: [user.id, user.room.shortName],
     },
   ];
 
   context.bindings.signalRGroupActions = [
     {
-      userId,
+      userId: user.id,
       groupName: user.room.id,
       action: "remove",
     },
     {
-      userId,
-      groupName: user.room.id,
+      userId: user.id,
+      groupName: to.id,
       action: "add",
     },
   ];

@@ -40,8 +40,6 @@ const App = () => {
     ""
   );
 
-  console.log(state.checkedAuthentication, state.authenticated);
-
   if (!state.checkedAuthentication) {
     return <div />;
   }
