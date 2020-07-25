@@ -1,18 +1,17 @@
-import { getCache, setCache } from "./redis";
+import DB from "./redis";
 
 export async function addUserToRoomPresence(
-  user: string,
+  userId: string,
   roomId: string
 ): Promise<string[]> {
-  const presenceKey = roomPresenceKey(roomId);
-  const roomOccupants: string[] = JSON.parse(await getCache(presenceKey)) || [];
+  const roomOccupants = await DB.roomOccupants(roomId);
 
-  if (roomOccupants.indexOf(user) === -1) {
-    const newPresence = roomOccupants.concat([user]);
-    await setCache(presenceKey, JSON.stringify(newPresence));
+  if (roomOccupants.indexOf(userId) === -1) {
+    roomOccupants.push(userId);
+    await DB.setRoomOccupants(roomId, roomOccupants);
   }
 
-  await setCache(roomKeyForUser(user), roomId);
+  await DB.setCurrentRoomForUser(userId, roomId);
 
   return roomOccupants;
 }
@@ -21,23 +20,10 @@ export async function removeUserFromRoomPresence(
   userId: string,
   roomId: string
 ): Promise<string[]> {
-  const presenceKey = roomPresenceKey(roomId);
-  const roomOccupants: string[] = JSON.parse(await getCache(presenceKey)) || [];
+  const roomOccupants = await DB.roomOccupants(roomId);
 
   const newPresence = roomOccupants.filter((n) => n !== userId);
-  await setCache(presenceKey, JSON.stringify(newPresence));
+  await DB.setRoomOccupants(roomId, newPresence);
 
-  return roomOccupants;
-}
-
-export function roomPresenceKey(roomName: string): string {
-  return `${roomName}Presence`;
-}
-
-export function roomKeyForUser(user: string): string {
-  return `${user}Room`;
-}
-
-export function roomKey(name: string) {
-  return `${name}RoomData`;
+  return newPresence;
 }

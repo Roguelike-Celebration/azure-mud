@@ -3,9 +3,9 @@ import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { RoomResponse } from "../src/types";
 import removeUserFromAllRooms from "../src/removeUserFromAllRooms";
 import { addUserToRoomPresence } from "../src/roomPresence";
-import { setUserHeartbeat } from "../src/heartbeat";
 import authenticate from "../src/authenticate";
 import { activeUserMap } from "../src/user";
+import { userHeartbeatReceived } from "../src/heartbeat";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -16,7 +16,7 @@ const httpTrigger: AzureFunction = async function (
   await authenticate(context, req, async (user) => {
     context.log("We have a user!", user.id);
     const roomOccupants = await addUserToRoomPresence(user.id, user.roomId);
-    await setUserHeartbeat(user.id);
+    await userHeartbeatReceived(user.id);
 
     const userMap = await activeUserMap();
     context.res = {

@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { setUserHeartbeat } from "../src/heartbeat";
+import DB from "../src/redis";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -13,7 +13,7 @@ const httpTrigger: AzureFunction = async function (
     };
   }
 
-  await setUserHeartbeat(userId);
+  await DB.setUserHeartbeat(userId);
 
   context.res = {
     status: 200,

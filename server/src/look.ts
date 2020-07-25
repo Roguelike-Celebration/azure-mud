@@ -1,8 +1,8 @@
 import { Context } from "@azure/functions";
-import { getPublicUser } from "./user";
+import DB from "./redis";
 
 export async function look(target: string, context: Context) {
-  const profile = await getPublicUser(target);
+  const profile = await DB.getPublicUser(target);
 
   context.res = {
     status: 200,

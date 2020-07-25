@@ -1,7 +1,8 @@
 import { AzureFunction, Context } from "@azure/functions";
 import { removeUserFromRoomPresence } from "../src/roomPresence";
-import { getHeartbeatData, setActiveUsers } from "../src/heartbeat";
 import { getFullUser } from "../src/user";
+import DB from "../src/redis";
+import { getHeartbeatData } from "../src/heartbeat";
 
 const timerTrigger: AzureFunction = async function (
   context: Context,
@@ -59,7 +60,7 @@ const timerTrigger: AzureFunction = async function (
     );
   }
 
-  await setActiveUsers(activeUsers);
+  await DB.setActiveUsers(activeUsers);
 
   context.bindings.signalRGroupActions = signalRGroupActions;
   context.bindings.signalRMessages = [

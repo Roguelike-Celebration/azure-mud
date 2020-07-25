@@ -31,7 +31,7 @@ const App = () => {
     const login = getLoginInfo().then((login) => {
       let userId, name;
       if (!login) {
-        // This should really be its own action
+        // This should really be its own action distinct from logging in
         dispatch(AuthenticateAction(undefined, undefined));
       } else {
         userId = login.user_claims[0].val;

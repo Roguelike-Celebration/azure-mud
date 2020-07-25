@@ -1,14 +1,6 @@
 import { Room } from "./room";
-import {
-  getCache,
-  profileKeyForUser,
-  setCache,
-  shoutKeyForUser,
-  usernameKeyForUser,
-} from "./redis";
+import DB from "./redis";
 import { roomData } from "./room";
-import { roomKeyForUser } from "./roomPresence";
-import { getActiveUsers } from "./heartbeat";
 import { invert } from "lodash";
 
 // TODO: pronouns (and realName?) shouldn't be optional
@@ -42,29 +34,23 @@ export async function getUserIdForUsername(username: string) {
   return userMap[username];
 }
 
-export async function getPublicUser(userId: string) {
-  return JSON.parse(await getCache(profileKeyForUser(userId)));
-}
-
 export async function updateUserProfile(userId: string, data: Partial<User>) {
-  const profile = (await getPublicUser(userId)) || {};
-  const newProfile = { ...profile, ...data };
-  return await setCache(profileKeyForUser(userId), JSON.stringify(newProfile));
+  const profile = (await DB.getPublicUser(userId)) || {};
+  const newProfile: User = { ...profile, ...data } as User; // TODO: Could use real validation here?
+  return await DB.setUserProfile(userId, newProfile);
 }
 
-export async function getFullUser(userId: string) {
-  const profile = (await getPublicUser(userId)) || {};
+export async function getFullUser(userId: string): Promise<User | undefined> {
+  const profile = await DB.getPublicUser(userId);
+  if (!profile) return;
 
-  let roomId = await getCache(roomKeyForUser(userId));
+  let roomId = await DB.currentRoomForUser(userId);
   if (!roomId) {
     roomId = "kitchen";
-    await setCache(roomKeyForUser(userId), roomId);
+    await DB.setCurrentRoomForUser(userId, roomId);
   }
 
-  let lastShouted = await getCache(shoutKeyForUser(userId));
-  if (lastShouted) {
-    lastShouted = new Date(JSON.parse(lastShouted));
-  }
+  let lastShouted = await DB.lastShoutedForUser(userId);
 
   return {
     ...profile,
@@ -76,15 +62,17 @@ export async function getFullUser(userId: string) {
 }
 
 export async function activeUserMap(): Promise<{ [userId: string]: string }> {
-  const userIds = await getActiveUsers();
+  const userIds = await DB.getActiveUsers();
   let names = await Promise.all(
-    userIds.map(async (u) => await getCache(usernameKeyForUser(u)))
+    userIds.map(async (u) => await DB.getUsernameForUserId(u))
   );
 
   let map = {};
   for (let i = 0; i < userIds.length; i++) {
     map[userIds[i]] = names[i];
   }
+
+  console.log(userIds, names, map);
 
   return map;
 }

@@ -1,6 +1,6 @@
 import { User } from "./user";
 import { Context } from "@azure/functions";
-import { setCache, shoutKeyForUser } from "./redis";
+import DB from "./redis";
 
 export async function shout(user: User, message: string, context: Context) {
   // Currently hardcode a 2-minute shout cooldown
@@ -19,7 +19,7 @@ export async function shout(user: User, message: string, context: Context) {
     }
   }
 
-  await setCache(shoutKeyForUser(user.id), JSON.stringify(new Date()));
+  await DB.userJustShouted(user.id);
 
   context.bindings.signalRMessages = [
     {
