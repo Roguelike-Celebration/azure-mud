@@ -1,17 +1,20 @@
 import { Room } from "./room";
 import DB from "./redis";
 import { roomData } from "./room";
-import { invert } from "lodash";
 
 // TODO: pronouns (and realName?) shouldn't be optional
 // but leaving like this til they actually exist in the DB.
 
-// A user profile. Users may fetch this about other users.
-export interface PublicUser {
+// The bare minimum amount of user information we need to send
+// about every user to every other user on login
+export interface MinimalUser {
   id: string;
   username: string;
-  isMod: boolean;
+  isMod?: boolean;
+}
 
+// A user profile. Users may fetch this about other users.
+export interface PublicUser extends MinimalUser {
   realName?: string;
   pronouns?: string;
   description?: string;
@@ -31,14 +34,29 @@ export interface User extends PublicUser {
   room: Room;
 }
 
+export function isMod(userId: string) {
+  const modList = ["19924413"];
+  return modList.includes(userId);
+}
+
 export async function getUserIdForUsername(username: string) {
-  const userMap = invert(await activeUserMap());
-  return userMap[username];
+  const userMap = await activeUserMap();
+  const user = Object.values(userMap).find((u) => u.username === username);
+  if (user) {
+    return user.id;
+  }
 }
 
 export async function updateUserProfile(userId: string, data: Partial<User>) {
   const profile = (await DB.getPublicUser(userId)) || {};
-  const newProfile: User = { ...profile, ...data } as User; // TODO: Could use real validation here?
+  const newProfile: User = { ...profile, ...data, id: userId } as User; // TODO: Could use real validation here?
+
+  // This may need to get fancier if MinimalProfile grows
+  await DB.setMinimalProfileForUser(userId, {
+    id: userId,
+    username: newProfile.username,
+  });
+
   return await DB.setUserProfile(userId, newProfile);
 }
 
@@ -63,13 +81,24 @@ export async function getFullUser(userId: string): Promise<User | undefined> {
   };
 }
 
-export async function activeUserMap(): Promise<{ [userId: string]: string }> {
+export function minimizeUser(user: User): MinimalUser {
+  const minimalUser: MinimalUser = { id: user.id, username: user.username };
+  if (isMod(user.id)) {
+    minimalUser.isMod = true;
+  }
+
+  return minimalUser;
+}
+
+export async function activeUserMap(): Promise<{
+  [userId: string]: MinimalUser;
+}> {
   const userIds = await DB.getActiveUsers();
-  let names = await Promise.all(
-    userIds.map(async (u) => await DB.getUsernameForUserId(u))
+  let names: MinimalUser[] = await Promise.all(
+    userIds.map(async (u) => await DB.getMinimalProfileForUser(u))
   );
 
-  let map = {};
+  let map: { [userId: string]: MinimalUser } = {};
   for (let i = 0; i < userIds.length; i++) {
     map[userIds[i]] = names[i];
   }

@@ -1,10 +1,10 @@
 import { Room } from "./room";
-import { User } from "./user";
+import { User, MinimalUser } from "./user";
 
 export interface RoomResponse {
   room: Room;
   roomOccupants: string[];
-  users?: { [userId: string]: string };
+  users?: { [userId: string]: MinimalUser };
 }
 
 export interface ErrorResponse {

@@ -50,7 +50,7 @@ export default (props: { user: PublicUser }) => {
   return (
     <div id="profile">
       <h1>
-        {user.username} {user.isMod ? "(ADMIN)" : ""}
+        {user.username} {user.isMod ? "(👑 moderator)" : ""}
       </h1>
       {realName}
       <div id="profile-pronouns">{user.pronouns}</div>

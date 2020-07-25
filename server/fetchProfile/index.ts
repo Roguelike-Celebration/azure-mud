@@ -1,5 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { PublicUser } from "../src/user";
 import { look } from "../src/look";
 
 const httpTrigger: AzureFunction = async function (
@@ -14,7 +13,7 @@ const httpTrigger: AzureFunction = async function (
     };
     return;
   }
-  return look(userId, context);
+  return await look(userId, context);
 };
 
 export default httpTrigger;

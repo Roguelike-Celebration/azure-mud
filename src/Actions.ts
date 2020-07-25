@@ -1,7 +1,7 @@
 import { ThunkDispatch, useReducerWithThunk } from "./useReducerWithThunk";
 import { State } from "./reducer";
 import { fetchProfile } from "./networking";
-import { PublicUser } from "../server/src/user";
+import { PublicUser, MinimalUser } from "../server/src/user";
 
 export type Action =
   | UpdatedRoomAction
@@ -88,16 +88,15 @@ export const UpdatedPresenceAction = (
 
 interface PlayerConnectedAction {
   type: ActionType.PlayerConnected;
-  value: { userId: string; username: string };
+  value: MinimalUser;
 }
 
 export const PlayerConnectedAction = (
-  userId: string,
-  username: string
+  user: MinimalUser
 ): PlayerConnectedAction => {
   return {
     type: ActionType.PlayerConnected,
-    value: { userId, username },
+    value: user,
   };
 };
 
@@ -201,11 +200,11 @@ export const PlayerLeftAction = (
 
 interface UserMapAction {
   type: ActionType.UserMap;
-  value: { [userId: string]: string };
+  value: { [userId: string]: MinimalUser };
 }
 
 export const UserMapAction = (map: {
-  [userId: string]: string;
+  [userId: string]: MinimalUser;
 }): UserMapAction => {
   return {
     type: ActionType.UserMap,

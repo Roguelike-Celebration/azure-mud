@@ -76,7 +76,7 @@ const App = () => {
     return (
       <ProfileEditView
         isFTUE={true}
-        defaultHandle={state.userMap[state.userId]}
+        defaultHandle={state.userMap[state.userId].username}
       />
     );
   }

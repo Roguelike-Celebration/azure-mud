@@ -1,8 +1,6 @@
 import { Context } from "@azure/functions";
-import { invert } from "lodash";
 
 import { User, getUserIdForUsername } from "./user";
-import { activeUserMap } from "./user";
 
 export async function whisper(
   from: User,

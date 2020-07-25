@@ -12,9 +12,7 @@ import {
 } from "./message";
 import { Room } from "./Room";
 import { sendChatMessage } from "./networking";
-import { PublicUser } from "../server/src/user";
-
-import { invert } from "lodash";
+import { PublicUser, MinimalUser } from "../server/src/user";
 
 export interface State {
   authenticated: boolean;
@@ -26,7 +24,7 @@ export interface State {
   room?: Room;
   messages: Message[];
   userId?: string;
-  userMap: { [userId: string]: string };
+  userMap: { [userId: string]: MinimalUser };
 
   prepopulatedInput?: string;
 
@@ -63,11 +61,12 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.PlayerConnected) {
-    if (!state.room.users.includes(action.value.userId)) {
-      state.room.users.push(action.value.userId);
-      state.messages.push(createConnectedMessage(action.value.userId));
+    const user = action.value;
+    if (!state.room.users.includes(user.id)) {
+      state.room.users.push(user.id);
+      state.messages.push(createConnectedMessage(user.id));
     }
-    state.userMap[action.value.userId] = action.value.username;
+    state.userMap[user.id] = user;
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
@@ -138,7 +137,10 @@ export default (oldState: State, action: Action): State => {
     if (isCommand) {
       if (isCommand[1] === "whisper") {
         const [_, username, message] = /^(.+?) (.+)/.exec(isCommand[2]);
-        const userId = invert(state.userMap)[username];
+        const user = Object.values(state.userMap).find(
+          (u) => u.username === username
+        );
+        const userId = user && user.id;
         if (userId) {
           state.messages.push(createWhisperMessage(userId, message, true));
         }
@@ -161,7 +163,12 @@ export default (oldState: State, action: Action): State => {
     if (action.value.userId && action.value.name) {
       state.authenticated = true;
       state.userId = action.value.userId;
-      state.userMap[action.value.userId] = action.value.name;
+
+      // If you haven't registered yet, we need to grab your username before we've pulled a server userMap
+      state.userMap[action.value.userId] = {
+        id: action.value.userId,
+        username: action.value.name,
+      };
     }
   }
 

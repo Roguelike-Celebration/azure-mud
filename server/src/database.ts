@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { User, MinimalUser } from "./user";
 
 interface Database {
   //-----------------------------------------------------------------
@@ -48,8 +48,14 @@ interface Database {
   /** Overwrites the stored user profile with a new one */
   setUserProfile(userId: string, data: User);
 
-  /** Given a user ID, returns that player's handle/username */
-  getUsernameForUserId(userId: string): Promise<string>;
+  /** Given a user ID, returns that player's minimal data.
+   * i.e. their username and if they're a mod */
+  getMinimalProfileForUser(userId: string): Promise<MinimalUser>;
+
+  setMinimalProfileForUser(
+    userId: string,
+    data: MinimalUser
+  ): Promise<MinimalUser>;
 
   /** Returns a Date for when the user last shouted */
   lastShoutedForUser(userId: string): Promise<Date | undefined>;

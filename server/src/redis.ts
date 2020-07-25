@@ -1,6 +1,6 @@
 import redis = require("redis");
 import { promisify } from "util";
-import { User } from "./user";
+import { User, isMod, MinimalUser } from "./user";
 
 import Database from "./database";
 
@@ -65,17 +65,30 @@ const Redis: Database = {
   async getPublicUser(userId: string) {
     const user: User = JSON.parse(await getCache(profileKeyForUser(userId)));
 
-    const modList = ["19924413"];
-    user.isMod = modList.includes(userId);
+    if (isMod(user.id)) {
+      user.isMod = true;
+    }
+
     return user;
   },
 
   async setUserProfile(userId: string, data: User) {
+    delete data.isMod;
     return await setCache(profileKeyForUser(userId), JSON.stringify(data));
   },
 
-  async getUsernameForUserId(userId: string) {
-    return await getCache(usernameKeyForUser(userId));
+  async getMinimalProfileForUser(userId: string) {
+    const user = JSON.parse(await getCache(usernameKeyForUser(userId)));
+
+    if (isMod(userId)) {
+      user.isMod = true;
+    }
+    return user;
+  },
+
+  async setMinimalProfileForUser(userId: string, data: MinimalUser) {
+    delete data.isMod;
+    return await setCache(usernameKeyForUser(userId), JSON.stringify(data));
   },
 
   async lastShoutedForUser(userId: string) {

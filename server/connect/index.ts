@@ -4,7 +4,7 @@ import { RoomResponse } from "../src/types";
 import removeUserFromAllRooms from "../src/removeUserFromAllRooms";
 import { addUserToRoomPresence } from "../src/roomPresence";
 import authenticate from "../src/authenticate";
-import { activeUserMap } from "../src/user";
+import { activeUserMap, minimizeUser } from "../src/user";
 import { userHeartbeatReceived } from "../src/heartbeat";
 
 const httpTrigger: AzureFunction = async function (
@@ -48,7 +48,7 @@ const httpTrigger: AzureFunction = async function (
       {
         groupName: user.roomId,
         target: "playerConnected",
-        arguments: [user.id, user.username],
+        arguments: [minimizeUser(user)],
       },
     ];
 

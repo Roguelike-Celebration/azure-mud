@@ -15,10 +15,17 @@ export default (props: { userId: string; id?: string }) => {
     dispatch(ShowProfileAction(data.name));
   };
 
+  const user = userMap[props.userId];
+  const username = user && user.username;
+  const isMod = user && user.isMod;
+
   return (
     <span className="name">
       <ContextMenuTrigger id={props.id} renderTag="span">
-        <strong>{userMap[props.userId]}</strong>
+        <strong>
+          {username ? username : "unknown"}
+          {isMod ? "👑" : ""}
+        </strong>
       </ContextMenuTrigger>
       <ContextMenu id={props.id}>
         <MenuItem data={{ name: props.userId }} onClick={handleProfile}>

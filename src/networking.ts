@@ -122,10 +122,10 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
     .configureLogging(SignalR.LogLevel.Debug)
     .build();
 
-  connection.on("playerConnected", (otherId, otherName) => {
-    console.log("Player joined!", otherId, otherName);
+  connection.on("playerConnected", (user) => {
+    console.log("Player joined!", user);
 
-    dispatch(PlayerConnectedAction(otherId, otherName));
+    dispatch(PlayerConnectedAction(user));
   });
 
   connection.on("playerDisconnected", (otherId) => {
