@@ -49,7 +49,7 @@ export default (props: { user: PublicUser }) => {
 
   return (
     <div id="profile">
-      <h1>{user.id}</h1>
+      <h1>{user.username}</h1>
       {realName}
       <div id="profile-pronouns">{user.pronouns}</div>
       {description}
