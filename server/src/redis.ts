@@ -63,7 +63,11 @@ const Redis: Database = {
 
   // User
   async getPublicUser(userId: string) {
-    return JSON.parse(await getCache(profileKeyForUser(userId)));
+    const user: User = JSON.parse(await getCache(profileKeyForUser(userId)));
+
+    const modList = ["19924413"];
+    user.isMod = modList.includes(userId);
+    return user;
   },
 
   async setUserProfile(userId: string, data: User) {

@@ -10,6 +10,8 @@ import { invert } from "lodash";
 export interface PublicUser {
   id: string;
   username: string;
+  isMod: boolean;
+
   realName?: string;
   pronouns?: string;
   description?: string;
