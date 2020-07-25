@@ -10,6 +10,7 @@ import {
   WhisperMessage,
   ErrorMessage,
   ShoutMessage,
+  ModMessage,
 } from "../message";
 import NameView from "./NameView";
 
@@ -25,6 +26,7 @@ export default (props: { message: Message; id: string }) => {
     [MessageType.Whisper]: WhisperView,
     [MessageType.Shout]: ShoutView,
     [MessageType.Error]: ErrorView,
+    [MessageType.Mod]: ModMessageView,
   };
 
   const component = messageMap[message.type];
@@ -88,6 +90,30 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
         <em>
           <NameView userId={props.userId} id={props.id} /> whispers:{" "}
           {props.message}
+        </em>
+      </div>
+    );
+  }
+};
+
+const ModMessageView = (props: ModMessage & { id: string }) => {
+  if (props.senderIsSelf) {
+    return (
+      <div>
+        <em>
+          <strong>You</strong> said to the <strong>mod team</strong>:{" "}
+          {props.message}
+          <br />
+          Someone from the <strong>mod team</strong> will be in touch soon.
+        </em>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <em>
+          ❗<NameView userId={props.userId} id={props.id} /> says to the{" "}
+          <strong>mods</strong>:{props.message}❗
         </em>
       </div>
     );

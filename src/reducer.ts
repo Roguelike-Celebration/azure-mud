@@ -9,6 +9,7 @@ import {
   createWhisperMessage,
   createErrorMessage,
   createShoutMessage,
+  createModMessage,
 } from "./message";
 import { Room } from "./Room";
 import { sendChatMessage } from "./networking";
@@ -97,6 +98,16 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.Whisper) {
     state.messages.push(
       createWhisperMessage(action.value.name, action.value.message)
+    );
+  }
+
+  if (action.type === ActionType.ModMessage) {
+    state.messages.push(
+      createModMessage(
+        action.value.name,
+        action.value.message,
+        action.value.name === state.userId
+      )
     );
   }
 

@@ -9,6 +9,7 @@ export type Action =
   | PlayerConnectedAction
   | PlayerDisconnectedAction
   | ChatMessageAction
+  | ModMessageAction
   | WhisperAction
   | ShoutAction
   | PlayerEnteredAction
@@ -32,6 +33,7 @@ export enum ActionType {
   PlayerConnected = "PLAYER_CONNECTED",
   PlayerDisconnected = "PLAYER_DISCONNECTED",
   ChatMessage = "CHAT_MESSAGE",
+  ModMessage = "MOD_MESSAGE",
   Whisper = "WHISPER",
   Shout = "SHOUT",
   PlayerEntered = "PLAYER_ENTERED",
@@ -143,6 +145,24 @@ interface WhisperAction {
 export const WhisperAction = (name: string, message: string): WhisperAction => {
   return {
     type: ActionType.Whisper,
+    value: { name, message },
+  };
+};
+
+interface ModMessageAction {
+  type: ActionType.ModMessage;
+  value: {
+    name: string;
+    message: string;
+  };
+}
+
+export const ModMessageAction = (
+  name: string,
+  message: string
+): ModMessageAction => {
+  return {
+    type: ActionType.ModMessage,
     value: { name, message },
   };
 };

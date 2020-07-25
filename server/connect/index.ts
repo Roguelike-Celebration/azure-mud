@@ -1,11 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 
 import { RoomResponse } from "../src/types";
-import removeUserFromAllRooms from "../src/removeUserFromAllRooms";
+import removeUserFromAllRooms from "../src/setUpRoomsForUser";
 import { addUserToRoomPresence } from "../src/roomPresence";
 import authenticate from "../src/authenticate";
-import { activeUserMap, minimizeUser } from "../src/user";
+import { activeUserMap, minimizeUser, isMod } from "../src/user";
 import { userHeartbeatReceived } from "../src/heartbeat";
+import setUpRoomsForUser from "../src/setUpRoomsForUser";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -28,8 +29,8 @@ const httpTrigger: AzureFunction = async function (
       } as RoomResponse,
     };
 
-    context.bindings.signalRGroupActions = [
-      ...removeUserFromAllRooms(user.id, user.roomId),
+    const actions = [
+      ...setUpRoomsForUser(user.id, user.roomId),
       {
         userId: user.id,
         groupName: "users",
@@ -41,6 +42,16 @@ const httpTrigger: AzureFunction = async function (
         action: "add",
       },
     ];
+
+    if (isMod(user.id)) {
+      actions.push({
+        userId: user.id,
+        groupName: "mods",
+        action: "add",
+      });
+    }
+
+    context.bindings.signalRGroupActions = actions;
 
     context.log("Setting messages");
 

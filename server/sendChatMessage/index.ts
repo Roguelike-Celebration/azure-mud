@@ -35,6 +35,19 @@ const httpTrigger: AzureFunction = async function (
       return await shout(user, shoutMatch[2], context);
     }
 
+    const modMatch = /^\/(mod) (.+)/.exec(message);
+    if (modMatch) {
+      // Send to the mod-only group
+      context.bindings.signalRMessages = [
+        {
+          groupName: user.roomId,
+          target: "mods",
+          arguments: [user.id, modMatch[2]],
+        },
+      ];
+      return;
+    }
+
     const lookMatch = /^\/(look) (.+)/.exec(message);
     if (lookMatch) {
       const lookUserId = await getUserIdForUsername(lookMatch[2]);

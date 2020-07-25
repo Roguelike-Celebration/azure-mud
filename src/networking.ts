@@ -17,6 +17,7 @@ import {
   ShoutAction,
   ShowProfileActionForFetchedUser,
   UserMapAction,
+  ModMessageAction,
 } from "./Actions";
 import { User } from "../server/src/user";
 import { startSignaling, receiveSignalData } from "./webRTC";
@@ -139,6 +140,10 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
     if (otherId === userId) return;
 
     dispatch(ChatMessageAction(otherId, message));
+  });
+
+  connection.on("mods", (otherId, message) => {
+    dispatch(ModMessageAction(otherId, message));
   });
 
   connection.on("playerEntered", (name, from) => {
