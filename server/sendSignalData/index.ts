@@ -1,5 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { hydrateUser } from "../src/hydrate";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

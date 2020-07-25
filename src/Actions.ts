@@ -22,7 +22,8 @@ export type Action =
   | SetNameAction
   | StartWhisperAction
   | ShowProfileAction
-  | AuthenticateAction;
+  | AuthenticateAction
+  | IsRegisteredAction;
 
 export enum ActionType {
   // Server-driven action
@@ -46,7 +47,9 @@ export enum ActionType {
   SetName = "SET_NAME",
   StartWhisper = "START_WHISPER",
   ShowProfile = "SHOW_PROFILE",
+  //
   Authenticate = "AUTHENTICATE",
+  IsRegistered = "IS_REGISTERED",
 }
 
 interface UpdatedRoomAction {
@@ -335,4 +338,12 @@ export const AuthenticateAction = (
   name: string | undefined
 ): AuthenticateAction => {
   return { type: ActionType.Authenticate, value: { userId, name } };
+};
+
+interface IsRegisteredAction {
+  type: ActionType.IsRegistered;
+}
+
+export const IsRegisteredAction = (): IsRegisteredAction => {
+  return { type: ActionType.IsRegistered };
 };

@@ -20,3 +20,7 @@ export function shoutKeyForUser(user: string): string {
 export function usernameKeyForUser(userId: string): string {
   return `${userId}Handle`;
 }
+
+export function profileKeyForUser(userId: string): string {
+  return `${userId}Profile`;
+}

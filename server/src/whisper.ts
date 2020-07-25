@@ -1,8 +1,8 @@
 import { Context } from "@azure/functions";
 import { invert } from "lodash";
 
-import { User } from "./user";
-import { activeUserMap } from "./hydrate";
+import { User, getUserIdForUsername } from "./user";
+import { activeUserMap } from "./user";
 
 export async function whisper(
   from: User,
@@ -10,10 +10,10 @@ export async function whisper(
   message: string,
   context: Context
 ) {
-  const userMap = invert(await activeUserMap());
+  const toUser = await getUserIdForUsername(toUsername);
 
   // TODO: Return this as metadata so the client can NameView the username
-  if (!userMap[toUsername]) {
+  if (!toUser) {
     context.res = {
       status: 200,
       body: {
@@ -25,7 +25,7 @@ export async function whisper(
 
   context.bindings.signalRMessages = [
     {
-      userId: userMap[toUsername],
+      userId: toUser,
       target: "whisper",
       arguments: [from.id, message],
     },

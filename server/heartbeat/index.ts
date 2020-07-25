@@ -1,7 +1,7 @@
 import { AzureFunction, Context } from "@azure/functions";
 import { removeUserFromRoomPresence } from "../src/roomPresence";
-import { hydrateUser } from "../src/hydrate";
 import { getHeartbeatData, setActiveUsers } from "../src/heartbeat";
+import { getFullUser } from "../src/user";
 
 const timerTrigger: AzureFunction = async function (
   context: Context,
@@ -37,7 +37,7 @@ const timerTrigger: AzureFunction = async function (
   let signalRGroupActions = [];
   for (let i = 0; i < usersToRemove.length; i++) {
     const userId = usersToRemove[i];
-    const user = await hydrateUser(userId);
+    const user = await getFullUser(userId);
     await removeUserFromRoomPresence(userId, user.roomId);
     signalRGroupActions.push(
       {

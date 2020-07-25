@@ -1,6 +1,5 @@
-import { User } from "./user";
+import { User, getFullUser } from "./user";
 import { Context, HttpRequest } from "@azure/functions";
-import { hydrateUser } from "./hydrate";
 
 /** This wraps an HTTP function and calls it with a hydrated authenticated user.
  * Returns true if execution should continue. */
@@ -20,9 +19,6 @@ export default async function authenticate(
     return;
   }
 
-  const username = req.headers && req.headers["x-ms-client-principal-name"];
-
-  const user = await hydrateUser(userId, username);
-  context.log("TESTING USERNAME?", username, user.username);
+  const user = await getFullUser(userId);
   return await handler(user);
 }

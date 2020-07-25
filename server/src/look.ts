@@ -1,18 +1,8 @@
 import { Context } from "@azure/functions";
-import { User, PublicUser } from "./user";
+import { getPublicUser } from "./user";
 
-export function look(target: string, context: Context) {
-  const profile: PublicUser = {
-    id: "123456789",
-    username: "lazerwalker",
-    realName: "Em Lazer-Walker",
-    pronouns: "she/her or they/them",
-    description:
-      "She looks around bewildered, clearly not used to seeing the world in text form",
-    askMeAbout: "Proc gen, tool-building, non-traditional interfaces!",
-    twitterHandle: "lazerwalker",
-    url: "https://lazerwalker.com",
-  };
+export async function look(target: string, context: Context) {
+  const profile = await getPublicUser(target);
 
   context.res = {
     status: 200,

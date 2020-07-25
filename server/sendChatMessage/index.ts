@@ -4,6 +4,7 @@ import { whisper } from "../src/whisper";
 import { shout } from "../src/shout";
 import { look } from "../src/look";
 import authenticate from "../src/authenticate";
+import { getUserIdForUsername } from "../src/user";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -36,7 +37,15 @@ const httpTrigger: AzureFunction = async function (
 
     const lookMatch = /^\/(look) (.+)/.exec(message);
     if (lookMatch) {
-      return await look(lookMatch[2], context);
+      const lookUserId = await getUserIdForUsername(lookMatch[2]);
+      if (!lookMatch) {
+        context.res = {
+          status: 400,
+          body: { error: `Could not find the user ${lookMatch[2]}` },
+        };
+        return;
+      }
+      return await look(lookUserId, context);
     }
 
     context.res = {

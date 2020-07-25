@@ -5,7 +5,7 @@ import removeUserFromAllRooms from "../src/removeUserFromAllRooms";
 import { addUserToRoomPresence } from "../src/roomPresence";
 import { setUserHeartbeat } from "../src/heartbeat";
 import authenticate from "../src/authenticate";
-import { activeUserMap } from "../src/hydrate";
+import { activeUserMap } from "../src/user";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

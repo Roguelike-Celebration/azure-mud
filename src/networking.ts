@@ -41,6 +41,17 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
   connectSignalR(userId, dispatch);
 }
 
+export async function updateProfile(user: Partial<User>) {
+  // TODO: This endpoint doesn't exist!
+  console.log(user);
+  await callAzureFunction("updateProfile", { user });
+}
+
+export async function checkIsRegistered(): Promise<boolean> {
+  const result = await callAzureFunction("isRegistered");
+  return result.registered;
+}
+
 export async function moveToRoom(roomId: string) {
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
     "moveRoom",

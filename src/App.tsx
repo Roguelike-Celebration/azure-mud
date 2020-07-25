@@ -1,15 +1,16 @@
-import React, { useEffect, createContext } from "react";
+import React, { useEffect, createContext, useState } from "react";
 
 import RoomView from "./components/RoomView";
 import ChatView from "./components/ChatView";
 import InputView from "./components/InputView";
-import { connect, getLoginInfo } from "./networking";
+import { connect, getLoginInfo, checkIsRegistered } from "./networking";
 import reducer, { State } from "./reducer";
-import { AuthenticateAction, Action } from "./Actions";
+import { AuthenticateAction, Action, IsRegisteredAction } from "./Actions";
 import ProfileView from "./components/ProfileView";
 import { useReducerWithThunk } from "./useReducerWithThunk";
 import config from "./config";
 import MediaChatView from "./components/MediaChatView";
+import ProfileEditView from "./components/ProfileEditView";
 
 export const DispatchContext = createContext(null);
 export const UserMapContext = createContext(null);
@@ -18,20 +19,31 @@ const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(reducer, {
     authenticated: false,
     checkedAuthentication: false,
+    hasLocalMediaStream: false,
+    hasRegistered: false,
     inMediaChat: false,
     messages: [],
     userMap: {},
   });
 
   useEffect(() => {
-    getLoginInfo().then((r) => {
+    // TODO: This logic is gnarly enough I'd love to abstract it somewhere
+    const login = getLoginInfo().then((login) => {
       let userId, name;
-      if (r) {
-        userId = r.user_claims[0].val;
-        name = r.user_id;
-        connect(userId, dispatch);
+      if (!login) {
+        // This should really be its own action
+        dispatch(AuthenticateAction(undefined, undefined));
+      } else {
+        userId = login.user_claims[0].val;
+        name = login.user_id;
+        checkIsRegistered().then((registered) => {
+          dispatch(AuthenticateAction(userId, name));
+          if (registered) {
+            dispatch(IsRegisteredAction());
+            connect(userId, dispatch);
+          }
+        });
       }
-      dispatch(AuthenticateAction(userId, name));
     });
   }, []);
 
@@ -56,6 +68,16 @@ const App = () => {
       >
         Log In
       </a>
+    );
+  }
+
+  if (!state.hasRegistered) {
+    // Fetching the handle like this is silly.
+    return (
+      <ProfileEditView
+        isFTUE={true}
+        defaultHandle={state.userMap[state.userId]}
+      />
     );
   }
 

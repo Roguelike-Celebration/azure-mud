@@ -15,12 +15,13 @@ import { sendChatMessage } from "./networking";
 import { PublicUser } from "../server/src/user";
 
 import { invert } from "lodash";
-import { otherMediaStreams } from "./webRTC";
 
 export interface State {
   authenticated: boolean;
   checkedAuthentication: boolean;
   inMediaChat: boolean;
+
+  hasRegistered: boolean;
 
   room?: Room;
   messages: Message[];
@@ -162,6 +163,10 @@ export default (oldState: State, action: Action): State => {
       state.userId = action.value.userId;
       state.userMap[action.value.userId] = action.value.name;
     }
+  }
+
+  if (action.type === ActionType.IsRegistered) {
+    state.hasRegistered = true;
   }
 
   return state;
