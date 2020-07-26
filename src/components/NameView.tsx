@@ -9,12 +9,15 @@ import {
 
 export default (props: { userId: string; id?: string }) => {
   const dispatch = useContext(DispatchContext);
-  const userMap = useContext(UserMapContext);
+  const { userMap, myId } = useContext(UserMapContext);
 
   const user = userMap[props.userId];
   const username = user && user.username;
   const isMod = user && user.isMod;
   const isBanned = user && user.isBanned;
+
+  const player = userMap[myId];
+  const playerCanBan = player && player.isMod;
 
   const handleWhisper = (e, data) => {
     dispatch(StartWhisperAction(data.id));
@@ -36,13 +39,15 @@ export default (props: { userId: string; id?: string }) => {
   };
 
   // TODO: need to know if the current user is a mod
-  const banButton = (
+  const banButton = playerCanBan ? (
     <MenuItem
       data={{ id: props.userId, username: username }}
       onClick={handleBan}
     >
       {isBanned ? "Unban" : "Ban"}
     </MenuItem>
+  ) : (
+    ""
   );
 
   return (

@@ -88,7 +88,9 @@ const App = () => {
 
   return (
     <DispatchContext.Provider value={dispatch}>
-      <UserMapContext.Provider value={state.userMap}>
+      <UserMapContext.Provider
+        value={{ userMap: state.userMap, myId: state.userId }}
+      >
         <div id="main">
           {videoChatView}
           <RoomView room={state.room} />
