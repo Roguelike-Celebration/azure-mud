@@ -109,6 +109,10 @@ export async function fetchProfile(userId: string): Promise<User | undefined> {
   }
 }
 
+export async function toggleUserBan(userId: string) {
+  const result = await callAzureFunction("banUser", { userId });
+}
+
 // WebRTC
 
 export async function sendSignalData(peerId: string, data: string) {

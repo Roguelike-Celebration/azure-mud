@@ -24,7 +24,8 @@ export type Action =
   | StartWhisperAction
   | ShowProfileAction
   | AuthenticateAction
-  | IsRegisteredAction;
+  | IsRegisteredAction
+  | BanToggleAction;
 
 export enum ActionType {
   // Server-driven action
@@ -52,6 +53,7 @@ export enum ActionType {
   //
   Authenticate = "AUTHENTICATE",
   IsRegistered = "IS_REGISTERED",
+  BanToggle = "BAN_TOGGLE",
 }
 
 interface UpdatedRoomAction {
@@ -365,4 +367,13 @@ interface IsRegisteredAction {
 
 export const IsRegisteredAction = (): IsRegisteredAction => {
   return { type: ActionType.IsRegistered };
+};
+
+interface BanToggleAction {
+  type: ActionType.BanToggle;
+  value: string;
+}
+
+export const BanToggleAction = (userId: string): BanToggleAction => {
+  return { type: ActionType.BanToggle, value: userId };
 };

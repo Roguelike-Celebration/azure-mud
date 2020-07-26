@@ -88,6 +88,7 @@ const Redis: Database = {
 
   async setMinimalProfileForUser(userId: string, data: MinimalUser) {
     delete data.isMod;
+    delete data.isBanned;
     return await setCache(usernameKeyForUser(userId), JSON.stringify(data));
   },
 
@@ -100,6 +101,36 @@ const Redis: Database = {
 
   async userJustShouted(userId: string) {
     await setCache(shoutKeyForUser(userId), JSON.stringify(new Date()));
+  },
+
+  // Because this data lives in both the minimal user profile and the real user data,
+  // we need to read/write in two places. Sigh.
+  async banUser(userId: string) {
+    const presenceData = await JSON.parse(
+      await getCache(usernameKeyForUser(userId))
+    );
+    presenceData.isBanned = true;
+    await setCache(usernameKeyForUser(userId), JSON.stringify(presenceData));
+
+    const profileData = await JSON.parse(
+      await getCache(profileKeyForUser(userId))
+    );
+    profileData.isBanned = true;
+    await setCache(profileKeyForUser(userId), JSON.stringify(profileData));
+  },
+
+  async unbanUser(userId: string) {
+    const profile = await JSON.parse(
+      await getCache(usernameKeyForUser(userId))
+    );
+    profile.isBanned = false;
+    await setCache(usernameKeyForUser(userId), JSON.stringify(profile));
+
+    const profileData = await JSON.parse(
+      await getCache(profileKeyForUser(userId))
+    );
+    profileData.isBanned = false;
+    await setCache(profileKeyForUser(userId), JSON.stringify(profileData));
   },
 };
 

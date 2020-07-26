@@ -8,6 +8,14 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<any> {
   await authenticate(context, req, async (user) => {
+    if (user.isBanned) {
+      context.res = {
+        status: 403,
+        body: { error: "You are currently banned and cannot do this." },
+      };
+      return;
+    }
+
     let toId = req.body && req.body.to;
     if (!toId) {
       context.res = {

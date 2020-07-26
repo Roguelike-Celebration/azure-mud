@@ -12,7 +12,7 @@ import {
   createModMessage,
 } from "./message";
 import { Room } from "./Room";
-import { sendChatMessage } from "./networking";
+import { sendChatMessage, toggleUserBan } from "./networking";
 import { PublicUser, MinimalUser } from "../server/src/user";
 
 export interface State {
@@ -185,6 +185,10 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.IsRegistered) {
     state.hasRegistered = true;
+  }
+
+  if (action.type === ActionType.BanToggle) {
+    toggleUserBan(action.value);
   }
 
   return state;

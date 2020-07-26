@@ -11,6 +11,7 @@ export interface MinimalUser {
   id: string;
   username: string;
   isMod?: boolean;
+  isBanned?: boolean;
 }
 
 // A user profile. Users may fetch this about other users.
@@ -81,8 +82,12 @@ export async function getFullUser(userId: string): Promise<User | undefined> {
   };
 }
 
-export function minimizeUser(user: User): MinimalUser {
-  const minimalUser: MinimalUser = { id: user.id, username: user.username };
+export function minimizeUser(user: User | PublicUser): MinimalUser {
+  const minimalUser: MinimalUser = {
+    id: user.id,
+    username: user.username,
+    isBanned: user.isBanned,
+  };
   if (isMod(user.id)) {
     minimalUser.isMod = true;
   }

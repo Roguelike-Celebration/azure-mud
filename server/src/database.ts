@@ -62,6 +62,9 @@ interface Database {
 
   /** Sets that the user shouted right now */
   userJustShouted(userId: string);
+
+  banUser(userId: string);
+  unbanUser(userId: string);
 }
 
 export default Database;
