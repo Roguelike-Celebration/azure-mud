@@ -21,7 +21,7 @@ import {
 import { User } from "../server/src/user";
 import { startSignaling, receiveSignalData, getMediaStream } from "./webRTC";
 import Config from "./config";
-import { convertServerRoom } from "./Room";
+import { convertServerRoom } from "./room";
 
 let myUserId: string;
 let myDispatch: Dispatch<Action>;

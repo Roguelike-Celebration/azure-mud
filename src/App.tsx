@@ -21,7 +21,6 @@ const App = () => {
     checkedAuthentication: false,
     hasLocalMediaStream: false,
     hasRegistered: false,
-    inMediaChat: false,
     messages: [],
     userMap: {},
   });
