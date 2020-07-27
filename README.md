@@ -2,6 +2,8 @@
 
 This is a playful text-based online social chat space. You can think of it as a hybrid between communication apps like Slack and Discord and traditional text-based online game spaces such as MUDs and MOOs.
 
+It is primarily being built for [Roguelike Celebration 2020](https://roguelike.club), but can hopefully eventually be repurposed for other events or communities.
+
 On the backend, it's powered by a serverless system made up of Azure Functions, Azure SignalR Service, and a Redis instance (currently provided by Azure Cache for Redis).
 
 On the frontend, it's a rich single-page webapp built in TypeScript and React, using the Flux architecture via the `useContext` React hook.
@@ -11,8 +13,11 @@ On the frontend, it's a rich single-page webapp built in TypeScript and React, u
 ### Frontend Dev
 
 1. Clone this repo
+
 2. Run `npm install`
+
 3. `npm run dev` will start a local development environment (at `http://localhost:1234` by default). It auto-watches changes to HTML, CSS, and JS/TS code, and attempts to live-reload any connected browser instances.
+
 4. `npm run build` will generate a bundled version of the webapp for distribution. If you're planning to push changes back to this repo for use in its official deployment, don't worry about this; a GitHub Actions CI pipeline builds and deploys the main branch on every push.
 
 ### Backend Dev

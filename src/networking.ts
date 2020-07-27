@@ -43,8 +43,6 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
 }
 
 export async function updateProfile(user: Partial<User>) {
-  // TODO: This endpoint doesn't exist!
-  console.log(user);
   await callAzureFunction("updateProfile", { user });
 }
 
