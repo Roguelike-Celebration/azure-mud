@@ -1,4 +1,4 @@
-import Peer from "simple-peer";
+import SimplePeer from "simple-peer";
 import { sendSignalData } from "./networking";
 import { Dispatch } from "react";
 import {
@@ -6,6 +6,7 @@ import {
   LocalMediaStreamOpenedAction,
   P2PDataReceivedAction,
   P2PStreamReceivedAction,
+  P2PConnectionClosedAction,
 } from "./Actions";
 
 // TODO: How am I threading through a dispatch function to this?
@@ -16,11 +17,11 @@ export function localMediaStream(): MediaStream | undefined {
   return mediaStream;
 }
 
-export function otherMediaStreams(): { [id: string]: Peer } {
+export function otherMediaStreams(): { [id: string]: MediaStream } {
   return peerStreams;
 }
 
-const getMediaStream = async (
+export const getMediaStream = async (
   dispatch: Dispatch<Action>
 ): Promise<MediaStream | undefined> => {
   console.log("Trying to open media stream");
@@ -52,7 +53,7 @@ export async function startSignaling(
   dispatch: Dispatch<Action>
 ) {
   const stream = await getMediaStream(dispatch);
-  const peer = new Peer({ initiator: true, stream });
+  const peer = new SimplePeer({ initiator: true, stream });
   peers[peerId] = peer;
   setUpPeer(peerId, peer, dispatch);
 }
@@ -65,7 +66,7 @@ export async function receiveSignalData(
   const stream = await getMediaStream(dispatch);
   let peer = peers[peerId];
   if (!peer) {
-    peer = new Peer({ stream });
+    peer = new SimplePeer({ stream });
     peers[peerId] = peer;
     setUpPeer(peerId, peer, dispatch);
   }
@@ -73,7 +74,7 @@ export async function receiveSignalData(
   peer.signal(data);
 }
 
-let peers: { [id: string]: Peer } = {};
+let peers: { [id: string]: SimplePeer.Instance } = {};
 let peerStreams: { [id: string]: MediaStream } = {};
 
 export function sendToPeer(id: string, msg: string) {
@@ -82,12 +83,22 @@ export function sendToPeer(id: string, msg: string) {
 
 export function broadcastToPeers(msg: string) {
   Object.values(peers).forEach((c) => {
-    if (!c.connected) return;
+    if (!c.writable) return;
     c.send(msg);
   });
 }
 
-function setUpPeer(peerId: string, peer: Peer, dispatch: Dispatch<Action>) {
+export function disconnectAllPeers() {
+  Object.values(peers).forEach((p) => {
+    p.destroy();
+  });
+}
+
+function setUpPeer(
+  peerId: string,
+  peer: SimplePeer.Instance,
+  dispatch: Dispatch<Action>
+) {
   peer.on("signal", (data) => {
     console.log("SIGNAL", JSON.stringify(data));
 
@@ -96,6 +107,20 @@ function setUpPeer(peerId: string, peer: Peer, dispatch: Dispatch<Action>) {
 
   peer.on("connect", () => {
     console.log(`Peer ${peerId} connected!`);
+  });
+
+  peer.on("close", () => {
+    console.log("WebRTC peer closed", peerId);
+    delete peers[peerId];
+    delete peerStreams[peerId];
+    dispatch(P2PConnectionClosedAction(peerId));
+  });
+
+  peer.on("err", (e) => {
+    console.log("Peer errored out", peerId, e);
+    delete peers[peerId];
+    delete peerStreams[peerId];
+    dispatch(P2PConnectionClosedAction(peerId));
   });
 
   peer.on("data", (data) => {

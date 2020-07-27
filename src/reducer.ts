@@ -1,4 +1,4 @@
-import { Action, ActionType } from "./Actions";
+import { Action, ActionType, StopVideoChatAction } from "./Actions";
 import {
   Message,
   createConnectedMessage,
@@ -12,13 +12,17 @@ import {
   createModMessage,
 } from "./message";
 import { Room } from "./Room";
-import { sendChatMessage, toggleUserBan } from "./networking";
+import {
+  sendChatMessage,
+  toggleUserBan,
+  setNetworkMediaChatStatus,
+} from "./networking";
 import { PublicUser, MinimalUser } from "../server/src/user";
+import { disconnectAllPeers } from "./webRTC";
 
 export interface State {
   authenticated: boolean;
   checkedAuthentication: boolean;
-  inMediaChat: boolean;
 
   hasRegistered: boolean;
 
@@ -45,16 +49,23 @@ export default (oldState: State, action: Action): State => {
   state.prepopulatedInput = undefined;
 
   if (action.type === ActionType.UpdatedRoom) {
-    let { name, description, allowsMedia } = action.value;
+    state.room = action.value;
+    state.room.users = state.room.users.filter((u) => u !== state.userId);
 
-    description = parseDescription(description);
-
-    state.room = {
-      name,
-      description,
-      users: [],
-      allowsMedia,
-    };
+    /** Here lies a giant hack.
+     * So, the WebRTC connection handshake lives outside of Flux.
+     * The set of peer connections are long-lived objects that shouldn't live inside React components,
+     * but they also need access to a `dispatch` function, so having them separate seems easiest.
+     *
+     * HOWEVER!
+     * When a new peer says "hey, you can connect to me", we need some state data.
+     * Specifically, we need to know if you're currently in a videocall.
+     * This means we need to do some state-munging to actively remove you from a call once you've left the room.
+     *
+     * TODO: There may be cases other than moving rooms where we want to disconnect you.
+     * If so, we need to dupe this logic there.
+     */
+    (action as Action).type = ActionType.StopVideoChat;
   }
 
   if (action.type === ActionType.UpdatedPresence) {
@@ -131,6 +142,10 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.P2PStreamReceived) {
+    if (!state.otherMediaStreamPeerIds) {
+      state.otherMediaStreamPeerIds = [];
+    }
+
     if (!state.otherMediaStreamPeerIds.includes(action.value)) {
       state.otherMediaStreamPeerIds.push(action.value);
     }
@@ -138,6 +153,19 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.P2PDataReceived) {
     console.log("Received P2P data!", action.value.peerId, action.value.data);
+  }
+
+  if (action.type === ActionType.P2PConnectionClosed) {
+    state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds.filter(
+      (p) => p !== action.value
+    );
+  }
+
+  if (action.type === ActionType.StopVideoChat) {
+    setNetworkMediaChatStatus(false);
+    disconnectAllPeers();
+    state.hasLocalMediaStream = false;
+    state.otherMediaStreamPeerIds = [];
   }
 
   // UI Actions
@@ -193,17 +221,3 @@ export default (oldState: State, action: Action): State => {
 
   return state;
 };
-
-function parseDescription(description: string): string {
-  const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g;
-  const simpleLinkRegex = /\[\[(.+?)\]\]/g;
-
-  description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    return `<a class='room-link' href='#' data-room='${roomId}'>${text}</a>`;
-  });
-
-  description = description.replace(simpleLinkRegex, (match, roomId) => {
-    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}</a>`;
-  });
-  return description;
-}

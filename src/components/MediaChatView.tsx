@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useContext,
-  useState,
-  VideoHTMLAttributes,
-  useRef,
-} from "react";
+import React, { useEffect, VideoHTMLAttributes, useRef } from "react";
 import NameView from "./NameView";
 import { localMediaStream, otherMediaStreams } from "../webRTC";
 

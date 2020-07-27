@@ -46,4 +46,12 @@ export const roomData: { [name: string]: Room } = {
       
       From here, you can get back to the [[bar]] or the [[theatre]].`,
   },
+  conference: {
+    id: "conference",
+    displayName: "The Executive Suite Conference Room",
+    shortName: "the conference room",
+    description:
+      "An executive conference room, straight out of a movie: a beautiful mahogany conferenece table, floor-to-ceiling windows overlooking the city, top-of-the-line conference equipment. A poster hangs on the wall expressing Garfield's hatred of Mondays, but it's impeccably framed and very classy.",
+    allowsMedia: true,
+  },
 };

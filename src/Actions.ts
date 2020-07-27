@@ -2,6 +2,7 @@ import { ThunkDispatch, useReducerWithThunk } from "./useReducerWithThunk";
 import { State } from "./reducer";
 import { fetchProfile } from "./networking";
 import { PublicUser, MinimalUser } from "../server/src/user";
+import { Room } from "./Room";
 
 export type Action =
   | UpdatedRoomAction
@@ -17,7 +18,9 @@ export type Action =
   | UserMapAction
   | P2PDataReceivedAction
   | P2PStreamReceivedAction
+  | P2PConnectionClosedAction
   | LocalMediaStreamOpenedAction
+  | StopVideoChatAction
   | ErrorAction
   | SendMessageAction
   | SetNameAction
@@ -44,7 +47,9 @@ export enum ActionType {
   // WebRTC
   P2PDataReceived = "P2P_DATA_RECEIVED",
   P2PStreamReceived = "P2P_STREAM_RECEIVED",
+  P2PConnectionClosed = "P2P_CONNECTION_CLOSED",
   LocalMediaStreamOpened = "LOCAL_MEDIASTREAM_OPENED",
+  StopVideoChat = "STOP_VIDEO_CHAT",
   // UI actions
   SendMessage = "SEND_MESSAGE",
   SetName = "SET_NAME",
@@ -58,21 +63,13 @@ export enum ActionType {
 
 interface UpdatedRoomAction {
   type: ActionType.UpdatedRoom;
-  value: {
-    name: string;
-    description: string;
-    allowsMedia: boolean;
-  };
+  value: Room;
 }
 
-export const UpdatedRoomAction = (
-  name: string,
-  description: string,
-  allowsMedia: boolean = false
-): UpdatedRoomAction => {
+export const UpdatedRoomAction = (room: Room): UpdatedRoomAction => {
   return {
     type: ActionType.UpdatedRoom,
-    value: { name, description, allowsMedia },
+    value: room,
   };
 };
 
@@ -266,12 +263,34 @@ export const P2PStreamReceivedAction = (
   };
 };
 
+interface P2PConnectionClosedAction {
+  type: ActionType.P2PConnectionClosed;
+  value: string;
+}
+
+export const P2PConnectionClosedAction = (
+  peerId: string
+): P2PConnectionClosedAction => {
+  return {
+    type: ActionType.P2PConnectionClosed,
+    value: peerId,
+  };
+};
+
 interface LocalMediaStreamOpenedAction {
   type: ActionType.LocalMediaStreamOpened;
 }
 
 export const LocalMediaStreamOpenedAction = (): LocalMediaStreamOpenedAction => {
   return { type: ActionType.LocalMediaStreamOpened };
+};
+
+interface StopVideoChatAction {
+  type: ActionType.StopVideoChat;
+}
+
+export const StopVideoChatAction = (): StopVideoChatAction => {
+  return { type: ActionType.StopVideoChat };
 };
 
 interface ErrorAction {

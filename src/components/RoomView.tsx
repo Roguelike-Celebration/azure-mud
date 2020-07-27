@@ -1,9 +1,17 @@
 import * as React from "react";
 import { Room } from "../Room";
-import { moveToRoom } from "../networking";
+import {
+  moveToRoom,
+  startVideoChat,
+  getNetworkMediaChatStatus,
+} from "../networking";
 import NameView from "./NameView";
+import { DispatchContext } from "../App";
+import { StopVideoChatAction } from "../Actions";
 
 export default (props: { room?: Room }) => {
+  const dispatch = React.useContext(DispatchContext);
+
   const { room } = props;
 
   // This is very silly.
@@ -17,6 +25,31 @@ export default (props: { room?: Room }) => {
     }
   };
 
+  const joinVideoChat = () => {
+    startVideoChat();
+  };
+
+  const leaveVideoChat = () => {
+    dispatch(StopVideoChatAction());
+  };
+
+  let videoChatButton;
+  if (room && room.allowsMedia) {
+    if (getNetworkMediaChatStatus()) {
+      videoChatButton = (
+        <a href="#" onClick={leaveVideoChat} role="button">
+          Leave Video Chat
+        </a>
+      );
+    } else {
+      videoChatButton = (
+        <a href="#" onClick={joinVideoChat} role="button">
+          Join Video Chat
+        </a>
+      );
+    }
+  }
+
   return (
     <div id="room">
       <h1 id="room-name">{room ? room.name : "Loading..."}</h1>
@@ -24,10 +57,13 @@ export default (props: { room?: Room }) => {
         id="static-room-description"
         onClick={descriptionClick}
         dangerouslySetInnerHTML={{
-          __html: room ? room.description : "Loading current room...",
+          __html: room
+            ? parseDescription(room.description)
+            : "Loading current room...",
         }}
       />
       {room ? <PresenceView users={room.users} /> : ""}
+      {videoChatButton}
     </div>
   );
 };
@@ -64,7 +100,6 @@ const PresenceView = (props: { users?: string[] }) => {
       );
     }
 
-    // TODO: Bold these
     return (
       <div id="dynamic-room-description">
         Also here {users.length === 1 ? "is" : "are"} {names}.
@@ -93,4 +128,18 @@ function intersperse(arr, sep) {
     },
     [arr[0]]
   );
+}
+
+function parseDescription(description: string): string {
+  const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g;
+  const simpleLinkRegex = /\[\[(.+?)\]\]/g;
+
+  description = description.replace(complexLinkRegex, (match, text, roomId) => {
+    return `<a class='room-link' href='#' data-room='${roomId}'>${text}</a>`;
+  });
+
+  description = description.replace(simpleLinkRegex, (match, roomId) => {
+    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}</a>`;
+  });
+  return description;
 }

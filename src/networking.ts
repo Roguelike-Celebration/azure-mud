@@ -6,7 +6,6 @@ import { Dispatch } from "react";
 import {
   Action,
   UpdatedRoomAction,
-  UpdatedPresenceAction,
   ErrorAction,
   PlayerConnectedAction,
   PlayerDisconnectedAction,
@@ -20,13 +19,14 @@ import {
   ModMessageAction,
 } from "./Actions";
 import { User } from "../server/src/user";
-import { startSignaling, receiveSignalData } from "./webRTC";
+import { startSignaling, receiveSignalData, getMediaStream } from "./webRTC";
 import Config from "./config";
+import { convertServerRoom } from "./Room";
 
 let myUserId: string;
 let myDispatch: Dispatch<Action>;
 
-// TODO: All you need to start a webrtc session is `callAzureFunction("broadcastPeerId");`
+let inMediaChat: boolean = false;
 
 export async function connect(userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId;
@@ -35,8 +35,7 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
   const result: RoomResponse = await callAzureFunction("connect");
 
   console.log(result);
-  dispatch(UpdatedRoomAction(result.room.displayName, result.room.description));
-  dispatch(UpdatedPresenceAction(result.roomOccupants));
+  dispatch(UpdatedRoomAction(convertServerRoom(result)));
   dispatch(UserMapAction(result.users));
 
   connectSignalR(userId, dispatch);
@@ -64,14 +63,7 @@ export async function moveToRoom(roomId: string) {
   if (result.error) {
     myDispatch(ErrorAction(result.error));
   } else {
-    myDispatch(
-      UpdatedRoomAction(
-        result.room.displayName,
-        result.room.description,
-        result.room.allowsMedia
-      )
-    );
-    myDispatch(UpdatedPresenceAction(result.roomOccupants));
+    myDispatch(UpdatedRoomAction(result));
   }
 }
 
@@ -87,10 +79,7 @@ export async function sendChatMessage(text: string) {
 
   // If it's a /move command
   if (result && result.room && result.roomOccupants) {
-    myDispatch(
-      UpdatedRoomAction(result.room.displayName, result.room.description)
-    );
-    myDispatch(UpdatedPresenceAction(result.roomOccupants));
+    myDispatch(UpdatedRoomAction(convertServerRoom(result)));
   } else if (result && result.user) {
     myDispatch(ShowProfileActionForFetchedUser(result.user));
   } else if (result && result.error) {
@@ -112,9 +101,29 @@ export async function toggleUserBan(userId: string) {
 }
 
 // WebRTC
+// A note: the WebRTC handshake process generally avoids the Flux store / reducer
+// The app store is only aware of actual video streams it has to present.
+
+// This kicks off the whole peering process.
+// Any connected WebRTC clients will start signaling, which happens over SignalR.
+export async function startVideoChat() {
+  inMediaChat = true;
+  callAzureFunction("broadcastPeerId");
+
+  // The act of fetching the local media stream triggers a local view of your webcam
+  await getMediaStream(myDispatch);
+}
 
 export async function sendSignalData(peerId: string, data: string) {
   return await callAzureFunction("sendSignalData", { peerId, data });
+}
+
+export function setNetworkMediaChatStatus(isInMediaChat: boolean) {
+  inMediaChat = isInMediaChat;
+}
+
+export function getNetworkMediaChatStatus(): boolean {
+  return inMediaChat;
 }
 
 // Setup
@@ -180,6 +189,7 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
 
   connection.on("webrtcPeerId", (peerId) => {
     if (peerId === userId) return;
+    if (!inMediaChat) return;
     console.log("Starting signaling with", peerId);
     startSignaling(peerId, dispatch);
   });
