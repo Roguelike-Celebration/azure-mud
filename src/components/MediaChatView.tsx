@@ -5,6 +5,8 @@ import {
   otherMediaStreams,
   toggleAudio,
   toggleVideo,
+  tellPeerToToggleVideo,
+  tellPeerToToggleAudio,
 } from "../webRTC";
 
 // TODO: We should allow you to not send media but still consume it
@@ -18,12 +20,12 @@ export default function (props: MediaProps) {
 
   let playerVideo, otherVideos;
 
-  const onChangeVideo = (e) => {
+  const onChangeMyVideo = (e) => {
     setUseVideo(e.target.checked);
     toggleVideo(sendVideo);
   };
 
-  const onChangeAudio = (e) => {
+  const onChangeMyAudio = (e) => {
     setUseAudio(e.target.checked);
     toggleAudio(sendAudio);
   };
@@ -36,18 +38,32 @@ export default function (props: MediaProps) {
         type="checkbox"
         id="send-video"
         checked={sendVideo}
-        onChange={onChangeVideo}
+        onChange={onChangeMyVideo}
       />
       <label htmlFor="send-video">Video</label>
       <input
         type="checkbox"
         id="send-audio"
         checked={sendAudio}
-        onChange={onChangeAudio}
+        onChange={onChangeMyAudio}
       />
       <label htmlFor="send-audio">Audio</label>
     </div>
   );
+
+  const onChangeTheirVideo = (e) => {
+    console.log(e);
+    const peerId = e.target.getAttribute("data-peer");
+    const state = e.target.checked;
+    tellPeerToToggleVideo(peerId, state);
+  };
+
+  const onChangeTheirAudio = (e) => {
+    console.log(e);
+    const peerId = e.target.getAttribute("data-peer");
+    const state = e.target.checked;
+    tellPeerToToggleAudio(peerId, state);
+  };
 
   // We don't actually use `peerIds` other than as a way to force the component to update.
   // That might change?
@@ -56,6 +72,22 @@ export default function (props: MediaProps) {
       <div>
         <NameView userId={peerId} id={`stream-nameview-${peerId}`} />:
         <Video srcObject={stream} id={`stream-${peerId}`} />
+        <input
+          type="checkbox"
+          id={`send-video-${peerId}`}
+          onChange={onChangeTheirVideo}
+          data-peer={peerId}
+          defaultChecked={true}
+        />
+        <label htmlFor={`send-video-${peerId}`}>Video</label>
+        <input
+          type="checkbox"
+          id={`send-audio-${peerId}`}
+          onChange={onChangeTheirAudio}
+          data-peer={peerId}
+          defaultChecked={true}
+        />
+        <label htmlFor={`send-audio-${peerId}`}>Audio</label>
       </div>
     );
   });

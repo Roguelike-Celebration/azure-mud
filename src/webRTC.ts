@@ -11,6 +11,11 @@ import {
 
 let mediaStream: MediaStream;
 
+enum PeerAction {
+  ToggleAudio = "toggleAudio",
+  ToggleVideo = "toggleVideo",
+}
+
 export function localMediaStream(): MediaStream | undefined {
   return mediaStream;
 }
@@ -68,6 +73,37 @@ export async function toggleAudio(newState: boolean) {
   }
 
   track.enabled = !newState;
+}
+
+export function tellPeerToToggleAudio(peerId: string, newState: boolean) {
+  const peer = peers[peerId];
+  if (!peer) {
+    console.log("ERROR: No peer found!", peerId);
+    return;
+  }
+
+  peer.send(
+    JSON.stringify({
+      action: PeerAction.ToggleAudio,
+      value: newState,
+    })
+  );
+}
+
+export function tellPeerToToggleVideo(peerId: string, newState: boolean) {
+  console.log("Telling peer to toggle video", peerId, newState);
+  const peer = peers[peerId];
+  if (!peer) {
+    console.log("ERROR: No peer found!", peerId);
+    return;
+  }
+
+  peer.send(
+    JSON.stringify({
+      action: PeerAction.ToggleVideo,
+      value: newState,
+    })
+  );
 }
 
 export async function startSignaling(
@@ -145,8 +181,40 @@ function setUpPeer(
     dispatch(P2PConnectionClosedAction(peerId));
   });
 
-  peer.on("data", (data) => {
-    console.log("Received data from peer", data);
+  peer.on("data", async (data) => {
+    console.log("Received data!");
+    let parsed: any;
+    try {
+      parsed = JSON.parse(data);
+    } catch {}
+
+    if (parsed && parsed.action) {
+      console.log("Parsed!", parsed);
+      if (parsed.action === PeerAction.ToggleVideo) {
+        const stream = await getMediaStream();
+        const track = stream.getVideoTracks()[0];
+        if (track) {
+          if (parsed.value) {
+            peer.addTrack(track, stream);
+          } else {
+            peer.removeTrack(track, stream);
+          }
+        }
+      }
+
+      if (parsed.action === PeerAction.ToggleAudio) {
+        const stream = await getMediaStream();
+        const track = stream.getAudioTracks()[0];
+        if (track) {
+          if (parsed.value) {
+            peer.addTrack(track, stream);
+          } else {
+            peer.removeTrack(track, stream);
+          }
+        }
+      }
+    }
+
     dispatch(P2PDataReceivedAction(peerId, data));
   });
 
