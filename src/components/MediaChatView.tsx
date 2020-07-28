@@ -1,6 +1,11 @@
-import React, { useEffect, VideoHTMLAttributes, useRef } from "react";
+import React, { useEffect, VideoHTMLAttributes, useRef, useState } from "react";
 import NameView from "./NameView";
-import { localMediaStream, otherMediaStreams } from "../webRTC";
+import {
+  localMediaStream,
+  otherMediaStreams,
+  toggleAudio,
+  toggleVideo,
+} from "../webRTC";
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
@@ -8,11 +13,39 @@ interface MediaProps {
 }
 
 export default function (props: MediaProps) {
+  const [sendVideo, setUseVideo] = useState(true);
+  const [sendAudio, setUseAudio] = useState(true);
+
   let playerVideo, otherVideos;
+
+  const onChangeVideo = (e) => {
+    setUseVideo(e.target.checked);
+    toggleVideo(sendVideo);
+  };
+
+  const onChangeAudio = (e) => {
+    setUseAudio(e.target.checked);
+    toggleAudio(sendAudio);
+  };
+
   playerVideo = (
     <div id="my-video">
       You:
       <Video srcObject={localMediaStream()} />
+      <input
+        type="checkbox"
+        id="send-video"
+        checked={sendVideo}
+        onChange={onChangeVideo}
+      />
+      <label htmlFor="send-video">Video</label>
+      <input
+        type="checkbox"
+        id="send-audio"
+        checked={sendAudio}
+        onChange={onChangeAudio}
+      />
+      <label htmlFor="send-audio">Audio</label>
     </div>
   );
 

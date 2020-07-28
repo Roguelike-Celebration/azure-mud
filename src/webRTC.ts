@@ -9,8 +9,6 @@ import {
   P2PConnectionClosedAction,
 } from "./Actions";
 
-// TODO: How am I threading through a dispatch function to this?
-
 let mediaStream: MediaStream;
 
 export function localMediaStream(): MediaStream | undefined {
@@ -22,7 +20,7 @@ export function otherMediaStreams(): { [id: string]: MediaStream } {
 }
 
 export const getMediaStream = async (
-  dispatch: Dispatch<Action>
+  dispatch?: Dispatch<Action>
 ): Promise<MediaStream | undefined> => {
   console.log("Trying to open media stream");
   if (mediaStream) {
@@ -43,10 +41,34 @@ export const getMediaStream = async (
 
   mediaStream = stream;
 
-  dispatch(LocalMediaStreamOpenedAction());
+  if (dispatch) {
+    dispatch(LocalMediaStreamOpenedAction());
+  }
 
   return stream;
 };
+
+export async function toggleVideo(newState: boolean) {
+  const stream = await getMediaStream();
+  const track = stream.getVideoTracks()[0];
+  if (!track) {
+    console.log("Error: No video track!");
+    return;
+  }
+
+  track.enabled = !newState;
+}
+
+export async function toggleAudio(newState: boolean) {
+  const stream = await getMediaStream();
+  const track = stream.getAudioTracks()[0];
+  if (!track) {
+    console.log("Error: No video track!");
+    return;
+  }
+
+  track.enabled = !newState;
+}
 
 export async function startSignaling(
   peerId: string,
