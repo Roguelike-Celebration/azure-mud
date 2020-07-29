@@ -33,8 +33,11 @@ export interface State {
 
   prepopulatedInput?: string;
 
-  hasLocalMediaStream: boolean;
+  localMediaStreamId?: string;
   otherMediaStreamPeerIds?: string[];
+
+  inMediaChat: boolean;
+  mediaDevices?: MediaDeviceInfo[];
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -138,7 +141,7 @@ export default (oldState: State, action: Action): State => {
 
   // WebRTC
   if (action.type === ActionType.LocalMediaStreamOpened) {
-    state.hasLocalMediaStream = true;
+    state.localMediaStreamId = action.value;
   }
 
   if (action.type === ActionType.P2PStreamReceived) {
@@ -161,11 +164,21 @@ export default (oldState: State, action: Action): State => {
     );
   }
 
+  if (action.type === ActionType.P2PWaitingForConnections) {
+    state.inMediaChat = true;
+    delete state.mediaDevices;
+  }
+
+  if (action.type === ActionType.LocalMediaDeviceListReceived) {
+    state.mediaDevices = action.value;
+  }
+
   if (action.type === ActionType.StopVideoChat) {
     setNetworkMediaChatStatus(false);
     disconnectAllPeers();
-    state.hasLocalMediaStream = false;
-    state.otherMediaStreamPeerIds = [];
+    delete state.localMediaStreamId = false;
+    delete state.otherMediaStreamPeerIds;
+    state.inMediaChat = false;
   }
 
   // UI Actions

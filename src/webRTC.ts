@@ -20,29 +20,46 @@ export function otherMediaStreams(): { [id: string]: MediaStream } {
 }
 
 export const getMediaStream = async (
-  dispatch?: Dispatch<Action>
+  dispatch?: Dispatch<Action>,
+  deviceIds?: { audioId?: string; videoId?: string }
 ): Promise<MediaStream | undefined> => {
   console.log("Trying to open media stream");
-  if (mediaStream) {
+
+  // If audioId or videoId aren't passed in, we just want an existing stream
+  // So return one if we have it
+  if (mediaStream && !deviceIds) {
     return mediaStream;
   }
 
   let stream: MediaStream = null;
 
+  let constraints: MediaStreamConstraints = {
+    audio: true,
+    video: { facingMode: "user" },
+  };
+
+  if (deviceIds && deviceIds.audioId) {
+    constraints.audio = { deviceId: deviceIds.audioId };
+  }
+
+  if (deviceIds && deviceIds.videoId) {
+    constraints.video = { deviceId: deviceIds.videoId };
+  }
+
+  console.log(constraints);
   try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: { facingMode: "user" },
-    });
+    stream = await navigator.mediaDevices.getUserMedia(constraints);
   } catch (err) {
     console.log("Video error", err);
     /* handle the error */
   }
 
+  console.log("We have a new stream?");
+
   mediaStream = stream;
 
   if (dispatch) {
-    dispatch(LocalMediaStreamOpenedAction());
+    dispatch(LocalMediaStreamOpenedAction(stream.id));
   }
 
   return stream;

@@ -19,7 +19,9 @@ export type Action =
   | P2PDataReceivedAction
   | P2PStreamReceivedAction
   | P2PConnectionClosedAction
+  | P2PWaitingForConnectionsAction
   | LocalMediaStreamOpenedAction
+  | LocalMediaDeviceListReceivedAction
   | StopVideoChatAction
   | ErrorAction
   | SendMessageAction
@@ -48,8 +50,10 @@ export enum ActionType {
   P2PDataReceived = "P2P_DATA_RECEIVED",
   P2PStreamReceived = "P2P_STREAM_RECEIVED",
   P2PConnectionClosed = "P2P_CONNECTION_CLOSED",
+  P2PWaitingForConnections = "P2P_WAITING_FOR_CONNECTIONS",
   LocalMediaStreamOpened = "LOCAL_MEDIASTREAM_OPENED",
   StopVideoChat = "STOP_VIDEO_CHAT",
+  LocalMediaDeviceListReceived = "LOCAL_MEDIA_DEVICE_LIST_RECEIVED",
   // UI actions
   SendMessage = "SEND_MESSAGE",
   SetName = "SET_NAME",
@@ -277,12 +281,39 @@ export const P2PConnectionClosedAction = (
   };
 };
 
-interface LocalMediaStreamOpenedAction {
-  type: ActionType.LocalMediaStreamOpened;
+interface P2PWaitingForConnectionsAction {
+  type: ActionType.P2PWaitingForConnections;
 }
 
-export const LocalMediaStreamOpenedAction = (): LocalMediaStreamOpenedAction => {
-  return { type: ActionType.LocalMediaStreamOpened };
+export const P2PWaitingForConnectionsAction = (): P2PWaitingForConnectionsAction => {
+  return {
+    type: ActionType.P2PWaitingForConnections,
+  };
+};
+
+interface LocalMediaStreamOpenedAction {
+  type: ActionType.LocalMediaStreamOpened;
+  value: string;
+}
+
+export const LocalMediaStreamOpenedAction = (
+  streamId: string
+): LocalMediaStreamOpenedAction => {
+  return { type: ActionType.LocalMediaStreamOpened, value: streamId };
+};
+
+interface LocalMediaDeviceListReceivedAction {
+  type: ActionType.LocalMediaDeviceListReceived;
+  value: MediaDeviceInfo[];
+}
+
+export const LocalMediaDeviceListReceivedAction = (
+  devices: MediaDeviceInfo[]
+): LocalMediaDeviceListReceivedAction => {
+  return {
+    type: ActionType.LocalMediaDeviceListReceived,
+    value: devices,
+  };
 };
 
 interface StopVideoChatAction {

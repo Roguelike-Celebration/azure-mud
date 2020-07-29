@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { toggleVideo, toggleAudio, localMediaStream } from "../webRTC";
 import { Video } from "./MediaChatView";
 

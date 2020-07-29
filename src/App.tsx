@@ -81,8 +81,14 @@ const App = () => {
   }
 
   let videoChatView;
-  if (state.hasLocalMediaStream) {
-    videoChatView = <MediaChatView peerIds={state.otherMediaStreamPeerIds} />;
+  if (state.localMediaStreamId) {
+    videoChatView = (
+      <MediaChatView
+        localMediaStreamId={state.localMediaStreamId}
+        peerIds={state.otherMediaStreamPeerIds}
+        mediaDevices={state.mediaDevices}
+      />
+    );
   }
 
   return (

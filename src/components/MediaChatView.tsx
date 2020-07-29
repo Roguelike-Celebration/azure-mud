@@ -1,37 +1,65 @@
-import React, { useEffect, VideoHTMLAttributes, useRef, useState } from "react";
+import React, {
+  useEffect,
+  VideoHTMLAttributes,
+  useRef,
+  useContext,
+} from "react";
 import NameView from "./NameView";
-import {
-  localMediaStream,
-  otherMediaStreams,
-  toggleAudio,
-  toggleVideo,
-} from "../webRTC";
+import { otherMediaStreams } from "../webRTC";
 import LocalMediaView from "./LocalMediaView";
+import MediaSelectorView from "./MediaSelectorView";
+import { DispatchContext } from "../App";
+import { P2PWaitingForConnectionsAction } from "../Actions";
+import { startVideoChat } from "../networking";
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
   peerIds?: string[];
+  localMediaStreamId?: string;
+  mediaDevices?: MediaDeviceInfo[];
 }
 
 export default function (props: MediaProps) {
-  let playerVideo, otherVideos;
-
+  let playerVideo, otherVideos, mediaSelector;
+  const dispatch = useContext(DispatchContext);
+  console.log("Re-rendering media chat view?");
   playerVideo = <LocalMediaView />;
 
-  // We don't actually use `peerIds` other than as a way to force the component to update.
-  // That might change?
-  otherVideos = Object.entries(otherMediaStreams()).map(([peerId, stream]) => {
-    return (
+  if (props.mediaDevices) {
+    const clickJoin = () => {
+      // TODO: Refresh the stream with the correct data
+      dispatch(P2PWaitingForConnectionsAction());
+      startVideoChat();
+    };
+
+    mediaSelector = (
       <div>
-        <NameView userId={peerId} id={`stream-nameview-${peerId}`} />:
-        <Video srcObject={stream} id={`stream-${peerId}`} />
+        <MediaSelectorView devices={props.mediaDevices} />;
+        <button id="join" onClick={clickJoin}>
+          Join
+        </button>
       </div>
     );
-  });
+  }
+
+  if (props.peerIds) {
+    // We don't actually use `peerIds` other than as a way to force the component to update.
+    // That might change?
+    otherVideos = Object.entries(otherMediaStreams()).map(
+      ([peerId, stream]) => {
+        return (
+          <div>
+            <NameView userId={peerId} id={`stream-nameview-${peerId}`} />:
+            <Video srcObject={stream} id={`stream-${peerId}`} />
+          </div>
+        );
+      }
+    );
+  }
 
   return (
-    <div>
-      {playerVideo} {otherVideos}
+    <div id="media-view">
+      {playerVideo} {mediaSelector} {otherVideos}
     </div>
   );
 }

@@ -2,12 +2,15 @@ import * as React from "react";
 import { Room } from "../Room";
 import {
   moveToRoom,
-  startVideoChat,
+  prepareToStartVideoChat,
   getNetworkMediaChatStatus,
 } from "../networking";
 import NameView from "./NameView";
 import { DispatchContext } from "../App";
-import { StopVideoChatAction } from "../Actions";
+import {
+  StopVideoChatAction,
+  LocalMediaDeviceListReceivedAction,
+} from "../Actions";
 
 export default (props: { room?: Room }) => {
   const dispatch = React.useContext(DispatchContext);
@@ -25,8 +28,13 @@ export default (props: { room?: Room }) => {
     }
   };
 
-  const joinVideoChat = () => {
-    startVideoChat();
+  const joinVideoChat = async () => {
+    prepareToStartVideoChat();
+
+    // TODO: A sensible refactor would be to refactor this action to not take an arg
+    // and have it be a thunk that fetches the device list.
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    dispatch(LocalMediaDeviceListReceivedAction(devices));
   };
 
   const leaveVideoChat = () => {
