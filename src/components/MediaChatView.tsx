@@ -6,6 +6,7 @@ import {
   toggleAudio,
   toggleVideo,
 } from "../webRTC";
+import LocalMediaView from "./LocalMediaView";
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
@@ -13,41 +14,9 @@ interface MediaProps {
 }
 
 export default function (props: MediaProps) {
-  const [sendVideo, setUseVideo] = useState(true);
-  const [sendAudio, setUseAudio] = useState(true);
-
   let playerVideo, otherVideos;
 
-  const onChangeVideo = (e) => {
-    setUseVideo(e.target.checked);
-    toggleVideo(sendVideo);
-  };
-
-  const onChangeAudio = (e) => {
-    setUseAudio(e.target.checked);
-    toggleAudio(sendAudio);
-  };
-
-  playerVideo = (
-    <div id="my-video">
-      You:
-      <Video srcObject={localMediaStream()} />
-      <input
-        type="checkbox"
-        id="send-video"
-        checked={sendVideo}
-        onChange={onChangeVideo}
-      />
-      <label htmlFor="send-video">Video</label>
-      <input
-        type="checkbox"
-        id="send-audio"
-        checked={sendAudio}
-        onChange={onChangeAudio}
-      />
-      <label htmlFor="send-audio">Audio</label>
-    </div>
-  );
+  playerVideo = <LocalMediaView />;
 
   // We don't actually use `peerIds` other than as a way to force the component to update.
   // That might change?
