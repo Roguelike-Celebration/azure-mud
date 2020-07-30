@@ -63,7 +63,13 @@ const Redis: Database = {
 
   // User
   async getPublicUser(userId: string) {
-    const user: User = JSON.parse(await getCache(profileKeyForUser(userId)));
+    const userData = await getCache(profileKeyForUser(userId));
+
+    if (!userData) {
+      return undefined;
+    }
+
+    const user: User = JSON.parse(userData);
 
     if (isMod(user.id)) {
       user.isMod = true;
