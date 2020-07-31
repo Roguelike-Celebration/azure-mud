@@ -64,7 +64,7 @@ export async function moveToRoom(roomId: string) {
   if (result.error) {
     myDispatch(ErrorAction(result.error));
   } else {
-    myDispatch(UpdatedRoomAction(result));
+    myDispatch(UpdatedRoomAction(convertServerRoom(result)));
   }
 }
 
