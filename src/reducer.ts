@@ -43,6 +43,15 @@ export interface State {
   visibleProfile?: PublicUser;
 }
 
+export const defaultState: State = {
+  authenticated: false,
+  checkedAuthentication: false,
+  hasRegistered: false,
+  messages: [],
+  userMap: {},
+  inMediaChat: false
+}
+
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
 export default (oldState: State, action: Action): State => {
   console.log("In reducer", action);

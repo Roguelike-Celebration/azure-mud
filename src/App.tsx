@@ -4,7 +4,7 @@ import RoomView from "./components/RoomView";
 import ChatView from "./components/ChatView";
 import InputView from "./components/InputView";
 import { connect, getLoginInfo, checkIsRegistered } from "./networking";
-import reducer, { State } from "./reducer";
+import reducer, { State, defaultState } from "./reducer";
 import { AuthenticateAction, Action, IsRegisteredAction } from "./Actions";
 import ProfileView from "./components/ProfileView";
 import { useReducerWithThunk } from "./useReducerWithThunk";
@@ -16,14 +16,7 @@ export const DispatchContext = createContext(null);
 export const UserMapContext = createContext(null);
 
 const App = () => {
-  const [state, dispatch] = useReducerWithThunk<Action, State>(reducer, {
-    authenticated: false,
-    checkedAuthentication: false,
-    hasLocalMediaStream: false,
-    hasRegistered: false,
-    messages: [],
-    userMap: {},
-  });
+  const [state, dispatch] = useReducerWithThunk<Action, State>(reducer, defaultState);
 
   useEffect(() => {
     // TODO: This logic is gnarly enough I'd love to abstract it somewhere
