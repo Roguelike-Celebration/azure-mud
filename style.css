@@ -32,7 +32,7 @@ a.room-link:visited {
   color: lightgreen;
 }
 
-input {
+#chat-input {
   width: 90%;
   margin-top: 2em;
 }
@@ -66,4 +66,14 @@ span.name {
   right: 70px;
   width: 600px;
   top: 50px;
+}
+
+/** WebRTC chat */
+video {
+  display: block;
+  width: 30vw;
+}
+
+input#send-audio {
+  margin-left: 1em;
 }

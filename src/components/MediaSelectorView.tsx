@@ -17,7 +17,7 @@ export default function (props: Props) {
       <option value={d.deviceId} key={d.deviceId}>
         {d.label}
       </option>
-    );
+    )
   };
 
   const onVideoChange = (e) => {

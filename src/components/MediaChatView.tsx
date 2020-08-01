@@ -34,7 +34,7 @@ export default function (props: MediaProps) {
 
     mediaSelector = (
       <div>
-        <MediaSelectorView devices={props.mediaDevices} />;
+        <MediaSelectorView devices={props.mediaDevices} />
         <button id="join" onClick={clickJoin}>
           Join
         </button>

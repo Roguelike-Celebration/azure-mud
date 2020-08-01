@@ -33,7 +33,7 @@ export default function () {
         checked={sendAudio}
         onChange={onChangeAudio}
       />
-      )<label htmlFor="send-audio">Audio</label>
+      <label htmlFor="send-audio">Audio</label>
     </div>
   );
 }
