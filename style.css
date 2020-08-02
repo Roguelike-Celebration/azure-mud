@@ -80,5 +80,5 @@ input#send-audio {
 
 #media-view {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
 }
