@@ -77,3 +77,8 @@ video {
 input#send-audio {
   margin-left: 1em;
 }
+
+#media-view {
+  display: flex;
+  flex-direction: row;
+}
