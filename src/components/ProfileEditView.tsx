@@ -8,6 +8,18 @@ interface Props {
   user?: PublicUser;
 }
 
+//shep: issue #45. Turns ' ' into '-'
+function crushSpaces(s: string) : string{
+    if( s.includes(" ")){
+        console.log("spaces detected " + s);
+        while(s.includes(" ")){
+            s = s.replace(" ", "-");
+        }
+        console.log("spaces crushed: " + s);
+    }
+    return s;
+}
+
 export default function (props: Props) {
   const { defaultHandle, user } = props;
 
@@ -54,7 +66,14 @@ export default function (props: Props) {
         type="text"
         id="username"
         value={handle}
-        onChange={(e) => setHandle(e.currentTarget.value)}
+        onChange={(e) => {
+            //shep: issue #45, prevent spaces in usernames
+            let s = crushSpaces(e.currentTarget.value);
+            if( s.localeCompare(e.currentTarget.value) != 0 ) {
+                e.currentTarget.value = s;
+            }
+            setHandle(e.currentTarget.value);
+        }}
       />
       <br />
       <label htmlFor="realname">Real Name:</label>{" "}
@@ -97,7 +116,13 @@ export default function (props: Props) {
         onChange={(e) => setDescription(e.currentTarget.value)}
       />
       <br />
-      <button onClick={submit}>Submit</button>
+      <button
+          //shep: issue #45, double checking that spaces didn't sneak into handle.
+          onClick={(e) => {
+              setHandle(crushSpaces(handle));
+              submit();
+          }}
+      >Submit</button>
     </div>
   );
 }
