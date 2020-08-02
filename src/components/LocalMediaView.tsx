@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { toggleVideo, toggleAudio, localMediaStream } from "../webRTC";
 import { Video } from "./MediaChatView";
 
-export default function () {
+export default function (props: { speaking: boolean }) {
   const [sendVideo, setUseVideo] = useState(true);
   const [sendAudio, setUseAudio] = useState(true);
 
@@ -19,7 +19,10 @@ export default function () {
   return (
     <div id="my-video">
       You:
-      <Video srcObject={localMediaStream()} />
+      <Video
+        srcObject={localMediaStream()}
+        className={props.speaking ? "speaking" : "self"}
+      />
       <input
         type="checkbox"
         id="send-video"

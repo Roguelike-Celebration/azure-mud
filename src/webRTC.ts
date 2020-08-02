@@ -7,6 +7,7 @@ import {
   P2PDataReceivedAction,
   P2PStreamReceivedAction,
   P2PConnectionClosedAction,
+  MediaReceivedSpeakingDataAction,
 } from "./Actions";
 
 let mediaStream: MediaStream;
@@ -86,6 +87,10 @@ export const getMediaStream = async (
     dispatch(
       LocalMediaStreamOpenedAction(stream.id, { videoDeviceId, audioDeviceId })
     );
+
+    peerAnalysers = peerAnalysers.filter((a) => a[0] !== "senf");
+    peerAnalysers.push(["self", setUpAnalyser(stream)]);
+    startAnalyserLoop(dispatch);
   }
 
   return stream;
@@ -141,6 +146,7 @@ export async function receiveSignalData(
 
 let peers: { [id: string]: SimplePeer.Instance } = {};
 let peerStreams: { [id: string]: MediaStream } = {};
+let peerAnalysers: [string, AnalyserNode][] = [];
 
 export function sendToPeer(id: string, msg: string) {
   peers[id].send(msg);
@@ -197,5 +203,66 @@ function setUpPeer(
     console.log("Received stream", peerId);
     peerStreams[peerId] = stream;
     dispatch(P2PStreamReceivedAction(peerId));
+
+    const analyser = setUpAnalyser(stream);
+    peerAnalysers.push([peerId, analyser]);
   });
+}
+
+function setUpAnalyser(stream: MediaStream): AnalyserNode {
+  const audioCtx = new (window.AudioContext ||
+    (window as any).webkitAudioContext)();
+  const source = audioCtx.createMediaStreamSource(stream);
+  var analyser = audioCtx.createAnalyser();
+  analyser.minDecibels = -90;
+  analyser.maxDecibels = -10;
+  analyser.smoothingTimeConstant = 0.85;
+
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
+
+  return analyser;
+}
+
+let shouldStopAnalysing = false;
+function startAnalyserLoop(dispatch: Dispatch<Action>) {
+  console.log("Starting analyser loop");
+
+  const average = (ns: Uint8Array) => {
+    let sum = 0;
+    for (let i = 0; i < ns.length; i++) {
+      sum += ns[i];
+    }
+    return (sum /= ns.length);
+  };
+
+  const analyse = () => {
+    const list: string[] = [];
+
+    if (shouldStopAnalysing) {
+      shouldStopAnalysing = false;
+      return;
+    }
+
+    peerAnalysers.forEach(([id, a]) => {
+      a.fftSize = 2048;
+      const bufferLength = a.fftSize;
+      let byteFrequencyDataArray = new Uint8Array(bufferLength);
+
+      a.getByteFrequencyData(byteFrequencyDataArray);
+
+      if (average(byteFrequencyDataArray) > 0) {
+        list.push(id);
+      }
+    });
+
+    dispatch(MediaReceivedSpeakingDataAction(list));
+
+    window.requestAnimationFrame(analyse);
+  };
+  window.requestAnimationFrame(analyse);
+}
+
+function stopAnalyserLoop() {
+  shouldStopAnalysing = true;
 }

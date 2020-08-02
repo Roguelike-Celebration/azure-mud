@@ -85,6 +85,7 @@ const App = () => {
         mediaDevices={state.mediaDevices}
         videoDeviceId={state.currentVideoDeviceId}
         audioDeviceId={state.currentAudioDeviceId}
+        speakingPeerIds={state.speakingPeerIds}
       />
     );
   }

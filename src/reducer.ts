@@ -40,6 +40,7 @@ export interface State {
   mediaDevices?: MediaDeviceInfo[];
   currentVideoDeviceId?: string;
   currentAudioDeviceId?: string;
+  speakingPeerIds?: string[];
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -52,6 +53,7 @@ export const defaultState: State = {
   messages: [],
   userMap: {},
   inMediaChat: false,
+  speakingPeerIds: [],
 };
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -184,6 +186,10 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.LocalMediaDeviceListReceived) {
     state.mediaDevices = action.value;
+  }
+
+  if (action.type === ActionType.MediaReceivedSpeakingData) {
+    state.speakingPeerIds = action.value;
   }
 
   if (action.type === ActionType.StopVideoChat) {

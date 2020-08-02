@@ -39,31 +39,26 @@ export default function (props: Props) {
   // So, if the deviceId isn't found in our list, we try to match based on label and grab the Id.
   // The video and audio paths are identical.
   console.log(props);
-  let defaultVideo, defaultAudio;
-  if (videoDevices) {
-    defaultVideo = props.initialVideoDeviceId;
-    if (defaultVideo) {
-      if (!videoDevices.find((v) => v.deviceId === defaultVideo)) {
-        const foundByName = videoDevices.find((v) => v.label === defaultVideo);
-        if (foundByName) {
-          defaultVideo = foundByName.deviceId;
-        } else {
-          defaultVideo = undefined;
-        }
+  let defaultVideo = props.initialVideoDeviceId;
+  if (defaultVideo) {
+    if (!videoDevices.find((v) => v.deviceId === defaultVideo)) {
+      const foundByName = videoDevices.find((v) => v.label === defaultVideo);
+      if (foundByName) {
+        defaultVideo = foundByName.deviceId;
+      } else {
+        defaultVideo = undefined;
       }
     }
   }
 
-  if (audioDevices) {
-    defaultAudio = props.initialAudioDeviceId;
-    if (defaultAudio) {
-      if (!audioDevices.find((d) => d.deviceId === defaultAudio)) {
-        const foundByName = audioDevices.find((d) => d.label === defaultAudio);
-        if (foundByName) {
-          defaultAudio = foundByName.deviceId;
-        } else {
-          defaultAudio = undefined;
-        }
+  let defaultAudio = props.initialAudioDeviceId;
+  if (defaultAudio) {
+    if (!audioDevices.find((d) => d.deviceId === defaultAudio)) {
+      const foundByName = audioDevices.find((d) => d.label === defaultAudio);
+      if (foundByName) {
+        defaultAudio = foundByName.deviceId;
+      } else {
+        defaultAudio = undefined;
       }
     }
   }

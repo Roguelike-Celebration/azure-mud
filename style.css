@@ -71,6 +71,7 @@ span.name {
 /** WebRTC chat */
 video {
   display: block;
+  box-sizing: border-box;
   width: 28%;
 }
 
@@ -81,4 +82,8 @@ input#send-audio {
 #media-view {
   display: flex;
   flex-flow: row wrap;
+}
+
+video.speaking {
+  border: 5px solid green;
 }

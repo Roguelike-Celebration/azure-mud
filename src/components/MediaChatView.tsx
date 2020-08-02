@@ -18,6 +18,8 @@ interface MediaProps {
   localMediaStreamId?: string;
   mediaDevices?: MediaDeviceInfo[];
 
+  speakingPeerIds: string[];
+
   videoDeviceId?: string;
   audioDeviceId?: string;
 }
@@ -26,7 +28,9 @@ export default function (props: MediaProps) {
   let playerVideo, otherVideos, mediaSelector;
   const dispatch = useContext(DispatchContext);
   console.log("Re-rendering media chat view?");
-  playerVideo = <LocalMediaView />;
+  playerVideo = (
+    <LocalMediaView speaking={props.speakingPeerIds.includes("self")} />
+  );
 
   if (props.mediaDevices) {
     const clickJoin = () => {
@@ -57,7 +61,13 @@ export default function (props: MediaProps) {
         return (
           <div>
             <NameView userId={peerId} id={`stream-nameview-${peerId}`} />:
-            <Video srcObject={stream} id={`stream-${peerId}`} />
+            <Video
+              srcObject={stream}
+              id={`stream-${peerId}`}
+              className={
+                props.speakingPeerIds.includes(peerId) ? "speaking" : ""
+              }
+            />
           </div>
         );
       }

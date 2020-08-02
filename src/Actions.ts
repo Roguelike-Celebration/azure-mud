@@ -22,6 +22,7 @@ export type Action =
   | P2PWaitingForConnectionsAction
   | LocalMediaStreamOpenedAction
   | LocalMediaDeviceListReceivedAction
+  | MediaReceivedSpeakingDataAction
   | StopVideoChatAction
   | ErrorAction
   | SendMessageAction
@@ -54,6 +55,7 @@ export enum ActionType {
   LocalMediaStreamOpened = "LOCAL_MEDIASTREAM_OPENED",
   StopVideoChat = "STOP_VIDEO_CHAT",
   LocalMediaDeviceListReceived = "LOCAL_MEDIA_DEVICE_LIST_RECEIVED",
+  MediaReceivedSpeakingData = "MEDIA_RECEIVED_SPEAKING_DATA",
   // UI actions
   SendMessage = "SEND_MESSAGE",
   SetName = "SET_NAME",
@@ -322,6 +324,20 @@ export const LocalMediaDeviceListReceivedAction = (
   return {
     type: ActionType.LocalMediaDeviceListReceived,
     value: devices,
+  };
+};
+
+interface MediaReceivedSpeakingDataAction {
+  type: ActionType.MediaReceivedSpeakingData;
+  value: string[];
+}
+
+export const MediaReceivedSpeakingDataAction = (
+  peerIds: string[]
+): MediaReceivedSpeakingDataAction => {
+  return {
+    type: ActionType.MediaReceivedSpeakingData,
+    value: peerIds,
   };
 };
 
