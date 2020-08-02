@@ -16,7 +16,10 @@ export const DispatchContext = createContext(null);
 export const UserMapContext = createContext(null);
 
 const App = () => {
-  const [state, dispatch] = useReducerWithThunk<Action, State>(reducer, defaultState);
+  const [state, dispatch] = useReducerWithThunk<Action, State>(
+    reducer,
+    defaultState
+  );
 
   useEffect(() => {
     // TODO: This logic is gnarly enough I'd love to abstract it somewhere
@@ -80,6 +83,8 @@ const App = () => {
         localMediaStreamId={state.localMediaStreamId}
         peerIds={state.otherMediaStreamPeerIds}
         mediaDevices={state.mediaDevices}
+        videoDeviceId={state.currentVideoDeviceId}
+        audioDeviceId={state.currentAudioDeviceId}
       />
     );
   }

@@ -30,11 +30,6 @@ export default (props: { room?: Room }) => {
 
   const joinVideoChat = async () => {
     prepareToStartVideoChat();
-
-    // TODO: A sensible refactor would be to refactor this action to not take an arg
-    // and have it be a thunk that fetches the device list.
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    dispatch(LocalMediaDeviceListReceivedAction(devices));
   };
 
   const leaveVideoChat = () => {

@@ -71,7 +71,7 @@ span.name {
 /** WebRTC chat */
 video {
   display: block;
-  width: 30vw;
+  width: 28%;
 }
 
 input#send-audio {

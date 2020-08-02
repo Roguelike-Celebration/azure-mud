@@ -293,13 +293,22 @@ export const P2PWaitingForConnectionsAction = (): P2PWaitingForConnectionsAction
 
 interface LocalMediaStreamOpenedAction {
   type: ActionType.LocalMediaStreamOpened;
-  value: string;
+  value: {
+    streamId: string;
+    videoDeviceId: string;
+    audioDeviceId: string;
+  };
 }
 
 export const LocalMediaStreamOpenedAction = (
-  streamId: string
+  streamId: string,
+  devices: { videoDeviceId: string; audioDeviceId: string }
 ): LocalMediaStreamOpenedAction => {
-  return { type: ActionType.LocalMediaStreamOpened, value: streamId };
+  const { videoDeviceId, audioDeviceId } = devices;
+  return {
+    type: ActionType.LocalMediaStreamOpened,
+    value: { streamId, videoDeviceId, audioDeviceId },
+  };
 };
 
 interface LocalMediaDeviceListReceivedAction {

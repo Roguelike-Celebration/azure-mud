@@ -38,6 +38,8 @@ export interface State {
 
   inMediaChat: boolean;
   mediaDevices?: MediaDeviceInfo[];
+  currentVideoDeviceId?: string;
+  currentAudioDeviceId?: string;
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -49,8 +51,8 @@ export const defaultState: State = {
   hasRegistered: false,
   messages: [],
   userMap: {},
-  inMediaChat: false
-}
+  inMediaChat: false,
+};
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
 export default (oldState: State, action: Action): State => {
@@ -150,7 +152,9 @@ export default (oldState: State, action: Action): State => {
 
   // WebRTC
   if (action.type === ActionType.LocalMediaStreamOpened) {
-    state.localMediaStreamId = action.value;
+    state.localMediaStreamId = action.value.streamId;
+    state.currentAudioDeviceId = action.value.audioDeviceId;
+    state.currentVideoDeviceId = action.value.videoDeviceId;
   }
 
   if (action.type === ActionType.P2PStreamReceived) {
@@ -185,7 +189,7 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.StopVideoChat) {
     setNetworkMediaChatStatus(false);
     disconnectAllPeers();
-    delete state.localMediaStreamId = false;
+    delete state.localMediaStreamId;
     delete state.otherMediaStreamPeerIds;
     state.inMediaChat = false;
   }

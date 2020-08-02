@@ -17,6 +17,9 @@ interface MediaProps {
   peerIds?: string[];
   localMediaStreamId?: string;
   mediaDevices?: MediaDeviceInfo[];
+
+  videoDeviceId?: string;
+  audioDeviceId?: string;
 }
 
 export default function (props: MediaProps) {
@@ -34,7 +37,11 @@ export default function (props: MediaProps) {
 
     mediaSelector = (
       <div>
-        <MediaSelectorView devices={props.mediaDevices} />
+        <MediaSelectorView
+          devices={props.mediaDevices}
+          initialAudioDeviceId={props.audioDeviceId}
+          initialVideoDeviceId={props.videoDeviceId}
+        />
         <button id="join" onClick={clickJoin}>
           Join
         </button>

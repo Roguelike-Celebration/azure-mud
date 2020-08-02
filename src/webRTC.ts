@@ -59,7 +59,33 @@ export const getMediaStream = async (
   mediaStream = stream;
 
   if (dispatch) {
-    dispatch(LocalMediaStreamOpenedAction(stream.id));
+    let videoDeviceId, audioDeviceId;
+
+    // HACK: getCapabilities() isn't supported in Firefox
+    // So we need to check if it exists before calling.
+    // If it doesn't exist, MediaSelectorView finds the deviceId with a label lookup.
+
+    const videoStream = stream.getVideoTracks()[0];
+    if (videoStream) {
+      if (videoStream.getCapabilities) {
+        videoDeviceId = videoStream.getCapabilities().deviceId;
+      } else {
+        videoDeviceId = videoStream.label;
+      }
+    }
+
+    const audioStream = stream.getAudioTracks()[0];
+    if (audioStream) {
+      if (audioStream.getCapabilities) {
+        audioDeviceId = audioStream.getCapabilities().deviceId;
+      } else {
+        audioDeviceId = audioStream.label;
+      }
+    }
+
+    dispatch(
+      LocalMediaStreamOpenedAction(stream.id, { videoDeviceId, audioDeviceId })
+    );
   }
 
   return stream;
