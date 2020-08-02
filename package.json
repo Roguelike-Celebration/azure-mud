@@ -15,17 +15,16 @@
   "license": "ISC",
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
-    "@types/lodash": "^4.14.158",
-    "@types/react": "^16.9.43",
-    "@types/react-dom": "^16.9.8",
     "axios": "^0.19.2",
-    "paper": "^0.12.4",
     "react": "^16.13.1",
     "react-contextmenu": "^2.14.0",
     "react-dom": "^16.13.1",
     "simple-peer": "^9.7.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.158",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
     "@types/simple-peer": "^9.6.0",
     "gh-pages": "^3.1.0",
     "parcel": "^1.12.4",
