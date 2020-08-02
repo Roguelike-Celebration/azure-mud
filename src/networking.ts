@@ -18,6 +18,7 @@ import {
   UserMapAction,
   ModMessageAction,
   LocalMediaDeviceListReceivedAction,
+  IsRegisteredAction,
 } from "./Actions";
 import { User } from "../server/src/user";
 import { startSignaling, receiveSignalData, getMediaStream } from "./webRTC";
@@ -43,7 +44,14 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
 }
 
 export async function updateProfile(user: Partial<User>) {
-  await callAzureFunction("updateProfile", { user });
+  const result = await callAzureFunction("updateProfile", { user });
+  if (result.valid) {
+    // TODO: This *should* properly kick the user to the MUD space,
+    // but might have unexpected side effects
+    // If this doesn't work as expected, just call window.refresh() /shrug
+    myDispatch(IsRegisteredAction());
+    connect(user.id, myDispatch);
+  }
 }
 
 export async function checkIsRegistered(): Promise<boolean> {
