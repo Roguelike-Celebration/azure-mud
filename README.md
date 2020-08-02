@@ -22,6 +22,8 @@ On the frontend, it's a rich single-page webapp built in TypeScript and React, u
 
 ### Backend Dev
 
+This requires your own [Azure subscription](https://azure.com/free/?WT.mc_id=devto-blog-emwalker). As a warning: this costs quite a bit of money to run. If you don't already have an Azure account/subscription, you'll get a few hundred bucks to use your first month, but if that's not the case you will want to keep an eye on the fact that **running this backend will cost you actual money**.
+
 1. Deploy the `server` folder to a new Azure Function App instance you control. I recommend using VS Code and the VS Code Azure Functions extension. See the "Publish the project to Azure" section of [this tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-javascript?WT.mc_id=github-code-emwalker) for details. You can also use the Azure CLI or any other method.
 
 2) In the Azure Portal, sign up for a new [Azure SignalR Service](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview?WT.mc_id=github-code-emwalker) instance. For development purposes, you can probably start with the free tier.
