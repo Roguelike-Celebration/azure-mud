@@ -58,7 +58,8 @@ export async function updateUserProfile(userId: string, data: Partial<User>) {
     username: newProfile.username,
   });
 
-  return await DB.setUserProfile(userId, newProfile);
+  await DB.setUserProfile(userId, newProfile);
+  return newProfile;
 }
 
 export async function getFullUser(userId: string): Promise<User | undefined> {

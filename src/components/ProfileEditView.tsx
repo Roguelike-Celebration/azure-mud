@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 import { updateProfile } from "../networking";
+import { PublicUser } from "../../server/src/user";
 
 interface Props {
   isFTUE: boolean;
   defaultHandle?: string;
+  user?: PublicUser;
 }
 
 export default function (props: Props) {
-  const [handle, setHandle] = useState(props.defaultHandle || "");
-  const [realName, setRealName] = useState("");
-  const [pronouns, setPronouns] = useState("");
-  const [description, setDescription] = useState("");
-  const [askMeAbout, setAskMeAbout] = useState("");
-  const [url, setUrl] = useState("");
+  const { defaultHandle, user } = props;
+
+  const [handle, setHandle] = useState(
+    (user && user.username) || defaultHandle || ""
+  );
+  const [realName, setRealName] = useState((user && user.realName) || "");
+  const [pronouns, setPronouns] = useState((user && user.pronouns) || "");
+  const [description, setDescription] = useState(
+    (user && user.description) || ""
+  );
+  const [askMeAbout, setAskMeAbout] = useState((user && user.askMeAbout) || "");
+  const [url, setUrl] = useState((user && user.url) || "");
+
+  const close = () => {
+    window.location.reload();
+  };
 
   const submit = () => {
     updateProfile({
@@ -26,6 +38,17 @@ export default function (props: Props) {
   };
   return (
     <div>
+      {props.isFTUE ? (
+        ""
+      ) : (
+        <a
+          role="button"
+          onClick={close}
+          style={{ float: "right", cursor: "pointer" }}
+        >
+          x
+        </a>
+      )}
       <label htmlFor="username">Username:</label>{" "}
       <input
         type="text"

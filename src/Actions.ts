@@ -5,6 +5,7 @@ import { PublicUser, MinimalUser } from "../server/src/user";
 import { Room } from "./Room";
 
 export type Action =
+  | ReceivedMyProfileAction
   | UpdatedCurrentRoomAction
   | UpdatedRoomDataAction
   | UpdatedPresenceAction
@@ -30,12 +31,14 @@ export type Action =
   | SetNameAction
   | StartWhisperAction
   | ShowProfileAction
+  | ShowEditProfileAction
   | AuthenticateAction
   | IsRegisteredAction
   | BanToggleAction;
 
 export enum ActionType {
   // Server-driven action
+  ReceivedMyProfile = "RECEIVED_MY_PROFILE",
   UpdatedCurrentRoom = "UPDATED_CURRENT_ROOM",
   UpdatedRoomData = "UPDATED_ROOM_DATA",
   UpdatedPresence = "UPDATED_PRESENCE",
@@ -63,11 +66,26 @@ export enum ActionType {
   SetName = "SET_NAME",
   StartWhisper = "START_WHISPER",
   ShowProfile = "SHOW_PROFILE",
+  ShowEditProfile = "SHOW_EDIT_PROFILE",
   //
   Authenticate = "AUTHENTICATE",
   IsRegistered = "IS_REGISTERED",
   BanToggle = "BAN_TOGGLE",
 }
+
+interface ReceivedMyProfileAction {
+  type: ActionType.ReceivedMyProfile;
+  value: PublicUser;
+}
+
+export const ReceivedMyProfileAction = (
+  user: PublicUser
+): ReceivedMyProfileAction => {
+  return {
+    type: ActionType.ReceivedMyProfile,
+    value: user,
+  };
+};
 
 interface UpdatedCurrentRoomAction {
   type: ActionType.UpdatedCurrentRoom;
@@ -439,6 +457,16 @@ export const ShowProfileActionForFetchedUser = (
   return {
     type: ActionType.ShowProfile,
     value: user,
+  };
+};
+
+interface ShowEditProfileAction {
+  type: ActionType.ShowEditProfile;
+}
+
+export const ShowEditProfileAction = (): ShowEditProfileAction => {
+  return {
+    type: ActionType.ShowEditProfile,
   };
 };
 

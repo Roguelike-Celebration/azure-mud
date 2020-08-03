@@ -21,6 +21,7 @@ import {
   UpdatedCurrentRoomAction,
   UpdatedRoomDataAction,
   UpdatedPresenceAction,
+  ReceivedMyProfileAction,
 } from "./Actions";
 import { User } from "../server/src/user";
 import { startSignaling, receiveSignalData, getMediaStream } from "./webRTC";
@@ -46,6 +47,10 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
     dispatch(UpdatedRoomDataAction(convertServerRoomData(result.roomData)));
   }
 
+  if (result.profile) {
+    dispatch(ReceivedMyProfileAction(result.profile));
+  }
+
   dispatch(UpdatedPresenceAction(result.presenceData));
 
   connectSignalR(userId, dispatch);
@@ -54,11 +59,9 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
 export async function updateProfile(user: Partial<User>) {
   const result = await callAzureFunction("updateProfile", { user });
   if (result.valid) {
-    // TODO: This *should* properly kick the user to the MUD space,
-    // but might have unexpected side effects
-    // If this doesn't work as expected, just call window.refresh() /shrug
-    myDispatch(IsRegisteredAction());
-    connect(user.id, myDispatch);
+    // TODO: I'm not sure this does what we want.
+    // Need to test this on the new user flow.
+    window.location.reload();
   }
 }
 
@@ -188,6 +191,10 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   connection.on("playerEntered", (name, from) => {
     if (name === userId) return;
     dispatch(PlayerEnteredAction(name, from));
+  });
+
+  connection.on("myProfile", (profile) => {
+    dispatch(ReceivedMyProfileAction(profile));
   });
 
   connection.on("whisper", (otherId, message) => {

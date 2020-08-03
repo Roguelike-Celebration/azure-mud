@@ -70,7 +70,7 @@ const LeftView = (props: LeftMessage & { id: string }) => (
   </div>
 );
 
-const MovedView = (props: MovedRoomMessage & { to: string }) => (
+const MovedView = (props: MovedRoomMessage & { id: string }) => (
   <div>You have moved to {props.to}.</div>
 );
 

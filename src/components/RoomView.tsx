@@ -7,13 +7,11 @@ import {
 } from "../networking";
 import NameView from "./NameView";
 import { DispatchContext } from "../App";
-import {
-  StopVideoChatAction,,
-} from "../Actions";
+import { StopVideoChatAction } from "../Actions";
 
 interface Props {
-  room?: Room
-  userId?: string
+  room?: Room;
+  userId?: string;
 }
 
 export default (props: Props) => {
@@ -75,7 +73,7 @@ export default (props: Props) => {
   );
 };
 
-const PresenceView = (props: { users?: string[], userId?: string }) => {
+const PresenceView = (props: { users?: string[]; userId?: string }) => {
   let { users, userId } = props;
 
   if (users && userId) {

@@ -1,5 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 
+import DB from "../src/redis";
+
 import { RoomResponse } from "../src/types";
 import { addUserToRoomPresence } from "../src/roomPresence";
 import authenticate from "../src/authenticate";
@@ -31,6 +33,8 @@ const httpTrigger: AzureFunction = async function (
         presenceData: await allPresenceData(),
         users: userMap,
         roomData,
+        // TODO: Instead of another DB call, delete the non-public fields from the user we already have?
+        profile: await DB.getPublicUser(user.id),
       } as RoomResponse,
     };
 

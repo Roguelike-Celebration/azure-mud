@@ -1,4 +1,4 @@
-import { Action, ActionType, StopVideoChatAction } from "./Actions";
+import { Action, ActionType } from "./Actions";
 import {
   Message,
   createConnectedMessage,
@@ -31,6 +31,7 @@ export interface State {
   userId?: string;
   userMap: { [userId: string]: MinimalUser };
   roomData: { [roomId: string]: Room };
+  profileData?: PublicUser;
 
   messages: Message[];
 
@@ -44,6 +45,12 @@ export interface State {
   currentVideoDeviceId?: string;
   currentAudioDeviceId?: string;
   speakingPeerIds?: string[];
+
+  // Right now, the profile edit screen is the only time (other than onboarding)
+  // that we actively show a different modal screen replacing the chat view.
+  //
+  // If that assumption changes, yell at Em if she hasn't refactored this away.
+  showProfileEditScreen?: boolean;
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -67,6 +74,10 @@ export default (oldState: State, action: Action): State => {
   // TODO: This could hurt perf when we have a lot of messages
   let state: State = JSON.parse(JSON.stringify(oldState));
   state.prepopulatedInput = undefined;
+
+  if (action.type === ActionType.ReceivedMyProfile) {
+    state.profileData = action.value;
+  }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
     state.roomId = action.value;
@@ -249,6 +260,11 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.ShowProfile) {
     state.visibleProfile = action.value;
   }
+
+  if (action.type === ActionType.ShowEditProfile) {
+    state.showProfileEditScreen = true;
+  }
+
   if (action.type === ActionType.Authenticate) {
     state.checkedAuthentication = true;
 

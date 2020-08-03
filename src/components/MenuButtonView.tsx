@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaChevronDown } from "react-icons/fa";
+
 import { ContextMenuTrigger, ContextMenu, MenuItem } from "react-contextmenu";
 import config from "../config";
+import { ShowEditProfileAction } from "../Actions";
+import { DispatchContext } from "../App";
+
 export default function (props: { username: string }) {
+  const dispatch = useContext(DispatchContext);
+
   const logOut = () => {
     const prompt = confirm("Are you sure you want to log out?");
     if (prompt) {
@@ -15,7 +21,7 @@ export default function (props: { username: string }) {
   };
 
   const showProfile = () => {
-    // TODO
+    dispatch(ShowEditProfileAction());
   };
 
   return (

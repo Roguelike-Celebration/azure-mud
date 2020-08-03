@@ -68,12 +68,13 @@ const App = () => {
     );
   }
 
-  if (!state.hasRegistered) {
+  if (state.showProfileEditScreen || !state.hasRegistered) {
     // Fetching the handle like this is silly.
     return (
       <ProfileEditView
-        isFTUE={true}
+        isFTUE={!state.hasRegistered}
         defaultHandle={state.userMap[state.userId].username}
+        user={state.profileData}
       />
     );
   }

@@ -46,7 +46,7 @@ interface Database {
   getPublicUser(userId: string): Promise<User | undefined>;
 
   /** Overwrites the stored user profile with a new one */
-  setUserProfile(userId: string, data: User);
+  setUserProfile(userId: string, data: User): Promise<User>;
 
   /** Given a user ID, returns that player's minimal data.
    * i.e. their username and if they're a mod */

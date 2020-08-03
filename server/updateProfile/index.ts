@@ -28,12 +28,10 @@ const httpTrigger: AzureFunction = async function (
     data.twitterHandle = twitterHandle;
   }
 
-  await updateUserProfile(userId, data);
-
   // TODO: We'll likely eventually have some validation here
   context.res = {
     status: 200,
-    valid: true,
+    body: { valid: true },
   };
 };
 
