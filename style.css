@@ -87,3 +87,14 @@ input#send-audio {
 video.speaking {
   border: 5px solid green;
 }
+
+/** Sidebar */
+nav {
+  float: left;
+  max-width: 260px;
+  list-style: none;
+}
+
+nav li {
+  cursor: pointer;
+}
