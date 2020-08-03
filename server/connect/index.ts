@@ -60,11 +60,18 @@ const httpTrigger: AzureFunction = async function (
 
     context.log("Setting messages");
 
+    const minimalUser = minimizeUser(user);
+
     context.bindings.signalRMessages = [
       {
         groupName: user.roomId,
         target: "playerConnected",
-        arguments: [minimizeUser(user)],
+        arguments: [minimalUser],
+      },
+      {
+        groupName: "users",
+        target: "usernameMap",
+        arguments: [{ [user.id]: minimalUser }],
       },
       await globalPresenceMessage([user.roomId]),
     ];
