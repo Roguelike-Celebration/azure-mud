@@ -251,7 +251,7 @@ function startAnalyserLoop(dispatch: Dispatch<Action>) {
 
       a.getByteFrequencyData(byteFrequencyDataArray);
 
-      if (average(byteFrequencyDataArray) > 0) {
+      if (average(byteFrequencyDataArray) > 1) {
         list.push(id);
       }
     });
