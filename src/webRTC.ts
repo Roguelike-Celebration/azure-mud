@@ -219,7 +219,6 @@ function setUpAnalyser(stream: MediaStream): AnalyserNode {
   analyser.smoothingTimeConstant = 0.85;
 
   source.connect(analyser);
-  analyser.connect(audioCtx.destination);
 
   return analyser;
 }

@@ -22,6 +22,7 @@ export default function (props: { speaking: boolean }) {
       <Video
         srcObject={localMediaStream()}
         className={props.speaking ? "speaking" : "self"}
+        muted={true}
       />
       <input
         type="checkbox"
