@@ -98,3 +98,8 @@ nav {
 nav li {
   cursor: pointer;
 }
+
+#menu-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+}

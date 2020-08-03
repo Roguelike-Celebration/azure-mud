@@ -19,6 +19,7 @@
     "react": "^16.13.1",
     "react-contextmenu": "^2.14.0",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
     "simple-peer": "^9.7.2"
   },
   "devDependencies": {

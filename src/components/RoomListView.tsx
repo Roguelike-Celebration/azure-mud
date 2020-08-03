@@ -1,17 +1,22 @@
 import React from "react";
 import { Room } from "../Room";
 import { moveToRoom } from "../networking";
+import MenuButtonView from "./MenuButtonView";
 
 interface Props {
   rooms: Room[];
+  username: string;
 }
 
 export default function (props: Props) {
   return (
     <nav>
-      {props.rooms.map((r) => (
-        <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
-      ))}
+      <MenuButtonView username={props.username} />
+      <ul>
+        {props.rooms.map((r) => (
+          <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
+        ))}
+      </ul>
     </nav>
   );
 }
