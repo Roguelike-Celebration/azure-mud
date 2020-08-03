@@ -26,10 +26,12 @@ export interface State {
 
   hasRegistered: boolean;
 
-  room?: Room;
-  messages: Message[];
+  roomId?: string;
   userId?: string;
   userMap: { [userId: string]: MinimalUser };
+  roomData: { [roomId: string]: Room };
+
+  messages: Message[];
 
   prepopulatedInput?: string;
 
@@ -52,6 +54,7 @@ export const defaultState: State = {
   hasRegistered: false,
   messages: [],
   userMap: {},
+  roomData: {},
   inMediaChat: false,
   speakingPeerIds: [],
 };
@@ -64,9 +67,8 @@ export default (oldState: State, action: Action): State => {
   let state: State = JSON.parse(JSON.stringify(oldState));
   state.prepopulatedInput = undefined;
 
-  if (action.type === ActionType.UpdatedRoom) {
-    state.room = action.value;
-    state.room.users = state.room.users.filter((u) => u !== state.userId);
+  if (action.type === ActionType.UpdatedCurrentRoom) {
+    state.roomId = action.value;
 
     /** Here lies a giant hack.
      * So, the WebRTC connection handshake lives outside of Flux.
@@ -84,27 +86,37 @@ export default (oldState: State, action: Action): State => {
     (action as Action).type = ActionType.StopVideoChat;
   }
 
+  if (action.type === ActionType.UpdatedRoomData) {
+    state.roomData = { ...state.roomData, ...action.value };
+  }
+
   if (action.type === ActionType.UpdatedPresence) {
-    state.room.users = action.value.filter((u) => u !== state.userId);
+    if (state.roomData[action.value.roomId]) {
+      state.roomData[action.value.roomId].users = action.value.users.filter(
+        (u) => u !== state.userId
+      );
+    }
   }
 
   if (action.type === ActionType.PlayerConnected) {
     const user = action.value;
-    if (!state.room.users.includes(user.id)) {
-      state.room.users.push(user.id);
+    if (!state.roomData[state.roomId].users.includes(user.id)) {
+      state.roomData[state.roomId].users.push(user.id);
       state.messages.push(createConnectedMessage(user.id));
     }
     state.userMap[user.id] = user;
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
-    state.room.users = state.room.users.filter((u) => u !== action.value);
+    state.roomData[state.roomId].users = state.roomData[
+      state.roomId
+    ].users.filter((u) => u !== action.value);
     state.messages.push(createDisconnectedMessage(action.value));
   }
 
   if (action.type === ActionType.PlayerEntered) {
-    if (!state.room.users.includes(action.value.name)) {
-      state.room.users.push(action.value.name);
+    if (!state.roomData[state.roomId].users.includes(action.value.name)) {
+      state.roomData[state.roomId].users.push(action.value.name);
       state.messages.push(
         createEnteredMessage(action.value.name, action.value.from)
       );
@@ -112,7 +124,9 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.PlayerLeft) {
-    state.room.users = state.room.users.filter((u) => u !== action.value.name);
+    state.roomData[state.roomId].users = state.roomData[
+      state.roomId
+    ].users.filter((u) => u !== action.value.name);
     state.messages.push(createLeftMessage(action.value.name, action.value.to));
   }
 

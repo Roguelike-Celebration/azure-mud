@@ -50,7 +50,7 @@ export async function moveToRoom(
   context.res = {
     status: 200,
     body: {
-      room: to,
+      roomId: to.id,
       roomOccupants: await addUserToRoomPresence(user.id, to.id),
     } as RoomResponse,
   };

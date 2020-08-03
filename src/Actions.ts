@@ -5,7 +5,8 @@ import { PublicUser, MinimalUser } from "../server/src/user";
 import { Room } from "./Room";
 
 export type Action =
-  | UpdatedRoomAction
+  | UpdatedCurrentRoomAction
+  | UpdatedRoomDataAction
   | UpdatedPresenceAction
   | PlayerConnectedAction
   | PlayerDisconnectedAction
@@ -35,7 +36,8 @@ export type Action =
 
 export enum ActionType {
   // Server-driven action
-  UpdatedRoom = "UPDATED_ROOM",
+  UpdatedCurrentRoom = "UPDATED_CURRENT_ROOM",
+  UpdatedRoomData = "UPDATED_ROOM_DATA",
   UpdatedPresence = "UPDATED_PRESENCE",
   PlayerConnected = "PLAYER_CONNECTED",
   PlayerDisconnected = "PLAYER_DISCONNECTED",
@@ -67,29 +69,46 @@ export enum ActionType {
   BanToggle = "BAN_TOGGLE",
 }
 
-interface UpdatedRoomAction {
-  type: ActionType.UpdatedRoom;
-  value: Room;
+interface UpdatedCurrentRoomAction {
+  type: ActionType.UpdatedCurrentRoom;
+  value: string;
 }
 
-export const UpdatedRoomAction = (room: Room): UpdatedRoomAction => {
+export const UpdatedCurrentRoomAction = (
+  roomId: string
+): UpdatedCurrentRoomAction => {
   return {
-    type: ActionType.UpdatedRoom,
-    value: room,
+    type: ActionType.UpdatedCurrentRoom,
+    value: roomId,
+  };
+};
+
+interface UpdatedRoomDataAction {
+  type: ActionType.UpdatedRoomData;
+  value: { [roomId: string]: Room };
+}
+
+export const UpdatedRoomDataAction = (roomData: {
+  [roomId: string]: Room;
+}): UpdatedRoomDataAction => {
+  return {
+    type: ActionType.UpdatedRoomData,
+    value: roomData,
   };
 };
 
 interface UpdatedPresenceAction {
   type: ActionType.UpdatedPresence;
-  value: string[];
+  value: { roomId: string; users: string[] };
 }
 
 export const UpdatedPresenceAction = (
+  roomId: string,
   users: string[]
 ): UpdatedPresenceAction => {
   return {
     type: ActionType.UpdatedPresence,
-    value: users,
+    value: { roomId, users },
   };
 };
 

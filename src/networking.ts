@@ -5,7 +5,6 @@ import { RoomResponse, ErrorResponse } from "../server/src/types";
 import { Dispatch } from "react";
 import {
   Action,
-  UpdatedRoomAction,
   ErrorAction,
   PlayerConnectedAction,
   PlayerDisconnectedAction,
@@ -19,11 +18,14 @@ import {
   ModMessageAction,
   LocalMediaDeviceListReceivedAction,
   IsRegisteredAction,
+  UpdatedCurrentRoomAction,
+  UpdatedRoomDataAction,
+  UpdatedPresenceAction,
 } from "./Actions";
 import { User } from "../server/src/user";
 import { startSignaling, receiveSignalData, getMediaStream } from "./webRTC";
 import Config from "./config";
-import { convertServerRoom } from "./room";
+import { convertServerRoomData } from "./room";
 
 let myUserId: string;
 let myDispatch: Dispatch<Action>;
@@ -37,8 +39,14 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
   const result: RoomResponse = await callAzureFunction("connect");
 
   console.log(result);
-  dispatch(UpdatedRoomAction(convertServerRoom(result)));
+  dispatch(UpdatedCurrentRoomAction(result.roomId));
   dispatch(UserMapAction(result.users));
+
+  if (result.roomData) {
+    dispatch(UpdatedRoomDataAction(convertServerRoomData(result.roomData)));
+  }
+
+  dispatch(UpdatedPresenceAction(result.roomId, result.roomOccupants));
 
   connectSignalR(userId, dispatch);
 }
@@ -72,7 +80,8 @@ export async function moveToRoom(roomId: string) {
   if (result.error) {
     myDispatch(ErrorAction(result.error));
   } else {
-    myDispatch(UpdatedRoomAction(convertServerRoom(result)));
+    myDispatch(UpdatedCurrentRoomAction(result.roomId));
+    myDispatch(UpdatedPresenceAction(result.roomId, result.roomOccupants));
   }
 }
 
@@ -87,8 +96,9 @@ export async function sendChatMessage(text: string) {
   console.log(result);
 
   // If it's a /move command
-  if (result && result.room && result.roomOccupants) {
-    myDispatch(UpdatedRoomAction(convertServerRoom(result)));
+  if (result && result.roomId && result.roomOccupants) {
+    myDispatch(UpdatedCurrentRoomAction(result.roomId));
+    myDispatch(UpdatedPresenceAction(result.roomId, result.roomOccupants));
   } else if (result && result.user) {
     myDispatch(ShowProfileActionForFetchedUser(result.user));
   } else if (result && result.error) {

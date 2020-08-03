@@ -11,6 +11,7 @@ import { useReducerWithThunk } from "./useReducerWithThunk";
 import config from "./config";
 import MediaChatView from "./components/MediaChatView";
 import ProfileEditView from "./components/ProfileEditView";
+import RoomListView from "./components/RoomListView";
 
 export const DispatchContext = createContext(null);
 export const UserMapContext = createContext(null);
@@ -90,14 +91,16 @@ const App = () => {
     );
   }
 
+  console.log(state.roomId, state.roomData, state.roomData[state.roomId]);
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserMapContext.Provider
         value={{ userMap: state.userMap, myId: state.userId }}
       >
         <div id="main">
+          <RoomListView rooms={Object.values(state.roomData)} />
           {videoChatView}
-          <RoomView room={state.room} />
+          <RoomView room={state.roomData[state.roomId]} />
           {profile}
           <ChatView messages={state.messages} />
           <InputView prepopulated={state.prepopulatedInput} />
