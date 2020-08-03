@@ -1,6 +1,7 @@
 import * as Server from "../server/src/room";
 export interface Room {
   name: string;
+  shortName: string;
   id: string;
   description: string;
   users?: string[];
@@ -17,6 +18,7 @@ export function convertServerRoomData(roomData: {
     newObj[k] = {
       name: room.displayName,
       id: room.id,
+      shortName: room.shortName,
       description: room.description,
       allowsMedia: room.allowsMedia,
     };

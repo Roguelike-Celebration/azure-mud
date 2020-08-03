@@ -10,6 +10,7 @@ import {
   createErrorMessage,
   createShoutMessage,
   createModMessage,
+  createMovedRoomMessage,
 } from "./message";
 import { Room } from "./Room";
 import {
@@ -69,6 +70,12 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
     state.roomId = action.value;
+
+    // Add a local "you have moved to X room" message
+    if (state.roomData && state.roomData[action.value]) {
+      const room = state.roomData[action.value];
+      state.messages.push(createMovedRoomMessage(room.shortName));
+    }
 
     /** Here lies a giant hack.
      * So, the WebRTC connection handshake lives outside of Flux.

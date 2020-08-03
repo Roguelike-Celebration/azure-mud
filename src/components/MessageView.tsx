@@ -6,6 +6,7 @@ import {
   DisconnectedMessage,
   EnteredMessage,
   LeftMessage,
+  MovedRoomMessage,
   ChatMessage,
   WhisperMessage,
   ErrorMessage,
@@ -22,6 +23,7 @@ export default (props: { message: Message; id: string }) => {
     [MessageType.Disconnected]: DisconnectedMessageView,
     [MessageType.Entered]: EnteredView,
     [MessageType.Left]: LeftView,
+    [MessageType.MovedRoom]: MovedView,
     [MessageType.Chat]: ChatMessageView,
     [MessageType.Whisper]: WhisperView,
     [MessageType.Shout]: ShoutView,
@@ -66,6 +68,10 @@ const LeftView = (props: LeftMessage & { id: string }) => (
     <NameView id={props.id} userId={props.userId} /> has wandered off to{" "}
     {props.to}.
   </div>
+);
+
+const MovedView = (props: MovedRoomMessage & { to: string }) => (
+  <div>You have moved to {props.to}.</div>
 );
 
 const ChatMessageView = (props: ChatMessage & { id: string }) => (

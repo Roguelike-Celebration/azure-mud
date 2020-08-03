@@ -3,6 +3,7 @@ export type Message =
   | DisconnectedMessage
   | EnteredMessage
   | LeftMessage
+  | MovedRoomMessage
   | ChatMessage
   | WhisperMessage
   | ShoutMessage
@@ -14,6 +15,7 @@ export enum MessageType {
   Disconnected = "DISCONNECTED",
   Entered = "ENTERED",
   Left = "LEFT",
+  MovedRoom = "MOVED",
   Chat = "CHAT",
   Whisper = "WHISPER",
   Shout = "SHOUT",
@@ -62,6 +64,15 @@ export interface LeftMessage {
 
 export const createLeftMessage = (userId: string, to: string): LeftMessage => {
   return { type: MessageType.Left, userId, to };
+};
+
+export interface MovedRoomMessage {
+  type: MessageType.MovedRoom;
+  to: string;
+}
+
+export const createMovedRoomMessage = (to: string): MovedRoomMessage => {
+  return { type: MessageType.MovedRoom, to };
 };
 
 export interface ChatMessage {
