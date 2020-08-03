@@ -8,11 +8,15 @@ import {
 import NameView from "./NameView";
 import { DispatchContext } from "../App";
 import {
-  StopVideoChatAction,
-  LocalMediaDeviceListReceivedAction,
+  StopVideoChatAction,,
 } from "../Actions";
 
-export default (props: { room?: Room }) => {
+interface Props {
+  room?: Room
+  userId?: string
+}
+
+export default (props: Props) => {
   const dispatch = React.useContext(DispatchContext);
 
   const { room } = props;
@@ -65,14 +69,19 @@ export default (props: { room?: Room }) => {
             : "Loading current room...",
         }}
       />
-      {room ? <PresenceView users={room.users} /> : ""}
+      {room ? <PresenceView users={room.users} userId={props.userId} /> : ""}
       {videoChatButton}
     </div>
   );
 };
 
-const PresenceView = (props: { users?: string[] }) => {
-  const { users } = props;
+const PresenceView = (props: { users?: string[], userId?: string }) => {
+  let { users, userId } = props;
+
+  if (users && userId) {
+    users = users.filter((u) => u !== userId);
+  }
+
   if (users) {
     // TODO: This should happen in the reducer
     let names;

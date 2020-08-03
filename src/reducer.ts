@@ -92,9 +92,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UpdatedPresence) {
     if (state.roomData[action.value.roomId]) {
-      state.roomData[action.value.roomId].users = action.value.users.filter(
-        (u) => u !== state.userId
-      );
+      state.roomData[action.value.roomId].users = action.value.users;
     }
   }
 

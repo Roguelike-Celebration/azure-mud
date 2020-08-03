@@ -100,7 +100,7 @@ const App = () => {
         <div id="main">
           <RoomListView rooms={Object.values(state.roomData)} />
           {videoChatView}
-          <RoomView room={state.roomData[state.roomId]} />
+          <RoomView room={state.roomData[state.roomId]} userId={state.userId} />
           {profile}
           <ChatView messages={state.messages} />
           <InputView prepopulated={state.prepopulatedInput} />
