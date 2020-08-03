@@ -6,6 +6,7 @@ import {
   addUserToRoomPresence,
 } from "./roomPresence";
 import { User } from "./user";
+import { globalPresenceMessage } from "./globalPresenceMessage";
 
 export async function moveToRoom(
   user: User,
@@ -46,12 +47,12 @@ export async function moveToRoom(
   }
 
   await removeUserFromRoomPresence(user.id, user.roomId);
+  await addUserToRoomPresence(user.id, to.id);
 
   context.res = {
     status: 200,
     body: {
       roomId: to.id,
-      roomOccupants: await addUserToRoomPresence(user.id, to.id),
     } as RoomResponse,
   };
 
@@ -66,6 +67,7 @@ export async function moveToRoom(
       target: "playerEntered",
       arguments: [user.id, user.room.shortName],
     },
+    await globalPresenceMessage([user.roomId, to.id]),
   ];
 
   context.bindings.signalRGroupActions = [

@@ -3,7 +3,7 @@ import { User, MinimalUser } from "./user";
 
 export interface RoomResponse {
   roomId: string;
-  roomOccupants: string[];
+  presenceData: { [roomId: string]: string[] };
   users?: { [userId: string]: MinimalUser };
   roomData?: { [roomId: string]: Room };
 }

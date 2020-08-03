@@ -46,7 +46,7 @@ export async function connect(userId: string, dispatch: Dispatch<Action>) {
     dispatch(UpdatedRoomDataAction(convertServerRoomData(result.roomData)));
   }
 
-  dispatch(UpdatedPresenceAction(result.roomId, result.roomOccupants));
+  dispatch(UpdatedPresenceAction(result.presenceData));
 
   connectSignalR(userId, dispatch);
 }
@@ -81,7 +81,6 @@ export async function moveToRoom(roomId: string) {
     myDispatch(ErrorAction(result.error));
   } else {
     myDispatch(UpdatedCurrentRoomAction(result.roomId));
-    myDispatch(UpdatedPresenceAction(result.roomId, result.roomOccupants));
   }
 }
 
@@ -98,7 +97,6 @@ export async function sendChatMessage(text: string) {
   // If it's a /move command
   if (result && result.roomId && result.roomOccupants) {
     myDispatch(UpdatedCurrentRoomAction(result.roomId));
-    myDispatch(UpdatedPresenceAction(result.roomId, result.roomOccupants));
   } else if (result && result.user) {
     myDispatch(ShowProfileActionForFetchedUser(result.user));
   } else if (result && result.error) {
@@ -169,6 +167,10 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   connection.on("playerDisconnected", (otherId) => {
     console.log("Player left!", otherId);
     dispatch(PlayerDisconnectedAction(otherId));
+  });
+
+  connection.on("presenceData", (data) => {
+    dispatch(UpdatedPresenceAction(data));
   });
 
   connection.on("chatMessage", (otherId, message) => {

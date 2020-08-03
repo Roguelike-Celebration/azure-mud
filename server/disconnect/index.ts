@@ -2,6 +2,7 @@ import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { removeUserFromRoomPresence } from "../src/roomPresence";
 import authenticate from "../src/authenticate";
 import DB from "../src/redis";
+import { globalPresenceMessage } from "../src/globalPresenceMessage";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -39,6 +40,7 @@ const httpTrigger: AzureFunction = async function (
         target: "playerDisconnected",
         arguments: [user.id],
       },
+      await globalPresenceMessage([user.roomId]),
     ];
   });
 };

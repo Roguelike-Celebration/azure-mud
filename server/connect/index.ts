@@ -7,6 +7,10 @@ import { activeUserMap, minimizeUser, isMod } from "../src/user";
 import { userHeartbeatReceived } from "../src/heartbeat";
 import setUpRoomsForUser from "../src/setUpRoomsForUser";
 import { roomData } from "../src/room";
+import {
+  globalPresenceMessage,
+  allPresenceData,
+} from "../src/globalPresenceMessage";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -16,7 +20,7 @@ const httpTrigger: AzureFunction = async function (
 
   await authenticate(context, req, async (user) => {
     context.log("We have a user!", user.id);
-    const roomOccupants = await addUserToRoomPresence(user.id, user.roomId);
+    await addUserToRoomPresence(user.id, user.roomId);
     await userHeartbeatReceived(user.id);
 
     const userMap = await activeUserMap();
@@ -24,7 +28,7 @@ const httpTrigger: AzureFunction = async function (
       status: 200,
       body: {
         roomId: user.room.id,
-        roomOccupants,
+        presenceData: await allPresenceData(),
         users: userMap,
         roomData,
       } as RoomResponse,
@@ -62,6 +66,7 @@ const httpTrigger: AzureFunction = async function (
         target: "playerConnected",
         arguments: [minimizeUser(user)],
       },
+      await globalPresenceMessage([user.roomId]),
     ];
 
     context.log("Finished the thing");

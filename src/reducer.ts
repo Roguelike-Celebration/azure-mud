@@ -91,9 +91,11 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.UpdatedPresence) {
-    if (state.roomData[action.value.roomId]) {
-      state.roomData[action.value.roomId].users = action.value.users;
-    }
+    Object.keys(action.value).forEach((roomId) => {
+      if (state.roomData[roomId]) {
+        state.roomData[roomId].users = action.value[roomId];
+      }
+    });
   }
 
   if (action.type === ActionType.PlayerConnected) {

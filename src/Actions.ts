@@ -99,16 +99,15 @@ export const UpdatedRoomDataAction = (roomData: {
 
 interface UpdatedPresenceAction {
   type: ActionType.UpdatedPresence;
-  value: { roomId: string; users: string[] };
+  value: { [roomId: string]: string[] };
 }
 
-export const UpdatedPresenceAction = (
-  roomId: string,
-  users: string[]
-): UpdatedPresenceAction => {
+export const UpdatedPresenceAction = (data: {
+  [roomId: string]: string[];
+}): UpdatedPresenceAction => {
   return {
     type: ActionType.UpdatedPresence,
-    value: { roomId, users },
+    value: data,
   };
 };
 
