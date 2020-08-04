@@ -50,9 +50,13 @@ export default (props: { userId: string; id?: string }) => {
     ""
   );
 
+
+  //#issue 43: Left click for dropdowns in addition to rightclick. Apparently disabling "holdToDisplay" can make this happen,
+  //not sure what the side effects are though.
+  //https://github.com/vkbansal/react-contextmenu/issues/50#issuecomment-335855193
   return (
     <span className="name">
-      <ContextMenuTrigger id={props.id} renderTag="span">
+      <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
         <strong>
           {username ? username : "unknown"}
           {isMod ? "👑" : ""}

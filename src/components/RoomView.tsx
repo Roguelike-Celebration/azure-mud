@@ -76,6 +76,7 @@ export default (props: Props) => {
 const PresenceView = (props: { users?: string[]; userId?: string }) => {
   let { users, userId } = props;
 
+  //Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
   if (users && userId) {
     users = users.filter((u) => u !== userId);
   }
