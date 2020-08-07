@@ -49,13 +49,31 @@ export async function getUserIdForUsername(username: string) {
 }
 
 export async function updateUserProfile(userId: string, data: Partial<User>) {
-  const profile = (await DB.getPublicUser(userId)) || {};
-  const newProfile: User = { ...profile, ...data, id: userId } as User; // TODO: Could use real validation here?
+  // Copy/pasted from ProfileEditView.tsx in the client
+  function crushSpaces(s: string): string {
+    if (s.includes(" ")) {
+      console.log("spaces detected " + s);
+      while (s.includes(" ")) {
+        s = s.replace(" ", "-");
+      }
+      console.log("spaces crushed: " + s);
+    }
+    return s;
+  }
+
+  const profile: Partial<User> = (await DB.getPublicUser(userId)) || {};
+  const username = crushSpaces(data.username) || profile.username;
+  const newProfile: User = {
+    ...profile,
+    ...data,
+    id: userId,
+    username,
+  } as User; // TODO: Could use real validation here?
 
   // This may need to get fancier if MinimalProfile grows
   await DB.setMinimalProfileForUser(userId, {
     id: userId,
-    username: newProfile.username,
+    username: username,
   });
 
   await DB.setUserProfile(userId, newProfile);
