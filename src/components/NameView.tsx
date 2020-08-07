@@ -1,17 +1,19 @@
 import React, { useContext } from "react";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import { DispatchContext, UserMapContext } from "../App";
+import ReactTooltip from "react-tooltip";
 import {
   StartWhisperAction,
   ShowProfileAction,
   BanToggleAction,
 } from "../Actions";
+import { User } from "../../server/src/user";
 
 export default (props: { userId: string; id?: string }) => {
   const dispatch = useContext(DispatchContext);
   const { userMap, myId } = useContext(UserMapContext);
 
-  const user = userMap[props.userId];
+  const user: User = userMap[props.userId];
   const username = user && user.username;
   const isMod = user && user.isMod;
   const isBanned = user && user.isBanned;
@@ -50,12 +52,14 @@ export default (props: { userId: string; id?: string }) => {
     ""
   );
 
-
   //#issue 43: Left click for dropdowns in addition to rightclick. Apparently disabling "holdToDisplay" can make this happen,
   //not sure what the side effects are though.
   //https://github.com/vkbansal/react-contextmenu/issues/50#issuecomment-335855193
+  //
+  // Tooltip: If no pronouns are set, no tooltip will show
+
   return (
-    <span className="name">
+    <span className="name" data-tip={user.pronouns}>
       <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
         <strong>
           {username ? username : "unknown"}
@@ -71,6 +75,7 @@ export default (props: { userId: string; id?: string }) => {
         </MenuItem>
         {banButton}
       </ContextMenu>
+      <ReactTooltip />
     </span>
   );
 };

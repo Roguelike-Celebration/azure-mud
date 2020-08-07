@@ -10,6 +10,7 @@ import { roomData } from "./room";
 export interface MinimalUser {
   id: string;
   username: string;
+  pronouns?: string;
   isMod?: boolean;
   isBanned?: boolean;
 }
@@ -70,11 +71,15 @@ export async function updateUserProfile(userId: string, data: Partial<User>) {
     username,
   } as User; // TODO: Could use real validation here?
 
-  // This may need to get fancier if MinimalProfile grows
-  await DB.setMinimalProfileForUser(userId, {
+  let minimalProfile: MinimalUser = {
     id: userId,
     username: username,
-  });
+  };
+  if (newProfile.pronouns) {
+    minimalProfile.pronouns = newProfile.pronouns;
+  }
+  // This may need to get fancier if MinimalProfile grows
+  await DB.setMinimalProfileForUser(userId, minimalProfile);
 
   await DB.setUserProfile(userId, newProfile);
   return newProfile;
