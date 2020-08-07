@@ -6,10 +6,17 @@ import "../../style/chat.css";
 
 export default (props: { messages: Message[] }) => {
   React.useEffect(() => {
-    const lastMessage = document.querySelector("#messages div:last-of-type");
-    if (lastMessage) {
-      lastMessage.scrollIntoView();
-    }
+    const lastMessage = document.querySelector(
+      "#messages .message:last-of-type"
+    );
+    if (!lastMessage) return;
+
+    // I was using lastMessage.scrollIntoView()
+    // But I was seeing odd behavior when there was only one message on-screen.
+    // This very TS-unfriendly code fixes taht.
+    (lastMessage.parentNode as Element).scrollTop =
+      (lastMessage as any).offsetTop -
+      (lastMessage.parentNode as Element).offsetTop;
   });
 
   return (

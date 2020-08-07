@@ -11,6 +11,11 @@ body {
   margin: auto;
 }
 
+#main {
+  margin-left: 320px;
+  max-width: 880px;
+}
+
 a {
   color: lightseagreen;
   text-decoration: none;

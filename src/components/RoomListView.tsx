@@ -12,7 +12,7 @@ interface Props {
 
 export default function (props: Props) {
   return (
-    <nav>
+    <nav id="side-menu">
       <MenuButtonView username={props.username} />
       <ul>
         {props.rooms.map((r) => (

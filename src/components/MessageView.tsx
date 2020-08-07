@@ -41,7 +41,7 @@ export default (props: { message: Message; id: string }) => {
 };
 
 const ConnectedMessageView = (props: ConnectedMessage & { id: string }) => (
-  <div>
+  <div className="message">
     <NameView userId={props.userId} id={props.id} /> has connected.
   </div>
 );
@@ -49,14 +49,14 @@ const ConnectedMessageView = (props: ConnectedMessage & { id: string }) => (
 const DisconnectedMessageView = (
   props: DisconnectedMessage & { id: string }
 ) => (
-  <div>
+  <div className="message">
     <NameView userId={props.userId} id={props.id} /> has disconnected.
   </div>
 );
 
 const EnteredView = (props: EnteredMessage & { id: string }) => {
   return (
-    <div>
+    <div className="message">
       <NameView userId={props.userId} id={props.id} /> has entered from{" "}
       {props.from}.
     </div>
@@ -64,18 +64,18 @@ const EnteredView = (props: EnteredMessage & { id: string }) => {
 };
 
 const LeftView = (props: LeftMessage & { id: string }) => (
-  <div>
+  <div className="message">
     <NameView id={props.id} userId={props.userId} /> has wandered off to{" "}
     {props.to}.
   </div>
 );
 
 const MovedView = (props: MovedRoomMessage & { id: string }) => (
-  <div>You have moved to {props.to}.</div>
+  <div className="message">You have moved to {props.to}.</div>
 );
 
 const ChatMessageView = (props: ChatMessage & { id: string }) => (
-  <div>
+  <div className="message">
     <NameView userId={props.userId} id={props.id} />: {props.message}
   </div>
 );
@@ -83,7 +83,7 @@ const ChatMessageView = (props: ChatMessage & { id: string }) => (
 const WhisperView = (props: WhisperMessage & { id: string }) => {
   if (props.senderIsSelf) {
     return (
-      <div>
+      <div className="message">
         <em>
           You whisper to <NameView id={props.id} userId={props.userId} />:{" "}
           {props.message}
@@ -92,7 +92,7 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
     );
   } else {
     return (
-      <div>
+      <div className="message">
         <em>
           <NameView userId={props.userId} id={props.id} /> whispers:{" "}
           {props.message}
@@ -105,7 +105,7 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
 const ModMessageView = (props: ModMessage & { id: string }) => {
   if (props.senderIsSelf) {
     return (
-      <div>
+      <div className="message">
         <em>
           <strong>You</strong> said to the <strong>mod team</strong>:{" "}
           {props.message}
@@ -116,7 +116,7 @@ const ModMessageView = (props: ModMessage & { id: string }) => {
     );
   } else {
     return (
-      <div>
+      <div className="message">
         <em>
           ❗<NameView userId={props.userId} id={props.id} /> says to the{" "}
           <strong>mods</strong>:{props.message}❗
@@ -128,12 +128,12 @@ const ModMessageView = (props: ModMessage & { id: string }) => {
 
 const ShoutView = (props: ShoutMessage & { id: string }) => {
   return (
-    <div>
+    <div className="message">
       <NameView userId={props.userId} id={props.id} /> shouts: {props.message}
     </div>
   );
 };
 
 const ErrorView = (props: ErrorMessage & { id: string }) => {
-  return <div>{props.error}</div>;
+  return <div className="message">{props.error}</div>;
 };

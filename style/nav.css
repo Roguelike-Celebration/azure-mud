@@ -1,12 +1,13 @@
-nav {
+#side-menu {
   float: left;
   height: 100vh;
   list-style: none;
   margin-right: 60px;
-  max-width: 260px;
+  margin-top: 30px;
+  width: 260px;
 }
 
-nav li {
+#side-menu li {
   cursor: pointer;
 }
 
