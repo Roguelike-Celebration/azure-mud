@@ -1,0 +1,18 @@
+video {
+  display: block;
+  box-sizing: border-box;
+  width: 28%;
+}
+
+input#send-audio {
+  margin-left: 1em;
+}
+
+#media-view {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+video.speaking {
+  border: 5px solid green;
+}

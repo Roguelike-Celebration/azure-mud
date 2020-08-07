@@ -3,6 +3,8 @@ import { Room } from "../Room";
 import { moveToRoom } from "../networking";
 import MenuButtonView from "./MenuButtonView";
 
+import "../../style/nav.css";
+
 interface Props {
   rooms: Room[];
   username: string;

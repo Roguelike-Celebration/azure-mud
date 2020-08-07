@@ -9,6 +9,8 @@ import NameView from "./NameView";
 import { DispatchContext } from "../App";
 import { StopVideoChatAction } from "../Actions";
 
+import "../../style/room.css";
+
 interface Props {
   room?: Room;
   userId?: string;

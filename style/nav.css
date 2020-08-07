@@ -1,0 +1,16 @@
+nav {
+  float: left;
+  height: 100vh;
+  list-style: none;
+  margin-right: 60px;
+  max-width: 260px;
+}
+
+nav li {
+  cursor: pointer;
+}
+
+#menu-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+}

@@ -12,6 +12,8 @@ import { DispatchContext } from "../App";
 import { P2PWaitingForConnectionsAction } from "../Actions";
 import { startVideoChat } from "../networking";
 
+import "../../style/videoChat.css";
+
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
   peerIds?: string[];

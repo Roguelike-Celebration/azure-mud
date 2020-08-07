@@ -1,0 +1,22 @@
+@import "./fonts.css";
+
+body {
+  background-color: black;
+  color: white;
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+}
+
+#app {
+  max-width: 1200px;
+  margin: auto;
+}
+
+a {
+  color: lightseagreen;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:visited {
+  color: lightseagreen;
+}

@@ -1,0 +1,17 @@
+nav.react-contextmenu {
+  background-color: #333;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.react-contextmenu-item {
+  padding: 2px 5px;
+}
+
+.react-contextmenu-item--selected {
+  background-color: #aaa !important;
+}
+
+span.name {
+  cursor: pointer;
+}

@@ -100,19 +100,21 @@ const App = () => {
         <UserMapContext.Provider
           value={{ userMap: state.userMap, myId: state.userId }}
         >
-          <div id="main">
+          <div id="app">
             <RoomListView
               rooms={Object.values(state.roomData)}
               username={state.userMap[state.userId].username}
             />
-            {videoChatView}
-            <RoomView
-              room={state.roomData[state.roomId]}
-              userId={state.userId}
-            />
-            {profile}
-            <ChatView messages={state.messages} />
-            <InputView prepopulated={state.prepopulatedInput} />
+            <div id="main">
+              {videoChatView}
+              <RoomView
+                room={state.roomData[state.roomId]}
+                userId={state.userId}
+              />
+              {profile}
+              <ChatView messages={state.messages} />
+              <InputView prepopulated={state.prepopulatedInput} />
+            </div>
           </div>
         </UserMapContext.Provider>
       </DispatchContext.Provider>

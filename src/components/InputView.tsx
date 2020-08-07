@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { DispatchContext } from "../App";
 import { SendMessageAction } from "../Actions";
-const emojifier = require('node-emoji');
+const emojifier = require("node-emoji");
+
+import "../../style/input.css";
 
 export default (props: { prepopulated?: string }) => {
   const dispatch = useContext(DispatchContext);

@@ -1,6 +1,8 @@
 import React from "react";
 import { PublicUser } from "../../server/src/user";
 
+import "../../style/profileView.css";
+
 export default (props: { user: PublicUser }) => {
   const { user } = props;
 

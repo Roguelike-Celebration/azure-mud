@@ -9,6 +9,8 @@ import {
 } from "../Actions";
 import { User } from "../../server/src/user";
 
+import "../../style/nameView.css";
+
 export default (props: { userId: string; id?: string }) => {
   const dispatch = useContext(DispatchContext);
   const { userMap, myId } = useContext(UserMapContext);
