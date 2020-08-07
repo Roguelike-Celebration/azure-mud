@@ -16,7 +16,7 @@ export default (props: { messages: Message[] }) => {
     // This very TS-unfriendly code fixes taht.
     (lastMessage.parentNode as Element).scrollTop =
       (lastMessage as any).offsetTop -
-      (lastMessage.parentNode as Element).offsetTop;
+      (lastMessage.parentNode as any).offsetTop;
   });
 
   return (
