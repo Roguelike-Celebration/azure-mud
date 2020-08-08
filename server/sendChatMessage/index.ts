@@ -59,7 +59,7 @@ const httpTrigger: AzureFunction = async function (
     const lookMatch = /^\/(look) (.+)/.exec(message)
     if (lookMatch) {
       const lookUserId = await getUserIdForUsername(lookMatch[2])
-      if (!lookMatch) {
+      if (!lookUserId) {
         context.res = {
           status: 400,
           body: { error: `Could not find the user ${lookMatch[2]}` }
