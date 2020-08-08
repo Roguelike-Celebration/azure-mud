@@ -97,5 +97,5 @@ export function Video({ srcObject, ...props }: PropsType) {
     refVideo.current.srcObject = srcObject;
   }, [srcObject]);
 
-  return <video ref={refVideo} {...props} autoPlay />;
+  return <video ref={refVideo} {...props} autoPlay />; // eslint-disable-line jsx-a11y/media-has-caption
 }

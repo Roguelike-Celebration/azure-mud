@@ -1,5 +1,5 @@
 import React from "react";
-import { Room } from "../Room";
+import { Room } from "../room";
 import { moveToRoom } from "../networking";
 import MenuButtonView from "./MenuButtonView";
 
@@ -12,7 +12,7 @@ interface Props {
 
 export default function (props: Props) {
   return (
-    <nav id="side-menu">
+    <nav id="side-menu" role="navigation" aria-label="List of rooms you can navigate to">
       <MenuButtonView username={props.username} />
       <ul>
         {props.rooms.map((r) => (
@@ -31,8 +31,10 @@ const RoomListItem = (props: { room: Room }) => {
   };
 
   return (
-    <li onClick={onClick} role="button">
-      <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ""}
+    <li>
+      <button onClick={onClick}>
+        <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ""}    
+      </button>
     </li>
   );
 };

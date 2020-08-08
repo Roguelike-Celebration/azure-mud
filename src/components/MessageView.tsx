@@ -118,8 +118,8 @@ const ModMessageView = (props: ModMessage & { id: string }) => {
     return (
       <div className="message">
         <em>
-          ❗<NameView userId={props.userId} id={props.id} /> says to the{" "}
-          <strong>mods</strong>:{props.message}❗
+          <span role="img" aria-label="red exclamation point">❗</span><NameView userId={props.userId} id={props.id} /> says to the{" "}
+          <strong>mods</strong>:{props.message}<span role="img" aria-label="red exclamation point">❗</span>
         </em>
       </div>
     );

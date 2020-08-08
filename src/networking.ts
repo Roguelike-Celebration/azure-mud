@@ -17,7 +17,6 @@ import {
   UserMapAction,
   ModMessageAction,
   LocalMediaDeviceListReceivedAction,
-  IsRegisteredAction,
   UpdatedCurrentRoomAction,
   UpdatedRoomDataAction,
   UpdatedPresenceAction,

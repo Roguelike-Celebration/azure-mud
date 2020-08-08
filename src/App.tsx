@@ -105,7 +105,7 @@ const App = () => {
               rooms={Object.values(state.roomData)}
               username={state.userMap[state.userId].username}
             />
-            <div id="main">
+            <div id="main" role="main">
               {videoChatView}
               <RoomView
                 room={state.roomData[state.roomId]}

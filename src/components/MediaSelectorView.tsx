@@ -69,7 +69,7 @@ export default function (props: Props) {
       <select
         name="Video"
         id="video-select"
-        onChange={onVideoChange}
+        onBlur={onVideoChange}
         defaultValue={defaultVideo}
       >
         {videoDevices.map(deviceToOption)}
@@ -77,7 +77,7 @@ export default function (props: Props) {
       <select
         name="Audio"
         id="audio-select"
-        onChange={onAudioChange}
+        onBlur={onAudioChange}
         defaultValue={defaultAudio}
       >
         {audioDevices.map(deviceToOption)}
