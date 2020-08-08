@@ -9,7 +9,8 @@
     "build": "parcel build index.html --public-url /azure-mud",
     "deploy": "npm run build; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/**/*"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +30,16 @@
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "@types/simple-peer": "^9.6.0",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "eslint": "^7.6.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^3.1.0",
     "parcel": "^1.12.4",
     "typescript": "^3.9.2"
