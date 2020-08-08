@@ -41,6 +41,7 @@ export default (props: { prepopulated?: string }) => {
         onChange={handleInputChange}
         onKeyPress={checkEnter}
         value={input}
+        aria-label="Chat text input box"
       />
       <button id="send" onClick={onClick}>
         Send

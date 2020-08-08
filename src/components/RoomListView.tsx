@@ -12,7 +12,7 @@ interface Props {
 
 export default function (props: Props) {
   return (
-    <nav id="side-menu">
+    <nav id="side-menu" role="navigation" aria-label="List of rooms you can navigate to">
       <MenuButtonView username={props.username} />
       <ul>
         {props.rooms.map((r) => (
@@ -33,8 +33,10 @@ const RoomListItem = (props: { room: Room }) => {
   /* eslint-disable jsx-a11y/click-events-have-key-events */
   /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
   return (
-    <li onClick={onClick} role="link">
-        <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ""}
+    <li>
+      <span onClick={onClick} role="link">
+        <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ""}    
+      </span>
     </li>
   );
 };
