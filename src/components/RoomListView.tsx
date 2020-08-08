@@ -30,9 +30,11 @@ const RoomListItem = (props: { room: Room }) => {
     moveToRoom(room.id);
   };
 
+  /* eslint-disable jsx-a11y/click-events-have-key-events */
+  /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
   return (
-    <li onClick={onClick} role="button">
-      <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ""}
+    <li onClick={onClick} role="link">
+        <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ""}
     </li>
   );
 };

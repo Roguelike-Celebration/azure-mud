@@ -53,13 +53,12 @@ export default function (props: Props) {
       {props.isFTUE ? (
         ""
       ) : (
-        <a
-          role="button"
+        <button
           onClick={close}
           style={{ float: "right", cursor: "pointer" }}
         >
           x
-        </a>
+        </button>
       )}
       <label htmlFor="username">Username:</label>{" "}
       <input

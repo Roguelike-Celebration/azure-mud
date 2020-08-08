@@ -44,19 +44,22 @@ export default (props: Props) => {
   if (room && room.allowsMedia) {
     if (getNetworkMediaChatStatus()) {
       videoChatButton = (
-        <a href="#" onClick={leaveVideoChat} role="button">
+        <button onClick={leaveVideoChat}>
           Leave Video Chat
-        </a>
+        </button>
       );
     } else {
       videoChatButton = (
-        <a href="#" onClick={joinVideoChat} role="button">
+        <button onClick={joinVideoChat}>
           Join Video Chat
-        </a>
+        </button>
       );
     }
   }
 
+  /* eslint-disable jsx-a11y/click-events-have-key-events */
+  /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
+  /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
     <div id="room">
       <h1 id="room-name">{room ? room.name : "Loading..."}</h1>
