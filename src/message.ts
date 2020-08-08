@@ -7,6 +7,7 @@ export type Message =
   | ChatMessage
   | WhisperMessage
   | ShoutMessage
+  | EmoteMessage
   | ModMessage
   | ErrorMessage;
 
@@ -19,6 +20,7 @@ export enum MessageType {
   Chat = "CHAT",
   Whisper = "WHISPER",
   Shout = "SHOUT",
+  Emote = "EMOTE",
   Mod = "MOD",
   Error = "ERROR",
 }
@@ -130,6 +132,19 @@ export const createShoutMessage = (
 ): ShoutMessage => {
   return { type: MessageType.Shout, userId, message };
 };
+
+export interface EmoteMessage {
+  type: MessageType.Emote;
+  userId: string;
+  message: string;
+}
+
+export const createEmoteMessage = (
+  userId: string,
+  message: string
+): EmoteMessage => {
+  return { type: MessageType.Emote, userId, message}
+}
 
 export interface ErrorMessage {
   type: MessageType.Error;

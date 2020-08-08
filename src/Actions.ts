@@ -15,6 +15,7 @@ export type Action =
   | ModMessageAction
   | WhisperAction
   | ShoutAction
+  | EmoteAction
   | PlayerEnteredAction
   | PlayerLeftAction
   | UserMapAction
@@ -48,6 +49,7 @@ export enum ActionType {
   ModMessage = "MOD_MESSAGE",
   Whisper = "WHISPER",
   Shout = "SHOUT",
+  Emote = "EMOTE",
   PlayerEntered = "PLAYER_ENTERED",
   PlayerLeft = "PLAYER_LEFT",
   Error = "ERROR",
@@ -221,6 +223,21 @@ interface ShoutAction {
     name: string;
     message: string;
   };
+}
+
+interface EmoteAction {
+  type: ActionType.Emote;
+  value: {
+    name: string;
+    message: string;
+  }
+}
+
+export const EmoteAction = (name: string, message: string): EmoteAction => {
+  return {
+    type: ActionType.Emote,
+    value: { name, message }
+  }
 }
 
 interface PlayerEnteredAction {

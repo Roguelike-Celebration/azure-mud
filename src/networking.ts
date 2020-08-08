@@ -13,6 +13,7 @@ import {
   WhisperAction,
   PlayerLeftAction,
   ShoutAction,
+  EmoteAction,
   ShowProfileActionForFetchedUser,
   UserMapAction,
   ModMessageAction,
@@ -214,6 +215,10 @@ async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
     // We don't gate on your own userId here.
     // Because shouting can fail at the server level, we don't show it preemptively.
     dispatch(ShoutAction(name, message));
+  });
+
+  connection.on("emote", (name, message) => {
+    dispatch(EmoteAction(name, message))
   });
 
   connection.on("webrtcSignalData", (peerId, data) => {
