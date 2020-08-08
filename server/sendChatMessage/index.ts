@@ -43,6 +43,18 @@ const httpTrigger: AzureFunction = async function (
       return await shout(user, shoutMatch[2], context)
     }
 
+    const emoteMatch = /^\/(me|emote) (.+)/.exec(message)
+    if (emoteMatch) {
+      context.bindings.signalRMessages = [
+        {
+          groupName: user.roomId,
+          target: 'emote',
+          arguments: [user.id, emoteMatch[2]]
+        }
+      ]
+      return
+    }
+
     const modMatch = /^\/(mod) (.+)/.exec(message)
     if (modMatch) {
       // Send to the mod-only group
