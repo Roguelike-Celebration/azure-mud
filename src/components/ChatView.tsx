@@ -1,14 +1,14 @@
-import React from "react";
-import MessageView from "./MessageView";
-import { Message } from "../message";
+import React from 'react'
+import MessageView from './MessageView'
+import { Message } from '../message'
 
-import "../../style/chat.css";
+import '../../style/chat.css'
 
-export default (props: { messages: Message[] }) => {
+export default function ChatView (props: { messages: Message[] }) {
   React.useEffect(() => {
     const lastMessage = document.querySelector(
-      "#messages .message:last-of-type"
-    );
+      '#messages .message:last-of-type'
+    )
     if (!lastMessage) return;
 
     // I was using lastMessage.scrollIntoView()
@@ -16,15 +16,15 @@ export default (props: { messages: Message[] }) => {
     // This very TS-unfriendly code fixes taht.
     (lastMessage.parentNode as Element).scrollTop =
       (lastMessage as any).offsetTop -
-      (lastMessage.parentNode as any).offsetTop;
-  });
+      (lastMessage.parentNode as any).offsetTop
+  })
 
   return (
     <div id="messages">
       {props.messages.map((m, idx) => {
-        const id = `message-${idx}`;
-        return <MessageView message={m} key={id} id={id} />;
+        const id = `message-${idx}`
+        return <MessageView message={m} key={id} id={id} />
       })}
     </div>
-  );
-};
+  )
+}

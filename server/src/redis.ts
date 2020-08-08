@@ -1,173 +1,173 @@
-import redis = require("redis");
-import { promisify } from "util";
-import { User, isMod, MinimalUser } from "./user";
+import { promisify } from 'util'
+import { User, isMod, MinimalUser } from './user'
 
-import Database from "./database";
+import Database from './database'
+import redis = require('redis');
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
   process.env.RedisHostname,
   {
     auth_pass: process.env.RedisKey,
-    tls: { servername: process.env.RedisHostname },
+    tls: { servername: process.env.RedisHostname }
   }
-);
+)
 
-const getCache = promisify(cache.get).bind(cache);
-const setCache = promisify(cache.set).bind(cache);
+const getCache = promisify(cache.get).bind(cache)
+const setCache = promisify(cache.set).bind(cache)
 
 const Redis: Database = {
-  async getActiveUsers() {
-    return JSON.parse(await getCache(activeUsersKey)) || [];
+  async getActiveUsers () {
+    return JSON.parse(await getCache(activeUsersKey)) || []
   },
-  async setActiveUsers(users: string[]) {
-    return await setCache(activeUsersKey, JSON.stringify(users));
-  },
-
-  async getUserHeartbeat(userId: string): Promise<number> {
-    return await getCache(heartbeatKeyForUser(userId));
+  async setActiveUsers (users: string[]) {
+    return await setCache(activeUsersKey, JSON.stringify(users))
   },
 
-  async setUserHeartbeat(userId: string) {
-    await setCache(heartbeatKeyForUser(userId), new Date().valueOf());
+  async getUserHeartbeat (userId: string): Promise<number> {
+    return await getCache(heartbeatKeyForUser(userId))
+  },
+
+  async setUserHeartbeat (userId: string) {
+    await setCache(heartbeatKeyForUser(userId), new Date().valueOf())
   },
 
   // TODO: This could theoretically use Redis lists
-  async setUserAsActive(userId: string) {
-    const activeUsers = await Redis.getActiveUsers();
+  async setUserAsActive (userId: string) {
+    const activeUsers = await Redis.getActiveUsers()
     if (!activeUsers.includes(userId)) {
-      activeUsers.push(userId);
-      await Redis.setActiveUsers(activeUsers);
+      activeUsers.push(userId)
+      await Redis.setActiveUsers(activeUsers)
     }
   },
 
   // Room presence
 
-  async roomOccupants(roomId: string) {
-    const presenceKey = roomPresenceKey(roomId);
-    return JSON.parse(await getCache(presenceKey)) || [];
+  async roomOccupants (roomId: string) {
+    const presenceKey = roomPresenceKey(roomId)
+    return JSON.parse(await getCache(presenceKey)) || []
   },
 
-  async setRoomOccupants(roomId: string, occupants: string[]) {
-    const presenceKey = roomPresenceKey(roomId);
-    await setCache(presenceKey, JSON.stringify(occupants));
+  async setRoomOccupants (roomId: string, occupants: string[]) {
+    const presenceKey = roomPresenceKey(roomId)
+    await setCache(presenceKey, JSON.stringify(occupants))
   },
 
-  async setCurrentRoomForUser(userId: string, roomId: string) {
-    await setCache(roomKeyForUser(userId), roomId);
+  async setCurrentRoomForUser (userId: string, roomId: string) {
+    await setCache(roomKeyForUser(userId), roomId)
   },
 
-  async currentRoomForUser(userId: string) {
-    return await getCache(roomKeyForUser(userId));
+  async currentRoomForUser (userId: string) {
+    return await getCache(roomKeyForUser(userId))
   },
 
   // User
-  async getPublicUser(userId: string) {
-    const userData = await getCache(profileKeyForUser(userId));
+  async getPublicUser (userId: string) {
+    const userData = await getCache(profileKeyForUser(userId))
 
     if (!userData) {
-      return undefined;
+      return undefined
     }
 
-    const user: User = JSON.parse(userData);
+    const user: User = JSON.parse(userData)
 
     if (isMod(user.id)) {
-      user.isMod = true;
+      user.isMod = true
     }
 
-    return user;
+    return user
   },
 
-  async setUserProfile(userId: string, data: User) {
-    delete data.isMod;
-    return await setCache(profileKeyForUser(userId), JSON.stringify(data));
+  async setUserProfile (userId: string, data: User) {
+    delete data.isMod
+    return await setCache(profileKeyForUser(userId), JSON.stringify(data))
   },
 
-  async getMinimalProfileForUser(userId: string) {
-    const user = JSON.parse(await getCache(usernameKeyForUser(userId)));
+  async getMinimalProfileForUser (userId: string) {
+    const user = JSON.parse(await getCache(usernameKeyForUser(userId)))
 
     if (isMod(userId)) {
-      user.isMod = true;
+      user.isMod = true
     }
-    return user;
+    return user
   },
 
-  async setMinimalProfileForUser(userId: string, data: MinimalUser) {
-    delete data.isMod;
-    delete data.isBanned;
-    return await setCache(usernameKeyForUser(userId), JSON.stringify(data));
+  async setMinimalProfileForUser (userId: string, data: MinimalUser) {
+    delete data.isMod
+    delete data.isBanned
+    return await setCache(usernameKeyForUser(userId), JSON.stringify(data))
   },
 
-  async lastShoutedForUser(userId: string) {
-    const date = await getCache(shoutKeyForUser(userId));
+  async lastShoutedForUser (userId: string) {
+    const date = await getCache(shoutKeyForUser(userId))
     if (date) {
-      return new Date(JSON.parse(date));
+      return new Date(JSON.parse(date))
     }
   },
 
-  async userJustShouted(userId: string) {
-    await setCache(shoutKeyForUser(userId), JSON.stringify(new Date()));
+  async userJustShouted (userId: string) {
+    await setCache(shoutKeyForUser(userId), JSON.stringify(new Date()))
   },
 
   // Because this data lives in both the minimal user profile and the real user data,
   // we need to read/write in two places. Sigh.
-  async banUser(userId: string) {
+  async banUser (userId: string) {
     const presenceData = await JSON.parse(
       await getCache(usernameKeyForUser(userId))
-    );
-    presenceData.isBanned = true;
-    await setCache(usernameKeyForUser(userId), JSON.stringify(presenceData));
+    )
+    presenceData.isBanned = true
+    await setCache(usernameKeyForUser(userId), JSON.stringify(presenceData))
 
     const profileData = await JSON.parse(
       await getCache(profileKeyForUser(userId))
-    );
-    profileData.isBanned = true;
-    await setCache(profileKeyForUser(userId), JSON.stringify(profileData));
+    )
+    profileData.isBanned = true
+    await setCache(profileKeyForUser(userId), JSON.stringify(profileData))
   },
 
-  async unbanUser(userId: string) {
+  async unbanUser (userId: string) {
     const profile = await JSON.parse(
       await getCache(usernameKeyForUser(userId))
-    );
-    profile.isBanned = false;
-    await setCache(usernameKeyForUser(userId), JSON.stringify(profile));
+    )
+    profile.isBanned = false
+    await setCache(usernameKeyForUser(userId), JSON.stringify(profile))
 
     const profileData = await JSON.parse(
       await getCache(profileKeyForUser(userId))
-    );
-    profileData.isBanned = false;
-    await setCache(profileKeyForUser(userId), JSON.stringify(profileData));
-  },
-};
-
-const activeUsersKey = "activeUsersList";
-
-function shoutKeyForUser(user: string): string {
-  return `${user}Shout`;
+    )
+    profileData.isBanned = false
+    await setCache(profileKeyForUser(userId), JSON.stringify(profileData))
+  }
 }
 
-function usernameKeyForUser(userId: string): string {
-  return `${userId}Handle`;
+const activeUsersKey = 'activeUsersList'
+
+function shoutKeyForUser (user: string): string {
+  return `${user}Shout`
 }
 
-function profileKeyForUser(userId: string): string {
-  return `${userId}Profile`;
+function usernameKeyForUser (userId: string): string {
+  return `${userId}Handle`
 }
 
-function heartbeatKeyForUser(user: string): string {
-  return `${user}Heartbeat`;
+function profileKeyForUser (userId: string): string {
+  return `${userId}Profile`
 }
 
-export function roomPresenceKey(roomName: string): string {
-  return `${roomName}Presence`;
+function heartbeatKeyForUser (user: string): string {
+  return `${user}Heartbeat`
 }
 
-export function roomKeyForUser(user: string): string {
-  return `${user}Room`;
+export function roomPresenceKey (roomName: string): string {
+  return `${roomName}Presence`
 }
 
-export function roomKey(name: string) {
-  return `${name}RoomData`;
+export function roomKeyForUser (user: string): string {
+  return `${user}Room`
 }
 
-export default Redis;
+export function roomKey (name: string) {
+  return `${name}RoomData`
+}
+
+export default Redis

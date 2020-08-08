@@ -1,8 +1,8 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { removeUserFromRoomPresence } from "../src/roomPresence";
-import authenticate from "../src/authenticate";
-import DB from "../src/redis";
-import { globalPresenceMessage } from "../src/globalPresenceMessage";
+import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { removeUserFromRoomPresence } from '../src/roomPresence'
+import authenticate from '../src/authenticate'
+import DB from '../src/redis'
+import { globalPresenceMessage } from '../src/globalPresenceMessage'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -10,39 +10,39 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<any> {
   await authenticate(context, req, async (user) => {
     context.res = {
-      status: 200,
-    };
+      status: 200
+    }
 
-    await removeUserFromRoomPresence(user.id, user.roomId);
+    await removeUserFromRoomPresence(user.id, user.roomId)
 
-    let activeUsers = await DB.getActiveUsers();
+    let activeUsers = await DB.getActiveUsers()
     if (activeUsers.includes(user.id)) {
-      activeUsers = activeUsers.filter((u) => u !== user.id);
-      await DB.setActiveUsers(activeUsers);
+      activeUsers = activeUsers.filter((u) => u !== user.id)
+      await DB.setActiveUsers(activeUsers)
     }
 
     context.bindings.signalRGroupActions = [
       {
         userId: user.id,
-        groupName: "users",
-        action: "remove",
+        groupName: 'users',
+        action: 'remove'
       },
       {
         userId: user.id,
         groupName: user.roomId,
-        action: "remove",
-      },
-    ];
+        action: 'remove'
+      }
+    ]
 
     context.bindings.signalRMessages = [
       {
         groupName: user.roomId,
-        target: "playerDisconnected",
-        arguments: [user.id],
+        target: 'playerDisconnected',
+        arguments: [user.id]
       },
-      await globalPresenceMessage([user.roomId]),
-    ];
-  });
-};
+      await globalPresenceMessage([user.roomId])
+    ]
+  })
+}
 
-export default httpTrigger;
+export default httpTrigger

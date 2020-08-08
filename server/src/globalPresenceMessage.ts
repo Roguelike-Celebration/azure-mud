@@ -1,39 +1,39 @@
-import DB from "./redis";
-import { roomData } from "./room";
+import DB from './redis'
+import { roomData } from './room'
 
 /** Fetches presence data for a set of rooms and returns a SignalR message
  * to broadcast current presence data to all users */
-export async function globalPresenceMessage(roomIds: string[]) {
-  let data: { [roomId: string]: string[] } = {};
+export async function globalPresenceMessage (roomIds: string[]) {
+  const data: { [roomId: string]: string[] } = {}
 
   await Promise.all(
     roomIds.map(async (id) => {
-      const occupants = await DB.roomOccupants(id);
-      data[id] = occupants;
+      const occupants = await DB.roomOccupants(id)
+      data[id] = occupants
     })
-  );
+  )
 
   return {
-    groupName: "users",
-    target: "presenceData",
-    arguments: [data],
-  };
+    groupName: 'users',
+    target: 'presenceData',
+    arguments: [data]
+  }
 }
 
 /** Fetches presence data for all rooms and returns a JSON object with all that data
  * Intended to only be used in `/connect` to seed the presence data
  */
-export async function allPresenceData(): Promise<{
+export async function allPresenceData (): Promise<{
   [roomId: string]: string[];
 }> {
-  let data: { [roomId: string]: string[] } = {};
+  const data: { [roomId: string]: string[] } = {}
 
   await Promise.all(
     Object.keys(roomData).map(async (id) => {
-      const occupants = await DB.roomOccupants(id);
-      data[id] = occupants;
+      const occupants = await DB.roomOccupants(id)
+      data[id] = occupants
     })
-  );
+  )
 
-  return data;
+  return data
 }

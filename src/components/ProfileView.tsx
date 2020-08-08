@@ -1,44 +1,44 @@
-import React from "react";
-import { PublicUser } from "../../server/src/user";
+import React from 'react'
+import { PublicUser } from '../../server/src/user'
 
-import "../../style/profileView.css";
+import '../../style/profileView.css'
 
-export default (props: { user: PublicUser }) => {
-  const { user } = props;
+export default function ProfileView (props: { user: PublicUser }) {
+  const { user } = props
 
   const realName = user.realName ? (
     <div id="profile-realName">{user.realName}</div>
   ) : (
-    ""
-  );
+    ''
+  )
 
   const twitterHandle = user.twitterHandle ? (
     <div id="profile-twitter">
-      <strong>Twitter</strong>:{" "}
-      <a href={`https://twitter.com/${user.twitterHandle}`} target="_blank">
+      <strong>Twitter</strong>:{' '}
+      <a href={`https://twitter.com/${user.twitterHandle}`} target="_blank" rel="noreferrer">
         @{user.twitterHandle}
       </a>
     </div>
   ) : (
-    ""
-  );
+    ''
+  )
 
   const url = user.url ? (
     <div id="profile-url">
-      <strong>Web Site</strong>:{" "}
-      <a href={user.url} target="_blank">
+      <strong>Web Site</strong>:{' '}
+      <a href={user.url} target="_blank" rel="noreferrer">
         {user.url}
       </a>
     </div>
   ) : (
-    ""
-  );
+    ''
+  )
 
   const description = user.description ? (
     <div id="profile-description">{user.description}</div>
   ) : (
-    ""
-  );
+    ''
+  )
 
   const askMeAbout = user.askMeAbout ? (
     <div id="profile-askme">
@@ -46,13 +46,13 @@ export default (props: { user: PublicUser }) => {
       {user.askMeAbout}
     </div>
   ) : (
-    ""
-  );
+    ''
+  )
 
   return (
     <div id="profile">
       <h1>
-        {user.username} {user.isMod ? "(👑 moderator)" : ""}
+        {user.username} {user.isMod ? '(👑 moderator)' : ''}
       </h1>
       {realName}
       <div id="profile-pronouns">{user.pronouns}</div>
@@ -61,5 +61,5 @@ export default (props: { user: PublicUser }) => {
       {url}
       {askMeAbout}
     </div>
-  );
-};
+  )
+}

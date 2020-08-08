@@ -1,31 +1,31 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import DB from "../src/redis";
+import DB from '../src/redis'
 
-import { RoomResponse } from "../src/types";
-import { addUserToRoomPresence } from "../src/roomPresence";
-import authenticate from "../src/authenticate";
-import { activeUserMap, minimizeUser, isMod } from "../src/user";
-import { userHeartbeatReceived } from "../src/heartbeat";
-import setUpRoomsForUser from "../src/setUpRoomsForUser";
-import { roomData } from "../src/room";
+import { RoomResponse } from '../src/types'
+import { addUserToRoomPresence } from '../src/roomPresence'
+import authenticate from '../src/authenticate'
+import { activeUserMap, minimizeUser, isMod } from '../src/user'
+import { userHeartbeatReceived } from '../src/heartbeat'
+import setUpRoomsForUser from '../src/setUpRoomsForUser'
+import { roomData } from '../src/room'
 import {
   globalPresenceMessage,
-  allPresenceData,
-} from "../src/globalPresenceMessage";
+  allPresenceData
+} from '../src/globalPresenceMessage'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<any> {
-  context.log("In connect");
+  context.log('In connect')
 
   await authenticate(context, req, async (user) => {
-    context.log("We have a user!", user.id);
-    await addUserToRoomPresence(user.id, user.roomId);
-    await userHeartbeatReceived(user.id);
+    context.log('We have a user!', user.id)
+    await addUserToRoomPresence(user.id, user.roomId)
+    await userHeartbeatReceived(user.id)
 
-    const userMap = await activeUserMap();
+    const userMap = await activeUserMap()
     context.res = {
       status: 200,
       body: {
@@ -34,58 +34,58 @@ const httpTrigger: AzureFunction = async function (
         users: userMap,
         roomData,
         // TODO: Instead of another DB call, delete the non-public fields from the user we already have?
-        profile: await DB.getPublicUser(user.id),
-      } as RoomResponse,
-    };
+        profile: await DB.getPublicUser(user.id)
+      } as RoomResponse
+    }
 
     const actions = [
       ...setUpRoomsForUser(user.id, user.roomId),
       {
         userId: user.id,
-        groupName: "users",
-        action: "add",
+        groupName: 'users',
+        action: 'add'
       },
       {
         userId: user.id,
         groupName: user.roomId,
-        action: "add",
-      },
-    ];
+        action: 'add'
+      }
+    ]
 
     if (isMod(user.id)) {
       actions.push({
         userId: user.id,
-        groupName: "mods",
-        action: "add",
-      });
+        groupName: 'mods',
+        action: 'add'
+      })
     }
 
-    context.bindings.signalRGroupActions = actions;
+    context.bindings.signalRGroupActions = actions
 
-    context.log("Setting messages");
+    context.log('Setting messages')
 
-    const minimalUser = minimizeUser(user);
+    const minimalUser = minimizeUser(user)
 
     context.bindings.signalRMessages = [
       {
         groupName: user.roomId,
-        target: "playerConnected",
-        arguments: [minimalUser],
+        target: 'playerConnected',
+        arguments: [minimalUser]
       },
       {
-        groupName: "users",
-        target: "usernameMap",
-        arguments: [{ [user.id]: minimalUser }],
+        groupName: 'users',
+        target: 'usernameMap',
+        arguments: [{ [user.id]: minimalUser }]
       },
-      await globalPresenceMessage([user.roomId]),
-    ];
+      await globalPresenceMessage([user.roomId])
+    ]
 
-    context.log("Finished the thing");
+    context.log('Finished the thing')
     context.log(
       context.bindings.signalRMessages,
       context.bindings.signalRGroupActions
-    );
-  });
-};
+    )
+  })
+}
 
-export default httpTrigger;
+export default httpTrigger

@@ -1,75 +1,75 @@
-import { AzureFunction, Context } from "@azure/functions";
-import { removeUserFromRoomPresence } from "../src/roomPresence";
-import { getFullUser } from "../src/user";
-import DB from "../src/redis";
-import { getHeartbeatData } from "../src/heartbeat";
+import { AzureFunction, Context } from '@azure/functions'
+import { removeUserFromRoomPresence } from '../src/roomPresence'
+import { getFullUser } from '../src/user'
+import DB from '../src/redis'
+import { getHeartbeatData } from '../src/heartbeat'
 
 const timerTrigger: AzureFunction = async function (
   context: Context,
   myTimer: any
 ): Promise<void> {
-  const thresholdSeconds = 90;
+  const thresholdSeconds = 90
 
-  var timeStamp = new Date().toISOString();
+  var timeStamp = new Date().toISOString()
 
   if (myTimer.IsPastDue) {
-    context.log("Timer function is running late!");
+    context.log('Timer function is running late!')
   }
-  context.log("Timer function ran!", timeStamp);
+  context.log('Timer function ran!', timeStamp)
 
-  const data = await getHeartbeatData();
-  context.log("HEARTBEAT DATA", data);
+  const data = await getHeartbeatData()
+  context.log('HEARTBEAT DATA', data)
 
-  const now = new Date();
-  const nowValue = now.valueOf();
+  const now = new Date()
+  const nowValue = now.valueOf()
 
-  let activeUsers = [];
-  let usersToRemove = [];
+  const activeUsers = []
+  const usersToRemove = []
   Object.keys(data).forEach((user) => {
-    const time = data[user];
-    const diff = nowValue - time;
+    const time = data[user]
+    const diff = nowValue - time
     if (Math.floor(diff / 1000) > thresholdSeconds) {
-      usersToRemove.push(user);
+      usersToRemove.push(user)
     } else {
-      activeUsers.push(user);
+      activeUsers.push(user)
     }
-  });
+  })
 
-  let signalRGroupActions = [];
+  const signalRGroupActions = []
   for (let i = 0; i < usersToRemove.length; i++) {
-    const userId = usersToRemove[i];
-    const user = await getFullUser(userId);
-    await removeUserFromRoomPresence(userId, user.roomId);
+    const userId = usersToRemove[i]
+    const user = await getFullUser(userId)
+    await removeUserFromRoomPresence(userId, user.roomId)
     signalRGroupActions.push(
       {
         userId,
-        groupName: "users",
-        action: "remove",
+        groupName: 'users',
+        action: 'remove'
       },
       {
         userId,
         groupName: user.roomId,
-        action: "remove",
+        action: 'remove'
       }
-    );
+    )
   }
 
   if (usersToRemove.length > 0) {
     context.log(
-      `Removing the following inactive users: ${usersToRemove.join(", ")}`
-    );
+      `Removing the following inactive users: ${usersToRemove.join(', ')}`
+    )
   }
 
-  await DB.setActiveUsers(activeUsers);
+  await DB.setActiveUsers(activeUsers)
 
-  context.bindings.signalRGroupActions = signalRGroupActions;
+  context.bindings.signalRGroupActions = signalRGroupActions
   context.bindings.signalRMessages = [
     {
-      groupName: "users",
-      target: "ping",
-      arguments: [],
-    },
-  ];
-};
+      groupName: 'users',
+      target: 'ping',
+      arguments: []
+    }
+  ]
+}
 
-export default timerTrigger;
+export default timerTrigger

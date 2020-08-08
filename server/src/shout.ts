@@ -1,36 +1,36 @@
-import { User } from "./user";
-import { Context } from "@azure/functions";
-import DB from "./redis";
+import { User } from './user'
+import { Context } from '@azure/functions'
+import DB from './redis'
 
-export async function shout(user: User, message: string, context: Context) {
+export async function shout (user: User, message: string, context: Context) {
   // Currently hardcode a 2-minute shout cooldown
   if (user.lastShouted) {
-    const cooldownMinutes = 2;
-    const diff = new Date().valueOf() - user.lastShouted.valueOf();
+    const cooldownMinutes = 2
+    const diff = new Date().valueOf() - user.lastShouted.valueOf()
     if (Math.floor(diff / 1000 / 60) < cooldownMinutes) {
       context.res = {
         status: 200,
         body: {
           error:
-            "Your voice is still hoarse from your last shout. Try again in a minute or two.",
-        },
-      };
-      return;
+            'Your voice is still hoarse from your last shout. Try again in a minute or two.'
+        }
+      }
+      return
     }
   }
 
-  await DB.userJustShouted(user.id);
+  await DB.userJustShouted(user.id)
 
   context.bindings.signalRMessages = [
     {
-      groupName: "users",
-      target: "shout",
-      arguments: [user.id, message],
-    },
-  ];
+      groupName: 'users',
+      target: 'shout',
+      arguments: [user.id, message]
+    }
+  ]
 
   context.res = {
     status: 200,
-    body: {},
-  };
+    body: {}
+  }
 }

@@ -1,37 +1,37 @@
-import React, { useContext, useState, useEffect } from "react";
-import { DispatchContext } from "../App";
-import { SendMessageAction } from "../Actions";
-const emojifier = require("node-emoji");
+import React, { useContext, useState, useEffect } from 'react'
+import { DispatchContext } from '../App'
+import { SendMessageAction } from '../Actions'
 
-import "../../style/input.css";
+import '../../style/input.css'
+const emojifier = require('node-emoji')
 
-export default (props: { prepopulated?: string }) => {
-  const dispatch = useContext(DispatchContext);
-  const [input, setInput] = useState("");
+export default function InputView (props: { prepopulated?: string }) {
+  const dispatch = useContext(DispatchContext)
+  const [input, setInput] = useState('')
 
   const handleInputChange = (e) => {
-    let result = emojifier.emojify(e.currentTarget.value);
-    setInput(result);
-  };
+    const result = emojifier.emojify(e.currentTarget.value)
+    setInput(result)
+  }
 
   const checkEnter = (e) => {
-    if (e.key === "Enter") {
-      onClick();
+    if (e.key === 'Enter') {
+      onClick()
     }
-  };
+  }
 
   const onClick = () => {
-    dispatch(SendMessageAction(input));
-    setInput("");
-  };
+    dispatch(SendMessageAction(input))
+    setInput('')
+  }
 
   useEffect(() => {
-    console.log("useEffect");
-    document.getElementById("chat-input").focus();
+    console.log('useEffect')
+    document.getElementById('chat-input').focus()
     if (props.prepopulated) {
-      setInput(props.prepopulated);
+      setInput(props.prepopulated)
     }
-  }, [props.prepopulated]);
+  }, [props.prepopulated])
 
   return (
     <div id="input">
@@ -47,5 +47,5 @@ export default (props: { prepopulated?: string }) => {
         Send
       </button>
     </div>
-  );
-};
+  )
+}

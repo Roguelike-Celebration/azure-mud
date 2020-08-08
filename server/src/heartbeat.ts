@@ -1,4 +1,4 @@
-import DB from "./redis";
+import DB from './redis'
 
 /** All of these store heartbeats as Unix timestamps as numbers.
  * When I stored either a timestamp number or a ISO8601 string,
@@ -6,27 +6,27 @@ import DB from "./redis";
  *
  * Since I'm just compring Unix timestamps anyway, this is a lazy solution.
  */
-export async function getHeartbeatData(): Promise<{
+export async function getHeartbeatData (): Promise<{
   [userId: string]: number;
 }> {
-  const activeUsers: string[] = await DB.getActiveUsers();
+  const activeUsers: string[] = await DB.getActiveUsers()
 
-  let data: { [userId: string]: number } = {};
+  const data: { [userId: string]: number } = {}
 
-  let dates = await Promise.all(
+  const dates = await Promise.all(
     activeUsers.map(async (u) => await DB.getUserHeartbeat(u))
-  );
+  )
 
   for (let i = 0; i < activeUsers.length; i++) {
-    const user = activeUsers[i];
-    const date = dates[i];
-    data[user] = date;
+    const user = activeUsers[i]
+    const date = dates[i]
+    data[user] = date
   }
 
-  return data;
+  return data
 }
 
-export async function userHeartbeatReceived(userId: string) {
-  await DB.setUserHeartbeat(userId);
-  await DB.setUserAsActive(userId);
+export async function userHeartbeatReceived (userId: string) {
+  await DB.setUserHeartbeat(userId)
+  await DB.setUserAsActive(userId)
 }
