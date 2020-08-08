@@ -139,7 +139,7 @@ const ShoutView = (props: ShoutMessage & { id: string }) => {
 const EmoteView = (props: EmoteMessage & { id: string }) => {
   return (
     <div className="message">
-      <NameView userId={props.userId} id={props.id} /> <em>{props.message}</em>
+      <em><NameView userId={props.userId} id={props.id} /> {props.message}</em>
     </div>
   )
 }
