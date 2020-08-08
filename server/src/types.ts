@@ -1,5 +1,5 @@
-import { Room } from "./room";
-import { User, MinimalUser, PublicUser } from "./user";
+import { Room } from './room'
+import { User, MinimalUser, PublicUser } from './user'
 
 export interface RoomResponse {
   roomId: string;

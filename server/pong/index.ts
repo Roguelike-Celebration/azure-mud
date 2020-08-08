@@ -1,24 +1,24 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import DB from "../src/redis";
+import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import DB from '../src/redis'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  let userId = req.headers && req.headers["x-ms-client-principal-id"];
+  const userId = req.headers && req.headers['x-ms-client-principal-id']
   if (!userId) {
     context.res = {
       status: 500,
-      body: "You did not include a user ID",
-    };
+      body: 'You did not include a user ID'
+    }
   }
 
-  await DB.setUserHeartbeat(userId);
+  await DB.setUserHeartbeat(userId)
 
   context.res = {
     status: 200,
-    body: {},
-  };
-};
+    body: {}
+  }
+}
 
-export default httpTrigger;
+export default httpTrigger

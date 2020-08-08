@@ -1,16 +1,16 @@
-import React from "react";
-import { Room } from "../room";
-import { moveToRoom } from "../networking";
-import MenuButtonView from "./MenuButtonView";
+import React from 'react'
+import { Room } from '../room'
+import { moveToRoom } from '../networking'
+import MenuButtonView from './MenuButtonView'
 
-import "../../style/nav.css";
+import '../../style/nav.css'
 
 interface Props {
   rooms: Room[];
   username: string;
 }
 
-export default function (props: Props) {
+export default function RoomListView (props: Props) {
   return (
     <nav id="side-menu" role="navigation" aria-label="List of rooms you can navigate to">
       <MenuButtonView username={props.username} />
@@ -20,21 +20,21 @@ export default function (props: Props) {
         ))}
       </ul>
     </nav>
-  );
+  )
 }
 
 const RoomListItem = (props: { room: Room }) => {
-  const { room } = props;
+  const { room } = props
 
   const onClick = () => {
-    moveToRoom(room.id);
-  };
+    moveToRoom(room.id)
+  }
 
   return (
     <li>
       <button onClick={onClick}>
-        <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ""}    
+        <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ''}
       </button>
     </li>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { moveToRoom } from "../src/moveToRoom";
-import authenticate from "../src/authenticate";
-import logSignalR from "../src/logSignalR";
+import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { moveToRoom } from '../src/moveToRoom'
+import authenticate from '../src/authenticate'
+import logSignalR from '../src/logSignalR'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -11,23 +11,23 @@ const httpTrigger: AzureFunction = async function (
     if (user.isBanned) {
       context.res = {
         status: 403,
-        body: { error: "You are currently banned and cannot do this." },
-      };
-      return;
+        body: { error: 'You are currently banned and cannot do this.' }
+      }
+      return
     }
 
-    let toId = req.body && req.body.to;
+    const toId = req.body && req.body.to
     if (!toId) {
       context.res = {
         status: 500,
-        body: "Include a room ID!",
-      };
-      return;
+        body: 'Include a room ID!'
+      }
+      return
     }
 
-    await moveToRoom(user, toId, context);
-  });
-  logSignalR(context);
-};
+    await moveToRoom(user, toId, context)
+  })
+  logSignalR(context)
+}
 
-export default httpTrigger;
+export default httpTrigger

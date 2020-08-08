@@ -1,6 +1,5 @@
-import { Room } from "./room";
-import DB from "./redis";
-import { roomData } from "./room";
+import { Room, roomData } from './room'
+import DB from './redis'
 
 // TODO: pronouns (and realName?) shouldn't be optional
 // but leaving like this til they actually exist in the DB.
@@ -36,103 +35,103 @@ export interface User extends PublicUser {
   room: Room;
 }
 
-export function isMod(userId: string) {
-  const modList = ["19924413"];
-  return modList.includes(userId);
+export function isMod (userId: string) {
+  const modList = ['19924413']
+  return modList.includes(userId)
 }
 
-export async function getUserIdForUsername(username: string) {
-  const userMap = await activeUserMap();
-  const user = Object.values(userMap).find((u) => u.username === username);
+export async function getUserIdForUsername (username: string) {
+  const userMap = await activeUserMap()
+  const user = Object.values(userMap).find((u) => u.username === username)
   if (user) {
-    return user.id;
+    return user.id
   }
 }
 
-export async function updateUserProfile(userId: string, data: Partial<User>) {
+export async function updateUserProfile (userId: string, data: Partial<User>) {
   // Copy/pasted from ProfileEditView.tsx in the client
-  function crushSpaces(s: string): string {
-    if (s.includes(" ")) {
-      console.log("spaces detected " + s);
-      while (s.includes(" ")) {
-        s = s.replace(" ", "-");
+  function crushSpaces (s: string): string {
+    if (s.includes(' ')) {
+      console.log('spaces detected ' + s)
+      while (s.includes(' ')) {
+        s = s.replace(' ', '-')
       }
-      console.log("spaces crushed: " + s);
+      console.log('spaces crushed: ' + s)
     }
-    return s;
+    return s
   }
 
-  const profile: Partial<User> = (await DB.getPublicUser(userId)) || {};
-  const username = crushSpaces(data.username) || profile.username;
+  const profile: Partial<User> = (await DB.getPublicUser(userId)) || {}
+  const username = crushSpaces(data.username) || profile.username
   const newProfile: User = {
     ...profile,
     ...data,
     id: userId,
-    username,
-  } as User; // TODO: Could use real validation here?
+    username
+  } as User // TODO: Could use real validation here?
 
-  let minimalProfile: MinimalUser = {
+  const minimalProfile: MinimalUser = {
     id: userId,
-    username: username,
-  };
+    username: username
+  }
   if (newProfile.pronouns) {
-    minimalProfile.pronouns = newProfile.pronouns;
+    minimalProfile.pronouns = newProfile.pronouns
   }
   // This may need to get fancier if MinimalProfile grows
-  await DB.setMinimalProfileForUser(userId, minimalProfile);
+  await DB.setMinimalProfileForUser(userId, minimalProfile)
 
-  await DB.setUserProfile(userId, newProfile);
-  return newProfile;
+  await DB.setUserProfile(userId, newProfile)
+  return newProfile
 }
 
-export async function getFullUser(userId: string): Promise<User | undefined> {
-  const profile = await DB.getPublicUser(userId);
-  if (!profile) return;
+export async function getFullUser (userId: string): Promise<User | undefined> {
+  const profile = await DB.getPublicUser(userId)
+  if (!profile) return
 
-  let roomId = await DB.currentRoomForUser(userId);
+  let roomId = await DB.currentRoomForUser(userId)
   if (!roomId) {
-    roomId = "kitchen";
-    await DB.setCurrentRoomForUser(userId, roomId);
+    roomId = 'kitchen'
+    await DB.setCurrentRoomForUser(userId, roomId)
   }
 
-  let lastShouted = await DB.lastShoutedForUser(userId);
+  const lastShouted = await DB.lastShoutedForUser(userId)
 
   return {
     ...profile,
     id: userId,
     roomId,
     room: roomData[roomId],
-    lastShouted,
-  };
+    lastShouted
+  }
 }
 
-export function minimizeUser(user: User | PublicUser): MinimalUser {
+export function minimizeUser (user: User | PublicUser): MinimalUser {
   const minimalUser: MinimalUser = {
     id: user.id,
     username: user.username,
-    isBanned: user.isBanned,
-  };
+    isBanned: user.isBanned
+  }
   if (isMod(user.id)) {
-    minimalUser.isMod = true;
+    minimalUser.isMod = true
   }
 
-  return minimalUser;
+  return minimalUser
 }
 
-export async function activeUserMap(): Promise<{
+export async function activeUserMap (): Promise<{
   [userId: string]: MinimalUser;
 }> {
-  const userIds = await DB.getActiveUsers();
-  let names: MinimalUser[] = await Promise.all(
+  const userIds = await DB.getActiveUsers()
+  const names: MinimalUser[] = await Promise.all(
     userIds.map(async (u) => await DB.getMinimalProfileForUser(u))
-  );
+  )
 
-  let map: { [userId: string]: MinimalUser } = {};
+  const map: { [userId: string]: MinimalUser } = {}
   for (let i = 0; i < userIds.length; i++) {
-    map[userIds[i]] = names[i];
+    map[userIds[i]] = names[i]
   }
 
-  console.log(userIds, names, map);
+  console.log(userIds, names, map)
 
-  return map;
+  return map
 }

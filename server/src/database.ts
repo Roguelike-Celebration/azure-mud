@@ -1,9 +1,9 @@
-import { User, MinimalUser } from "./user";
+import { User, MinimalUser } from './user'
 
 interface Database {
-  //-----------------------------------------------------------------
+  // -----------------------------------------------------------------
   // WORLD PRESENCE
-  //-----------------------------------------------------------------
+  // -----------------------------------------------------------------
 
   /** Returns an array of user IDs for all active logged-in users */
   getActiveUsers(): Promise<string[]>;
@@ -20,9 +20,9 @@ interface Database {
   /** Adds a user to the current list of logged-in users */
   setUserAsActive(userId: string);
 
-  //-----------------------------------------------------------------
+  // -----------------------------------------------------------------
   // ROOM PRESENCE
-  //-----------------------------------------------------------------
+  // -----------------------------------------------------------------
 
   /** Returns an array of userIds who are currently in the given room */
   roomOccupants(roomId: string): Promise<string[]>;
@@ -38,9 +38,9 @@ interface Database {
   /** Returns the room ID for the room a user is currently in */
   currentRoomForUser(userId: string): Promise<string | undefined>;
 
-  //-----------------------------------------------------------------
+  // -----------------------------------------------------------------
   // USER DATA
-  //-----------------------------------------------------------------
+  // -----------------------------------------------------------------
 
   /** Returns public profile data for a given user */
   getPublicUser(userId: string): Promise<User | undefined>;
@@ -67,4 +67,5 @@ interface Database {
   unbanUser(userId: string);
 }
 
-export default Database;
+// eslint-disable-next-line no-undef
+export default Database
