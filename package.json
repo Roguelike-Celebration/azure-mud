@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.158",
     "@types/react": "^16.9.43",
+    "@types/redis": "^2.8.25",
     "@types/react-dom": "^16.9.8",
     "@types/simple-peer": "^9.6.0",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
