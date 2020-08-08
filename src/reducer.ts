@@ -12,7 +12,7 @@ import {
   createModMessage,
   createMovedRoomMessage,
 } from "./message";
-import { Room } from "./Room";
+import { Room } from "./room";
 import {
   sendChatMessage,
   toggleUserBan,

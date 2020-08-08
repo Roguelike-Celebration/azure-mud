@@ -1,5 +1,5 @@
 import React from "react";
-import { Room } from "../Room";
+import { Room } from "../room";
 import { moveToRoom } from "../networking";
 import MenuButtonView from "./MenuButtonView";
 

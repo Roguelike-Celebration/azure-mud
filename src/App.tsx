@@ -104,7 +104,6 @@ const App = () => {
             <RoomListView
               rooms={Object.values(state.roomData)}
               username={state.userMap[state.userId].username}
-              role="navigation" aria-label="List of rooms you can navigate to"
             />
             <div id="main" role="main">
               {videoChatView}

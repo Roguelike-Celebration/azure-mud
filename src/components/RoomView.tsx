@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Room } from "../Room";
+import { Room } from "../room";
 import {
   moveToRoom,
   prepareToStartVideoChat,

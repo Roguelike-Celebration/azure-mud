@@ -25,7 +25,7 @@
   text-align: left;
 }
 
-#side-menu button:hover, #side-menu button:focus {
+#side-menu button:hover, #side-menu button:focus, #side-menu button:active {
   text-decoration: none;
 }
 

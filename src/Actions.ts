@@ -2,7 +2,7 @@ import { ThunkDispatch, useReducerWithThunk } from "./useReducerWithThunk";
 import { State } from "./reducer";
 import { fetchProfile } from "./networking";
 import { PublicUser, MinimalUser } from "../server/src/user";
-import { Room } from "./Room";
+import { Room } from "./room";
 
 export type Action =
   | ReceivedMyProfileAction
