@@ -9,6 +9,24 @@
 
 #side-menu li {
   cursor: pointer;
+  list-style: none;
+}
+
+#side-menu button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline; 
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 1.0em;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+#side-menu button:hover, #side-menu button:focus {
+  text-decoration: none;
 }
 
 #menu-button {
