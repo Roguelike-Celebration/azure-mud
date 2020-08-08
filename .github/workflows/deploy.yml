@@ -3,8 +3,6 @@ name: Build and Deploy to GH Pages
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build:
@@ -16,12 +14,6 @@ jobs:
 
       - name: build
         run: npm run build
-
-      - name: lint
-        run: npm run lint
-
-      - name: typecheck
-        run: npm run typecheck
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
