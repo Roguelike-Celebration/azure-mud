@@ -39,3 +39,11 @@ This requires your own [Azure subscription](https://azure.com/free/?WT.mc_id=dev
 7) Set up CORS in the Azure Portal page for the Function app. There's a "CORS" menu item on the left. Allow `http://localhost:1234` for local development, as well as whatever URLs you're using for a production version of the frontend.
 
 8) In `src/config.ts` in this repo, update the hostname to point to your own Function App instance.
+
+## Contributions
+
+If you're looking to get involved: awesome! There's a "Good First Issue" tag in this repo's GitHub Issues that may point you towards something. If you want to work on something, it might be nice to comment that you're looking into it in case others are already working on it or were thinking about it.
+
+Fork this repo, make your changes, open a pull request! Once you've contributed, I'm fairly liberal with granting people contributor access, but the `main` branch is still locked.
+
+Pull requests are run through a few automated checks. If the `ESLint` checks fail, first try running `npm run eslint-fix` to try to automatically fix as many of the errors as you can; anything that doesn't catch will need to be fixed manually.
