@@ -11,6 +11,7 @@ import {
   WhisperMessage,
   ErrorMessage,
   ShoutMessage,
+  EmoteMessage,
   ModMessage
 } from '../message'
 import NameView from './NameView'
@@ -27,6 +28,7 @@ export default function MessageView (props: { message: Message; id: string }) {
     [MessageType.Chat]: ChatMessageView,
     [MessageType.Whisper]: WhisperView,
     [MessageType.Shout]: ShoutView,
+    [MessageType.Emote]: EmoteView,
     [MessageType.Error]: ErrorView,
     [MessageType.Mod]: ModMessageView
   }
@@ -130,6 +132,14 @@ const ShoutView = (props: ShoutMessage & { id: string }) => {
   return (
     <div className="message">
       <NameView userId={props.userId} id={props.id} /> shouts: {props.message}
+    </div>
+  )
+}
+
+const EmoteView = (props: EmoteMessage & { id: string }) => {
+  return (
+    <div className="message">
+      <em><NameView userId={props.userId} id={props.id} /> {props.message}</em>
     </div>
   )
 }

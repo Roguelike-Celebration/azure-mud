@@ -9,6 +9,7 @@ import {
   createWhisperMessage,
   createErrorMessage,
   createShoutMessage,
+  createEmoteMessage,
   createModMessage,
   createMovedRoomMessage,
 } from "./message";
@@ -174,6 +175,12 @@ export default (oldState: State, action: Action): State => {
     state.messages.push(
       createShoutMessage(action.value.name, action.value.message)
     );
+  }
+
+  if (action.type == ActionType.Emote) {
+    state.messages.push(
+      createEmoteMessage(action.value.name, action.value.message)
+    )
   }
 
   if (action.type === ActionType.UserMap) {
