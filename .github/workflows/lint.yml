@@ -1,11 +1,11 @@
-name: Build and Deploy to GH Pages
+name: Linting and Validation Checks
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
