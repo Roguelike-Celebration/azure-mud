@@ -10,7 +10,7 @@
     "deploy": "npm run build; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/**/* server/**/*.ts", 
+    "lint": "eslint src/**/* server/**/*.ts",
     "lint-fix": "eslint src/**/* server/**/*.ts --fix"
   },
   "author": "",
