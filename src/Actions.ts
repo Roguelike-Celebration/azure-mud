@@ -3,6 +3,7 @@ import { State } from "./reducer";
 import { fetchProfile } from "./networking";
 import { PublicUser, MinimalUser } from "../server/src/user";
 import { Room } from "./room";
+import { Message } from "./message";
 
 export type Action =
   | ReceivedMyProfileAction
@@ -13,6 +14,7 @@ export type Action =
   | PlayerDisconnectedAction
   | ChatMessageAction
   | ModMessageAction
+  | LoadMessageArchiveAction
   | WhisperAction
   | ShoutAction
   | EmoteAction
@@ -73,6 +75,7 @@ export enum ActionType {
   Authenticate = "AUTHENTICATE",
   IsRegistered = "IS_REGISTERED",
   BanToggle = "BAN_TOGGLE",
+  LoadMessageArchive = "LOAD_MESSAGE_ARCHIVE",
 }
 
 interface ReceivedMyProfileAction {
@@ -514,4 +517,13 @@ interface BanToggleAction {
 
 export const BanToggleAction = (userId: string): BanToggleAction => {
   return { type: ActionType.BanToggle, value: userId };
+};
+
+interface LoadMessageArchiveAction {
+  type: ActionType.LoadMessageArchive;
+  value: Message[];
+}
+
+export const LoadMessageArchiveAction = (messages: Message[]): LoadMessageArchiveAction => {
+  return { type: ActionType.LoadMessageArchive, value: messages };
 };
