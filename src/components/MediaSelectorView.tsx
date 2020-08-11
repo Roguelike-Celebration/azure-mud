@@ -9,7 +9,7 @@ interface Props {
   initialAudioDeviceId?: string;
 }
 
-export default function MediaSelectorView (props: Props) {
+export default function MediaSelectorView(props: Props) {
   const audioDevices = props.devices.filter((d) => d.kind === 'audioinput')
   const videoDevices = props.devices.filter((d) => d.kind === 'videoinput')
   const dispatch = useContext(DispatchContext)

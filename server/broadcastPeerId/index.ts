@@ -3,7 +3,7 @@ import authenticate from '../src/authenticate'
 import logSignalR from '../src/logSignalR'
 import DB from '../src/redis'
 
-const httpTrigger: AzureFunction = async function (
+const httpTrigger: AzureFunction = async function(
   context: Context,
   req: HttpRequest
 ): Promise<void> {

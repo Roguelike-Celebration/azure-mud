@@ -41,7 +41,7 @@ let myDispatch: Dispatch<Action>
 
 let inMediaChat: boolean = false
 
-export async function connect (userId: string, dispatch: Dispatch<Action>) {
+export async function connect(userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId
   myDispatch = dispatch
 
@@ -69,7 +69,7 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 }
 
 // If hardRefreshPage is true, a successful update will refresh the entire page instead of dismissing a modal
-export async function updateProfile (user: Partial<User>, hardRefreshPage: boolean) {
+export async function updateProfile(user: Partial<User>, hardRefreshPage: boolean) {
   const result = await callAzureFunction('updateProfile', { user })
   if (result.valid) {
     if (hardRefreshPage) {
@@ -80,33 +80,33 @@ export async function updateProfile (user: Partial<User>, hardRefreshPage: boole
   }
 }
 
-export async function checkIsRegistered (): Promise<boolean> {
+export async function checkIsRegistered(): Promise<boolean> {
   const result = await callAzureFunction('isRegistered')
   return result.registered
 }
 
 // Post-it notes
 
-export async function addNoteToWall (message: string) {
+export async function addNoteToWall(message: string) {
   const id = uuid()
   await callAzureFunction('addRoomNote', { id, message })
 }
 
-export async function deleteRoomNote (noteId: string) {
+export async function deleteRoomNote(noteId: string) {
   await callAzureFunction('deleteRoomNote', { noteId })
 }
 
-export async function likeRoomNote (noteId: string) {
+export async function likeRoomNote(noteId: string) {
   await callAzureFunction('likeRoomNote', { noteId, like: true })
 }
 
-export async function unlikeRoomNote (noteId: string) {
+export async function unlikeRoomNote(noteId: string) {
   await callAzureFunction('likeRoomNote', { noteId, like: false })
 }
 
 //
 
-export async function moveToRoom (roomId: string) {
+export async function moveToRoom(roomId: string) {
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
     'moveRoom',
     {
@@ -127,7 +127,7 @@ export async function moveToRoom (roomId: string) {
   }
 }
 
-export async function sendChatMessage (id: string, text: string) {
+export async function sendChatMessage(id: string, text: string) {
   const result: RoomResponse | Error | any = await callAzureFunction(
     'sendChatMessage',
     {
@@ -148,7 +148,7 @@ export async function sendChatMessage (id: string, text: string) {
   }
 }
 
-export async function fetchProfile (userId: string): Promise<User | undefined> {
+export async function fetchProfile(userId: string): Promise<User | undefined> {
   const result = await callAzureFunction('fetchProfile', { userId })
   if (result.error) {
     console.log('Could not fetch profile', result.erroc)
@@ -157,11 +157,11 @@ export async function fetchProfile (userId: string): Promise<User | undefined> {
   }
 }
 
-export async function toggleUserBan (userId: string) {
+export async function toggleUserBan(userId: string) {
   const result = await callAzureFunction('banUser', { userId })
 }
 
-export async function deleteMessage (messageId: string) {
+export async function deleteMessage(messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
 }
 
@@ -172,7 +172,7 @@ export async function deleteMessage (messageId: string) {
 // This loads a local webcam view
 // We show a "here's what you look like, select your input devices, toggle audio/video" before you connect
 // We need to grab a local feed first so we can get pretty names for the list of inputs.
-export async function prepareToStartVideoChat () {
+export async function prepareToStartVideoChat() {
   // The act of fetching the local media stream triggers a local view of your webcam
   await getMediaStream(myDispatch)
   const devices = await navigator.mediaDevices.enumerateDevices()
@@ -181,16 +181,16 @@ export async function prepareToStartVideoChat () {
 
 // This kicks off the whole peering process.
 // Any connected WebRTC clients will start signaling, which happens over SignalR.
-export async function startVideoChat () {
+export async function startVideoChat() {
   inMediaChat = true
   callAzureFunction('broadcastPeerId')
 }
 
-export async function sendSignalData (peerId: string, data: string) {
+export async function sendSignalData(peerId: string, data: string) {
   return await callAzureFunction('sendSignalData', { peerId, data })
 }
 
-export async function setNetworkMediaChatStatus (isInMediaChat: boolean) {
+export async function setNetworkMediaChatStatus(isInMediaChat: boolean) {
   inMediaChat = isInMediaChat
 
   if (!isInMediaChat) {
@@ -198,13 +198,13 @@ export async function setNetworkMediaChatStatus (isInMediaChat: boolean) {
   }
 }
 
-export function getNetworkMediaChatStatus (): boolean {
+export function getNetworkMediaChatStatus(): boolean {
   return inMediaChat
 }
 
 // Setup
 
-async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
+async function connectSignalR(userId: string, dispatch: Dispatch<Action>) {
   const connection = new SignalR.HubConnectionBuilder()
     .withUrl(`${Config.SERVER_HOSTNAME}/api`)
     .configureLogging(SignalR.LogLevel.Debug)
@@ -328,7 +328,7 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     .catch(console.error)
 }
 
-async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
+async function callAzureFunction(endpoint: string, body?: any): Promise<any> {
   try {
     const r = await axios.post(
       `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
@@ -343,7 +343,7 @@ async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
   }
 }
 
-export async function getLoginInfo () {
+export async function getLoginInfo() {
   try {
     console.log('Fetching')
     const r = await axios.post(`${Config.SERVER_HOSTNAME}/.auth/me`, null, {

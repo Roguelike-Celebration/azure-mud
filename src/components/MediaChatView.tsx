@@ -26,7 +26,7 @@ interface MediaProps {
   audioDeviceId?: string;
 }
 
-export default function MediaChatView (props: MediaProps) {
+export default function MediaChatView(props: MediaProps) {
   let otherVideos, mediaSelector
   const dispatch = useContext(DispatchContext)
   console.log('Re-rendering media chat view?')
@@ -89,7 +89,7 @@ type PropsType = VideoHTMLAttributes<HTMLVideoElement> & {
   srcObject: MediaStream;
 };
 
-export function Video ({ srcObject, ...props }: PropsType) {
+export function Video({ srcObject, ...props }: PropsType) {
   const refVideo = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {

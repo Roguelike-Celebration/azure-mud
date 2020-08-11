@@ -4,7 +4,7 @@ import { getFullUser } from '../src/user'
 import DB from '../src/redis'
 import { getHeartbeatData } from '../src/heartbeat'
 
-const timerTrigger: AzureFunction = async function (
+const timerTrigger: AzureFunction = async function(
   context: Context,
   myTimer: any
 ): Promise<void> {

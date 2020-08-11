@@ -14,7 +14,7 @@ import {
   allPresenceData
 } from '../src/globalPresenceMessage'
 
-const httpTrigger: AzureFunction = async function (
+const httpTrigger: AzureFunction = async function(
   context: Context,
   req: HttpRequest
 ): Promise<any> {

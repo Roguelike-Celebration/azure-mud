@@ -6,7 +6,7 @@ import DB from './redis'
  *
  * Since I'm just compring Unix timestamps anyway, this is a lazy solution.
  */
-export async function getHeartbeatData (): Promise<{
+export async function getHeartbeatData(): Promise<{
   [userId: string]: number;
 }> {
   const activeUsers: string[] = await DB.getActiveUsers()
@@ -26,7 +26,7 @@ export async function getHeartbeatData (): Promise<{
   return data
 }
 
-export async function userHeartbeatReceived (userId: string) {
+export async function userHeartbeatReceived(userId: string) {
   await DB.setUserHeartbeat(userId)
   await DB.setUserAsActive(userId)
 }
