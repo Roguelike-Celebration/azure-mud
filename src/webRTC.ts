@@ -12,15 +12,15 @@ import {
 
 let mediaStream: MediaStream
 
-export function localMediaStream (): MediaStream | undefined {
+export function localMediaStream(): MediaStream | undefined {
   return mediaStream
 }
 
-export function otherMediaStreams (): { [id: string]: MediaStream } {
+export function otherMediaStreams(): { [id: string]: MediaStream } {
   return peerStreams
 }
 
-export const getMediaStream = async (
+export const getMediaStream = async(
   dispatch?: Dispatch<Action>,
   deviceIds?: { audioId?: string; videoId?: string }
 ): Promise<MediaStream | undefined> => {
@@ -52,7 +52,7 @@ export const getMediaStream = async (
     stream = await navigator.mediaDevices.getUserMedia(constraints)
   } catch (err) {
     console.log('Video error', err)
-    alert("Could not load your webcam. Investigate your browser settings and try again")
+    alert('Could not load your webcam. Investigate your browser settings and try again')
     return
   }
 
@@ -97,7 +97,7 @@ export const getMediaStream = async (
   return stream
 }
 
-export async function toggleVideo (newState: boolean) {
+export async function toggleVideo(newState: boolean) {
   const stream = await getMediaStream()
   const track = stream.getVideoTracks()[0]
   if (!track) {
@@ -108,7 +108,7 @@ export async function toggleVideo (newState: boolean) {
   track.enabled = !newState
 }
 
-export async function toggleAudio (newState: boolean) {
+export async function toggleAudio(newState: boolean) {
   const stream = await getMediaStream()
   const track = stream.getAudioTracks()[0]
   if (!track) {
@@ -119,7 +119,7 @@ export async function toggleAudio (newState: boolean) {
   track.enabled = !newState
 }
 
-export async function startSignaling (
+export async function startSignaling(
   peerId: string,
   dispatch: Dispatch<Action>
 ) {
@@ -129,7 +129,7 @@ export async function startSignaling (
   setUpPeer(peerId, peer, dispatch)
 }
 
-export async function receiveSignalData (
+export async function receiveSignalData(
   peerId: string,
   data: string,
   dispatch: Dispatch<Action>
@@ -149,24 +149,24 @@ const peers: { [id: string]: SimplePeer.Instance } = {}
 const peerStreams: { [id: string]: MediaStream } = {}
 let peerAnalysers: [string, AnalyserNode][] = []
 
-export function sendToPeer (id: string, msg: string) {
+export function sendToPeer(id: string, msg: string) {
   peers[id].send(msg)
 }
 
-export function broadcastToPeers (msg: string) {
+export function broadcastToPeers(msg: string) {
   Object.values(peers).forEach((c) => {
     if (!c.writable) return
     c.send(msg)
   })
 }
 
-export function disconnectAllPeers () {
+export function disconnectAllPeers() {
   Object.values(peers).forEach((p) => {
     p.destroy()
   })
 }
 
-function setUpPeer (
+function setUpPeer(
   peerId: string,
   peer: SimplePeer.Instance,
   dispatch: Dispatch<Action>
@@ -210,7 +210,7 @@ function setUpPeer (
   })
 }
 
-function setUpAnalyser (stream: MediaStream): AnalyserNode {
+function setUpAnalyser(stream: MediaStream): AnalyserNode {
   const audioCtx = new (window.AudioContext ||
     (window as any).webkitAudioContext)()
   const source = audioCtx.createMediaStreamSource(stream)
@@ -225,7 +225,7 @@ function setUpAnalyser (stream: MediaStream): AnalyserNode {
 }
 
 let shouldStopAnalysing = false
-function startAnalyserLoop (dispatch: Dispatch<Action>) {
+function startAnalyserLoop(dispatch: Dispatch<Action>) {
   console.log('Starting analyser loop')
 
   const average = (ns: Uint8Array) => {
@@ -263,6 +263,6 @@ function startAnalyserLoop (dispatch: Dispatch<Action>) {
   window.requestAnimationFrame(analyse)
 }
 
-function stopAnalyserLoop () {
+export function stopAudioAnalyserLoop() {
   shouldStopAnalysing = true
 }

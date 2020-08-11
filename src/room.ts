@@ -6,7 +6,7 @@ export interface Room {
   id: string;
   description: string;
   users?: string[];
-  videoUsers?: string[]
+  videoUsers?: string[];
   allowsMedia: boolean;
 
   hasNoteWall: boolean;

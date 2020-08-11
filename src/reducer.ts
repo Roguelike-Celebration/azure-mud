@@ -21,7 +21,7 @@ import {
   setNetworkMediaChatStatus
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
-import { disconnectAllPeers } from './webRTC'
+import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 
@@ -120,7 +120,7 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.UpdatedVideoPresence) {
-    const {roomId, users} = action.value
+    const { roomId, users } = action.value
     if (state.roomData[roomId]) {
       state.roomData[roomId].videoUsers = users
     }
@@ -166,13 +166,15 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.Whisper) {
-    addMessage(state,
+    addMessage(
+      state,
       createWhisperMessage(action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.ModMessage) {
-    addMessage(state,
+    addMessage(
+      state,
       createModMessage(
         action.value.name,
         action.value.message,
@@ -249,6 +251,7 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.StopVideoChat) {
     setNetworkMediaChatStatus(false)
     disconnectAllPeers()
+    stopAudioAnalyserLoop()
     delete state.localMediaStreamId
     delete state.otherMediaStreamPeerIds
     state.inMediaChat = false
@@ -368,7 +371,7 @@ export default (oldState: State, action: Action): State => {
   return state
 }
 
-function deleteMessage (state: State, messageId: String) {
+function deleteMessage(state: State, messageId: String) {
   const target = state.messages.find(m => isDeletable(m) && m.messageId === messageId)
   // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
   if (isDeletable(target)) {
@@ -378,7 +381,7 @@ function deleteMessage (state: State, messageId: String) {
   }
 }
 
-function addMessage (state: State, message: Message) {
+function addMessage(state: State, message: Message) {
   state.messages.push(message)
   localStorage.setItem('messages', JSON.stringify(state.messages))
   localStorage.setItem('messageTimestamp', new Date().toUTCString())
