@@ -6,7 +6,7 @@ import { look } from '../src/look'
 import authenticate from '../src/authenticate'
 import { getUserIdForUsername } from '../src/user'
 
-const httpTrigger: AzureFunction = async function (
+const httpTrigger: AzureFunction = async function(
   context: Context,
   req: HttpRequest
 ): Promise<any> {

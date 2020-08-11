@@ -9,7 +9,7 @@ import { User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
 import DB from '../src/redis'
 
-export async function moveToRoom (
+export async function moveToRoom(
   user: User,
   newRoomId: string,
   context: Context

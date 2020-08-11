@@ -1,6 +1,6 @@
 import DB from './redis'
 
-export async function addUserToRoomPresence (
+export async function addUserToRoomPresence(
   userId: string,
   roomId: string
 ): Promise<string[]> {
@@ -16,7 +16,7 @@ export async function addUserToRoomPresence (
   return roomOccupants
 }
 
-export async function removeUserFromRoomPresence (
+export async function removeUserFromRoomPresence(
   userId: string,
   roomId: string
 ): Promise<string[]> {

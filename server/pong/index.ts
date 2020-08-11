@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import DB from '../src/redis'
 
-const httpTrigger: AzureFunction = async function (
+const httpTrigger: AzureFunction = async function(
   context: Context,
   req: HttpRequest
 ): Promise<void> {

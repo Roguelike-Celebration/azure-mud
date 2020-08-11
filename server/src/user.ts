@@ -35,12 +35,12 @@ export interface User extends PublicUser {
   room: Room;
 }
 
-export function isMod (userId: string) {
+export function isMod(userId: string) {
   const modList = ['19924413', '1288674456219471875']
   return modList.includes(userId)
 }
 
-export async function getUserIdForUsername (username: string) {
+export async function getUserIdForUsername(username: string) {
   const userMap = await activeUserMap()
   const user = Object.values(userMap).find((u) => u.username === username)
   if (user) {
@@ -48,9 +48,9 @@ export async function getUserIdForUsername (username: string) {
   }
 }
 
-export async function updateUserProfile (userId: string, data: Partial<User>) {
+export async function updateUserProfile(userId: string, data: Partial<User>) {
   // Copy/pasted from ProfileEditView.tsx in the client
-  function crushSpaces (s: string): string {
+  function crushSpaces(s: string): string {
     if (s.includes(' ')) {
       console.log('spaces detected ' + s)
       while (s.includes(' ')) {
@@ -84,7 +84,7 @@ export async function updateUserProfile (userId: string, data: Partial<User>) {
   return newProfile
 }
 
-export async function getFullUser (userId: string): Promise<User | undefined> {
+export async function getFullUser(userId: string): Promise<User | undefined> {
   const profile = await DB.getPublicUser(userId)
   if (!profile) return
 
@@ -105,7 +105,7 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
   }
 }
 
-export function minimizeUser (user: User | PublicUser): MinimalUser {
+export function minimizeUser(user: User | PublicUser): MinimalUser {
   const minimalUser: MinimalUser = {
     id: user.id,
     username: user.username,
@@ -118,7 +118,7 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
   return minimalUser
 }
 
-export async function activeUserMap (): Promise<{
+export async function activeUserMap(): Promise<{
   [userId: string]: MinimalUser;
 }> {
   const userIds = await DB.getActiveUsers()

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { toggleVideo, toggleAudio, localMediaStream } from '../webRTC'
 import { Video } from './MediaChatView'
 
-export default function LocalMediaView (props: { speaking: boolean }) {
+export default function LocalMediaView(props: { speaking: boolean }) {
   const [sendVideo, setUseVideo] = useState(true)
   const [sendAudio, setUseAudio] = useState(true)
 

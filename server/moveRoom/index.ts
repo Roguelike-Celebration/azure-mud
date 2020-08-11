@@ -3,7 +3,7 @@ import { moveToRoom } from '../src/moveToRoom'
 import authenticate from '../src/authenticate'
 import logSignalR from '../src/logSignalR'
 
-const httpTrigger: AzureFunction = async function (
+const httpTrigger: AzureFunction = async function(
   context: Context,
   req: HttpRequest
 ): Promise<any> {

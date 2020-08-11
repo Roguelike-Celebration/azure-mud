@@ -11,7 +11,7 @@ interface Props {
   username: string;
 }
 
-export default function RoomListView (props: Props) {
+export default function RoomListView(props: Props) {
   return (
     <nav id="side-menu" role="navigation" aria-label="List of rooms you can navigate to">
       <MenuButtonView username={props.username} />

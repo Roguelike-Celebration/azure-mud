@@ -120,6 +120,7 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.UpdatedVideoPresence) {
+    debugger
     const { roomId, users } = action.value
     if (state.roomData[roomId]) {
       state.roomData[roomId].videoUsers = users

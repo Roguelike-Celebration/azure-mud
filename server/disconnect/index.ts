@@ -4,7 +4,7 @@ import authenticate from '../src/authenticate'
 import DB from '../src/redis'
 import { globalPresenceMessage } from '../src/globalPresenceMessage'
 
-const httpTrigger: AzureFunction = async function (
+const httpTrigger: AzureFunction = async function(
   context: Context,
   req: HttpRequest
 ): Promise<any> {

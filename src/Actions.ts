@@ -4,8 +4,11 @@ import { fetchProfile } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
 import { Message } from './message'
+<<<<<<< HEAD
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
+=======
+>>>>>>> Mass eslint pass
 
 export type Action =
   | ReceivedMyProfileAction
@@ -68,7 +71,6 @@ export enum ActionType {
   PlayerLeft = 'PLAYER_LEFT',
   Error = 'ERROR',
   UserMap = 'USER_MAP',
-
   // WebRTC
   P2PDataReceived = 'P2P_DATA_RECEIVED',
   P2PStreamReceived = 'P2P_STREAM_RECEIVED',

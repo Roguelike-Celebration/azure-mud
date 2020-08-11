@@ -20,7 +20,7 @@ import ReactTooltip from 'react-tooltip'
 import { UserMapContext } from '../App'
 import { deleteMessage } from '../networking'
 
-export default function MessageView (props: { message: Message; id: string }) {
+export default function MessageView(props: { message: Message; id: string }) {
   const { message } = props
 
   const messageMap = {

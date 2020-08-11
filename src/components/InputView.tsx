@@ -5,7 +5,7 @@ import { SendMessageAction } from '../Actions'
 import '../../style/input.css'
 const emojifier = require('node-emoji')
 
-export default function InputView (props: { prepopulated?: string }) {
+export default function InputView(props: { prepopulated?: string }) {
   const dispatch = useContext(DispatchContext)
   const [input, setInput] = useState('')
 

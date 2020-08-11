@@ -13,7 +13,7 @@ interface Props {
 }
 
 // shep: issue #45. Turns ' ' into '-'
-function crushSpaces (s: string) : string {
+function crushSpaces(s: string) : string {
   if (s.includes(' ')) {
     console.log('spaces detected ' + s)
     while (s.includes(' ')) {
@@ -24,7 +24,7 @@ function crushSpaces (s: string) : string {
   return s
 }
 
-export default function ProfileEditView (props: Props) {
+export default function ProfileEditView(props: Props) {
   const dispatch = useContext(DispatchContext)
 
   const { defaultHandle, user } = props

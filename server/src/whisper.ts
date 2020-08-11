@@ -2,7 +2,7 @@ import { Context } from '@azure/functions'
 
 import { User, getUserIdForUsername } from './user'
 
-export async function whisper (
+export async function whisper(
   from: User,
   toUsername: string,
   message: string,

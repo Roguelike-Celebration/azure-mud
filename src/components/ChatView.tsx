@@ -4,7 +4,7 @@ import { Message } from '../message'
 
 import '../../style/chat.css'
 
-export default function ChatView (props: { messages: Message[] }) {
+export default function ChatView(props: { messages: Message[] }) {
   React.useEffect(() => {
     const lastMessage = document.querySelector(
       '#messages .message:last-of-type'

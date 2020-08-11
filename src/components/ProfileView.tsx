@@ -5,7 +5,7 @@ import { DispatchContext } from '../App'
 
 import '../../style/profileView.css'
 
-export default function ProfileView (props: { user: PublicUser }) {
+export default function ProfileView(props: { user: PublicUser }) {
   const { user } = props
   const dispatch = useContext(DispatchContext)
 

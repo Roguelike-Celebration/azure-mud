@@ -1,7 +1,7 @@
 import { Context } from '@azure/functions'
 import DB from './redis'
 
-export async function look (target: string, context: Context) {
+export async function look(target: string, context: Context) {
   const profile = await DB.getPublicUser(target)
 
   context.res = {
