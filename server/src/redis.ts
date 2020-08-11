@@ -65,21 +65,30 @@ const Redis: Database = {
   async addUserToVideoPresence(userId: string, roomId: string) {
     const rawList = await getCache(videoPresenceKey(roomId))
     let list: string[]
+<<<<<<< HEAD
     if (!rawList) { list = [] }
     list = JSON.parse(rawList)
+=======
+    if (rawList) {
+      list = JSON.parse(rawList)
+    } else {
+      list = []
+    }
 
-    // if (!list.includes(userId)) {
-    //   list.push(userId)
-    // }
+    console.log(list)
+>>>>>>> Fix video presence to actually work [#8, #76]
 
-    // await setCache(videoPresenceKey(roomId), list)
-    // return list
-    return []
+    if (!list.includes(userId)) {
+      list.push(userId)
+    }
+
+    return list
   },
 
   async removeUserFromVideoPresence(userId: string, roomId: string) {
     const rawList = await getCache(videoPresenceKey(roomId))
     let list: string[]
+<<<<<<< HEAD
     if (!rawList) { list = [] }
     list = JSON.parse(rawList)
 
@@ -88,6 +97,19 @@ const Redis: Database = {
     // await setCache(videoPresenceKey(roomId), list)
     // return list
     return []
+=======
+    if (rawList) {
+      list = JSON.parse(rawList)
+    } else {
+      list = []
+    }
+    console.log(list)
+
+    list = list.filter(l => l !== userId)
+
+    await setCache(videoPresenceKey(roomId), JSON.stringify(list))
+    return list
+>>>>>>> Fix video presence to actually work [#8, #76]
   },
 
   // User
