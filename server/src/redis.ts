@@ -68,12 +68,13 @@ const Redis: Database = {
     if (!rawList) { list = [] }
     list = JSON.parse(rawList)
 
-    if (!list.includes(userId)) {
-      list.push(userId)
-    }
+    // if (!list.includes(userId)) {
+    //   list.push(userId)
+    // }
 
-    await setCache(videoPresenceKey(roomId), list)
-    return list
+    // await setCache(videoPresenceKey(roomId), list)
+    // return list
+    return []
   },
 
   async removeUserFromVideoPresence(userId: string, roomId: string) {
@@ -82,10 +83,11 @@ const Redis: Database = {
     if (!rawList) { list = [] }
     list = JSON.parse(rawList)
 
-    list = list.filter(l => l !== userId)
+    // list = list.filter(l => l !== userId)
 
-    await setCache(videoPresenceKey(roomId), list)
-    return list
+    // await setCache(videoPresenceKey(roomId), list)
+    // return list
+    return []
   },
 
   // User
