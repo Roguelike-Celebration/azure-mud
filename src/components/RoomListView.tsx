@@ -2,6 +2,7 @@ import React from 'react'
 import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import MenuButtonView from './MenuButtonView'
+import { FaVideo } from 'react-icons/fa'
 
 import '../../style/nav.css'
 
@@ -29,11 +30,13 @@ const RoomListItem = (props: { room: Room }) => {
   const onClick = () => {
     moveToRoom(room.id)
   }
+  const userCount = room.users ? `(${room.users.length})` : ''
+  const videoIcon = room.videoUsers && room.videoUsers.length > 0 ? <FaVideo /> : ''
 
   return (
     <li>
       <button onClick={onClick}>
-        <strong>{room.name}</strong> {room.users ? `(${room.users.length})` : ''}
+        <strong>{room.name}</strong> {userCount} {videoIcon}
       </button>
     </li>
   )

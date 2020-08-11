@@ -27,7 +27,8 @@ import {
   NoteRemoveAction,
   NoteUpdateRoomAction,
   NoteUpdateLikesAction,
-  HideModalAction
+  HideModalAction,
+  UpdatedVideoPresenceAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
@@ -189,8 +190,12 @@ export async function sendSignalData (peerId: string, data: string) {
   return await callAzureFunction('sendSignalData', { peerId, data })
 }
 
-export function setNetworkMediaChatStatus (isInMediaChat: boolean) {
+export async function setNetworkMediaChatStatus (isInMediaChat: boolean) {
   inMediaChat = isInMediaChat
+
+  if (!isInMediaChat) {
+    return await callAzureFunction('leaveVideoChat')
+  }
 }
 
 export function getNetworkMediaChatStatus (): boolean {
@@ -258,6 +263,11 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   connection.on('usernameMap', (map) => {
     console.log('Received map', map)
     dispatch(UserMapAction(map))
+  })
+
+  connection.on('videoPresence', (roomId: string, users: string[]) => {
+    console.log('Changed video presence')
+    dispatch(UpdatedVideoPresenceAction(roomId, users))
   })
 
   connection.on('shout', (messageId, name, message) => {

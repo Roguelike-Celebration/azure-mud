@@ -62,6 +62,32 @@ const Redis: Database = {
     return await getCache(roomKeyForUser(userId))
   },
 
+  async addUserToVideoPresence (userId: string, roomId: string) {
+    const rawList = await getCache(videoPresenceKey(roomId))
+    let list: string[]
+    if (!rawList) { list = [] }
+    list = JSON.parse(rawList)
+
+    if (!list.includes(userId)) {
+      list.push(userId)
+    }
+
+    await setCache(videoPresenceKey(roomId), list)
+    return list
+  },
+
+  async removeUserFromVideoPresence (userId: string, roomId: string) {
+    const rawList = await getCache(videoPresenceKey(roomId))
+    let list: string[]
+    if (!rawList) { list = [] }
+    list = JSON.parse(rawList)
+
+    list = list.filter(l => l !== userId)
+
+    await setCache(videoPresenceKey(roomId), list)
+    return list
+  },
+
   // User
   async getPublicUser (userId: string) {
     const userData = await getCache(profileKeyForUser(userId))
@@ -247,6 +273,10 @@ export function roomKey (name: string) {
 
 export function roomNotesKey (roomId: string): string {
   return `${roomId}Notes`
+}
+
+export function videoPresenceKey (roomId: string) {
+  return `${roomId}PresenceVideo`
 }
 
 export default Redis

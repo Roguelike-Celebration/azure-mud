@@ -12,6 +12,7 @@ export type Action =
   | UpdatedCurrentRoomAction
   | UpdatedRoomDataAction
   | UpdatedPresenceAction
+  | UpdatedVideoPresenceAction
   | PlayerConnectedAction
   | PlayerDisconnectedAction
   | ChatMessageAction
@@ -54,6 +55,7 @@ export enum ActionType {
   UpdatedCurrentRoom = 'UPDATED_CURRENT_ROOM',
   UpdatedRoomData = 'UPDATED_ROOM_DATA',
   UpdatedPresence = 'UPDATED_PRESENCE',
+  UpdatedVideoPresence = 'UPDATED_VIDEO_PRESENCE',
   PlayerConnected = 'PLAYER_CONNECTED',
   PlayerDisconnected = 'PLAYER_DISCONNECTED',
   ChatMessage = 'CHAT_MESSAGE',
@@ -66,6 +68,7 @@ export enum ActionType {
   PlayerLeft = 'PLAYER_LEFT',
   Error = 'ERROR',
   UserMap = 'USER_MAP',
+
   // WebRTC
   P2PDataReceived = 'P2P_DATA_RECEIVED',
   P2PStreamReceived = 'P2P_STREAM_RECEIVED',
@@ -148,6 +151,21 @@ export const UpdatedPresenceAction = (data: {
   return {
     type: ActionType.UpdatedPresence,
     value: data
+  }
+}
+
+interface UpdatedVideoPresenceAction {
+  type: ActionType.UpdatedVideoPresence;
+  value: {
+    roomId: string,
+    users: string[]
+  }
+}
+
+export const UpdatedVideoPresenceAction = (roomId: string, users: string[]): UpdatedVideoPresenceAction => {
+  return {
+    type: ActionType.UpdatedVideoPresence,
+    value: { roomId, users }
   }
 }
 

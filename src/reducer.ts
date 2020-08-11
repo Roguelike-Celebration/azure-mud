@@ -119,6 +119,13 @@ export default (oldState: State, action: Action): State => {
     })
   }
 
+  if (action.type === ActionType.UpdatedVideoPresence) {
+    const {roomId, users} = action.value
+    if (state.roomData[roomId]) {
+      state.roomData[roomId].videoUsers = users
+    }
+  }
+
   if (action.type === ActionType.PlayerConnected) {
     const user = action.value
     if (!state.roomData[state.roomId].users.includes(user.id)) {
