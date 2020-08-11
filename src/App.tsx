@@ -5,7 +5,7 @@ import ChatView from "./components/ChatView";
 import InputView from "./components/InputView";
 import { connect, getLoginInfo, checkIsRegistered } from "./networking";
 import reducer, { State, defaultState } from "./reducer";
-import { AuthenticateAction, Action, IsRegisteredAction } from "./Actions";
+import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction } from "./Actions";
 import ProfileView from "./components/ProfileView";
 import { useReducerWithThunk } from "./useReducerWithThunk";
 import config from "./config";
@@ -13,6 +13,7 @@ import MediaChatView from "./components/MediaChatView";
 import ProfileEditView from "./components/ProfileEditView";
 import RoomListView from "./components/RoomListView";
 import { IconContext } from "react-icons/lib";
+import { Message } from "./message";
 
 export const DispatchContext = createContext(null);
 export const UserMapContext = createContext(null);
@@ -36,6 +37,28 @@ const App = () => {
         checkIsRegistered().then((registered) => {
           dispatch(AuthenticateAction(userId, name));
           if (registered) {
+            let loadMessages = false
+            const rawTimestamp = localStorage.getItem("messageTimestamp")
+            const rawMessageData = localStorage.getItem("messages")
+            if (rawTimestamp) {
+              try {
+                const timestamp = new Date(rawTimestamp)
+                // A janky way to say "Is it older than an hour"
+                loadMessages = rawMessageData && (new Date()).getTime() - timestamp.getTime() < 1000 * 60 * 60
+              } catch {
+                console.log("Did not find a valid timestamp for message cache")
+              }
+            }
+
+            if (loadMessages) {
+              try {
+                const messages = JSON.parse(rawMessageData)
+                dispatch(LoadMessageArchiveAction(messages))
+              } catch {
+                console.log("Could not parse message JSON", rawMessageData)
+              }
+            }
+
             dispatch(IsRegisteredAction());
             connect(userId, dispatch);
           }

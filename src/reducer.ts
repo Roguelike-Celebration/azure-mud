@@ -86,7 +86,7 @@ export default (oldState: State, action: Action): State => {
     // Add a local "you have moved to X room" message
     if (state.roomData && state.roomData[action.value]) {
       const room = state.roomData[action.value];
-      state.messages.push(createMovedRoomMessage(room.shortName));
+      addMessage(state, createMovedRoomMessage(room.shortName));
     }
 
     /** Here lies a giant hack.
@@ -121,7 +121,7 @@ export default (oldState: State, action: Action): State => {
     const user = action.value;
     if (!state.roomData[state.roomId].users.includes(user.id)) {
       state.roomData[state.roomId].users.push(user.id);
-      state.messages.push(createConnectedMessage(user.id));
+      addMessage(state, createConnectedMessage(user.id));
     }
     state.userMap[user.id] = user;
   }
@@ -130,13 +130,13 @@ export default (oldState: State, action: Action): State => {
     state.roomData[state.roomId].users = state.roomData[
       state.roomId
     ].users.filter((u) => u !== action.value);
-    state.messages.push(createDisconnectedMessage(action.value));
+    addMessage(state, createDisconnectedMessage(action.value));
   }
 
   if (action.type === ActionType.PlayerEntered) {
     if (!state.roomData[state.roomId].users.includes(action.value.name)) {
       state.roomData[state.roomId].users.push(action.value.name);
-      state.messages.push(
+      addMessage(state,
         createEnteredMessage(action.value.name, action.value.from)
       );
     }
@@ -146,23 +146,23 @@ export default (oldState: State, action: Action): State => {
     state.roomData[state.roomId].users = state.roomData[
       state.roomId
     ].users.filter((u) => u !== action.value.name);
-    state.messages.push(createLeftMessage(action.value.name, action.value.to));
+    addMessage(state, createLeftMessage(action.value.name, action.value.to));
   }
 
   if (action.type === ActionType.ChatMessage) {
-    state.messages.push(
+    addMessage(state,
       createChatMessage(action.value.name, action.value.message)
     );
   }
 
   if (action.type === ActionType.Whisper) {
-    state.messages.push(
+    addMessage(state,
       createWhisperMessage(action.value.name, action.value.message)
     );
   }
 
   if (action.type === ActionType.ModMessage) {
-    state.messages.push(
+    addMessage(state,
       createModMessage(
         action.value.name,
         action.value.message,
@@ -172,13 +172,13 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.Shout) {
-    state.messages.push(
+    addMessage(state,
       createShoutMessage(action.value.name, action.value.message)
     );
   }
 
   if (action.type == ActionType.Emote) {
-    state.messages.push(
+    addMessage(state,
       createEmoteMessage(action.value.name, action.value.message)
     )
   }
@@ -188,7 +188,7 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.Error) {
-    state.messages.push(createErrorMessage(action.value));
+    addMessage(state, createErrorMessage(action.value));
   }
 
   // WebRTC
@@ -252,11 +252,11 @@ export default (oldState: State, action: Action): State => {
         );
         const userId = user && user.id;
         if (userId) {
-          state.messages.push(createWhisperMessage(userId, message, true));
+          addMessage(state, createWhisperMessage(userId, message, true));
         }
       }
     } else {
-      state.messages.push(createChatMessage(state.userId, action.value));
+      addMessage(state, createChatMessage(state.userId, action.value));
     }
   }
 
@@ -295,5 +295,15 @@ export default (oldState: State, action: Action): State => {
     toggleUserBan(action.value);
   }
 
+  if (action.type === ActionType.LoadMessageArchive) {
+    state.messages = action.value
+  }
+
   return state;
 };
+
+function addMessage(state: State, message: Message) {
+  state.messages.push(message)
+  localStorage.setItem("messages", JSON.stringify(state.messages))
+  localStorage.setItem("messageTimestamp", new Date().toUTCString())
+}
