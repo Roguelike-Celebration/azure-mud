@@ -16,3 +16,17 @@ export interface ErrorResponse {
 export interface ProfileResponse {
   user: User;
 }
+
+// TODO: Find a way to submit these upstream. Other people have this problem!
+export interface SignalRMessage {
+  userId?: string
+  groupName?: string
+  target: string
+  arguments: any[]
+}
+
+export interface SignalRGroupAction {
+  userId: string,
+  groupName: string,
+  action: 'add'|'remove'
+}
