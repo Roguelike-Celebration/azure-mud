@@ -12,17 +12,17 @@ export type Message =
   | ErrorMessage;
 
 export enum MessageType {
-  Connected = "CONNECTED",
-  Disconnected = "DISCONNECTED",
-  Entered = "ENTERED",
-  Left = "LEFT",
-  MovedRoom = "MOVED",
-  Chat = "CHAT",
-  Whisper = "WHISPER",
-  Shout = "SHOUT",
-  Emote = "EMOTE",
-  Mod = "MOD",
-  Error = "ERROR",
+  Connected = 'CONNECTED',
+  Disconnected = 'DISCONNECTED',
+  Entered = 'ENTERED',
+  Left = 'LEFT',
+  MovedRoom = 'MOVED',
+  Chat = 'CHAT',
+  Whisper = 'WHISPER',
+  Shout = 'SHOUT',
+  Emote = 'EMOTE',
+  Mod = 'MOD',
+  Error = 'ERROR',
 }
 
 export interface ConnectedMessage {
@@ -31,8 +31,8 @@ export interface ConnectedMessage {
 }
 
 export const createConnectedMessage = (userId: string): ConnectedMessage => {
-  return { type: MessageType.Connected, userId };
-};
+  return { type: MessageType.Connected, userId }
+}
 
 export interface DisconnectedMessage {
   type: MessageType.Disconnected;
@@ -42,8 +42,8 @@ export interface DisconnectedMessage {
 export const createDisconnectedMessage = (
   userId: string
 ): DisconnectedMessage => {
-  return { type: MessageType.Disconnected, userId };
-};
+  return { type: MessageType.Disconnected, userId }
+}
 
 export interface EnteredMessage {
   type: MessageType.Entered;
@@ -55,8 +55,8 @@ export const createEnteredMessage = (
   userId: string,
   from: string
 ): EnteredMessage => {
-  return { type: MessageType.Entered, userId, from };
-};
+  return { type: MessageType.Entered, userId, from }
+}
 
 export interface LeftMessage {
   type: MessageType.Left;
@@ -65,8 +65,8 @@ export interface LeftMessage {
 }
 
 export const createLeftMessage = (userId: string, to: string): LeftMessage => {
-  return { type: MessageType.Left, userId, to };
-};
+  return { type: MessageType.Left, userId, to }
+}
 
 export interface MovedRoomMessage {
   type: MessageType.MovedRoom;
@@ -74,8 +74,8 @@ export interface MovedRoomMessage {
 }
 
 export const createMovedRoomMessage = (to: string): MovedRoomMessage => {
-  return { type: MessageType.MovedRoom, to };
-};
+  return { type: MessageType.MovedRoom, to }
+}
 
 export interface ChatMessage {
   type: MessageType.Chat;
@@ -87,8 +87,8 @@ export const createChatMessage = (
   userId: string,
   message: string
 ): ChatMessage => {
-  return { type: MessageType.Chat, userId, message };
-};
+  return { type: MessageType.Chat, userId, message }
+}
 
 export interface WhisperMessage {
   type: MessageType.Whisper;
@@ -102,8 +102,8 @@ export const createWhisperMessage = (
   message: string,
   senderIsSelf = false
 ): WhisperMessage => {
-  return { type: MessageType.Whisper, userId, message, senderIsSelf };
-};
+  return { type: MessageType.Whisper, userId, message, senderIsSelf }
+}
 
 export interface ModMessage {
   type: MessageType.Mod;
@@ -117,8 +117,8 @@ export const createModMessage = (
   message: string,
   senderIsSelf = false
 ): ModMessage => {
-  return { type: MessageType.Mod, userId, message, senderIsSelf };
-};
+  return { type: MessageType.Mod, userId, message, senderIsSelf }
+}
 
 export interface ShoutMessage {
   type: MessageType.Shout;
@@ -130,8 +130,8 @@ export const createShoutMessage = (
   userId: string,
   message: string
 ): ShoutMessage => {
-  return { type: MessageType.Shout, userId, message };
-};
+  return { type: MessageType.Shout, userId, message }
+}
 
 export interface EmoteMessage {
   type: MessageType.Emote;
@@ -143,7 +143,7 @@ export const createEmoteMessage = (
   userId: string,
   message: string
 ): EmoteMessage => {
-  return { type: MessageType.Emote, userId, message}
+  return { type: MessageType.Emote, userId, message }
 }
 
 export interface ErrorMessage {
@@ -152,5 +152,5 @@ export interface ErrorMessage {
 }
 
 export const createErrorMessage = (error: string): ErrorMessage => {
-  return { type: MessageType.Error, error };
-};
+  return { type: MessageType.Error, error }
+}

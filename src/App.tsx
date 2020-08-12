@@ -1,52 +1,52 @@
-import React, { useEffect, createContext, useState } from "react";
+import React, { useEffect, createContext, useState } from 'react'
 
-import RoomView from "./components/RoomView";
-import ChatView from "./components/ChatView";
-import InputView from "./components/InputView";
-import { connect, getLoginInfo, checkIsRegistered } from "./networking";
-import reducer, { State, defaultState } from "./reducer";
-import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction } from "./Actions";
-import ProfileView from "./components/ProfileView";
-import { useReducerWithThunk } from "./useReducerWithThunk";
-import config from "./config";
-import MediaChatView from "./components/MediaChatView";
-import ProfileEditView from "./components/ProfileEditView";
-import RoomListView from "./components/RoomListView";
-import { IconContext } from "react-icons/lib";
-import { Message } from "./message";
+import RoomView from './components/RoomView'
+import ChatView from './components/ChatView'
+import InputView from './components/InputView'
+import { connect, getLoginInfo, checkIsRegistered } from './networking'
+import reducer, { State, defaultState } from './reducer'
+import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction } from './Actions'
+import ProfileView from './components/ProfileView'
+import { useReducerWithThunk } from './useReducerWithThunk'
+import config from './config'
+import MediaChatView from './components/MediaChatView'
+import ProfileEditView from './components/ProfileEditView'
+import RoomListView from './components/RoomListView'
+import { IconContext } from 'react-icons/lib'
+import { Message } from './message'
 
-export const DispatchContext = createContext(null);
-export const UserMapContext = createContext(null);
+export const DispatchContext = createContext(null)
+export const UserMapContext = createContext(null)
 
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(
     reducer,
     defaultState
-  );
+  )
 
   useEffect(() => {
     // TODO: This logic is gnarly enough I'd love to abstract it somewhere
     const login = getLoginInfo().then((login) => {
-      let userId, name;
+      let userId, name
       if (!login) {
         // This should really be its own action distinct from logging in
-        dispatch(AuthenticateAction(undefined, undefined));
+        dispatch(AuthenticateAction(undefined, undefined))
       } else {
-        userId = login.user_claims[0].val;
-        name = login.user_id;
+        userId = login.user_claims[0].val
+        name = login.user_id
         checkIsRegistered().then((registered) => {
-          dispatch(AuthenticateAction(userId, name));
+          dispatch(AuthenticateAction(userId, name))
           if (registered) {
             let loadMessages = false
-            const rawTimestamp = localStorage.getItem("messageTimestamp")
-            const rawMessageData = localStorage.getItem("messages")
+            const rawTimestamp = localStorage.getItem('messageTimestamp')
+            const rawMessageData = localStorage.getItem('messages')
             if (rawTimestamp) {
               try {
                 const timestamp = new Date(rawTimestamp)
                 // A janky way to say "Is it older than an hour"
                 loadMessages = rawMessageData && (new Date()).getTime() - timestamp.getTime() < 1000 * 60 * 60
               } catch {
-                console.log("Did not find a valid timestamp for message cache")
+                console.log('Did not find a valid timestamp for message cache')
               }
             }
 
@@ -55,26 +55,26 @@ const App = () => {
                 const messages = JSON.parse(rawMessageData)
                 dispatch(LoadMessageArchiveAction(messages))
               } catch {
-                console.log("Could not parse message JSON", rawMessageData)
+                console.log('Could not parse message JSON', rawMessageData)
               }
             }
 
-            dispatch(IsRegisteredAction());
-            connect(userId, dispatch);
+            dispatch(IsRegisteredAction())
+            connect(userId, dispatch)
           }
-        });
+        })
       }
-    });
-  }, []);
+    })
+  }, [])
 
   const profile = state.visibleProfile ? (
     <ProfileView user={state.visibleProfile} />
   ) : (
-    ""
-  );
+    ''
+  )
 
   if (!state.checkedAuthentication) {
-    return <div />;
+    return <div />
   }
 
   if (state.checkedAuthentication && !state.authenticated) {
@@ -88,7 +88,7 @@ const App = () => {
       >
         Log In
       </a>
-    );
+    )
   }
 
   if (state.showProfileEditScreen || !state.hasRegistered) {
@@ -99,10 +99,10 @@ const App = () => {
         defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
       />
-    );
+    )
   }
 
-  let videoChatView;
+  let videoChatView
   if (state.localMediaStreamId) {
     videoChatView = (
       <MediaChatView
@@ -113,12 +113,12 @@ const App = () => {
         audioDeviceId={state.currentAudioDeviceId}
         speakingPeerIds={state.speakingPeerIds}
       />
-    );
+    )
   }
 
-  console.log(state.roomId, state.roomData, state.roomData[state.roomId]);
+  console.log(state.roomId, state.roomData, state.roomData[state.roomId])
   return (
-    <IconContext.Provider value={{ style: { verticalAlign: "middle" } }}>
+    <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
         <UserMapContext.Provider
           value={{ userMap: state.userMap, myId: state.userId }}
@@ -142,7 +142,7 @@ const App = () => {
         </UserMapContext.Provider>
       </DispatchContext.Provider>
     </IconContext.Provider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

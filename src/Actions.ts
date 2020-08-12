@@ -1,9 +1,9 @@
-import { ThunkDispatch, useReducerWithThunk } from "./useReducerWithThunk";
-import { State } from "./reducer";
-import { fetchProfile } from "./networking";
-import { PublicUser, MinimalUser } from "../server/src/user";
-import { Room } from "./room";
-import { Message } from "./message";
+import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
+import { State } from './reducer'
+import { fetchProfile } from './networking'
+import { PublicUser, MinimalUser } from '../server/src/user'
+import { Room } from './room'
+import { Message } from './message'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -41,41 +41,41 @@ export type Action =
 
 export enum ActionType {
   // Server-driven action
-  ReceivedMyProfile = "RECEIVED_MY_PROFILE",
-  UpdatedCurrentRoom = "UPDATED_CURRENT_ROOM",
-  UpdatedRoomData = "UPDATED_ROOM_DATA",
-  UpdatedPresence = "UPDATED_PRESENCE",
-  PlayerConnected = "PLAYER_CONNECTED",
-  PlayerDisconnected = "PLAYER_DISCONNECTED",
-  ChatMessage = "CHAT_MESSAGE",
-  ModMessage = "MOD_MESSAGE",
-  Whisper = "WHISPER",
-  Shout = "SHOUT",
-  Emote = "EMOTE",
-  PlayerEntered = "PLAYER_ENTERED",
-  PlayerLeft = "PLAYER_LEFT",
-  Error = "ERROR",
-  UserMap = "USER_MAP",
+  ReceivedMyProfile = 'RECEIVED_MY_PROFILE',
+  UpdatedCurrentRoom = 'UPDATED_CURRENT_ROOM',
+  UpdatedRoomData = 'UPDATED_ROOM_DATA',
+  UpdatedPresence = 'UPDATED_PRESENCE',
+  PlayerConnected = 'PLAYER_CONNECTED',
+  PlayerDisconnected = 'PLAYER_DISCONNECTED',
+  ChatMessage = 'CHAT_MESSAGE',
+  ModMessage = 'MOD_MESSAGE',
+  Whisper = 'WHISPER',
+  Shout = 'SHOUT',
+  Emote = 'EMOTE',
+  PlayerEntered = 'PLAYER_ENTERED',
+  PlayerLeft = 'PLAYER_LEFT',
+  Error = 'ERROR',
+  UserMap = 'USER_MAP',
   // WebRTC
-  P2PDataReceived = "P2P_DATA_RECEIVED",
-  P2PStreamReceived = "P2P_STREAM_RECEIVED",
-  P2PConnectionClosed = "P2P_CONNECTION_CLOSED",
-  P2PWaitingForConnections = "P2P_WAITING_FOR_CONNECTIONS",
-  LocalMediaStreamOpened = "LOCAL_MEDIASTREAM_OPENED",
-  StopVideoChat = "STOP_VIDEO_CHAT",
-  LocalMediaDeviceListReceived = "LOCAL_MEDIA_DEVICE_LIST_RECEIVED",
-  MediaReceivedSpeakingData = "MEDIA_RECEIVED_SPEAKING_DATA",
+  P2PDataReceived = 'P2P_DATA_RECEIVED',
+  P2PStreamReceived = 'P2P_STREAM_RECEIVED',
+  P2PConnectionClosed = 'P2P_CONNECTION_CLOSED',
+  P2PWaitingForConnections = 'P2P_WAITING_FOR_CONNECTIONS',
+  LocalMediaStreamOpened = 'LOCAL_MEDIASTREAM_OPENED',
+  StopVideoChat = 'STOP_VIDEO_CHAT',
+  LocalMediaDeviceListReceived = 'LOCAL_MEDIA_DEVICE_LIST_RECEIVED',
+  MediaReceivedSpeakingData = 'MEDIA_RECEIVED_SPEAKING_DATA',
   // UI actions
-  SendMessage = "SEND_MESSAGE",
-  SetName = "SET_NAME",
-  StartWhisper = "START_WHISPER",
-  ShowProfile = "SHOW_PROFILE",
-  ShowEditProfile = "SHOW_EDIT_PROFILE",
+  SendMessage = 'SEND_MESSAGE',
+  SetName = 'SET_NAME',
+  StartWhisper = 'START_WHISPER',
+  ShowProfile = 'SHOW_PROFILE',
+  ShowEditProfile = 'SHOW_EDIT_PROFILE',
   //
-  Authenticate = "AUTHENTICATE",
-  IsRegistered = "IS_REGISTERED",
-  BanToggle = "BAN_TOGGLE",
-  LoadMessageArchive = "LOAD_MESSAGE_ARCHIVE",
+  Authenticate = 'AUTHENTICATE',
+  IsRegistered = 'IS_REGISTERED',
+  BanToggle = 'BAN_TOGGLE',
+  LoadMessageArchive = 'LOAD_MESSAGE_ARCHIVE',
 }
 
 interface ReceivedMyProfileAction {
@@ -88,9 +88,9 @@ export const ReceivedMyProfileAction = (
 ): ReceivedMyProfileAction => {
   return {
     type: ActionType.ReceivedMyProfile,
-    value: user,
-  };
-};
+    value: user
+  }
+}
 
 interface UpdatedCurrentRoomAction {
   type: ActionType.UpdatedCurrentRoom;
@@ -102,9 +102,9 @@ export const UpdatedCurrentRoomAction = (
 ): UpdatedCurrentRoomAction => {
   return {
     type: ActionType.UpdatedCurrentRoom,
-    value: roomId,
-  };
-};
+    value: roomId
+  }
+}
 
 interface UpdatedRoomDataAction {
   type: ActionType.UpdatedRoomData;
@@ -116,9 +116,9 @@ export const UpdatedRoomDataAction = (roomData: {
 }): UpdatedRoomDataAction => {
   return {
     type: ActionType.UpdatedRoomData,
-    value: roomData,
-  };
-};
+    value: roomData
+  }
+}
 
 interface UpdatedPresenceAction {
   type: ActionType.UpdatedPresence;
@@ -130,9 +130,9 @@ export const UpdatedPresenceAction = (data: {
 }): UpdatedPresenceAction => {
   return {
     type: ActionType.UpdatedPresence,
-    value: data,
-  };
-};
+    value: data
+  }
+}
 
 interface PlayerConnectedAction {
   type: ActionType.PlayerConnected;
@@ -144,9 +144,9 @@ export const PlayerConnectedAction = (
 ): PlayerConnectedAction => {
   return {
     type: ActionType.PlayerConnected,
-    value: user,
-  };
-};
+    value: user
+  }
+}
 
 interface PlayerDisconnectedAction {
   type: ActionType.PlayerDisconnected;
@@ -158,9 +158,9 @@ export const PlayerDisconnectedAction = (
 ): PlayerDisconnectedAction => {
   return {
     type: ActionType.PlayerDisconnected,
-    value: name,
-  };
-};
+    value: name
+  }
+}
 
 interface ChatMessageAction {
   type: ActionType.ChatMessage;
@@ -176,9 +176,9 @@ export const ChatMessageAction = (
 ): ChatMessageAction => {
   return {
     type: ActionType.ChatMessage,
-    value: { name, message },
-  };
-};
+    value: { name, message }
+  }
+}
 
 interface WhisperAction {
   type: ActionType.Whisper;
@@ -191,9 +191,9 @@ interface WhisperAction {
 export const WhisperAction = (name: string, message: string): WhisperAction => {
   return {
     type: ActionType.Whisper,
-    value: { name, message },
-  };
-};
+    value: { name, message }
+  }
+}
 
 interface ModMessageAction {
   type: ActionType.ModMessage;
@@ -209,16 +209,16 @@ export const ModMessageAction = (
 ): ModMessageAction => {
   return {
     type: ActionType.ModMessage,
-    value: { name, message },
-  };
-};
+    value: { name, message }
+  }
+}
 
 export const ShoutAction = (name: string, message: string): ShoutAction => {
   return {
     type: ActionType.Shout,
-    value: { name, message },
-  };
-};
+    value: { name, message }
+  }
+}
 
 interface ShoutAction {
   type: ActionType.Shout;
@@ -257,9 +257,9 @@ export const PlayerEnteredAction = (
 ): PlayerEnteredAction => {
   return {
     type: ActionType.PlayerEntered,
-    value: { name, from },
-  };
-};
+    value: { name, from }
+  }
+}
 
 interface PlayerLeftAction {
   type: ActionType.PlayerLeft;
@@ -275,9 +275,9 @@ export const PlayerLeftAction = (
 ): PlayerLeftAction => {
   return {
     type: ActionType.PlayerLeft,
-    value: { name, to },
-  };
-};
+    value: { name, to }
+  }
+}
 
 interface UserMapAction {
   type: ActionType.UserMap;
@@ -289,9 +289,9 @@ export const UserMapAction = (map: {
 }): UserMapAction => {
   return {
     type: ActionType.UserMap,
-    value: map,
-  };
-};
+    value: map
+  }
+}
 
 interface P2PDataReceivedAction {
   type: ActionType.P2PDataReceived;
@@ -307,9 +307,9 @@ export const P2PDataReceivedAction = (
 ): P2PDataReceivedAction => {
   return {
     type: ActionType.P2PDataReceived,
-    value: { peerId, data },
-  };
-};
+    value: { peerId, data }
+  }
+}
 
 interface P2PStreamReceivedAction {
   type: ActionType.P2PStreamReceived;
@@ -321,9 +321,9 @@ export const P2PStreamReceivedAction = (
 ): P2PStreamReceivedAction => {
   return {
     type: ActionType.P2PStreamReceived,
-    value: peerId,
-  };
-};
+    value: peerId
+  }
+}
 
 interface P2PConnectionClosedAction {
   type: ActionType.P2PConnectionClosed;
@@ -335,9 +335,9 @@ export const P2PConnectionClosedAction = (
 ): P2PConnectionClosedAction => {
   return {
     type: ActionType.P2PConnectionClosed,
-    value: peerId,
-  };
-};
+    value: peerId
+  }
+}
 
 interface P2PWaitingForConnectionsAction {
   type: ActionType.P2PWaitingForConnections;
@@ -345,9 +345,9 @@ interface P2PWaitingForConnectionsAction {
 
 export const P2PWaitingForConnectionsAction = (): P2PWaitingForConnectionsAction => {
   return {
-    type: ActionType.P2PWaitingForConnections,
-  };
-};
+    type: ActionType.P2PWaitingForConnections
+  }
+}
 
 interface LocalMediaStreamOpenedAction {
   type: ActionType.LocalMediaStreamOpened;
@@ -362,12 +362,12 @@ export const LocalMediaStreamOpenedAction = (
   streamId: string,
   devices: { videoDeviceId: string; audioDeviceId: string }
 ): LocalMediaStreamOpenedAction => {
-  const { videoDeviceId, audioDeviceId } = devices;
+  const { videoDeviceId, audioDeviceId } = devices
   return {
     type: ActionType.LocalMediaStreamOpened,
-    value: { streamId, videoDeviceId, audioDeviceId },
-  };
-};
+    value: { streamId, videoDeviceId, audioDeviceId }
+  }
+}
 
 interface LocalMediaDeviceListReceivedAction {
   type: ActionType.LocalMediaDeviceListReceived;
@@ -379,9 +379,9 @@ export const LocalMediaDeviceListReceivedAction = (
 ): LocalMediaDeviceListReceivedAction => {
   return {
     type: ActionType.LocalMediaDeviceListReceived,
-    value: devices,
-  };
-};
+    value: devices
+  }
+}
 
 interface MediaReceivedSpeakingDataAction {
   type: ActionType.MediaReceivedSpeakingData;
@@ -393,17 +393,17 @@ export const MediaReceivedSpeakingDataAction = (
 ): MediaReceivedSpeakingDataAction => {
   return {
     type: ActionType.MediaReceivedSpeakingData,
-    value: peerIds,
-  };
-};
+    value: peerIds
+  }
+}
 
 interface StopVideoChatAction {
   type: ActionType.StopVideoChat;
 }
 
 export const StopVideoChatAction = (): StopVideoChatAction => {
-  return { type: ActionType.StopVideoChat };
-};
+  return { type: ActionType.StopVideoChat }
+}
 
 interface ErrorAction {
   type: ActionType.Error;
@@ -413,9 +413,9 @@ interface ErrorAction {
 export const ErrorAction = (error: string): ErrorAction => {
   return {
     type: ActionType.Error,
-    value: error,
-  };
-};
+    value: error
+  }
+}
 
 // UI Actions
 
@@ -427,9 +427,9 @@ interface SendMessageAction {
 export const SendMessageAction = (message: string): SendMessageAction => {
   return {
     type: ActionType.SendMessage,
-    value: message,
-  };
-};
+    value: message
+  }
+}
 
 interface SetNameAction {
   type: ActionType.SetName;
@@ -439,9 +439,9 @@ interface SetNameAction {
 export const SetNameAction = (name: string): SetNameAction => {
   return {
     type: ActionType.SetName,
-    value: name,
-  };
-};
+    value: name
+  }
+}
 
 interface StartWhisperAction {
   type: ActionType.StartWhisper;
@@ -449,8 +449,8 @@ interface StartWhisperAction {
 }
 
 export const StartWhisperAction = (name: string): StartWhisperAction => {
-  return { type: ActionType.StartWhisper, value: name };
-};
+  return { type: ActionType.StartWhisper, value: name }
+}
 
 interface ShowProfileAction {
   type: ActionType.ShowProfile;
@@ -461,24 +461,24 @@ export const ShowProfileAction = (
   name: string
 ): ((dispatch: ThunkDispatch<Action, State>) => void) => {
   return async (dispatch: ThunkDispatch<Action, State>) => {
-    console.log("lol");
-    const user = await fetchProfile(name);
+    console.log('lol')
+    const user = await fetchProfile(name)
     if (!user) {
-      console.log("No user");
-      return;
+      console.log('No user')
+      return
     }
-    dispatch(ShowProfileActionForFetchedUser(user));
-  };
-};
+    dispatch(ShowProfileActionForFetchedUser(user))
+  }
+}
 
 export const ShowProfileActionForFetchedUser = (
   user: PublicUser
 ): ShowProfileAction => {
   return {
     type: ActionType.ShowProfile,
-    value: user,
-  };
-};
+    value: user
+  }
+}
 
 interface ShowEditProfileAction {
   type: ActionType.ShowEditProfile;
@@ -486,9 +486,9 @@ interface ShowEditProfileAction {
 
 export const ShowEditProfileAction = (): ShowEditProfileAction => {
   return {
-    type: ActionType.ShowEditProfile,
-  };
-};
+    type: ActionType.ShowEditProfile
+  }
+}
 
 interface AuthenticateAction {
   type: ActionType.Authenticate;
@@ -499,16 +499,16 @@ export const AuthenticateAction = (
   userId: string | undefined,
   name: string | undefined
 ): AuthenticateAction => {
-  return { type: ActionType.Authenticate, value: { userId, name } };
-};
+  return { type: ActionType.Authenticate, value: { userId, name } }
+}
 
 interface IsRegisteredAction {
   type: ActionType.IsRegistered;
 }
 
 export const IsRegisteredAction = (): IsRegisteredAction => {
-  return { type: ActionType.IsRegistered };
-};
+  return { type: ActionType.IsRegistered }
+}
 
 interface BanToggleAction {
   type: ActionType.BanToggle;
@@ -516,8 +516,8 @@ interface BanToggleAction {
 }
 
 export const BanToggleAction = (userId: string): BanToggleAction => {
-  return { type: ActionType.BanToggle, value: userId };
-};
+  return { type: ActionType.BanToggle, value: userId }
+}
 
 interface LoadMessageArchiveAction {
   type: ActionType.LoadMessageArchive;
@@ -525,5 +525,5 @@ interface LoadMessageArchiveAction {
 }
 
 export const LoadMessageArchiveAction = (messages: Message[]): LoadMessageArchiveAction => {
-  return { type: ActionType.LoadMessageArchive, value: messages };
-};
+  return { type: ActionType.LoadMessageArchive, value: messages }
+}
