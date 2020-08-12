@@ -40,7 +40,7 @@ const httpTrigger: AzureFunction = async function (
 
     const shoutMatch = /^\/(shout) (.+)/.exec(message)
     if (shoutMatch) {
-      return await shout(user, shoutMatch[2], context)
+      return await shout(user, req.body.id, shoutMatch[2], context)
     }
 
     const emoteMatch = /^\/(me|emote) (.+)/.exec(message)

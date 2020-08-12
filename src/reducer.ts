@@ -173,7 +173,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.Shout) {
     addMessage(state,
-      createShoutMessage(action.value.name, action.value.message)
+      createShoutMessage(action.value.id, action.value.name, action.value.message)
     )
   }
 

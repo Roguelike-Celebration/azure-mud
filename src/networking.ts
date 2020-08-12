@@ -213,10 +213,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(UserMapAction(map))
   })
 
-  connection.on('shout', (name, message) => {
+  connection.on('shout', (id, name, message) => {
     // We don't gate on your own userId here.
     // Because shouting can fail at the server level, we don't show it preemptively.
-    dispatch(ShoutAction(name, message))
+    dispatch(ShoutAction(id, name, message))
   })
 
   connection.on('emote', (id, name, message) => {

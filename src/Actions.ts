@@ -213,16 +213,17 @@ export const ModMessageAction = (
   }
 }
 
-export const ShoutAction = (name: string, message: string): ShoutAction => {
+export const ShoutAction = (id: string, name: string, message: string): ShoutAction => {
   return {
     type: ActionType.Shout,
-    value: { name, message }
+    value: { id, name, message }
   }
 }
 
 interface ShoutAction {
   type: ActionType.Shout;
   value: {
+    id: string;
     name: string;
     message: string;
   };

@@ -122,15 +122,17 @@ export const createModMessage = (
 
 export interface ShoutMessage {
   type: MessageType.Shout;
+  id: string;
   userId: string;
   message: string;
 }
 
 export const createShoutMessage = (
+  id: string,
   userId: string,
   message: string
 ): ShoutMessage => {
-  return { type: MessageType.Shout, userId, message }
+  return { type: MessageType.Shout, id, userId, message }
 }
 
 export interface EmoteMessage {
