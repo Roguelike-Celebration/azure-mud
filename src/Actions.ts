@@ -231,15 +231,16 @@ interface ShoutAction {
 interface EmoteAction {
   type: ActionType.Emote;
   value: {
+    id: string;
     name: string;
     message: string;
   }
 }
 
-export const EmoteAction = (name: string, message: string): EmoteAction => {
+export const EmoteAction = (id: string, name: string, message: string): EmoteAction => {
   return {
     type: ActionType.Emote,
-    value: { name, message }
+    value: { id, name, message }
   }
 }
 

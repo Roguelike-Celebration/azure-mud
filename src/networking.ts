@@ -26,6 +26,7 @@ import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
+import { v4 as uuidv4 } from 'uuid'
 const axios = require('axios').default
 
 let myUserId: string
@@ -91,7 +92,8 @@ export async function sendChatMessage (text: string) {
   const result: RoomResponse | Error | any = await callAzureFunction(
     'sendChatMessage',
     {
-      text
+      id: uuidv4(),
+      text: text
     }
   )
 
@@ -217,8 +219,8 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(ShoutAction(name, message))
   })
 
-  connection.on('emote', (name, message) => {
-    dispatch(EmoteAction(name, message))
+  connection.on('emote', (id, name, message) => {
+    dispatch(EmoteAction(id, name, message))
   })
 
   connection.on('webrtcSignalData', (peerId, data) => {

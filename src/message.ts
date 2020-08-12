@@ -135,15 +135,17 @@ export const createShoutMessage = (
 
 export interface EmoteMessage {
   type: MessageType.Emote;
+  id: string;
   userId: string;
   message: string;
 }
 
 export const createEmoteMessage = (
+  id: string,
   userId: string,
   message: string
 ): EmoteMessage => {
-  return { type: MessageType.Emote, userId, message }
+  return { type: MessageType.Emote, id, userId, message }
 }
 
 export interface ErrorMessage {

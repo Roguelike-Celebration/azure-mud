@@ -49,7 +49,7 @@ const httpTrigger: AzureFunction = async function (
         {
           groupName: user.roomId,
           target: 'emote',
-          arguments: [user.id, emoteMatch[2]]
+          arguments: [req.body.id, user.id, emoteMatch[2]]
         }
       ]
       return
