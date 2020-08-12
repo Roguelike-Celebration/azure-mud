@@ -79,15 +79,17 @@ export const createMovedRoomMessage = (to: string): MovedRoomMessage => {
 
 export interface ChatMessage {
   type: MessageType.Chat;
+  id: string;
   userId: string;
   message: string;
 }
 
 export const createChatMessage = (
+  id: string,
   userId: string,
   message: string
 ): ChatMessage => {
-  return { type: MessageType.Chat, userId, message }
+  return { type: MessageType.Chat, id, userId, message }
 }
 
 export interface WhisperMessage {

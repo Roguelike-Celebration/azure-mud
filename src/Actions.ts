@@ -165,18 +165,20 @@ export const PlayerDisconnectedAction = (
 interface ChatMessageAction {
   type: ActionType.ChatMessage;
   value: {
+    id: string;
     name: string;
     message: string;
   };
 }
 
 export const ChatMessageAction = (
+  id: string,
   name: string,
   message: string
 ): ChatMessageAction => {
   return {
     type: ActionType.ChatMessage,
-    value: { name, message }
+    value: { id, name, message }
   }
 }
 

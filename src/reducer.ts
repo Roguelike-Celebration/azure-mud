@@ -21,6 +21,7 @@ import {
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers } from './webRTC'
+import { v4 as uuidv4 } from 'uuid'
 
 export interface State {
   authenticated: boolean;
@@ -151,7 +152,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ChatMessage) {
     addMessage(state,
-      createChatMessage(action.value.name, action.value.message)
+      createChatMessage(action.value.id, action.value.name, action.value.message)
     )
   }
 
@@ -241,7 +242,9 @@ export default (oldState: State, action: Action): State => {
 
   // UI Actions
   if (action.type === ActionType.SendMessage) {
-    sendChatMessage(action.value)
+    const messageId: string = uuidv4()
+
+    sendChatMessage(messageId, action.value)
 
     const isCommand = /^\/(.+?) (.+)/.exec(action.value)
     if (isCommand) {
@@ -256,7 +259,7 @@ export default (oldState: State, action: Action): State => {
         }
       }
     } else {
-      addMessage(state, createChatMessage(state.userId, action.value))
+      addMessage(state, createChatMessage(messageId, state.userId, action.value))
     }
   }
 

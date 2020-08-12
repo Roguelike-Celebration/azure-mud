@@ -26,7 +26,6 @@ import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
-import { v4 as uuidv4 } from 'uuid'
 const axios = require('axios').default
 
 let myUserId: string
@@ -88,11 +87,11 @@ export async function moveToRoom (roomId: string) {
   }
 }
 
-export async function sendChatMessage (text: string) {
+export async function sendChatMessage (id: string, text: string) {
   const result: RoomResponse | Error | any = await callAzureFunction(
     'sendChatMessage',
     {
-      id: uuidv4(),
+      id: id,
       text: text
     }
   )
@@ -178,12 +177,13 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(UpdatedPresenceAction(data))
   })
 
-  connection.on('chatMessage', (otherId, message) => {
+  // We use otherId/name basically interchangably here.
+  connection.on('chatMessage', (id, otherId, message) => {
     console.log('Received chat', otherId, message)
     console.log(otherId, message, userId)
     if (otherId === userId) return
 
-    dispatch(ChatMessageAction(otherId, message))
+    dispatch(ChatMessageAction(id, otherId, message))
   })
 
   connection.on('mods', (otherId, message) => {

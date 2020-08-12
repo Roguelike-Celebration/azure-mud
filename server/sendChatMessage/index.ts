@@ -92,7 +92,7 @@ const httpTrigger: AzureFunction = async function (
       {
         groupName: user.roomId,
         target: 'chatMessage',
-        arguments: [user.id, message]
+        arguments: [req.body.id, user.id, message]
       }
     ]
   })
