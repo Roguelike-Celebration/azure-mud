@@ -1,267 +1,267 @@
-import SimplePeer from "simple-peer";
-import { sendSignalData } from "./networking";
-import { Dispatch } from "react";
+import SimplePeer from 'simple-peer'
+import { sendSignalData } from './networking'
+import { Dispatch } from 'react'
 import {
   Action,
   LocalMediaStreamOpenedAction,
   P2PDataReceivedAction,
   P2PStreamReceivedAction,
   P2PConnectionClosedAction,
-  MediaReceivedSpeakingDataAction,
-} from "./Actions";
+  MediaReceivedSpeakingDataAction
+} from './Actions'
 
-let mediaStream: MediaStream;
+let mediaStream: MediaStream
 
-export function localMediaStream(): MediaStream | undefined {
-  return mediaStream;
+export function localMediaStream (): MediaStream | undefined {
+  return mediaStream
 }
 
-export function otherMediaStreams(): { [id: string]: MediaStream } {
-  return peerStreams;
+export function otherMediaStreams (): { [id: string]: MediaStream } {
+  return peerStreams
 }
 
 export const getMediaStream = async (
   dispatch?: Dispatch<Action>,
   deviceIds?: { audioId?: string; videoId?: string }
 ): Promise<MediaStream | undefined> => {
-  console.log("Trying to open media stream");
+  console.log('Trying to open media stream')
 
   // If audioId or videoId aren't passed in, we just want an existing stream
   // So return one if we have it
   if (mediaStream && !deviceIds) {
-    return mediaStream;
+    return mediaStream
   }
 
-  let stream: MediaStream = null;
+  let stream: MediaStream = null
 
-  let constraints: MediaStreamConstraints = {
+  const constraints: MediaStreamConstraints = {
     audio: true,
-    video: { facingMode: "user" },
-  };
+    video: { facingMode: 'user' }
+  }
 
   if (deviceIds && deviceIds.audioId) {
-    constraints.audio = { deviceId: deviceIds.audioId };
+    constraints.audio = { deviceId: deviceIds.audioId }
   }
 
   if (deviceIds && deviceIds.videoId) {
-    constraints.video = { deviceId: deviceIds.videoId };
+    constraints.video = { deviceId: deviceIds.videoId }
   }
 
-  console.log(constraints);
+  console.log(constraints)
   try {
-    stream = await navigator.mediaDevices.getUserMedia(constraints);
+    stream = await navigator.mediaDevices.getUserMedia(constraints)
   } catch (err) {
-    console.log("Video error", err);
+    console.log('Video error', err)
     /* handle the error */
   }
 
-  console.log("We have a new stream?");
+  console.log('We have a new stream?')
 
-  mediaStream = stream;
+  mediaStream = stream
 
   if (dispatch) {
-    let videoDeviceId, audioDeviceId;
+    let videoDeviceId, audioDeviceId
 
     // HACK: getCapabilities() isn't supported in Firefox
     // So we need to check if it exists before calling.
     // If it doesn't exist, MediaSelectorView finds the deviceId with a label lookup.
 
-    const videoStream = stream.getVideoTracks()[0];
+    const videoStream = stream.getVideoTracks()[0]
     if (videoStream) {
       if (videoStream.getCapabilities) {
-        videoDeviceId = videoStream.getCapabilities().deviceId;
+        videoDeviceId = videoStream.getCapabilities().deviceId
       } else {
-        videoDeviceId = videoStream.label;
+        videoDeviceId = videoStream.label
       }
     }
 
-    const audioStream = stream.getAudioTracks()[0];
+    const audioStream = stream.getAudioTracks()[0]
     if (audioStream) {
       if (audioStream.getCapabilities) {
-        audioDeviceId = audioStream.getCapabilities().deviceId;
+        audioDeviceId = audioStream.getCapabilities().deviceId
       } else {
-        audioDeviceId = audioStream.label;
+        audioDeviceId = audioStream.label
       }
     }
 
     dispatch(
       LocalMediaStreamOpenedAction(stream.id, { videoDeviceId, audioDeviceId })
-    );
+    )
 
-    peerAnalysers = peerAnalysers.filter((a) => a[0] !== "senf");
-    peerAnalysers.push(["self", setUpAnalyser(stream)]);
-    startAnalyserLoop(dispatch);
+    peerAnalysers = peerAnalysers.filter((a) => a[0] !== 'senf')
+    peerAnalysers.push(['self', setUpAnalyser(stream)])
+    startAnalyserLoop(dispatch)
   }
 
-  return stream;
-};
-
-export async function toggleVideo(newState: boolean) {
-  const stream = await getMediaStream();
-  const track = stream.getVideoTracks()[0];
-  if (!track) {
-    console.log("Error: No video track!");
-    return;
-  }
-
-  track.enabled = !newState;
+  return stream
 }
 
-export async function toggleAudio(newState: boolean) {
-  const stream = await getMediaStream();
-  const track = stream.getAudioTracks()[0];
+export async function toggleVideo (newState: boolean) {
+  const stream = await getMediaStream()
+  const track = stream.getVideoTracks()[0]
   if (!track) {
-    console.log("Error: No video track!");
-    return;
+    console.log('Error: No video track!')
+    return
   }
 
-  track.enabled = !newState;
+  track.enabled = !newState
 }
 
-export async function startSignaling(
+export async function toggleAudio (newState: boolean) {
+  const stream = await getMediaStream()
+  const track = stream.getAudioTracks()[0]
+  if (!track) {
+    console.log('Error: No video track!')
+    return
+  }
+
+  track.enabled = !newState
+}
+
+export async function startSignaling (
   peerId: string,
   dispatch: Dispatch<Action>
 ) {
-  const stream = await getMediaStream(dispatch);
-  const peer = new SimplePeer({ initiator: true, stream });
-  peers[peerId] = peer;
-  setUpPeer(peerId, peer, dispatch);
+  const stream = await getMediaStream(dispatch)
+  const peer = new SimplePeer({ initiator: true, stream })
+  peers[peerId] = peer
+  setUpPeer(peerId, peer, dispatch)
 }
 
-export async function receiveSignalData(
+export async function receiveSignalData (
   peerId: string,
   data: string,
   dispatch: Dispatch<Action>
 ) {
-  const stream = await getMediaStream(dispatch);
-  let peer = peers[peerId];
+  const stream = await getMediaStream(dispatch)
+  let peer = peers[peerId]
   if (!peer) {
-    peer = new SimplePeer({ stream });
-    peers[peerId] = peer;
-    setUpPeer(peerId, peer, dispatch);
+    peer = new SimplePeer({ stream })
+    peers[peerId] = peer
+    setUpPeer(peerId, peer, dispatch)
   }
 
-  peer.signal(data);
+  peer.signal(data)
 }
 
-let peers: { [id: string]: SimplePeer.Instance } = {};
-let peerStreams: { [id: string]: MediaStream } = {};
-let peerAnalysers: [string, AnalyserNode][] = [];
+const peers: { [id: string]: SimplePeer.Instance } = {}
+const peerStreams: { [id: string]: MediaStream } = {}
+let peerAnalysers: [string, AnalyserNode][] = []
 
-export function sendToPeer(id: string, msg: string) {
-  peers[id].send(msg);
+export function sendToPeer (id: string, msg: string) {
+  peers[id].send(msg)
 }
 
-export function broadcastToPeers(msg: string) {
+export function broadcastToPeers (msg: string) {
   Object.values(peers).forEach((c) => {
-    if (!c.writable) return;
-    c.send(msg);
-  });
+    if (!c.writable) return
+    c.send(msg)
+  })
 }
 
-export function disconnectAllPeers() {
+export function disconnectAllPeers () {
   Object.values(peers).forEach((p) => {
-    p.destroy();
-  });
+    p.destroy()
+  })
 }
 
-function setUpPeer(
+function setUpPeer (
   peerId: string,
   peer: SimplePeer.Instance,
   dispatch: Dispatch<Action>
 ) {
-  peer.on("signal", (data) => {
-    console.log("SIGNAL", JSON.stringify(data));
+  peer.on('signal', (data) => {
+    console.log('SIGNAL', JSON.stringify(data))
 
-    sendSignalData(peerId, data);
-  });
+    sendSignalData(peerId, data)
+  })
 
-  peer.on("connect", () => {
-    console.log(`Peer ${peerId} connected!`);
-  });
+  peer.on('connect', () => {
+    console.log(`Peer ${peerId} connected!`)
+  })
 
-  peer.on("close", () => {
-    console.log("WebRTC peer closed", peerId);
-    delete peers[peerId];
-    delete peerStreams[peerId];
-    dispatch(P2PConnectionClosedAction(peerId));
-  });
+  peer.on('close', () => {
+    console.log('WebRTC peer closed', peerId)
+    delete peers[peerId]
+    delete peerStreams[peerId]
+    dispatch(P2PConnectionClosedAction(peerId))
+  })
 
-  peer.on("err", (e) => {
-    console.log("Peer errored out", peerId, e);
-    delete peers[peerId];
-    delete peerStreams[peerId];
-    dispatch(P2PConnectionClosedAction(peerId));
-  });
+  peer.on('err', (e) => {
+    console.log('Peer errored out', peerId, e)
+    delete peers[peerId]
+    delete peerStreams[peerId]
+    dispatch(P2PConnectionClosedAction(peerId))
+  })
 
-  peer.on("data", (data) => {
-    console.log("Received data from peer", data);
-    dispatch(P2PDataReceivedAction(peerId, data));
-  });
+  peer.on('data', (data) => {
+    console.log('Received data from peer', data)
+    dispatch(P2PDataReceivedAction(peerId, data))
+  })
 
-  peer.on("stream", (stream) => {
-    console.log("Received stream", peerId);
-    peerStreams[peerId] = stream;
-    dispatch(P2PStreamReceivedAction(peerId));
+  peer.on('stream', (stream) => {
+    console.log('Received stream', peerId)
+    peerStreams[peerId] = stream
+    dispatch(P2PStreamReceivedAction(peerId))
 
-    const analyser = setUpAnalyser(stream);
-    peerAnalysers.push([peerId, analyser]);
-  });
+    const analyser = setUpAnalyser(stream)
+    peerAnalysers.push([peerId, analyser])
+  })
 }
 
-function setUpAnalyser(stream: MediaStream): AnalyserNode {
+function setUpAnalyser (stream: MediaStream): AnalyserNode {
   const audioCtx = new (window.AudioContext ||
-    (window as any).webkitAudioContext)();
-  const source = audioCtx.createMediaStreamSource(stream);
-  var analyser = audioCtx.createAnalyser();
-  analyser.minDecibels = -90;
-  analyser.maxDecibels = -10;
-  analyser.smoothingTimeConstant = 0.85;
+    (window as any).webkitAudioContext)()
+  const source = audioCtx.createMediaStreamSource(stream)
+  var analyser = audioCtx.createAnalyser()
+  analyser.minDecibels = -90
+  analyser.maxDecibels = -10
+  analyser.smoothingTimeConstant = 0.85
 
-  source.connect(analyser);
+  source.connect(analyser)
 
-  return analyser;
+  return analyser
 }
 
-let shouldStopAnalysing = false;
-function startAnalyserLoop(dispatch: Dispatch<Action>) {
-  console.log("Starting analyser loop");
+let shouldStopAnalysing = false
+function startAnalyserLoop (dispatch: Dispatch<Action>) {
+  console.log('Starting analyser loop')
 
   const average = (ns: Uint8Array) => {
-    let sum = 0;
+    let sum = 0
     for (let i = 0; i < ns.length; i++) {
-      sum += ns[i];
+      sum += ns[i]
     }
-    return (sum /= ns.length);
-  };
+    return (sum /= ns.length)
+  }
 
   const analyse = () => {
-    const list: string[] = [];
+    const list: string[] = []
 
     if (shouldStopAnalysing) {
-      shouldStopAnalysing = false;
-      return;
+      shouldStopAnalysing = false
+      return
     }
 
     peerAnalysers.forEach(([id, a]) => {
-      a.fftSize = 2048;
-      const bufferLength = a.fftSize;
-      let byteFrequencyDataArray = new Uint8Array(bufferLength);
+      a.fftSize = 2048
+      const bufferLength = a.fftSize
+      const byteFrequencyDataArray = new Uint8Array(bufferLength)
 
-      a.getByteFrequencyData(byteFrequencyDataArray);
+      a.getByteFrequencyData(byteFrequencyDataArray)
 
       if (average(byteFrequencyDataArray) > 1) {
-        list.push(id);
+        list.push(id)
       }
-    });
+    })
 
-    dispatch(MediaReceivedSpeakingDataAction(list));
+    dispatch(MediaReceivedSpeakingDataAction(list))
 
-    window.requestAnimationFrame(analyse);
-  };
-  window.requestAnimationFrame(analyse);
+    window.requestAnimationFrame(analyse)
+  }
+  window.requestAnimationFrame(analyse)
 }
 
-function stopAnalyserLoop() {
-  shouldStopAnalysing = true;
+function stopAnalyserLoop () {
+  shouldStopAnalysing = true
 }

@@ -1,4 +1,4 @@
-import { Action, ActionType } from "./Actions";
+import { Action, ActionType } from './Actions'
 import {
   Message,
   createConnectedMessage,
@@ -11,16 +11,16 @@ import {
   createShoutMessage,
   createEmoteMessage,
   createModMessage,
-  createMovedRoomMessage,
-} from "./message";
-import { Room } from "./room";
+  createMovedRoomMessage
+} from './message'
+import { Room } from './room'
 import {
   sendChatMessage,
   toggleUserBan,
-  setNetworkMediaChatStatus,
-} from "./networking";
-import { PublicUser, MinimalUser } from "../server/src/user";
-import { disconnectAllPeers } from "./webRTC";
+  setNetworkMediaChatStatus
+} from './networking'
+import { PublicUser, MinimalUser } from '../server/src/user'
+import { disconnectAllPeers } from './webRTC'
 
 export interface State {
   authenticated: boolean;
@@ -65,28 +65,28 @@ export const defaultState: State = {
   userMap: {},
   roomData: {},
   inMediaChat: false,
-  speakingPeerIds: [],
-};
+  speakingPeerIds: []
+}
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
 export default (oldState: State, action: Action): State => {
-  console.log("In reducer", action);
+  console.log('In reducer', action)
 
   // TODO: This could hurt perf when we have a lot of messages
-  let state: State = JSON.parse(JSON.stringify(oldState));
-  state.prepopulatedInput = undefined;
+  const state: State = JSON.parse(JSON.stringify(oldState))
+  state.prepopulatedInput = undefined
 
   if (action.type === ActionType.ReceivedMyProfile) {
-    state.profileData = action.value;
+    state.profileData = action.value
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
-    state.roomId = action.value;
+    state.roomId = action.value
 
     // Add a local "you have moved to X room" message
     if (state.roomData && state.roomData[action.value]) {
-      const room = state.roomData[action.value];
-      addMessage(state, createMovedRoomMessage(room.shortName));
+      const room = state.roomData[action.value]
+      addMessage(state, createMovedRoomMessage(room.shortName))
     }
 
     /** Here lies a giant hack.
@@ -102,63 +102,63 @@ export default (oldState: State, action: Action): State => {
      * TODO: There may be cases other than moving rooms where we want to disconnect you.
      * If so, we need to dupe this logic there.
      */
-    (action as Action).type = ActionType.StopVideoChat;
+    (action as Action).type = ActionType.StopVideoChat
   }
 
   if (action.type === ActionType.UpdatedRoomData) {
-    state.roomData = { ...state.roomData, ...action.value };
+    state.roomData = { ...state.roomData, ...action.value }
   }
 
   if (action.type === ActionType.UpdatedPresence) {
     Object.keys(action.value).forEach((roomId) => {
       if (state.roomData[roomId]) {
-        state.roomData[roomId].users = action.value[roomId];
+        state.roomData[roomId].users = action.value[roomId]
       }
-    });
+    })
   }
 
   if (action.type === ActionType.PlayerConnected) {
-    const user = action.value;
+    const user = action.value
     if (!state.roomData[state.roomId].users.includes(user.id)) {
-      state.roomData[state.roomId].users.push(user.id);
-      addMessage(state, createConnectedMessage(user.id));
+      state.roomData[state.roomId].users.push(user.id)
+      addMessage(state, createConnectedMessage(user.id))
     }
-    state.userMap[user.id] = user;
+    state.userMap[user.id] = user
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
     state.roomData[state.roomId].users = state.roomData[
       state.roomId
-    ].users.filter((u) => u !== action.value);
-    addMessage(state, createDisconnectedMessage(action.value));
+    ].users.filter((u) => u !== action.value)
+    addMessage(state, createDisconnectedMessage(action.value))
   }
 
   if (action.type === ActionType.PlayerEntered) {
     if (!state.roomData[state.roomId].users.includes(action.value.name)) {
-      state.roomData[state.roomId].users.push(action.value.name);
+      state.roomData[state.roomId].users.push(action.value.name)
       addMessage(state,
         createEnteredMessage(action.value.name, action.value.from)
-      );
+      )
     }
   }
 
   if (action.type === ActionType.PlayerLeft) {
     state.roomData[state.roomId].users = state.roomData[
       state.roomId
-    ].users.filter((u) => u !== action.value.name);
-    addMessage(state, createLeftMessage(action.value.name, action.value.to));
+    ].users.filter((u) => u !== action.value.name)
+    addMessage(state, createLeftMessage(action.value.name, action.value.to))
   }
 
   if (action.type === ActionType.ChatMessage) {
     addMessage(state,
       createChatMessage(action.value.name, action.value.message)
-    );
+    )
   }
 
   if (action.type === ActionType.Whisper) {
     addMessage(state,
       createWhisperMessage(action.value.name, action.value.message)
-    );
+    )
   }
 
   if (action.type === ActionType.ModMessage) {
@@ -168,142 +168,142 @@ export default (oldState: State, action: Action): State => {
         action.value.message,
         action.value.name === state.userId
       )
-    );
+    )
   }
 
   if (action.type === ActionType.Shout) {
     addMessage(state,
       createShoutMessage(action.value.name, action.value.message)
-    );
+    )
   }
 
-  if (action.type == ActionType.Emote) {
+  if (action.type === ActionType.Emote) {
     addMessage(state,
       createEmoteMessage(action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.UserMap) {
-    state.userMap = { ...state.userMap, ...action.value };
+    state.userMap = { ...state.userMap, ...action.value }
   }
 
   if (action.type === ActionType.Error) {
-    addMessage(state, createErrorMessage(action.value));
+    addMessage(state, createErrorMessage(action.value))
   }
 
   // WebRTC
   if (action.type === ActionType.LocalMediaStreamOpened) {
-    state.localMediaStreamId = action.value.streamId;
-    state.currentAudioDeviceId = action.value.audioDeviceId;
-    state.currentVideoDeviceId = action.value.videoDeviceId;
+    state.localMediaStreamId = action.value.streamId
+    state.currentAudioDeviceId = action.value.audioDeviceId
+    state.currentVideoDeviceId = action.value.videoDeviceId
   }
 
   if (action.type === ActionType.P2PStreamReceived) {
     if (!state.otherMediaStreamPeerIds) {
-      state.otherMediaStreamPeerIds = [];
+      state.otherMediaStreamPeerIds = []
     }
 
     if (!state.otherMediaStreamPeerIds.includes(action.value)) {
-      state.otherMediaStreamPeerIds.push(action.value);
+      state.otherMediaStreamPeerIds.push(action.value)
     }
   }
 
   if (action.type === ActionType.P2PDataReceived) {
-    console.log("Received P2P data!", action.value.peerId, action.value.data);
+    console.log('Received P2P data!', action.value.peerId, action.value.data)
   }
 
   if (action.type === ActionType.P2PConnectionClosed) {
     state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds.filter(
       (p) => p !== action.value
-    );
+    )
   }
 
   if (action.type === ActionType.P2PWaitingForConnections) {
-    state.inMediaChat = true;
-    delete state.mediaDevices;
+    state.inMediaChat = true
+    delete state.mediaDevices
   }
 
   if (action.type === ActionType.LocalMediaDeviceListReceived) {
-    state.mediaDevices = action.value;
+    state.mediaDevices = action.value
   }
 
   if (action.type === ActionType.MediaReceivedSpeakingData) {
-    state.speakingPeerIds = action.value;
+    state.speakingPeerIds = action.value
   }
 
   if (action.type === ActionType.StopVideoChat) {
-    setNetworkMediaChatStatus(false);
-    disconnectAllPeers();
-    delete state.localMediaStreamId;
-    delete state.otherMediaStreamPeerIds;
-    state.inMediaChat = false;
+    setNetworkMediaChatStatus(false)
+    disconnectAllPeers()
+    delete state.localMediaStreamId
+    delete state.otherMediaStreamPeerIds
+    state.inMediaChat = false
   }
 
   // UI Actions
   if (action.type === ActionType.SendMessage) {
-    sendChatMessage(action.value);
+    sendChatMessage(action.value)
 
-    const isCommand = /^\/(.+?) (.+)/.exec(action.value);
+    const isCommand = /^\/(.+?) (.+)/.exec(action.value)
     if (isCommand) {
-      if (isCommand[1] === "whisper") {
-        const [_, username, message] = /^(.+?) (.+)/.exec(isCommand[2]);
+      if (isCommand[1] === 'whisper') {
+        const [_, username, message] = /^(.+?) (.+)/.exec(isCommand[2])
         const user = Object.values(state.userMap).find(
           (u) => u.username === username
-        );
-        const userId = user && user.id;
+        )
+        const userId = user && user.id
         if (userId) {
-          addMessage(state, createWhisperMessage(userId, message, true));
+          addMessage(state, createWhisperMessage(userId, message, true))
         }
       }
     } else {
-      addMessage(state, createChatMessage(state.userId, action.value));
+      addMessage(state, createChatMessage(state.userId, action.value))
     }
   }
 
   if (action.type === ActionType.StartWhisper) {
-    state.prepopulatedInput = `/whisper ${action.value} `;
+    state.prepopulatedInput = `/whisper ${action.value} `
   }
 
   if (action.type === ActionType.ShowProfile) {
-    state.visibleProfile = action.value;
+    state.visibleProfile = action.value
   }
 
   if (action.type === ActionType.ShowEditProfile) {
-    state.showProfileEditScreen = true;
+    state.showProfileEditScreen = true
   }
 
   if (action.type === ActionType.Authenticate) {
-    state.checkedAuthentication = true;
+    state.checkedAuthentication = true
 
     if (action.value.userId && action.value.name) {
-      state.authenticated = true;
-      state.userId = action.value.userId;
+      state.authenticated = true
+      state.userId = action.value.userId
 
       // If you haven't registered yet, we need to grab your username before we've pulled a server userMap
       state.userMap[action.value.userId] = {
         id: action.value.userId,
-        username: action.value.name,
-      };
+        username: action.value.name
+      }
     }
   }
 
   if (action.type === ActionType.IsRegistered) {
-    state.hasRegistered = true;
+    state.hasRegistered = true
   }
 
   if (action.type === ActionType.BanToggle) {
-    toggleUserBan(action.value);
+    toggleUserBan(action.value)
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
     state.messages = action.value
   }
 
-  return state;
-};
+  return state
+}
 
-function addMessage(state: State, message: Message) {
+function addMessage (state: State, message: Message) {
   state.messages.push(message)
-  localStorage.setItem("messages", JSON.stringify(state.messages))
-  localStorage.setItem("messageTimestamp", new Date().toUTCString())
+  localStorage.setItem('messages', JSON.stringify(state.messages))
+  localStorage.setItem('messageTimestamp', new Date().toUTCString())
 }
