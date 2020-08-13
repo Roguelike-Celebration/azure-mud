@@ -79,17 +79,17 @@ export const createMovedRoomMessage = (to: string): MovedRoomMessage => {
 
 export interface ChatMessage {
   type: MessageType.Chat;
-  id: string;
+  messageId: string;
   userId: string;
   message: string;
 }
 
 export const createChatMessage = (
-  id: string,
+  messageId: string,
   userId: string,
   message: string
 ): ChatMessage => {
-  return { type: MessageType.Chat, id, userId, message }
+  return { type: MessageType.Chat, messageId, userId, message }
 }
 
 export interface WhisperMessage {
@@ -124,7 +124,7 @@ export const createModMessage = (
 
 export interface ShoutMessage {
   type: MessageType.Shout;
-  id: string;
+  messageId: string;
   userId: string;
   message: string;
 }
@@ -134,12 +134,12 @@ export const createShoutMessage = (
   userId: string,
   message: string
 ): ShoutMessage => {
-  return { type: MessageType.Shout, id, userId, message }
+  return { type: MessageType.Shout, messageId: id, userId, message }
 }
 
 export interface EmoteMessage {
   type: MessageType.Emote;
-  id: string;
+  messageId: string;
   userId: string;
   message: string;
 }
@@ -149,7 +149,7 @@ export const createEmoteMessage = (
   userId: string,
   message: string
 ): EmoteMessage => {
-  return { type: MessageType.Emote, id, userId, message }
+  return { type: MessageType.Emote, messageId: id, userId, message }
 }
 
 export interface ErrorMessage {
