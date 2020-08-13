@@ -1,7 +1,6 @@
 import { Action, ActionType } from './Actions'
 import {
   Message,
-  DeletableMessage,
   createConnectedMessage,
   createDisconnectedMessage,
   createEnteredMessage,
@@ -13,10 +12,7 @@ import {
   createEmoteMessage,
   createModMessage,
   createMovedRoomMessage,
-  MessageType,
-  ChatMessage,
-  EmoteMessage,
-  ShoutMessage
+  isDeletable
 } from './message'
 import { Room } from './room'
 import {
@@ -189,7 +185,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.Emote) {
     addMessage(state,
-      createEmoteMessage(action.value.id, action.value.name, action.value.message)
+      createEmoteMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
@@ -314,13 +310,12 @@ export default (oldState: State, action: Action): State => {
   return state
 }
 
-function isDeletableMessage(message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
-  return [MessageType.Chat, MessageType.Emote, MessageType.Shout].includes(message.type)
-}
+
 
 function deleteMessage (state: State, messageId: String) {
-  const target = state.messages.find(m => isDeletableMessage(m) && m.messageId === messageId ) as ChatMessage | EmoteMessage | ShoutMessage
-  if (target) {
+  const target = state.messages.find(m => isDeletable(m) && m.messageId === messageId )
+  // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
+  if (isDeletable(target)) {
     target.message = "message was removed by moderator"
     localStorage.setItem('messages', JSON.stringify(state.messages))
     localStorage.setItem('messageTimestamp', new Date().toUTCString())

@@ -47,11 +47,7 @@ export default function MessageView (props: { message: Message; id: string }) {
 }
 
 const handleDeleteMessage = (e, data) => {
-  const doDelete = confirm(
-    `Are you sure you would like to delete the message '${
-      data.message
-    }'?`
-  )
+  const doDelete = confirm(`Are you sure you would like to delete the message '${data.message}'?`)
   if (doDelete) {
     deleteMessage(data.messageId)
   }
@@ -76,9 +72,7 @@ const DeleteMessageView = (props: { messageId: string, message: string, id: stri
             data={{ messageId: props.messageId, message: props.message }}
             onClick={handleDeleteMessage}
           >
-            {
-              'Delete Message?'
-            }
+            { 'Delete Message?' }
           </MenuItem>
         </ContextMenu>
         <ReactTooltip />

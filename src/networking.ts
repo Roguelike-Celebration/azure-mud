@@ -183,12 +183,12 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   })
 
   // We use otherId/name basically interchangably here.
-  connection.on('chatMessage', (id, otherId, message) => {
+  connection.on('chatMessage', (messageId, otherId, message) => {
     console.log('Received chat', otherId, message)
     console.log(otherId, message, userId)
     if (otherId === userId) return
 
-    dispatch(ChatMessageAction(id, otherId, message))
+    dispatch(ChatMessageAction(messageId, otherId, message))
   })
 
   connection.on('mods', (otherId, message) => {
@@ -222,14 +222,14 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(UserMapAction(map))
   })
 
-  connection.on('shout', (id, name, message) => {
+  connection.on('shout', (messageId, name, message) => {
     // We don't gate on your own userId here.
     // Because shouting can fail at the server level, we don't show it preemptively.
-    dispatch(ShoutAction(id, name, message))
+    dispatch(ShoutAction(messageId, name, message))
   })
 
-  connection.on('emote', (id, name, message) => {
-    dispatch(EmoteAction(id, name, message))
+  connection.on('emote', (messageId, name, message) => {
+    dispatch(EmoteAction(messageId, name, message))
   })
 
   connection.on('webrtcSignalData', (peerId, data) => {
