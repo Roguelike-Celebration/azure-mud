@@ -1,0 +1,20 @@
+
+
+:root {
+  --main-background:#fdf6e3;
+  --main-font:#657b83;
+  --alternate-background: #eee8d5;
+  --link-text:#859900;
+  --highlight-line: #002b36;
+}
+
+/* main background:
+base3 #fdf6e3
+alternate background:
+base2 #eee8d5
+text:
+base00 #657b83
+link:
+green #859900
+highlight:
+base03 #002b36 (background of 'dark') */

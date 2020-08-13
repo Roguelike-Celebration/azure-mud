@@ -1,6 +1,19 @@
+/* background-color different than 'main' background, dropdown by username
+'default' #333333
+'light' base2 #eee8d5
+'dark' base02 #073642 
+
+'border' matches text
+'default' white
+'light'/'dark' #657b83
+
+'selected' highlights item
+'default' #aaaaaa
+'light'/'dark' flip #*/
+
 nav.react-contextmenu {
-  background-color: #333;
-  border: 1px solid white;
+  background-color: var(--alternate-background);
+  border: 1px solid var(--main-font);
   cursor: pointer;
 }
 
@@ -9,7 +22,7 @@ nav.react-contextmenu {
 }
 
 .react-contextmenu-item--selected {
-  background-color: #aaa !important;
+  background-color: var(--highlight-line) !important;
 }
 
 span.name {

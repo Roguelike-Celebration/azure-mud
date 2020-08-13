@@ -1,8 +1,9 @@
 @import "./fonts.css";
+@import "./colors/default.css";
 
 body {
-  background-color: black;
-  color: white;
+  background-color: var(--main-background);
+  color: var(--main-font);
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
 }
 
@@ -17,11 +18,11 @@ body {
 }
 
 a {
-  color: lightseagreen;
+  color:var(--link-text);
   text-decoration: none;
   font-weight: bold;
 }
 
 a:visited {
-  color: lightseagreen;
+  color: var(--link-text);
 }
