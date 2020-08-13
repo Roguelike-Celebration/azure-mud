@@ -11,7 +11,11 @@ import {
   createShoutMessage,
   createEmoteMessage,
   createModMessage,
-  createMovedRoomMessage
+  createMovedRoomMessage,
+  MessageType,
+  ChatMessage,
+  EmoteMessage,
+  ShoutMessage
 } from './message'
 import { Room } from './room'
 import {
@@ -172,6 +176,10 @@ export default (oldState: State, action: Action): State => {
     )
   }
 
+  if (action.type === ActionType.ModDeleteMessage) {
+    deleteMessage(state, action.value.targetMessageId)
+  }
+
   if (action.type === ActionType.Shout) {
     addMessage(state,
       createShoutMessage(action.value.id, action.value.name, action.value.message)
@@ -303,6 +311,19 @@ export default (oldState: State, action: Action): State => {
   }
 
   return state
+}
+
+function isRemovableMessage(message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
+  return [MessageType.Chat, MessageType.Emote, MessageType.Shout].includes(message.type)
+}
+
+function deleteMessage (state: State, messageId: String) {
+  const target = state.messages.find(m => isRemovableMessage(m) && m.messageId === messageId ) as ChatMessage | EmoteMessage | ShoutMessage
+  if (target) {
+    target.message = "message was removed by moderator"
+    localStorage.setItem('messages', JSON.stringify(state.messages))
+    localStorage.setItem('messageTimestamp', new Date().toUTCString())
+  }
 }
 
 function addMessage (state: State, message: Message) {

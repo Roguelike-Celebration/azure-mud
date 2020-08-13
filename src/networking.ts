@@ -20,7 +20,8 @@ import {
   UpdatedCurrentRoomAction,
   UpdatedRoomDataAction,
   UpdatedPresenceAction,
-  ReceivedMyProfileAction
+  ReceivedMyProfileAction,
+  ModDeleteMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
@@ -121,6 +122,10 @@ export async function toggleUserBan (userId: string) {
   const result = await callAzureFunction('banUser', { userId })
 }
 
+export async function modDeleteMessage (messageId: string) {
+  const result = await callAzureFunction('deleteMessage', { messageId })
+}
+
 // WebRTC
 // A note: the WebRTC handshake process generally avoids the Flux store / reducer
 // The app store is only aware of actual video streams it has to present.
@@ -188,6 +193,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('mods', (otherId, message) => {
     dispatch(ModMessageAction(otherId, message))
+  })
+
+  connection.on('modDeleteMessage', (modId, targetMessageId) => {
+    dispatch(ModDeleteMessageAction(modId, targetMessageId))
   })
 
   connection.on('playerEntered', (name, from) => {

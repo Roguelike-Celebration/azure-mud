@@ -18,8 +18,7 @@ import NameView from './NameView'
 import { MenuItem, ContextMenuTrigger, ContextMenu } from 'react-contextmenu'
 import ReactTooltip from 'react-tooltip'
 import { UserMapContext } from '../App'
-
-const removableMessageTypes = [MessageType.Chat, MessageType.Emote, MessageType.Shout]
+import { modDeleteMessage } from '../networking'
 
 export default function MessageView (props: { message: Message; id: string }) {
   const { message } = props
@@ -54,7 +53,7 @@ const handleDeleteMessage = (e, data) => {
     }'?`
   )
   if (doDelete) {
-    alert('Deletion is not yet implemented!')
+    modDeleteMessage(data.messageId)
   }
 }
 

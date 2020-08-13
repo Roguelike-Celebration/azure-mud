@@ -14,6 +14,7 @@ export type Action =
   | PlayerDisconnectedAction
   | ChatMessageAction
   | ModMessageAction
+  | ModDeleteMessageAction
   | LoadMessageArchiveAction
   | WhisperAction
   | ShoutAction
@@ -49,6 +50,7 @@ export enum ActionType {
   PlayerDisconnected = 'PLAYER_DISCONNECTED',
   ChatMessage = 'CHAT_MESSAGE',
   ModMessage = 'MOD_MESSAGE',
+  ModDeleteMessage = 'DELETE_MESSAGE',
   Whisper = 'WHISPER',
   Shout = 'SHOUT',
   Emote = 'EMOTE',
@@ -212,6 +214,24 @@ export const ModMessageAction = (
   return {
     type: ActionType.ModMessage,
     value: { name, message }
+  }
+}
+
+interface ModDeleteMessageAction {
+  type: ActionType.ModDeleteMessage;
+  value: {
+    modId: string;
+    targetMessageId: string;
+  }
+}
+
+export const ModDeleteMessageAction = (
+  modId: string,
+  targetMessageId: string
+): ModDeleteMessageAction => {
+  return {
+    type: ActionType.ModDeleteMessage,
+    value: { modId, targetMessageId }
   }
 }
 
