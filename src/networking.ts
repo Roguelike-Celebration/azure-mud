@@ -21,7 +21,7 @@ import {
   UpdatedRoomDataAction,
   UpdatedPresenceAction,
   ReceivedMyProfileAction,
-  ModDeleteMessageAction
+  DeleteMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
@@ -122,7 +122,7 @@ export async function toggleUserBan (userId: string) {
   const result = await callAzureFunction('banUser', { userId })
 }
 
-export async function modDeleteMessage (messageId: string) {
+export async function deleteMessage (messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
 }
 
@@ -195,8 +195,8 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(ModMessageAction(otherId, message))
   })
 
-  connection.on('modDeleteMessage', (modId, targetMessageId) => {
-    dispatch(ModDeleteMessageAction(modId, targetMessageId))
+  connection.on('deleteMessage', (modId, targetMessageId) => {
+    dispatch(DeleteMessageAction(modId, targetMessageId))
   })
 
   connection.on('playerEntered', (name, from) => {

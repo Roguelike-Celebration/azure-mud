@@ -1,6 +1,7 @@
 import { Action, ActionType } from './Actions'
 import {
   Message,
+  DeletableMessage,
   createConnectedMessage,
   createDisconnectedMessage,
   createEnteredMessage,
@@ -156,7 +157,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ChatMessage) {
     addMessage(state,
-      createChatMessage(action.value.id, action.value.name, action.value.message)
+      createChatMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
@@ -176,13 +177,13 @@ export default (oldState: State, action: Action): State => {
     )
   }
 
-  if (action.type === ActionType.ModDeleteMessage) {
+  if (action.type === ActionType.DeleteMessage) {
     deleteMessage(state, action.value.targetMessageId)
   }
 
   if (action.type === ActionType.Shout) {
     addMessage(state,
-      createShoutMessage(action.value.id, action.value.name, action.value.message)
+      createShoutMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
@@ -313,12 +314,12 @@ export default (oldState: State, action: Action): State => {
   return state
 }
 
-function isRemovableMessage(message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
+function isDeletableMessage(message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
   return [MessageType.Chat, MessageType.Emote, MessageType.Shout].includes(message.type)
 }
 
 function deleteMessage (state: State, messageId: String) {
-  const target = state.messages.find(m => isRemovableMessage(m) && m.messageId === messageId ) as ChatMessage | EmoteMessage | ShoutMessage
+  const target = state.messages.find(m => isDeletableMessage(m) && m.messageId === messageId ) as ChatMessage | EmoteMessage | ShoutMessage
   if (target) {
     target.message = "message was removed by moderator"
     localStorage.setItem('messages', JSON.stringify(state.messages))

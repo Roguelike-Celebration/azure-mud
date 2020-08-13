@@ -1,12 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import authenticate from '../src/authenticate'
-import { isMod, getFullUser, minimizeUser } from '../src/user'
-import DB from '../src/redis'
-import setUpRoomsForUser from '../src/setUpRoomsForUser'
-import {
-  addUserToRoomPresence,
-  removeUserFromRoomPresence
-} from '../src/roomPresence'
+import { isMod } from '../src/user'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -33,7 +27,7 @@ const httpTrigger: AzureFunction = async function (
     context.bindings.signalRMessages = [
       {
         groupName: 'users',
-        target: 'modDeleteMessage',
+        target: 'deleteMessage',
         arguments: [user.id, messageId]
       }
     ]

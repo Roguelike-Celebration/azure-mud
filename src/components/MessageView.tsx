@@ -18,7 +18,7 @@ import NameView from './NameView'
 import { MenuItem, ContextMenuTrigger, ContextMenu } from 'react-contextmenu'
 import ReactTooltip from 'react-tooltip'
 import { UserMapContext } from '../App'
-import { modDeleteMessage } from '../networking'
+import { deleteMessage } from '../networking'
 
 export default function MessageView (props: { message: Message; id: string }) {
   const { message } = props
@@ -53,7 +53,7 @@ const handleDeleteMessage = (e, data) => {
     }'?`
   )
   if (doDelete) {
-    modDeleteMessage(data.messageId)
+    deleteMessage(data.messageId)
   }
 }
 

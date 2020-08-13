@@ -2,7 +2,7 @@ import { User } from './user'
 import { Context } from '@azure/functions'
 import DB from './redis'
 
-export async function shout (user: User, id: string, message: string, context: Context) {
+export async function shout (user: User, messageId: string, message: string, context: Context) {
   // Currently hardcode a 2-minute shout cooldown
   if (user.lastShouted) {
     const cooldownMinutes = 2
@@ -25,7 +25,7 @@ export async function shout (user: User, id: string, message: string, context: C
     {
       groupName: 'users',
       target: 'shout',
-      arguments: [id, user.id, message]
+      arguments: [messageId, user.id, message]
     }
   ]
 
