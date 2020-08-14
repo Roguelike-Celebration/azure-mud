@@ -27,7 +27,8 @@ export const roomData: { [name: string]: Room } = {
     id: 'theatre',
     displayName: 'GitHub HQ: Theatre',
     shortName: 'the theatre',
-    description: 'A stage, confusingly decorated with Halloween sculls and streamers. There are a few dozen flimsy metal chairs you can sit in, plus some comfy couches in the back. You can leave to the [[kitchen]], the [[bar]], or the [[arcade]].<br/><br/><center><iframe width="560" height="315" src="https://www.youtube.com/embed/mYMdMAvTHpo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center><br/>'
+    // kawa: fixed typo, changed src to Twitch per issue #89. Note 'parent' will need to be changed if we change domains, see issue #88. Twitch documentation about 'parent': https://discuss.dev.twitch.tv/t/twitch-embedded-player-updates-in-2020/23956
+    description: 'A stage, confusingly decorated with Halloween skulls and streamers. There are a few dozen flimsy metal chairs you can sit in, plus some comfy couches in the back. You can leave to the [[kitchen]], the [[bar]], or the [[arcade]].<br/><br/><center><iframe width="560" height="315" src="https://player.twitch.tv/?roguelike_con&parent=lazerwalker.com" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center><br/>'
   },
   bar: {
     id: 'bar',
