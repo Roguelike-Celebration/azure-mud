@@ -1,7 +1,7 @@
 video {
   display: block;
   box-sizing: border-box;
-  width: 28%;
+  width: 180px;
 }
 
 input#send-audio {
