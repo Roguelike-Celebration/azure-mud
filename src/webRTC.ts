@@ -52,7 +52,8 @@ export const getMediaStream = async (
     stream = await navigator.mediaDevices.getUserMedia(constraints)
   } catch (err) {
     console.log('Video error', err)
-    /* handle the error */
+    alert("Could not load your webcam. Investigate your browser settings and try again")
+    return
   }
 
   console.log('We have a new stream?')
