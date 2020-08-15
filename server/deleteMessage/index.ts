@@ -26,7 +26,6 @@ const httpTrigger: AzureFunction = async function (
 
     context.bindings.signalRMessages = [
       {
-        groupName: 'users',
         target: 'deleteMessage',
         arguments: [user.id, messageId]
       }

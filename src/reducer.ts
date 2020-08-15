@@ -310,13 +310,11 @@ export default (oldState: State, action: Action): State => {
   return state
 }
 
-
-
 function deleteMessage (state: State, messageId: String) {
-  const target = state.messages.find(m => isDeletable(m) && m.messageId === messageId )
+  const target = state.messages.find(m => isDeletable(m) && m.messageId === messageId)
   // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
   if (isDeletable(target)) {
-    target.message = "message was removed by moderator"
+    target.message = 'message was removed by moderator'
     localStorage.setItem('messages', JSON.stringify(state.messages))
     localStorage.setItem('messageTimestamp', new Date().toUTCString())
   }
