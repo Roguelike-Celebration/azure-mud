@@ -42,11 +42,6 @@ const httpTrigger: AzureFunction = async function (
       ...setUpRoomsForUser(user.id, user.roomId),
       {
         userId: user.id,
-        groupName: 'users',
-        action: 'add'
-      },
-      {
-        userId: user.id,
         groupName: user.roomId,
         action: 'add'
       }
@@ -73,7 +68,6 @@ const httpTrigger: AzureFunction = async function (
         arguments: [minimalUser]
       },
       {
-        groupName: 'users',
         target: 'usernameMap',
         arguments: [{ [user.id]: minimalUser }]
       },

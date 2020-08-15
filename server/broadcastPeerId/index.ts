@@ -10,7 +10,6 @@ const httpTrigger: AzureFunction = async function (
     context.log('Broadcasting peer ID', user.roomId, user.id)
     context.bindings.signalRMessages = [
       {
-        groupName: 'users',
         target: 'webrtcPeerId',
         arguments: [user.id]
       }
