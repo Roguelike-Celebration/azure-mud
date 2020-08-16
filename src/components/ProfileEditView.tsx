@@ -52,10 +52,11 @@ export default function ProfileEditView (props: Props) {
       description,
       askMeAbout,
       url
-    })
+    },
+    props.isFTUE)
   }
   return (
-    <div className="container">
+    <div className={`container ${props.isFTUE ? 'ftue' : ''}`}>
       <div className="form">
         <div className="grid">
           <div style={{ fontSize: '20px' }}>{`${props.isFTUE ? 'Create' : 'Edit'} Profile`}</div>

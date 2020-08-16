@@ -30,8 +30,11 @@ input {
 }
 
 .form {
-  margin-top: 8rem;
   width: 30rem;
+}
+
+.ftue .form {
+  margin-top: 8rem;
 }
 
 .grid {

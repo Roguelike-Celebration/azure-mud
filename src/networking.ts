@@ -67,12 +67,15 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   connectSignalR(userId, dispatch)
 }
 
-export async function updateProfile (user: Partial<User>) {
+// If hardRefreshPage is true, a successful update will refresh the entire page instead of dismissing a modal
+export async function updateProfile (user: Partial<User>, hardRefreshPage: boolean) {
   const result = await callAzureFunction('updateProfile', { user })
   if (result.valid) {
-    // TODO: I don't think this currently works for a new user flow.
-    // Might need to branch somewhere and go back to using window.location.reload()
-    myDispatch(HideModalAction())
+    if (hardRefreshPage) {
+      window.location.reload()
+    } else {
+      myDispatch(HideModalAction())
+    }
   }
 }
 

@@ -27,7 +27,7 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
   })
 
   const close = (e) => {
-    if (e.target.id === 'modal-wrapper') {
+    if (e.target.id === 'modal-wrapper' || e.target.id === 'close-button') {
       dispatch(HideModalAction())
     }
   }
@@ -37,7 +37,8 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
       <div id='modal'>
         <button
           onClick={close}
-          className="close"
+          id='close-button'
+          className='close'
           style={{ float: 'right', padding: '20px' }}
         >
             x
