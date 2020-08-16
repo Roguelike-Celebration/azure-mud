@@ -182,7 +182,10 @@ const Redis: Database = {
       }
 
       await setCache(roomNotesKey(roomId), JSON.stringify(notes))
+      return note.likes
     }
+
+    return []
   },
 
   async unlikeRoomNote (roomId: string, noteId: string, userId: string) {
@@ -196,7 +199,9 @@ const Redis: Database = {
     if (note && note.likes) {
       note.likes = note.likes.filter(n => n !== userId)
       await setCache(roomNotesKey(roomId), JSON.stringify(notes))
+      return note.likes
     }
+    return []
   },
 
   async getRoomNotes (roomId: string): Promise<RoomNote[]> {

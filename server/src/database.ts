@@ -73,8 +73,8 @@ interface Database {
   addRoomNote(roomId: string, note: RoomNote)
   deleteRoomNote(roomId: string, noteId: string)
 
-  likeRoomNote(roomId: string, noteId: string, userId: string)
-  unlikeRoomNote(roomId: string, noteId: string, userId: string)
+  likeRoomNote(roomId: string, noteId: string, userId: string): Promise<string[]>
+  unlikeRoomNote(roomId: string, noteId: string, userId: string): Promise<string[]>
 
   getRoomNotes(roomId: string): Promise<RoomNote[]>
 

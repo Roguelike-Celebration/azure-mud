@@ -25,7 +25,8 @@ import {
   DeleteMessageAction,
   NoteAddAction,
   NoteRemoveAction,
-  NoteUpdateRoomAction
+  NoteUpdateRoomAction,
+  NoteUpdateLikesAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
@@ -79,6 +80,8 @@ export async function checkIsRegistered (): Promise<boolean> {
   return result.registered
 }
 
+// Post-it notes
+
 export async function addNoteToWall (message: string) {
   const id = uuid()
   await callAzureFunction('addRoomNote', { id, message })
@@ -87,6 +90,16 @@ export async function addNoteToWall (message: string) {
 export async function deleteRoomNote (noteId: string) {
   await callAzureFunction('deleteRoomNote', { noteId })
 }
+
+export async function likeRoomNote (noteId: string) {
+  await callAzureFunction('likeRoomNote', { noteId, like: true })
+}
+
+export async function unlikeRoomNote (noteId: string) {
+  await callAzureFunction('likeRoomNote', { noteId, like: false })
+}
+
+//
 
 export async function moveToRoom (roomId: string) {
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
@@ -272,6 +285,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('noteRemoved', (roomId, noteId) => {
     dispatch(NoteRemoveAction(roomId, noteId))
+  })
+
+  connection.on('noteLikesUpdated', (roomId, noteId, likes) => {
+    dispatch(NoteUpdateLikesAction(roomId, noteId, likes))
   })
 
   connection.onclose(() => {
