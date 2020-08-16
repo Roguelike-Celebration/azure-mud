@@ -11,7 +11,8 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@types/redis": "^2.8.24",

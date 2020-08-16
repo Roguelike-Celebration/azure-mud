@@ -1,4 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { v4 as uuid } from 'uuid'
+
 import authenticate from '../src/authenticate'
 import DB from '../src/redis'
 import { isMod } from '../src/user'
@@ -33,13 +35,23 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     await DB.deleteRoomNote(user.roomId, noteId)
 
-    context.bindings.signalRMessages = [
+    const messages: any = [
       {
         groupName: user.roomId,
         target: 'noteRemoved',
         arguments: [user.roomId, noteId]
       }
     ]
+
+    if (note.authorId !== user.id) {
+      messages.push({
+        userId: note.authorId,
+        target: 'emote',
+        arguments: [uuid(), user.id, `has removed a note of yours from ${user.room.shortName} wall`]
+      })
+    }
+
+    context.bindings.signalRMessages = messages
   })
 
   context.res = {
