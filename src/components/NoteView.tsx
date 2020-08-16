@@ -35,7 +35,7 @@ export function NoteView (props: { note: RoomNote }) {
       {canDelete ? <button onClick={onClickDelete}>X</button> : ''}
       {n.message} <br/>
         -<NameView userId={n.authorId} id={`noteAuthor-${n.id}`}/> <br/>
-        ({n.likes && n.likes.length || 0} likes)
+        ({n.likes && n.likes.length || 0} {n.likes && n.likes.length === 1 ? 'like' : 'likes' })
       {likeView}
     </div>
   )
