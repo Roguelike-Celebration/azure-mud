@@ -3,6 +3,7 @@ import { RoomNote } from '../../server/src/roomNote'
 import { UserMapContext } from '../App'
 import { isMod, MinimalUser } from '../../server/src/user'
 import { deleteRoomNote } from '../networking'
+import NameView from './NameView'
 
 export function NoteView (props: { note: RoomNote }) {
   const { userMap, myId } = useContext(UserMapContext)
@@ -21,7 +22,7 @@ export function NoteView (props: { note: RoomNote }) {
     <div>
       {canDelete ? <button onClick={onClickDelete}>X</button> : ''}
       {n.message} <br/>
-        -{userMap[n.authorId].username} <br/>
+        -<NameView userId={n.authorId} id={`noteAuthor-${n.id}`}/> <br/>
         ({n.likes && n.likes.length || 0} likes)
     </div>
   )
