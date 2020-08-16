@@ -26,7 +26,8 @@ import {
   NoteAddAction,
   NoteRemoveAction,
   NoteUpdateRoomAction,
-  NoteUpdateLikesAction
+  NoteUpdateLikesAction,
+  HideModalAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
@@ -69,9 +70,9 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 export async function updateProfile (user: Partial<User>) {
   const result = await callAzureFunction('updateProfile', { user })
   if (result.valid) {
-    // TODO: I'm not sure this does what we want.
-    // Need to test this on the new user flow.
-    window.location.reload()
+    // TODO: I don't think this currently works for a new user flow.
+    // Might need to branch somewhere and go back to using window.location.reload()
+    myDispatch(HideModalAction())
   }
 }
 

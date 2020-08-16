@@ -23,6 +23,7 @@ import {
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
+import { Modal } from './modals'
 
 export interface State {
   authenticated: boolean;
@@ -49,11 +50,9 @@ export interface State {
   currentAudioDeviceId?: string;
   speakingPeerIds?: string[];
 
-  // Right now, the profile edit screen is the only time (other than onboarding)
-  // that we actively show a different modal screen replacing the chat view.
-  //
-  // If that assumption changes, yell at Em if she hasn't refactored this away.
-  showProfileEditScreen?: boolean;
+  // If this is set to something other than Modal.None, that will indicate
+  // which modal view should be rendered on top of the chat view
+  activeModal: Modal
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -67,7 +66,8 @@ export const defaultState: State = {
   userMap: {},
   roomData: {},
   inMediaChat: false,
-  speakingPeerIds: []
+  speakingPeerIds: [],
+  activeModal: Modal.None
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -272,12 +272,16 @@ export default (oldState: State, action: Action): State => {
     state.prepopulatedInput = `/whisper ${action.value} `
   }
 
+  if (action.type === ActionType.HideModalAction) {
+    state.activeModal = Modal.None
+  }
+
   if (action.type === ActionType.ShowProfile) {
     state.visibleProfile = action.value
   }
 
   if (action.type === ActionType.ShowEditProfile) {
-    state.showProfileEditScreen = true
+    state.activeModal = Modal.ProfileEdit
   }
 
   if (action.type === ActionType.Authenticate) {

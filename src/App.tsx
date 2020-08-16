@@ -14,6 +14,7 @@ import ProfileEditView from './components/ProfileEditView'
 import RoomListView from './components/RoomListView'
 import { IconContext } from 'react-icons/lib'
 import { Message } from './message'
+import { Modal } from './modals'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -91,11 +92,11 @@ const App = () => {
     )
   }
 
-  if (state.showProfileEditScreen || !state.hasRegistered) {
+  if (!state.hasRegistered) {
     // Fetching the handle like this is silly.
     return (
       <ProfileEditView
-        isFTUE={!state.hasRegistered}
+        isFTUE={true}
         defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
       />
@@ -116,7 +117,24 @@ const App = () => {
     )
   }
 
-  console.log(state.roomId, state.roomData, state.roomData[state.roomId])
+  let modalView
+  switch (state.activeModal) {
+    case Modal.ProfileEdit: {
+      modalView = (
+        <div id='modal-wrapper'>
+          <div id='modal'>
+            <ProfileEditView
+              isFTUE={false}
+              defaultHandle={state.userMap[state.userId].username}
+              user={state.profileData}
+            />
+          </div>
+
+        </div>
+      )
+    }
+  }
+
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
@@ -128,6 +146,7 @@ const App = () => {
               rooms={Object.values(state.roomData)}
               username={state.userMap[state.userId].username}
             />
+            {modalView}
             <div id="main" role="main">
               {videoChatView}
               <RoomView

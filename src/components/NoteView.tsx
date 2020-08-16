@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { RoomNote } from '../../server/src/roomNote'
 import { UserMapContext } from '../App'
-import { isMod, MinimalUser } from '../../server/src/user'
+import { MinimalUser } from '../../server/src/user'
 import { deleteRoomNote, unlikeRoomNote, likeRoomNote } from '../networking'
 import NameView from './NameView'
 

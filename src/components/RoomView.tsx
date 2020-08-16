@@ -41,9 +41,13 @@ export default function RoomView (props: Props) {
     dispatch(StopVideoChatAction())
   }
 
+  const showNoteWall = () => {
+    // <NoteWallView notes={room.notes}/>
+  }
+
   let noteWallView
   if (room && room.hasNoteWall) {
-    noteWallView = <NoteWallView notes={room.notes}/>
+    noteWallView = <div>One of the walls has space for attendees to put up sticky notes. <button onClick={showNoteWall}>View note wall</button></div>
   }
 
   let videoChatButton

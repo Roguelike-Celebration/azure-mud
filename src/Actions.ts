@@ -43,7 +43,8 @@ export type Action =
   | NoteAddAction
   | NoteRemoveAction
   | NoteUpdateLikesAction
-  | NoteUpdateRoomACtion
+  | NoteUpdateRoomAction
+  | HideModalAction
 
 export enum ActionType {
   // Server-driven action
@@ -86,8 +87,9 @@ export enum ActionType {
   // Note Wall
   NoteAdd = 'NOTE_ADD',
   NoteRemove = 'NOTE_REMOVE',
-  NoteUpdateLikes = 'NOTE_UPDATE_LIKES'
-  NoteUpdateRoom = "NOTE_UPDATE_ROOM"
+  NoteUpdateLikes = 'NOTE_UPDATE_LIKES',
+  NoteUpdateRoom = 'NOTE_UPDATE_ROOM',
+  HideModalAction = 'HIDE_MODAL'
 }
 
 interface ReceivedMyProfileAction {
@@ -568,7 +570,7 @@ interface NoteAddAction {
 }
 
 export const NoteAddAction = (roomId: string, note: RoomNote): NoteAddAction => {
-  return { type: ActionType.NoteAdd, value: {roomId, note} }
+  return { type: ActionType.NoteAdd, value: { roomId, note } }
 }
 
 interface NoteRemoveAction {
@@ -596,4 +598,12 @@ interface NoteUpdateRoomAction {
 
 export const NoteUpdateRoomAction = (roomId: string, notes: RoomNote[]): NoteUpdateRoomAction => {
   return { type: ActionType.NoteUpdateRoom, value: { roomId, notes } }
+}
+
+interface HideModalAction {
+  type: ActionType.HideModalAction;
+}
+
+export const HideModalAction = (): HideModalAction => {
+  return { type: ActionType.HideModalAction }
 }
