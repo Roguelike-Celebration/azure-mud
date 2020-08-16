@@ -20,7 +20,8 @@ import {
   UpdatedCurrentRoomAction,
   UpdatedRoomDataAction,
   UpdatedPresenceAction,
-  ReceivedMyProfileAction
+  ReceivedMyProfileAction,
+  DeleteMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
@@ -87,11 +88,12 @@ export async function moveToRoom (roomId: string) {
   }
 }
 
-export async function sendChatMessage (text: string) {
+export async function sendChatMessage (id: string, text: string) {
   const result: RoomResponse | Error | any = await callAzureFunction(
     'sendChatMessage',
     {
-      text
+      id: id,
+      text: text
     }
   )
 
@@ -118,6 +120,10 @@ export async function fetchProfile (userId: string): Promise<User | undefined> {
 
 export async function toggleUserBan (userId: string) {
   const result = await callAzureFunction('banUser', { userId })
+}
+
+export async function deleteMessage (messageId: string) {
+  const result = await callAzureFunction('deleteMessage', { messageId })
 }
 
 // WebRTC
@@ -176,16 +182,21 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(UpdatedPresenceAction(data))
   })
 
-  connection.on('chatMessage', (otherId, message) => {
+  // We use otherId/name basically interchangably here.
+  connection.on('chatMessage', (messageId, otherId, message) => {
     console.log('Received chat', otherId, message)
     console.log(otherId, message, userId)
     if (otherId === userId) return
 
-    dispatch(ChatMessageAction(otherId, message))
+    dispatch(ChatMessageAction(messageId, otherId, message))
   })
 
   connection.on('mods', (otherId, message) => {
     dispatch(ModMessageAction(otherId, message))
+  })
+
+  connection.on('deleteMessage', (modId, targetMessageId) => {
+    dispatch(DeleteMessageAction(modId, targetMessageId))
   })
 
   connection.on('playerEntered', (name, from) => {
@@ -211,14 +222,14 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(UserMapAction(map))
   })
 
-  connection.on('shout', (name, message) => {
+  connection.on('shout', (messageId, name, message) => {
     // We don't gate on your own userId here.
     // Because shouting can fail at the server level, we don't show it preemptively.
-    dispatch(ShoutAction(name, message))
+    dispatch(ShoutAction(messageId, name, message))
   })
 
-  connection.on('emote', (name, message) => {
-    dispatch(EmoteAction(name, message))
+  connection.on('emote', (messageId, name, message) => {
+    dispatch(EmoteAction(messageId, name, message))
   })
 
   connection.on('webrtcSignalData', (peerId, data) => {

@@ -14,6 +14,7 @@ export type Action =
   | PlayerDisconnectedAction
   | ChatMessageAction
   | ModMessageAction
+  | DeleteMessageAction
   | LoadMessageArchiveAction
   | WhisperAction
   | ShoutAction
@@ -49,6 +50,7 @@ export enum ActionType {
   PlayerDisconnected = 'PLAYER_DISCONNECTED',
   ChatMessage = 'CHAT_MESSAGE',
   ModMessage = 'MOD_MESSAGE',
+  DeleteMessage = 'DELETE_MESSAGE',
   Whisper = 'WHISPER',
   Shout = 'SHOUT',
   Emote = 'EMOTE',
@@ -165,18 +167,20 @@ export const PlayerDisconnectedAction = (
 interface ChatMessageAction {
   type: ActionType.ChatMessage;
   value: {
+    messageId: string;
     name: string;
     message: string;
   };
 }
 
 export const ChatMessageAction = (
+  messageId: string,
   name: string,
   message: string
 ): ChatMessageAction => {
   return {
     type: ActionType.ChatMessage,
-    value: { name, message }
+    value: { messageId, name, message }
   }
 }
 
@@ -213,16 +217,35 @@ export const ModMessageAction = (
   }
 }
 
-export const ShoutAction = (name: string, message: string): ShoutAction => {
+interface DeleteMessageAction {
+  type: ActionType.DeleteMessage;
+  value: {
+    modId: string;
+    targetMessageId: string;
+  }
+}
+
+export const DeleteMessageAction = (
+  modId: string,
+  targetMessageId: string
+): DeleteMessageAction => {
+  return {
+    type: ActionType.DeleteMessage,
+    value: { modId, targetMessageId }
+  }
+}
+
+export const ShoutAction = (messageId: string, name: string, message: string): ShoutAction => {
   return {
     type: ActionType.Shout,
-    value: { name, message }
+    value: { messageId, name, message }
   }
 }
 
 interface ShoutAction {
   type: ActionType.Shout;
   value: {
+    messageId: string;
     name: string;
     message: string;
   };
@@ -231,15 +254,16 @@ interface ShoutAction {
 interface EmoteAction {
   type: ActionType.Emote;
   value: {
+    messageId: string;
     name: string;
     message: string;
   }
 }
 
-export const EmoteAction = (name: string, message: string): EmoteAction => {
+export const EmoteAction = (messageId: string, name: string, message: string): EmoteAction => {
   return {
     type: ActionType.Emote,
-    value: { name, message }
+    value: { messageId, name, message }
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, FunctionComponent, ReactElement } from 'react'
 import {
   Message,
   MessageType,
@@ -15,6 +15,10 @@ import {
   ModMessage
 } from '../message'
 import NameView from './NameView'
+import { MenuItem, ContextMenuTrigger, ContextMenu } from 'react-contextmenu'
+import ReactTooltip from 'react-tooltip'
+import { UserMapContext } from '../App'
+import { deleteMessage } from '../networking'
 
 export default function MessageView (props: { message: Message; id: string }) {
   const { message } = props
@@ -40,6 +44,43 @@ export default function MessageView (props: { message: Message; id: string }) {
   }
 
   return React.createElement(component, { ...message, id: props.id })
+}
+
+const handleDeleteMessage = (e, data) => {
+  const doDelete = confirm(`Are you sure you would like to delete the message '${data.message}'?`)
+  if (doDelete) {
+    deleteMessage(data.messageId)
+  }
+}
+
+type DeletableMessageViewProps = {
+  messageId: string
+}
+
+const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (props) => {
+  const { userMap, myId } = useContext(UserMapContext)
+  const playerIsMod = userMap[myId] && userMap[myId].isMod
+
+  if (!playerIsMod) {
+    return props.children as ReactElement
+  } else {
+    return (
+      <span className="deleteMenu">
+        <ContextMenuTrigger id={props.messageId} renderTag="span" holdToDisplay={0}>
+          {props.children}
+        </ContextMenuTrigger>
+        <ContextMenu id={props.messageId}>
+          <MenuItem
+            data={{ messageId: props.messageId, message: props.children }}
+            onClick={handleDeleteMessage}
+          >
+            { 'Delete Message?' }
+          </MenuItem>
+        </ContextMenu>
+        <ReactTooltip />
+      </span>
+    )
+  }
 }
 
 const ConnectedMessageView = (props: ConnectedMessage & { id: string }) => (
@@ -78,7 +119,7 @@ const MovedView = (props: MovedRoomMessage & { id: string }) => (
 
 const ChatMessageView = (props: ChatMessage & { id: string }) => (
   <div className="message">
-    <NameView userId={props.userId} id={props.id} />: {props.message}
+    <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView>
   </div>
 )
 
@@ -131,7 +172,7 @@ const ModMessageView = (props: ModMessage & { id: string }) => {
 const ShoutView = (props: ShoutMessage & { id: string }) => {
   return (
     <div className="message">
-      <NameView userId={props.userId} id={props.id} /> shouts: {props.message}
+      <NameView userId={props.userId} id={props.id} /> shouts: <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView>
     </div>
   )
 }
@@ -139,7 +180,7 @@ const ShoutView = (props: ShoutMessage & { id: string }) => {
 const EmoteView = (props: EmoteMessage & { id: string }) => {
   return (
     <div className="message">
-      <em><NameView userId={props.userId} id={props.id} /> {props.message}</em>
+      <em><NameView userId={props.userId} id={props.id} /> <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView></em>
     </div>
   )
 }

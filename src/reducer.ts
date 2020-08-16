@@ -11,7 +11,8 @@ import {
   createShoutMessage,
   createEmoteMessage,
   createModMessage,
-  createMovedRoomMessage
+  createMovedRoomMessage,
+  isDeletable
 } from './message'
 import { Room } from './room'
 import {
@@ -21,6 +22,7 @@ import {
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers } from './webRTC'
+import { v4 as uuidv4 } from 'uuid'
 
 export interface State {
   authenticated: boolean;
@@ -151,7 +153,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ChatMessage) {
     addMessage(state,
-      createChatMessage(action.value.name, action.value.message)
+      createChatMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
@@ -171,15 +173,19 @@ export default (oldState: State, action: Action): State => {
     )
   }
 
+  if (action.type === ActionType.DeleteMessage) {
+    deleteMessage(state, action.value.targetMessageId)
+  }
+
   if (action.type === ActionType.Shout) {
     addMessage(state,
-      createShoutMessage(action.value.name, action.value.message)
+      createShoutMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.Emote) {
     addMessage(state,
-      createEmoteMessage(action.value.name, action.value.message)
+      createEmoteMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
@@ -241,7 +247,9 @@ export default (oldState: State, action: Action): State => {
 
   // UI Actions
   if (action.type === ActionType.SendMessage) {
-    sendChatMessage(action.value)
+    const messageId: string = uuidv4()
+
+    sendChatMessage(messageId, action.value)
 
     const isCommand = /^\/(.+?) (.+)/.exec(action.value)
     if (isCommand) {
@@ -256,7 +264,7 @@ export default (oldState: State, action: Action): State => {
         }
       }
     } else {
-      addMessage(state, createChatMessage(state.userId, action.value))
+      addMessage(state, createChatMessage(messageId, state.userId, action.value))
     }
   }
 
@@ -300,6 +308,16 @@ export default (oldState: State, action: Action): State => {
   }
 
   return state
+}
+
+function deleteMessage (state: State, messageId: String) {
+  const target = state.messages.find(m => isDeletable(m) && m.messageId === messageId)
+  // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
+  if (isDeletable(target)) {
+    target.message = 'message was removed by moderator'
+    localStorage.setItem('messages', JSON.stringify(state.messages))
+    localStorage.setItem('messageTimestamp', new Date().toUTCString())
+  }
 }
 
 function addMessage (state: State, message: Message) {
