@@ -15,6 +15,7 @@ import RoomListView from './components/RoomListView'
 import { IconContext } from 'react-icons/lib'
 import { Message } from './message'
 import { Modal } from './modals'
+import { NoteWallView } from './components/NoteWallView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -117,22 +118,34 @@ const App = () => {
     )
   }
 
-  let modalView
+  let innerModalView, modalView
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
-      modalView = (
-        <div id='modal-wrapper'>
-          <div id='modal'>
-            <ProfileEditView
-              isFTUE={false}
-              defaultHandle={state.userMap[state.userId].username}
-              user={state.profileData}
-            />
-          </div>
-
-        </div>
+      innerModalView = (
+        <ProfileEditView
+          isFTUE={false}
+          defaultHandle={state.userMap[state.userId].username}
+          user={state.profileData}
+        />
       )
+      break
     }
+    case Modal.NoteWall: {
+      innerModalView = (
+        <NoteWallView notes={state.roomData[state.roomId].notes} />
+      )
+      break
+    }
+  }
+
+  if (innerModalView) {
+    modalView = (
+      <div id='modal-wrapper'>
+        <div id='modal'>
+          {innerModalView}
+        </div>
+      </div>
+    )
   }
 
   return (

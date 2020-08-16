@@ -3,8 +3,9 @@ import { FaChevronDown } from 'react-icons/fa'
 
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import config from '../config'
-import { ShowEditProfileAction } from '../Actions'
+import { ShowModalAction } from '../Actions'
 import { DispatchContext } from '../App'
+import { Modal } from '../modals'
 
 export default function MenuButtonView (props: { username: string }) {
   const dispatch = useContext(DispatchContext)
@@ -21,7 +22,7 @@ export default function MenuButtonView (props: { username: string }) {
   }
 
   const showProfile = () => {
-    dispatch(ShowEditProfileAction())
+    dispatch(ShowModalAction(Modal.ProfileEdit))
   }
 
   return (

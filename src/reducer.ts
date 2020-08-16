@@ -280,8 +280,8 @@ export default (oldState: State, action: Action): State => {
     state.visibleProfile = action.value
   }
 
-  if (action.type === ActionType.ShowEditProfile) {
-    state.activeModal = Modal.ProfileEdit
+  if (action.type === ActionType.ShowModal) {
+    state.activeModal = action.value
   }
 
   if (action.type === ActionType.Authenticate) {

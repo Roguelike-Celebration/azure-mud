@@ -5,6 +5,7 @@ import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
 import { Message } from './message'
 import { RoomNote } from '../server/src/roomNote'
+import { Modal } from './modals'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -36,7 +37,7 @@ export type Action =
   | SetNameAction
   | StartWhisperAction
   | ShowProfileAction
-  | ShowEditProfileAction
+  | ShowModalAction
   | AuthenticateAction
   | IsRegisteredAction
   | BanToggleAction
@@ -78,7 +79,7 @@ export enum ActionType {
   SetName = 'SET_NAME',
   StartWhisper = 'START_WHISPER',
   ShowProfile = 'SHOW_PROFILE',
-  ShowEditProfile = 'SHOW_EDIT_PROFILE',
+  ShowModal = 'SHOW_MODAL',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -516,14 +517,24 @@ export const ShowProfileActionForFetchedUser = (
   }
 }
 
-interface ShowEditProfileAction {
-  type: ActionType.ShowEditProfile;
+interface ShowModalAction {
+  type: ActionType.ShowModal;
+  value: Modal
 }
 
-export const ShowEditProfileAction = (): ShowEditProfileAction => {
+export const ShowModalAction = (modal: Modal): ShowModalAction => {
   return {
-    type: ActionType.ShowEditProfile
+    type: ActionType.ShowModal,
+    value: modal
   }
+}
+
+interface HideModalAction {
+  type: ActionType.HideModalAction;
+}
+
+export const HideModalAction = (): HideModalAction => {
+  return { type: ActionType.HideModalAction }
 }
 
 interface AuthenticateAction {
@@ -598,12 +609,4 @@ interface NoteUpdateRoomAction {
 
 export const NoteUpdateRoomAction = (roomId: string, notes: RoomNote[]): NoteUpdateRoomAction => {
   return { type: ActionType.NoteUpdateRoom, value: { roomId, notes } }
-}
-
-interface HideModalAction {
-  type: ActionType.HideModalAction;
-}
-
-export const HideModalAction = (): HideModalAction => {
-  return { type: ActionType.HideModalAction }
 }

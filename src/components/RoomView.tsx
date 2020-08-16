@@ -7,10 +7,10 @@ import {
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext } from '../App'
-import { StopVideoChatAction } from '../Actions'
+import { StopVideoChatAction, ShowModalAction } from '../Actions'
 
 import '../../style/room.css'
-import { NoteWallView } from './NoteWallView'
+import { Modal } from '../modals'
 
 interface Props {
   room?: Room;
@@ -42,7 +42,7 @@ export default function RoomView (props: Props) {
   }
 
   const showNoteWall = () => {
-    // <NoteWallView notes={room.notes}/>
+    dispatch(ShowModalAction(Modal.NoteWall))
   }
 
   let noteWallView
