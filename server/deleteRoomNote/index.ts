@@ -35,7 +35,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     context.bindings.signalRMessages = [
       {
-        groupName: user.room,
+        groupName: user.roomId,
         target: 'noteRemoved',
         arguments: [user.roomId, noteId]
       }

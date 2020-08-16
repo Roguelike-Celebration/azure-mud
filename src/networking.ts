@@ -84,6 +84,10 @@ export async function addNoteToWall (message: string) {
   await callAzureFunction('addRoomNote', { id, message })
 }
 
+export async function deleteRoomNote (noteId: string) {
+  await callAzureFunction('deleteRoomNote', { noteId })
+}
+
 export async function moveToRoom (roomId: string) {
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
     'moveRoom',
