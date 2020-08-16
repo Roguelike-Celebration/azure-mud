@@ -14,7 +14,6 @@ export async function globalPresenceMessage (roomIds: string[]) {
   )
 
   return {
-    groupName: 'users',
     target: 'presenceData',
     arguments: [data]
   }

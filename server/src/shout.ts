@@ -23,7 +23,6 @@ export async function shout (user: User, messageId: string, message: string, con
 
   context.bindings.signalRMessages = [
     {
-      groupName: 'users',
       target: 'shout',
       arguments: [messageId, user.id, message]
     }
