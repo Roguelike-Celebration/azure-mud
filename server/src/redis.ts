@@ -2,6 +2,7 @@ import { promisify } from 'util'
 import { User, isMod, MinimalUser } from './user'
 
 import Database from './database'
+import { RoomNote } from './roomNote'
 import redis = require('redis');
 
 const cache = redis.createClient(
@@ -137,6 +138,75 @@ const Redis: Database = {
     )
     profileData.isBanned = false
     await setCache(profileKeyForUser(userId), JSON.stringify(profileData))
+  },
+
+  // Post-it notes
+  async addRoomNote (roomId: string, note: RoomNote) {
+    const rawNotes = await getCache(roomNotesKey(roomId))
+    let notes: RoomNote[] = []
+    if (rawNotes) {
+      notes = JSON.parse(rawNotes)
+    }
+
+    if (!notes.find(n => n.id === note.id)) {
+      notes.push(note)
+    }
+
+    await setCache(roomNotesKey(roomId), JSON.stringify(notes))
+  },
+
+  async deleteRoomNote (roomId: string, noteId: string) {
+    const rawNotes = await getCache(roomNotesKey(roomId))
+    let notes: RoomNote[] = []
+    if (rawNotes) {
+      notes = JSON.parse(rawNotes)
+    }
+
+    notes = notes.filter(n => n.id !== noteId)
+
+    await setCache(roomNotesKey(roomId), JSON.stringify(notes))
+  },
+
+  async likeRoomNote (roomId: string, noteId: string, userId: string) {
+    const rawNotes = await getCache(roomNotesKey(roomId))
+    let notes: RoomNote[] = []
+    if (rawNotes) {
+      notes = JSON.parse(rawNotes)
+    }
+
+    const note = notes.find(n => n.id === noteId)
+    if (note) {
+      if (!note.likes) { note.likes = [] }
+      if (!note.likes.includes(userId)) {
+        note.likes.push(userId)
+      }
+
+      await setCache(roomNotesKey(roomId), JSON.stringify(notes))
+    }
+  },
+
+  async unlikeRoomNote (roomId: string, noteId: string, userId: string) {
+    const rawNotes = await getCache(roomNotesKey(roomId))
+    let notes: RoomNote[] = []
+    if (rawNotes) {
+      notes = JSON.parse(rawNotes)
+    }
+
+    const note = notes.find(n => n.id === noteId)
+    if (note && note.likes) {
+      note.likes = note.likes.filter(n => n !== userId)
+      await setCache(roomNotesKey(roomId), JSON.stringify(notes))
+    }
+  },
+
+  async getRoomNotes (roomId: string): Promise<RoomNote[]> {
+    const rawNotes = await getCache(roomNotesKey(roomId))
+    let notes: RoomNote[] = []
+    if (rawNotes) {
+      notes = JSON.parse(rawNotes)
+    }
+
+    return notes
   }
 }
 
@@ -168,6 +238,10 @@ export function roomKeyForUser (user: string): string {
 
 export function roomKey (name: string) {
   return `${name}RoomData`
+}
+
+export function roomNotesKey (roomId: string): string {
+  return `${roomId}Notes`
 }
 
 export default Redis

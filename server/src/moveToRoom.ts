@@ -7,6 +7,7 @@ import {
 } from './roomPresence'
 import { User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
+import DB from '../src/redis'
 
 export async function moveToRoom (
   user: User,
@@ -53,11 +54,17 @@ export async function moveToRoom (
   await removeUserFromRoomPresence(user.id, user.roomId)
   await addUserToRoomPresence(user.id, to.id)
 
+  const response: RoomResponse = {
+    roomId: to.id
+  }
+
+  if (roomData[to.id].hasNoteWall) {
+    response.roomNotes = await DB.getRoomNotes(to.id)
+  }
+
   context.res = {
     status: 200,
-    body: {
-      roomId: to.id
-    } as RoomResponse
+    body: response
   }
 
   context.bindings.signalRMessages = [

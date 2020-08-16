@@ -10,6 +10,7 @@ import { DispatchContext } from '../App'
 import { StopVideoChatAction } from '../Actions'
 
 import '../../style/room.css'
+import { NoteWallView } from './NoteWallView'
 
 interface Props {
   room?: Room;
@@ -38,6 +39,11 @@ export default function RoomView (props: Props) {
 
   const leaveVideoChat = () => {
     dispatch(StopVideoChatAction())
+  }
+
+  let noteWallView
+  if (room && room.hasNoteWall) {
+    noteWallView = <NoteWallView notes={room.notes}/>
   }
 
   let videoChatButton
@@ -74,6 +80,7 @@ export default function RoomView (props: Props) {
       />
       {room ? <PresenceView users={room.users} userId={props.userId} /> : ''}
       {videoChatButton}
+      {noteWallView}
     </div>
   )
 }

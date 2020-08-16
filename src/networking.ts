@@ -1,4 +1,5 @@
 import * as SignalR from '@aspnet/signalr'
+import { v4 as uuid } from 'uuid'
 
 import { RoomResponse, ErrorResponse } from '../server/src/types'
 import { Dispatch } from 'react'
@@ -21,7 +22,10 @@ import {
   UpdatedRoomDataAction,
   UpdatedPresenceAction,
   ReceivedMyProfileAction,
-  DeleteMessageAction
+  DeleteMessageAction,
+  NoteAddAction,
+  NoteRemoveAction,
+  NoteUpdateRoomAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
@@ -52,6 +56,10 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
     dispatch(ReceivedMyProfileAction(result.profile))
   }
 
+  if (result.roomNotes) {
+    dispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
+  }
+
   dispatch(UpdatedPresenceAction(result.presenceData))
 
   connectSignalR(userId, dispatch)
@@ -71,6 +79,11 @@ export async function checkIsRegistered (): Promise<boolean> {
   return result.registered
 }
 
+export async function addNoteToWall (message: string) {
+  const id = uuid()
+  await callAzureFunction('addRoomNote', { id, message })
+}
+
 export async function moveToRoom (roomId: string) {
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
     'moveRoom',
@@ -85,6 +98,10 @@ export async function moveToRoom (roomId: string) {
     myDispatch(ErrorAction(result.error))
   } else {
     myDispatch(UpdatedCurrentRoomAction(result.roomId))
+
+    if (result.roomNotes) {
+      myDispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
+    }
   }
 }
 
@@ -242,6 +259,15 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     if (!inMediaChat) return
     console.log('Starting signaling with', peerId)
     startSignaling(peerId, dispatch)
+  })
+
+  // Post-It Note Wall
+  connection.on('noteAdded', (roomId, noteId, message, authorId) => {
+    dispatch(NoteAddAction(roomId, { id: noteId, message, authorId }))
+  })
+
+  connection.on('noteRemoved', (roomId, noteId) => {
+    dispatch(NoteRemoveAction(roomId, noteId))
   })
 
   connection.onclose(() => {

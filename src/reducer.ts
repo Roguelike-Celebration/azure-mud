@@ -307,6 +307,44 @@ export default (oldState: State, action: Action): State => {
     state.messages = action.value
   }
 
+  // Notes
+  if (action.type === ActionType.NoteAdd) {
+    const room = state.roomData && state.roomData[action.value.roomId]
+    if (room.hasNoteWall) {
+      if (!room.notes) room.notes = []
+
+      room.notes.push(action.value.note)
+    }
+  }
+
+  if (action.type === ActionType.NoteRemove) {
+    const room = state.roomData && state.roomData[action.value.roomId]
+    if (room.hasNoteWall) {
+      if (!room.notes) room.notes = []
+
+      room.notes = room.notes.filter(n => n.id !== action.value.noteId)
+    }
+  }
+
+  if (action.type === ActionType.NoteUpdateLikes) {
+    const room = state.roomData && state.roomData[action.value.roomId]
+    if (room.hasNoteWall) {
+      if (!room.notes) room.notes = []
+
+      const note = room.notes.find(n => n.id === action.value.noteId)
+      if (note) {
+        note.likes = action.value.likes
+      }
+    }
+  }
+
+  if (action.type === ActionType.NoteUpdateRoom) {
+    const room = state.roomData && state.roomData[action.value.roomId]
+    if (room.hasNoteWall) {
+      room.notes = action.value.notes
+    }
+  }
+
   return state
 }
 

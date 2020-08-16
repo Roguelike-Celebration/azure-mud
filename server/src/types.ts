@@ -1,12 +1,14 @@
 import { Room } from './room'
 import { User, MinimalUser, PublicUser } from './user'
+import { RoomNote } from './roomNote'
 
 export interface RoomResponse {
   roomId: string;
-  presenceData: { [roomId: string]: string[] };
+  presenceData?: { [roomId: string]: string[] };
   users?: { [userId: string]: MinimalUser };
   roomData?: { [roomId: string]: Room };
   profile?: PublicUser;
+  roomNotes?: RoomNote[]
 }
 
 export interface ErrorResponse {
