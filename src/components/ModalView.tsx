@@ -1,7 +1,11 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react'
+
+import React, { useContext, useEffect } from 'react'
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
+import ReactDOM from 'react-dom'
 
 interface Props {
     foo?: any
@@ -10,12 +14,26 @@ interface Props {
 export const ModalView: React.FunctionComponent<Props> = (props) => {
   const dispatch = useContext(DispatchContext)
 
-  const close = () => {
-    dispatch(HideModalAction())
+  useEffect(() => {
+    function keyListener (e) {
+      if (e.keyCode === 27) {
+        dispatch(HideModalAction())
+      }
+    }
+
+    document.addEventListener('keydown', keyListener)
+
+    return () => document.removeEventListener('keydown', keyListener)
+  })
+
+  const close = (e) => {
+    if (e.target.id === 'modal-wrapper') {
+      dispatch(HideModalAction())
+    }
   }
 
-  return (
-    <div id='modal-wrapper' onClick={close}>
+  return ReactDOM.createPortal(
+    <div id='modal-wrapper' onClick={close} role='dialog' aria-modal={true}>
       <div id='modal'>
         <button
           onClick={close}
@@ -26,6 +44,7 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
         </button>
         {props.children}
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
