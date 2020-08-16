@@ -59,16 +59,6 @@ export default function ProfileEditView (props: Props) {
       <div className="form">
         <div className="grid">
           <div style={{ fontSize: '20px' }}>{`${props.isFTUE ? 'Create' : 'Edit'} Profile`}</div>
-          {props.isFTUE ? (
-            ''
-          ) : (
-            <button
-              onClick={close}
-              className="close"
-            >
-            x
-            </button>
-          )}
           <div className="field">
             <label htmlFor="username">Username</label>
             <input

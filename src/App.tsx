@@ -16,6 +16,7 @@ import { IconContext } from 'react-icons/lib'
 import { Message } from './message'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
+import { ModalView } from './components/ModalView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -139,13 +140,7 @@ const App = () => {
   }
 
   if (innerModalView) {
-    modalView = (
-      <div id='modal-wrapper'>
-        <div id='modal'>
-          {innerModalView}
-        </div>
-      </div>
-    )
+    modalView = <ModalView>{innerModalView}</ModalView>
   }
 
   return (
