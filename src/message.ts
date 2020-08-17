@@ -25,6 +25,10 @@ export enum MessageType {
   Error = 'ERROR',
 }
 
+export function isDeletable(message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
+  return [MessageType.Chat, MessageType.Emote, MessageType.Shout].includes(message.type)
+}
+
 export interface ConnectedMessage {
   type: MessageType.Connected;
   userId: string;
@@ -79,15 +83,17 @@ export const createMovedRoomMessage = (to: string): MovedRoomMessage => {
 
 export interface ChatMessage {
   type: MessageType.Chat;
+  messageId: string;
   userId: string;
   message: string;
 }
 
 export const createChatMessage = (
+  messageId: string,
   userId: string,
   message: string
 ): ChatMessage => {
-  return { type: MessageType.Chat, userId, message }
+  return { type: MessageType.Chat, messageId, userId, message }
 }
 
 export interface WhisperMessage {
@@ -122,28 +128,32 @@ export const createModMessage = (
 
 export interface ShoutMessage {
   type: MessageType.Shout;
+  messageId: string;
   userId: string;
   message: string;
 }
 
 export const createShoutMessage = (
+  id: string,
   userId: string,
   message: string
 ): ShoutMessage => {
-  return { type: MessageType.Shout, userId, message }
+  return { type: MessageType.Shout, messageId: id, userId, message }
 }
 
 export interface EmoteMessage {
   type: MessageType.Emote;
+  messageId: string;
   userId: string;
   message: string;
 }
 
 export const createEmoteMessage = (
+  id: string,
   userId: string,
   message: string
 ): EmoteMessage => {
-  return { type: MessageType.Emote, userId, message }
+  return { type: MessageType.Emote, messageId: id, userId, message }
 }
 
 export interface ErrorMessage {

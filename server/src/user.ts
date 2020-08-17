@@ -36,7 +36,7 @@ export interface User extends PublicUser {
 }
 
 export function isMod (userId: string) {
-  const modList = ['19924413']
+  const modList = ['19924413', '1288674456219471875']
   return modList.includes(userId)
 }
 

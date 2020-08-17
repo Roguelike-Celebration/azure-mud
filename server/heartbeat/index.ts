@@ -43,11 +43,6 @@ const timerTrigger: AzureFunction = async function (
     signalRGroupActions.push(
       {
         userId,
-        groupName: 'users',
-        action: 'remove'
-      },
-      {
-        userId,
         groupName: user.roomId,
         action: 'remove'
       }
@@ -65,7 +60,6 @@ const timerTrigger: AzureFunction = async function (
   context.bindings.signalRGroupActions = signalRGroupActions
   context.bindings.signalRMessages = [
     {
-      groupName: 'users',
       target: 'ping',
       arguments: []
     }

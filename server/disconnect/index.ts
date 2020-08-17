@@ -24,11 +24,6 @@ const httpTrigger: AzureFunction = async function (
     context.bindings.signalRGroupActions = [
       {
         userId: user.id,
-        groupName: 'users',
-        action: 'remove'
-      },
-      {
-        userId: user.id,
         groupName: user.roomId,
         action: 'remove'
       }

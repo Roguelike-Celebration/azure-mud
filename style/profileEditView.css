@@ -1,0 +1,54 @@
+input {
+  border-radius: 5px;
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 14px;
+  height: 2rem;
+}
+
+.close {
+  align-self: start;
+  background-color: black;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  justify-self: end;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.form {
+  margin-top: 8rem;
+  width: 30rem;
+}
+
+.grid {
+  display: grid;
+  grid-column-gap: 5%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 4rem repeat(3, 1fr)
+}
+
+.submit {
+  background-color: black;
+  border: 2px solid white;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 16px;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+}
