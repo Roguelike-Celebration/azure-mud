@@ -1,4 +1,5 @@
 import * as Server from '../server/src/room'
+import { RoomNote } from '../server/src/roomNote'
 export interface Room {
   name: string;
   shortName: string;
@@ -6,6 +7,9 @@ export interface Room {
   description: string;
   users?: string[];
   allowsMedia: boolean;
+
+  hasNoteWall: boolean;
+  notes?: RoomNote[]
 }
 
 export function convertServerRoomData (roomData: {
@@ -20,7 +24,8 @@ export function convertServerRoomData (roomData: {
       id: room.id,
       shortName: room.shortName,
       description: room.description,
-      allowsMedia: room.allowsMedia
+      allowsMedia: room.allowsMedia,
+      hasNoteWall: room.hasNoteWall
     }
   })
 

@@ -4,6 +4,8 @@ import { fetchProfile } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
 import { Message } from './message'
+import { RoomNote } from '../server/src/roomNote'
+import { Modal } from './modals'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -35,10 +37,15 @@ export type Action =
   | SetNameAction
   | StartWhisperAction
   | ShowProfileAction
-  | ShowEditProfileAction
+  | ShowModalAction
   | AuthenticateAction
   | IsRegisteredAction
-  | BanToggleAction;
+  | BanToggleAction
+  | NoteAddAction
+  | NoteRemoveAction
+  | NoteUpdateLikesAction
+  | NoteUpdateRoomAction
+  | HideModalAction
 
 export enum ActionType {
   // Server-driven action
@@ -72,12 +79,18 @@ export enum ActionType {
   SetName = 'SET_NAME',
   StartWhisper = 'START_WHISPER',
   ShowProfile = 'SHOW_PROFILE',
-  ShowEditProfile = 'SHOW_EDIT_PROFILE',
+  ShowModal = 'SHOW_MODAL',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
   BanToggle = 'BAN_TOGGLE',
   LoadMessageArchive = 'LOAD_MESSAGE_ARCHIVE',
+  // Note Wall
+  NoteAdd = 'NOTE_ADD',
+  NoteRemove = 'NOTE_REMOVE',
+  NoteUpdateLikes = 'NOTE_UPDATE_LIKES',
+  NoteUpdateRoom = 'NOTE_UPDATE_ROOM',
+  HideModalAction = 'HIDE_MODAL'
 }
 
 interface ReceivedMyProfileAction {
@@ -504,14 +517,24 @@ export const ShowProfileActionForFetchedUser = (
   }
 }
 
-interface ShowEditProfileAction {
-  type: ActionType.ShowEditProfile;
+interface ShowModalAction {
+  type: ActionType.ShowModal;
+  value: Modal
 }
 
-export const ShowEditProfileAction = (): ShowEditProfileAction => {
+export const ShowModalAction = (modal: Modal): ShowModalAction => {
   return {
-    type: ActionType.ShowEditProfile
+    type: ActionType.ShowModal,
+    value: modal
   }
+}
+
+interface HideModalAction {
+  type: ActionType.HideModalAction;
+}
+
+export const HideModalAction = (): HideModalAction => {
+  return { type: ActionType.HideModalAction }
 }
 
 interface AuthenticateAction {
@@ -550,4 +573,40 @@ interface LoadMessageArchiveAction {
 
 export const LoadMessageArchiveAction = (messages: Message[]): LoadMessageArchiveAction => {
   return { type: ActionType.LoadMessageArchive, value: messages }
+}
+
+interface NoteAddAction {
+  type: ActionType.NoteAdd;
+  value: { roomId: string, note: RoomNote };
+}
+
+export const NoteAddAction = (roomId: string, note: RoomNote): NoteAddAction => {
+  return { type: ActionType.NoteAdd, value: { roomId, note } }
+}
+
+interface NoteRemoveAction {
+  type: ActionType.NoteRemove;
+  value: { roomId: string, noteId: string };
+}
+
+export const NoteRemoveAction = (roomId: string, noteId: string): NoteRemoveAction => {
+  return { type: ActionType.NoteRemove, value: { roomId, noteId } }
+}
+
+interface NoteUpdateLikesAction {
+  type: ActionType.NoteUpdateLikes;
+  value: { roomId: string, noteId: string, likes: string[] };
+}
+
+export const NoteUpdateLikesAction = (roomId: string, noteId: string, likes: string[]): NoteUpdateLikesAction => {
+  return { type: ActionType.NoteUpdateLikes, value: { roomId, noteId, likes } }
+}
+
+interface NoteUpdateRoomAction {
+  type: ActionType.NoteUpdateRoom;
+  value: { roomId: string, notes: RoomNote[] };
+}
+
+export const NoteUpdateRoomAction = (roomId: string, notes: RoomNote[]): NoteUpdateRoomAction => {
+  return { type: ActionType.NoteUpdateRoom, value: { roomId, notes } }
 }

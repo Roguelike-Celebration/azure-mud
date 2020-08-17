@@ -1,4 +1,5 @@
 @import "./fonts.css";
+@import "./modal.css";
 
 body {
   background-color: black;
@@ -24,4 +25,17 @@ a {
 
 a:visited {
   color: lightseagreen;
+}
+
+.link-styled-button {
+  background-color: transparent;
+  border: none;
+  color: lightgreen;
+  cursor: pointer;
+  display: inline; 
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 1.0em;
+  margin: 0;
+  padding: 0;
+  text-align: left;
 }

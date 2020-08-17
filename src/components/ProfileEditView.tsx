@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { updateProfile } from '../networking'
 import { PublicUser } from '../../server/src/user'
 
 import '../../style/profileEditView.css'
+import { DispatchContext } from '../App'
+import { HideModalAction } from '../Actions'
 
 interface Props {
   isFTUE: boolean;
@@ -23,6 +25,8 @@ function crushSpaces (s: string) : string {
 }
 
 export default function ProfileEditView (props: Props) {
+  const dispatch = useContext(DispatchContext)
+
   const { defaultHandle, user } = props
 
   const [handle, setHandle] = useState(
@@ -37,7 +41,7 @@ export default function ProfileEditView (props: Props) {
   const [url, setUrl] = useState((user && user.url) || '')
 
   const close = () => {
-    window.location.reload()
+    dispatch(HideModalAction())
   }
 
   const submit = () => {
@@ -48,23 +52,15 @@ export default function ProfileEditView (props: Props) {
       description,
       askMeAbout,
       url
-    })
+    },
+    props.isFTUE)
   }
   return (
-    <div className="container">
+    <div className={`container ${props.isFTUE ? 'ftue' : ''}`}>
       <div className="form">
         <div className="grid">
           <div style={{ fontSize: '20px' }}>{`${props.isFTUE ? 'Create' : 'Edit'} Profile`}</div>
-          {props.isFTUE ? (
-            ''
-          ) : (
-            <button
-              onClick={close}
-              className="close"
-            >
-            x
-            </button>
-          )}
+          <div></div>
           <div className="field">
             <label htmlFor="username">Username</label>
             <input

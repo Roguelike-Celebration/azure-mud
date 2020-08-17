@@ -1,4 +1,5 @@
 import * as SignalR from '@aspnet/signalr'
+import { v4 as uuid } from 'uuid'
 
 import { RoomResponse, ErrorResponse } from '../server/src/types'
 import { Dispatch } from 'react'
@@ -21,7 +22,12 @@ import {
   UpdatedRoomDataAction,
   UpdatedPresenceAction,
   ReceivedMyProfileAction,
-  DeleteMessageAction
+  DeleteMessageAction,
+  NoteAddAction,
+  NoteRemoveAction,
+  NoteUpdateRoomAction,
+  NoteUpdateLikesAction,
+  HideModalAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
@@ -52,17 +58,24 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
     dispatch(ReceivedMyProfileAction(result.profile))
   }
 
+  if (result.roomNotes) {
+    dispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
+  }
+
   dispatch(UpdatedPresenceAction(result.presenceData))
 
   connectSignalR(userId, dispatch)
 }
 
-export async function updateProfile (user: Partial<User>) {
+// If hardRefreshPage is true, a successful update will refresh the entire page instead of dismissing a modal
+export async function updateProfile (user: Partial<User>, hardRefreshPage: boolean) {
   const result = await callAzureFunction('updateProfile', { user })
   if (result.valid) {
-    // TODO: I'm not sure this does what we want.
-    // Need to test this on the new user flow.
-    window.location.reload()
+    if (hardRefreshPage) {
+      window.location.reload()
+    } else {
+      myDispatch(HideModalAction())
+    }
   }
 }
 
@@ -70,6 +83,27 @@ export async function checkIsRegistered (): Promise<boolean> {
   const result = await callAzureFunction('isRegistered')
   return result.registered
 }
+
+// Post-it notes
+
+export async function addNoteToWall (message: string) {
+  const id = uuid()
+  await callAzureFunction('addRoomNote', { id, message })
+}
+
+export async function deleteRoomNote (noteId: string) {
+  await callAzureFunction('deleteRoomNote', { noteId })
+}
+
+export async function likeRoomNote (noteId: string) {
+  await callAzureFunction('likeRoomNote', { noteId, like: true })
+}
+
+export async function unlikeRoomNote (noteId: string) {
+  await callAzureFunction('likeRoomNote', { noteId, like: false })
+}
+
+//
 
 export async function moveToRoom (roomId: string) {
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
@@ -85,6 +119,10 @@ export async function moveToRoom (roomId: string) {
     myDispatch(ErrorAction(result.error))
   } else {
     myDispatch(UpdatedCurrentRoomAction(result.roomId))
+
+    if (result.roomNotes) {
+      myDispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
+    }
   }
 }
 
@@ -242,6 +280,19 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     if (!inMediaChat) return
     console.log('Starting signaling with', peerId)
     startSignaling(peerId, dispatch)
+  })
+
+  // Post-It Note Wall
+  connection.on('noteAdded', (roomId, noteId, message, authorId) => {
+    dispatch(NoteAddAction(roomId, { id: noteId, message, authorId }))
+  })
+
+  connection.on('noteRemoved', (roomId, noteId) => {
+    dispatch(NoteRemoveAction(roomId, noteId))
+  })
+
+  connection.on('noteLikesUpdated', (roomId, noteId, likes) => {
+    dispatch(NoteUpdateLikesAction(roomId, noteId, likes))
   })
 
   connection.onclose(() => {

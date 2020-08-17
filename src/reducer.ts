@@ -23,6 +23,7 @@ import {
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
+import { Modal } from './modals'
 
 export interface State {
   authenticated: boolean;
@@ -49,11 +50,9 @@ export interface State {
   currentAudioDeviceId?: string;
   speakingPeerIds?: string[];
 
-  // Right now, the profile edit screen is the only time (other than onboarding)
-  // that we actively show a different modal screen replacing the chat view.
-  //
-  // If that assumption changes, yell at Em if she hasn't refactored this away.
-  showProfileEditScreen?: boolean;
+  // If this is set to something other than Modal.None, that will indicate
+  // which modal view should be rendered on top of the chat view
+  activeModal: Modal
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -67,7 +66,8 @@ export const defaultState: State = {
   userMap: {},
   roomData: {},
   inMediaChat: false,
-  speakingPeerIds: []
+  speakingPeerIds: [],
+  activeModal: Modal.None
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -272,12 +272,16 @@ export default (oldState: State, action: Action): State => {
     state.prepopulatedInput = `/whisper ${action.value} `
   }
 
+  if (action.type === ActionType.HideModalAction) {
+    state.activeModal = Modal.None
+  }
+
   if (action.type === ActionType.ShowProfile) {
     state.visibleProfile = action.value
   }
 
-  if (action.type === ActionType.ShowEditProfile) {
-    state.showProfileEditScreen = true
+  if (action.type === ActionType.ShowModal) {
+    state.activeModal = action.value
   }
 
   if (action.type === ActionType.Authenticate) {
@@ -305,6 +309,44 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.LoadMessageArchive) {
     state.messages = action.value
+  }
+
+  // Notes
+  if (action.type === ActionType.NoteAdd) {
+    const room = state.roomData && state.roomData[action.value.roomId]
+    if (room.hasNoteWall) {
+      if (!room.notes) room.notes = []
+
+      room.notes.push(action.value.note)
+    }
+  }
+
+  if (action.type === ActionType.NoteRemove) {
+    const room = state.roomData && state.roomData[action.value.roomId]
+    if (room.hasNoteWall) {
+      if (!room.notes) room.notes = []
+
+      room.notes = room.notes.filter(n => n.id !== action.value.noteId)
+    }
+  }
+
+  if (action.type === ActionType.NoteUpdateLikes) {
+    const room = state.roomData && state.roomData[action.value.roomId]
+    if (room.hasNoteWall) {
+      if (!room.notes) room.notes = []
+
+      const note = room.notes.find(n => n.id === action.value.noteId)
+      if (note) {
+        note.likes = action.value.likes
+      }
+    }
+  }
+
+  if (action.type === ActionType.NoteUpdateRoom) {
+    const room = state.roomData && state.roomData[action.value.roomId]
+    if (room.hasNoteWall) {
+      room.notes = action.value.notes
+    }
   }
 
   return state

@@ -7,9 +7,10 @@ import {
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext } from '../App'
-import { StopVideoChatAction } from '../Actions'
+import { StopVideoChatAction, ShowModalAction } from '../Actions'
 
 import '../../style/room.css'
+import { Modal } from '../modals'
 
 interface Props {
   room?: Room;
@@ -38,6 +39,15 @@ export default function RoomView (props: Props) {
 
   const leaveVideoChat = () => {
     dispatch(StopVideoChatAction())
+  }
+
+  const showNoteWall = () => {
+    dispatch(ShowModalAction(Modal.NoteWall))
+  }
+
+  let noteWallView
+  if (room && room.hasNoteWall) {
+    noteWallView = <div>One of the walls has space for attendees to put up sticky notes. <button onClick={showNoteWall}>View note wall</button></div>
   }
 
   let videoChatButton
@@ -74,6 +84,7 @@ export default function RoomView (props: Props) {
       />
       {room ? <PresenceView users={room.users} userId={props.userId} /> : ''}
       {videoChatButton}
+      {noteWallView}
     </div>
   )
 }

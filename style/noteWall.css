@@ -1,0 +1,28 @@
+.note-wall-description {
+    margin-bottom: 2em;
+}
+
+.note {
+    display: inline-block;
+    max-width: 20rem;
+    margin: 30px;
+    vertical-align: top;
+}
+
+button.note-delete {
+    color: lightpink;
+    float: right;
+    margin-left: 10px;
+}
+
+.like-button {
+    color: lightskyblue;
+    float: right;
+    padding-left: 20px;
+    padding-right: 15px;
+}
+
+.like-button svg {
+    vertical-align: top !important;
+    margin-left: 4px;
+}
