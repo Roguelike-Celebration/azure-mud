@@ -11,9 +11,6 @@ interface Props {
     foo?: any
 }
 
-/* axe-linter:disable:click-events-have-key-events */
-// lazerwalker: The axelinter check is safely disabled since we have a global key handler to close this.
-// Also, the dedicated 'x' button should be selectable via keyboard nav.
 export const ModalView: React.FunctionComponent<Props> = (props) => {
   const dispatch = useContext(DispatchContext)
 
