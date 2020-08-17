@@ -13,10 +13,17 @@
     border: 2px solid white;
     border-radius: 4px;
     margin: auto;
-    padding-bottom: 30px;
+    padding: 30px;
     position: absolute;
     top: 50px;
     left: 0;
     right: 0;
     width: 800px;
+}
+
+#close-button {
+    position: absolute;
+    padding: 30px;
+    right: 0;
+    top: 0;
 }

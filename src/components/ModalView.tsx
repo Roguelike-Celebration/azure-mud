@@ -39,7 +39,6 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
           onClick={close}
           id='close-button'
           className='close'
-          style={{ float: 'right', padding: '20px' }}
         >
             x
         </button>
