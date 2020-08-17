@@ -24,7 +24,7 @@ export function NoteWallView (props: {notes: RoomNote[]}) {
       <div className='note-wall-description'>
       You are looking at a wall with space for people to place sticky notes.
         <br/><br/>
-        If you'd like, you can <button onClick={addNote} id='addNote' className='link-styled-button'>add a note</button>.
+        If you&apos;d like, you can <button onClick={addNote} id='addNote' className='link-styled-button'>add a note</button>.
       </div>
       {noteViews}
     </div>
