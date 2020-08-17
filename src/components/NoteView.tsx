@@ -13,7 +13,7 @@ export function NoteView (props: { note: RoomNote }) {
   const n = props.note
 
   const me: MinimalUser = userMap[myId]
-  const canDelete = (me.isMod && false) || n.authorId === myId
+  const canDelete = me.isMod || n.authorId === myId
   const canLike = n.authorId !== myId
 
   const onClickDelete = () => {
