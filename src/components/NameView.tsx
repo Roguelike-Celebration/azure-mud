@@ -5,7 +5,8 @@ import ReactTooltip from 'react-tooltip'
 import {
   StartWhisperAction,
   ShowProfileAction,
-  BanToggleAction
+  BanToggleAction,
+  HideModalAction
 } from '../Actions'
 import { User } from '../../server/src/user'
 
@@ -24,10 +25,12 @@ export default function NameView (props: { userId: string; id?: string }) {
   const playerCanBan = player && player.isMod
 
   const handleWhisper = (e, data) => {
+    dispatch(HideModalAction())
     dispatch(StartWhisperAction(data.id))
   }
 
   const handleProfile = (e, data) => {
+    dispatch(HideModalAction())
     dispatch(ShowProfileAction(data.id))
   }
 

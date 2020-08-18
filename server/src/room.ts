@@ -1,17 +1,23 @@
 export interface Room {
   // e.g. "kitchen"
-  id: string;
+  id: string
 
   // e.g. "GitHub HQ: Kitchen"
-  displayName: string;
+  displayName: string
 
   // e.g. "the kitchen"
-  shortName: string;
+  shortName: string
 
-  description: string;
+  description: string
 
   // If true, webRTC audio/video chat can happen
-  allowsMedia?: boolean;
+  allowsMedia?: boolean
+
+  // Indicates whether the room should let users place post-it notes
+  // As we add more pieces of one-off functionality,
+  // having a bunch of ad-hoc flags like this will probably get frustrating quickly.
+  // We may want to eventually refactor to something resembling an ECS.
+  hasNoteWall?: boolean
 }
 
 export const roomData: { [name: string]: Room } = {
@@ -21,7 +27,8 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the kitchen',
     description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. On the island are a few samovars of Sightglass coffee — don't worry, there's plenty of decaf too — and hot water for tea, plus a few trays of Arizmendi pastries.
       From here, you can walk over to the [[bar]] or grab a seat in the [[main theatre area->theatre]].`,
-    allowsMedia: true
+    allowsMedia: true,
+    hasNoteWall: true
   },
   theatre: {
     id: 'theatre',

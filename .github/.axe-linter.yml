@@ -1,0 +1,2 @@
+exclude:
+  - ./src/components/ModalView.tsx # I don't want to exclude this! The per-file ignore syntax to ignore the spurious click-events-have-key-events error isn't working

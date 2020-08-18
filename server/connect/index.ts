@@ -26,16 +26,23 @@ const httpTrigger: AzureFunction = async function (
     await userHeartbeatReceived(user.id)
 
     const userMap = await activeUserMap()
+
+    const response: RoomResponse = {
+      roomId: user.room.id,
+      presenceData: await allPresenceData(),
+      users: userMap,
+      roomData,
+      // TODO: Instead of another DB call, delete the non-public fields from the user we already have?
+      profile: await DB.getPublicUser(user.id)
+    }
+
+    if (roomData[user.roomId].hasNoteWall) {
+      response.roomNotes = await DB.getRoomNotes(user.roomId)
+    }
+
     context.res = {
       status: 200,
-      body: {
-        roomId: user.room.id,
-        presenceData: await allPresenceData(),
-        users: userMap,
-        roomData,
-        // TODO: Instead of another DB call, delete the non-public fields from the user we already have?
-        profile: await DB.getPublicUser(user.id)
-      } as RoomResponse
+      body: response
     }
 
     const actions = [

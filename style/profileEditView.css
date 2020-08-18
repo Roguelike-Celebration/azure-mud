@@ -30,14 +30,17 @@ input {
 }
 
 .form {
+  width: 31rem;
+}
+
+.ftue .form {
   margin-top: 8rem;
-  width: 30rem;
 }
 
 .grid {
   display: grid;
   grid-column-gap: 5%;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 47.5% 47.5%;
   grid-template-rows: 4rem repeat(3, 1fr)
 }
 

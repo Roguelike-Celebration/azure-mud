@@ -1,4 +1,5 @@
 import { User, MinimalUser } from './user'
+import { RoomNote } from './roomNote'
 
 interface Database {
   // -----------------------------------------------------------------
@@ -65,6 +66,18 @@ interface Database {
 
   banUser(userId: string);
   unbanUser(userId: string);
+
+  // -----------------------------------------------------------------
+  // POST-IT NOTES
+  // -----------------------------------------------------------------
+  addRoomNote(roomId: string, note: RoomNote)
+  deleteRoomNote(roomId: string, noteId: string)
+
+  likeRoomNote(roomId: string, noteId: string, userId: string): Promise<string[]>
+  unlikeRoomNote(roomId: string, noteId: string, userId: string): Promise<string[]>
+
+  getRoomNotes(roomId: string): Promise<RoomNote[]>
+
 }
 
 // eslint-disable-next-line no-undef
