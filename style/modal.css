@@ -1,5 +1,6 @@
 #modal-wrapper {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--alternate-background);
+    opacity: 0.9;
     left: 0;
     right: 0;
     top: 0;
@@ -9,8 +10,8 @@
 }
 
 #modal {
-    background-color: black;
-    border: 2px solid white;
+    background-color:var(--main-background);
+    border: 2px solid var(--main-font);
     border-radius: 4px;
     margin: auto;
     padding: 30px;

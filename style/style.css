@@ -1,9 +1,38 @@
 @import "./fonts.css";
-<<<<<<< HEAD
-@import "./colors/default.css";
-=======
 @import "./modal.css";
->>>>>>> main
+
+/* Default theme */
+:root {
+  --main-background: black;
+  --main-font: white;
+  --alternate-background: #333333;
+  --link-text: lightseagreen;
+  --highlight-line: #aaaaaa;
+  --warning-color: lightpink;
+  --like-color: lightskyblue;
+}
+
+/* solarized dark */
+.solarized-dark{
+  --main-background:#002b36;
+  --main-font:#657b83;
+  --alternate-background: #073642;
+  --link-text: #859900;
+  --highlight-line: #fdf6e3;
+  --warning-color: #d33682;
+  --like-color: #268bd2;
+}
+
+/* solarized light */
+.solarized-light{
+  --main-background:#fdf6e3;
+  --main-font:#657b83;
+  --alternate-background: #eee8d5;
+  --link-text:#859900;
+  --highlight-line: #002b36;
+  --warning-color: #d33682;
+  --like-color: #268bd2;
+}
 
 body {
   background-color: var(--main-background);
@@ -34,7 +63,7 @@ a:visited {
 .link-styled-button {
   background-color: transparent;
   border: none;
-  color: lightgreen;
+  color: var(--link-text);
   cursor: pointer;
   display: inline; 
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
