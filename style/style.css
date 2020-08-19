@@ -41,13 +41,23 @@ body {
 }
 
 #app {
-  max-width: 1200px;
-  margin: auto;
+  padding: 0 50px;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-gap: 50px;
+}
+
+#app-profile-open {
+  padding: 0 50px;
+  display: grid;
+  grid-template-columns: 250px 1fr 250px;
+  grid-gap: 50px;
 }
 
 #main {
-  margin-left: 320px;
-  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 a {

@@ -46,6 +46,7 @@ export type Action =
   | NoteUpdateLikesAction
   | NoteUpdateRoomAction
   | HideModalAction
+  | HideProfileAction
 
 export enum ActionType {
   // Server-driven action
@@ -79,6 +80,7 @@ export enum ActionType {
   SetName = 'SET_NAME',
   StartWhisper = 'START_WHISPER',
   ShowProfile = 'SHOW_PROFILE',
+  HideProfile = 'HIDE_PROFILE',
   ShowModal = 'SHOW_MODAL',
   //
   Authenticate = 'AUTHENTICATE',
@@ -508,6 +510,14 @@ export const ShowProfileAction = (
   }
 }
 
+interface HideProfileAction {
+  type: ActionType.HideProfile;
+}
+
+export const HideProfileAction = (): HideProfileAction => {
+  return { type: ActionType.HideProfile }
+}
+
 export const ShowProfileActionForFetchedUser = (
   user: PublicUser
 ): ShowProfileAction => {
@@ -568,11 +578,12 @@ export const BanToggleAction = (userId: string): BanToggleAction => {
 
 interface LoadMessageArchiveAction {
   type: ActionType.LoadMessageArchive;
-  value: Message[];
+  messages: Message[];
+  userMap: { [userId: string]: MinimalUser };
 }
 
-export const LoadMessageArchiveAction = (messages: Message[]): LoadMessageArchiveAction => {
-  return { type: ActionType.LoadMessageArchive, value: messages }
+export const LoadMessageArchiveAction = (messages: Message[], userMap: { [userId: string]: MinimalUser }): LoadMessageArchiveAction => {
+  return { type: ActionType.LoadMessageArchive, messages: messages, userMap: userMap }
 }
 
 interface NoteAddAction {
