@@ -46,6 +46,7 @@ export type Action =
   | NoteUpdateLikesAction
   | NoteUpdateRoomAction
   | HideModalAction
+  | HideProfileAction
 
 export enum ActionType {
   // Server-driven action
@@ -79,6 +80,7 @@ export enum ActionType {
   SetName = 'SET_NAME',
   StartWhisper = 'START_WHISPER',
   ShowProfile = 'SHOW_PROFILE',
+  HideProfile = 'HIDE_PROFILE',
   ShowModal = 'SHOW_MODAL',
   //
   Authenticate = 'AUTHENTICATE',
@@ -506,6 +508,14 @@ export const ShowProfileAction = (
     }
     dispatch(ShowProfileActionForFetchedUser(user))
   }
+}
+
+interface HideProfileAction {
+  type: ActionType.HideProfile;
+}
+
+export const HideProfileAction = (): HideProfileAction => {
+  return { type: ActionType.HideProfile }
 }
 
 export const ShowProfileActionForFetchedUser = (

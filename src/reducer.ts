@@ -282,6 +282,10 @@ export default (oldState: State, action: Action): State => {
     state.visibleProfile = action.value
   }
 
+  if (action.type === ActionType.HideProfile) {
+    state.visibleProfile = null
+  }
+
   if (action.type === ActionType.ShowModal) {
     state.activeModal = action.value
   }

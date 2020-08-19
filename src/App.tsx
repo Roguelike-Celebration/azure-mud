@@ -151,7 +151,7 @@ const App = () => {
         <UserMapContext.Provider
           value={{ userMap: state.userMap, myId: state.userId }}
         >
-          <div id="app">
+          <div id={state.visibleProfile ? 'app-profile-open' : 'app'}>
             <RoomListView
               rooms={Object.values(state.roomData)}
               username={state.userMap[state.userId].username}
@@ -163,10 +163,10 @@ const App = () => {
                 room={state.roomData[state.roomId]}
                 userId={state.userId}
               />
-              {profile}
               <ChatView messages={state.messages} />
               <InputView prepopulated={state.prepopulatedInput} />
             </div>
+            {profile}
           </div>
         </UserMapContext.Provider>
       </DispatchContext.Provider>

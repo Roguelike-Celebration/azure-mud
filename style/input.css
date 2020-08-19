@@ -5,6 +5,5 @@
 #input {
   bottom: 60px;
   margin-top: 2em;
-  position: absolute;
-  width: 1200px;
+  width: 100%;
 }
