@@ -40,23 +40,25 @@ const App = () => {
         checkIsRegistered().then((registered) => {
           dispatch(AuthenticateAction(userId, name))
           if (registered) {
-            let loadMessages = false
+            let localLocalData = false
             const rawTimestamp = localStorage.getItem('messageTimestamp')
             const rawMessageData = localStorage.getItem('messages')
+            const rawUserMapData = localStorage.getItem('userMap')
             if (rawTimestamp) {
               try {
                 const timestamp = new Date(rawTimestamp)
                 // A janky way to say "Is it older than an hour"
-                loadMessages = rawMessageData && (new Date()).getTime() - timestamp.getTime() < 1000 * 60 * 60
+                localLocalData = rawMessageData && (new Date()).getTime() - timestamp.getTime() < 1000 * 60 * 60
               } catch {
                 console.log('Did not find a valid timestamp for message cache')
               }
             }
 
-            if (loadMessages) {
+            if (localLocalData) {
               try {
                 const messages = JSON.parse(rawMessageData)
-                dispatch(LoadMessageArchiveAction(messages))
+                const userMap = JSON.parse(rawUserMapData)
+                dispatch(LoadMessageArchiveAction(messages, userMap))
               } catch {
                 console.log('Could not parse message JSON', rawMessageData)
               }

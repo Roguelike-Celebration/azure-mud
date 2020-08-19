@@ -78,17 +78,6 @@ export default (oldState: State, action: Action): State => {
   const state: State = JSON.parse(JSON.stringify(oldState))
   state.prepopulatedInput = undefined
 
-  // Only join local users into the userMap if we don't already have them - server users are fresher & may contain updates
-  const localUserMapString = localStorage.getItem('userMap')
-  if (localUserMapString) {
-    const localUserMap: { [userId: string]: MinimalUser } = JSON.parse(localUserMapString)
-    for (const key in localUserMap) {
-      if (!state.userMap[key]) {
-        state.userMap[key] = localUserMap[key]
-      }
-    }
-  }
-
   if (action.type === ActionType.ReceivedMyProfile) {
     state.profileData = action.value
   }
@@ -137,6 +126,7 @@ export default (oldState: State, action: Action): State => {
       addMessage(state, createConnectedMessage(user.id))
     }
     state.userMap[user.id] = user
+    localStorage.setItem('userMap', JSON.stringify(state.userMap))
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
@@ -202,6 +192,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UserMap) {
     state.userMap = { ...state.userMap, ...action.value }
+    localStorage.setItem('userMap', JSON.stringify(state.userMap))
   }
 
   if (action.type === ActionType.Error) {
@@ -319,7 +310,8 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
-    state.messages = action.value
+    state.messages = action.messages
+    state.userMap = action.userMap
   }
 
   // Notes
@@ -359,10 +351,6 @@ export default (oldState: State, action: Action): State => {
       room.notes = action.value.notes
     }
   }
-
-  // The userMap is always saved so if somebody writes new functionality that edits the userMap, they don't have to remember
-  // to save it.
-  localStorage.setItem('userMap', JSON.stringify(state.userMap))
 
   return state
 }
