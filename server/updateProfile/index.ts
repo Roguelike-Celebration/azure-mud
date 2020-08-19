@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import { User, updateUserProfile } from '../src/user'
+import { User, updateUserProfile, minimizeUser } from '../src/user'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -28,7 +28,13 @@ const httpTrigger: AzureFunction = async function (
     data.twitterHandle = twitterHandle
   }
 
-  await updateUserProfile(userId, data)
+  const profile = await updateUserProfile(userId, data)
+  const minimalUser = minimizeUser(profile)
+
+  context.bindings.signalRMessages = [{
+    target: 'usernameMap',
+    arguments: [{ [userId]: minimalUser }]
+  }]
 
   // TODO: We'll likely eventually have some validation here
   context.res = {
