@@ -311,7 +311,9 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.LoadMessageArchive) {
     state.messages = action.messages
-    state.userMap = action.userMap
+    if (action.userMap) {
+      state.userMap = action.userMap
+    }
   }
 
   // Notes

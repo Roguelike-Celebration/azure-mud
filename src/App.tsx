@@ -57,10 +57,10 @@ const App = () => {
             if (localLocalData) {
               try {
                 const messages = JSON.parse(rawMessageData)
-                const userMap = JSON.parse(rawUserMapData)
+                const userMap = !(rawUserMapData === undefined) ? JSON.parse(rawUserMapData) : null
                 dispatch(LoadMessageArchiveAction(messages, userMap))
-              } catch {
-                console.log('Could not parse message JSON', rawMessageData)
+              } catch (e) {
+                console.log('Could not parse message JSON', e)
               }
             }
 
