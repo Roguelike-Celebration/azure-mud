@@ -568,11 +568,12 @@ export const BanToggleAction = (userId: string): BanToggleAction => {
 
 interface LoadMessageArchiveAction {
   type: ActionType.LoadMessageArchive;
-  value: Message[];
+  messages: Message[];
+  userMap: { [userId: string]: MinimalUser };
 }
 
-export const LoadMessageArchiveAction = (messages: Message[]): LoadMessageArchiveAction => {
-  return { type: ActionType.LoadMessageArchive, value: messages }
+export const LoadMessageArchiveAction = (messages: Message[], userMap: { [userId: string]: MinimalUser }): LoadMessageArchiveAction => {
+  return { type: ActionType.LoadMessageArchive, messages: messages, userMap: userMap }
 }
 
 interface NoteAddAction {
