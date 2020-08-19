@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { PublicUser } from '../../server/src/user'
+import { HideProfileAction } from '../Actions'
+import { DispatchContext } from '../App'
 
 import '../../style/profileView.css'
 
 export default function ProfileView (props: { user: PublicUser }) {
   const { user } = props
+  const dispatch = useContext(DispatchContext)
 
   const realName = user.realName ? (
     <div id="profile-realName">{user.realName}</div>
@@ -60,6 +63,7 @@ export default function ProfileView (props: { user: PublicUser }) {
       {twitterHandle}
       {url}
       {askMeAbout}
+      <button onClick={() => dispatch(HideProfileAction())}>Close</button>
     </div>
   )
 }
