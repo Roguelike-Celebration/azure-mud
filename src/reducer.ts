@@ -56,6 +56,10 @@ export interface State {
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
+
+  // If the device is a portrait smartphone, we hide the menu in favor of a hamburger button
+  // In that situation, this reflects whether the side menu is visible.
+  mobileSideMenuIsVisible?: boolean
 }
 
 export const defaultState: State = {
@@ -288,6 +292,14 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ShowModal) {
     state.activeModal = action.value
+  }
+
+  if (action.type === ActionType.ShowSideMenu) {
+    state.mobileSideMenuIsVisible = true
+  }
+
+  if (action.type === ActionType.HideSideMenu) {
+    state.mobileSideMenuIsVisible = false
   }
 
   if (action.type === ActionType.Authenticate) {

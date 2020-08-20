@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import MenuButtonView from './MenuButtonView'
 
 import '../../style/nav.css'
+import { IsMobileContext, DispatchContext } from '../App'
+import { HideSideMenuAction } from '../Actions'
 
 interface Props {
   rooms: Room[];
@@ -11,8 +13,20 @@ interface Props {
 }
 
 export default function RoomListView (props: Props) {
+  const isMobile = useContext(IsMobileContext)
+  const dispatch = useContext(DispatchContext)
+
+  const close = () => {
+    dispatch(HideSideMenuAction())
+  }
+
   return (
     <nav id="side-menu" role="navigation" aria-label="List of rooms you can navigate to">
+      {isMobile ? <button
+        onClick={close}
+        id='close-button'
+        className='close'
+      >x</button> : ''}
       <MenuButtonView username={props.username} />
       <ul>
         {props.rooms.map((r) => (
