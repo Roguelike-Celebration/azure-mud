@@ -22,12 +22,7 @@ module.exports = {
     'jsx-a11y'
   ],
   rules: {
-    'no-unused-vars': 0,
-    'space-before-function-paren': ['error', {
-      anonymous: 'never',
-      named: 'never',
-      asyncArrow: 'always'
-    }]
+    'no-unused-vars': 0
   },
   settings: {
     react: {
