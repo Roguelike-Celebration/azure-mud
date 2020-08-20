@@ -4,11 +4,8 @@ import { fetchProfile } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
 import { Message } from './message'
-<<<<<<< HEAD
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
-=======
->>>>>>> Mass eslint pass
 
 export type Action =
   | ReceivedMyProfileAction
