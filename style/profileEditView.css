@@ -30,11 +30,15 @@ input {
 }
 
 .form {
-  width: 31rem;
+  width: 780px;
 }
 
 .ftue .form {
   margin-top: 8rem;
+}
+
+.form label {
+  font-size: 1.4em;
 }
 
 .grid {
