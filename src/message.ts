@@ -25,7 +25,7 @@ export enum MessageType {
   Error = 'ERROR',
 }
 
-export function isDeletable(message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
+export function isDeletable (message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
   return [MessageType.Chat, MessageType.Emote, MessageType.Shout].includes(message.type)
 }
 

@@ -52,7 +52,7 @@ export const getMediaStream = async (
     stream = await navigator.mediaDevices.getUserMedia(constraints)
   } catch (err) {
     console.log('Video error', err)
-    alert("Could not load your webcam. Investigate your browser settings and try again")
+    alert('Could not load your webcam. Investigate your browser settings and try again')
     return
   }
 
@@ -263,6 +263,6 @@ function startAnalyserLoop (dispatch: Dispatch<Action>) {
   window.requestAnimationFrame(analyse)
 }
 
-function stopAnalyserLoop () {
+export function stopAudioAnalyserLoop () {
   shouldStopAnalysing = true
 }

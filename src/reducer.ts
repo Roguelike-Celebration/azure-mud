@@ -21,7 +21,7 @@ import {
   setNetworkMediaChatStatus
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
-import { disconnectAllPeers } from './webRTC'
+import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 
@@ -123,6 +123,13 @@ export default (oldState: State, action: Action): State => {
     })
   }
 
+  if (action.type === ActionType.UpdatedVideoPresence) {
+    const { roomId, users } = action.value
+    if (state.roomData[roomId]) {
+      state.roomData[roomId].videoUsers = users
+    }
+  }
+
   if (action.type === ActionType.PlayerConnected) {
     const user = action.value
     if (!state.roomData[state.roomId].users.includes(user.id)) {
@@ -163,13 +170,15 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.Whisper) {
-    addMessage(state,
+    addMessage(
+      state,
       createWhisperMessage(action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.ModMessage) {
-    addMessage(state,
+    addMessage(
+      state,
       createModMessage(
         action.value.name,
         action.value.message,
@@ -246,6 +255,7 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.StopVideoChat) {
     setNetworkMediaChatStatus(false)
     disconnectAllPeers()
+    stopAudioAnalyserLoop()
     delete state.localMediaStreamId
     delete state.otherMediaStreamPeerIds
     state.inMediaChat = false
