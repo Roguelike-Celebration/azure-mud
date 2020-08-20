@@ -5,8 +5,9 @@ nav.react-contextmenu {
 }
 
 @media only screen and (max-device-width: 500px) {
-nav.react-contextmenu {
-  font-size: 40px;
+  nav.react-contextmenu {
+    font-size: 40px;
+  }
 }
 
 .react-contextmenu-item {
