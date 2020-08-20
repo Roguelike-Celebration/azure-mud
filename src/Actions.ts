@@ -47,6 +47,8 @@ export type Action =
   | NoteUpdateRoomAction
   | HideModalAction
   | HideProfileAction
+  | ShowSideMenuAction
+  | HideSideMenuAction
 
 export enum ActionType {
   // Server-driven action
@@ -82,6 +84,8 @@ export enum ActionType {
   ShowProfile = 'SHOW_PROFILE',
   HideProfile = 'HIDE_PROFILE',
   ShowModal = 'SHOW_MODAL',
+  ShowSideMenu = 'SHOW_SIDE_MENU',
+  HideSideMenu = 'HIDE_SIDE_MENU',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -550,6 +554,22 @@ export const HideModalAction = (): HideModalAction => {
 interface AuthenticateAction {
   type: ActionType.Authenticate;
   value: { name: string; userId: string };
+}
+
+interface ShowSideMenuAction {
+  type: ActionType.ShowSideMenu;
+}
+
+export const ShowSideMenuAction = (): ShowSideMenuAction => {
+  return { type: ActionType.ShowSideMenu }
+}
+
+interface HideSideMenuAction {
+  type: ActionType.HideSideMenu;
+}
+
+export const HideSideMenuAction = (): HideSideMenuAction => {
+  return { type: ActionType.HideSideMenu }
 }
 
 export const AuthenticateAction = (
