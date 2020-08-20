@@ -3,7 +3,7 @@ import { roomData } from './room'
 
 /** Fetches presence data for a set of rooms and returns a SignalR message
  * to broadcast current presence data to all users */
-export async function globalPresenceMessage(roomIds: string[]) {
+export async function globalPresenceMessage (roomIds: string[]) {
   const data: { [roomId: string]: string[] } = {}
 
   await Promise.all(
@@ -22,7 +22,7 @@ export async function globalPresenceMessage(roomIds: string[]) {
 /** Fetches presence data for all rooms and returns a JSON object with all that data
  * Intended to only be used in `/connect` to seed the presence data
  */
-export async function allPresenceData(): Promise<{
+export async function allPresenceData (): Promise<{
   [roomId: string]: string[];
 }> {
   const data: { [roomId: string]: string[] } = {}

@@ -18,23 +18,23 @@ const getCache = promisify(cache.get).bind(cache)
 const setCache = promisify(cache.set).bind(cache)
 
 const Redis: Database = {
-  async getActiveUsers() {
+  async getActiveUsers () {
     return JSON.parse(await getCache(activeUsersKey)) || []
   },
-  async setActiveUsers(users: string[]) {
+  async setActiveUsers (users: string[]) {
     return await setCache(activeUsersKey, JSON.stringify(users))
   },
 
-  async getUserHeartbeat(userId: string): Promise<number> {
+  async getUserHeartbeat (userId: string): Promise<number> {
     return await getCache(heartbeatKeyForUser(userId))
   },
 
-  async setUserHeartbeat(userId: string) {
+  async setUserHeartbeat (userId: string) {
     await setCache(heartbeatKeyForUser(userId), new Date().valueOf())
   },
 
   // TODO: This could theoretically use Redis lists
-  async setUserAsActive(userId: string) {
+  async setUserAsActive (userId: string) {
     const activeUsers = await Redis.getActiveUsers()
     if (!activeUsers.includes(userId)) {
       activeUsers.push(userId)
@@ -44,25 +44,25 @@ const Redis: Database = {
 
   // Room presence
 
-  async roomOccupants(roomId: string) {
+  async roomOccupants (roomId: string) {
     const presenceKey = roomPresenceKey(roomId)
     return JSON.parse(await getCache(presenceKey)) || []
   },
 
-  async setRoomOccupants(roomId: string, occupants: string[]) {
+  async setRoomOccupants (roomId: string, occupants: string[]) {
     const presenceKey = roomPresenceKey(roomId)
     await setCache(presenceKey, JSON.stringify(occupants))
   },
 
-  async setCurrentRoomForUser(userId: string, roomId: string) {
+  async setCurrentRoomForUser (userId: string, roomId: string) {
     await setCache(roomKeyForUser(userId), roomId)
   },
 
-  async currentRoomForUser(userId: string) {
+  async currentRoomForUser (userId: string) {
     return await getCache(roomKeyForUser(userId))
   },
 
-  async addUserToVideoPresence(userId: string, roomId: string) {
+  async addUserToVideoPresence (userId: string, roomId: string) {
     const rawList = await getCache(videoPresenceKey(roomId))
     let list: string[]
     if (rawList) {
@@ -80,7 +80,7 @@ const Redis: Database = {
     return list
   },
 
-  async removeUserFromVideoPresence(userId: string, roomId: string) {
+  async removeUserFromVideoPresence (userId: string, roomId: string) {
     const rawList = await getCache(videoPresenceKey(roomId))
     let list: string[]
     if (rawList) {
@@ -97,7 +97,7 @@ const Redis: Database = {
   },
 
   // User
-  async getPublicUser(userId: string) {
+  async getPublicUser (userId: string) {
     const userData = await getCache(profileKeyForUser(userId))
 
     if (!userData) {
@@ -113,12 +113,12 @@ const Redis: Database = {
     return user
   },
 
-  async setUserProfile(userId: string, data: User) {
+  async setUserProfile (userId: string, data: User) {
     delete data.isMod
     return await setCache(profileKeyForUser(userId), JSON.stringify(data))
   },
 
-  async getMinimalProfileForUser(userId: string) {
+  async getMinimalProfileForUser (userId: string) {
     const user = JSON.parse(await getCache(usernameKeyForUser(userId)))
 
     if (isMod(userId)) {
@@ -127,26 +127,26 @@ const Redis: Database = {
     return user
   },
 
-  async setMinimalProfileForUser(userId: string, data: MinimalUser) {
+  async setMinimalProfileForUser (userId: string, data: MinimalUser) {
     delete data.isMod
     delete data.isBanned
     return await setCache(usernameKeyForUser(userId), JSON.stringify(data))
   },
 
-  async lastShoutedForUser(userId: string) {
+  async lastShoutedForUser (userId: string) {
     const date = await getCache(shoutKeyForUser(userId))
     if (date) {
       return new Date(JSON.parse(date))
     }
   },
 
-  async userJustShouted(userId: string) {
+  async userJustShouted (userId: string) {
     await setCache(shoutKeyForUser(userId), JSON.stringify(new Date()))
   },
 
   // Because this data lives in both the minimal user profile and the real user data,
   // we need to read/write in two places. Sigh.
-  async banUser(userId: string) {
+  async banUser (userId: string) {
     const presenceData = await JSON.parse(
       await getCache(usernameKeyForUser(userId))
     )
@@ -160,7 +160,7 @@ const Redis: Database = {
     await setCache(profileKeyForUser(userId), JSON.stringify(profileData))
   },
 
-  async unbanUser(userId: string) {
+  async unbanUser (userId: string) {
     const profile = await JSON.parse(
       await getCache(usernameKeyForUser(userId))
     )
@@ -175,7 +175,7 @@ const Redis: Database = {
   },
 
   // Post-it notes
-  async addRoomNote(roomId: string, note: RoomNote) {
+  async addRoomNote (roomId: string, note: RoomNote) {
     const rawNotes = await getCache(roomNotesKey(roomId))
     let notes: RoomNote[] = []
     if (rawNotes) {
@@ -189,7 +189,7 @@ const Redis: Database = {
     await setCache(roomNotesKey(roomId), JSON.stringify(notes))
   },
 
-  async deleteRoomNote(roomId: string, noteId: string) {
+  async deleteRoomNote (roomId: string, noteId: string) {
     const rawNotes = await getCache(roomNotesKey(roomId))
     let notes: RoomNote[] = []
     if (rawNotes) {
@@ -201,7 +201,7 @@ const Redis: Database = {
     await setCache(roomNotesKey(roomId), JSON.stringify(notes))
   },
 
-  async likeRoomNote(roomId: string, noteId: string, userId: string) {
+  async likeRoomNote (roomId: string, noteId: string, userId: string) {
     const rawNotes = await getCache(roomNotesKey(roomId))
     let notes: RoomNote[] = []
     if (rawNotes) {
@@ -222,7 +222,7 @@ const Redis: Database = {
     return []
   },
 
-  async unlikeRoomNote(roomId: string, noteId: string, userId: string) {
+  async unlikeRoomNote (roomId: string, noteId: string, userId: string) {
     const rawNotes = await getCache(roomNotesKey(roomId))
     let notes: RoomNote[] = []
     if (rawNotes) {
@@ -238,7 +238,7 @@ const Redis: Database = {
     return []
   },
 
-  async getRoomNotes(roomId: string): Promise<RoomNote[]> {
+  async getRoomNotes (roomId: string): Promise<RoomNote[]> {
     const rawNotes = await getCache(roomNotesKey(roomId))
     let notes: RoomNote[] = []
     if (rawNotes) {
@@ -251,39 +251,39 @@ const Redis: Database = {
 
 const activeUsersKey = 'activeUsersList'
 
-function shoutKeyForUser(user: string): string {
+function shoutKeyForUser (user: string): string {
   return `${user}Shout`
 }
 
-function usernameKeyForUser(userId: string): string {
+function usernameKeyForUser (userId: string): string {
   return `${userId}Handle`
 }
 
-function profileKeyForUser(userId: string): string {
+function profileKeyForUser (userId: string): string {
   return `${userId}Profile`
 }
 
-function heartbeatKeyForUser(user: string): string {
+function heartbeatKeyForUser (user: string): string {
   return `${user}Heartbeat`
 }
 
-export function roomPresenceKey(roomName: string): string {
+export function roomPresenceKey (roomName: string): string {
   return `${roomName}Presence`
 }
 
-export function roomKeyForUser(user: string): string {
+export function roomKeyForUser (user: string): string {
   return `${user}Room`
 }
 
-export function roomKey(name: string) {
+export function roomKey (name: string) {
   return `${name}RoomData`
 }
 
-export function roomNotesKey(roomId: string): string {
+export function roomNotesKey (roomId: string): string {
   return `${roomId}Notes`
 }
 
-export function videoPresenceKey(roomId: string) {
+export function videoPresenceKey (roomId: string) {
   return `${roomId}PresenceVideo`
 }
 

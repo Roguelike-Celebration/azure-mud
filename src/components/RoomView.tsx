@@ -18,7 +18,7 @@ interface Props {
   userId?: string;
 }
 
-export default function RoomView(props: Props) {
+export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
 
   const { room } = props
@@ -149,20 +149,20 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
  * > _([1,2,3]).intersperse(0)
  * [1,0,2,0,3]
  */
-function intersperse(arr, sep) {
+function intersperse (arr, sep) {
   if (arr.length === 0) {
     return []
   }
 
   return arr.slice(1).reduce(
-    function(xs, x, i) {
+    function (xs, x, i) {
       return xs.concat([sep, x])
     },
     [arr[0]]
   )
 }
 
-function parseDescription(description: string): string {
+function parseDescription (description: string): string {
   // eslint-disable-next-line no-useless-escape
   const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
   const simpleLinkRegex = /\[\[(.+?)\]\]/g

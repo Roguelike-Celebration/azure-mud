@@ -7,7 +7,7 @@ import { ShowModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { Modal } from '../modals'
 
-export default function MenuButtonView(props: { username: string }) {
+export default function MenuButtonView (props: { username: string }) {
   const dispatch = useContext(DispatchContext)
 
   const logOut = () => {
