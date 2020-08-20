@@ -371,7 +371,7 @@ export default (oldState: State, action: Action): State => {
   return state
 }
 
-function deleteMessage(state: State, messageId: String) {
+function deleteMessage (state: State, messageId: String) {
   const target = state.messages.find(m => isDeletable(m) && m.messageId === messageId)
   // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
   if (isDeletable(target)) {
@@ -381,7 +381,7 @@ function deleteMessage(state: State, messageId: String) {
   }
 }
 
-function addMessage(state: State, message: Message) {
+function addMessage (state: State, message: Message) {
   state.messages.push(message)
   localStorage.setItem('messages', JSON.stringify(state.messages))
   localStorage.setItem('messageTimestamp', new Date().toUTCString())
