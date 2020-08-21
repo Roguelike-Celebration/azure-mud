@@ -5,16 +5,8 @@ import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
 import { HideModalAction } from '../Actions'
 
-interface Props {
-  isFTUE: boolean;
-  defaultHandle?: string;
-  user?: PublicUser;
-}
-
-export default function ThemeSelectorView (props: Props) {
+export default function ThemeSelectorView () {
   const dispatch = useContext(DispatchContext)
-
-  const { defaultHandle, user } = props
 
   const close = () => {
     dispatch(HideModalAction())
@@ -24,22 +16,21 @@ export default function ThemeSelectorView (props: Props) {
   // Otherwise, set the state in local storage to be Default
 
   // Set the selection of the radio group upon opening the modal
-  const [selectedTheme, setselectedTheme] = React.useState(
+  const [selectedTheme, setSelectedTheme] = React.useState(
     localStorage.getItem('UserSelectedTheme') || 'Default'
   )
 
   // Handle what happens when you change the modal
   /// change the value in local storage
   /// then change the actual theme
-  /// then refresh
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setselectedTheme(event.target.value)
+    document.body.classList.replace(selectedTheme, event.target.value)
+    setSelectedTheme(event.target.value)
     localStorage.setItem('UserSelectedTheme', event.target.value)
-    window.location.reload()
   }
   return (
-    <div className={`container ${props.isFTUE ? 'ftue' : ''}`}>
+    <div className={'container'}>
       <div className ="form" id="ThemeSelectionForm">
         <label htmlFor="ThemeSelectionForm">Select Theme:</label>
         <div className = "radio"><label>
