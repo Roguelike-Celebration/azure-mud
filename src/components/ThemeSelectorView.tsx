@@ -14,10 +14,10 @@ interface Props {
 export default function ThemeSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
-  const { defaultHandle, user} = props
+  const { defaultHandle, user } = props
 
   const close = () => {
-  dispatch(HideModalAction())
+    dispatch(HideModalAction())
   }
 
   // By default, use the state in local storage
@@ -40,33 +40,33 @@ export default function ThemeSelectorView (props: Props) {
   }
   return (
     <div className={`container ${props.isFTUE ? 'ftue' : ''}`}>
-    <div className ="form" id="ThemeSelectionForm">
-      <label htmlFor="ThemeSelectionForm">Select Theme:</label>
-      <div className = "radio"><label>
+      <div className ="form" id="ThemeSelectionForm">
+        <label htmlFor="ThemeSelectionForm">Select Theme:</label>
+        <div className = "radio"><label>
           <input type = "radio"
-          id = "theme"
-          value = "default"
-          checked = {selectedTheme === 'default'}
-          onChange = {handleChange}
+            id = "theme"
+            value = "default"
+            checked = {selectedTheme === 'default'}
+            onChange = {handleChange}
           />
           Default (Dark)</label></div>
-      <div className = "radio"><label>
+        <div className = "radio"><label>
           <input type = "radio"
-          id = "theme"
-          value = "solarized-dark"
-          checked = {selectedTheme === 'solarized-dark'}
-          onChange = {handleChange}
+            id = "theme"
+            value = "solarized-dark"
+            checked = {selectedTheme === 'solarized-dark'}
+            onChange = {handleChange}
           />
           Solarized Dark</label></div>
-      <div className = "radio"><label>
+        <div className = "radio"><label>
           <input type = "radio"
-          id = "theme"
-          value = "solarized-light"
-          checked = {selectedTheme === 'solarized-light'}
+            id = "theme"
+            value = "solarized-light"
+            checked = {selectedTheme === 'solarized-light'}
           onChange = {handleChange}
           />
           Solarized Light</label></div>
-    </div>
+      </div>
     </div>
   )
 }

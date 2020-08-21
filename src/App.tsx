@@ -148,10 +148,10 @@ const App = () => {
     }
     case Modal.ThemeSelector: {
       innerModalView = (
-        <ThemeSelectorView 
-        isFTUE={false}
-        defaultHandle={state.userMap[state.userId].username}
-        user={state.profileData}
+        <ThemeSelectorView
+          isFTUE={false}
+          defaultHandle={state.userMap[state.userId].username}
+          user={state.profileData}
         />
       )
       break
