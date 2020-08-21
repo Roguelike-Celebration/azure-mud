@@ -1,6 +1,5 @@
 #modal-wrapper {
-    background-color: var(--alternate-background);
-    opacity: 0.9;
+    background-color: var(--alternate-translucent);
     left: 0;
     right: 0;
     top: 0;
