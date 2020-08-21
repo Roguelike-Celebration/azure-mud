@@ -39,6 +39,14 @@ interface Database {
   /** Returns the room ID for the room a user is currently in */
   currentRoomForUser(userId: string): Promise<string | undefined>;
 
+  /** Add a user to the videochat presence for a room.
+   * Returns a list of users currently in videochat */
+  addUserToVideoPresence(userId: string, roomId: string): Promise<string[]>
+
+  /** Removes a user from the videochat presence for a room.
+   * Returns a list of users currently in videochat */
+  removeUserFromVideoPresence(userId: string, roomId: string): Promise<string[]>
+
   // -----------------------------------------------------------------
   // USER DATA
   // -----------------------------------------------------------------

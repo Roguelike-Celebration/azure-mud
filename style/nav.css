@@ -3,6 +3,23 @@
   margin-top: 30px;
 }
 
+@media only screen and (max-device-width: 500px) {
+  #side-menu {
+    background-color: black;
+    font-size: 30px;
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    top: 0;
+    width: 100vw;
+  }
+
+  #side-menu #close-button {
+    font-size: 64px;
+    margin-right: 20px;
+  }
+}
+
 #side-menu li {
   cursor: pointer;
   list-style: none;

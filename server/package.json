@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "deploy": "func azure functionapp publish roguelike-mud",
+    "deploy": "func azure functionapp publish roguelike-celebration-mud",
     "prestart": "npm run build",
     "start": "func start",
     "test": "echo \"No tests yet...\""

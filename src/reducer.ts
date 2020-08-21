@@ -21,7 +21,7 @@ import {
   setNetworkMediaChatStatus
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
-import { disconnectAllPeers } from './webRTC'
+import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 
@@ -56,6 +56,10 @@ export interface State {
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
+
+  // If the device is a portrait smartphone, we hide the menu in favor of a hamburger button
+  // In that situation, this reflects whether the side menu is visible.
+  mobileSideMenuIsVisible?: boolean
 }
 
 export const defaultState: State = {
@@ -119,6 +123,13 @@ export default (oldState: State, action: Action): State => {
     })
   }
 
+  if (action.type === ActionType.UpdatedVideoPresence) {
+    const { roomId, users } = action.value
+    if (state.roomData[roomId]) {
+      state.roomData[roomId].videoUsers = users
+    }
+  }
+
   if (action.type === ActionType.PlayerConnected) {
     const user = action.value
     if (!state.roomData[state.roomId].users.includes(user.id)) {
@@ -159,13 +170,15 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.Whisper) {
-    addMessage(state,
+    addMessage(
+      state,
       createWhisperMessage(action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.ModMessage) {
-    addMessage(state,
+    addMessage(
+      state,
       createModMessage(
         action.value.name,
         action.value.message,
@@ -242,6 +255,7 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.StopVideoChat) {
     setNetworkMediaChatStatus(false)
     disconnectAllPeers()
+    stopAudioAnalyserLoop()
     delete state.localMediaStreamId
     delete state.otherMediaStreamPeerIds
     state.inMediaChat = false
@@ -288,6 +302,14 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ShowModal) {
     state.activeModal = action.value
+  }
+
+  if (action.type === ActionType.ShowSideMenu) {
+    state.mobileSideMenuIsVisible = true
+  }
+
+  if (action.type === ActionType.HideSideMenu) {
+    state.mobileSideMenuIsVisible = false
   }
 
   if (action.type === ActionType.Authenticate) {

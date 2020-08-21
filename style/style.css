@@ -54,6 +54,12 @@ body {
   grid-gap: 50px;
 }
 
+@media only screen and (max-device-width: 500px) {
+  #app {
+    grid-template-columns: auto;
+  }
+}
+
 #main {
   display: flex;
   flex-direction: column;

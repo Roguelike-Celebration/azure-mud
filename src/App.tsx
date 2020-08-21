@@ -5,7 +5,7 @@ import ChatView from './components/ChatView'
 import InputView from './components/InputView'
 import { connect, getLoginInfo, checkIsRegistered } from './networking'
 import reducer, { State, defaultState } from './reducer'
-import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction } from './Actions'
+import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction, ShowSideMenuAction } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
 import config from './config'
@@ -13,7 +13,6 @@ import MediaChatView from './components/MediaChatView'
 import ProfileEditView from './components/ProfileEditView'
 import RoomListView from './components/RoomListView'
 import { IconContext } from 'react-icons/lib'
-import { Message } from './message'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
@@ -21,6 +20,7 @@ import ThemeSelectorView from './components/ThemeSelectorView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
+export const IsMobileContext = createContext(null)
 
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(
@@ -67,11 +67,17 @@ const App = () => {
 
             dispatch(IsRegisteredAction())
             connect(userId, dispatch)
+
+            window.addEventListener('resize', () => {
+
+            })
           }
         })
       }
     })
   }, [])
+
+  const isMobile = window.outerWidth < 500
 
   const profile = state.visibleProfile ? (
     <ProfileView user={state.visibleProfile} />
@@ -156,30 +162,40 @@ const App = () => {
     modalView = <ModalView>{innerModalView}</ModalView>
   }
 
+  const showMenu = () => {
+    dispatch(ShowSideMenuAction())
+  }
+
+  const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
+
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <UserMapContext.Provider
-          value={{ userMap: state.userMap, myId: state.userId }}
-        >
-          <div id={state.visibleProfile ? 'app-profile-open' : 'app'}>
-            <RoomListView
-              rooms={Object.values(state.roomData)}
-              username={state.userMap[state.userId].username}
-            />
-            {modalView}
-            <div id="main" role="main">
-              {videoChatView}
-              <RoomView
-                room={state.roomData[state.roomId]}
-                userId={state.userId}
-              />
-              <ChatView messages={state.messages} />
-              <InputView prepopulated={state.prepopulatedInput} />
+        <IsMobileContext.Provider value={isMobile}>
+          <UserMapContext.Provider
+            value={{ userMap: state.userMap, myId: state.userId }}
+          >
+            <div id={state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'}>
+              {shouldShowMenu
+                ? <RoomListView
+                  rooms={Object.values(state.roomData)}
+                  username={state.userMap[state.userId].username}
+                />
+                : <button id='show-menu' onClick={showMenu}><span role='img' aria-label='menu'>🍔</span></button>}
+              {modalView}
+              <div id="main" role="main">
+                {videoChatView}
+                <RoomView
+                  room={state.roomData[state.roomId]}
+                  userId={state.userId}
+                />
+                <ChatView messages={state.messages} />
+                <InputView prepopulated={state.prepopulatedInput} />
+              </div>
+              {profile}
             </div>
-            {profile}
-          </div>
-        </UserMapContext.Provider>
+          </UserMapContext.Provider>
+        </IsMobileContext.Provider>
       </DispatchContext.Provider>
     </IconContext.Provider>
   )
