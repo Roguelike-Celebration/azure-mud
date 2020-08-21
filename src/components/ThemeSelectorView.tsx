@@ -12,7 +12,6 @@ interface Props {
 }
 
 export default function ThemeSelectorView (props: Props) {
-
     const dispatch = useContext(DispatchContext)
 
     const { defaultHandle, user} = props
@@ -37,6 +36,7 @@ export default function ThemeSelectorView (props: Props) {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setselectedTheme(event.target.value);
         localStorage.setItem('UserSelectedTheme',event.target.value);
+        window.location.reload();
     };
     return(
         
@@ -46,24 +46,24 @@ export default function ThemeSelectorView (props: Props) {
                 <div className = "radio"><label><input 
                     type = "radio"
                     id = "theme"
-                    value = "Default"
-                    checked = {selectedTheme === 'Default'}
+                    value = "default"
+                    checked = {selectedTheme === 'default'}
                     onChange = {handleChange}
                     />
                     Default (Dark)</label></div>
                 <div className = "radio"><label><input 
                     type = "radio"
                     id = "theme"
-                    value = "SolarizedDark"
-                    checked = {selectedTheme === 'SolarizedDark'}
+                    value = "solarized-dark"
+                    checked = {selectedTheme === 'solarized-dark'}
                     onChange = {handleChange}
                     />
                     Solarized Dark</label></div>
                 <div className = "radio"><label><input 
                     type = "radio"
                     id = "theme"
-                    value = "SolarizedLight"
-                    checked = {selectedTheme === 'SolarizedLight'}
+                    value = "solarized-light"
+                    checked = {selectedTheme === 'solarized-light'}
                     onChange = {handleChange}
                     />
                     Solarized Light</label></div>
