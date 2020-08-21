@@ -41,8 +41,8 @@ export default function ThemeSelectorView (props: Props) {
     return(
         
         <div className={`container ${props.isFTUE ? 'ftue' : ''}`}>
-        <div className ="form">
-            <label>Theme</label>
+        <div className ="form" id="ThemeSelectionForm">
+            <label for="ThemeSelectionForm">Select Theme:</label>
                 <div className = "radio"><label><input 
                     type = "radio"
                     id = "theme"
