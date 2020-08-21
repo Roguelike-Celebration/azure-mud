@@ -41,5 +41,4 @@ export default function MenuButtonView (props: { username: string }) {
       </ContextMenu>
     </div>
   )
-
 }

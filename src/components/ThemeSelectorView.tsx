@@ -63,7 +63,7 @@ export default function ThemeSelectorView (props: Props) {
             id = "theme"
             value = "solarized-light"
             checked = {selectedTheme === 'solarized-light'}
-          onChange = {handleChange}
+            onChange = {handleChange}
           />
           Solarized Light</label></div>
       </div>
