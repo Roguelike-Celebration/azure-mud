@@ -7,9 +7,9 @@ input {
 
 .close {
   align-self: start;
-  background-color: black;
+  background-color:var(--main-background);
   border: none;
-  color: white;
+  color: var(--main-font);
   cursor: pointer;
   font-size: 24px;
   justify-self: end;
@@ -45,10 +45,10 @@ input {
 }
 
 .submit {
-  background-color: black;
-  border: 2px solid white;
+  background-color:var(--main-background);
+  border: 2px solid var(--highlight-line);
   border-radius: 5px;
-  color: white;
+  color: var(--main-font);
   cursor: pointer;
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
   font-size: 16px;

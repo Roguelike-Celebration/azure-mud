@@ -5,7 +5,7 @@
 
 @media only screen and (max-device-width: 500px) {
   #side-menu {
-    background-color: black;
+    background-color:var(--main-background);
     font-size: 30px;
     position: fixed;
     left: 0;
@@ -28,7 +28,7 @@
 #side-menu button {
   background-color: transparent;
   border: none;
-  color: white;
+  color: var(--main-font);
   cursor: pointer;
   display: inline; 
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;

@@ -14,5 +14,5 @@ input#send-audio {
 }
 
 video.speaking {
-  border: 5px solid green;
+  border: 5px solid var(--link-text);
 }

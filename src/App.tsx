@@ -16,6 +16,7 @@ import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
+import ThemeSelectorView from './components/ThemeSelectorView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -142,6 +143,12 @@ const App = () => {
     case Modal.NoteWall: {
       innerModalView = (
         <NoteWallView notes={state.roomData[state.roomId].notes} />
+      )
+      break
+    }
+    case Modal.ThemeSelector: {
+      innerModalView = (
+        <ThemeSelectorView />
       )
       break
     }
