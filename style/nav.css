@@ -5,7 +5,7 @@
 
 @media only screen and (max-device-width: 500px) {
   #side-menu {
-    background-color: black;
+    background-color:var(--main-background);
     font-size: 30px;
     position: fixed;
     left: 0;
