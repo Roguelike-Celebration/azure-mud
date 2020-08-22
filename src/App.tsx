@@ -114,7 +114,7 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.localMediaStreamId) {
+  if (state.inMediaChat) {
     videoChatView = (
       <MediaChatView
         localMediaStreamId={state.localMediaStreamId}
