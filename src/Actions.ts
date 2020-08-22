@@ -6,6 +6,7 @@ import { Room } from './room'
 import { Message } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
+import { getMediaStream } from './webRTC'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -406,6 +407,19 @@ interface P2PWaitingForConnectionsAction {
 export const P2PWaitingForConnectionsAction = (): P2PWaitingForConnectionsAction => {
   return {
     type: ActionType.P2PWaitingForConnections
+  }
+}
+
+export const PrepareToStartVideoChatAction = (): ((dispatch: ThunkDispatch<Action, State>) => void) => {
+  // This loads a local webcam view
+  // We show a "here's what you look like, select your input devices, toggle audio/video" before you connect
+  // We need to grab a local feed first so we can get pretty names for the list of inputs.
+  return async (dispatch: ThunkDispatch<Action, State>) => {
+    // The act of fetching the local media stream triggers a local view of your webcam
+    await getMediaStream(dispatch)
+    const devices = await navigator.mediaDevices.enumerateDevices()
+    dispatch(LocalMediaDeviceListReceivedAction(devices))
+    dispatch(ShowModalAction(Modal.MediaSelector))
   }
 }
 

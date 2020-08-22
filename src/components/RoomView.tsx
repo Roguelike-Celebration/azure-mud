@@ -7,7 +7,7 @@ import {
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext } from '../App'
-import { StopVideoChatAction, ShowModalAction } from '../Actions'
+import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction } from '../Actions'
 import { FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
@@ -35,7 +35,7 @@ export default function RoomView (props: Props) {
   }
 
   const joinVideoChat = async () => {
-    prepareToStartVideoChat()
+    dispatch(PrepareToStartVideoChatAction())
   }
 
   const leaveVideoChat = () => {

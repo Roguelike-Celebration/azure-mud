@@ -29,11 +29,13 @@ import {
   NoteUpdateLikesAction,
   HideModalAction,
   UpdatedVideoPresenceAction
+  ShowModalAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
+import { Modal } from './modals'
 const axios = require('axios').default
 
 let myUserId: string
@@ -168,16 +170,6 @@ export async function deleteMessage (messageId: string) {
 // WebRTC
 // A note: the WebRTC handshake process generally avoids the Flux store / reducer
 // The app store is only aware of actual video streams it has to present.
-
-// This loads a local webcam view
-// We show a "here's what you look like, select your input devices, toggle audio/video" before you connect
-// We need to grab a local feed first so we can get pretty names for the list of inputs.
-export async function prepareToStartVideoChat () {
-  // The act of fetching the local media stream triggers a local view of your webcam
-  await getMediaStream(myDispatch)
-  const devices = await navigator.mediaDevices.enumerateDevices()
-  myDispatch(LocalMediaDeviceListReceivedAction(devices))
-}
 
 // This kicks off the whole peering process.
 // Any connected WebRTC clients will start signaling, which happens over SignalR.

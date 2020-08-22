@@ -89,7 +89,7 @@ export const getMediaStream = async (
       LocalMediaStreamOpenedAction(stream.id, { videoDeviceId, audioDeviceId })
     )
 
-    peerAnalysers = peerAnalysers.filter((a) => a[0] !== 'senf')
+    peerAnalysers = peerAnalysers.filter((a) => a[0] !== 'self')
     peerAnalysers.push(['self', setUpAnalyser(stream)])
     startAnalyserLoop(dispatch)
   }
@@ -112,7 +112,7 @@ export async function toggleAudio (newState: boolean) {
   const stream = await getMediaStream()
   const track = stream.getAudioTracks()[0]
   if (!track) {
-    console.log('Error: No video track!')
+    console.log('Error: No audio track!')
     return
   }
 

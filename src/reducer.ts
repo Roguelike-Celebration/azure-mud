@@ -239,7 +239,6 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.P2PWaitingForConnections) {
     state.inMediaChat = true
-    delete state.mediaDevices
   }
 
   if (action.type === ActionType.LocalMediaDeviceListReceived) {

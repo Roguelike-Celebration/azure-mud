@@ -3,5 +3,6 @@ export enum Modal {
     None = 0,
     ProfileEdit,
     NoteWall,
-    ThemeSelector
+    ThemeSelector,
+    MediaSelector
 }

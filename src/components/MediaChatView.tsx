@@ -7,10 +7,7 @@ import React, {
 import NameView from './NameView'
 import { otherMediaStreams } from '../webRTC'
 import LocalMediaView from './LocalMediaView'
-import MediaSelectorView from './MediaSelectorView'
 import { DispatchContext } from '../App'
-import { P2PWaitingForConnectionsAction } from '../Actions'
-import { startVideoChat } from '../networking'
 
 import '../../style/videoChat.css'
 
@@ -18,7 +15,6 @@ import '../../style/videoChat.css'
 interface MediaProps {
   peerIds?: string[];
   localMediaStreamId?: string;
-  mediaDevices?: MediaDeviceInfo[];
 
   speakingPeerIds: string[];
 
@@ -34,27 +30,6 @@ export default function MediaChatView (props: MediaProps) {
   const playerVideo = (
     <LocalMediaView speaking={props.speakingPeerIds.includes('self')} />
   )
-
-  if (props.mediaDevices) {
-    const clickJoin = () => {
-      // TODO: Refresh the stream with the correct data
-      dispatch(P2PWaitingForConnectionsAction())
-      startVideoChat()
-    }
-
-    mediaSelector = (
-      <div>
-        <MediaSelectorView
-          devices={props.mediaDevices}
-          initialAudioDeviceId={props.audioDeviceId}
-          initialVideoDeviceId={props.videoDeviceId}
-        />
-        <button id="join" onClick={clickJoin}>
-          Join
-        </button>
-      </div>
-    )
-  }
 
   if (props.peerIds) {
     // We don't actually use `peerIds` other than as a way to force the component to update.
