@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react'
-import { PublicUser } from '../../server/src/user'
+import React, { useContext } from 'react'
 
 import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
@@ -25,15 +24,16 @@ export default function ThemeSelectorView () {
   /// then change the actual theme
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(selectedTheme, event.target.value)
     document.body.classList.replace(selectedTheme, event.target.value)
     setSelectedTheme(event.target.value)
     localStorage.setItem('UserSelectedTheme', event.target.value)
   }
   return (
-    <div className={'container'}>
-      <div className ="form" id="ThemeSelectionForm">
-        <label htmlFor="ThemeSelectionForm">Select Theme:</label>
-        <div className = "radio"><label>
+    <div className='container'>
+      <div className='form' id="themeSelectionForm">
+        <label htmlFor="themeSelectionForm">Select Theme:</label>
+        <div className='radio'><label>
           <input type = "radio"
             id = "theme"
             value = "default"
