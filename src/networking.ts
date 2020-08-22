@@ -17,7 +17,6 @@ import {
   ShowProfileActionForFetchedUser,
   UserMapAction,
   ModMessageAction,
-  LocalMediaDeviceListReceivedAction,
   UpdatedCurrentRoomAction,
   UpdatedRoomDataAction,
   UpdatedPresenceAction,
@@ -29,13 +28,11 @@ import {
   NoteUpdateLikesAction,
   HideModalAction,
   UpdatedVideoPresenceAction
-  ShowModalAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
-import { Modal } from './modals'
 const axios = require('axios').default
 
 let myUserId: string

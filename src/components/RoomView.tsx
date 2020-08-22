@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Room } from '../room'
 import {
   moveToRoom,
-  prepareToStartVideoChat,
   getNetworkMediaChatStatus
 } from '../networking'
 import NameView from './NameView'
