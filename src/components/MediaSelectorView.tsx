@@ -22,6 +22,9 @@ export default function MediaSelectorView (props: Props) {
   const videoDevices = props.devices.filter((d) => d.kind === 'videoinput')
   const dispatch = useContext(DispatchContext)
 
+  const [videoId, setVideoId] = useState('')
+  const [audioId, setAudioId] = useState('')
+
   const deviceToOption = (d: MediaDeviceInfo) => {
     return (
       <option value={d.deviceId} key={d.deviceId}>
@@ -33,11 +36,14 @@ export default function MediaSelectorView (props: Props) {
   // TODO: These audio/video changes immediately affect your outgoing stream.
   // Eventually, they shouldn't.
   const onVideoChange = (e) => {
-    getMediaStream(dispatch, { videoId: e.target.value })
+    console.log('Changed')
+    setVideoId(e.target.value)
+    getMediaStream(dispatch, { videoId: e.target.value, audioId })
   }
 
   const onAudioChange = (e) => {
-    getMediaStream(dispatch, { audioId: e.target.value })
+    setAudioId(e.target.value)
+    getMediaStream(dispatch, { videoId, audioId: e.target.value })
   }
 
   const clickJoin = () => {
@@ -61,6 +67,7 @@ export default function MediaSelectorView (props: Props) {
       const foundByName = videoDevices.find((v) => v.label === defaultVideo)
       if (foundByName) {
         defaultVideo = foundByName.deviceId
+        setVideoId(defaultVideo)
       } else {
         defaultVideo = undefined
       }
@@ -73,6 +80,7 @@ export default function MediaSelectorView (props: Props) {
       const foundByName = audioDevices.find((d) => d.label === defaultAudio)
       if (foundByName) {
         defaultAudio = foundByName.deviceId
+        setAudioId(defaultAudio)
       } else {
         defaultAudio = undefined
       }
