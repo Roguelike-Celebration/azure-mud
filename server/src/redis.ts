@@ -150,7 +150,7 @@ const Redis: Database = {
   },
 
   async minimalProfileUserMap () {
-    return await getCache(userMapKey)
+    return JSON.parse((await getCache(userMapKey) || '{}'))
   },
 
   async lastShoutedForUser (userId: string) {

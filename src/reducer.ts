@@ -232,6 +232,7 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.P2PConnectionClosed) {
+    state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds || []
     state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds.filter(
       (p) => p !== action.value
     )
@@ -239,7 +240,6 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.P2PWaitingForConnections) {
     state.inMediaChat = true
-    delete state.mediaDevices
   }
 
   if (action.type === ActionType.LocalMediaDeviceListReceived) {

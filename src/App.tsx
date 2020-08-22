@@ -17,6 +17,7 @@ import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
 import ThemeSelectorView from './components/ThemeSelectorView'
+import MediaSelectorView from './components/MediaSelectorView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -113,12 +114,11 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.localMediaStreamId) {
+  if (state.inMediaChat) {
     videoChatView = (
       <MediaChatView
         localMediaStreamId={state.localMediaStreamId}
         peerIds={state.otherMediaStreamPeerIds}
-        mediaDevices={state.mediaDevices}
         videoDeviceId={state.currentVideoDeviceId}
         audioDeviceId={state.currentAudioDeviceId}
         speakingPeerIds={state.speakingPeerIds}
@@ -149,6 +149,16 @@ const App = () => {
         <ThemeSelectorView />
       )
       break
+    }
+    case Modal.MediaSelector: {
+      innerModalView =
+        <MediaSelectorView
+          devices={state.mediaDevices}
+          initialAudioDeviceId={state.currentAudioDeviceId}
+          initialVideoDeviceId={state.currentVideoDeviceId}
+          showJoinButton={!state.inMediaChat}
+          userIsSpeaking={state.speakingPeerIds.includes('self')}
+        />
     }
   }
 
