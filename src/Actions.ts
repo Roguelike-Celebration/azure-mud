@@ -616,11 +616,10 @@ export const BanToggleAction = (userId: string): BanToggleAction => {
 interface LoadMessageArchiveAction {
   type: ActionType.LoadMessageArchive;
   messages: Message[];
-  userMap: { [userId: string]: MinimalUser };
 }
 
-export const LoadMessageArchiveAction = (messages: Message[], userMap: { [userId: string]: MinimalUser }): LoadMessageArchiveAction => {
-  return { type: ActionType.LoadMessageArchive, messages: messages, userMap: userMap }
+export const LoadMessageArchiveAction = (messages: Message[]): LoadMessageArchiveAction => {
+  return { type: ActionType.LoadMessageArchive, messages: messages }
 }
 
 interface NoteAddAction {
