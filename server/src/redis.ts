@@ -130,7 +130,27 @@ const Redis: Database = {
   async setMinimalProfileForUser (userId: string, data: MinimalUser) {
     delete data.isMod
     delete data.isBanned
-    return await setCache(usernameKeyForUser(userId), JSON.stringify(data))
+    const result = await setCache(usernameKeyForUser(userId), JSON.stringify(data))
+
+    const rawUserMap = await getCache(userMapKey)
+    let userMap: {[userId: string]: MinimalUser} = {}
+    if (rawUserMap) {
+      userMap = JSON.parse(rawUserMap)
+    }
+
+    // We don't trust the data the user has sent in from the client
+    // so unsetting that field and manually setting it here is the solution!
+    if (isMod(userId)) {
+      data.isMod = true
+    }
+    userMap[userId] = data
+
+    await setCache(userMapKey, JSON.stringify(userMap))
+    return result
+  },
+
+  async minimalProfileUserMap () {
+    return await getCache(userMapKey)
   },
 
   async lastShoutedForUser (userId: string) {
@@ -267,24 +287,25 @@ function heartbeatKeyForUser (user: string): string {
   return `${user}Heartbeat`
 }
 
-export function roomPresenceKey (roomName: string): string {
+function roomPresenceKey (roomName: string): string {
   return `${roomName}Presence`
 }
 
-export function roomKeyForUser (user: string): string {
+function roomKeyForUser (user: string): string {
   return `${user}Room`
 }
 
-export function roomKey (name: string) {
+function roomKey (name: string) {
   return `${name}RoomData`
 }
 
-export function roomNotesKey (roomId: string): string {
+function roomNotesKey (roomId: string): string {
   return `${roomId}Notes`
 }
 
 export function videoPresenceKey (roomId: string) {
   return `${roomId}PresenceVideo`
 }
+const userMapKey = 'userMap'
 
 export default Redis

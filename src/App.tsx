@@ -44,7 +44,6 @@ const App = () => {
             let localLocalData = false
             const rawTimestamp = localStorage.getItem('messageTimestamp')
             const rawMessageData = localStorage.getItem('messages')
-            const rawUserMapData = localStorage.getItem('userMap')
             if (rawTimestamp) {
               try {
                 const timestamp = new Date(rawTimestamp)
@@ -58,8 +57,7 @@ const App = () => {
             if (localLocalData) {
               try {
                 const messages = JSON.parse(rawMessageData)
-                const userMap = !(rawUserMapData === undefined) ? JSON.parse(rawUserMapData) : null
-                dispatch(LoadMessageArchiveAction(messages, userMap))
+                dispatch(LoadMessageArchiveAction(messages))
               } catch (e) {
                 console.log('Could not parse message JSON', e)
               }

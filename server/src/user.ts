@@ -41,6 +41,9 @@ export function isMod (userId: string) {
 }
 
 export async function getUserIdForUsername (username: string) {
+  // This currently only checks active users, by intention
+  // If we used all users, that would mistakenly let you e.g. send messages to offline users
+  // (who would never get the message)
   const userMap = await activeUserMap()
   const user = Object.values(userMap).find((u) => u.username === username)
   if (user) {

@@ -137,7 +137,6 @@ export default (oldState: State, action: Action): State => {
       addMessage(state, createConnectedMessage(user.id))
     }
     state.userMap[user.id] = user
-    localStorage.setItem('userMap', JSON.stringify(state.userMap))
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
@@ -205,7 +204,6 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UserMap) {
     state.userMap = { ...state.userMap, ...action.value }
-    localStorage.setItem('userMap', JSON.stringify(state.userMap))
   }
 
   if (action.type === ActionType.Error) {
@@ -337,9 +335,6 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.LoadMessageArchive) {
     state.messages = action.messages
-    if (action.userMap) {
-      state.userMap = action.userMap
-    }
   }
 
   // Notes

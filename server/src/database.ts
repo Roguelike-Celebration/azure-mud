@@ -66,6 +66,8 @@ interface Database {
     data: MinimalUser
   ): Promise<MinimalUser>;
 
+  minimalProfileUserMap(): Promise<{[userId: string]: MinimalUser}>;
+
   /** Returns a Date for when the user last shouted */
   lastShoutedForUser(userId: string): Promise<Date | undefined>;
 
