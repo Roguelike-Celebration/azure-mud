@@ -18,12 +18,12 @@ export default function LocalMediaView (props: Props) {
   const [sendAudio, setUseAudio] = useState(true)
 
   const onChangeVideo = (e) => {
-    toggleVideo(!sendVideo)
+    toggleVideo(sendVideo)
     setUseVideo(!sendVideo)
   }
 
   const onChangeAudio = (e) => {
-    toggleAudio(!sendAudio)
+    toggleAudio(sendAudio)
     setUseAudio(!sendAudio)
   }
 
