@@ -63,7 +63,7 @@ export default function ProfileView (props: { user: PublicUser }) {
       {twitterHandle}
       {url}
       {askMeAbout}
-      <button onClick={() => dispatch(HideProfileAction())}>Close</button>
+      <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
     </div>
   )
 }

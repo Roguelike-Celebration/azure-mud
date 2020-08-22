@@ -10,3 +10,7 @@
     width: 100vw;
   }
 }
+
+#profile .close-profile {
+    margin-top: 2em;
+}
