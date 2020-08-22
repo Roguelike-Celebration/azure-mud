@@ -5,7 +5,7 @@ import DB from '../src/redis'
 import { RoomResponse } from '../src/types'
 import { addUserToRoomPresence } from '../src/roomPresence'
 import authenticate from '../src/authenticate'
-import { activeUserMap, minimizeUser, isMod } from '../src/user'
+import { minimizeUser, isMod } from '../src/user'
 import { userHeartbeatReceived } from '../src/heartbeat'
 import setUpRoomsForUser from '../src/setUpRoomsForUser'
 import { roomData } from '../src/room'
@@ -25,7 +25,7 @@ const httpTrigger: AzureFunction = async function (
     await addUserToRoomPresence(user.id, user.roomId)
     await userHeartbeatReceived(user.id)
 
-    const userMap = await activeUserMap()
+    const userMap = await DB.minimalProfileUserMap()
 
     const response: RoomResponse = {
       roomId: user.room.id,
