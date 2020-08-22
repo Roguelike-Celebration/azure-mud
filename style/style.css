@@ -91,3 +91,14 @@ a:visited {
   padding: 0;
   text-align: left;
 }
+
+button {
+  background-color:var(--main-background);
+  border: 2px solid var(--highlight-line);
+  border-radius: 5px;
+  color: var(--main-font);
+  cursor: pointer;
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 16px;
+  padding: 0.5rem 1rem;
+}

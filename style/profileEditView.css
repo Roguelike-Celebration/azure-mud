@@ -49,13 +49,5 @@ input {
 }
 
 .submit {
-  background-color:var(--main-background);
-  border: 2px solid var(--highlight-line);
-  border-radius: 5px;
-  color: var(--main-font);
-  cursor: pointer;
-  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
-  font-size: 16px;
   margin-top: 2rem;
-  padding: 0.5rem 1rem;
 }
