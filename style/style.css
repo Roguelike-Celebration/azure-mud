@@ -102,3 +102,12 @@ button {
   font-size: 16px;
   padding: 0.5rem 1rem;
 }
+
+input[type=radio] {
+  vertical-align: baselin;
+  margin-right: 1em;
+}
+
+#themeSelectionForm .radio {
+  margin: 1em;
+}
