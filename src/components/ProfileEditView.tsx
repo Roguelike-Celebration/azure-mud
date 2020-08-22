@@ -57,11 +57,15 @@ export default function ProfileEditView (props: Props) {
     props.isFTUE)
   }
   return (
-    <div className={`container ${props.isFTUE ? 'ftue' : ''}`}>
+    <div id='profile-edit' className={`container ${props.isFTUE ? 'ftue' : ''}`}>
       <div className="form">
+        <h1>{`${props.isFTUE ? 'Create' : 'Edit'} Name Badge`}</h1>
+        <div style={{ marginTop: '2em', marginBottom: '2em' }}>
+          This is your virtual conference badge!<br/>
+        Whatever you enter will be visible to other attendees.<br/>
+        You can come back and change this at any time.
+        </div>
         <div className="grid">
-          <div style={{ fontSize: '20px' }}>{`${props.isFTUE ? 'Create' : 'Edit'} Name Badge`}</div>
-          <div></div>
           <div className="field">
             <label htmlFor="username">Chat Handle</label>
             <em>What shows up when you send messages</em>
