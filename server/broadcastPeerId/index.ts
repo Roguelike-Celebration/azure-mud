@@ -7,7 +7,7 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  await authenticate(context, req, async (user) => {
+  await authenticate(context, req, false, async (user) => {
     const videoChatters = await DB.addUserToVideoPresence(user.id, user.roomId)
 
     context.log('Broadcasting peer ID', user.roomId, user.id)

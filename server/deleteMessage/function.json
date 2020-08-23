@@ -17,6 +17,12 @@
       "name": "signalRMessages",
       "hubName": "chat",
       "direction": "out"
+    },
+    {
+      "tableName": "auditLog",
+      "name": "tableBinding",
+      "type": "table",
+      "direction": "out"
     }
   ],
   "scriptFile": "../dist/deleteMessage/index.js"

@@ -6,7 +6,7 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  return await authenticate(context, req, async (user) => {
+  return await authenticate(context, req, true, async (user) => {
     if (!isMod(user.id)) {
       context.res = {
         status: 403,

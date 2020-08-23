@@ -7,6 +7,7 @@ import { Context, HttpRequest } from '@azure/functions'
 export default async function authenticate (
   context: Context,
   req: HttpRequest,
+  audit: boolean,
   handler: (user: User) => void
 ) {
   const userId = req.headers && req.headers['x-ms-client-principal-id']
@@ -18,7 +19,27 @@ export default async function authenticate (
     context.log('Failed to include a user ID')
     return
   }
+  if (audit && !context.bindingDefinitions.find(def => def.name === 'tableBinding')) {
+    context.res = {
+      status: 500,
+      body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
+    }
+    context.log('Failed to configure audit endpoint with the proper tableBinding')
+    return
+  }
 
   const user = await getFullUser(userId)
-  return await handler(user)
+  const handled = await handler(user)
+
+  if (audit) {
+    context.bindings.tableBinding = [{
+      PartitionKey: user.id,
+      RowKey: Date.now().toString(), // I suppose with an appropriately zealous bot and a lot of luck, you could hit this timing window
+      url: req.url,
+      request: req.body,
+      response: context.res
+    }]
+  }
+
+  return handled
 }
