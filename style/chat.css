@@ -1,5 +1,5 @@
 #messages {
-  max-height: 40vh;
+  height: 40vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }

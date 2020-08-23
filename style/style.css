@@ -10,14 +10,14 @@ body {
 #app {
   padding: 0 50px;
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 250px 1fr 200px;
   grid-gap: 50px;
 }
 
 #app-profile-open {
   padding: 0 50px;
   display: grid;
-  grid-template-columns: 250px 1fr 250px;
+  grid-template-columns: 250px 1fr 400px;
   grid-gap: 50px;
 }
 

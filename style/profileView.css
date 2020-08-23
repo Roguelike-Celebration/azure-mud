@@ -10,3 +10,52 @@
     width: 100vw;
   }
 }
+
+#profile {
+  background-color: black;
+  border-left: 1px solid white;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0px 0px 20px 20px;
+  width: 100%;
+}
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  word-break: break-all;
+}
+
+#profile-close {
+  background-color: black;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  width: 30px;
+}
+
+#chat-container {
+  border-top: 1px dashed white;
+  margin-top: 20px;
+}
+
+#chat-header {
+  background-color: black;
+  padding: 20px 0px;
+  top: 0;
+  width: 100%;
+}
+
+#chat {
+  overflow: scroll;
+  height: 40vh;
+}
+
+#input {
+  display: flex;
+}
+
+input {
+  width: 100%;
+}

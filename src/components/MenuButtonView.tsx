@@ -31,7 +31,7 @@ export default function MenuButtonView (props: { username: string }) {
         <strong>{props.username}</strong> <FaChevronDown />
       </ContextMenuTrigger>
       <ContextMenu id={'topMenu'}>
-        <MenuItem onClick={showProfile}>Profile</MenuItem>
+        <MenuItem onClick={showProfile}>Edit Profile</MenuItem>
         <MenuItem onClick={logOut}>Log Out</MenuItem>
       </ContextMenu>
     </div>

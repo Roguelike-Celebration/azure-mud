@@ -79,7 +79,7 @@ const App = () => {
   const isMobile = window.outerWidth < 500
 
   const profile = state.visibleProfile ? (
-    <ProfileView user={state.visibleProfile} />
+    <ProfileView user={state.visibleProfile} messages={state.messages} />
   ) : (
     ''
   )
@@ -164,7 +164,7 @@ const App = () => {
           <UserMapContext.Provider
             value={{ userMap: state.userMap, myId: state.userId }}
           >
-            <div id={state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'}>
+            <div id={state.visibleProfile ? 'app-profile-open' : 'app'}>
               {shouldShowMenu
                 ? <RoomListView
                   rooms={Object.values(state.roomData)}
