@@ -34,10 +34,11 @@ export default async function authenticate (
   if (audit) {
     context.bindings.tableBinding = [{
       PartitionKey: user.id,
-      RowKey: Date.now().toString(), // I suppose with an appropriately zealous bot and a lot of luck, you could hit this timing window
+      RowKey: Date.now().toString(), // With an appropriately zealous bot and a lot of luck, you could hit this 1ms timing window, so it's not foolproof
+      // The object comes loaded with a Timestamp by default as well
+      userData: user, // Screenshotting the whole userData, since threading the current profile data through is hard
       url: req.url,
-      request: req.body,
-      response: context.res
+      request: req.body // Assumes that all the relevant information will be in the body and not in, like...headers, or something
     }]
   }
 
