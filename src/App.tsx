@@ -158,7 +158,7 @@ const App = () => {
       break
     }
     case Modal.MediaSelector: {
-      innerModalView =
+      innerModalView = (
         <MediaSelectorView
           devices={state.mediaDevices}
           initialAudioDeviceId={state.currentAudioDeviceId}
@@ -166,11 +166,14 @@ const App = () => {
           showJoinButton={!state.inMediaChat}
           userIsSpeaking={state.speakingPeerIds.includes('self')}
         />
+      )
+      break
     }
     case Modal.CodeOfConduct: {
       innerModalView = (
         <CodeOfConductView />
       )
+      break
     }
   }
 
