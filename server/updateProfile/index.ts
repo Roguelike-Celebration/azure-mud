@@ -42,7 +42,7 @@ const httpTrigger: AzureFunction = async function (
     RowKey: Date.now().toString(),
     userId: userId,
     username: minimalUser.username,
-    url: req.url,
+    endpoint: req.url.replace('https://' + process.env.WEBSITE_HOSTNAME, ''),
     request: req.body
   }]
 

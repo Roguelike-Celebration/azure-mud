@@ -38,7 +38,7 @@ export default async function authenticate (
       // The object comes loaded with a Timestamp by default as well
       userId: user.id,
       username: user.username,
-      url: req.url,
+      endpoint: req.url.replace('https://' + process.env.WEBSITE_HOSTNAME, ''),
       request: req.body // Assumes that all the relevant information will be in the body and not in, like...headers, or something
     }]
   }
