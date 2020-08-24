@@ -66,7 +66,7 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (prop
   } else {
     return (
       <span className="deleteMenu">
-        <ContextMenuTrigger id={props.messageId} renderTag="span" holdToDisplay={0}>
+        <ContextMenuTrigger id={props.messageId} mouseButton={2} renderTag="span">
           {props.children}
         </ContextMenuTrigger>
         <ContextMenu id={props.messageId}>
