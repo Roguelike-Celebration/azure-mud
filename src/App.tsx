@@ -18,6 +18,7 @@ import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
 import ThemeSelectorView from './components/ThemeSelectorView'
 import MediaSelectorView from './components/MediaSelectorView'
+import CodeOfConductView from './components/CodeOfConductView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -165,6 +166,11 @@ const App = () => {
           showJoinButton={!state.inMediaChat}
           userIsSpeaking={state.speakingPeerIds.includes('self')}
         />
+    }
+    case Modal.CodeOfConduct: {
+      innerModalView = (
+        <CodeOfConductView />
+      )
     }
   }
 
