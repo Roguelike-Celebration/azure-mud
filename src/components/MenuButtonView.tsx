@@ -29,6 +29,10 @@ export default function MenuButtonView (props: { username: string }) {
     dispatch(ShowModalAction(Modal.ThemeSelector))
   }
 
+  const showCodeOfConduct = () => {
+    dispatch(ShowModalAction(Modal.CodeOfConduct))
+  }
+
   return (
     <div id="menu-button">
       <ContextMenuTrigger id="topMenu" holdToDisplay={0}>
@@ -37,6 +41,7 @@ export default function MenuButtonView (props: { username: string }) {
       <ContextMenu id={'topMenu'}>
         <MenuItem onClick={showProfile}>Profile</MenuItem>
         <MenuItem onClick={showThemeSelector}>Select Theme</MenuItem>
+        <MenuItem onClick={showCodeOfConduct}>Code of Conduct</MenuItem>
         <MenuItem onClick={logOut}>Log Out</MenuItem>
       </ContextMenu>
     </div>
