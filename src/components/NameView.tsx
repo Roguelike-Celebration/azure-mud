@@ -26,7 +26,7 @@ export default function NameView (props: { userId: string; id?: string }) {
 
   const handleWhisper = (e, data) => {
     dispatch(HideModalAction())
-    dispatch(StartWhisperAction(data.id))
+    dispatch(StartWhisperAction(data.username))
   }
 
   const handleProfile = (e, data) => {
@@ -75,7 +75,7 @@ export default function NameView (props: { userId: string; id?: string }) {
         <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
           Profile
         </MenuItem>
-        <MenuItem data={{ id: props.userId }} onClick={handleWhisper}>
+        <MenuItem data={{ username: username }} onClick={handleWhisper}>
           Whisper
         </MenuItem>
         {banButton}
