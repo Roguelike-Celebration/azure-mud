@@ -4,9 +4,9 @@
 }
 
 a.room-link {
-  color: var(--link-text);
+  color: var(--green);
 }
 
 a.room-link:visited {
-  color: var(--link-text);
+  color: var(--green);
 }

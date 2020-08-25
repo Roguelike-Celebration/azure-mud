@@ -7,10 +7,10 @@
   --main-font: white;
   --alternate-background: #333333;
   --alternate-translucent: rgba(51,51,51,0.8);
-  --link-text: lightseagreen;
+  --green: lightseagreen;
   --highlight-line: #aaaaaa;
-  --warning-color: lightpink;
-  --like-color: lightskyblue;
+  --pink: lightpink;
+  --blue: lightskyblue;
 }
 
 /* solarized dark */
@@ -19,10 +19,10 @@
   --main-font:#657b83;
   --alternate-background: #073642;
   --alternate-translucent: rgba(7,54,66,0.8);
-  --link-text: #859900;
+  --green: #859900;
   --highlight-line: #fdf6e3;
-  --warning-color: #d33682;
-  --like-color: #268bd2;
+  --pink: #d33682;
+  --blue: #268bd2;
 }
 
 /* solarized light */
@@ -31,10 +31,10 @@
   --main-font:#657b83;
   --alternate-background: #eee8d5;
   --alternate-translucent: rgba(238,232,213,0.8);
-  --link-text:#859900;
+  --green:#859900;
   --highlight-line: #002b36;
-  --warning-color: #d33682;
-  --like-color: #268bd2;
+  --pink: #d33682;
+  --blue: #268bd2;
 }
 
 body {
@@ -70,19 +70,19 @@ body {
 }
 
 a {
-  color:var(--link-text);
+  color:var(--green);
   text-decoration: none;
   font-weight: bold;
 }
 
 a:visited {
-  color: var(--link-text);
+  color: var(--green);
 }
 
 .link-styled-button {
   background-color: transparent;
   border: none;
-  color: var(--link-text);
+  color: var(--green);
   cursor: pointer;
   display: inline; 
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
