@@ -138,7 +138,7 @@ export async function sendChatMessage (id: string, text: string) {
   console.log(result)
 
   // If it's a /move command
-  if (result && result.roomId && result.roomOccupants) {
+  if (result && result.roomId) {
     myDispatch(UpdatedCurrentRoomAction(result.roomId))
   } else if (result && result.user) {
     myDispatch(ShowProfileActionForFetchedUser(result.user))
