@@ -18,6 +18,9 @@ export interface Room {
   // having a bunch of ad-hoc flags like this will probably get frustrating quickly.
   // We may want to eventually refactor to something resembling an ECS.
   hasNoteWall?: boolean
+
+  // If true, don't show the room in the side list
+  hidden?: boolean
 }
 
 export const roomData: { [name: string]: Room } = {
@@ -74,5 +77,12 @@ export const roomData: { [name: string]: Room } = {
       It's not quite clear why there's a shipping container in the middle of the space. Seems pretty chill, though? Somebody's set up a makeshift bench.<br/><br/>
       After you climb out, you can get back to the [[bar]], the [[theatre]], the [[kitchen]], or the [[lounge]].`,
     allowsMedia: true
+  },
+  entryway: {
+    id: 'entryway',
+    displayName: 'Registration Desk',
+    shortName: 'the registration desk',
+    description: 'A big banner reads welcome to Roguelike Celebration! Once you\'ve got your bearings about you, you can move to the [[lounge]].',
+    hidden: true
   }
 }
