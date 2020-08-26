@@ -5,7 +5,10 @@ import { SendMessageAction } from '../Actions'
 import '../../style/input.css'
 const emojifier = require('node-emoji')
 
-export default function InputView (props: { prepopulated?: string }) {
+export default function InputView (props: {
+  sendMessage: (message: string) => void,
+  prepopulated?: string
+}) {
   const dispatch = useContext(DispatchContext)
   const [input, setInput] = useState('')
 
@@ -16,17 +19,11 @@ export default function InputView (props: { prepopulated?: string }) {
 
   const checkEnter = (e) => {
     if (e.key === 'Enter') {
-      onClick()
+      props.sendMessage(input)
     }
   }
 
-  const onClick = () => {
-    dispatch(SendMessageAction(input))
-    setInput('')
-  }
-
   useEffect(() => {
-    console.log('useEffect')
     document.getElementById('chat-input').focus()
     if (props.prepopulated) {
       setInput(props.prepopulated)
@@ -43,7 +40,10 @@ export default function InputView (props: { prepopulated?: string }) {
         value={input}
         aria-label="Chat text input box"
       />
-      <button id="send" onClick={onClick}>
+      <button id="send" onClick={() => {
+        props.sendMessage(input)
+        setInput('')
+      }}>
         Send
       </button>
     </div>

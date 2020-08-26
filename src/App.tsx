@@ -5,7 +5,7 @@ import ChatView from './components/ChatView'
 import InputView from './components/InputView'
 import { connect, getLoginInfo, checkIsRegistered } from './networking'
 import reducer, { State, defaultState } from './reducer'
-import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction, ShowSideMenuAction } from './Actions'
+import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction, ShowSideMenuAction, SendMessageAction } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
 import config from './config'
@@ -209,7 +209,10 @@ const App = () => {
                   userId={state.userId}
                 />
                 <ChatView messages={state.messages} />
-                <InputView prepopulated={state.prepopulatedInput} />
+                <InputView
+                  prepopulated={state.prepopulatedInput}
+                  sendMessage={(message) => dispatch(SendMessageAction(message))}
+                />
               </div>
               {profile}
             </div>

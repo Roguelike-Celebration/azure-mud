@@ -1,6 +1,6 @@
 import React from 'react'
 import MessageView from './MessageView'
-import { Message } from '../message'
+import { Message, MessageType } from '../message'
 
 import '../../style/chat.css'
 
@@ -21,7 +21,7 @@ export default function ChatView (props: { messages: Message[] }) {
 
   return (
     <div id="messages">
-      {props.messages.map((m, idx) => {
+      {props.messages.filter((m) => m.type !== MessageType.Whisper).map((m, idx) => {
         const id = `message-${idx}`
         return <MessageView message={m} key={id} id={id} />
       })}

@@ -3,7 +3,6 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu'
 import { DispatchContext, UserMapContext } from '../App'
 import ReactTooltip from 'react-tooltip'
 import {
-  StartWhisperAction,
   ShowProfileAction,
   BanToggleAction,
   HideModalAction
@@ -23,11 +22,6 @@ export default function NameView (props: { userId: string; id?: string }) {
 
   const player = userMap[myId]
   const playerCanBan = player && player.isMod
-
-  const handleWhisper = (e, data) => {
-    dispatch(HideModalAction())
-    dispatch(StartWhisperAction(data.username))
-  }
 
   const handleProfile = (e, data) => {
     dispatch(HideModalAction())
@@ -73,10 +67,7 @@ export default function NameView (props: { userId: string; id?: string }) {
       </ContextMenuTrigger>
       <ContextMenu id={props.id}>
         <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
-          Profile
-        </MenuItem>
-        <MenuItem data={{ username: username }} onClick={handleWhisper}>
-          Whisper
+          Profile/Whisper
         </MenuItem>
         {banButton}
       </ContextMenu>

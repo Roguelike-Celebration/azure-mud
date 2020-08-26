@@ -82,17 +82,6 @@ export default (oldState: State, action: Action): State => {
   const state: State = JSON.parse(JSON.stringify(oldState))
   state.prepopulatedInput = undefined
 
-  // TODO: test value, rm
-  state.visibleProfile = {
-    id: '12345678',
-    username: 'superduperlongusername',
-    realName: 'anne yuan',
-    pronouns: 'she/her',
-    description: 'complex human person',
-    askMeAbout: 'anything u want dude',
-    twitterHandle: 'visibleworld'
-  }
-
   if (action.type === ActionType.ReceivedMyProfile) {
     state.profileData = action.value
   }

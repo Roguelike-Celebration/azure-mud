@@ -128,7 +128,7 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
     return (
       <div className="message">
         <em>
-          You whisper to <NameView id={props.id} userId={props.userId} />:{' '}
+          You:{' '}
           {props.message}
         </em>
       </div>
@@ -137,7 +137,7 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
     return (
       <div className="message">
         <em>
-          <NameView userId={props.userId} id={props.id} /> whispers:{' '}
+          <NameView userId={props.userId} id={props.id} />:{' '}
           {props.message}
         </em>
       </div>
