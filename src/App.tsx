@@ -194,7 +194,7 @@ const App = () => {
           <UserMapContext.Provider
             value={{ userMap: state.userMap, myId: state.userId }}
           >
-            <div id={state.visibleProfile ? 'app-profile-open' : 'app'}>
+            <div id={state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'}>
               {shouldShowMenu
                 ? <RoomListView
                   rooms={Object.values(state.roomData)}

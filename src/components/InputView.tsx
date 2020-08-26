@@ -19,8 +19,13 @@ export default function InputView (props: {
 
   const checkEnter = (e) => {
     if (e.key === 'Enter') {
-      props.sendMessage(input)
+      onClick()
     }
+  }
+
+  const onClick = () => {
+    props.sendMessage(input)
+    setInput('')
   }
 
   useEffect(() => {
@@ -40,10 +45,7 @@ export default function InputView (props: {
         value={input}
         aria-label="Chat text input box"
       />
-      <button id="send" onClick={() => {
-        props.sendMessage(input)
-        setInput('')
-      }}>
+      <button id="send" onClick={onClick}>
         Send
       </button>
     </div>

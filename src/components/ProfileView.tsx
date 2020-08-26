@@ -12,6 +12,20 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
   const { user, messages } = props
   const dispatch = useContext(DispatchContext)
 
+  React.useEffect(() => {
+    const lastMessage = document.querySelector(
+      '#chat .message:last-of-type'
+    )
+    if (!lastMessage) return;
+
+    // I was using lastMessage.scrollIntoView()
+    // But I was seeing odd behavior when there was only one message on-screen.
+    // This very TS-unfriendly code fixes taht.
+    (lastMessage.parentNode as Element).scrollTop =
+      (lastMessage as any).offsetTop -
+      (lastMessage.parentNode as any).offsetTop
+  })
+
   const whisperMessages = messages.filter((m, _) => m.type === MessageType.Whisper && m.userId === user.id)
 
   const realName = user.realName ? (
