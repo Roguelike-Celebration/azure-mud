@@ -104,7 +104,7 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
 
   let roomId = await DB.currentRoomForUser(userId)
   if (!roomId) {
-    roomId = 'kitchen'
+    roomId = 'entryway'
     await DB.setCurrentRoomForUser(userId, roomId)
   }
 
