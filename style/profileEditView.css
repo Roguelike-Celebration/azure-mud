@@ -59,5 +59,8 @@ input[type=text] {
 
 #profile-edit .submit {
   float: right;
-  margin-top: 2rem;
+}
+
+#profile-edit h1 {
+    margin-top: 0;
 }

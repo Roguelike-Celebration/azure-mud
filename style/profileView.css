@@ -14,3 +14,7 @@
 #profile .close-profile {
     margin-top: 2em;
 }
+
+#profile h1 {
+    margin-top: 0;
+}
