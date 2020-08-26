@@ -148,7 +148,6 @@ export default (oldState: State, action: Action): State => {
       addMessage(state, createConnectedMessage(user.id))
     }
     state.userMap[user.id] = user
-    localStorage.setItem('userMap', JSON.stringify(state.userMap))
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
@@ -216,7 +215,6 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UserMap) {
     state.userMap = { ...state.userMap, ...action.value }
-    localStorage.setItem('userMap', JSON.stringify(state.userMap))
   }
 
   if (action.type === ActionType.Error) {
@@ -245,6 +243,7 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.P2PConnectionClosed) {
+    state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds || []
     state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds.filter(
       (p) => p !== action.value
     )
@@ -252,7 +251,6 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.P2PWaitingForConnections) {
     state.inMediaChat = true
-    delete state.mediaDevices
   }
 
   if (action.type === ActionType.LocalMediaDeviceListReceived) {
@@ -348,9 +346,6 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.LoadMessageArchive) {
     state.messages = action.messages
-    if (action.userMap) {
-      state.userMap = action.userMap
-    }
   }
 
   // Notes

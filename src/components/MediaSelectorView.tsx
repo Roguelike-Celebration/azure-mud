@@ -1,18 +1,29 @@
+/* eslint-disable jsx-a11y/no-onchange */
 import React, { useState, useContext } from 'react'
 import { getMediaStream } from '../webRTC'
 import { DispatchContext } from '../App'
+import { P2PWaitingForConnectionsAction, HideModalAction } from '../Actions'
+import { startVideoChat } from '../networking'
+import LocalMediaView from './LocalMediaView'
 
 interface Props {
   // The result of navigator.mediaDevices.enumerateDevices()
   devices: MediaDeviceInfo[];
   initialVideoDeviceId?: string;
   initialAudioDeviceId?: string;
+
+  userIsSpeaking: boolean
+
+  showJoinButton?: boolean
 }
 
 export default function MediaSelectorView (props: Props) {
   const audioDevices = props.devices.filter((d) => d.kind === 'audioinput')
   const videoDevices = props.devices.filter((d) => d.kind === 'videoinput')
   const dispatch = useContext(DispatchContext)
+
+  const [videoId, setVideoId] = useState('')
+  const [audioId, setAudioId] = useState('')
 
   const deviceToOption = (d: MediaDeviceInfo) => {
     return (
@@ -22,12 +33,23 @@ export default function MediaSelectorView (props: Props) {
     )
   }
 
+  // TODO: These audio/video changes immediately affect your outgoing stream.
+  // Eventually, they shouldn't.
   const onVideoChange = (e) => {
-    getMediaStream(dispatch, { videoId: e.target.value })
+    console.log('Changed')
+    setVideoId(e.target.value)
+    getMediaStream(dispatch, { videoId: e.target.value, audioId })
   }
 
   const onAudioChange = (e) => {
-    getMediaStream(dispatch, { audioId: e.target.value })
+    setAudioId(e.target.value)
+    getMediaStream(dispatch, { videoId, audioId: e.target.value })
+  }
+
+  const clickJoin = () => {
+    dispatch(HideModalAction())
+    dispatch(P2PWaitingForConnectionsAction())
+    startVideoChat()
   }
 
   // Here's a fun hack!
@@ -45,6 +67,7 @@ export default function MediaSelectorView (props: Props) {
       const foundByName = videoDevices.find((v) => v.label === defaultVideo)
       if (foundByName) {
         defaultVideo = foundByName.deviceId
+        setVideoId(defaultVideo)
       } else {
         defaultVideo = undefined
       }
@@ -57,6 +80,7 @@ export default function MediaSelectorView (props: Props) {
       const foundByName = audioDevices.find((d) => d.label === defaultAudio)
       if (foundByName) {
         defaultAudio = foundByName.deviceId
+        setAudioId(defaultAudio)
       } else {
         defaultAudio = undefined
       }
@@ -65,23 +89,32 @@ export default function MediaSelectorView (props: Props) {
   console.log(defaultAudio, defaultVideo)
 
   return (
-    <div>
-      <select
-        name="Video"
-        id="video-select"
-        onBlur={onVideoChange}
-        defaultValue={defaultVideo}
-      >
-        {videoDevices.map(deviceToOption)}
-      </select>
-      <select
-        name="Audio"
-        id="audio-select"
-        onBlur={onAudioChange}
-        defaultValue={defaultAudio}
-      >
-        {audioDevices.map(deviceToOption)}
-      </select>
+    <div id='media-selector'>
+      <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>
+      <div className='selects'>
+        <label htmlFor="#video-select">Webcam</label>
+        <select
+          name="Video"
+          id="video-select"
+          onChange={onVideoChange}
+          defaultValue={defaultVideo}
+        >
+          {videoDevices.map(deviceToOption)}
+        </select>
+        <br/>
+        <label htmlFor="#audio-select">Audio</label>
+        <select
+          name="Audio"
+          id="audio-select"
+          onChange={onAudioChange}
+          defaultValue={defaultAudio}
+        >
+          {audioDevices.map(deviceToOption)}
+        </select>
+      </div>
+      {props.showJoinButton
+        ? <button id="join" onClick={clickJoin}>Join</button>
+        : ''}
     </div>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState, useContext } from 'react'
 import { updateProfile } from '../networking'
 import { PublicUser } from '../../server/src/user'
@@ -56,13 +57,18 @@ export default function ProfileEditView (props: Props) {
     props.isFTUE)
   }
   return (
-    <div className={`container ${props.isFTUE ? 'ftue' : ''}`}>
+    <div id='profile-edit' className={`container ${props.isFTUE ? 'ftue' : ''}`}>
       <div className="form">
+        <h1>{`${props.isFTUE ? 'Create' : 'Edit'} Name Badge`}</h1>
+        <div style={{ marginTop: '2em', marginBottom: '2em' }}>
+          This is your virtual conference badge!<br/>
+        Whatever you enter will be visible to other attendees.<br/>
+        You can come back and change this at any time.
+        </div>
         <div className="grid">
-          <div style={{ fontSize: '20px' }}>{`${props.isFTUE ? 'Create' : 'Edit'} Profile`}</div>
-          <div></div>
           <div className="field">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Chat Handle</label>
+            <em>What shows up when you send messages</em>
             <input
               type="text"
               id="username"
@@ -78,7 +84,8 @@ export default function ProfileEditView (props: Props) {
             />
           </div>
           <div className="field">
-            <label htmlFor="realname">Real Name</label>
+            <label htmlFor="realname">Name</label>
+            <em>What people should call you</em>
             <input
               type="text"
               id="real-name"
@@ -88,6 +95,7 @@ export default function ProfileEditView (props: Props) {
           </div>
           <div className="field">
             <label htmlFor="pronouns">Pronouns</label>
+            <em>e.g. "she/her" or "he/they"</em>
             <input
               type="text"
               id="pronouns"
@@ -96,7 +104,8 @@ export default function ProfileEditView (props: Props) {
             />
           </div>
           <div className="field">
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">Character Description</label>
+            <em>Describe your virtual avatar!</em>
             <input
               type="text"
               id="description"
@@ -106,6 +115,7 @@ export default function ProfileEditView (props: Props) {
           </div>
           <div className="field">
             <label htmlFor="website">Website</label>
+            <em>Your personal site, or something else</em>
             <input
               type="text"
               id="website"
@@ -115,6 +125,7 @@ export default function ProfileEditView (props: Props) {
           </div>
           <div className="field">
             <label htmlFor="ask-me-about">Ask Me About</label>
+            <em>What are you excited to talk about?</em>
             <input
               type="text"
               id="ask-me-about"

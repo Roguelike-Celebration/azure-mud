@@ -1,6 +1,6 @@
 import { Context } from '@azure/functions'
 
-import { User, getUserIdForUsername } from './user'
+import { User, getUserIdForOnlineUsername } from './user'
 
 export async function whisper (
   from: User,
@@ -8,7 +8,7 @@ export async function whisper (
   message: string,
   context: Context
 ) {
-  const toUser = await getUserIdForUsername(toUsername)
+  const toUser = await getUserIdForOnlineUsername(toUsername)
 
   // TODO: Return this as metadata so the client can NameView the username
   if (!toUser) {

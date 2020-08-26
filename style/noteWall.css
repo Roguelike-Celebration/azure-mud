@@ -10,13 +10,13 @@
 }
 
 button.note-delete {
-    color: lightpink;
+    color: var(--pink);
     float: right;
     margin-left: 10px;
 }
 
 .like-button {
-    color: lightskyblue;
+    color: var(--blue);
     float: right;
     padding-left: 20px;
     padding-right: 15px;

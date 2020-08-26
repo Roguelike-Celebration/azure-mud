@@ -14,5 +14,49 @@ input#send-audio {
 }
 
 video.speaking {
-  border: 5px solid green;
+  border: 5px solid var(--green);
+}
+
+#media-view .video-button {
+  color: white;
+  padding: 10px;
+}
+
+#media-view .video-button.enabled {
+  color: lightgreen;
+}
+
+#media-view .video-button.disabled {
+  color: lightpink;
+}
+
+/** Selector modal */
+
+#media-selector .my-video, #media-selector .selects {
+  float: left;
+}
+
+#media-selector .selects {
+  margin-left: 30px;
+  margin-top: 1em;
+}
+
+#media-selector select {
+  display: block;
+}
+
+#media-selector #join {
+  background-color:var(--main-background);
+  border: 2px solid var(--highlight-line);
+  border-radius: 5px;
+  bottom: 20px;
+  color: var(--main-font);
+  cursor: pointer;
+  display: block;
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 16px;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  right: 30px;
 }

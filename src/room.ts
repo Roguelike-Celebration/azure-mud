@@ -8,7 +8,7 @@ export interface Room {
   users?: string[];
   videoUsers?: string[];
   allowsMedia: boolean;
-
+  hidden?: boolean;
   hasNoteWall: boolean;
   notes?: RoomNote[]
 }
@@ -26,7 +26,8 @@ export function convertServerRoomData (roomData: {
       shortName: room.shortName,
       description: room.description,
       allowsMedia: room.allowsMedia,
-      hasNoteWall: room.hasNoteWall
+      hasNoteWall: room.hasNoteWall,
+      hidden: room.hidden
     }
   })
 

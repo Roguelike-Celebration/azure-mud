@@ -1,9 +1,45 @@
 @import "./fonts.css";
 @import "./modal.css";
 
+/* Default theme */
+:root {
+  --main-background: black;
+  --main-font: white;
+  --alternate-background: #333333;
+  --alternate-translucent: rgba(51,51,51,0.8);
+  --green: lightseagreen;
+  --highlight-line: #aaaaaa;
+  --pink: lightpink;
+  --blue: lightskyblue;
+}
+
+/* solarized dark */
+.solarized-dark{
+  --main-background:#002b36;
+  --main-font:#657b83;
+  --alternate-background: #073642;
+  --alternate-translucent: rgba(7,54,66,0.8);
+  --green: #859900;
+  --highlight-line: #fdf6e3;
+  --pink: #d33682;
+  --blue: #268bd2;
+}
+
+/* solarized light */
+.solarized-light{
+  --main-background:#fdf6e3;
+  --main-font:#657b83;
+  --alternate-background: #eee8d5;
+  --alternate-translucent: rgba(238,232,213,0.8);
+  --green:#859900;
+  --highlight-line: #002b36;
+  --pink: #d33682;
+  --blue: #268bd2;
+}
+
 body {
-  background-color: black;
-  color: white;
+  background-color: var(--main-background);
+  color: var(--main-font);
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
 }
 
@@ -34,19 +70,19 @@ body {
 }
 
 a {
-  color: lightseagreen;
+  color:var(--green);
   text-decoration: none;
   font-weight: bold;
 }
 
 a:visited {
-  color: lightseagreen;
+  color: var(--green);
 }
 
 .link-styled-button {
   background-color: transparent;
   border: none;
-  color: lightgreen;
+  color: var(--green);
   cursor: pointer;
   display: inline; 
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
@@ -54,4 +90,24 @@ a:visited {
   margin: 0;
   padding: 0;
   text-align: left;
+}
+
+button {
+  background-color:var(--main-background);
+  border: 2px solid var(--highlight-line);
+  border-radius: 5px;
+  color: var(--main-font);
+  cursor: pointer;
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 16px;
+  padding: 0.5rem 1rem;
+}
+
+input[type=radio] {
+  vertical-align: baselin;
+  margin-right: 1em;
+}
+
+#themeSelectionForm .radio {
+  margin: 1em;
 }

@@ -62,6 +62,7 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
         </div>
         <InputView />
       </div>
+      <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
     </div>
   )
 }

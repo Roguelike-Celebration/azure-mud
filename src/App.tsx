@@ -16,6 +16,9 @@ import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
+import ThemeSelectorView from './components/ThemeSelectorView'
+import MediaSelectorView from './components/MediaSelectorView'
+import CodeOfConductView from './components/CodeOfConductView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -43,7 +46,6 @@ const App = () => {
             let localLocalData = false
             const rawTimestamp = localStorage.getItem('messageTimestamp')
             const rawMessageData = localStorage.getItem('messages')
-            const rawUserMapData = localStorage.getItem('userMap')
             if (rawTimestamp) {
               try {
                 const timestamp = new Date(rawTimestamp)
@@ -57,8 +59,7 @@ const App = () => {
             if (localLocalData) {
               try {
                 const messages = JSON.parse(rawMessageData)
-                const userMap = !(rawUserMapData === undefined) ? JSON.parse(rawUserMapData) : null
-                dispatch(LoadMessageArchiveAction(messages, userMap))
+                dispatch(LoadMessageArchiveAction(messages))
               } catch (e) {
                 console.log('Could not parse message JSON', e)
               }
@@ -90,15 +91,21 @@ const App = () => {
 
   if (state.checkedAuthentication && !state.authenticated) {
     return (
-      <a
-        href={`${
-          config.SERVER_HOSTNAME
-        }/.auth/login/twitter?post_login_redirect_url=${encodeURIComponent(
-          window.location.href
-        )}`}
-      >
-        Log In
-      </a>
+      <div>
+        <header role="banner"><h1>Welcome to Roguelike Celebration 2020!</h1></header>
+        <main role="main"><p>This is a social space for attendees of <a href={ 'https://roguelike.club' }>Roguelike Celebration</a>, a community-generated weekend of talks, games, and conversations about roguelikes and related topics, including procedural generation and game design. It&apos;s for fans, players, developers, scholars, and everyone else!</p>
+          <a
+            href={`${
+            config.SERVER_HOSTNAME
+          }/.auth/login/twitter?post_login_redirect_url=${encodeURIComponent(
+            window.location.href
+          )}`}
+          >
+          Log In With Twitter
+          </a>
+          <p>We are using Twitter for authentication only. You will have the opportunity to pick a distinct chat handle when you enter the space. Feel free to sign up for a free throwaway Twitter account if necessary.</p>
+          <p>By entering the space, you agree to our <a href={ 'https://roguelike.club/code.html' }>Code of Conduct</a>.</p></main>
+      </div>
     )
   }
 
@@ -114,12 +121,11 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.localMediaStreamId) {
+  if (state.inMediaChat) {
     videoChatView = (
       <MediaChatView
         localMediaStreamId={state.localMediaStreamId}
         peerIds={state.otherMediaStreamPeerIds}
-        mediaDevices={state.mediaDevices}
         videoDeviceId={state.currentVideoDeviceId}
         audioDeviceId={state.currentAudioDeviceId}
         speakingPeerIds={state.speakingPeerIds}
@@ -142,6 +148,30 @@ const App = () => {
     case Modal.NoteWall: {
       innerModalView = (
         <NoteWallView notes={state.roomData[state.roomId].notes} />
+      )
+      break
+    }
+    case Modal.ThemeSelector: {
+      innerModalView = (
+        <ThemeSelectorView />
+      )
+      break
+    }
+    case Modal.MediaSelector: {
+      innerModalView = (
+        <MediaSelectorView
+          devices={state.mediaDevices}
+          initialAudioDeviceId={state.currentAudioDeviceId}
+          initialVideoDeviceId={state.currentVideoDeviceId}
+          showJoinButton={!state.inMediaChat}
+          userIsSpeaking={state.speakingPeerIds.includes('self')}
+        />
+      )
+      break
+    }
+    case Modal.CodeOfConduct: {
+      innerModalView = (
+        <CodeOfConductView />
       )
       break
     }

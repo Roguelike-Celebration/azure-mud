@@ -40,8 +40,22 @@ export function isMod (userId: string) {
   return modList.includes(userId)
 }
 
-export async function getUserIdForUsername (username: string) {
+export async function getUserIdForOnlineUsername (username: string) {
+  // This currently only checks active users, by intention
+  // If we used all users, that would mistakenly let you e.g. send messages to offline users
+  // (who would never get the message)
   const userMap = await activeUserMap()
+  const user = Object.values(userMap).find((u) => u.username === username)
+  if (user) {
+    return user.id
+  }
+}
+
+export async function getUserIdForUsername (username: string) {
+  // This currently only checks active users, by intention
+  // If we used all users, that would mistakenly let you e.g. send messages to offline users
+  // (who would never get the message)
+  const userMap = await DB.minimalProfileUserMap()
   const user = Object.values(userMap).find((u) => u.username === username)
   if (user) {
     return user.id
@@ -90,7 +104,7 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
 
   let roomId = await DB.currentRoomForUser(userId)
   if (!roomId) {
-    roomId = 'kitchen'
+    roomId = 'entryway'
     await DB.setCurrentRoomForUser(userId, roomId)
   }
 

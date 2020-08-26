@@ -1,4 +1,4 @@
-input {
+input[type=text] {
   border-radius: 5px;
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
   font-size: 14px;
@@ -7,9 +7,9 @@ input {
 
 .close {
   align-self: start;
-  background-color: black;
+  background-color:var(--main-background);
   border: none;
-  color: white;
+  color: var(--main-font);
   cursor: pointer;
   font-size: 24px;
   justify-self: end;
@@ -22,36 +22,45 @@ input {
   width: 100%;
 }
 
-.field {
+#profile-edit .field {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .form {
-  width: 31rem;
+  width: 780px;
 }
 
 .ftue .form {
   margin-top: 8rem;
 }
 
+.form label {
+  font-size: 1.4em;
+}
+
+#profile-edit .form label {
+  font-size: 1.6em;
+}
+
+#profile-edit em {
+  line-height: 2.2em;
+}
+
+
 .grid {
   display: grid;
   grid-column-gap: 5%;
   grid-template-columns: 47.5% 47.5%;
-  grid-template-rows: 4rem repeat(3, 1fr)
+  grid-template-rows: repeat(3, 1fr)
 }
 
-.submit {
-  background-color: black;
-  border: 2px solid white;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
-  font-size: 16px;
-  margin-top: 2rem;
-  padding: 0.5rem 1rem;
+#profile-edit .submit {
+  float: right;
+}
+
+#profile-edit h1 {
+    margin-top: 0;
 }

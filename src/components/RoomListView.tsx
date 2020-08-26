@@ -30,9 +30,9 @@ export default function RoomListView (props: Props) {
       >x</button> : ''}
       <MenuButtonView username={props.username} />
       <ul>
-        {props.rooms.map((r) => (
-          <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
-        ))}
+        {props.rooms.map((r) => {
+          return r.hidden ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
+        })}
       </ul>
     </nav>
   )

@@ -2,5 +2,8 @@
 export enum Modal {
     None = 0,
     ProfileEdit,
-    NoteWall
+    NoteWall,
+    ThemeSelector,
+    MediaSelector,
+    CodeOfConduct
 }
