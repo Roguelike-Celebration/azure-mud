@@ -12,10 +12,13 @@
     background-color:var(--main-background);
     border: 2px solid var(--main-font);
     border-radius: 4px;
+    box-sizing: border-box;
+    max-height: 90vh;
     margin: auto;
+    overflow-y: scroll;
     padding: 30px;
     position: absolute;
-    top: 50px;
+    top: 5vh;
     left: 0;
     right: 0;
     width: 800px;
