@@ -1,4 +1,9 @@
-import React, { useContext, FunctionComponent, ReactElement } from 'react'
+import React, { useContext, FunctionComponent } from 'react'
+import ReactTooltip from 'react-tooltip'
+import Linkify from 'react-linkify'
+
+import { MenuItem, ContextMenuTrigger, ContextMenu } from 'react-contextmenu'
+
 import {
   Message,
   MessageType,
@@ -15,8 +20,6 @@ import {
   ModMessage
 } from '../message'
 import NameView from './NameView'
-import { MenuItem, ContextMenuTrigger, ContextMenu } from 'react-contextmenu'
-import ReactTooltip from 'react-tooltip'
 import { UserMapContext } from '../App'
 import { deleteMessage } from '../networking'
 
@@ -62,23 +65,25 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (prop
   const playerIsMod = userMap[myId] && userMap[myId].isMod
 
   if (!playerIsMod) {
-    return props.children as ReactElement
+    return <Linkify properties={{ target: '_blank' }}>{props.children}</Linkify>
   } else {
     return (
-      <span className="deleteMenu">
-        <ContextMenuTrigger id={props.messageId} mouseButton={2} renderTag="span">
-          {props.children}
-        </ContextMenuTrigger>
-        <ContextMenu id={props.messageId}>
-          <MenuItem
-            data={{ messageId: props.messageId, message: props.children }}
-            onClick={handleDeleteMessage}
-          >
-            { 'Delete Message?' }
-          </MenuItem>
-        </ContextMenu>
-        <ReactTooltip />
-      </span>
+      <Linkify properties={{ target: '_blank' }}>
+        <span className="deleteMenu">
+          <ContextMenuTrigger id={props.messageId} mouseButton={2} renderTag="span">
+            {props.children}
+          </ContextMenuTrigger>
+          <ContextMenu id={props.messageId}>
+            <MenuItem
+              data={{ messageId: props.messageId, message: props.children }}
+              onClick={handleDeleteMessage}
+            >
+              { 'Delete Message?' }
+            </MenuItem>
+          </ContextMenu>
+          <ReactTooltip />
+        </span>
+      </Linkify>
     )
   }
 }

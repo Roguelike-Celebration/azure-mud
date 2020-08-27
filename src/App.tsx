@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useState } from 'react'
+import React, { useEffect, createContext } from 'react'
 
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'
@@ -19,6 +19,7 @@ import { ModalView } from './components/ModalView'
 import ThemeSelectorView from './components/ThemeSelectorView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
+import ScheduleView from './components/ScheduleView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -174,6 +175,11 @@ const App = () => {
         <CodeOfConductView />
       )
       break
+    }
+    case Modal.Schedule: {
+      innerModalView = (
+        <ScheduleView />
+      )
     }
   }
 

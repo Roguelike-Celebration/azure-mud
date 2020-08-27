@@ -54,13 +54,13 @@ export default function RoomView (props: Props) {
   if (room && room.allowsMedia) {
     if (getNetworkMediaChatStatus()) {
       videoChatButton = (
-        <button onClick={leaveVideoChat}>
+        <button onClick={leaveVideoChat} id='join-video-chat'>
           Leave Video Chat
         </button>
       )
     } else {
       videoChatButton = (
-        <button onClick={joinVideoChat}>
+        <button onClick={joinVideoChat} id='join-video-chat'>
           Join Video Chat {room.videoUsers && room.videoUsers.length > 0 ? `(${room.videoUsers.length})` : ''}
         </button>
       )
@@ -72,7 +72,7 @@ export default function RoomView (props: Props) {
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
     <div id="room">
-      <h1 id="room-name">{room ? room.name : 'Loading...'}</h1>
+      <h1 id="room-name">{room ? room.name : 'Loading...'}{videoChatButton}</h1>
       <div
         id="static-room-description"
         onClick={descriptionClick}
@@ -83,7 +83,6 @@ export default function RoomView (props: Props) {
         }}
       />
       {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
-      {videoChatButton}
       {noteWallView}
     </div>
   )

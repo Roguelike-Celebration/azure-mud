@@ -28,6 +28,7 @@
 #side-menu button {
   background-color: transparent;
   border: none;
+  outline: none;
   color: var(--main-font);
   cursor: pointer;
   display: inline; 

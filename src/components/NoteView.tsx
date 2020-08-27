@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { FaThumbsUp, FaRegThumbsUp } from 'react-icons/fa'
 import ReactTooltip from 'react-tooltip'
+import Linkify from 'react-linkify'
 
 import { RoomNote } from '../../server/src/roomNote'
 import { UserMapContext } from '../App'
@@ -39,16 +40,18 @@ export function NoteView (props: { note: RoomNote }) {
   }
 
   return (
-    <div className='note'>
-      {canDelete ? <button onClick={onClickDelete} className='link-styled-button note-delete'>X</button> : ''}
-      {n.message} <br/>
-      {canLike
-        ? <button className={`link-styled-button like-button ${hasLiked ? 'liked' : 'unliked'}`} onClick={onClickLike} data-tip={likeNames}>
-          {likes}{hasLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
-          <ReactTooltip />
-        </button>
-        : ''}
+    <Linkify properties={{ target: '_blank' }}>
+      <div className='note'>
+        {canDelete ? <button onClick={onClickDelete} className='link-styled-button note-delete'>X</button> : ''}
+        {n.message} <br/>
+        {canLike
+          ? <button className={`link-styled-button like-button ${hasLiked ? 'liked' : 'unliked'}`} onClick={onClickLike} data-tip={likeNames}>
+            {likes}{hasLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
+            <ReactTooltip />
+          </button>
+          : ''}
         -<NameView userId={n.authorId} id={`noteAuthor-${n.id}`}/> <br/>
-    </div>
+      </div>
+    </Linkify>
   )
 }
