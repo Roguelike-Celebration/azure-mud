@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import Linkify from 'react-linkify'
+
 import { PublicUser } from '../../server/src/user'
 import { HideProfileAction } from '../Actions'
 import { DispatchContext } from '../App'
@@ -29,9 +31,7 @@ export default function ProfileView (props: { user: PublicUser }) {
   const url = user.url ? (
     <div id="profile-url">
       <strong>Web Site</strong>:{' '}
-      <a href={user.url} target="_blank" rel="noreferrer">
-        {user.url}
-      </a>
+      {user.url}
     </div>
   ) : (
     ''
@@ -53,17 +53,19 @@ export default function ProfileView (props: { user: PublicUser }) {
   )
 
   return (
-    <div id="profile">
-      <h1>
-        {user.username} {user.isMod ? '(👑 moderator)' : ''}
-      </h1>
-      {realName}
-      <div id="profile-pronouns">{user.pronouns}</div>
-      {description}
-      {twitterHandle}
-      {url}
-      {askMeAbout}
-      <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
-    </div>
+    <Linkify>
+      <div id="profile">
+        <h1>
+          {user.username} {user.isMod ? '(👑 moderator)' : ''}
+        </h1>
+        {realName}
+        <div id="profile-pronouns">{user.pronouns}</div>
+        {description}
+        {twitterHandle}
+        {url}
+        {askMeAbout}
+        <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
+      </div>
+    </Linkify>
   )
 }

@@ -1,16 +1,6 @@
-import React, { useContext } from 'react'
-
-import '../../style/profileEditView.css'
-import { DispatchContext } from '../App'
-import { HideModalAction } from '../Actions'
+import React from 'react'
 
 export default function CodeOfConductView () {
-  const dispatch = useContext(DispatchContext)
-
-  const close = () => {
-    dispatch(HideModalAction())
-  }
-
   return (
     <div>
       <p>Our goal is to have a really fun and welcoming celebration of roguelike games, so we have a formalized code of conduct that sets these expectations.</p>

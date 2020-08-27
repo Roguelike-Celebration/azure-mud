@@ -1,8 +1,11 @@
 import React from 'react'
+
 import MessageView from './MessageView'
 import { Message } from '../message'
 
 import '../../style/chat.css'
+
+console.log('Are we linkify9ing?')
 
 export default function ChatView (props: { messages: Message[] }) {
   React.useEffect(() => {
