@@ -16,7 +16,7 @@ export default function ThemeSelectorView () {
 
   // Set the selection of the radio group upon opening the modal
   const [selectedTheme, setSelectedTheme] = React.useState(
-    localStorage.getItem('UserSelectedTheme') || 'Default'
+    localStorage.getItem('UserSelectedTheme') || 'default'
   )
 
   // Handle what happens when you change the modal
