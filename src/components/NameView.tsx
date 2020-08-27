@@ -67,7 +67,10 @@ export default function NameView (props: { userId: string; id?: string }) {
       </ContextMenuTrigger>
       <ContextMenu id={props.id}>
         <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
-          Profile/Whisper
+          Profile
+        </MenuItem>
+        <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
+          Whisper
         </MenuItem>
         {banButton}
       </ContextMenu>
