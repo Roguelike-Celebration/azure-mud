@@ -10,3 +10,8 @@ a.room-link {
 a.room-link:visited {
   color: var(--green);
 }
+
+#join-video-chat {
+  margin-left: 2em;
+  vertical-align: top;
+}
