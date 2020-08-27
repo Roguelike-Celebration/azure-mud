@@ -60,7 +60,7 @@ const httpTrigger: AzureFunction = async function (
       // Send to the mod-only group
       context.bindings.signalRMessages = [
         {
-          groupName: user.roomId,
+          groupName: 'mods',
           target: 'mods',
           arguments: [user.id, modMatch[2]]
         }
