@@ -2,30 +2,49 @@ import React, { useContext } from 'react'
 import Linkify from 'react-linkify'
 
 import { PublicUser } from '../../server/src/user'
-import { HideProfileAction } from '../Actions'
+import { HideProfileAction, WhisperAction } from '../Actions'
 import { DispatchContext } from '../App'
+import MessageView from './MessageView'
+import { Message, MessageType } from '../message'
+import InputView from './InputView'
 
 import '../../style/profileView.css'
 
-export default function ProfileView (props: { user: PublicUser }) {
-  const { user } = props
+export default function ProfileView (props: { user: PublicUser, messages: Message[] }) {
+  const { user, messages } = props
   const dispatch = useContext(DispatchContext)
+
+  React.useEffect(() => {
+    const lastMessage = document.querySelector(
+      '#chat .message:last-of-type'
+    )
+    if (!lastMessage) return;
+
+    // I was using lastMessage.scrollIntoView()
+    // But I was seeing odd behavior when there was only one message on-screen.
+    // This very TS-unfriendly code fixes taht.
+    (lastMessage.parentNode as Element).scrollTop =
+      (lastMessage as any).offsetTop -
+      (lastMessage.parentNode as any).offsetTop
+  })
+
+  const whisperMessages = messages.filter((m, _) => m.type === MessageType.Whisper && m.userId === user.id)
 
   const realName = user.realName ? (
     <div id="profile-realName">{user.realName}</div>
   ) : (
-    ''
+    null
   )
 
   const twitterHandle = user.twitterHandle ? (
     <div id="profile-twitter">
       <strong>Twitter</strong>:{' '}
       <a href={`https://twitter.com/${user.twitterHandle}`} target="_blank" rel="noreferrer">
-        @{user.twitterHandle}
+      @{user.twitterHandle}
       </a>
     </div>
   ) : (
-    ''
+    null
   )
 
   const url = user.url ? (
@@ -34,13 +53,13 @@ export default function ProfileView (props: { user: PublicUser }) {
       {user.url}
     </div>
   ) : (
-    ''
+    null
   )
 
   const description = user.description ? (
     <div id="profile-description">{user.description}</div>
   ) : (
-    ''
+    null
   )
 
   const askMeAbout = user.askMeAbout ? (
@@ -49,22 +68,32 @@ export default function ProfileView (props: { user: PublicUser }) {
       {user.askMeAbout}
     </div>
   ) : (
-    ''
+    null
   )
 
   return (
     <Linkify>
       <div id="profile">
-        <h1>
-          {user.username} {user.isMod ? '(👑 moderator)' : ''}
-        </h1>
+        <div id="header">
+          <h2>{user.username} {user.isMod ? '(👑 moderator)' : ''}</h2>
+          <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
+        </div>
         {realName}
         <div id="profile-pronouns">{user.pronouns}</div>
         {description}
         {twitterHandle}
         {url}
         {askMeAbout}
-        <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
+        <div id="chat-container">
+          <div id="chat-header">Whisper Chat</div>
+          <div id="chat">
+            {whisperMessages.length > 0 ? whisperMessages.map((m, idx) => {
+              const id = `message-${idx}`
+              return <MessageView message={m} key={id} id={id} />
+            }) : <em>{`This is the beginning of your whisper chat with ${user.username}`}</em>}
+          </div>
+          <InputView sendMessage={(message) => dispatch(WhisperAction(user.id, message))}/>
+        </div>
       </div>
     </Linkify>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import MessageView from './MessageView'
-import { Message } from '../message'
+import { Message, MessageType } from '../message'
 
 import '../../style/chat.css'
 

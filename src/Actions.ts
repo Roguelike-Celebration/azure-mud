@@ -532,11 +532,11 @@ interface ShowProfileAction {
 }
 
 export const ShowProfileAction = (
-  name: string
+  userId: string
 ): ((dispatch: ThunkDispatch<Action, State>) => void) => {
   return async (dispatch: ThunkDispatch<Action, State>) => {
     console.log('lol')
-    const user = await fetchProfile(name)
+    const user = await fetchProfile(userId)
     if (!user) {
       console.log('No user')
       return
