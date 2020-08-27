@@ -55,12 +55,18 @@ const httpTrigger: AzureFunction = async function (
       return
     }
 
-    const modMatch = /^\/(mod) (.+)/.exec(message)
+    const modMatch = /^\/(mod|mods|moderator|moderators) (.+)/.exec(message)
     if (modMatch) {
-      // Send to the mod-only group
       context.bindings.signalRMessages = [
+        // Send to the mod-only group
         {
-          groupName: user.roomId,
+          groupName: 'mods',
+          target: 'mods',
+          arguments: [user.id, modMatch[2]]
+        },
+        // We also send it back to the user so it shows up in their chat window
+        {
+          userId: user.id,
           target: 'mods',
           arguments: [user.id, modMatch[2]]
         }
