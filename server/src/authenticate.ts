@@ -21,7 +21,7 @@ export default async function authenticate (
   }
   if (audit && !context.bindingDefinitions.find(def => def.name === 'tableBinding')) {
     context.res = {
-      status: 500,
+      status: 501,
       body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
     }
     context.log('Failed to configure audit endpoint with the proper tableBinding')
