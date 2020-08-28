@@ -24,6 +24,7 @@ import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
+import { matchingSlashCommand } from './SlashCommands'
 
 export interface State {
   authenticated: boolean;
@@ -262,13 +263,19 @@ export default (oldState: State, action: Action): State => {
   // UI Actions
   if (action.type === ActionType.SendMessage) {
     const messageId: string = uuidv4()
+    const trimmedMessage = action.value.trim()
+    const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
 
-    sendChatMessage(messageId, action.value)
+    if (beginsWithSlash && matchingSlashCommand(trimmedMessage) === undefined) {
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+      addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
+    } else if (beginsWithSlash) {
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+      sendChatMessage(messageId, trimmedMessage)
 
-    const isCommand = /^\/(.+?) (.+)/.exec(action.value)
-    if (isCommand) {
-      if (isCommand[1] === 'whisper') {
-        const [_, username, message] = /^(.+?) (.+)/.exec(isCommand[2])
+      // TODO clean this up by assigning enumerated values to the SlashCommands and checking against the matching command instead of this.
+      if (commandStr[1] === '/whisper') {
+        const [_, username, message] = /^(.+?) (.+)/.exec(commandStr[2])
         const user = Object.values(state.userMap).find(
           (u) => u.username === username
         )
@@ -278,6 +285,7 @@ export default (oldState: State, action: Action): State => {
         }
       }
     } else {
+      sendChatMessage(messageId, action.value)
       addMessage(state, createChatMessage(messageId, state.userId, action.value))
     }
   }
