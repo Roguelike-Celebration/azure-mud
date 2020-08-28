@@ -20,5 +20,6 @@ export const SlashCommands: SlashCommand[] = [
 ]
 
 export function matchingSlashCommand (message: String): SlashCommand | undefined {
-  return SlashCommands.find((c) => c.invocations.find((i) => message.startsWith(i)))
+  // Tacking on a required whitespace works only because we have no one-parameter commands so far!
+  return SlashCommands.find((c) => c.invocations.find((i) => message.startsWith(i + ' ')))
 }

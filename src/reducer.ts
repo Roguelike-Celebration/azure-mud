@@ -263,16 +263,16 @@ export default (oldState: State, action: Action): State => {
   // UI Actions
   if (action.type === ActionType.SendMessage) {
     const messageId: string = uuidv4()
-    const isCommand = /^\/(.+?)/.exec(action.value)
-    const matchingCommand = matchingSlashCommand(action.value)
+    const beginsWithSlash = /^\/.+?/.exec(action.value.trim())
 
-    if (isCommand && matchingCommand === undefined) {
-      addMessage(state, createChatMessage(messageId, state.userId, 'Your command is not a registered slash command!'))
-    } else if (isCommand) {
-      sendChatMessage(messageId, action.value)
+    if (beginsWithSlash && matchingSlashCommand(action.value.trim()) === undefined) {
+      const commandStr = /^(\/.+?) (.+)/.exec(action.value)
+      addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
+    } else if (beginsWithSlash) {
+      sendChatMessage(messageId, action.value.trim())
 
-      if (isCommand[1] === 'whisper') {
-        const [_, username, message] = /^(.+?) (.+)/.exec(isCommand[2])
+      if (beginsWithSlash[1] === 'whisper') {
+        const [_, username, message] = /^(.+?) (.+)/.exec(beginsWithSlash[2])
         const user = Object.values(state.userMap).find(
           (u) => u.username === username
         )
