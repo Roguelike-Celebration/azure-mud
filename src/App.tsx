@@ -210,10 +210,11 @@ const App = () => {
               {modalView}
               <div id="main" role="main">
                 {videoChatView}
-                <RoomView
+                {state.roomData[state.roomId] ? <RoomView
                   room={state.roomData[state.roomId]}
                   userId={state.userId}
-                />
+                  roomData={state.roomData}
+                /> : null}
                 <ChatView messages={state.messages} />
                 <InputView
                   prepopulated={state.prepopulatedInput}
