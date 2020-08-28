@@ -24,6 +24,7 @@ import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
+import { matchingSlashCommand } from './SlashCommands'
 
 export interface State {
   authenticated: boolean;
@@ -262,11 +263,14 @@ export default (oldState: State, action: Action): State => {
   // UI Actions
   if (action.type === ActionType.SendMessage) {
     const messageId: string = uuidv4()
+    const isCommand = /^\/(.+?)/.exec(action.value)
+    const matchingCommand = matchingSlashCommand(action.value)
 
-    sendChatMessage(messageId, action.value)
+    if (isCommand && matchingCommand === undefined) {
+      addMessage(state, createChatMessage(messageId, state.userId, 'Your command is not a registered slash command!'))
+    } else if (isCommand) {
+      sendChatMessage(messageId, action.value)
 
-    const isCommand = /^\/(.+?) (.+)/.exec(action.value)
-    if (isCommand) {
       if (isCommand[1] === 'whisper') {
         const [_, username, message] = /^(.+?) (.+)/.exec(isCommand[2])
         const user = Object.values(state.userMap).find(
@@ -278,6 +282,7 @@ export default (oldState: State, action: Action): State => {
         }
       }
     } else {
+      sendChatMessage(messageId, action.value)
       addMessage(state, createChatMessage(messageId, state.userId, action.value))
     }
   }
