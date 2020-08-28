@@ -11,12 +11,10 @@ import { FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
-import MapView from './Map/MapView'
 
 interface Props {
   room?: Room;
   userId?: string;
-  roomData: { [roomId: string]: Room }
 }
 
 export default function RoomView (props: Props) {
@@ -74,7 +72,6 @@ export default function RoomView (props: Props) {
   return (
     <div id="room">
       <h1 id="room-name">{room ? room.name : 'Loading...'}{videoChatButton}</h1>
-      <MapView roomData={props.roomData} />
       <div
         id="static-room-description"
         onClick={descriptionClick}

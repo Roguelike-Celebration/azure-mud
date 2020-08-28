@@ -20,6 +20,7 @@ import ThemeSelectorView from './components/ThemeSelectorView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
+import MapModalView from './components/MapModalView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -180,6 +181,11 @@ const App = () => {
       innerModalView = (
         <ScheduleView />
       )
+      break
+    }
+    case Modal.Map: {
+      innerModalView = <MapModalView roomData={state.roomData} />
+      break
     }
   }
 
@@ -213,7 +219,6 @@ const App = () => {
                 {state.roomData[state.roomId] ? <RoomView
                   room={state.roomData[state.roomId]}
                   userId={state.userId}
-                  roomData={state.roomData}
                 /> : null}
                 <ChatView messages={state.messages} />
                 <InputView

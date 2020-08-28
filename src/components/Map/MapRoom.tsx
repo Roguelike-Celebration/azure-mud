@@ -1,5 +1,22 @@
-import React from 'react'
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+import React, { useContext } from 'react'
 import { Room } from '../../room'
+import { moveToRoom } from '../../networking'
+import { HideModalAction } from '../../Actions'
+import { DispatchContext } from '../../App'
+
+/**
+ * This procedurally generates a room in the ASCII map!
+ *
+ * Right now, it's just munging a string together, which makes it difficult for
+ * us to do things like coloring elements or making the room name bold
+ * (and placing the player's @ is going to be super weird).
+ *
+ * I also imagine this could be made more complex to procedurally generate
+ * other interesting objects in the room (or visualize how many players are in there?)
+ */
 
 interface Props {
     width: number
@@ -10,7 +27,13 @@ interface Props {
 }
 
 export default function MapRoom (props: Props) {
+  const dispatch = useContext(DispatchContext)
   const { room, width, height, x, y } = props
+
+  const onClick = () => {
+    moveToRoom(room.id)
+    dispatch(HideModalAction())
+  }
 
   let str
 
@@ -52,5 +75,7 @@ export default function MapRoom (props: Props) {
   }
   str += '┘\r\n'
 
-  return <pre style={{ position: 'absolute', top: `${y * 15}px`, left: `${x * 10}px`, margin: '0' }}>{str}</pre>
+  // This fails a bunch of a11y checks. This is okay because I'm assuming the entire map is fundamentally not accessible.
+  // We'll offer the old list view as the accessible fallback.
+  return <pre onClick={onClick} style={{ position: 'absolute', top: `${y * 15}px`, left: `${x * 10}px`, margin: '0', cursor: 'pointer' }}>{str}</pre>
 }

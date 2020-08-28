@@ -37,6 +37,10 @@ export default function MenuButtonView (props: { username: string }) {
     dispatch(ShowModalAction(Modal.Schedule))
   }
 
+  const showMap = () => {
+    dispatch(ShowModalAction(Modal.Map))
+  }
+
   return (
     <div id="menu-button">
       <ContextMenuTrigger id="topMenu" holdToDisplay={0}>
@@ -45,6 +49,7 @@ export default function MenuButtonView (props: { username: string }) {
       <ContextMenu id={'topMenu'}>
         <MenuItem onClick={showProfile}>Edit Profile</MenuItem>
         <MenuItem onClick={showSchedule}>Schedule</MenuItem>
+        <MenuItem onClick={showMap}>Map</MenuItem>
         <MenuItem onClick={showThemeSelector}>Select Theme</MenuItem>
         <MenuItem onClick={showCodeOfConduct}>Code of Conduct</MenuItem>
         <MenuItem onClick={logOut}>Log Out</MenuItem>

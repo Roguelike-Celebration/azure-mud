@@ -3,6 +3,19 @@ import MapRoom from './MapRoom'
 import MapPath from './MapPath'
 import { Room } from '../../room'
 
+/**
+ * This renders a clickable ASCII map! This code is super janky in many ways.
+ *
+ * At a high level, while there's some procedurality in creating the rooms,
+ * the overall map is completely declarative. There's a data blob in this file
+ * that contains exactly where each room should go, as well as the paths between
+ * rooms (which I would *love* to procgen, but seems like a bunch of work)
+ *
+ * The paths in particular are janky. They have a solid background to override
+ * the wall tiles in the case of doors, but that means we ofteh need to chunk out
+ * individual paths into multiple ones so that the div being created doesn't
+ * unintentionally sit on top of other room tiles and wipe them out. Sigh.
+ */
 interface Props {
     roomData: { [roomId: string]: Room };
 }
