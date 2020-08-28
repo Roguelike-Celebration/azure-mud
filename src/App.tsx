@@ -5,7 +5,7 @@ import ChatView from './components/ChatView'
 import InputView from './components/InputView'
 import { connect, getLoginInfo, checkIsRegistered } from './networking'
 import reducer, { State, defaultState } from './reducer'
-import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction, ShowSideMenuAction, SendMessageAction } from './Actions'
+import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction, ShowSideMenuAction, SendMessageAction, ShowModalAction } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
 import config from './config'
@@ -208,10 +208,13 @@ const App = () => {
           >
             <div id={state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'}>
               {shouldShowMenu
-                ? <RoomListView
-                  rooms={Object.values(state.roomData)}
-                  username={state.userMap[state.userId].username}
-                />
+                ? <div>
+                    <button onClick={() => dispatch(ShowModalAction(Modal.Help))}>Help</button>
+                    <RoomListView
+                      rooms={Object.values(state.roomData)}
+                      username={state.userMap[state.userId].username}
+                    />
+                  </div>
                 : <button id='show-menu' onClick={showMenu}><span role='img' aria-label='menu'>🍔</span></button>}
               {modalView}
               <div id="main" role="main">
