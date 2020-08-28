@@ -270,10 +270,12 @@ export default (oldState: State, action: Action): State => {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
     } else if (beginsWithSlash) {
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       sendChatMessage(messageId, trimmedMessage)
 
-      if (beginsWithSlash[1] === 'whisper') {
-        const [_, username, message] = /^(.+?) (.+)/.exec(beginsWithSlash[2])
+      // TODO clean this up by assigning enumerated values to the SlashCommands and checking against the matching command instead of this.
+      if (commandStr[1] === '/whisper') {
+        const [_, username, message] = /^(.+?) (.+)/.exec(commandStr[2])
         const user = Object.values(state.userMap).find(
           (u) => u.username === username
         )
