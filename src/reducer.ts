@@ -284,7 +284,7 @@ export default (oldState: State, action: Action): State => {
           addMessage(state, createWhisperMessage(userId, message, true))
         }
       } else if (matching.type === SlashCommandType.Help) {
-        addMessage(state, createErrorMessage("!!!!! THIS SHOULD BRING UP THE HELP MODAL!"))
+        state.activeModal = Modal.Help
       }
     } else {
       sendChatMessage(messageId, action.value)

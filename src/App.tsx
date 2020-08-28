@@ -20,6 +20,7 @@ import ThemeSelectorView from './components/ThemeSelectorView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
+import HelpView from './components/HelpView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -179,6 +180,11 @@ const App = () => {
     case Modal.Schedule: {
       innerModalView = (
         <ScheduleView />
+      )
+    }
+    case Modal.Help: {
+      innerModalView = (
+        <HelpView />
       )
     }
   }

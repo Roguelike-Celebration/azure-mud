@@ -6,5 +6,6 @@ export enum Modal {
     ThemeSelector,
     MediaSelector,
     CodeOfConduct,
-    Schedule
+    Schedule,
+    Help
 }
