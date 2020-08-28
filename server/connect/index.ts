@@ -20,7 +20,7 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<any> {
   context.log('In connect')
 
-  await authenticate(context, req, async (user) => {
+  await authenticate(context, req, true, async (user) => {
     context.log('We have a user!', user.id)
     await addUserToRoomPresence(user.id, user.roomId)
     await userHeartbeatReceived(user.id)

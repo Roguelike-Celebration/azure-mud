@@ -6,7 +6,7 @@ import DB from '../src/redis'
 import { isMod } from '../src/user'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  await authenticate(context, req, async (user) => {
+  await authenticate(context, req, true, async (user) => {
     if (user.isBanned) {
       context.res = {
         status: 403,

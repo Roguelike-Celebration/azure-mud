@@ -36,6 +36,16 @@ const httpTrigger: AzureFunction = async function (
     arguments: [{ [userId]: minimalUser }]
   }]
 
+  // Special case audit log entry - see authenticate(...) for general case audit
+  context.bindings.tableBinding = [{
+    PartitionKey: userId,
+    RowKey: Date.now().toString(),
+    userId: userId,
+    username: minimalUser.username,
+    endpoint: req.url.replace('https://' + process.env.WEBSITE_HOSTNAME, ''),
+    request: req.body
+  }]
+
   // TODO: We'll likely eventually have some validation here
   context.res = {
     status: 200,
