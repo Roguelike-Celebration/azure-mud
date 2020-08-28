@@ -1,6 +1,6 @@
 import React from 'react'
 import { Room } from '../room'
-import MapView from './Map/MapView'
+import MapView from './map/MapView'
 
 interface Props {
     roomData: { [roomId: string]: Room };
