@@ -11,7 +11,7 @@ import { useReducerWithThunk } from './useReducerWithThunk'
 import config from './config'
 import MediaChatView from './components/MediaChatView'
 import ProfileEditView from './components/ProfileEditView'
-import RoomListView from './components/RoomListView'
+import SideNavView from './components/SideNavView'
 import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
@@ -208,7 +208,7 @@ const App = () => {
           >
             <div id={state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'}>
               {shouldShowMenu
-                ? <RoomListView
+                ? <SideNavView
                   rooms={Object.values(state.roomData)}
                   username={state.userMap[state.userId].username}
                 />
