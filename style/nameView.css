@@ -34,3 +34,8 @@ nav.react-contextmenu {
 span.name {
   cursor: pointer;
 }
+
+.name .react-contextmenu {
+  color: white;
+  font-style: normal;
+}

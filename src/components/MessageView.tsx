@@ -129,20 +129,22 @@ const ChatMessageView = (props: ChatMessage & { id: string }) => (
 )
 
 const WhisperView = (props: WhisperMessage & { id: string }) => {
+  const grayFont = { color: '#b5b5b5' }
+
   if (props.senderIsSelf) {
     return (
-      <div className="message">
+      <div className="message" style={grayFont}>
         <em>
-          You whisper to <NameView id={props.id} userId={props.userId} />:{' '}
+          You whisper to <NameView id={props.id} userId={props.userId} whisper />:{' '}
           {props.message}
         </em>
       </div>
     )
   } else {
     return (
-      <div className="message">
+      <div className="message" style={grayFont}>
         <em>
-          <NameView userId={props.userId} id={props.id} /> whispers:{' '}
+          <NameView userId={props.userId} id={props.id} whisper /> whispers:{' '}
           {props.message}
         </em>
       </div>

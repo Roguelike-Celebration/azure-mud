@@ -11,7 +11,7 @@ import { User } from '../../server/src/user'
 
 import '../../style/nameView.css'
 
-export default function NameView (props: { userId: string; id?: string }) {
+export default function NameView (props: { userId: string; id?: string}) {
   const dispatch = useContext(DispatchContext)
   const { userMap, myId } = useContext(UserMapContext)
 
