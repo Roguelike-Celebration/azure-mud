@@ -23,6 +23,12 @@
       "type": "http",
       "direction": "out",
       "name": "res"
+    },
+    {
+      "tableName": "auditLog",
+      "name": "tableBinding",
+      "type": "table",
+      "direction": "out"
     }
   ],
   "scriptFile": "../dist/disconnect/index.js"

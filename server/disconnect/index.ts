@@ -8,7 +8,7 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<any> {
-  await authenticate(context, req, async (user) => {
+  await authenticate(context, req, true, async (user) => {
     context.res = {
       status: 200
     }

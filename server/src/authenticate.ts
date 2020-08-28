@@ -1,5 +1,6 @@
 import { User, getFullUser } from './user'
 import { Context, HttpRequest } from '@azure/functions'
+import { v4 as uuid } from 'uuid'
 
 /** This wraps an HTTP function and calls it with a hydrated authenticated user.
  * Returns true if execution should continue. */
@@ -7,6 +8,7 @@ import { Context, HttpRequest } from '@azure/functions'
 export default async function authenticate (
   context: Context,
   req: HttpRequest,
+  audit: boolean,
   handler: (user: User) => void
 ) {
   const userId = req.headers && req.headers['x-ms-client-principal-id']
@@ -18,7 +20,29 @@ export default async function authenticate (
     context.log('Failed to include a user ID')
     return
   }
+  if (audit && !context.bindingDefinitions.find(def => def.name === 'tableBinding')) {
+    context.res = {
+      status: 501,
+      body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
+    }
+    context.log('Failed to configure audit endpoint with the proper tableBinding')
+    return
+  }
 
   const user = await getFullUser(userId)
-  return await handler(user)
+  const handled = await handler(user)
+
+  if (audit) {
+    context.bindings.tableBinding = [{
+      PartitionKey: user.id,
+      RowKey: uuid(),
+      // The object comes loaded with a Timestamp by default as well
+      userId: user.id,
+      username: user.username,
+      endpoint: req.url.replace('https://' + process.env.WEBSITE_HOSTNAME, ''),
+      request: req.body // Assumes that all the relevant information will be in the body and not in, like...headers, or something
+    }]
+  }
+
+  return handled
 }
