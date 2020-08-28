@@ -18,6 +18,7 @@ import { Room } from '../../room'
  */
 interface Props {
     roomData: { [roomId: string]: Room };
+    currentRoomId: string
 }
 
 export default function MapView (props: Props) {
@@ -26,7 +27,7 @@ export default function MapView (props: Props) {
   console.log(props.roomData)
   const roomViews = rooms.map((r, idx) => {
     console.log(r.id, props.roomData[r.id])
-    return <MapRoom key={`room-${idx}`} room={props.roomData[r.id]} width={r.width} height={r.height} x={r.x} y={r.y}/>
+    return <MapRoom key={`room-${idx}`} room={props.roomData[r.id]} width={r.width} height={r.height} x={r.x} y={r.y} playerCoords={r.playerCoords} hasPlayer={r.id === props.currentRoomId}/>
   })
   const pathViews = paths.map((p, idx) => <MapPath key={`path-${idx}`} x={p.x} y={p.y} str={p.str}/>)
 
@@ -44,49 +45,56 @@ const rooms = [
     width: 7,
     height: 8,
     x: 0,
-    y: 4
+    y: 4,
+    playerCoords: [5, 6]
   },
   {
     id: 'kitchen',
     width: 10,
     height: 8,
     x: 12,
-    y: 0
+    y: 0,
+    playerCoords: [2, 6]
   },
   {
     id: 'bar',
     width: 10,
     height: 4,
     x: 12,
-    y: 10
+    y: 10,
+    playerCoords: [1, 1]
   },
   {
     id: 'shippingContainer',
     width: 13,
     height: 3,
     x: 30,
-    y: 3
+    y: 3,
+    playerCoords: [1, 2]
   },
   {
     id: 'theatre',
     width: 15,
     height: 20,
     x: 50,
-    y: 0
+    y: 0,
+    playerCoords: [7, 13]
   },
   {
     id: 'statue',
     width: 8,
     height: 5,
     x: 33,
-    y: 12
+    y: 12,
+    playerCoords: [5, 4]
   },
   {
     id: 'lounge',
     width: 30,
     height: 6,
     x: 13,
-    y: 20
+    y: 20,
+    playerCoords: [8, 3]
   }
 ]
 

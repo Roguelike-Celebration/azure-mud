@@ -24,6 +24,12 @@ interface Props {
     x: number
     y: number
     room: Room
+
+    // Note a weird glitch:
+    // currently, if a player's coordinates are in the same row as a title,
+    // it will only render if it's to the left of the title
+    hasPlayer?: boolean
+    playerCoords: number[]
 }
 
 export default function MapRoom (props: Props) {
@@ -52,17 +58,27 @@ export default function MapRoom (props: Props) {
   for (let row = 0; row < height; row++) {
     str += '│'
     if (row >= nameVOffset && (nameWords.length + nameVOffset) > row) {
+      // Print part of the name
       const diff = (width - nameWords[row - nameVOffset].length) / 2
-      for (let i = 0; i < Math.floor(diff); i++) {
-        str += '.'
+      for (let col = 0; col < Math.floor(diff); col++) {
+        if (props.hasPlayer && props.playerCoords[0] === col && props.playerCoords[1] === row) {
+          str += '@'
+        } else {
+          str += '.'
+        }
       }
       str += nameWords[row - nameVOffset]
       for (let i = 0; i < Math.ceil(diff); i++) {
         str += '.'
       }
     } else {
+      // Normal empty floor path
       for (let col = 0; col < width; col++) {
-        str += '.'
+        if (props.hasPlayer && props.playerCoords[0] === col && props.playerCoords[1] === row) {
+          str += '@'
+        } else {
+          str += '.'
+        }
       }
     }
     str += '│\r\n'

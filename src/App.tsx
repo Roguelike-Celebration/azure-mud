@@ -184,7 +184,7 @@ const App = () => {
       break
     }
     case Modal.Map: {
-      innerModalView = <MapModalView roomData={state.roomData} />
+      innerModalView = <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
       break
     }
   }
