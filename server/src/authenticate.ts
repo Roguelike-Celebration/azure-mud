@@ -1,5 +1,6 @@
 import { User, getFullUser } from './user'
 import { Context, HttpRequest } from '@azure/functions'
+import { v4 as uuid } from 'uuid'
 
 /** This wraps an HTTP function and calls it with a hydrated authenticated user.
  * Returns true if execution should continue. */
@@ -34,7 +35,7 @@ export default async function authenticate (
   if (audit) {
     context.bindings.tableBinding = [{
       PartitionKey: user.id,
-      RowKey: Date.now().toString(), // With an appropriately zealous bot and a lot of luck, you could hit this 1ms timing window, so it's not foolproof
+      RowKey: uuid(),
       // The object comes loaded with a Timestamp by default as well
       userId: user.id,
       username: user.username,
