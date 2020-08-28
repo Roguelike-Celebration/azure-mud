@@ -11,7 +11,7 @@ import { useReducerWithThunk } from './useReducerWithThunk'
 import config from './config'
 import MediaChatView from './components/MediaChatView'
 import ProfileEditView from './components/ProfileEditView'
-import RoomListView from './components/RoomListView'
+import SideNavView from './components/SideNavView'
 import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
@@ -20,6 +20,7 @@ import ThemeSelectorView from './components/ThemeSelectorView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
+import MapModalView from './components/MapModalView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -180,6 +181,11 @@ const App = () => {
       innerModalView = (
         <ScheduleView />
       )
+      break
+    }
+    case Modal.Map: {
+      innerModalView = <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
+      break
     }
   }
 
@@ -202,7 +208,7 @@ const App = () => {
           >
             <div id={state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'}>
               {shouldShowMenu
-                ? <RoomListView
+                ? <SideNavView
                   rooms={Object.values(state.roomData)}
                   username={state.userMap[state.userId].username}
                 />
@@ -210,10 +216,10 @@ const App = () => {
               {modalView}
               <div id="main" role="main">
                 {videoChatView}
-                <RoomView
+                {state.roomData[state.roomId] ? <RoomView
                   room={state.roomData[state.roomId]}
                   userId={state.userId}
-                />
+                /> : null}
                 <ChatView messages={state.messages} />
                 <InputView
                   prepopulated={state.prepopulatedInput}

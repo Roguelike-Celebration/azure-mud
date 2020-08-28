@@ -15,7 +15,7 @@
     box-sizing: border-box;
     max-height: 90vh;
     margin: auto;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 30px;
     position: absolute;
     top: 5vh;
