@@ -87,8 +87,10 @@ export async function checkIsRegistered (): Promise<boolean> {
 // Post-it notes
 
 export async function addNoteToWall (message: string) {
-  const id = uuid()
-  await callAzureFunction('addRoomNote', { id, message })
+  if (message != null && message.length > 0) {
+    const id = uuid()
+    await callAzureFunction('addRoomNote', { id, message })
+  }
 }
 
 export async function deleteRoomNote (noteId: string) {
@@ -283,7 +285,6 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   // Post-It Note Wall
   connection.on('noteAdded', (roomId, noteId, message, authorId) => {
-    if (message == null) return
     dispatch(NoteAddAction(roomId, { id: noteId, message, authorId }))
   })
 
