@@ -82,9 +82,8 @@ export default function NameView (props: { userId: string; id?: string }) {
   return (
     <span className="name" data-tip={user && user.pronouns}>
       <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
-        <strong>
+        <strong className={isMod ? 'mod' : ''}>
           {username || 'unknown'}
-          {isMod ? '👑' : ''}
         </strong>
       </ContextMenuTrigger>
       <ContextMenu id={props.id}>

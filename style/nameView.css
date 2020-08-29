@@ -39,3 +39,7 @@ span.name {
   color: var(--main-font);
   font-style: normal;
 }
+
+.mod {
+  color: var(--pink);
+}

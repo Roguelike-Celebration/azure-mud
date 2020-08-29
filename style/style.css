@@ -123,3 +123,13 @@ input[type=radio] {
 td {
   padding-right: 1em;
 }
+
+#code-of-conduct li {
+  margin-bottom: 1.5em;
+  padding-left: 0.5em;
+}
+
+#code-of-conduct ul {
+  list-style-type: circle;
+  padding-left: 2em;
+}

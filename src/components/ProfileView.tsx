@@ -102,7 +102,7 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
     <Linkify>
       <div id="profile">
         <div id="header">
-          <h2>{user.username} {user.isMod ? '(👑 moderator)' : ''}</h2>
+          <h2 className={user.isMod ? 'mod' : ''}>{user.username} {user.isMod ? <div>(moderator)</div> : ''}</h2>
           <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
         </div>
         {realName}
