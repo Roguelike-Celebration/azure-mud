@@ -10,3 +10,15 @@ a.room-link {
 a.room-link:visited {
   color: var(--link-text);
 }
+
+#iframes {
+  border: solid;
+  border-color: var(--highlight-line);
+  width: min-content;
+}
+
+#captions {
+  border-top: dashed;
+  border-color: var(--highlight-line);
+  padding-top: 5px;
+}
