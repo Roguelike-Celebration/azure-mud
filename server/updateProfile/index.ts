@@ -29,7 +29,7 @@ const httpTrigger: AzureFunction = async function (
   }
 
   const profile = await updateUserProfile(userId, data)
-  const minimalUser = await minimizeUser(profile)
+  const minimalUser = minimizeUser(profile)
 
   context.bindings.signalRMessages = [{
     target: 'usernameMap',

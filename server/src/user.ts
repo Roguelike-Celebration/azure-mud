@@ -81,7 +81,8 @@ export async function updateUserProfile (userId: string, data: Partial<User>) {
     ...profile,
     ...data,
     id: userId,
-    username
+    username,
+    isMod: profile.isMod
   } as User // TODO: Could use real validation here?
 
   const minimalProfile: MinimalUser = {
@@ -119,14 +120,12 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
   }
 }
 
-export async function minimizeUser (user: User | PublicUser): Promise<MinimalUser> {
+export function minimizeUser (user: User | PublicUser): MinimalUser {
   const minimalUser: MinimalUser = {
     id: user.id,
     username: user.username,
-    isBanned: user.isBanned
-  }
-  if (await isMod(user.id)) {
-    minimalUser.isMod = true
+    isBanned: user.isBanned,
+    isMod: user.isMod
   }
 
   return minimalUser
