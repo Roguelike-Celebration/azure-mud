@@ -283,6 +283,7 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   // Post-It Note Wall
   connection.on('noteAdded', (roomId, noteId, message, authorId) => {
+    if (message == null) return
     dispatch(NoteAddAction(roomId, { id: noteId, message, authorId }))
   })
 
