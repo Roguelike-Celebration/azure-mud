@@ -15,6 +15,13 @@ export async function moveToRoom (
   context: Context
 ) {
   let to = roomData[newRoomId]
+
+  // If you're already in the room and try to 're-enter' the room,
+  // nothing should happen: issue 162
+  if (newRoomId == user.roomId) {
+    return
+  }
+
   if (!to) {
     // If the user typed a command, rather than clicking a link,
     // they may have typed a friendly version of the room name rather than the ID
