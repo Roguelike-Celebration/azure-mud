@@ -26,7 +26,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const notes = await DB.getRoomNotes(user.roomId)
     const note = notes.find(n => n.id === noteId)
 
-    if (note.authorId !== user.id && !isMod(user.id)) {
+    if (note.authorId !== user.id && !(await isMod(user.id))) {
       context.res = {
         status: 403,
         body: 'You cannot delete this note!'

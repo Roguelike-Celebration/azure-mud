@@ -19,7 +19,8 @@ import { Room } from './room'
 import {
   sendChatMessage,
   toggleUserBan,
-  setNetworkMediaChatStatus
+  setNetworkMediaChatStatus,
+  toggleUserMod
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
@@ -349,6 +350,10 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.BanToggle) {
     toggleUserBan(action.value)
+  }
+
+  if (action.type === ActionType.ModToggle) {
+    toggleUserMod(action.value)
   }
 
   if (action.type === ActionType.LoadMessageArchive) {

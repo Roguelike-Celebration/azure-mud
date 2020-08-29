@@ -162,6 +162,10 @@ export async function toggleUserBan (userId: string) {
   const result = await callAzureFunction('banUser', { userId })
 }
 
+export async function toggleUserMod (userId: string) {
+  const result = await callAzureFunction('toggleModStatus', { userId })
+}
+
 export async function deleteMessage (messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
 }

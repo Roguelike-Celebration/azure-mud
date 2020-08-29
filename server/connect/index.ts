@@ -54,7 +54,7 @@ const httpTrigger: AzureFunction = async function (
       }
     ]
 
-    if (isMod(user.id)) {
+    if (await isMod(user.id)) {
       actions.push({
         userId: user.id,
         groupName: 'mods',

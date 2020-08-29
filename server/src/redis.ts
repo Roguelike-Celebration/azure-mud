@@ -106,7 +106,7 @@ const Redis: Database = {
 
     const user: User = JSON.parse(userData)
 
-    if (isMod(user.id)) {
+    if (await isMod(user.id)) {
       user.isMod = true
     }
 
@@ -121,7 +121,7 @@ const Redis: Database = {
   async getMinimalProfileForUser (userId: string) {
     const user = JSON.parse(await getCache(usernameKeyForUser(userId)))
 
-    if (isMod(userId)) {
+    if (await isMod(userId)) {
       user.isMod = true
     }
     return user
@@ -140,7 +140,7 @@ const Redis: Database = {
 
     // We don't trust the data the user has sent in from the client
     // so unsetting that field and manually setting it here is the solution!
-    if (isMod(userId)) {
+    if (await isMod(userId)) {
       data.isMod = true
     }
     userMap[userId] = data
@@ -192,6 +192,38 @@ const Redis: Database = {
     )
     profileData.isBanned = false
     await setCache(profileKeyForUser(userId), JSON.stringify(profileData))
+  },
+
+  async modList (): Promise<string[]> {
+    let modList = []
+    const rawModList = await getCache(modListKey)
+    if (rawModList) {
+      modList = JSON.parse(rawModList)
+    }
+
+    return modList
+  },
+
+  async addMod (userId: string) {
+    const list = await Redis.modList()
+
+    if (!list.includes(userId)) {
+      list.push(userId)
+      await setCache(modListKey, JSON.stringify(list))
+    }
+
+    return list
+  },
+
+  async removeMod (userId: string) {
+    let list = await Redis.modList()
+
+    if (list.includes(userId)) {
+      list = list.filter(id => id !== userId)
+      await setCache(modListKey, JSON.stringify(list))
+    }
+
+    return list
   },
 
   // Post-it notes
@@ -270,6 +302,8 @@ const Redis: Database = {
 }
 
 const activeUsersKey = 'activeUsersList'
+
+const modListKey = 'mods'
 
 function shoutKeyForUser (user: string): string {
   return `${user}Shout`

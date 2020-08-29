@@ -5,7 +5,8 @@ import ReactTooltip from 'react-tooltip'
 import {
   ShowProfileAction,
   BanToggleAction,
-  HideModalAction
+  HideModalAction,
+  ModToggleAction
 } from '../Actions'
 import { User } from '../../server/src/user'
 
@@ -21,7 +22,7 @@ export default function NameView (props: { userId: string; id?: string }) {
   const isBanned = user && user.isBanned
 
   const player = userMap[myId]
-  const playerCanBan = player && player.isMod
+  const playerIsMod = player && player.isMod
 
   const handleProfile = (e, data) => {
     dispatch(HideModalAction())
@@ -39,13 +40,34 @@ export default function NameView (props: { userId: string; id?: string }) {
     }
   }
 
-  // TODO: need to know if the current user is a mod
-  const banButton = playerCanBan ? (
+  const handleMod = (e, data) => {
+    const doMod = confirm(
+      `Are you sure you would like to ${isMod ? 'remove' : 'add'} the user '${
+        data.username
+      }' ${isMod ? 'from' : 'to'} the mod list?`
+    )
+    if (doMod) {
+      dispatch(ModToggleAction(data.id))
+    }
+  }
+
+  const banButton = playerIsMod ? (
     <MenuItem
       data={{ id: props.userId, username: username }}
       onClick={handleBan}
     >
       {isBanned ? 'Unban' : 'Ban'}
+    </MenuItem>
+  ) : (
+    ''
+  )
+
+  const modButton = playerIsMod ? (
+    <MenuItem
+      data={{ id: props.userId, username: username }}
+      onClick={handleMod}
+    >
+      {isMod ? 'Remove Mod' : 'Make Mod'}
     </MenuItem>
   ) : (
     ''
@@ -73,6 +95,7 @@ export default function NameView (props: { userId: string; id?: string }) {
           Whisper
         </MenuItem>
         {banButton}
+        {modButton}
       </ContextMenu>
       <ReactTooltip />
     </span>

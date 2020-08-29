@@ -77,6 +77,10 @@ interface Database {
   banUser(userId: string);
   unbanUser(userId: string);
 
+  addMod(userId: string)
+  removeMod(userId: string)
+  modList(): Promise<string[]>
+
   // -----------------------------------------------------------------
   // POST-IT NOTES
   // -----------------------------------------------------------------

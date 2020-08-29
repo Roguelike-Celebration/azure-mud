@@ -35,8 +35,8 @@ export interface User extends PublicUser {
   room: Room;
 }
 
-export function isMod (userId: string) {
-  const modList = ['19924413', '1288674456219471875']
+export async function isMod (userId: string) {
+  const modList = await DB.modList()
   return modList.includes(userId)
 }
 
@@ -119,13 +119,13 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
   }
 }
 
-export function minimizeUser (user: User | PublicUser): MinimalUser {
+export async function minimizeUser (user: User | PublicUser): Promise<MinimalUser> {
   const minimalUser: MinimalUser = {
     id: user.id,
     username: user.username,
     isBanned: user.isBanned
   }
-  if (isMod(user.id)) {
+  if (await isMod(user.id)) {
     minimalUser.isMod = true
   }
 
