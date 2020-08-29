@@ -65,13 +65,12 @@ const RoomListItem = (props: { room: Room }) => {
   const onClick = () => {
     moveToRoom(room.id)
   }
-  const userCount = room.users ? `(${room.users.length})` : ''
   const videoIcon = room.videoUsers && room.videoUsers.length > 0 ? <FaVideo /> : ''
 
   return (
     <li>
       <button onClick={onClick}>
-        <strong>{room.name}</strong> {userCount} {videoIcon}
+        <strong>{room.name}</strong> {videoIcon}
       </button>
     </li>
   )
