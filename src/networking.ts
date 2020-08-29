@@ -87,7 +87,7 @@ export async function checkIsRegistered (): Promise<boolean> {
 // Post-it notes
 
 export async function addNoteToWall (message: string) {
-  if (message != null && message.length > 0) {
+  if (message !== null && message.length > 0) {
     const id = uuid()
     await callAzureFunction('addRoomNote', { id, message })
   }

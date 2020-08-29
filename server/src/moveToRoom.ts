@@ -62,7 +62,7 @@ export async function moveToRoom (
 
   // If you're already in the room and try to 're-enter' the room,
   // nothing should happen: issue 162
-  if (user.roomId != to.id) {
+  if (user.roomId !== to.id) {
     await removeUserFromRoomPresence(user.id, user.roomId)
     await addUserToRoomPresence(user.id, to.id)
 
@@ -79,7 +79,6 @@ export async function moveToRoom (
       },
       await globalPresenceMessage([user.roomId, to.id])
     ]
-  
     context.bindings.signalRGroupActions = [
       {
         userId: user.id,

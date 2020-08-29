@@ -90,14 +90,14 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
-    let oldRoomId = state.roomId;
+    const oldRoomId = state.roomId
     state.roomId = action.value
 
     // Add a local "you have moved to X room" message
     // Don't display if we're in the same room (issue 162)
     if (state.roomData && state.roomData[action.value]) {
       const room = state.roomData[action.value]
-      if (state.roomId != oldRoomId) {
+      if (state.roomId !== oldRoomId) {
         addMessage(state, createMovedRoomMessage(room.shortName))
       } else {
         addMessage(state, createSameRoomMessage(room.shortName))
