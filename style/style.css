@@ -5,6 +5,7 @@
 :root {
   --main-background: black;
   --main-font: white;
+  --gray-text: #b5b5b5;
   --alternate-background: #333333;
   --alternate-translucent: rgba(51,51,51,0.8);
   --green: lightseagreen;
@@ -17,6 +18,7 @@
 .solarized-dark{
   --main-background:#002b36;
   --main-font:#657b83;
+  --gray-text:#586e75;
   --alternate-background: #073642;
   --alternate-translucent: rgba(7,54,66,0.8);
   --green: #859900;
@@ -29,6 +31,7 @@
 .solarized-light{
   --main-background:#fdf6e3;
   --main-font:#657b83;
+  --gray-text:#93a1a1;
   --alternate-background: #eee8d5;
   --alternate-translucent: rgba(238,232,213,0.8);
   --green:#859900;
@@ -75,6 +78,11 @@ a {
   font-weight: bold;
 }
 
+.whisper {
+  color: var(--gray-text);
+  font-style: italic;
+}
+
 a:visited {
   color: var(--green);
 }
@@ -104,7 +112,7 @@ button {
 }
 
 input[type=radio] {
-  vertical-align: baselin;
+  vertical-align: baseline;
   margin-right: 1em;
 }
 

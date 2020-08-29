@@ -20,8 +20,8 @@
 }
 
 #profile {
-  background-color: black;
-  border-left: 1px solid white;
+  background-color: var(--main-background);
+  border-left: 1px solid var(--main-font);
   box-sizing: border-box;
   height: 100%;
   padding: 0px 0px 20px 20px;
@@ -36,21 +36,21 @@
 }
 
 #profile-close {
-  background-color: black;
+  background-color: var(--main-background);
   border: none;
-  color: white;
+  color: var(--main-font);
   cursor: pointer;
   font-size: 24px;
   width: 30px;
 }
 
 #chat-container {
-  border-top: 1px dashed white;
+  border-top: 1px dashed var(--main-font);
   margin-top: 20px;
 }
 
 #chat-header {
-  background-color: black;
+  background-color: var(--main-background);
   padding: 20px 0px;
   top: 0;
   width: 100%;

@@ -18,16 +18,16 @@ video.speaking {
 }
 
 #media-view .video-button {
-  color: white;
+  color:var(--main-font);
   padding: 10px;
 }
 
 #media-view .video-button.enabled {
-  color: lightgreen;
+  color: var(--green);
 }
 
 #media-view .video-button.disabled {
-  color: lightpink;
+  color: var(--pink);
 }
 
 /** Selector modal */
