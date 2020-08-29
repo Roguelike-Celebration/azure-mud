@@ -34,6 +34,7 @@ export default function RoomListView (props: Props) {
         <MenuItem title="Map" modal={Modal.Map} />
         <MenuItem title="Schedule" modal={Modal.Schedule} />
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
+        <MenuItem title="Help" modal={Modal.Help} />
         <hr style={{ marginTop: '1em', marginBottom: '1em' }}/>
         {props.rooms.map((r) => {
           return r.hidden ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />

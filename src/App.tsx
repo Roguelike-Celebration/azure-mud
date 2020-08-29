@@ -5,7 +5,7 @@ import ChatView from './components/ChatView'
 import InputView from './components/InputView'
 import { connect, getLoginInfo, checkIsRegistered } from './networking'
 import reducer, { State, defaultState } from './reducer'
-import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction, ShowSideMenuAction, SendMessageAction } from './Actions'
+import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction, ShowSideMenuAction, SendMessageAction, ShowModalAction } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
 import config from './config'
@@ -20,6 +20,7 @@ import ThemeSelectorView from './components/ThemeSelectorView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
+import HelpView from './components/HelpView'
 import MapModalView from './components/MapModalView'
 
 export const DispatchContext = createContext(null)
@@ -186,6 +187,11 @@ const App = () => {
     case Modal.Map: {
       innerModalView = <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
       break
+    }
+    case Modal.Help: {
+      innerModalView = (
+        <HelpView />
+      )
     }
   }
 

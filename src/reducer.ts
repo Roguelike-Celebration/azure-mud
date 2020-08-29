@@ -24,7 +24,7 @@ import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
-import { matchingSlashCommand } from './SlashCommands'
+import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 
 export interface State {
   authenticated: boolean;
@@ -265,16 +265,16 @@ export default (oldState: State, action: Action): State => {
     const messageId: string = uuidv4()
     const trimmedMessage = action.value.trim()
     const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
+    const matching = beginsWithSlash ? matchingSlashCommand(trimmedMessage) : undefined
 
-    if (beginsWithSlash && matchingSlashCommand(trimmedMessage) === undefined) {
+    if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
     } else if (beginsWithSlash) {
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       sendChatMessage(messageId, trimmedMessage)
 
-      // TODO clean this up by assigning enumerated values to the SlashCommands and checking against the matching command instead of this.
-      if (commandStr[1] === '/whisper') {
+      if (matching.type === SlashCommandType.Whisper) {
+        const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
         const [_, username, message] = /^(.+?) (.+)/.exec(commandStr[2])
         const user = Object.values(state.userMap).find(
           (u) => u.username === username
@@ -283,6 +283,8 @@ export default (oldState: State, action: Action): State => {
         if (userId) {
           addMessage(state, createWhisperMessage(userId, message, true))
         }
+      } else if (matching.type === SlashCommandType.Help) {
+        state.activeModal = Modal.Help
       }
     } else {
       sendChatMessage(messageId, action.value)
