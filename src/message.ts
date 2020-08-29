@@ -4,6 +4,7 @@ export type Message =
   | EnteredMessage
   | LeftMessage
   | MovedRoomMessage
+  | SameRoomMessage
   | ChatMessage
   | WhisperMessage
   | ShoutMessage
@@ -17,6 +18,7 @@ export enum MessageType {
   Entered = 'ENTERED',
   Left = 'LEFT',
   MovedRoom = 'MOVED',
+  SameRoom = 'SAME',
   Chat = 'CHAT',
   Whisper = 'WHISPER',
   Shout = 'SHOUT',
@@ -79,6 +81,15 @@ export interface MovedRoomMessage {
 
 export const createMovedRoomMessage = (to: string): MovedRoomMessage => {
   return { type: MessageType.MovedRoom, to }
+}
+
+export interface SameRoomMessage {
+  type: MessageType.SameRoom;
+  room: string;
+}
+
+export const createSameRoomMessage = (to: string): SameRoomMessage => {
+  return { type: MessageType.SameRoom, room: to }
 }
 
 export interface ChatMessage {

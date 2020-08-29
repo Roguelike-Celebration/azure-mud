@@ -16,12 +16,6 @@ export async function moveToRoom (
 ) {
   let to = roomData[newRoomId]
 
-  // If you're already in the room and try to 're-enter' the room,
-  // nothing should happen: issue 162
-  if (newRoomId == user.roomId) {
-    return
-  }
-
   if (!to) {
     // If the user typed a command, rather than clicking a link,
     // they may have typed a friendly version of the room name rather than the ID
@@ -58,9 +52,6 @@ export async function moveToRoom (
     return
   }
 
-  await removeUserFromRoomPresence(user.id, user.roomId)
-  await addUserToRoomPresence(user.id, to.id)
-
   const response: RoomResponse = {
     roomId: to.id
   }
@@ -69,35 +60,42 @@ export async function moveToRoom (
     response.roomNotes = await DB.getRoomNotes(to.id)
   }
 
+  // If you're already in the room and try to 're-enter' the room,
+  // nothing should happen: issue 162
+  if (user.roomId != to.id) {
+    await removeUserFromRoomPresence(user.id, user.roomId)
+    await addUserToRoomPresence(user.id, to.id)
+
+    context.bindings.signalRMessages = [
+      {
+        groupName: user.room.id,
+        target: 'playerLeft',
+        arguments: [user.id, to.shortName]
+      },
+      {
+        groupName: to.id,
+        target: 'playerEntered',
+        arguments: [user.id, user.room.shortName]
+      },
+      await globalPresenceMessage([user.roomId, to.id])
+    ]
+  
+    context.bindings.signalRGroupActions = [
+      {
+        userId: user.id,
+        groupName: user.room.id,
+        action: 'remove'
+      },
+      {
+        userId: user.id,
+        groupName: to.id,
+        action: 'add'
+      }
+    ]
+  }
+
   context.res = {
     status: 200,
     body: response
   }
-
-  context.bindings.signalRMessages = [
-    {
-      groupName: user.room.id,
-      target: 'playerLeft',
-      arguments: [user.id, to.shortName]
-    },
-    {
-      groupName: to.id,
-      target: 'playerEntered',
-      arguments: [user.id, user.room.shortName]
-    },
-    await globalPresenceMessage([user.roomId, to.id])
-  ]
-
-  context.bindings.signalRGroupActions = [
-    {
-      userId: user.id,
-      groupName: user.room.id,
-      action: 'remove'
-    },
-    {
-      userId: user.id,
-      groupName: to.id,
-      action: 'add'
-    }
-  ]
 }
