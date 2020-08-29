@@ -47,3 +47,7 @@
   cursor: pointer;
   -webkit-user-select: none;
 }
+
+#side-menu ul {
+  padding: 15px;
+}

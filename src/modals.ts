@@ -7,5 +7,6 @@ export enum Modal {
     MediaSelector,
     CodeOfConduct,
     Schedule,
-    Help
+    Help,
+    Map
 }

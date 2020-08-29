@@ -11,7 +11,7 @@ import { useReducerWithThunk } from './useReducerWithThunk'
 import config from './config'
 import MediaChatView from './components/MediaChatView'
 import ProfileEditView from './components/ProfileEditView'
-import RoomListView from './components/RoomListView'
+import SideNavView from './components/SideNavView'
 import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
@@ -21,6 +21,7 @@ import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
 import HelpView from './components/HelpView'
+import MapModalView from './components/MapModalView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -181,6 +182,11 @@ const App = () => {
       innerModalView = (
         <ScheduleView />
       )
+      break
+    }
+    case Modal.Map: {
+      innerModalView = <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
+      break
     }
     case Modal.Help: {
       innerModalView = (
@@ -208,21 +214,18 @@ const App = () => {
           >
             <div id={state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'}>
               {shouldShowMenu
-                ? <div>
-                    <button onClick={() => dispatch(ShowModalAction(Modal.Help))}>Help</button>
-                    <RoomListView
-                      rooms={Object.values(state.roomData)}
-                      username={state.userMap[state.userId].username}
-                    />
-                  </div>
+                ? <SideNavView
+                  rooms={Object.values(state.roomData)}
+                  username={state.userMap[state.userId].username}
+                />
                 : <button id='show-menu' onClick={showMenu}><span role='img' aria-label='menu'>🍔</span></button>}
               {modalView}
               <div id="main" role="main">
                 {videoChatView}
-                <RoomView
+                {state.roomData[state.roomId] ? <RoomView
                   room={state.roomData[state.roomId]}
                   userId={state.userId}
-                />
+                /> : null}
                 <ChatView messages={state.messages} />
                 <InputView
                   prepopulated={state.prepopulatedInput}

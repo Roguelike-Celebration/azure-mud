@@ -6,7 +6,8 @@ import { FaVideo } from 'react-icons/fa'
 
 import '../../style/nav.css'
 import { IsMobileContext, DispatchContext } from '../App'
-import { HideSideMenuAction } from '../Actions'
+import { HideSideMenuAction, ShowModalAction } from '../Actions'
+import { Modal } from '../modals'
 
 interface Props {
   rooms: Room[];
@@ -30,11 +31,30 @@ export default function RoomListView (props: Props) {
       >x</button> : ''}
       <MenuButtonView username={props.username} />
       <ul>
+        <MenuItem title="Map" modal={Modal.Map} />
+        <MenuItem title="Schedule" modal={Modal.Schedule} />
+        <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
+        <hr style={{ marginTop: '1em', marginBottom: '1em' }}/>
         {props.rooms.map((r) => {
           return r.hidden ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
         })}
       </ul>
     </nav>
+  )
+}
+
+const MenuItem = (props: {title: string, modal: Modal}) => {
+  const dispatch = useContext(DispatchContext)
+
+  const handler = () => {
+    dispatch(ShowModalAction(props.modal))
+  }
+  return (
+    <li>
+      <button onClick={handler}>
+        <strong>{props.title}</strong>
+      </button>
+    </li>
   )
 }
 

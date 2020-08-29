@@ -19,7 +19,6 @@ interface Props {
 
 export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
-
   const { room } = props
 
   // This is very silly.

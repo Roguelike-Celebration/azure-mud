@@ -1,14 +1,41 @@
 import React, { useContext } from 'react'
 import Linkify from 'react-linkify'
-
 import { PublicUser } from '../../server/src/user'
-import { HideProfileAction, WhisperAction } from '../Actions'
+import { HideProfileAction, SendMessageAction, ReceivedMyProfileAction } from '../Actions'
 import { DispatchContext } from '../App'
-import MessageView from './MessageView'
-import { Message, MessageType } from '../message'
+import { Message, WhisperMessage, MessageType } from '../message'
 import InputView from './InputView'
+import NameView from './NameView'
+import ReactTooltip from 'react-tooltip'
 
 import '../../style/profileView.css'
+
+const ProfileWhisperView = (props: WhisperMessage & {id: string, otherUser: PublicUser}) => {
+  const { otherUser } = props
+
+  if (props.senderIsSelf) {
+    return (
+      <div className="whisper-message">
+        <em>
+          You:{' '}
+          {props.message}
+        </em>
+      </div>
+    )
+  } else {
+    return (
+      <div className="whisper-message">
+        <em>
+          <span data-tip={otherUser && otherUser.pronouns}>
+            {otherUser.username}
+          </span>:{' '}
+          {props.message}
+          <ReactTooltip />
+        </em>
+      </div>
+    )
+  }
+}
 
 export default function ProfileView (props: { user: PublicUser, messages: Message[] }) {
   const { user, messages } = props
@@ -16,9 +43,9 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
 
   React.useEffect(() => {
     const lastMessage = document.querySelector(
-      '#chat .message:last-of-type'
+      '#chat .whisper-message:last-of-type'
     )
-    if (!lastMessage) return;
+    if (!lastMessage) return
 
     // I was using lastMessage.scrollIntoView()
     // But I was seeing odd behavior when there was only one message on-screen.
@@ -28,7 +55,7 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
       (lastMessage.parentNode as any).offsetTop
   })
 
-  const whisperMessages = messages.filter((m, _) => m.type === MessageType.Whisper && m.userId === user.id)
+  const whisperMessages = messages.filter((m, _) => m.type === MessageType.Whisper && m.userId === user.id) as Array<WhisperMessage>
 
   const realName = user.realName ? (
     <div id="profile-realName">{user.realName}</div>
@@ -64,7 +91,7 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
 
   const askMeAbout = user.askMeAbout ? (
     <div id="profile-askme">
-      <strong>Ask me about:</strong>
+      <strong>Ask me about:</strong>{' '}
       {user.askMeAbout}
     </div>
   ) : (
@@ -88,11 +115,11 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
           <div id="chat-header">Whisper Chat</div>
           <div id="chat">
             {whisperMessages.length > 0 ? whisperMessages.map((m, idx) => {
-              const id = `message-${idx}`
-              return <MessageView message={m} key={id} id={id} />
+              const id = `whisper-message-${idx}`
+              return <ProfileWhisperView {...m} key={id} id={id} otherUser={user} />
             }) : <em>{`This is the beginning of your whisper chat with ${user.username}`}</em>}
           </div>
-          <InputView sendMessage={(message) => dispatch(WhisperAction(user.id, message))}/>
+          <InputView sendMessage={(message) => dispatch(SendMessageAction(`/whisper ${user.username} ${message}`))}/>
         </div>
       </div>
     </Linkify>
