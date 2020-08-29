@@ -36,6 +36,6 @@ span.name {
 }
 
 .name .react-contextmenu {
-  color: white;
+  color: var(--main-font);
   font-style: normal;
 }
