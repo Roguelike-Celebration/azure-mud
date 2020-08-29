@@ -12,6 +12,7 @@ import {
   EnteredMessage,
   LeftMessage,
   MovedRoomMessage,
+  SameRoomMessage,
   ChatMessage,
   WhisperMessage,
   ErrorMessage,
@@ -32,6 +33,7 @@ export default function MessageView (props: { message: Message; id: string }) {
     [MessageType.Entered]: EnteredView,
     [MessageType.Left]: LeftView,
     [MessageType.MovedRoom]: MovedView,
+    [MessageType.SameRoom]: SameView,
     [MessageType.Chat]: ChatMessageView,
     [MessageType.Whisper]: WhisperView,
     [MessageType.Shout]: ShoutView,
@@ -120,6 +122,10 @@ const LeftView = (props: LeftMessage & { id: string }) => (
 
 const MovedView = (props: MovedRoomMessage & { id: string }) => (
   <div className="message">You have moved to {props.to}.</div>
+)
+
+const SameView = (props: SameRoomMessage & { id: string }) => (
+  <div className="message">You are already in {props.room}.</div>
 )
 
 const ChatMessageView = (props: ChatMessage & { id: string }) => (

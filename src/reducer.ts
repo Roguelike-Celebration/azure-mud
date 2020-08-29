@@ -12,6 +12,7 @@ import {
   createEmoteMessage,
   createModMessage,
   createMovedRoomMessage,
+  createSameRoomMessage,
   isDeletable
 } from './message'
 import { Room } from './room'
@@ -25,6 +26,7 @@ import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
+import { useReducer } from 'react'
 
 export interface State {
   authenticated: boolean;
@@ -88,12 +90,18 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
+    const oldRoomId = state.roomId
     state.roomId = action.value
 
     // Add a local "you have moved to X room" message
+    // Don't display if we're in the same room (issue 162)
     if (state.roomData && state.roomData[action.value]) {
       const room = state.roomData[action.value]
-      addMessage(state, createMovedRoomMessage(room.shortName))
+      if (state.roomId !== oldRoomId) {
+        addMessage(state, createMovedRoomMessage(room.shortName))
+      } else {
+        addMessage(state, createSameRoomMessage(room.shortName))
+      }
     }
 
     /** Here lies a giant hack.
