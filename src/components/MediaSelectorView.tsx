@@ -52,42 +52,6 @@ export default function MediaSelectorView (props: Props) {
     startVideoChat()
   }
 
-  // Here's a fun hack!
-  // So, when opening a local MediaStream, we fetch the deviceIds for audio/video
-  // so we can preselect the correct <select> items here
-  //
-  // However, Firefox does NOT support returning that data.
-  // It can only give us the user-friendly label.
-  // So, if the deviceId isn't found in our list, we try to match based on label and grab the Id.
-  // The video and audio paths are identical.
-  console.log(props)
-  let defaultVideo = props.initialVideoDeviceId
-  if (defaultVideo) {
-    if (!videoDevices.find((v) => v.deviceId === defaultVideo)) {
-      const foundByName = videoDevices.find((v) => v.label === defaultVideo)
-      if (foundByName) {
-        defaultVideo = foundByName.deviceId
-        setVideoId(defaultVideo)
-      } else {
-        defaultVideo = undefined
-      }
-    }
-  }
-
-  let defaultAudio = props.initialAudioDeviceId
-  if (defaultAudio) {
-    if (!audioDevices.find((d) => d.deviceId === defaultAudio)) {
-      const foundByName = audioDevices.find((d) => d.label === defaultAudio)
-      if (foundByName) {
-        defaultAudio = foundByName.deviceId
-        setAudioId(defaultAudio)
-      } else {
-        defaultAudio = undefined
-      }
-    }
-  }
-  console.log(defaultAudio, defaultVideo)
-
   return (
     <div id='media-selector'>
       <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>
@@ -97,7 +61,6 @@ export default function MediaSelectorView (props: Props) {
           name="Video"
           id="video-select"
           onChange={onVideoChange}
-          defaultValue={defaultVideo}
         >
           {videoDevices.map(deviceToOption)}
         </select>
@@ -107,7 +70,6 @@ export default function MediaSelectorView (props: Props) {
           name="Audio"
           id="audio-select"
           onChange={onAudioChange}
-          defaultValue={defaultAudio}
         >
           {audioDevices.map(deviceToOption)}
         </select>
