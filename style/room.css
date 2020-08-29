@@ -15,3 +15,15 @@ a.room-link:visited {
   margin-left: 2em;
   vertical-align: top;
 }
+
+#iframes {
+  border: solid;
+  border-color: var(--highlight-line);
+  width: min-content;
+}
+
+#captions {
+  border-top: dashed;
+  border-color: var(--highlight-line);
+  padding-top: 5px;
+}
