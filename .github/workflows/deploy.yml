@@ -10,13 +10,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+
       - uses: actions/setup-node@v2.1.0
 
-      - name: build
+      - name: Build Frontend
         run: npm run build
 
-      - name: Deploy
+      - name: Deploy Frontend
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+      
+      - name: Build Backend
+        working-directory: server
+        run: npm install && npm run build
+
+      - name: Deploy Backend
+        uses: Azure/functions-action@v1
+        with:
+          app-name: roguelikecelebration-mud
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          package: server
