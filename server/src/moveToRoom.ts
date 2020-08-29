@@ -20,8 +20,10 @@ export async function moveToRoom (
     // they may have typed a friendly version of the room name rather than the ID
     // TODO: Rooms should have a generous list of accepted names
     // DOUBLE TODO: Can we fuzzily search all exits for the current room?
+    const searchStr = newRoomId.replace(' ', '').toUpperCase()
     to = Object.values(roomData).find(
-      (room) => room.shortName === newRoomId || room.displayName === newRoomId
+      (room) => room.shortName.replace(' ', '').toUpperCase() === searchStr ||
+        room.displayName.replace(' ', '').toUpperCase() === searchStr
     )
   }
 
@@ -45,7 +47,7 @@ export async function moveToRoom (
 
   if (!to) {
     context.res = {
-      status: 500,
+      status: 404,
       body: { error: 'Invalid room ID' }
     }
     return
