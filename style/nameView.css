@@ -41,5 +41,6 @@ span.name {
 }
 
 .mod {
-  color: var(--pink);
+  background-color: var(--highlight-line);
+  color: var(--main-text);
 }
