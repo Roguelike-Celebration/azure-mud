@@ -8,7 +8,7 @@ export default function CodeOfConductView () {
       <p>If you&apos;re being harrassed, notice someone being harrassed, or have any other concerns related to the code of conduct, you have a few options:</p>
       <ul>
         <li>Type <code>/mod</code> into the chat box, followed by a message, to contact all moderators.</li>
-        <li>Directly message any moderator with a <span className="mod">pink username</span>.</li>
+        <li>Directly message any moderator with a <span className="mod">highlighted username</span>.</li>
         <li>Email <a href="mailto:contact@roguelike.club">contact@roguelike.club</a>.</li>
         <li>If you have a report or concern related to an organizer, please contact a different member of the <a href="https://roguelike.club/who.html" target="_blank" rel="noreferrer">organizing team</a> outside of this tool (via email, Twitter DM, Discord, or some other service).</li>
       </ul>
