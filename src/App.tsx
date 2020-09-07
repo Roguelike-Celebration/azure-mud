@@ -5,10 +5,16 @@ import ChatView from './components/ChatView'
 import InputView from './components/InputView'
 import { connect, getLoginInfo, checkIsRegistered } from './networking'
 import reducer, { State, defaultState } from './reducer'
-import { AuthenticateAction, Action, IsRegisteredAction, LoadMessageArchiveAction, ShowSideMenuAction, SendMessageAction, ShowModalAction } from './Actions'
+import {
+  AuthenticateAction,
+  Action,
+  IsRegisteredAction,
+  LoadMessageArchiveAction,
+  ShowSideMenuAction,
+  SendMessageAction
+} from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
-import config from './config'
 import MediaChatView from './components/MediaChatView'
 import ProfileEditView from './components/ProfileEditView'
 import SideNavView from './components/SideNavView'
@@ -22,6 +28,7 @@ import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
 import HelpView from './components/HelpView'
 import MapModalView from './components/MapModalView'
+import LoggedOutView from './components/LoggedOutView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -53,7 +60,9 @@ const App = () => {
               try {
                 const timestamp = new Date(rawTimestamp)
                 // A janky way to say "Is it older than an hour"
-                localLocalData = rawMessageData && (new Date()).getTime() - timestamp.getTime() < 1000 * 60 * 60
+                localLocalData =
+                  rawMessageData &&
+                  new Date().getTime() - timestamp.getTime() < 1000 * 60 * 60
               } catch {
                 console.log('Did not find a valid timestamp for message cache')
               }
@@ -71,9 +80,7 @@ const App = () => {
             dispatch(IsRegisteredAction())
             connect(userId, dispatch)
 
-            window.addEventListener('resize', () => {
-
-            })
+            window.addEventListener('resize', () => {})
           }
         })
       }
@@ -93,23 +100,7 @@ const App = () => {
   }
 
   if (state.checkedAuthentication && !state.authenticated) {
-    return (
-      <div>
-        <header role="banner"><h1>Welcome to Roguelike Celebration 2020!</h1></header>
-        <main role="main"><p>This is a social space for attendees of <a href={ 'https://roguelike.club' }>Roguelike Celebration</a>, a community-generated weekend of talks, games, and conversations about roguelikes and related topics, including procedural generation and game design. It&apos;s for fans, players, developers, scholars, and everyone else!</p>
-          <a
-            href={`${
-            config.SERVER_HOSTNAME
-          }/.auth/login/twitter?post_login_redirect_url=${encodeURIComponent(
-            window.location.href
-          )}`}
-          >
-          Log In With Twitter
-          </a>
-          <p>We are using Twitter for authentication only. You will have the opportunity to pick a distinct chat handle when you enter the space. Feel free to sign up for a free throwaway Twitter account if necessary.</p>
-          <p>By entering the space, you agree to our <a href={ 'https://roguelike.club/code.html' }>Code of Conduct</a>.</p></main>
-      </div>
-    )
+    return <LoggedOutView />
   }
 
   if (!state.hasRegistered) {
@@ -155,9 +146,7 @@ const App = () => {
       break
     }
     case Modal.ThemeSelector: {
-      innerModalView = (
-        <ThemeSelectorView />
-      )
+      innerModalView = <ThemeSelectorView />
       break
     }
     case Modal.MediaSelector: {
@@ -173,25 +162,21 @@ const App = () => {
       break
     }
     case Modal.CodeOfConduct: {
-      innerModalView = (
-        <CodeOfConductView />
-      )
+      innerModalView = <CodeOfConductView />
       break
     }
     case Modal.Schedule: {
-      innerModalView = (
-        <ScheduleView />
-      )
+      innerModalView = <ScheduleView />
       break
     }
     case Modal.Map: {
-      innerModalView = <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
+      innerModalView = (
+        <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
+      )
       break
     }
     case Modal.Help: {
-      innerModalView = (
-        <HelpView />
-      )
+      innerModalView = <HelpView />
     }
   }
 
@@ -212,24 +197,38 @@ const App = () => {
           <UserMapContext.Provider
             value={{ userMap: state.userMap, myId: state.userId }}
           >
-            <div id={state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'}>
-              {shouldShowMenu
-                ? <SideNavView
+            <div
+              id={
+                state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
+              }
+            >
+              {shouldShowMenu ? (
+                <SideNavView
                   rooms={Object.values(state.roomData)}
                   username={state.userMap[state.userId].username}
                 />
-                : <button id='show-menu' onClick={showMenu}><span role='img' aria-label='menu'>🍔</span></button>}
+              ) : (
+                <button id="show-menu" onClick={showMenu}>
+                  <span role="img" aria-label="menu">
+                    🍔
+                  </span>
+                </button>
+              )}
               {modalView}
               <div id="main" role="main">
                 {videoChatView}
-                {state.roomData[state.roomId] ? <RoomView
-                  room={state.roomData[state.roomId]}
-                  userId={state.userId}
-                /> : null}
+                {state.roomData[state.roomId] ? (
+                  <RoomView
+                    room={state.roomData[state.roomId]}
+                    userId={state.userId}
+                  />
+                ) : null}
                 <ChatView messages={state.messages} />
                 <InputView
                   prepopulated={state.prepopulatedInput}
-                  sendMessage={(message) => dispatch(SendMessageAction(message))}
+                  sendMessage={(message) =>
+                    dispatch(SendMessageAction(message))
+                  }
                 />
               </div>
               {profile}
