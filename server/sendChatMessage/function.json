@@ -14,6 +14,12 @@
       "direction": "out"
     },
     {
+      "type": "signalR",
+      "name": "signalRGroupActions",
+      "hubName": "chat",
+      "direction": "out"
+    },
+    {
       "type": "http",
       "direction": "out",
       "name": "res"
