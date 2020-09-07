@@ -43,45 +43,45 @@ const App = () => {
   useEffect(() => {
     // TODO: This logic is gnarly enough I'd love to abstract it somewhere
     const login = getLoginInfo().then((login) => {
-      let userId, name
       if (!login) {
         // This should really be its own action distinct from logging in
         dispatch(AuthenticateAction(undefined, undefined))
       } else {
-        userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
-        name = login.user_id
-        checkIsRegistered().then((registered) => {
-          dispatch(AuthenticateAction(userId, name))
-          if (registered) {
-            let localLocalData = false
-            const rawTimestamp = localStorage.getItem('messageTimestamp')
-            const rawMessageData = localStorage.getItem('messages')
-            if (rawTimestamp) {
-              try {
-                const timestamp = new Date(rawTimestamp)
-                // A janky way to say "Is it older than an hour"
-                localLocalData =
+        console.log(login)
+        const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
+
+        checkIsRegistered().then((registeredUsername) => {
+          if (!registeredUsername) return
+          dispatch(AuthenticateAction(userId, registeredUsername))
+
+          let localLocalData = false
+          const rawTimestamp = localStorage.getItem('messageTimestamp')
+          const rawMessageData = localStorage.getItem('messages')
+          if (rawTimestamp) {
+            try {
+              const timestamp = new Date(rawTimestamp)
+              // A janky way to say "Is it older than an hour"
+              localLocalData =
                   rawMessageData &&
                   new Date().getTime() - timestamp.getTime() < 1000 * 60 * 60
-              } catch {
-                console.log('Did not find a valid timestamp for message cache')
-              }
+            } catch {
+              console.log('Did not find a valid timestamp for message cache')
             }
-
-            if (localLocalData) {
-              try {
-                const messages = JSON.parse(rawMessageData)
-                dispatch(LoadMessageArchiveAction(messages))
-              } catch (e) {
-                console.log('Could not parse message JSON', e)
-              }
-            }
-
-            dispatch(IsRegisteredAction())
-            connect(userId, dispatch)
-
-            window.addEventListener('resize', () => {})
           }
+
+          if (localLocalData) {
+            try {
+              const messages = JSON.parse(rawMessageData)
+              dispatch(LoadMessageArchiveAction(messages))
+            } catch (e) {
+              console.log('Could not parse message JSON', e)
+            }
+          }
+
+          dispatch(IsRegisteredAction())
+          connect(registeredUsername, dispatch)
+
+          window.addEventListener('resize', () => {})
         })
       }
     })

@@ -79,7 +79,7 @@ export async function updateProfile (user: Partial<User>, hardRefreshPage: boole
   }
 }
 
-export async function checkIsRegistered (): Promise<boolean> {
+export async function checkIsRegistered (): Promise<string> {
   const result = await callAzureFunction('isRegistered')
   return result.registered
 }
