@@ -48,7 +48,7 @@ const App = () => {
         // This should really be its own action distinct from logging in
         dispatch(AuthenticateAction(undefined, undefined))
       } else {
-        userId = login.user_claims[0].val
+        userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
         name = login.user_id
         checkIsRegistered().then((registered) => {
           dispatch(AuthenticateAction(userId, name))
