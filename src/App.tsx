@@ -79,7 +79,7 @@ const App = () => {
           }
 
           dispatch(IsRegisteredAction())
-          connect(registeredUsername, dispatch)
+          connect(userId, dispatch)
 
           window.addEventListener('resize', () => {})
         })
