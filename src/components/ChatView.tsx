@@ -25,8 +25,17 @@ export default function ChatView (props: { messages: Message[] }) {
   return (
     <div id="messages">
       {props.messages.map((m, idx) => {
+        let hideTimestamp = false
+        const previousMessage = props.messages[idx - 1]
+        if (previousMessage) {
+          // TODO: Give all messages a userId for this to be meaningful
+          if ((previousMessage as any).userId && (m as any).userId && (previousMessage as any).userId === (m as any).userId) {
+            hideTimestamp = true
+          }
+        }
+
         const id = `message-${idx}`
-        return <MessageView message={m} key={id} id={id} />
+        return <MessageView message={m} key={id} id={id} hideTimestamp={hideTimestamp} />
       })}
     </div>
   )

@@ -15,3 +15,11 @@
   font-size: 0.8em;
   text-transform: lowercase;
 }
+
+.message-wrapper .time.show-on-hover {
+  opacity: 0;
+}
+
+.message-wrapper:hover .time.show-on-hover {
+  opacity: 1
+}

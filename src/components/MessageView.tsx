@@ -26,7 +26,7 @@ import { deleteMessage } from '../networking'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
-export default function MessageView (props: { message: Message; id: string }) {
+export default function MessageView (props: { message: Message; id: string, hideTimestamp: boolean }) {
   const { message } = props
   if (!message) { return <div/> }
 
@@ -55,7 +55,7 @@ export default function MessageView (props: { message: Message; id: string }) {
 
   return (
     <div className='message-wrapper'>
-      <div className='time'>{formatter.format(date)}</div>
+      <div className={`time ${props.hideTimestamp ? 'show-on-hover' : null}`}>{formatter.format(date)}</div>
       {React.createElement(component, { ...message, id: props.id })}
     </div>
   )
