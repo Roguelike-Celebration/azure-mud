@@ -33,6 +33,15 @@ export default function LoggedOutView () {
           )}`}
         >
           Log In With Google
+        </a><br/>
+        <a
+          href={`${
+            config.SERVER_HOSTNAME
+          }/.auth/login/facebook?post_login_redirect_url=${encodeURIComponent(
+            window.location.href
+          )}`}
+        >
+          Log In With Facebook
         </a>
         <p>
           No matter which service you log in with, we do not access any data
