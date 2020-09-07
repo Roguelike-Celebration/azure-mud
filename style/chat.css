@@ -4,3 +4,22 @@
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
+
+.message-wrapper div {
+  display: inline-block
+}
+
+.message-wrapper .time {
+  margin-right: 1.5em;
+  color: var(--gray-text);
+  font-size: 0.8em;
+  text-transform: lowercase;
+}
+
+.message-wrapper .time.show-on-hover {
+  opacity: 0;
+}
+
+.message-wrapper:hover .time.show-on-hover {
+  opacity: 1
+}

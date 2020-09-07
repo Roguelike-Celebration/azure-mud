@@ -24,8 +24,11 @@ import NameView from './NameView'
 import { UserMapContext } from '../App'
 import { deleteMessage } from '../networking'
 
-export default function MessageView (props: { message: Message; id: string }) {
+const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
+
+export default function MessageView (props: { message: Message; id: string, hideTimestamp: boolean }) {
   const { message } = props
+  if (!message) { return <div/> }
 
   const messageMap = {
     [MessageType.Connected]: ConnectedMessageView,
@@ -48,7 +51,14 @@ export default function MessageView (props: { message: Message; id: string }) {
     return <div />
   }
 
-  return React.createElement(component, { ...message, id: props.id })
+  const date = (typeof message.timestamp === 'string' ? new Date(message.timestamp) : message.timestamp)
+
+  return (
+    <div className='message-wrapper'>
+      <div className={`time ${props.hideTimestamp ? 'show-on-hover' : null}`}>{formatter.format(date)}</div>
+      {React.createElement(component, { ...message, id: props.id })}
+    </div>
+  )
 }
 
 const handleDeleteMessage = (e, data) => {

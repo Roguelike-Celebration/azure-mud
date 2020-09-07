@@ -34,62 +34,68 @@ export function isDeletable (message: Message): message is ChatMessage | EmoteMe
 export interface ConnectedMessage {
   type: MessageType.Connected;
   userId: string;
+  timestamp: Date;
 }
 
 export const createConnectedMessage = (userId: string): ConnectedMessage => {
-  return { type: MessageType.Connected, userId }
+  return { type: MessageType.Connected, userId, timestamp: new Date() }
 }
 
 export interface DisconnectedMessage {
   type: MessageType.Disconnected;
   userId: string;
+  timestamp: Date;
 }
 
 export const createDisconnectedMessage = (
   userId: string
 ): DisconnectedMessage => {
-  return { type: MessageType.Disconnected, userId }
+  return { type: MessageType.Disconnected, userId, timestamp: new Date() }
 }
 
 export interface EnteredMessage {
   type: MessageType.Entered;
   userId: string;
   from: string;
+  timestamp: Date;
 }
 
 export const createEnteredMessage = (
   userId: string,
   from: string
 ): EnteredMessage => {
-  return { type: MessageType.Entered, userId, from }
+  return { type: MessageType.Entered, userId, from, timestamp: new Date() }
 }
 
 export interface LeftMessage {
   type: MessageType.Left;
   userId: string;
   to: string;
+  timestamp: Date;
 }
 
 export const createLeftMessage = (userId: string, to: string): LeftMessage => {
-  return { type: MessageType.Left, userId, to }
+  return { type: MessageType.Left, userId, to, timestamp: new Date() }
 }
 
 export interface MovedRoomMessage {
   type: MessageType.MovedRoom;
   to: string;
+  timestamp: Date;
 }
 
 export const createMovedRoomMessage = (to: string): MovedRoomMessage => {
-  return { type: MessageType.MovedRoom, to }
+  return { type: MessageType.MovedRoom, to, timestamp: new Date() }
 }
 
 export interface SameRoomMessage {
   type: MessageType.SameRoom;
   room: string;
+  timestamp: Date;
 }
 
 export const createSameRoomMessage = (to: string): SameRoomMessage => {
-  return { type: MessageType.SameRoom, room: to }
+  return { type: MessageType.SameRoom, room: to, timestamp: new Date() }
 }
 
 export interface ChatMessage {
@@ -97,6 +103,7 @@ export interface ChatMessage {
   messageId: string;
   userId: string;
   message: string;
+  timestamp: Date;
 }
 
 export const createChatMessage = (
@@ -104,7 +111,7 @@ export const createChatMessage = (
   userId: string,
   message: string
 ): ChatMessage => {
-  return { type: MessageType.Chat, messageId, userId, message }
+  return { type: MessageType.Chat, messageId, userId, message, timestamp: new Date() }
 }
 
 export interface WhisperMessage {
@@ -112,6 +119,7 @@ export interface WhisperMessage {
   userId: string;
   message: string;
   senderIsSelf: boolean;
+  timestamp: Date;
 }
 
 export const createWhisperMessage = (
@@ -119,7 +127,7 @@ export const createWhisperMessage = (
   message: string,
   senderIsSelf = false
 ): WhisperMessage => {
-  return { type: MessageType.Whisper, userId, message, senderIsSelf }
+  return { type: MessageType.Whisper, userId, message, senderIsSelf, timestamp: new Date() }
 }
 
 export interface ModMessage {
@@ -127,6 +135,7 @@ export interface ModMessage {
   userId: string;
   message: string;
   senderIsSelf: boolean;
+  timestamp: Date;
 }
 
 export const createModMessage = (
@@ -134,7 +143,7 @@ export const createModMessage = (
   message: string,
   senderIsSelf = false
 ): ModMessage => {
-  return { type: MessageType.Mod, userId, message, senderIsSelf }
+  return { type: MessageType.Mod, userId, message, senderIsSelf, timestamp: new Date() }
 }
 
 export interface ShoutMessage {
@@ -142,6 +151,7 @@ export interface ShoutMessage {
   messageId: string;
   userId: string;
   message: string;
+  timestamp: Date;
 }
 
 export const createShoutMessage = (
@@ -149,7 +159,7 @@ export const createShoutMessage = (
   userId: string,
   message: string
 ): ShoutMessage => {
-  return { type: MessageType.Shout, messageId: id, userId, message }
+  return { type: MessageType.Shout, messageId: id, userId, message, timestamp: new Date() }
 }
 
 export interface EmoteMessage {
@@ -157,6 +167,7 @@ export interface EmoteMessage {
   messageId: string;
   userId: string;
   message: string;
+  timestamp: Date;
 }
 
 export const createEmoteMessage = (
@@ -164,14 +175,15 @@ export const createEmoteMessage = (
   userId: string,
   message: string
 ): EmoteMessage => {
-  return { type: MessageType.Emote, messageId: id, userId, message }
+  return { type: MessageType.Emote, messageId: id, userId, message, timestamp: new Date() }
 }
 
 export interface ErrorMessage {
   type: MessageType.Error;
   error: string;
+  timestamp: Date;
 }
 
 export const createErrorMessage = (error: string): ErrorMessage => {
-  return { type: MessageType.Error, error }
+  return { type: MessageType.Error, error, timestamp: new Date() }
 }
