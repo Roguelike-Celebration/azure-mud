@@ -281,16 +281,22 @@ export default (oldState: State, action: Action): State => {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
     } else if (beginsWithSlash && matching.type === SlashCommandType.Whisper) {
-      sendChatMessage(messageId, trimmedMessage)
-
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
-      const [_, username, message] = /^(.+?) (.+)/.exec(commandStr[2])
-      const user = Object.values(state.userMap).find(
-        (u) => u.username === username
-      )
-      const userId = user && user.id
-      if (userId) {
-        addMessage(state, createWhisperMessage(userId, message, true))
+      const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
+
+      if (!parsedUsernameMessage) {
+        addMessage(state, createErrorMessage(`Your whisper to ${commandStr[2]} had no message!`))
+      } else {
+        sendChatMessage(messageId, trimmedMessage)
+
+        const [_, username, message] = parsedUsernameMessage
+        const user = Object.values(state.userMap).find(
+          (u) => u.username === username
+        )
+        const userId = user && user.id
+        if (userId) {
+          addMessage(state, createWhisperMessage(userId, message, true))
+        }
       }
     } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
       state.activeModal = Modal.Help
