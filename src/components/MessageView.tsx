@@ -205,7 +205,7 @@ const EmoteView = (props: EmoteMessage & { id: string }) => {
 }
 
 const ErrorView = (props: ErrorMessage & { id: string }) => {
-  return <div className="message">{props.error}</div>
+  return <div className="error">{props.error}</div>
 }
 
 const CommandView = (props: CommandMessage & { id: string }) => {
