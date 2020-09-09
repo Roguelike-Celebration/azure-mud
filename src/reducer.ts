@@ -13,8 +13,7 @@ import {
   createModMessage,
   createMovedRoomMessage,
   createSameRoomMessage,
-  isDeletable,
-  MAX_MESSASGE_LENGTH
+  isDeletable
 } from './message'
 import { Room } from './room'
 import {
@@ -28,6 +27,7 @@ import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
+import { MAX_MESSAGE_LENGTH } from '../server/sendChatMessage/index'
 
 export interface State {
   authenticated: boolean;
@@ -276,7 +276,7 @@ export default (oldState: State, action: Action): State => {
     const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
     const matching = beginsWithSlash ? matchingSlashCommand(trimmedMessage) : undefined
 
-    if (trimmedMessage.length > MAX_MESSASGE_LENGTH) {
+    if (trimmedMessage.length > MAX_MESSAGE_LENGTH) {
       addMessage(state, createErrorMessage(`Your message is too long! Please try to keep it under ~600 characters!`))
     } else if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)

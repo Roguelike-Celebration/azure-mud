@@ -6,6 +6,8 @@ import { look } from '../src/look'
 import authenticate from '../src/authenticate'
 import { getUserIdForUsername } from '../src/user'
 
+export const MAX_MESSAGE_LENGTH = 631
+
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
@@ -26,7 +28,7 @@ const httpTrigger: AzureFunction = async function (
         body: 'Include a user ID and a message!'
       }
       return
-    } else if (message.length > 631) { // Matches MAX_MESSAGE_LENGTH from client's message.ts - unsure how to share
+    } else if (message.length > MAX_MESSAGE_LENGTH) { // Matches MAX_MESSAGE_LENGTH from client's message.ts - unsure how to share
       context.res = {
         status: 400,
         body: 'Message length too long!'
