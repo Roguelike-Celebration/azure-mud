@@ -33,7 +33,7 @@ import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
-import { MAX_MESSAGE_LENGTH } from '../server/sendChatMessage/index'
+import { MAX_MESSAGE_LENGTH } from '../server/src/config'
 const axios = require('axios').default
 
 let myUserId: string

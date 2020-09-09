@@ -27,7 +27,7 @@ import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
-import { MAX_MESSAGE_LENGTH } from '../server/sendChatMessage/index'
+import { MAX_MESSAGE_LENGTH } from '../server/src/config'
 
 export interface State {
   authenticated: boolean;

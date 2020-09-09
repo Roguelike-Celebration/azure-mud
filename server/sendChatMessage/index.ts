@@ -5,8 +5,7 @@ import { shout } from '../src/shout'
 import { look } from '../src/look'
 import authenticate from '../src/authenticate'
 import { getUserIdForUsername } from '../src/user'
-
-export const MAX_MESSAGE_LENGTH = 631
+import { MAX_MESSAGE_LENGTH } from '../src/config'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
