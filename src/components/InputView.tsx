@@ -44,6 +44,7 @@ export default function InputView (props: {
         onKeyPress={checkEnter}
         value={input}
         aria-label="Chat text input box"
+        autoComplete="off"
       />
       <button id="send" onClick={onClick}>
         Send
