@@ -26,6 +26,12 @@ const httpTrigger: AzureFunction = async function (
         body: 'Include a user ID and a message!'
       }
       return
+    } else if (message.length > 631) { // Matches MAX_MESSAGE_LENGTH from client's message.ts - unsure how to share
+      context.res = {
+        status: 400,
+        body: 'Message length too long!'
+      }
+      return
     }
 
     const moveMatch = /^\/(go|move) (.+)/.exec(message)

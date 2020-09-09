@@ -27,6 +27,8 @@ export enum MessageType {
   Error = 'ERROR',
 }
 
+export const MAX_MESSASGE_LENGTH = 631
+
 export function isDeletable (message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
   return [MessageType.Chat, MessageType.Emote, MessageType.Shout].includes(message.type)
 }

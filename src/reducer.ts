@@ -13,7 +13,8 @@ import {
   createModMessage,
   createMovedRoomMessage,
   createSameRoomMessage,
-  isDeletable
+  isDeletable,
+  MAX_MESSASGE_LENGTH
 } from './message'
 import { Room } from './room'
 import {
@@ -27,7 +28,6 @@ import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
-import { useReducer } from 'react'
 
 export interface State {
   authenticated: boolean;
@@ -276,7 +276,9 @@ export default (oldState: State, action: Action): State => {
     const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
     const matching = beginsWithSlash ? matchingSlashCommand(trimmedMessage) : undefined
 
-    if (beginsWithSlash && matching === undefined) {
+    if (trimmedMessage.length > MAX_MESSASGE_LENGTH) {
+      addMessage(state, createErrorMessage(`Your message is too long! Please try to keep it under ~600 characters!`))
+    } else if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
     } else if (beginsWithSlash) {
