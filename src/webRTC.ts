@@ -274,3 +274,9 @@ function startAnalyserLoop (dispatch: Dispatch<Action>) {
 export function stopAudioAnalyserLoop () {
   shouldStopAnalysing = true
 }
+
+export function stopAllDeviceUsage () {
+  if(localMediaStream()) {
+    localMediaStream().getTracks().forEach(e => e.stop())
+  }
+}

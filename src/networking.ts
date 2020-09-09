@@ -30,7 +30,7 @@ import {
   UpdatedVideoPresenceAction
 } from './Actions'
 import { User } from '../server/src/user'
-import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
+import { startSignaling, receiveSignalData } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
 const axios = require('axios').default
