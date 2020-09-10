@@ -51,7 +51,10 @@ const App = () => {
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
         checkIsRegistered().then((registeredUsername) => {
-          if (!registeredUsername) return
+          if (!registeredUsername) {
+            dispatch(AuthenticateAction(userId, login.user_id))
+            return
+          }
           dispatch(AuthenticateAction(userId, registeredUsername))
 
           let localLocalData = false
