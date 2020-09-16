@@ -10,7 +10,8 @@ export type Message =
   | ShoutMessage
   | EmoteMessage
   | ModMessage
-  | ErrorMessage;
+  | ErrorMessage
+  | CommandMessage;
 
 export enum MessageType {
   Connected = 'CONNECTED',
@@ -25,6 +26,7 @@ export enum MessageType {
   Emote = 'EMOTE',
   Mod = 'MOD',
   Error = 'ERROR',
+  Command = 'COMMAND',
 }
 
 export function isDeletable (message: Message): message is ChatMessage | EmoteMessage | ShoutMessage {
@@ -186,4 +188,14 @@ export interface ErrorMessage {
 
 export const createErrorMessage = (error: string): ErrorMessage => {
   return { type: MessageType.Error, error, timestamp: new Date() }
+}
+
+export interface CommandMessage {
+  type: MessageType.Command;
+  command: string;
+  timestamp: Date;
+}
+
+export const createCommandMessage = (command: string): CommandMessage => {
+  return { type: MessageType.Command, command, timestamp: new Date() }
 }

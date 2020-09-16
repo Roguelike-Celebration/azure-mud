@@ -13,7 +13,8 @@ import {
   createModMessage,
   createMovedRoomMessage,
   createSameRoomMessage,
-  isDeletable
+  isDeletable,
+  createCommandMessage
 } from './message'
 import { Room } from './room'
 import {
@@ -279,12 +280,16 @@ export default (oldState: State, action: Action): State => {
     if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
-    } else if (beginsWithSlash) {
-      sendChatMessage(messageId, trimmedMessage)
+    } else if (beginsWithSlash && matching.type === SlashCommandType.Whisper) {
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+      const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
 
-      if (matching.type === SlashCommandType.Whisper) {
-        const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
-        const [_, username, message] = /^(.+?) (.+)/.exec(commandStr[2])
+      if (!parsedUsernameMessage) {
+        addMessage(state, createErrorMessage(`Your whisper to ${commandStr[2]} had no message!`))
+      } else {
+        sendChatMessage(messageId, trimmedMessage)
+
+        const [_, username, message] = parsedUsernameMessage
         const user = Object.values(state.userMap).find(
           (u) => u.username === username
         )
@@ -292,9 +297,16 @@ export default (oldState: State, action: Action): State => {
         if (userId) {
           addMessage(state, createWhisperMessage(userId, message, true))
         }
-      } else if (matching.type === SlashCommandType.Help) {
-        state.activeModal = Modal.Help
       }
+    } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
+      state.activeModal = Modal.Help
+      addMessage(state, createCommandMessage("You consult the help docs. (You can also find them in sidebar!)"))
+    } else if (beginsWithSlash && matching.type == SlashCommandType.Look) {
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+      addMessage(state, createCommandMessage(`You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`))
+      sendChatMessage(messageId, trimmedMessage)
+    } else if (beginsWithSlash) {
+      sendChatMessage(messageId, trimmedMessage)
     } else {
       sendChatMessage(messageId, action.value)
       addMessage(state, createChatMessage(messageId, state.userId, action.value))

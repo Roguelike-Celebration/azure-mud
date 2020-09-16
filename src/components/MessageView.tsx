@@ -18,7 +18,8 @@ import {
   ErrorMessage,
   ShoutMessage,
   EmoteMessage,
-  ModMessage
+  ModMessage,
+  CommandMessage
 } from '../message'
 import NameView from './NameView'
 import { UserMapContext } from '../App'
@@ -42,7 +43,8 @@ export default function MessageView (props: { message: Message; id: string, hide
     [MessageType.Shout]: ShoutView,
     [MessageType.Emote]: EmoteView,
     [MessageType.Error]: ErrorView,
-    [MessageType.Mod]: ModMessageView
+    [MessageType.Mod]: ModMessageView,
+    [MessageType.Command]: CommandView
   }
 
   const component = messageMap[message.type]
@@ -203,5 +205,9 @@ const EmoteView = (props: EmoteMessage & { id: string }) => {
 }
 
 const ErrorView = (props: ErrorMessage & { id: string }) => {
-  return <div className="message">{props.error}</div>
+  return <div className="error">{props.error}</div>
+}
+
+const CommandView = (props: CommandMessage & { id: string }) => {
+  return <div className="message"><em>{props.command}</em></div>
 }
