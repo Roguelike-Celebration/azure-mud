@@ -24,7 +24,7 @@ import {
   toggleUserMod
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
-import { disconnectAllPeers, stopAudioAnalyserLoop } from './webRTC'
+import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
@@ -265,6 +265,7 @@ export default (oldState: State, action: Action): State => {
     setNetworkMediaChatStatus(false)
     disconnectAllPeers()
     stopAudioAnalyserLoop()
+    stopAllDeviceUsage()
     delete state.localMediaStreamId
     delete state.otherMediaStreamPeerIds
     state.inMediaChat = false
