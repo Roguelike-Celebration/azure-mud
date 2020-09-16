@@ -30,9 +30,10 @@ import {
   UpdatedVideoPresenceAction
 } from './Actions'
 import { User } from '../server/src/user'
-import { startSignaling, receiveSignalData, getMediaStream } from './webRTC'
+import { startSignaling, receiveSignalData } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
+import { MAX_MESSAGE_LENGTH } from '../server/src/config'
 const axios = require('axios').default
 
 let myUserId: string
@@ -129,6 +130,12 @@ export async function moveToRoom (roomId: string) {
 }
 
 export async function sendChatMessage (id: string, text: string) {
+  // If it's over the character limit
+  if (text.length > MAX_MESSAGE_LENGTH) {
+    console.log(`Sorry, can't send messages over ${MAX_MESSAGE_LENGTH} characters!`)
+    return
+  }
+
   const result: RoomResponse | Error | any = await callAzureFunction(
     'sendChatMessage',
     {
