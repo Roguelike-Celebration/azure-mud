@@ -276,7 +276,7 @@ export function stopAudioAnalyserLoop () {
 }
 
 export function stopAllDeviceUsage () {
-  if(localMediaStream()) {
+  if (localMediaStream()) {
     localMediaStream().getTracks().forEach(e => e.stop())
   }
 }
