@@ -279,7 +279,7 @@ export default (oldState: State, action: Action): State => {
     const matching = beginsWithSlash ? matchingSlashCommand(trimmedMessage) : undefined
 
     if (trimmedMessage.length > MAX_MESSAGE_LENGTH) {
-      addMessage(state, createErrorMessage(`Your message is too long! Please try to keep it under ~600 characters!`))
+      addMessage(state, createErrorMessage('Your message is too long! Please try to keep it under ~600 characters!'))
     } else if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
@@ -304,7 +304,7 @@ export default (oldState: State, action: Action): State => {
     } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
       state.activeModal = Modal.Help
       addMessage(state, createCommandMessage("You consult the help docs. (You can also find them in sidebar!)"))
-    } else if (beginsWithSlash && matching.type == SlashCommandType.Look) {
+    } else if (beginsWithSlash && matching.type === SlashCommandType.Look) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createCommandMessage(`You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`))
       sendChatMessage(messageId, trimmedMessage)
