@@ -1,11 +1,17 @@
 import React from 'react'
 
 import MessageView from './MessageView'
-import { Message, MessageType } from '../message'
+import { Message, MessageType, ConnectedMessage, DisconnectedMessage, EnteredMessage, LeftMessage } from '../message'
 
 import '../../style/chat.css'
 
 console.log('Are we linkify9ing?')
+
+
+function isMovementMessage(message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
+  return message.type == MessageType.Connected || message.type == MessageType.Disconnected ||
+    message.type == MessageType.Entered || message.type == MessageType.Left
+}
 
 export default function ChatView (props: { messages: Message[] }) {
   React.useEffect(() => {
@@ -22,9 +28,14 @@ export default function ChatView (props: { messages: Message[] }) {
       (lastMessage.parentNode as any).offsetTop
   })
 
+  const hideMovementThreshold = -1
+  const messagesAfterMovementFilter = props.messages.filter((msg) => {
+    return !(isMovementMessage(msg) && msg.numUsersInRoom > hideMovementThreshold)
+  })
+
   return (
     <div id="messages">
-      {props.messages.map((m, idx) => {
+      {messagesAfterMovementFilter.map((m, idx) => {
         let hideTimestamp = false
         const previousMessage = props.messages[idx - 1]
         if (previousMessage) {
