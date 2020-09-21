@@ -22,7 +22,7 @@ import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
-import ThemeSelectorView from './components/ThemeSelectorView'
+import SettingsView from './components/SettingsView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
@@ -148,8 +148,8 @@ const App = () => {
       )
       break
     }
-    case Modal.ThemeSelector: {
-      innerModalView = <ThemeSelectorView />
+    case Modal.Settings: {
+      innerModalView = <SettingsView />
       break
     }
     case Modal.MediaSelector: {

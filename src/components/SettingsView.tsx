@@ -4,7 +4,7 @@ import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
 import { HideModalAction } from '../Actions'
 
-export default function ThemeSelectorView () {
+export default function SettingsView () {
   const dispatch = useContext(DispatchContext)
 
   const close = () => {
