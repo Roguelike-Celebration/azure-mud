@@ -42,7 +42,6 @@ export default function ChatView (props: { messages: Message[] }) {
           // TODO: Give all messages a userId for this to be meaningful
           if ((previousMessage as any).userId && (m as any).userId && (previousMessage as any).userId === (m as any).userId) {
             const diff = (new Date(m.timestamp).getTime() - new Date(previousMessage.timestamp).getTime())
-            console.log(diff)
             // This is a bad way to calculate '3 minutes' and I should feel bad -em
             if (diff < 1000 * 60 * 3) {
               hideTimestamp = true
