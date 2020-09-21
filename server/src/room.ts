@@ -84,5 +84,49 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the registration desk',
     description: 'A big banner reads welcome to Roguelike Celebration! Once you\'ve got your bearings about you, you can move to the [[lounge]].',
     hidden: true
+  },
+  northShowcaseHall: {
+    id: 'northShowcaseHall',
+    displayName: 'North Showcase Hall',
+    shortName: 'the north showcase hall',
+    description: `
+      A number of booths line the sides of the hall.<br/><br/>
+      Here you can see Gesuido, by Ryosuke Mihara, Project Earth by Michael Taylor, WizardWarsIO by quantompotato, and Project Shiro by Garbriel Martinez.<br/><br/>
+      <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
+      You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
+    allowsMedia: true
+  },
+  eastShowcaseHall: {
+    id: 'eastShowcaseHall',
+    displayName: 'East Showcase Hall',
+    shortName: 'the east showcase hall',
+    description: `
+      A number of booths line the sides of the hall.<br/><br/>
+      Here you can see Roundguard, by Andrea Roberts, Nogunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
+      <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
+      You can exit to the [[north hall->northShowcaseHall]] or [[south hall->southShowcaseHall]]`,
+    allowsMedia: true
+  },
+  southShowcaseHall: {
+    id: 'southShowcaseHall',
+    displayName: 'South Showcase Hall',
+    shortName: 'the south showcase hall',
+    description: `
+      A number of booths line the sides of the hall.<br/><br/>
+      Here you can see Fuzz Force: Spook Squad, by Alan Igle, Mech@mor Showdown by Seth Alter, Rift Wizard by Dylan White, and Happy Grumps by Glenn LaBarre.<br/><br/>
+      <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
+      You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
+    allowsMedia: true
+  },
+  westShowcaseHall: {
+    id: 'westShowcaseHall',
+    displayName: 'West Showcase Hall',
+    shortName: 'the west showcase hall',
+    description: `
+      A number of booths line the sides of the hall.<br/><br/>
+      Here you can see Computer Dungeon Slash: ZZT, by KKairos, Nock Loose by Tarraske Digital, Peglin by Red Nexus Games, and AutoFire by Patrick Lipo.<br/><br/>
+      <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
+      You can exit to the [[north hall->northShowcaseHall]] or [[south hall->southShowcaseHall]]`,
+    allowsMedia: true
   }
 }
