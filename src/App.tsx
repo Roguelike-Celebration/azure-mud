@@ -61,6 +61,7 @@ const App = () => {
           let localLocalData = false
           const rawTimestamp = localStorage.getItem('messageTimestamp')
           const rawMessageData = localStorage.getItem('messages')
+          const rawWhisperData = localStorage.getItem('whispers')
           if (rawTimestamp) {
             try {
               const timestamp = new Date(rawTimestamp)
@@ -76,7 +77,8 @@ const App = () => {
           if (localLocalData) {
             try {
               const messages = JSON.parse(rawMessageData)
-              dispatch(LoadMessageArchiveAction(messages))
+              const whispers = JSON.parse(rawWhisperData)
+              dispatch(LoadMessageArchiveAction(messages, whispers))
             } catch (e) {
               console.log('Could not parse message JSON', e)
             }
@@ -94,7 +96,7 @@ const App = () => {
   const isMobile = window.outerWidth < 500
 
   const profile = state.visibleProfile ? (
-    <ProfileView user={state.visibleProfile} messages={state.messages} />
+    <ProfileView user={state.visibleProfile} whispers={state.whispers} />
   ) : (
     ''
   )

@@ -14,7 +14,8 @@ import {
   createMovedRoomMessage,
   createSameRoomMessage,
   isDeletable,
-  createCommandMessage
+  createCommandMessage,
+  WhisperMessage
 } from './message'
 import { Room } from './room'
 import {
@@ -43,6 +44,7 @@ export interface State {
   profileData?: PublicUser;
 
   messages: Message[];
+  whispers: WhisperMessage[];
 
   prepopulatedInput?: string;
 
@@ -72,6 +74,7 @@ export const defaultState: State = {
   checkedAuthentication: false,
   hasRegistered: false,
   messages: [],
+  whispers: [],
   userMap: {},
   roomData: {},
   inMediaChat: false,
@@ -188,10 +191,9 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.Whisper) {
-    addMessage(
-      state,
-      createWhisperMessage(action.value.name, action.value.message)
-    )
+    const whisperMessage = createWhisperMessage(action.value.name, action.value.message)
+    addMessage(state, whisperMessage)
+    saveWhisper(state, whisperMessage)
   }
 
   if (action.type === ActionType.ModMessage) {
@@ -306,7 +308,9 @@ export default (oldState: State, action: Action): State => {
         )
         const userId = user && user.id
         if (userId) {
-          addMessage(state, createWhisperMessage(userId, message, true))
+          const whisperMessage = createWhisperMessage(userId, message, true)
+          addMessage(state, whisperMessage)
+          saveWhisper(state, whisperMessage)
         }
       }
     } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
@@ -381,6 +385,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.LoadMessageArchive) {
     state.messages = action.messages
+    state.whispers = action.whispers
   }
 
   // Notes
@@ -432,6 +437,11 @@ function deleteMessage (state: State, messageId: String) {
     localStorage.setItem('messages', JSON.stringify(state.messages))
     localStorage.setItem('messageTimestamp', new Date().toUTCString())
   }
+}
+
+function saveWhisper(state: State, message: WhisperMessage) {
+  state.whispers.push(message)
+  localStorage.setItem('whispers', JSON.stringify(state.whispers))
 }
 
 function addMessage (state: State, message: Message) {

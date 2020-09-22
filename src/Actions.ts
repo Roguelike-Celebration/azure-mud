@@ -3,7 +3,7 @@ import { State } from './reducer'
 import { fetchProfile } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
-import { Message } from './message'
+import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { getMediaStream } from './webRTC'
@@ -641,10 +641,11 @@ export const ModToggleAction = (userId: string): ModToggleAction => {
 interface LoadMessageArchiveAction {
   type: ActionType.LoadMessageArchive;
   messages: Message[];
+  whispers: WhisperMessage[];
 }
 
-export const LoadMessageArchiveAction = (messages: Message[]): LoadMessageArchiveAction => {
-  return { type: ActionType.LoadMessageArchive, messages: messages }
+export const LoadMessageArchiveAction = (messages: Message[], whispers: WhisperMessage[]): LoadMessageArchiveAction => {
+  return { type: ActionType.LoadMessageArchive, messages: messages, whispers: whispers }
 }
 
 interface NoteAddAction {
