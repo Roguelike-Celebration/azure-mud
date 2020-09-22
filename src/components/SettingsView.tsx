@@ -30,8 +30,11 @@ export default function SettingsView () {
     localStorage.setItem('UserSelectedTheme', event.target.value)
   }
 
+  const handleToggleMovement = (event: React.ChangeEvent<HTMLInputElement>) => {
+    localStorage.setItem('HideAllMovementMessages', JSON.stringify(event.target.checked))
+  }
+
   const handleMovementSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("New change:", event.target.value)
     if (event.target.value) {
       localStorage.setItem('HideMovementThreshold', event.target.value)
     }
@@ -73,7 +76,9 @@ export default function SettingsView () {
         <label htmlFor='movementNotificationForm'>Movement Messages:</label>
         <div>
           <input type='checkbox'
-            id='hideMoveToggle'/>
+            id='hideMoveToggle'
+            defaultChecked={JSON.parse(localStorage.getItem('HideAllMovementMessages'))}
+            onChange={handleToggleMovement} />
           <label>Hide all movement messages</label>
         </div>
         <div>

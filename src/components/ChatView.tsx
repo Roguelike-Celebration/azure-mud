@@ -29,13 +29,16 @@ export default function ChatView (props: { messages: Message[] }) {
   })
 
   var hideMovementThreshold = parseInt(localStorage.getItem('HideMovementThreshold'))
-  console.log(hideMovementThreshold)
   if (Number.isNaN(hideMovementThreshold)) {
     hideMovementThreshold = 6
     localStorage.setItem('HideMovementThreshold', '6')
   }
+  var hideAllMovementMessages: Boolean = JSON.parse(localStorage.getItem('HideAllMovementMessages'))
+  if (hideAllMovementMessages === null) {
+    localStorage.setItem('HideAllMovementMessages', 'false')
+  }
   const messagesAfterMovementFilter = props.messages.filter((msg) => {
-    return !(isMovementMessage(msg) && msg.numUsersInRoom > hideMovementThreshold)
+    return !(isMovementMessage(msg) && (hideAllMovementMessages || msg.numUsersInRoom > hideMovementThreshold))
   })
 
   return (
