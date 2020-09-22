@@ -28,7 +28,12 @@ export default function ChatView (props: { messages: Message[] }) {
       (lastMessage.parentNode as any).offsetTop
   })
 
-  const hideMovementThreshold = -1
+  var hideMovementThreshold = parseInt(localStorage.getItem('HideMovementThreshold'))
+  console.log(hideMovementThreshold)
+  if (hideMovementThreshold == NaN) {
+    hideMovementThreshold = 6
+    localStorage.setItem('HideMovementThreshold', '6')
+  }
   const messagesAfterMovementFilter = props.messages.filter((msg) => {
     return !(isMovementMessage(msg) && msg.numUsersInRoom > hideMovementThreshold)
   })
