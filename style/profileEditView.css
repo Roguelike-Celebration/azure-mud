@@ -30,7 +30,7 @@ input[type=text] {
 }
 
 .form {
-  width: 780px;
+  width: 600px;
 }
 
 .ftue .form {
@@ -38,6 +38,7 @@ input[type=text] {
 }
 
 .form label {
+  width: 600px;
   font-size: 1.4em;
 }
 

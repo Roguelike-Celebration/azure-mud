@@ -45,50 +45,60 @@ export default function SettingsView () {
       <div className='form' id="themeSelectionForm">
         <label htmlFor="themeSelectionForm">Select Theme:</label>
         <div className='radio'>
-          <input type = "radio"
-            id = "theme"
-            value = "default"
-            checked = {selectedTheme === 'default'}
-            onChange = {handleThemeSelection}
-          />
-          <label>Default (Dark)</label>
+          <label>
+            <input type = "radio"
+              id = "theme"
+              value = "default"
+              checked = {selectedTheme === 'default'}
+              onChange = {handleThemeSelection}
+            />
+            Default (Dark)
+          </label>
         </div>
         <div className = "radio">
-          <input type = "radio"
-            id = "theme"
-            value = "solarized-dark"
-            checked = {selectedTheme === 'solarized-dark'}
-            onChange = {handleThemeSelection}
-          />
-          <label>Solarized Dark</label>
+          <label>
+            <input type = "radio"
+              id = "theme"
+              value = "solarized-dark"
+              checked = {selectedTheme === 'solarized-dark'}
+              onChange = {handleThemeSelection}
+            />
+            Solarized Dark
+          </label>
         </div>
         <div className = "radio">
-          <input type = "radio"
-            id = "theme"
-            value = "solarized-light"
-            checked = {selectedTheme === 'solarized-light'}
-            onChange = {handleThemeSelection}
-          />
-          <label>Solarized Light</label>
+          <label>
+            <input type = "radio"
+              id = "theme"
+              value = "solarized-light"
+              checked = {selectedTheme === 'solarized-light'}
+              onChange = {handleThemeSelection}
+            />
+            Solarized Light
+          </label>
         </div>
       </div>
       <div className='form' id='movementNotificationForm'>
         <label htmlFor='movementNotificationForm'>Movement Messages:</label>
         <div>
-          <input type='checkbox'
-            id='hideMoveToggle'
-            defaultChecked={JSON.parse(localStorage.getItem('HideAllMovementMessages'))}
-            onChange={handleToggleMovement} />
-          <label>Hide all movement messages</label>
+          <label>
+            <input type='checkbox'
+              id='hideMoveToggle'
+              defaultChecked={JSON.parse(localStorage.getItem('HideAllMovementMessages'))}
+              onChange={handleToggleMovement} />
+              Hide all movement messages
+          </label>
         </div>
         <div>
-          <input type='number'
-            id='hideMoveThreshold'
-            min='0'
-            name='stuff'
-            defaultValue={localStorage.getItem('HideMovementThreshold')}
-            onChange={handleMovementSelection} />
-          <label>Hide if person count is over</label>
+          <label>
+            <input type='number'
+              id='hideMoveThreshold'
+              min='0'
+              name='stuff'
+              defaultValue={localStorage.getItem('HideMovementThreshold')}
+              onChange={handleMovementSelection} />
+            Hide if person count is over
+          </label>
         </div>
       </div>
     </div>
