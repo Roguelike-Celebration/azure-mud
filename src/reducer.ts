@@ -431,6 +431,7 @@ function deleteMessage (state: State, messageId: String) {
 
 function addMessage (state: State, message: Message) {
   state.messages.push(message)
+  state.messages = state.messages.slice(-500)
   localStorage.setItem('messages', JSON.stringify(state.messages))
   localStorage.setItem('messageTimestamp', new Date().toUTCString())
 }
