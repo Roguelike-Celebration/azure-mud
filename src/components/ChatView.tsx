@@ -30,7 +30,7 @@ export default function ChatView (props: { messages: Message[] }) {
 
   var hideMovementThreshold = parseInt(localStorage.getItem('HideMovementThreshold'))
   console.log(hideMovementThreshold)
-  if (hideMovementThreshold == NaN) {
+  if (Number.isNaN(hideMovementThreshold)) {
     hideMovementThreshold = 6
     localStorage.setItem('HideMovementThreshold', '6')
   }
