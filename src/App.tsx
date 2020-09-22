@@ -29,6 +29,7 @@ import ScheduleView from './components/ScheduleView'
 import HelpView from './components/HelpView'
 import MapModalView from './components/MapModalView'
 import LoggedOutView from './components/LoggedOutView'
+import WelcomeModalView from './components/WelcomeModalView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -180,6 +181,10 @@ const App = () => {
     }
     case Modal.Help: {
       innerModalView = <HelpView />
+      break
+    }
+    case Modal.Welcome: {
+      innerModalView = <WelcomeModalView />
     }
   }
 
