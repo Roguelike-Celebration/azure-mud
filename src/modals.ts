@@ -8,5 +8,6 @@ export enum Modal {
     CodeOfConduct,
     Schedule,
     Help,
-    Map
+    Map,
+    Welcome
 }

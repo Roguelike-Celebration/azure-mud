@@ -95,6 +95,14 @@ export default (oldState: State, action: Action): State => {
     const oldRoomId = state.roomId
     state.roomId = action.value
 
+    if (state.roomId === 'entryway') {
+      // This will show any time anyone reloads into the entryway, which
+      // might be slightly annoying for e.g. greeters.
+      // Given our time constraints, that seems an acceptable tradeoff
+      // for not needing to QA more complex logic?
+      state.activeModal = Modal.Welcome
+    }
+
     // Add a local "you have moved to X room" message
     // Don't display if we're in the same room (issue 162)
     if (state.roomData && state.roomData[action.value]) {
@@ -303,7 +311,7 @@ export default (oldState: State, action: Action): State => {
       }
     } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
       state.activeModal = Modal.Help
-      addMessage(state, createCommandMessage("You consult the help docs. (You can also find them in sidebar!)"))
+      addMessage(state, createCommandMessage('You consult the help docs. (You can also find them in sidebar!)'))
     } else if (beginsWithSlash && matching.type === SlashCommandType.Look) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createCommandMessage(`You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`))
