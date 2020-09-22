@@ -312,10 +312,7 @@ export default (oldState: State, action: Action): State => {
       sendChatMessage(messageId, trimmedMessage)
     } else {
       sendChatMessage(messageId, action.value)
-      console.log("Creating 500 local messages!")
-      for (let i = 0; i < 500; i++) {
-        addMessage(state, createChatMessage(messageId, state.userId, action.value))
-      }
+      addMessage(state, createChatMessage(messageId, state.userId, action.value))
     }
   }
 
