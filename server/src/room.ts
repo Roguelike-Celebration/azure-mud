@@ -223,7 +223,14 @@ export const roomData: { [name: string]: Room } = {
           <p><a href="https://store.steampowered.com/app/1271280/Rift_Wizard" target="_blank">Rift Wizard</a>, by
             <a href="https://twitter.com/GameDevDylanW" target="_blank" rel="nofollow noopener noreferrer">Dylan White</a>
           </p>
-          <p>FILL THIS IN</p>
+          <p>Rift Wizard is a tactical spellcasting roguelike. The game emphasizes combat and character builds. The character system allows the 
+            player extreme freedom, with many possible synergies and combos to be discovered and exploited. Levels are compact, fitting entirely 
+            on one screen, allowing the player to fully plan out a clever strategy for each battle. Diverse enemies, high impact random loot, and 
+            procedurally generated battlefields ensure that each run is a unique strategic challenge.
+          </p>
+          <img src="images/rift-wizard/ss_6.png" alt="Rift Wizard screenshot 6" style="overflow: hidden;">
+          <img src="images/rift-wizard/ss_9.png" alt="Rift Wizard screenshot 9" style="overflow: hidden;">
+          <iframe src="https://store.steampowered.com/widget/1271280/" frameborder="0" width="646" height="190"></iframe>
         </div>
 
         <div id="happy-grumps-entry" class="showcase-entry">
