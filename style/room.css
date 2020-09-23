@@ -8,6 +8,10 @@ div.showcase-entry {
   padding: 5px;
   border-width: thin;
   margin-block-end: 5px;
+  max-height: 600px;
+  overflow: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
 a.room-link {
