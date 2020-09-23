@@ -130,7 +130,7 @@ export const roomData: { [name: string]: Room } = {
       <div class="showcase-container">
         <div class="showcase-entry">
           <p><a href="https://kkairos.itch.io/cdslash" target="_blank">Computer Dungeon Slash: ZZT</a>, by 
-            <a href="https://twitter.com/Kaikairos" target="_blank" rel="nofollow noopener noreferrer">KKairos</a> <-- Twitter link, can remove or change if requested
+            <a href="https://www.kaikairos.dev" target="_blank" rel="nofollow noopener noreferrer">KKairos</a>
           </p>
           <p>Computer Dungeon Slash: ZZT is a "dungeon crawler" written for the 1991 game-creation system ZZT featuring classic "ZZT-style" action, 
             dynamic procedural level generation, and a comedic cast of characters to rescue. You can find it on 
