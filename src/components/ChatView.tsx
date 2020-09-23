@@ -24,7 +24,7 @@ export default function ChatView (props: { messages: Message[] }) {
 
   return (
     <div id="messages">
-      {props.messages.map((m, idx) => {
+      {props.messages.slice(-150).map((m, idx) => {
         let hideTimestamp = false
         const previousMessage = props.messages[idx - 1]
         if (previousMessage) {
