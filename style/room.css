@@ -3,6 +3,12 @@
   margin-bottom: 1em;
 }
 
+div.showcase-entry {
+  border-style: solid;
+  padding: 5px;
+  border-width: thin;
+}
+
 a.room-link {
   color: var(--green);
 }

@@ -125,7 +125,19 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the west showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Computer Dungeon Slash: ZZT, by KKairos, Nock Loose by Tarraske Digital, Peglin by Red Nexus Games, and AutoFire by Patrick Lipo.<br/><br/>
+      Here you can see Computer Dungeon Slash: ZZT, by KKairos, Peglin by Red Nexus Games, and AutoFire by Patrick Lipo.<br/><br/>
+
+      <div class="showcase-entry">
+        <p><a href="https://kkairos.itch.io/cdslash" target="_blank">Computer Dungeon Slash: ZZT</a>, by KKairos</p>
+        <p>Computer Dungeon Slash: ZZT is a "dungeon crawler" written for the 1991 game-creation system ZZT featuring classic "ZZT-style" action, 
+          dynamic procedural level generation, and a comedic cast of characters to rescue. You can find it on 
+          <a href="https://kkairos.itch.io/cdslash" target="_blank">itch.io</a>!
+        </p>
+        <img src="images/cdszzt/cdszzt-title.png" alt="The Computer Dungeon Slash: ZZT title screen" class="" style="max-width: 32%;">
+        <img src="images/cdszzt/cdszzt-town.png" alt="The town area of Computer Dungeon Slash: ZZT" style="max-width: 32%;">
+        <img src="images/cdszzt/cdszzt-montage.png" alt="Several different 'limited viewport' levels of Computer Dungeon Slash: ZZT" style="max-width: 32%;">
+      </div>
+
       <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
       You can exit to the [[north hall->northShowcaseHall]] or [[south hall->southShowcaseHall]]`,
     allowsMedia: true
