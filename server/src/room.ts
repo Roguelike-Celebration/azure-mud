@@ -91,6 +91,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the north showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
+      <img src="images/puppy.jpg" alt="puppy" />
       Here you can see Gesuido, by Ryosuke Mihara, Project Earth by Michael Taylor, WizardWarsIO by quantompotato, and Project Shiro by Garbriel Martinez.<br/><br/>
       <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
       You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
