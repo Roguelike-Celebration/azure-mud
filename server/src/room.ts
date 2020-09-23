@@ -91,9 +91,49 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the north showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      <img src="images/puppy.jpg" alt="puppy" />
       Here you can see Gesuido, by Ryosuke Mihara, Project Earth by Michael Taylor, WizardWarsIO by quantompotato, and Project Shiro by Garbriel Martinez.<br/><br/>
-      <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
+
+      <div id="north-showcase" class="showcase-container">
+        <div id="gesuido-entry" class="showcase-entry" style="display: inline-flex;">
+          <div id="gesuido-text">
+            <p><a href="https://mihararyosuke.com/gesuido/">Gesuido</a>, by 
+              <a href="https://twitter.com/oinariman" target="_blank" rel="nofollow noopener noreferrer">Ryosuke Mihara</a>
+            </p>
+            <p>Gesuido is a Roguelike game for iPhone that's not too dissimilar in gameplay to the original Rogue, but it features early 
+              Macintosh-style black and white tile graphics and cute illustrated magic cards. The game is still developing, but I’ve made a beta 
+              version available for Roguelike Celebration 2020 attendees. Feedbacks are welcome. You can find it 
+              <a href="https://www.google.com/" target="_blank">[beta link will be added when available]</a>!
+            </p>
+          </div>
+          <img src="images/gesuido/gesuido_ss01.png" alt="Gesuido screenshot 1" style="width: 30%; object-fit: scale-down;">
+          <img src="images/gesuido/gesuido_ss02.png" alt="Gesuido screenshot 2" style="width: 30%; object-fit: scale-down;">
+        </div>
+
+        <div id="project-earth-entry" class="showcase-entry">
+          <p><a href="https://axeforge.itch.io/project-earth" target="_blank">Project Earth</a>, by Michael Taylor</p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://axeforge.itch.io/project-earth" target="_blank">itch.io</a>!
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+
+        <div id="wizard-wars-io-entry" class="showcase-entry">
+          <p><a href="https://github.com/WizardWarsIO" target="_blank">Wizard Wars IO</a>, by quantumpotato</p>
+          <p>Text? Screenshots? Embedded game? It's a webgame, maybe we can embed it. Discuss further with quantumpotato.</p>
+        </div>
+
+        <div id="project-shiro-entry" class="showcase-entry">
+          <p><a href="https://mystal.itch.io/project-shiro" target="_blank">Project Shiro</a>, by 
+            <a href="https://twitter.com/mystalice" target="_blank" rel="nofollow noopener noreferrer">Gabriel Martinez</a> <-- persona link, review!
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://mystal.itch.io/project-shiro" target="_blank">itch.io</a>!
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+      </div>
+
+
       You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
     allowsMedia: true
   },
