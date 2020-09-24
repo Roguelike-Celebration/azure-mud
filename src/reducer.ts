@@ -45,6 +45,7 @@ export interface State {
 
   messages: Message[];
   whispers: WhisperMessage[];
+  autoscrollChat: boolean;
 
   prepopulatedInput?: string;
 
@@ -75,6 +76,7 @@ export const defaultState: State = {
   hasRegistered: false,
   messages: [],
   whispers: [],
+  autoscrollChat: true,
   userMap: {},
   roomData: {},
   inMediaChat: false,
@@ -354,6 +356,14 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.HideSideMenu) {
     state.mobileSideMenuIsVisible = false
+  }
+
+  if (action.type === ActionType.DeactivateAutoscroll) {
+    state.autoscrollChat = false
+  }
+
+  if (action.type === ActionType.ActivateAutoscroll) {
+    state.autoscrollChat = true
   }
 
   if (action.type === ActionType.Authenticate) {

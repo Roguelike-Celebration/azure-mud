@@ -52,6 +52,8 @@ export type Action =
   | HideProfileAction
   | ShowSideMenuAction
   | HideSideMenuAction
+  | DeactivateAutoscrollAction
+  | ActivateAutoscrollAction
 
 export enum ActionType {
   // Server-driven action
@@ -90,6 +92,8 @@ export enum ActionType {
   ShowModal = 'SHOW_MODAL',
   ShowSideMenu = 'SHOW_SIDE_MENU',
   HideSideMenu = 'HIDE_SIDE_MENU',
+  DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
+  ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -603,6 +607,22 @@ interface HideSideMenuAction {
 
 export const HideSideMenuAction = (): HideSideMenuAction => {
   return { type: ActionType.HideSideMenu }
+}
+
+interface DeactivateAutoscrollAction {
+  type: ActionType.DeactivateAutoscroll;
+}
+
+export const DeactivateAutoscrollAction = (): DeactivateAutoscrollAction => {
+  return { type: ActionType.DeactivateAutoscroll }
+}
+
+interface ActivateAutoscrollAction {
+  type: ActionType.ActivateAutoscroll;
+}
+
+export const ActivateAutoscrollAction = (): ActivateAutoscrollAction => {
+  return { type: ActionType.ActivateAutoscroll }
 }
 
 export const AuthenticateAction = (
