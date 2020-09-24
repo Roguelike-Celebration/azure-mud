@@ -147,8 +147,9 @@ const App = () => {
       break
     }
     case Modal.NoteWall: {
+      const room = state.roomData[state.roomId]
       innerModalView = (
-        <NoteWallView notes={state.roomData[state.roomId].notes} />
+        <NoteWallView notes={room.notes} noteWallData={room.noteWallData} />
       )
       break
     }
