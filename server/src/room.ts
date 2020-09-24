@@ -91,7 +91,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the north showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Gesuido, by Ryosuke Mihara, Project Earth by Michael Taylor, WizardWarsIO by quantompotato, and Project Shiro by Garbriel Martinez.<br/><br/>
+      Here you can see Gesuido by Ryosuke Mihara, Project Earth by Michael Taylor, and WizardWarsIO by quantompotato.<br/><br/>
 
       <div id="north-showcase" class="showcase-container">
         <div id="gesuido-entry" class="showcase-entry" style="display: inline-flex;">
@@ -121,16 +121,6 @@ export const roomData: { [name: string]: Room } = {
           <p><a href="https://github.com/WizardWarsIO" target="_blank">Wizard Wars IO</a>, by quantumpotato</p>
           <p>Text? Screenshots? Embedded game? It's a webgame, maybe we can embed it. Discuss further with quantumpotato.</p>
         </div>
-
-        <div id="project-shiro-entry" class="showcase-entry">
-          <p><a href="https://mystal.itch.io/project-shiro" target="_blank">Project Shiro</a>, by 
-            <a href="https://twitter.com/mystalice" target="_blank" rel="nofollow noopener noreferrer">Gabriel Martinez</a> <-- persona link, review!
-          </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://mystal.itch.io/project-shiro" target="_blank">itch.io</a>!
-          </p>
-          <p>MAYBE SOME PICTURES HERE</p>
-        </div>
       </div>
 
 
@@ -143,7 +133,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the east showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Roundguard, by Andrea Roberts, Nogunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
+      Here you can see Roundguard by Andrea Roberts, Nogunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
 
       <div id="east-showcase" class="showcase-container">
         <div id="roundguard-entry" class="showcase-entry">
@@ -196,7 +186,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the south showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Fuzz Force: Spook Squad, by Alan Igle, Mech@mor Showdown by Seth Alter, Rift Wizard by Dylan White, and Happy Grumps by Glenn LaBarre.<br/><br/>
+      Here you can see Fuzz Force: Spook Squad by Alan Igle, Mech@mor Showdown by Seth Alter, Rift Wizard by Dylan White, and Happy Grumps by Glenn LaBarre.<br/><br/>
 
       <div id="south-showcase" class="showcase-container">
         <div id="fuzz-force-entry" class="showcase-entry">
@@ -246,7 +236,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the west showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Computer Dungeon Slash: ZZT, by KKairos, Peglin by Red Nexus Games, and AutoFire by Patrick Lipo.<br/><br/>
+      Here you can see Computer Dungeon Slash: ZZT by KKairos, Peglin by Red Nexus Games, and AutoFire by Patrick Lipo.<br/><br/>
 
       <div class="showcase-container">
         <div id="cdslash-entry" class="showcase-entry">
