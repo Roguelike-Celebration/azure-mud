@@ -10,9 +10,9 @@ console.log('Are we linkify9ing?')
 export default function ChatView (props: { messages: Message[] }) {
   React.useEffect(() => {
     const lastMessage = document.querySelector(
-      '#messages .message:last-of-type'
+      '#messages .message-wrapper:last-of-type'
     )
-    if (!lastMessage) return;
+    if (!lastMessage) { return }
 
     // I was using lastMessage.scrollIntoView()
     // But I was seeing odd behavior when there was only one message on-screen.
