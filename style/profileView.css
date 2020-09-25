@@ -9,6 +9,10 @@
     top: 0;
     width: 100vw;
   }
+
+  #profile input {
+    width: 30px;
+  }
 }
 
 #profile .close-profile {
@@ -67,5 +71,6 @@
 }
 
 input {
+  box-sizing: border-box;
   width: 100%;
 }
