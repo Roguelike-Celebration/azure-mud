@@ -5,8 +5,6 @@ import { Message, MessageType } from '../message'
 
 import '../../style/chat.css'
 
-console.log('Are we linkify9ing?')
-
 export default function ChatView (props: { messages: Message[] }) {
   React.useEffect(() => {
     const lastMessage = document.querySelector(

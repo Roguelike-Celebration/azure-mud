@@ -98,8 +98,14 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     null
   )
 
+  const linkDecorator = (href, text, key) => (
+    <a href={href} key={key} target="_blank" rel="noopener noreferrer">
+      {text}
+    </a>
+  )
+
   return (
-    <Linkify>
+    <Linkify componentDecorator={linkDecorator}>
       <div id="profile">
         <div id="header">
           <h2 className={user.isMod ? 'mod' : ''}>{user.username} {user.isMod ? <div>(moderator)</div> : ''}</h2>
