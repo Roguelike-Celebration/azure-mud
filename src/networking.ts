@@ -27,7 +27,8 @@ import {
   NoteUpdateRoomAction,
   NoteUpdateLikesAction,
   HideModalAction,
-  UpdatedVideoPresenceAction
+  UpdatedVideoPresenceAction,
+  SpaceOpenedOrClosedAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
@@ -80,9 +81,9 @@ export async function updateProfile (user: Partial<User>, hardRefreshPage: boole
   }
 }
 
-export async function checkIsRegistered (): Promise<string> {
+export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string}> {
   const result = await callAzureFunction('isRegistered')
-  return result.registered
+  return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod }
 }
 
 // Post-it notes
@@ -104,6 +105,12 @@ export async function likeRoomNote (noteId: string) {
 
 export async function unlikeRoomNote (noteId: string) {
   await callAzureFunction('likeRoomNote', { noteId, like: false })
+}
+
+//
+
+export async function openOrCloseSpace (spaceIsClosed) {
+  await callAzureFunction('openOrCloseSpace', { spaceIsClosed })
 }
 
 //
@@ -305,6 +312,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('noteLikesUpdated', (roomId, noteId, likes) => {
     dispatch(NoteUpdateLikesAction(roomId, noteId, likes))
+  })
+
+  connection.on('spaceOpenedOrClosed', (status) => {
+    dispatch(SpaceOpenedOrClosedAction(status))
   })
 
   connection.onclose(() => {

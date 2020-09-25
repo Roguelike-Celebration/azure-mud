@@ -11,7 +11,8 @@ import {
   IsRegisteredAction,
   LoadMessageArchiveAction,
   ShowSideMenuAction,
-  SendMessageAction
+  SendMessageAction,
+  SpaceIsClosedAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -31,6 +32,7 @@ import MapModalView from './components/MapModalView'
 import LoggedOutView from './components/LoggedOutView'
 import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
+import GoHomeView from './components/GoHomeView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -52,12 +54,22 @@ const App = () => {
         console.log(login)
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
-        checkIsRegistered().then((registeredUsername) => {
+        checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod }) => {
           if (!registeredUsername) {
             dispatch(AuthenticateAction(userId, login.user_id))
             return
           }
           dispatch(AuthenticateAction(userId, registeredUsername))
+
+          if (spaceIsClosed) {
+            dispatch(SpaceIsClosedAction())
+
+            if (!isMod) {
+              // non-mods shouldn't subscribe to SignalR if the space is closed
+              dispatch(IsRegisteredAction())
+              return
+            }
+          }
 
           let localLocalData = false
           const rawTimestamp = localStorage.getItem('messageTimestamp')
@@ -78,7 +90,7 @@ const App = () => {
           if (localLocalData) {
             try {
               const messages = JSON.parse(rawMessageData)
-              const whispers = JSON.parse(rawWhisperData) || new Array<WhisperMessage>()
+              const whispers: WhisperMessage[] = JSON.parse(rawWhisperData) || []
               dispatch(LoadMessageArchiveAction(messages, whispers))
             } catch (e) {
               console.log('Could not parse message JSON', e)
@@ -119,6 +131,10 @@ const App = () => {
         user={state.profileData}
       />
     )
+  }
+
+  if (state.isClosed && !state.userMap[state.userId].isMod) {
+    return <GoHomeView />
   }
 
   let videoChatView
@@ -218,6 +234,7 @@ const App = () => {
                 <SideNavView
                   rooms={Object.values(state.roomData)}
                   username={state.userMap[state.userId].username}
+                  spaceIsClosed={state.isClosed}
                 />
               ) : (
                 <button id="show-menu" onClick={showMenu}>

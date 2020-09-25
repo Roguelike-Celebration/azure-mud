@@ -54,6 +54,8 @@ export type Action =
   | HideSideMenuAction
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
+  | SpaceIsClosedAction
+  | SpaceOpenedOrClosedAction
 
 export enum ActionType {
   // Server-driven action
@@ -105,7 +107,10 @@ export enum ActionType {
   NoteRemove = 'NOTE_REMOVE',
   NoteUpdateLikes = 'NOTE_UPDATE_LIKES',
   NoteUpdateRoom = 'NOTE_UPDATE_ROOM',
-  HideModalAction = 'HIDE_MODAL'
+  HideModalAction = 'HIDE_MODAL',
+
+  SpaceIsClosed = 'SPACE_IS_CLOSED',
+  SpaceOpenedOrClosed = 'SPACE_OPENED_OR_CLOSED'
 }
 
 interface ReceivedMyProfileAction {
@@ -702,4 +707,21 @@ interface NoteUpdateRoomAction {
 
 export const NoteUpdateRoomAction = (roomId: string, notes: RoomNote[]): NoteUpdateRoomAction => {
   return { type: ActionType.NoteUpdateRoom, value: { roomId, notes } }
+}
+
+interface SpaceIsClosedAction {
+  type: ActionType.SpaceIsClosed;
+}
+
+export const SpaceIsClosedAction = (): SpaceIsClosedAction => {
+  return { type: ActionType.SpaceIsClosed }
+}
+
+interface SpaceOpenedOrClosedAction {
+  type: ActionType.SpaceOpenedOrClosed;
+  value: boolean
+}
+
+export const SpaceOpenedOrClosedAction = (value: boolean): SpaceOpenedOrClosedAction => {
+  return { type: ActionType.SpaceOpenedOrClosed, value }
 }

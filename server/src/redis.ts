@@ -298,6 +298,14 @@ const Redis: Database = {
     }
 
     return notes
+  },
+
+  async isSpaceClosed (): Promise<boolean> {
+    return JSON.parse(await getCache(spaceAvailabilityKey))
+  },
+
+  async setSpaceAvailability (open: boolean) {
+    return await setCache(spaceAvailabilityKey, open)
   }
 }
 
@@ -341,5 +349,6 @@ export function videoPresenceKey (roomId: string) {
   return `${roomId}PresenceVideo`
 }
 const userMapKey = 'userMap'
+const spaceAvailabilityKey = 'spaceIsClosed'
 
 export default Redis

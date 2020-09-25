@@ -92,6 +92,11 @@ interface Database {
 
   getRoomNotes(roomId: string): Promise<RoomNote[]>
 
+  // -----------------------------------------------------------------
+  // AVAILABILITY
+  // -----------------------------------------------------------------
+  isSpaceClosed(): Promise<boolean>
+  setSpaceAvailability(open: boolean)
 }
 
 // eslint-disable-next-line no-undef
