@@ -250,13 +250,22 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="happy-grumps-entry" class="showcase-entry">
-          <p><a href="https://store.steampowered.com/app/1109170/Happy_Grumps" target="_blank">Happy Grumps</a>, by 
-            <a href="https://twitter.com/gwlabarre" target="_blank" rel="nofollow noopener noreferrer">Glenn LaBarre</a> <-- personal link
+          <div style="margin: auto; width: 50%; height: 200px;">
+            <div style="display: inline-flex; margin: auto;">
+              <a href="https://store.steampowered.com/app/1109170/Happy_Grumps rel="nofollow noopener noreferrer"" target="_blank">
+                <img src="images/happy-grumps/logo.png" alt="Happy Grumps Logo" style="max-height: 200px;">
+              </a>
+              <p style="margin: auto;">by 
+                <a href="https://twitter.com/HappyGrumps" target="_blank" rel="nofollow noopener noreferrer">Glenn LaBarre</a>
+              </p>
+            </div>
+          </div>
+          <p>Happy Grumps is a love letter to classic roguelike adventures with a twist. Instead of trying to steal treasure or 
+            fight monsters, you are on a quest to spread happiness to a grumpy world. You can find it on 
+            <a href="https://store.steampowered.com/app/1109170/Happy_Grumps rel="nofollow noopener noreferrer"" target="_blank">Steam</a>!
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://store.steampowered.com/app/1109170/Happy_Grumps" target="_blank">Steam</a>!
-          </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/happy-grumps/0.png" alt="Happy Grumps 0" style="width: 49%;">
+          <img src="images/happy-grumps/1.png" alt="Happy Grumps 1" style="width: 49%;">
         </div>
       </div>
 
