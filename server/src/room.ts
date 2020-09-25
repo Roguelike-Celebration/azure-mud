@@ -214,10 +214,14 @@ export const roomData: { [name: string]: Room } = {
           <p><a href="https://fuzzforce.itch.io/fuzz-force-spook-squad">Fuzz Force: Spook Squad</a>, by 
             <a href="https://twitter.com/FuzzForce" target="_blank" rel="nofollow noopener noreferrer">Alan Igle</a>
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
+          <p> Deckbuilding meets Dice in a quest to capture the ghoulish Polter Prince. Join the Spook Squad and upgrade their 
+            Dice-powered weapons to give those ghosts something to be scared of! You can find a demo on 
             <a href="https://fuzzforce.itch.io/fuzz-force-spook-squad" target="_blank">itch.io</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/fuzz-force/Finn_Dice_Web.jpg" alt="Finn_Dice_Web" style="width: 49%;">
+          <img src="images/fuzz-force/ForestLevel_Web.jpg" alt="ForestLevel_Web" style="width: 49%;">
+          <img src="images/fuzz-force/DiceSwap_Web.jpg" alt="DiceSwap_Web" style="width: 49%;">
+          <img src="images/fuzz-force/FerretyShop_Dot_Web.jpg" alt="ForretyShop_Dot_Web" style="width: 49%;">
         </div>
 
         <div id="mech@mor-showdown-entry" class="showcase-entry">
