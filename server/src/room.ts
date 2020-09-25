@@ -150,7 +150,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the east showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Roundguard by Andrea Roberts, Nogunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
+      Here you can see Roundguard by Andrea Roberts, Nongunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
 
       <div id="east-showcase" class="showcase-container">
         <div id="roundguard-entry" class="showcase-entry">
@@ -163,14 +163,18 @@ export const roomData: { [name: string]: Room } = {
           <p>MAYBE SOME PICTURES HERE</p>
         </div>
 
-        <div id="nogunz-entry" class="showcase-entry">
-          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/">Nogunz: Doppelganger Edition</a>, by 
+        <div id="nongunz-entry" class="showcase-entry">
+          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/">Nongunz: Doppelganger Edition</a>, by 
             <a href="https://twitter.com/digeratiDM" target="_blank" rel="nofollow noopener noreferrer">Mike Corrigan</a>
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/" target="_blank">itch.io</a>! <-- password?
+          <p>Nongunz is a roguelite action-platformer described as “The Binding of Isaac meets Cookie Clicker.” Battle grotesque 
+            creatures, kill quickly to maintain your combo meter, and rescue worshipers to become part of your idle army to buy 
+            upgrades. You can find the demo on 
+            <a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/" target="_blank">Steam</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/nongunz-de/NongunzDE_09_Scaled.png" alt="Nongunz DE 9" style="width: 32%;">
+          <img src="images/nongunz-de/NongunzDE_011_Scaled.png" alt="Nongunz DE 11" style="width: 32%;">
+          <img src="images/nongunz-de/NongunzDE_012_Scaled.png" alt="Nongunz DE 12" style="width: 32%;">
         </div>
 
         <div id="ultimate-adom-entry" class="showcase-entry">
