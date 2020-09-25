@@ -91,9 +91,39 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the north showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      <img src="images/puppy.jpg" alt="puppy" />
-      Here you can see Gesuido, by Ryosuke Mihara, Project Earth by Michael Taylor, WizardWarsIO by quantompotato, and Project Shiro by Garbriel Martinez.<br/><br/>
-      <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
+      Here you can see Gesuido by Ryosuke Mihara, Project Earth by Michael Taylor, and WizardWarsIO by quantompotato.<br/><br/>
+
+      <div id="north-showcase" class="showcase-container">
+        <div id="gesuido-entry" class="showcase-entry" style="display: inline-flex;">
+          <div id="gesuido-text">
+            <p><a href="https://mihararyosuke.com/gesuido">Gesuido</a>, by 
+              <a href="https://twitter.com/oinariman" target="_blank" rel="nofollow noopener noreferrer">Ryosuke Mihara</a>
+            </p>
+            <p>Gesuido is a Roguelike game for iPhone that's not too dissimilar in gameplay to the original Rogue, but it features early 
+              Macintosh-style black and white tile graphics and cute illustrated magic cards. The game is still developing, but I’ve made a beta 
+              version available for Roguelike Celebration 2020 attendees. Feedbacks are welcome. You can find it 
+              <a href="https://www.google.com" target="_blank">[beta link will be added when available]</a>!
+            </p>
+          </div>
+          <img src="images/gesuido/gesuido_ss01.png" alt="Gesuido screenshot 1" style="width: 30%; object-fit: scale-down;">
+          <img src="images/gesuido/gesuido_ss02.png" alt="Gesuido screenshot 2" style="width: 30%; object-fit: scale-down;">
+        </div>
+
+        <div id="project-earth-entry" class="showcase-entry">
+          <p><a href="https://axeforge.itch.io/project-earth" target="_blank">Project Earth</a>, by Michael Taylor</p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://axeforge.itch.io/project-earth" target="_blank">itch.io</a>!
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+
+        <div id="wizard-wars-io-entry" class="showcase-entry">
+          <p><a href="https://github.com/WizardWarsIO" target="_blank">Wizard Wars IO</a>, by quantumpotato</p>
+          <p>Text? Screenshots? Embedded game? It's a webgame, maybe we can embed it. Discuss further with quantumpotato.</p>
+        </div>
+      </div>
+
+
       You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
     allowsMedia: true
   },
@@ -103,8 +133,50 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the east showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Roundguard, by Andrea Roberts, Nogunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
-      <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
+      Here you can see Roundguard by Andrea Roberts, Nogunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
+
+      <div id="east-showcase" class="showcase-container">
+        <div id="roundguard-entry" class="showcase-entry">
+          <p><a href="https://store.steampowered.com/app/848030/Roundguard">Roundguard</a>, by 
+            <a href="https://twitter.com/TanookiFruit" target="_blank" rel="nofollow noopener noreferrer">Andrea Roberts</a> <-- personal link
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://store.steampowered.com/app/848030/Roundguard" target="_blank">Steam</a>!
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+
+        <div id="nogunz-entry" class="showcase-entry">
+          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/">Nogunz: Doppelganger Edition</a>, by 
+            <a href="https://twitter.com/digeratiDM" target="_blank" rel="nofollow noopener noreferrer">Mike Corrigan</a>
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/" target="_blank">itch.io</a>! <-- password?
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+
+        <div id="ultimate-adom-entry" class="showcase-entry">
+          <p><a href="https://www.ultimate-adom.com" target="_blank">Ultimate ADOM: Caverns of Chaos</a>, by
+            <a href="https://twitter.com/adom_dev" target="_blank" rel="nofollow noopener noreferrer">Team ADOM</a>
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://store.steampowered.com/app/1266820/Ultimate_ADOM__Caverns_of_Chaos" target="_blank">Steam</a>! <-- if playable keys put here
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+
+        <div id="cantrip-entry" class="showcase-entry">
+          <p><a href="https://bakkerjoeri.itch.io/cantrip" target="_blank">Cantrip</a>, by 
+            <a href="https://twitter.com/bakkerjoeri" target="_blank" rel="nofollow noopener noreferrer">Joeri Bakker</a> <-- personal link
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://bakkerjoeri.itch.io/cantrip" target="_blank">itch.io</a>!
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+      </div>
+
       You can exit to the [[north hall->northShowcaseHall]] or [[south hall->southShowcaseHall]]`,
     allowsMedia: true
   },
@@ -114,8 +186,47 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the south showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Fuzz Force: Spook Squad, by Alan Igle, Mech@mor Showdown by Seth Alter, Rift Wizard by Dylan White, and Happy Grumps by Glenn LaBarre.<br/><br/>
-      <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
+      Here you can see Fuzz Force: Spook Squad by Alan Igle, Mech@mor Showdown by Seth Alter, Rift Wizard by Dylan White, and Happy Grumps by Glenn LaBarre.<br/><br/>
+
+      <div id="south-showcase" class="showcase-container">
+        <div id="fuzz-force-entry" class="showcase-entry">
+          <p><a href="https://fuzzforce.itch.io/fuzz-force-spook-squad">Fuzz Force: Spook Squad</a>, by 
+            <a href="https://twitter.com/FuzzForce" target="_blank" rel="nofollow noopener noreferrer">Alan Igle</a>
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://fuzzforce.itch.io/fuzz-force-spook-squad" target="_blank">itch.io</a>!
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+
+        <div id="mech@mor-showdown-entry" class="showcase-entry">
+          <p><a href="https://subalterngames.itch.io/mechamor-showdown">Mech@mor Showdown</a>, by 
+            <a href="https://twitter.com/subalterngames" target="_blank" rel="nofollow noopener noreferrer">Seth Alter</a>
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://subalterngames.itch.io/mechamor-showdown" target="_blank">itch.io</a>! <-- password?
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+
+        <div id="rift-wizard-entry" class="showcase-entry">
+          <p><a href="https://store.steampowered.com/app/1271280/Rift_Wizard" target="_blank">Rift Wizard</a>, by
+            <a href="https://twitter.com/GameDevDylanW" target="_blank" rel="nofollow noopener noreferrer">Dylan White</a>
+          </p>
+          <p>FILL THIS IN</p>
+        </div>
+
+        <div id="happy-grumps-entry" class="showcase-entry">
+          <p><a href="https://store.steampowered.com/app/1109170/Happy_Grumps" target="_blank">Happy Grumps</a>, by 
+            <a href="https://twitter.com/gwlabarre" target="_blank" rel="nofollow noopener noreferrer">Glenn LaBarre</a> <-- personal link
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://store.steampowered.com/app/1109170/Happy_Grumps" target="_blank">Steam</a>!
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
+        </div>
+      </div>
+
       You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
     allowsMedia: true
   },
@@ -125,12 +236,12 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the west showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Computer Dungeon Slash: ZZT, by KKairos, Peglin by Red Nexus Games, and AutoFire by Patrick Lipo.<br/><br/>
+      Here you can see Computer Dungeon Slash: ZZT by KKairos, Peglin by Red Nexus Games, and AutoFire by Patrick Lipo.<br/><br/>
 
       <div class="showcase-container">
-        <div class="showcase-entry">
+        <div id="cdslash-entry" class="showcase-entry">
           <p><a href="https://kkairos.itch.io/cdslash" target="_blank">Computer Dungeon Slash: ZZT</a>, by 
-            <a href="https://twitter.com/Kaikairos" target="_blank" rel="nofollow noopener noreferrer">KKairos</a> <-- Twitter link, can remove or change if requested
+            <a href="https://www.kaikairos.dev" target="_blank" rel="nofollow noopener noreferrer">KKairos</a>
           </p>
           <p>Computer Dungeon Slash: ZZT is a "dungeon crawler" written for the 1991 game-creation system ZZT featuring classic "ZZT-style" action, 
             dynamic procedural level generation, and a comedic cast of characters to rescue. You can find it on 
@@ -141,7 +252,7 @@ export const roomData: { [name: string]: Room } = {
           <img src="images/cdszzt/cdszzt-montage.png" alt="Several different 'limited viewport' levels of Computer Dungeon Slash: ZZT" style="max-width: 32%;">
         </div>
 
-        <div class="showcase-entry">
+        <div id="peglin-entry" class="showcase-entry">
           <p><a href="https://store.steampowered.com/app/1296610/Peglin" target="_blank">Peglin</a>, by 
             <a href="https://twitter.com/rednexusgames" target="_blank" rel="nofollow noopener noreferrer">Red Nexus Games</a>
           </p>
@@ -151,7 +262,7 @@ export const roomData: { [name: string]: Room } = {
           <p>MAYBE SOME PICTURES HERE</p>
         </div>
 
-        <div class="showcase-entry">
+        <div id="auto-fire-entry" class="showcase-entry">
           <p><a href="https://vertigames.itch.io/auto-fire" target="_blank">Auto Fire</a>, by 
             <a href="https://twitter.com/autofiregame" target="_blank" rel="nofollow noopener noreferrer">Patrick Lipo</a>
           </p>
