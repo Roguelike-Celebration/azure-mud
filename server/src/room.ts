@@ -237,7 +237,9 @@ export const roomData: { [name: string]: Room } = {
           </p>
           <img src="images/rift-wizard/ss_16.png" alt="Rift Wizard screenshot 16" style="width: 49%; height: 150px; object-fit: none; object-position:center;">
           <img src="images/rift-wizard/ss_17.png" alt="Rift Wizard screenshot 17" style="width: 49%; height: 150px; object-fit: none; object-position:center;">
-          <iframe src="https://store.steampowered.com/widget/1271280/" frameborder="0" width="646" height="190"></iframe>
+          <div style="margin: 0 auto; width: fit-content;">
+            <iframe src="https://store.steampowered.com/widget/1271280/" frameborder="0" width="646" height="190"></iframe>
+          </div>
         </div>
 
         <div id="happy-grumps-entry" class="showcase-entry">
