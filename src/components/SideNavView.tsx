@@ -12,6 +12,7 @@ import { Modal } from '../modals'
 interface Props {
   rooms: Room[];
   username: string;
+  spaceIsClosed?: boolean;
 }
 
 export default function RoomListView (props: Props) {
@@ -29,7 +30,7 @@ export default function RoomListView (props: Props) {
         id='close-button'
         className='close'
       >x</button> : ''}
-      <MenuButtonView username={props.username} />
+      <MenuButtonView username={props.username} spaceIsClosed={props.spaceIsClosed} />
       <ul>
         <MenuItem title="Map" modal={Modal.Map} />
         <MenuItem title="Schedule" modal={Modal.Schedule} />

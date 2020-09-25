@@ -68,6 +68,9 @@ export interface State {
   // If the device is a portrait smartphone, we hide the menu in favor of a hamburger button
   // In that situation, this reflects whether the side menu is visible.
   mobileSideMenuIsVisible?: boolean
+
+  // If true, non-mods cannot access the space
+  isClosed?: boolean
 }
 
 export const defaultState: State = {
@@ -436,6 +439,21 @@ export default (oldState: State, action: Action): State => {
     }
   }
 
+  if (action.type === ActionType.SpaceIsClosed) {
+    state.isClosed = true
+  }
+
+  if (action.type === ActionType.SpaceOpenedOrClosed) {
+    if (state.userMap[state.userId].isMod) {
+      state.isClosed = action.value
+      addMessage(state, createCommandMessage(`The space is now ${action.value ? 'open' : 'closed'}`))
+    } else {
+      // Not reloading the page will show the 'go home' screen, but will still send SignalR data
+      // Just hard-reloading the page will stop them from getting messages
+      window.location.reload()
+    }
+  }
+
   return state
 }
 
@@ -449,7 +467,7 @@ function deleteMessage (state: State, messageId: String) {
   }
 }
 
-function saveWhisper(state: State, message: WhisperMessage) {
+function saveWhisper (state: State, message: WhisperMessage) {
   state.whispers.push(message)
   localStorage.setItem('whispers', JSON.stringify(state.whispers))
 }
