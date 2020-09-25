@@ -74,15 +74,21 @@ type DeletableMessageViewProps = {
   messageId: string
 }
 
+const linkDecorator = (href, text, key) => (
+  <a href={href} key={key} target="_blank" rel="noopener noreferrer">
+    {text}
+  </a>
+)
+
 const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (props) => {
   const { userMap, myId } = useContext(UserMapContext)
   const playerIsMod = userMap[myId] && userMap[myId].isMod
 
   if (!playerIsMod) {
-    return <Linkify properties={{ target: '_blank' }}>{props.children}</Linkify>
+    return <Linkify componentDecorator={linkDecorator}>{props.children}</Linkify>
   } else {
     return (
-      <Linkify properties={{ target: '_blank' }}>
+      <Linkify componentDecorator={linkDecorator}>
         <span className="deleteMenu">
           <ContextMenuTrigger id={props.messageId} mouseButton={2} renderTag="span">
             {props.children}

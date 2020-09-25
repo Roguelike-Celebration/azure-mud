@@ -46,7 +46,11 @@ export default function RoomView (props: Props) {
 
   let noteWallView
   if (room && room.hasNoteWall) {
-    noteWallView = <div>One of the walls has space for attendees to put up sticky notes. <button onClick={showNoteWall}>View note wall</button></div>
+    if (room.noteWallData) {
+      noteWallView = <div>{room.noteWallData.roomWallDescription} <button onClick={showNoteWall}>{room.noteWallData.noteWallButton}</button></div>
+    } else {
+      noteWallView = <div>One of the walls has space for attendees to put up sticky notes. <button onClick={showNoteWall}>View note wall</button></div>
+    }
   }
 
   let videoChatButton

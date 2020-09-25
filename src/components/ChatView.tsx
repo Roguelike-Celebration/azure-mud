@@ -7,8 +7,6 @@ import '../../style/chat.css'
 import { DispatchContext } from '../App'
 import { ActivateAutoscrollAction, DeactivateAutoscrollAction } from '../Actions'
 
-console.log('Are we linkify9ing?')
-
 export default function ChatView (props: { messages: Message[], autoscrollChat: Boolean }) {
   const dispatch = useContext(DispatchContext)
 
