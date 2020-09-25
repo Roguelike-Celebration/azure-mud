@@ -235,9 +235,9 @@ export const roomData: { [name: string]: Room } = {
             on one screen, allowing the player to fully plan out a clever strategy for each battle. Diverse enemies, high impact random loot, and 
             procedurally generated battlefields ensure that each run is a unique strategic challenge.
           </p>
+          <img src="images/rift-wizard/ss_16.png" alt="Rift Wizard screenshot 16" style="width: 49%; height: 150px; object-fit: none; object-position:center;">
+          <img src="images/rift-wizard/ss_17.png" alt="Rift Wizard screenshot 17" style="width: 49%; height: 150px; object-fit: none; object-position:center;">
           <iframe src="https://store.steampowered.com/widget/1271280/" frameborder="0" width="646" height="190"></iframe>
-          <img src="images/rift-wizard/ss_6.png" alt="Rift Wizard screenshot 6" style="width: 400px;">
-          <img src="images/rift-wizard/ss_9.png" alt="Rift Wizard screenshot 9" style="width: 400px;">
         </div>
 
         <div id="happy-grumps-entry" class="showcase-entry">
