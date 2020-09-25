@@ -53,6 +53,13 @@ body {
   grid-gap: 50px;
 }
 
+@media only screen and (max-device-width: 500px) {
+  #app {
+    padding: 5px;
+    box-sizing: border-box;
+  }
+}
+
 #app-profile-open {
   padding: 0 50px;
   display: grid;
