@@ -92,7 +92,10 @@ export const roomData: { [name: string]: Room } = {
     description: `
       A number of booths line the sides of the hall.<br/><br/>
       <img src="images/puppy.jpg" alt="puppy" />
-      Here you can see Gesuido, by Ryosuke Mihara, Project Earth by Michael Taylor, WizardWarsIO by quantompotato, and Project Shiro by Garbriel Martinez.<br/><br/>
+      Here you can see Gesuido, by Ryosuke Mihara, Project Earth by Michael Taylor, WizardWarsIO by R. Riley Holmes and quantumpotato, and Project Shiro by Garbriel Martinez.<br/><br/>
+      <br/><br/>
+      <a ref="http://206.189.227.251/">WizardWars</a> is a rhythmic turnbased deathmatch. Press a number 1-9 to select an item. Press F + Arrow Keys to zap a wand or throw a potion. Press A to equip selected item. You can move and throw in 8 directions.
+      <br/><br/>
       <i>PLACEHOLDER TEXT - can include developer content or embeds if requested</i><br/><br/>
       You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
     allowsMedia: true
