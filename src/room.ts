@@ -10,6 +10,7 @@ export interface Room {
   allowsMedia: boolean;
   hidden?: boolean;
   hasNoteWall: boolean;
+  noteWallData: Server.NoteWallData
   notes?: RoomNote[]
 }
 
@@ -27,6 +28,7 @@ export function convertServerRoomData (roomData: {
       description: room.description,
       allowsMedia: room.allowsMedia,
       hasNoteWall: room.hasNoteWall,
+      noteWallData: room.noteWallData,
       hidden: room.hidden
     }
   })
