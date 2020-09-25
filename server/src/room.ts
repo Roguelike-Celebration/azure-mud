@@ -150,7 +150,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the east showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Roundguard by Andrea Roberts, Nogunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
+      Here you can see Roundguard by Andrea Roberts, Nongunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
 
       <div id="east-showcase" class="showcase-container">
         <div id="roundguard-entry" class="showcase-entry">
@@ -163,14 +163,18 @@ export const roomData: { [name: string]: Room } = {
           <p>MAYBE SOME PICTURES HERE</p>
         </div>
 
-        <div id="nogunz-entry" class="showcase-entry">
-          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/">Nogunz: Doppelganger Edition</a>, by 
+        <div id="nongunz-entry" class="showcase-entry">
+          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/">Nongunz: Doppelganger Edition</a>, by 
             <a href="https://twitter.com/digeratiDM" target="_blank" rel="nofollow noopener noreferrer">Mike Corrigan</a>
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/" target="_blank">itch.io</a>! <-- password?
+          <p>Nongunz is a roguelite action-platformer described as “The Binding of Isaac meets Cookie Clicker.” Battle grotesque 
+            creatures, kill quickly to maintain your combo meter, and rescue worshipers to become part of your idle army to buy 
+            upgrades. You can find the demo on 
+            <a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/" target="_blank">Steam</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/nongunz-de/NongunzDE_09_Scaled.png" alt="Nongunz DE 9" style="width: 32%;">
+          <img src="images/nongunz-de/NongunzDE_011_Scaled.png" alt="Nongunz DE 11" style="width: 32%;">
+          <img src="images/nongunz-de/NongunzDE_012_Scaled.png" alt="Nongunz DE 12" style="width: 32%;">
         </div>
 
         <div id="ultimate-adom-entry" class="showcase-entry">
@@ -210,20 +214,29 @@ export const roomData: { [name: string]: Room } = {
           <p><a href="https://fuzzforce.itch.io/fuzz-force-spook-squad">Fuzz Force: Spook Squad</a>, by 
             <a href="https://twitter.com/FuzzForce" target="_blank" rel="nofollow noopener noreferrer">Alan Igle</a>
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
+          <p> Deckbuilding meets Dice in a quest to capture the ghoulish Polter Prince. Join the Spook Squad and upgrade their 
+            Dice-powered weapons to give those ghosts something to be scared of! You can find a demo on 
             <a href="https://fuzzforce.itch.io/fuzz-force-spook-squad" target="_blank">itch.io</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/fuzz-force/Finn_Dice_Web.jpg" alt="Finn_Dice_Web" style="width: 49%;">
+          <img src="images/fuzz-force/ForestLevel_Web.jpg" alt="ForestLevel_Web" style="width: 49%;">
+          <img src="images/fuzz-force/DiceSwap_Web.jpg" alt="DiceSwap_Web" style="width: 49%;">
+          <img src="images/fuzz-force/FerretyShop_Dot_Web.jpg" alt="ForretyShop_Dot_Web" style="width: 49%;">
         </div>
 
         <div id="mech@mor-showdown-entry" class="showcase-entry">
           <p><a href="https://subalterngames.itch.io/mechamor-showdown">Mech@mor Showdown</a>, by 
             <a href="https://twitter.com/subalterngames" target="_blank" rel="nofollow noopener noreferrer">Seth Alter</a>
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://subalterngames.itch.io/mechamor-showdown" target="_blank">itch.io</a>! <-- password?
+          <p>Mech@mor showdown is an ASCII roguelike about your relationships with your mech and with your opponents. Build 
+            trust between you and your mecha. Fight your foes. Flirt with your rivals. Taunt your lovers. Swap out parts for 
+            better parts. Save Planet Yendor for the regime of the Kyriarch.
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <p> Pre-release available at <a href="https://subalterngames.itch.io/mechamor-showdown" target="_blank">itch.io</a>!</p>
+          <img src="images/mech@mor-showdown/0.png" alt="Mech@amor Showdown 0" style="width: 49%;">
+          <img src="images/mech@mor-showdown/1.png" alt="Mech@amor Showdown 1" style="width: 49%;">
+          <img src="images/mech@mor-showdown/2.png" alt="Mech@amor Showdown 2" style="width: 49%;">
+          <img src="images/mech@mor-showdown/3.png" alt="Mech@amor Showdown 3" style="width: 49%;">
         </div>
 
         <div id="rift-wizard-entry" class="showcase-entry">
@@ -241,13 +254,22 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="happy-grumps-entry" class="showcase-entry">
-          <p><a href="https://store.steampowered.com/app/1109170/Happy_Grumps" target="_blank">Happy Grumps</a>, by 
-            <a href="https://twitter.com/gwlabarre" target="_blank" rel="nofollow noopener noreferrer">Glenn LaBarre</a> <-- personal link
+          <div style="margin: auto; width: 50%; height: 200px;">
+            <div style="display: inline-flex; margin: auto;">
+              <a href="https://store.steampowered.com/app/1109170/Happy_Grumps rel="nofollow noopener noreferrer"" target="_blank">
+                <img src="images/happy-grumps/logo.png" alt="Happy Grumps Logo" style="max-height: 200px;">
+              </a>
+              <p style="margin: auto;">by 
+                <a href="https://twitter.com/HappyGrumps" target="_blank" rel="nofollow noopener noreferrer">Glenn LaBarre</a>
+              </p>
+            </div>
+          </div>
+          <p>Happy Grumps is a love letter to classic roguelike adventures with a twist. Instead of trying to steal treasure or 
+            fight monsters, you are on a quest to spread happiness to a grumpy world. You can find it on 
+            <a href="https://store.steampowered.com/app/1109170/Happy_Grumps rel="nofollow noopener noreferrer"" target="_blank">Steam</a>!
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://store.steampowered.com/app/1109170/Happy_Grumps" target="_blank">Steam</a>!
-          </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/happy-grumps/0.png" alt="Happy Grumps 0" style="width: 49%;">
+          <img src="images/happy-grumps/1.png" alt="Happy Grumps 1" style="width: 49%;">
         </div>
       </div>
 

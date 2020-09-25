@@ -8,6 +8,7 @@ div.showcase-entry {
   padding: 5px;
   border-width: thin;
   margin-block-end: 5px;
+  min-width: 650px;
   max-height: 600px;
   overflow: scroll;
   overflow-x: auto;
