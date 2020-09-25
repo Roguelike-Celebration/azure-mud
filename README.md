@@ -16,7 +16,7 @@ On the frontend, it's a rich single-page webapp built in TypeScript and React, u
 
 2. Run `npm install`
 
-3. `npm run dev` will start a local development environment (at `http://localhost:1234` by default). It auto-watches changes to HTML, CSS, and JS/TS code, and attempts to live-reload any connected browser instances.
+3. `npm run dev` will start a local development environment (at `http://localhost:1234/index.html` by default). It auto-watches changes to HTML, CSS, and JS/TS code, and attempts to live-reload any connected browser instances.
 
 4. `npm run build` will generate a bundled version of the webapp for distribution. If you're planning to push changes back to this repo for use in its official deployment, don't worry about this; a GitHub Actions CI pipeline builds and deploys the main branch on every push.
 
@@ -34,7 +34,7 @@ This requires your own [Azure subscription](https://azure.com/free/?WT.mc_id=dev
 
 5) As above, you want to take your Redis access key, the hostname, and the port, and add them as Application settings to the Function App with the keys `RedisKey` and `RedisHostname`, `RedisPort`.
 
-6) Set up Twitter authentication. In the Azure Portal, pull up the Function App and go to "Authentication". In another window, go to https://developer.twitter.com/apps and register a new Twitter developer application. You will need to paste the consumer key and secret from Twitter into the Azure setup screen for Twitter. The callback URL to enter in the Twitter app is `https://your-function-app.azurewebsites.net/.auth/login/twitter/callback`, swapping in the URL hostname of your Function app. In the Azure Portal authentication screen, make sure that "Token Store" is on, and add "http://localhost:1234" (and any other URLs you want to be able to use) to the Allowed External Redirect URLs list.
+6) Set up Twitter authentication. In the Azure Portal, pull up the Function App and go to "Authentication". In another window, go to <https://developer.twitter.com/apps> and register a new Twitter developer application. You will need to paste the consumer key and secret from Twitter into the Azure setup screen for Twitter. The callback URL to enter in the Twitter app is `https://your-function-app.azurewebsites.net/.auth/login/twitter/callback`, swapping in the URL hostname of your Function app. In the Azure Portal authentication screen, make sure that "Token Store" is on, and add "http://localhost:1234" (and any other URLs you want to be able to use) to the Allowed External Redirect URLs list.
 
 7) Set up CORS in the Azure Portal page for the Function app. There's a "CORS" menu item on the left. Allow `http://localhost:1234` for local development, as well as whatever URLs you're using for a production version of the frontend.
 
