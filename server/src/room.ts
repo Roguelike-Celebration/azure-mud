@@ -188,14 +188,17 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="cantrip-entry" class="showcase-entry">
-          <p><a href="https://bakkerjoeri.itch.io/cantrip" target="_blank">Cantrip</a>, by 
-            <a href="https://twitter.com/bakkerjoeri" target="_blank" rel="nofollow noopener noreferrer">Joeri Bakker</a> <-- personal link
+          <p><a href="https://bakkerjoeri.itch.io/cantrip" target="_blank">Cantrip</a>,
+              by <a href="https://twitter.com/bakkerjoeri" target="_blank" rel="nofollow noopener noreferrer">Joeri Bakker</a>
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://bakkerjoeri.itch.io/cantrip" target="_blank">itch.io</a>!
+          <p>Battle your way through 9 enemies and draft from 40+ unique cards to build up your deck with powerful synergies
+            in this card battler roguelite with a twist: Your hand is your health. Damage makes you discard cards,
+            and if you take a hit while your hand is empty, it's game over.
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
-        </div>
+          <iframe src="https://itch.io/embed/381590?linkback=true&amp;dark=true" width="552" height="167" frameborder="0"><a href="https://bakkerjoeri.itch.io/cantrip">Cantrip by Joeri</a></iframe>
+          <img src="images/cantrip/0.png" alt="The battle screen of Cantrip. The player's hand visible on the bottom. The opponent's hand is face down at the top. Both have a drawing pile and graveyard next to it." style="width: 49%;">
+          <img src="images/cantrip/1.png" alt="The drafting screen of Cantrip. Three cards are lined up in the middle, waiting to be picked." style="width: 49%;">
+      </div>
       </div>
 
       You can exit to the [[north hall->northShowcaseHall]] or [[south hall->southShowcaseHall]]`,
