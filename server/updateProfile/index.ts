@@ -22,12 +22,6 @@ const httpTrigger: AzureFunction = async function (
     return
   }
 
-  const twitterHandle =
-    req.headers && req.headers['x-ms-client-principal-name']
-  if (twitterHandle) {
-    data.twitterHandle = twitterHandle
-  }
-
   const profile = await updateUserProfile(userId, data)
   const minimalUser = minimizeUser(profile)
 

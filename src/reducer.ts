@@ -34,6 +34,7 @@ import { MAX_MESSAGE_LENGTH } from '../server/src/config'
 export interface State {
   authenticated: boolean;
   checkedAuthentication: boolean;
+  authenticationProvider?: string;
 
   hasRegistered: boolean;
 
@@ -240,7 +241,7 @@ export default (oldState: State, action: Action): State => {
       state.isBanned = true
     } else {
       state.userMap[action.value.id].isBanned = true
-      addMessage(state, createErrorMessage("User " + action.value.username + " was banned!"))
+      addMessage(state, createErrorMessage('User ' + action.value.username + ' was banned!'))
     }
   }
 
@@ -249,7 +250,7 @@ export default (oldState: State, action: Action): State => {
     if (state.userMap[action.value.id]) {
       state.userMap[action.value.id].isBanned = false
     }
-    addMessage(state, createErrorMessage("User " + action.value.username + " was unbanned!"))
+    addMessage(state, createErrorMessage('User ' + action.value.username + ' was unbanned!'))
   }
 
   if (action.type === ActionType.Error) {
@@ -391,6 +392,8 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.Authenticate) {
     state.checkedAuthentication = true
+
+    state.authenticationProvider = action.value.provider
 
     if (action.value.userId && action.value.name) {
       state.authenticated = true
