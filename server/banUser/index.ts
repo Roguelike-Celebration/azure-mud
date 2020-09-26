@@ -10,7 +10,7 @@ import {
 import { globalPresenceMessage } from '../src/globalPresenceMessage'
 
 // Copied and modified from disconnect/index.ts
-async function disconnectAndBan(user: User, target: User, context: Context) {
+async function disconnectAndBan (user: User, target: User, context: Context) {
   target.isBanned = true
   await DB.banUser(target.id)
 
