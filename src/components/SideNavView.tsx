@@ -39,7 +39,7 @@ export default function RoomListView (props: Props) {
         <MenuItem title="Help" modal={Modal.Help} />
         <hr style={{ marginTop: '1em', marginBottom: '1em' }}/>
         {props.rooms.map((r) => {
-          return r.hidden ? '' : <li><RoomNameView room={r} key={`room-sidebar-${r.id}`} /></li>
+          return r.hidden ? '' : <li><RoomNameView roomId={r.id} key={`room-sidebar-${r.id}`} /></li>
         })}
       </ul>
     </nav>

@@ -170,18 +170,22 @@ function renderExits (description: string, onClick: (event: React.MouseEvent<HTM
   const simpleLinkRegex = /\[\[(.+?)\]\]/g
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    return `<a class='room-link' href='#' data-room='${roomId}'>${text}</a>`
+    return `<RoomNameView className='room-link' roomId='${roomId}' title='${text}' key='room-link-${roomId}' />`
   })
 
   description = description.replace(simpleLinkRegex, (match, roomId) => {
-    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}</a>`
+    return `<RoomNameView className='room-link' roomId='${roomId}' key='room-link-${roomId}'/>`
   })
 
   return (
     <div id='room-exits'
       onClick={onClick}
     >
-      {parse(`<span>${description}</span>`)}
+      {parse(`<span>${description}</span>`, {
+        htmlparser2: {
+          lowerCaseTags: false
+        }
+      })}
     </div>
   )
 }

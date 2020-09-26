@@ -38,6 +38,7 @@ import YouAreBannedView from './components/YouAreBannedView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
+export const RoomDataContext = createContext(null)
 export const IsMobileContext = createContext(null)
 
 const App = () => {
@@ -64,7 +65,7 @@ const App = () => {
           dispatch(AuthenticateAction(userId, registeredUsername))
 
           if (isBanned) {
-            dispatch(PlayerBannedAction({id: userId, username: registeredUsername, isBanned: isBanned}))
+            dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
             dispatch(IsRegisteredAction())
             return
           }
@@ -236,43 +237,45 @@ const App = () => {
           <UserMapContext.Provider
             value={{ userMap: state.userMap, myId: state.userId }}
           >
-            <div
-              id={
-                state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
-              }
-            >
-              {shouldShowMenu ? (
-                <SideNavView
-                  rooms={Object.values(state.roomData)}
-                  username={state.userMap[state.userId].username}
-                  spaceIsClosed={state.isClosed}
-                />
-              ) : (
-                <button id="show-menu" onClick={showMenu}>
-                  <span role="img" aria-label="menu">
-                    🍔
-                  </span>
-                </button>
-              )}
-              {modalView}
-              <div id="main" role="main">
-                {videoChatView}
-                {state.roomData[state.roomId] ? (
-                  <RoomView
-                    room={state.roomData[state.roomId]}
-                    userId={state.userId}
+            <RoomDataContext.Provider value={{ roomData: state.roomData }}>
+              <div
+                id={
+                  state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
+                }
+              >
+                {shouldShowMenu ? (
+                  <SideNavView
+                    rooms={Object.values(state.roomData)}
+                    username={state.userMap[state.userId].username}
+                    spaceIsClosed={state.isClosed}
                   />
-                ) : null}
-                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} />
-                <InputView
-                  prepopulated={state.prepopulatedInput}
-                  sendMessage={(message) =>
-                    dispatch(SendMessageAction(message))
-                  }
-                />
+                ) : (
+                  <button id="show-menu" onClick={showMenu}>
+                    <span role="img" aria-label="menu">
+                    🍔
+                    </span>
+                  </button>
+                )}
+                {modalView}
+                <div id="main" role="main">
+                  {videoChatView}
+                  {state.roomData[state.roomId] ? (
+                    <RoomView
+                      room={state.roomData[state.roomId]}
+                      userId={state.userId}
+                    />
+                  ) : null}
+                  <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} />
+                  <InputView
+                    prepopulated={state.prepopulatedInput}
+                    sendMessage={(message) =>
+                      dispatch(SendMessageAction(message))
+                    }
+                  />
+                </div>
+                {profile}
               </div>
-              {profile}
-            </div>
+            </RoomDataContext.Provider>
           </UserMapContext.Provider>
         </IsMobileContext.Provider>
       </DispatchContext.Provider>

@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaVideo } from 'react-icons/fa'
 
 import { moveToRoom } from '../networking'
-import { Room } from '../room'
+import { RoomDataContext } from '../App'
 
-export default function RoomNameView (props: { room: Room }) {
-  const { room } = props
+interface Props {
+  roomId: string
+  title?: string
+}
+
+export default function RoomNameView (props: Props) {
+  const { roomData } = useContext(RoomDataContext)
+  const room = roomData[props.roomId]
+  if (!room) return null
 
   const onClick = () => {
     moveToRoom(room.id)
@@ -15,7 +22,7 @@ export default function RoomNameView (props: { room: Room }) {
 
   return (
     <button onClick={onClick}>
-      <strong>{room.name}</strong> {userCount} {videoIcon}
+      <strong>{props.title ? props.title : room.name}</strong> {userCount} {videoIcon}
     </button>
   )
 }
