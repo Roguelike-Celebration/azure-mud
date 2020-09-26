@@ -142,7 +142,8 @@ const App = () => {
     videoChatView = (
       <MediaChatView
         localMediaStreamId={state.localMediaStreamId}
-        peerIds={state.otherMediaStreamPeerIds}
+        peerIds={state.roomData[state.roomId].videoUsers}
+        connectedPeerIds={state.otherMediaStreamPeerIds}
         videoDeviceId={state.currentVideoDeviceId}
         audioDeviceId={state.currentAudioDeviceId}
         speakingPeerIds={state.speakingPeerIds}

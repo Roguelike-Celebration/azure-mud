@@ -13,7 +13,14 @@ import '../../style/videoChat.css'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
+  // All peers that the server considers to be 'in' videochat
   peerIds?: string[];
+
+  // All peers who have open WebRTC streams
+  // We don't (as of writing this) use this data in logic, but tracking it as a
+  // prop lets React auto-rerender this component when a new stream is opened
+  connectedPeerIds?: string[];
+
   localMediaStreamId?: string;
 
   speakingPeerIds: string[];
@@ -32,24 +39,24 @@ export default function MediaChatView (props: MediaProps) {
   )
 
   if (props.peerIds) {
-    // We don't actually use `peerIds` other than as a way to force the component to update.
-    // That might change?
-    otherVideos = Object.entries(otherMediaStreams()).map(
-      ([peerId, stream]) => {
-        return (
-          <div key={`stream-wrapper-${peerId}`}>
-            <NameView userId={peerId} id={`stream-nameview-${peerId}`} />:
-            <Video
-              srcObject={stream}
-              id={`stream-${peerId}`}
-              className={
-                props.speakingPeerIds.includes(peerId) ? 'speaking' : ''
-              }
-            />
-          </div>
-        )
-      }
-    )
+    console.log(props.peerIds)
+    const otherStreams = otherMediaStreams()
+    otherVideos = props.peerIds.map((peerId) => {
+      const stream = otherStreams[peerId]
+      if (!stream) return null
+      return (
+        <div key={`stream-wrapper-${peerId}`}>
+          <NameView userId={peerId} id={`stream-nameview-${peerId}`} />:
+          <Video
+            srcObject={stream}
+            id={`stream-${peerId}`}
+            className={
+              props.speakingPeerIds.includes(peerId) ? 'speaking' : ''
+            }
+          />
+        </div>
+      )
+    }).filter(el => !!el)
   }
 
   return (
