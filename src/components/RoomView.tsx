@@ -1,4 +1,7 @@
 import * as React from 'react'
+import { FaVideo } from 'react-icons/fa'
+import parse from 'html-react-parser'
+
 import { Room } from '../room'
 import {
   moveToRoom,
@@ -7,10 +10,9 @@ import {
 import NameView from './NameView'
 import { DispatchContext } from '../App'
 import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction } from '../Actions'
-import { FaVideo } from 'react-icons/fa'
+import { Modal } from '../modals'
 
 import '../../style/room.css'
-import { Modal } from '../modals'
 
 interface Props {
   room?: Room;
@@ -22,9 +24,8 @@ export default function RoomView (props: Props) {
   const { room } = props
 
   // This is very silly.
-  // Since we're manually setting raw HTML, we can't get refs to add proper click handlers
-  // Instead, we just hijack ALL clicks in the description, and check if they're for a link
-  const descriptionClick = (e) => {
+  // Our parser doesn't have proper support for parsing click handlers, so we attach one to the broader div.
+  const exitsClick = (e) => {
     const roomId =
       e.target && e.target.getAttribute && e.target.getAttribute('data-room')
     if (roomId) {
@@ -78,13 +79,13 @@ export default function RoomView (props: Props) {
       <h1 id="room-name">{room ? room.name : 'Loading...'}{videoChatButton}</h1>
       <div
         id="static-room-description"
-        onClick={descriptionClick}
         dangerouslySetInnerHTML={{
           __html: room
-            ? parseDescription(room.description)
+            ? room.description
             : 'Loading current room...'
         }}
       />
+      {renderExits(room.exitDescription, exitsClick)}
       {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
       {noteWallView}
     </div>
@@ -163,7 +164,7 @@ function intersperse (arr, sep) {
   )
 }
 
-function parseDescription (description: string): string {
+function renderExits (description: string, onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void): JSX.Element|JSX.Element[] {
   // eslint-disable-next-line no-useless-escape
   const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
   const simpleLinkRegex = /\[\[(.+?)\]\]/g
@@ -175,5 +176,12 @@ function parseDescription (description: string): string {
   description = description.replace(simpleLinkRegex, (match, roomId) => {
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}</a>`
   })
-  return description
+
+  return (
+    <div id='room-exits'
+      onClick={onClick}
+    >
+      {parse(`<span>${description}</span>`)}
+    </div>
+  )
 }

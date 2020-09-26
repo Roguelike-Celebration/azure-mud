@@ -43,3 +43,7 @@ a.room-link:visited {
 #static-room-description iframe {
   max-width: 100%;
 }
+
+#room-exits {
+  margin-top: 1em;
+}

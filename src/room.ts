@@ -5,6 +5,7 @@ export interface Room {
   shortName: string;
   id: string;
   description: string;
+  exitDescription: string;
   users?: string[];
   videoUsers?: string[];
   allowsMedia: boolean;
@@ -26,6 +27,7 @@ export function convertServerRoomData (roomData: {
       id: room.id,
       shortName: room.shortName,
       description: room.description,
+      exitDescription: room.exitDescription,
       allowsMedia: room.allowsMedia,
       hasNoteWall: room.hasNoteWall,
       noteWallData: room.noteWallData,
