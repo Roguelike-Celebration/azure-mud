@@ -30,6 +30,16 @@ export default async function authenticate (
   }
 
   const user = await getFullUser(userId)
+
+  if (user.isBanned) {
+    context.res = {
+      status: 401,
+      body: 'You are banned!'
+    }
+    context.log('Banned user was blocked:', user.id, user.username)
+    return
+  }
+
   const handled = await handler(user)
 
   if (audit) {
