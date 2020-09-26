@@ -8,6 +8,7 @@ import '../../style/nav.css'
 import { IsMobileContext, DispatchContext } from '../App'
 import { HideSideMenuAction, ShowModalAction } from '../Actions'
 import { Modal } from '../modals'
+import RoomNameView from './RoomNameView'
 
 interface Props {
   rooms: Room[];
@@ -38,7 +39,7 @@ export default function RoomListView (props: Props) {
         <MenuItem title="Help" modal={Modal.Help} />
         <hr style={{ marginTop: '1em', marginBottom: '1em' }}/>
         {props.rooms.map((r) => {
-          return r.hidden ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
+          return r.hidden ? '' : <li><RoomNameView room={r} key={`room-sidebar-${r.id}`} /></li>
         })}
       </ul>
     </nav>
@@ -55,24 +56,6 @@ const MenuItem = (props: {title: string, modal: Modal}) => {
     <li>
       <button onClick={handler}>
         <strong>{props.title}</strong>
-      </button>
-    </li>
-  )
-}
-
-const RoomListItem = (props: { room: Room }) => {
-  const { room } = props
-
-  const onClick = () => {
-    moveToRoom(room.id)
-  }
-  const userCount = room.users ? `(${room.users.length})` : ''
-  const videoIcon = room.videoUsers && room.videoUsers.length > 0 ? <FaVideo /> : ''
-
-  return (
-    <li>
-      <button onClick={onClick}>
-        <strong>{room.name}</strong> {userCount} {videoIcon}
       </button>
     </li>
   )
