@@ -12,7 +12,8 @@ import {
   LoadMessageArchiveAction,
   ShowSideMenuAction,
   SendMessageAction,
-  SpaceIsClosedAction
+  SpaceIsClosedAction,
+  PlayerBannedAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -33,6 +34,7 @@ import LoggedOutView from './components/LoggedOutView'
 import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
+import YouAreBannedView from './components/YouAreBannedView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -54,12 +56,18 @@ const App = () => {
         console.log(login)
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
-        checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod }) => {
+        checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
             dispatch(AuthenticateAction(userId, login.user_id))
             return
           }
           dispatch(AuthenticateAction(userId, registeredUsername))
+
+          if (isBanned) {
+            dispatch(PlayerBannedAction({id: userId, username: registeredUsername, isBanned: isBanned}))
+            dispatch(IsRegisteredAction())
+            return
+          }
 
           if (spaceIsClosed) {
             dispatch(SpaceIsClosedAction())
@@ -135,6 +143,8 @@ const App = () => {
 
   if (state.isClosed && !state.userMap[state.userId].isMod) {
     return <GoHomeView />
+  } else if (state.isBanned) {
+    return <YouAreBannedView />
   }
 
   let videoChatView

@@ -26,6 +26,8 @@ export type Action =
   | PlayerEnteredAction
   | PlayerLeftAction
   | UserMapAction
+  | PlayerBannedAction
+  | PlayerUnbannedAction
   | P2PDataReceivedAction
   | P2PStreamReceivedAction
   | P2PConnectionClosedAction
@@ -76,6 +78,8 @@ export enum ActionType {
   PlayerLeft = 'PLAYER_LEFT',
   Error = 'ERROR',
   UserMap = 'USER_MAP',
+  PlayerBanned = 'PLAYER_BANNED',
+  PlayerUnbanned = 'PLAYER_UNBANNED',
   // WebRTC
   P2PDataReceived = 'P2P_DATA_RECEIVED',
   P2PStreamReceived = 'P2P_STREAM_RECEIVED',
@@ -362,6 +366,30 @@ export const UserMapAction = (map: {
   return {
     type: ActionType.UserMap,
     value: map
+  }
+}
+
+interface PlayerBannedAction {
+  type: ActionType.PlayerBanned;
+  value: MinimalUser;
+}
+
+export const PlayerBannedAction = (user: MinimalUser): PlayerBannedAction => {
+  return {
+    type: ActionType.PlayerBanned,
+    value: user
+  }
+}
+
+interface PlayerUnbannedAction {
+  type: ActionType.PlayerUnbanned;
+  value: MinimalUser;
+}
+
+export const PlayerUnbannedAction = (user: MinimalUser): PlayerUnbannedAction => {
+  return {
+    type: ActionType.PlayerUnbanned,
+    value: user
   }
 }
 

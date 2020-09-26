@@ -18,7 +18,7 @@ const httpTrigger: AzureFunction = async function (
 
   context.res = {
     status: 200,
-    body: { registered: user && user.username, spaceIsClosed, isMod: user && user.isMod }
+    body: { registered: user && user.username, spaceIsClosed, isMod: user && user.isMod, isBanned: user && user.isBanned }
   }
 }
 

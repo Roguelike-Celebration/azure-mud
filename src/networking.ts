@@ -28,7 +28,9 @@ import {
   NoteUpdateLikesAction,
   HideModalAction,
   UpdatedVideoPresenceAction,
-  SpaceOpenedOrClosedAction
+  SpaceOpenedOrClosedAction,
+  PlayerBannedAction,
+  PlayerUnbannedAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
@@ -81,9 +83,9 @@ export async function updateProfile (user: Partial<User>, hardRefreshPage: boole
   }
 }
 
-export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string}> {
+export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {
   const result = await callAzureFunction('isRegistered')
-  return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod }
+  return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod, isBanned: result.isBanned }
 }
 
 // Post-it notes
@@ -272,6 +274,14 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   connection.on('usernameMap', (map) => {
     console.log('Received map', map)
     dispatch(UserMapAction(map))
+  })
+
+  connection.on('playerBanned', (user) => {
+    dispatch(PlayerBannedAction(user))
+  })
+
+  connection.on('playerUnbanned', (user) => {
+    dispatch(PlayerUnbannedAction(user))
   })
 
   connection.on('videoPresence', (roomId: string, users: string[]) => {

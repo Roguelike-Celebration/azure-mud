@@ -71,6 +71,8 @@ export interface State {
 
   // If true, non-mods cannot access the space
   isClosed?: boolean
+
+  isBanned: boolean
 }
 
 export const defaultState: State = {
@@ -84,7 +86,8 @@ export const defaultState: State = {
   roomData: {},
   inMediaChat: false,
   speakingPeerIds: [],
-  activeModal: Modal.None
+  activeModal: Modal.None,
+  isBanned: false
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -230,6 +233,23 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UserMap) {
     state.userMap = { ...state.userMap, ...action.value }
+  }
+
+  if (action.type === ActionType.PlayerBanned) {
+    if (action.value.id === state.userId) {
+      state.isBanned = true
+    } else {
+      state.userMap[action.value.id].isBanned = true
+      addMessage(state, createErrorMessage("User " + action.value.username + " was banned!"))
+    }
+  }
+
+  // This message is never received by the banned player.
+  if (action.type === ActionType.PlayerUnbanned) {
+    if (state.userMap[action.value.id]) {
+      state.userMap[action.value.id].isBanned = false
+    }
+    addMessage(state, createErrorMessage("User " + action.value.username + " was unbanned!"))
   }
 
   if (action.type === ActionType.Error) {
