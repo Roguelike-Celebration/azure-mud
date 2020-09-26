@@ -161,8 +161,20 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="wizard-wars-io-entry" class="showcase-entry">
-          <p><a href="https://github.com/WizardWarsIO" target="_blank">Wizard Wars IO</a>, by quantumpotato</p>
-          <p>Text? Screenshots? Embedded game? It's a webgame, maybe we can embed it. Discuss further with quantumpotato.</p>
+          <h3><a href="https://github.com/WizardWarsIO" target="_blank">WizardWars.IO</a>, by R. Riley Holmes & quantumpotato</h3>
+          <strong>Rhythmic turnbased deathmatch!</strong>
+          <div>
+            <p>Multiplayer roguelike combat. Toss potions, zap wands, detonate bombs, dodge minotaurs and kill players to crown 
+              the leaderboard. <a href="http://206.189.227.251:8000" target="_blank">Play it online!</a>
+            </p>
+            <p>Press a number 1-9 to select an item. Press F + Arrow Keys to zap a wand or throw a potion. Press A to equip 
+              selected item. You can move and throw in 8 directions.
+            </p>
+          </div>
+          <img src="images/wizard-wars-io/0.png" alt="wizard wars io 0" style="width: 23%; object-fit: scale-down; max-height: 340px">
+          <img src="images/wizard-wars-io/1.png" alt="wizard wars io 1" style="width: 23%; object-fit: scale-down; max-height: 340px">
+          <img src="images/wizard-wars-io/2.png" alt="wizard wars io 2" style="width: 23%; object-fit: scale-down; max-height: 340px">
+          <img src="images/wizard-wars-io/3.png" alt="wizard wars io 3" style="width: 23%; object-fit: scale-down; max-height: 340px">
         </div>
       </div>
 
