@@ -232,6 +232,18 @@ export default (oldState: State, action: Action): State => {
     state.userMap = { ...state.userMap, ...action.value }
   }
 
+  if (action.type === ActionType.PlayerBanned) {
+    // I don't think we actually need this since we do have the disconnect & presence udpates?
+    state.roomData[state.roomId].users = state.roomData[
+      state.roomId
+    ].users.filter((u) => u !== action.value.id)
+    addMessage(state, createErrorMessage("User " + action.value.id + " was banned!"))
+  }
+
+  if (action.type === ActionType.PlayerUnbanned) {
+    addMessage(state, createErrorMessage("User " + action.value.id + " was unbanned!"))
+  }
+
   if (action.type === ActionType.Error) {
     addMessage(state, createErrorMessage(action.value))
   }

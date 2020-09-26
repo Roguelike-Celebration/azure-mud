@@ -28,7 +28,9 @@ import {
   NoteUpdateLikesAction,
   HideModalAction,
   UpdatedVideoPresenceAction,
-  SpaceOpenedOrClosedAction
+  SpaceOpenedOrClosedAction,
+  PlayerBannedAction,
+  PlayerUnbannedAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
@@ -272,6 +274,14 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   connection.on('usernameMap', (map) => {
     console.log('Received map', map)
     dispatch(UserMapAction(map))
+  })
+
+  connection.on('playerBanned', (user) => {
+    dispatch(PlayerBannedAction(user))
+  })
+
+  connection.on('playerUnbanned', (user) => {
+    dispatch(PlayerUnbannedAction(user))
   })
 
   connection.on('videoPresence', (roomId: string, users: string[]) => {

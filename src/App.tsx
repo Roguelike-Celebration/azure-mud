@@ -12,7 +12,8 @@ import {
   LoadMessageArchiveAction,
   ShowSideMenuAction,
   SendMessageAction,
-  SpaceIsClosedAction
+  SpaceIsClosedAction,
+  PlayerBannedAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -33,6 +34,7 @@ import LoggedOutView from './components/LoggedOutView'
 import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
+import YouAreBannedView from './components/YouAreBannedView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
