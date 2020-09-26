@@ -128,10 +128,36 @@ export const roomData: { [name: string]: Room } = {
 
         <div id="project-earth-entry" class="showcase-entry">
           <p><a href="https://axeforge.itch.io/project-earth" target="_blank">Project Earth</a>, by Michael Taylor</p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://axeforge.itch.io/project-earth" target="_blank">itch.io</a>!
+          <p>Project Earth is tactical Roguelike where instead of finding your gear, you craft your gear! Instead enemies drop 
+            materials when defeated which you use as materials for crafting. The type of materials used affects the kinds of 
+            items you make. This opens up many different tactical options. Like all Roguelikes, it's meant to be brutal and you 
+            will die a bunch of times. But when you die, what happens to the items you made? After all, they are still usable in 
+            anyone's possession...
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <p>Project Earth is currently in the early stages of development. This is a playable prototype for Windows (64-bit). 
+            Currently, I'm looking for feedback on the following:
+          </p>
+          <ul>
+            <li>Combat</li>
+            <li>Crafting</li>
+            <li>World progression</li>
+          </ul>
+          <p>Feel free to mention anything else as well! Thanks for trying out Project Earth!</p>
+          <p>You can find the playable prototype <a href="https://axeforge.itch.io/project-earth" target="_blank">here</a> on 
+            itch.io. Instructions on how to play are on the site.
+          </p>
+          <p>I can be contacted in the following ways:</p>
+          <ul>
+            <li>Discord: AxeForge #0707 I'm on the following discord servers as well:
+              <ul>
+                <li>roguelikes</li>
+                <li>Tangledeep</li>
+                <li>Dungeonfans Academy</li>
+                <li>Auto Combat Zone</li>
+              </ul>
+            </li>
+            <li>Leaving a comment on Project Earth's itch.io page.</li>
+          </ul>
         </div>
 
         <div id="wizard-wars-io-entry" class="showcase-entry">
