@@ -83,9 +83,9 @@ export async function updateProfile (user: Partial<User>, hardRefreshPage: boole
   }
 }
 
-export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string}> {
+export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {
   const result = await callAzureFunction('isRegistered')
-  return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod }
+  return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod, isBanned: result.isBanned }
 }
 
 // Post-it notes
