@@ -239,13 +239,17 @@ export default (oldState: State, action: Action): State => {
     if (action.value.id === state.userId) {
       state.isBanned = true
     } else {
-      addMessage(state, createErrorMessage("User " + action.value.id + " was banned!"))
+      state.userMap[action.value.id].isBanned = true
+      addMessage(state, createErrorMessage("User " + action.value.username + " was banned!"))
     }
   }
 
   // This message is never received by the banned player.
   if (action.type === ActionType.PlayerUnbanned) {
-    addMessage(state, createErrorMessage("User " + action.value.id + " was unbanned!"))
+    if (state.userMap[action.value.id]) {
+      state.userMap[action.value.id].isBanned = false
+    }
+    addMessage(state, createErrorMessage("User " + action.value.username + " was unbanned!"))
   }
 
   if (action.type === ActionType.Error) {
