@@ -1,4 +1,7 @@
 import * as React from 'react'
+import parse from 'html-react-parser'
+import { FaVideo } from 'react-icons/fa'
+
 import { Room } from '../room'
 import {
   moveToRoom,
@@ -7,10 +10,9 @@ import {
 import NameView from './NameView'
 import { DispatchContext } from '../App'
 import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction } from '../Actions'
-import { FaVideo } from 'react-icons/fa'
+import { Modal } from '../modals'
 
 import '../../style/room.css'
-import { Modal } from '../modals'
 
 interface Props {
   room?: Room;
@@ -76,15 +78,7 @@ export default function RoomView (props: Props) {
   return (
     <div id="room">
       <h1 id="room-name">{room ? room.name : 'Loading...'}{videoChatButton}</h1>
-      <div
-        id="static-room-description"
-        onClick={descriptionClick}
-        dangerouslySetInnerHTML={{
-          __html: room
-            ? parseDescription(room.description)
-            : 'Loading current room...'
-        }}
-      />
+      {parseDescription(room.description, descriptionClick)}
       {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
       {noteWallView}
     </div>
@@ -163,7 +157,11 @@ function intersperse (arr, sep) {
   )
 }
 
-function parseDescription (description: string): string {
+function parseDescription (description: string|undefined, onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void): React.ReactElement {
+  if (!description) {
+    description = 'Loading current room...'
+  }
+
   // eslint-disable-next-line no-useless-escape
   const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
   const simpleLinkRegex = /\[\[(.+?)\]\]/g
@@ -175,5 +173,13 @@ function parseDescription (description: string): string {
   description = description.replace(simpleLinkRegex, (match, roomId) => {
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}</a>`
   })
-  return description
+
+  return (
+    <div
+      id="static-room-description"
+      onClick={onClick}
+    >
+      {parse(`<span>${description}</span>`)}
+    </div>
+  )
 }
