@@ -113,7 +113,7 @@ export const roomData: { [name: string]: Room } = {
       <div id="north-showcase" class="showcase-container">
         <div id="gesuido-entry" class="showcase-entry" style="display: inline-flex;">
           <div id="gesuido-text">
-            <p><a href="https://mihararyosuke.com/gesuido">Gesuido</a>, by 
+            <p><a href="https://mihararyosuke.com/gesuido" target="_blank">Gesuido</a>, by 
               <a href="https://twitter.com/oinariman" target="_blank" rel="nofollow noopener noreferrer">Ryosuke Mihara</a>
             </p>
             <p>Gesuido is a Roguelike game for iPhone that's not too dissimilar in gameplay to the original Rogue, but it features early 
@@ -192,7 +192,7 @@ export const roomData: { [name: string]: Room } = {
 
       <div id="east-showcase" class="showcase-container">
         <div id="roundguard-entry" class="showcase-entry">
-          <p><a href="https://store.steampowered.com/app/848030/Roundguard">Roundguard</a>, by 
+          <p><a href="https://store.steampowered.com/app/848030/Roundguard" target="_blank">Roundguard</a>, by 
             <a href="https://twitter.com/TanookiFruit" target="_blank" rel="nofollow noopener noreferrer">Andrea Roberts</a> <-- personal link
           </p>
           <p>PROMO TEXT GOES HERE You can find it on 
@@ -202,7 +202,7 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="nongunz-entry" class="showcase-entry">
-          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/">Nongunz: Doppelganger Edition</a>, by 
+          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/" target="_blank">Nongunz: Doppelganger Edition</a>, by 
             <a href="https://twitter.com/digeratiDM" target="_blank" rel="nofollow noopener noreferrer">Mike Corrigan</a>
           </p>
           <p>Nongunz is a roguelite action-platformer described as “The Binding of Isaac meets Cookie Clicker.” Battle grotesque 
@@ -223,7 +223,7 @@ export const roomData: { [name: string]: Room } = {
             in this card battler roguelite with a twist: Your hand is your health. Damage makes you discard cards,
             and if you take a hit while your hand is empty, it's game over.
           </p>
-          <iframe src="https://itch.io/embed/381590?linkback=true&amp;dark=true" width="552" height="167" frameborder="0"><a href="https://bakkerjoeri.itch.io/cantrip">Cantrip by Joeri</a></iframe>
+          <iframe src="https://itch.io/embed/381590?linkback=true&amp;dark=true" width="552" height="167" frameborder="0"><a href="https://bakkerjoeri.itch.io/cantrip" target="_blank">Cantrip by Joeri</a></iframe>
           <img src="images/cantrip/0.png" alt="The battle screen of Cantrip. The player's hand visible on the bottom. The opponent's hand is face down at the top. Both have a drawing pile and graveyard next to it." style="width: 49%;">
           <img src="images/cantrip/1.png" alt="The drafting screen of Cantrip. Three cards are lined up in the middle, waiting to be picked." style="width: 49%;">
       </div>
@@ -242,7 +242,7 @@ export const roomData: { [name: string]: Room } = {
 
       <div id="south-showcase" class="showcase-container">
         <div id="fuzz-force-entry" class="showcase-entry">
-          <p><a href="https://fuzzforce.itch.io/fuzz-force-spook-squad">Fuzz Force: Spook Squad</a>, by 
+          <p><a href="https://fuzzforce.itch.io/fuzz-force-spook-squad" target="_blank">Fuzz Force: Spook Squad</a>, by 
             <a href="https://twitter.com/FuzzForce" target="_blank" rel="nofollow noopener noreferrer">Alan Igle</a>
           </p>
           <p> Deckbuilding meets Dice in a quest to capture the ghoulish Polter Prince. Join the Spook Squad and upgrade their 
@@ -256,7 +256,7 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="mech@mor-showdown-entry" class="showcase-entry">
-          <p><a href="https://subalterngames.itch.io/mechamor-showdown">Mech@mor Showdown</a>, by 
+          <p><a href="https://subalterngames.itch.io/mechamor-showdown" target="_blank">Mech@mor Showdown</a>, by 
             <a href="https://twitter.com/subalterngames" target="_blank" rel="nofollow noopener noreferrer">Seth Alter</a>
           </p>
           <p>Mech@mor showdown is an ASCII roguelike about your relationships with your mech and with your opponents. Build 
