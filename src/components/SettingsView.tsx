@@ -4,6 +4,8 @@ import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
 import { HideModalAction } from '../Actions'
 
+export const LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY = 'ShowAllMovementMessages'
+
 export default function SettingsView () {
   const dispatch = useContext(DispatchContext)
 
@@ -31,13 +33,7 @@ export default function SettingsView () {
   }
 
   const handleToggleMovement = (event: React.ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem('HideAllMovementMessages', JSON.stringify(event.target.checked))
-  }
-
-  const handleMovementSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      localStorage.setItem('HideMovementThreshold', event.target.value)
-    }
+    localStorage.setItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY, JSON.stringify(event.target.checked))
   }
 
   return (
@@ -83,21 +79,10 @@ export default function SettingsView () {
         <div>
           <label>
             <input type='checkbox'
-              id='hideMoveToggle'
-              defaultChecked={JSON.parse(localStorage.getItem('HideAllMovementMessages'))}
+              id='showMoveToggle'
+              defaultChecked={JSON.parse(localStorage.getItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY))}
               onChange={handleToggleMovement} />
-              Hide all movement messages
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type='number'
-              id='hideMoveThreshold'
-              min='0'
-              name='stuff'
-              defaultValue={localStorage.getItem('HideMovementThreshold')}
-              onChange={handleMovementSelection} />
-            Hide if person count is over
+              Show all movement messages (messages hidden by default in high-traffic areas)
           </label>
         </div>
       </div>

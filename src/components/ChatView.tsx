@@ -6,6 +6,9 @@ import { Message, MessageType, ConnectedMessage, DisconnectedMessage, EnteredMes
 import '../../style/chat.css'
 import { DispatchContext } from '../App'
 import { ActivateAutoscrollAction, DeactivateAutoscrollAction } from '../Actions'
+import { LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY } from './SettingsView'
+
+const HIDE_MOVEMENT_MESSAGES_THRESHOLD: number = 20
 
 function isMovementMessage(message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
   return message.type == MessageType.Connected || message.type == MessageType.Disconnected ||
@@ -40,17 +43,12 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
     }
   })
 
-  var hideMovementThreshold = parseInt(localStorage.getItem('HideMovementThreshold'))
-  if (Number.isNaN(hideMovementThreshold)) {
-    hideMovementThreshold = 6
-    localStorage.setItem('HideMovementThreshold', '6')
+  var showAllMovementMessages: Boolean = JSON.parse(localStorage.getItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY))
+  if (showAllMovementMessages === null) {
+    localStorage.setItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY, 'false')
   }
-  var hideAllMovementMessages: Boolean = JSON.parse(localStorage.getItem('HideAllMovementMessages'))
-  if (hideAllMovementMessages === null) {
-    localStorage.setItem('HideAllMovementMessages', 'false')
-  }
-  const messagesAfterMovementFilter = props.messages.filter((msg) => {
-    return !(isMovementMessage(msg) && (hideAllMovementMessages || msg.numUsersInRoom > hideMovementThreshold))
+  const messagesAfterMovementFilter = showAllMovementMessages ? props.messages : props.messages.filter((msg) => {
+    return !(isMovementMessage(msg) && msg.numUsersInRoom > HIDE_MOVEMENT_MESSAGES_THRESHOLD)
   })
 
   return (
