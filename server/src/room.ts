@@ -99,8 +99,50 @@ export const roomData: { [name: string]: Room } = {
     id: 'entryway',
     displayName: 'Registration Desk',
     shortName: 'the registration desk',
-    description: 'A big banner reads welcome to Roguelike Celebration! Once you\'ve got your bearings about you, you can move to the [[lounge]].',
+    description: 'A big banner reads "Welcome to Roguelike Celebration!" Once you\'ve got your bearings about you, you can move to the [[lounge]].',
     hidden: true
+  },
+  minetown: {
+    id: 'minetown',
+    displayName: 'Unconferencing: Minetown',
+    shortName: 'minetown',
+    description: 'This is a room for unconferencing! The other unconferencing rooms are [[Oracle]], [[Castle]], [[Fort Ludios]], [[Sokoban]], and [[Astral Plane]]. Or you can go back to the [[kitchen]] in the main space.',
+    hasNoteWall: true
+  },
+  oracle: {
+    id: 'oracle',
+    displayName: 'Unconferencing: Oracle',
+    shortName: 'oracle',
+    description: 'This is a room for unconferencing! The other unconferencing rooms are [[Minetown]], [[Castle]], [[Fort Ludios]], [[Sokoban]], and [[Astral Plane]]. Or you can go back to the [[kitchen]] in the main space.',
+    hasNoteWall: true
+  },
+  fortLudios: {
+    id: 'fortLudios',
+    displayName: 'Unconferencing: Fort Ludios',
+    shortName: 'Fort Ludios',
+    description: 'This is a room for unconferencing! The other unconferencing rooms are [[Minetown]], [[Oracle]], [[Castle]], [[Sokoban]], and [[Astral Plane]]. Or you can go back to the [[kitchen]] in the main space.',
+    hasNoteWall: true
+  },
+  castle: {
+    id: 'castle',
+    displayName: 'Unconferencing: Castle',
+    shortName: 'castle',
+    description: 'This is a room for unconferencing! The other unconferencing rooms are [[Minetown]], [[Oracle]], [[Fort Ludios]], [[Sokoban]], and [[Astral Plane]]. Or you can go back to the [[kitchen]] in the main space.',
+    hasNoteWall: true
+  },
+  sokoban: {
+    id: 'sokoban',
+    displayName: 'Unconferencing: Sokoban',
+    shortName: 'sokoban',
+    description: 'This is a room for unconferencing! The other unconferencing rooms are [[Minetown]], [[Oracle]], [[Castle]], [[Fort Ludios]], and [[Astral Plane]]. Or you can go back to the [[kitchen]] in the main space.',
+    hasNoteWall: true
+  },
+  astralPlane: {
+    id: 'astralPlane',
+    displayName: 'Unconferencing: Astral Plane',
+    shortName: 'astral plane',
+    description: 'This is a room for unconferencing! The other unconferencing rooms are [[Minetown]], [[Oracle]], [[Castle]], [[Fort Ludios]], and [[Sokoban]]. Or you can go back to the [[kitchen]] in the main space.',
+    hasNoteWall: true
   },
   northShowcaseHall: {
     id: 'northShowcaseHall',
