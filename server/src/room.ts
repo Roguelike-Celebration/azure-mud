@@ -188,7 +188,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the east showcase hall',
     description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Roundguard by Andrea Roberts, Nongunz: Doppelganger Edition by Mike Corrigan, and Cantrip by Joeri Bakker.<br/><br/>
+      Here you can see Roundguard by Andrea Roberts, Nongunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
 
       <div id="east-showcase" class="showcase-container">
         <div id="roundguard-entry" class="showcase-entry">
@@ -221,6 +221,16 @@ export const roomData: { [name: string]: Room } = {
           <img src="images/nongunz-de/NongunzDE_09_Scaled.png" alt="Nongunz DE 9" style="width: 32%;">
           <img src="images/nongunz-de/NongunzDE_011_Scaled.png" alt="Nongunz DE 11" style="width: 32%;">
           <img src="images/nongunz-de/NongunzDE_012_Scaled.png" alt="Nongunz DE 12" style="width: 32%;">
+        </div>
+
+        <div id="ultimate-adom-entry" class="showcase-entry">
+          <p><a href="https://www.ultimate-adom.com" target="_blank">Ultimate ADOM: Caverns of Chaos</a>, by
+            <a href="https://twitter.com/adom_dev" target="_blank" rel="nofollow noopener noreferrer">Team ADOM</a>
+          </p>
+          <p>PROMO TEXT GOES HERE You can find it on 
+            <a href="https://store.steampowered.com/app/1266820/Ultimate_ADOM__Caverns_of_Chaos" target="_blank">Steam</a>! <-- if playable keys put here
+          </p>
+          <p>MAYBE SOME PICTURES HERE</p>
         </div>
 
         <div id="cantrip-entry" class="showcase-entry">
