@@ -113,7 +113,7 @@ export const roomData: { [name: string]: Room } = {
       <div id="north-showcase" class="showcase-container">
         <div id="gesuido-entry" class="showcase-entry" style="display: inline-flex;">
           <div id="gesuido-text">
-            <p><a href="https://mihararyosuke.com/gesuido">Gesuido</a>, by 
+            <p><a href="https://mihararyosuke.com/gesuido" target="_blank">Gesuido</a>, by 
               <a href="https://twitter.com/oinariman" target="_blank" rel="nofollow noopener noreferrer">Ryosuke Mihara</a>
             </p>
             <p>Gesuido is a Roguelike game for iPhone that's not too dissimilar in gameplay to the original Rogue, but it features early 
@@ -192,17 +192,25 @@ export const roomData: { [name: string]: Room } = {
 
       <div id="east-showcase" class="showcase-container">
         <div id="roundguard-entry" class="showcase-entry">
-          <p><a href="https://store.steampowered.com/app/848030/Roundguard">Roundguard</a>, by 
-            <a href="https://twitter.com/TanookiFruit" target="_blank" rel="nofollow noopener noreferrer">Andrea Roberts</a> <-- personal link
+          <p><a href="https://store.steampowered.com/app/848030/Roundguard" target="_blank">Roundguard</a>, by 
+            <a href="https://twitter.com/TanookiFruit" target="_blank" rel="nofollow noopener noreferrer">Andrea Roberts</a>
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://store.steampowered.com/app/848030/Roundguard" target="_blank">Steam</a>!
+          <p>Roundguard is a bouncy dungeon crawler with pinball physics, lots of loot, and a randomized castle full of 
+            oddballs. Press your luck against hordes of dangerously cute monsters and challenging roguelike elements in this 
+            all-round bouncy adventure! You can find it on 
+            <a href="https://store.steampowered.com/app/848030/Roundguard" target="_blank">Steam</a>, 
+            <a href="https://apps.apple.com/us/app/roundguard/id1484566760" target="_blank">Apple Arcade</a>, 
+            <a href="https://www.nintendo.com/games/detail/roundguard-switch/" target="_blank">Switch</a>, 
+            <a href="https://www.microsoft.com/en-us/p/roundguard/9pb3fdwrwb9l?activetab=pivot:overviewtab" target="_blank">Xbox One</a>, and 
+            <a href="https://store.playstation.com/en-us/product/UP2199-CUSA17809_00-ROUNDGUARDNA0002" target="_blank">PS4</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/roundguard/Roundguard_1.png" alt="Roundguard 1" style="width: 32%;">
+          <img src="images/roundguard/Roundguard_2.png" alt="Roundguard 2" style="width: 32%;">
+          <img src="images/roundguard/Roundguard_3.png" alt="Roundguard 3" style="width: 32%;">
         </div>
 
         <div id="nongunz-entry" class="showcase-entry">
-          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/">Nongunz: Doppelganger Edition</a>, by 
+          <p><a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/" target="_blank">Nongunz: Doppelganger Edition</a>, by 
             <a href="https://twitter.com/digeratiDM" target="_blank" rel="nofollow noopener noreferrer">Mike Corrigan</a>
           </p>
           <p>Nongunz is a roguelite action-platformer described as “The Binding of Isaac meets Cookie Clicker.” Battle grotesque 
@@ -216,13 +224,29 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="ultimate-adom-entry" class="showcase-entry">
-          <p><a href="https://www.ultimate-adom.com" target="_blank">Ultimate ADOM: Caverns of Chaos</a>, by
-            <a href="https://twitter.com/adom_dev" target="_blank" rel="nofollow noopener noreferrer">Team ADOM</a>
+          <div style="display: inline-flex;height:  fit-content;">
+            <p style="width: fit-content;font-size: x-large;height: fit-content; margin: auto;">
+              <a href="https://www.ultimate-adom.com" target="_blank" style="color: magenta;">Ultimate ADOM: Caverns of Chaos</a>
+            </p>
+            <p style="padding-left: 1em; margin: auto;">by
+              <a href="https://twitter.com/adom_dev" target="_blank" rel="nofollow noopener noreferrer" style="color: magenta;">
+                Team ADOM</a>
+            </p>
+          </div>
+
+          <p>After over 25 years, Team ADOM brings the official successor to the award-winning original. Grab your blade, ready 
+            your spells and join one of the powerful factions vying for control or destruction of the source of ChAoS found 
+            deep within the ominous and deadly Caverns of Chaos.
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://store.steampowered.com/app/1266820/Ultimate_ADOM__Caverns_of_Chaos" target="_blank">Steam</a>! <-- if playable keys put here
+          <p>Wishlist us now on 
+            <a href="https://store.steampowered.com/app/1266820/Ultimate_ADOM__Caverns_of_Chaos" target="_blank">Steam</a> and 
+            prepare for Early Access!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/ultimate-adom/left.png" alt="Ultimate ADOM left" style="width: 49%; max-height: 215px; object-fit: contain">
+          <img src="images/ultimate-adom/right.png" alt="Ultimate ADOM right" style="width: 49%; max-height: 215px; object-fit: contain">
+          <div style="margin: 0 auto; width: fit-content;">
+            <iframe src="https://store.steampowered.com/widget/1266820/" frameborder="0" width="646" height="190"></iframe>
+          </div>
         </div>
 
         <div id="cantrip-entry" class="showcase-entry">
@@ -233,7 +257,7 @@ export const roomData: { [name: string]: Room } = {
             in this card battler roguelite with a twist: Your hand is your health. Damage makes you discard cards,
             and if you take a hit while your hand is empty, it's game over.
           </p>
-          <iframe src="https://itch.io/embed/381590?linkback=true&amp;dark=true" width="552" height="167" frameborder="0"><a href="https://bakkerjoeri.itch.io/cantrip">Cantrip by Joeri</a></iframe>
+          <iframe src="https://itch.io/embed/381590?linkback=true&amp;dark=true" width="552" height="167" frameborder="0"><a href="https://bakkerjoeri.itch.io/cantrip" target="_blank">Cantrip by Joeri</a></iframe>
           <img src="images/cantrip/0.png" alt="The battle screen of Cantrip. The player's hand visible on the bottom. The opponent's hand is face down at the top. Both have a drawing pile and graveyard next to it." style="width: 49%;">
           <img src="images/cantrip/1.png" alt="The drafting screen of Cantrip. Three cards are lined up in the middle, waiting to be picked." style="width: 49%;">
       </div>
@@ -252,7 +276,7 @@ export const roomData: { [name: string]: Room } = {
 
       <div id="south-showcase" class="showcase-container">
         <div id="fuzz-force-entry" class="showcase-entry">
-          <p><a href="https://fuzzforce.itch.io/fuzz-force-spook-squad">Fuzz Force: Spook Squad</a>, by 
+          <p><a href="https://fuzzforce.itch.io/fuzz-force-spook-squad" target="_blank">Fuzz Force: Spook Squad</a>, by 
             <a href="https://twitter.com/FuzzForce" target="_blank" rel="nofollow noopener noreferrer">Alan Igle</a>
           </p>
           <p> Deckbuilding meets Dice in a quest to capture the ghoulish Polter Prince. Join the Spook Squad and upgrade their 
@@ -266,7 +290,7 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="mech@mor-showdown-entry" class="showcase-entry">
-          <p><a href="https://subalterngames.itch.io/mechamor-showdown">Mech@mor Showdown</a>, by 
+          <p><a href="https://subalterngames.itch.io/mechamor-showdown" target="_blank">Mech@mor Showdown</a>, by 
             <a href="https://twitter.com/subalterngames" target="_blank" rel="nofollow noopener noreferrer">Seth Alter</a>
           </p>
           <p>Mech@mor showdown is an ASCII roguelike about your relationships with your mech and with your opponents. Build 
@@ -345,20 +369,37 @@ export const roomData: { [name: string]: Room } = {
           <p><a href="https://store.steampowered.com/app/1296610/Peglin" target="_blank">Peglin</a>, by 
             <a href="https://twitter.com/rednexusgames" target="_blank" rel="nofollow noopener noreferrer">Red Nexus Games</a>
           </p>
-          <p>PEGLIN TEXT GOES HERE You can find it on 
+          <p>Peglin is a Pachinko Roguelike: Fight enemies by collecting special orbs and popping pegs to deal damage. Acquire 
+            special relics that radically change the stakes and ensure no two runs are the same. Aim carefully to survive in 
+            this unique turn-based RPG! You can find it on 
             <a href="https://store.steampowered.com/app/1296610/Peglin" target="_blank">Steam</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <div style="width: 100%">
+            <video class="showcase-video" controls style="margin: auto; width: 420px; height: 240px;">
+                <source src="images/peglin/peglin_video.mp4" type="video/mp4">
+                <source src="movie.ogg" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <img src="images/peglin/peglin1.png" alt="Peglin 1" style="max-width: 32%;">
+          <img src="images/peglin/peglin2.png" alt="Peglin 2" style="max-width: 32%;">
+          <img src="images/peglin/peglin3.png" alt="Peglin 3" style="max-width: 32%;">
         </div>
 
         <div id="auto-fire-entry" class="showcase-entry">
           <p><a href="https://vertigames.itch.io/auto-fire" target="_blank">Auto Fire</a>, by 
             <a href="https://twitter.com/autofiregame" target="_blank" rel="nofollow noopener noreferrer">Patrick Lipo</a>
           </p>
-          <p>AUTOFIRE TEXT GOES HERE You can find it on 
-            <a href="https://vertigames.itch.io/auto-fire" target="_blank">itch.io</a>!
+          <p><strong>Auto Fire</strong> combines classic car combat with a Tactical RPG that roams across outlaw lands in a world 
+            where drivers are worshiped like celebrities. Salvage equipment and cars and build the sexiest, deadliest ride. 
+            Work for a corp, haul cargo, fight in the combat arena or become a savior. The choice is yours. You can play the 
+            demo at <a href="https://vertigames.itch.io/auto-fire" target="_blank">itch.io</a>, and wishlist it on 
+            <a href="https://store.steampowered.com/app/1147880/Auto_Fire/">Steam</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/auto-fire/AutoFireDesertTarget1280.jpg" alt="Auto Fire Desert Target" style="max-width: 49%;">
+          <img src="images/auto-fire/AutoFireGarage1280.jpg" alt="Auto Fire Garage" style="max-width: 49%;">
+          <img src="images/auto-fire/AutoFireOverworld1280.jpg" alt="Auto Fire Overworld" style="max-width: 49%;">
+          <img src="images/auto-fire/AutoFireRuinsCars1280.jpg" alt="Auto Fire RuinsCars" style="max-width: 49%;">
         </div>
       </div>
 
