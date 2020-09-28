@@ -349,7 +349,7 @@ export const roomData: { [name: string]: Room } = {
             <a href="https://store.steampowered.com/app/1296610/Peglin" target="_blank">Steam</a>!
           </p>
           <div style="width: 100%">
-            <video class="showcase-video" controls style="margin: auto; width: 420; height: 240;">
+            <video class="showcase-video" controls style="margin: auto; width: 420px; height: 240px;">
                 <source src="images/peglin/peglin_video.mp4" type="video/mp4">
                 <source src="movie.ogg" type="video/ogg">
               Your browser does not support the video tag.
