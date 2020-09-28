@@ -12,6 +12,8 @@
     height: 100vh;
     top: 0;
     width: 100vw;
+    overflow: scroll;
+    margin-top: 0;
   }
 
   #side-menu #close-button {

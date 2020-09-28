@@ -3,7 +3,7 @@ import { State } from './reducer'
 import { fetchProfile } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
-import { Message } from './message'
+import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { getMediaStream } from './webRTC'
@@ -26,6 +26,8 @@ export type Action =
   | PlayerEnteredAction
   | PlayerLeftAction
   | UserMapAction
+  | PlayerBannedAction
+  | PlayerUnbannedAction
   | P2PDataReceivedAction
   | P2PStreamReceivedAction
   | P2PConnectionClosedAction
@@ -52,6 +54,10 @@ export type Action =
   | HideProfileAction
   | ShowSideMenuAction
   | HideSideMenuAction
+  | DeactivateAutoscrollAction
+  | ActivateAutoscrollAction
+  | SpaceIsClosedAction
+  | SpaceOpenedOrClosedAction
 
 export enum ActionType {
   // Server-driven action
@@ -72,6 +78,8 @@ export enum ActionType {
   PlayerLeft = 'PLAYER_LEFT',
   Error = 'ERROR',
   UserMap = 'USER_MAP',
+  PlayerBanned = 'PLAYER_BANNED',
+  PlayerUnbanned = 'PLAYER_UNBANNED',
   // WebRTC
   P2PDataReceived = 'P2P_DATA_RECEIVED',
   P2PStreamReceived = 'P2P_STREAM_RECEIVED',
@@ -90,6 +98,8 @@ export enum ActionType {
   ShowModal = 'SHOW_MODAL',
   ShowSideMenu = 'SHOW_SIDE_MENU',
   HideSideMenu = 'HIDE_SIDE_MENU',
+  DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
+  ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -101,7 +111,10 @@ export enum ActionType {
   NoteRemove = 'NOTE_REMOVE',
   NoteUpdateLikes = 'NOTE_UPDATE_LIKES',
   NoteUpdateRoom = 'NOTE_UPDATE_ROOM',
-  HideModalAction = 'HIDE_MODAL'
+  HideModalAction = 'HIDE_MODAL',
+
+  SpaceIsClosed = 'SPACE_IS_CLOSED',
+  SpaceOpenedOrClosed = 'SPACE_OPENED_OR_CLOSED'
 }
 
 interface ReceivedMyProfileAction {
@@ -356,6 +369,30 @@ export const UserMapAction = (map: {
   }
 }
 
+interface PlayerBannedAction {
+  type: ActionType.PlayerBanned;
+  value: MinimalUser;
+}
+
+export const PlayerBannedAction = (user: MinimalUser): PlayerBannedAction => {
+  return {
+    type: ActionType.PlayerBanned,
+    value: user
+  }
+}
+
+interface PlayerUnbannedAction {
+  type: ActionType.PlayerUnbanned;
+  value: MinimalUser;
+}
+
+export const PlayerUnbannedAction = (user: MinimalUser): PlayerUnbannedAction => {
+  return {
+    type: ActionType.PlayerUnbanned,
+    value: user
+  }
+}
+
 interface P2PDataReceivedAction {
   type: ActionType.P2PDataReceived;
   value: {
@@ -605,6 +642,22 @@ export const HideSideMenuAction = (): HideSideMenuAction => {
   return { type: ActionType.HideSideMenu }
 }
 
+interface DeactivateAutoscrollAction {
+  type: ActionType.DeactivateAutoscroll;
+}
+
+export const DeactivateAutoscrollAction = (): DeactivateAutoscrollAction => {
+  return { type: ActionType.DeactivateAutoscroll }
+}
+
+interface ActivateAutoscrollAction {
+  type: ActionType.ActivateAutoscroll;
+}
+
+export const ActivateAutoscrollAction = (): ActivateAutoscrollAction => {
+  return { type: ActionType.ActivateAutoscroll }
+}
+
 export const AuthenticateAction = (
   userId: string | undefined,
   name: string | undefined
@@ -641,10 +694,11 @@ export const ModToggleAction = (userId: string): ModToggleAction => {
 interface LoadMessageArchiveAction {
   type: ActionType.LoadMessageArchive;
   messages: Message[];
+  whispers: WhisperMessage[];
 }
 
-export const LoadMessageArchiveAction = (messages: Message[]): LoadMessageArchiveAction => {
-  return { type: ActionType.LoadMessageArchive, messages: messages }
+export const LoadMessageArchiveAction = (messages: Message[], whispers: WhisperMessage[]): LoadMessageArchiveAction => {
+  return { type: ActionType.LoadMessageArchive, messages: messages, whispers: whispers }
 }
 
 interface NoteAddAction {
@@ -681,4 +735,21 @@ interface NoteUpdateRoomAction {
 
 export const NoteUpdateRoomAction = (roomId: string, notes: RoomNote[]): NoteUpdateRoomAction => {
   return { type: ActionType.NoteUpdateRoom, value: { roomId, notes } }
+}
+
+interface SpaceIsClosedAction {
+  type: ActionType.SpaceIsClosed;
+}
+
+export const SpaceIsClosedAction = (): SpaceIsClosedAction => {
+  return { type: ActionType.SpaceIsClosed }
+}
+
+interface SpaceOpenedOrClosedAction {
+  type: ActionType.SpaceOpenedOrClosed;
+  value: boolean
+}
+
+export const SpaceOpenedOrClosedAction = (value: boolean): SpaceOpenedOrClosedAction => {
+  return { type: ActionType.SpaceOpenedOrClosed, value }
 }

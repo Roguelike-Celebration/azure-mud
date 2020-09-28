@@ -3,6 +3,18 @@
   margin-bottom: 1em;
 }
 
+div.showcase-entry {
+  border-style: solid;
+  padding: 5px;
+  border-width: thin;
+  margin-block-end: 5px;
+  min-width: 650px;
+  max-height: 600px;
+  overflow: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
 a.room-link {
   color: var(--green);
 }
@@ -26,4 +38,8 @@ a.room-link:visited {
   border-top: dashed;
   border-color: var(--highlight-line);
   padding-top: 5px;
+}
+
+#static-room-description iframe {
+  max-width: 100%;
 }

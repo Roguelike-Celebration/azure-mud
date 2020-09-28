@@ -34,24 +34,6 @@ export default function LoggedOutView () {
         >
           Log In With Google
         </a><br/>
-        <a
-          href={`${
-            config.SERVER_HOSTNAME
-          }/.auth/login/facebook?post_login_redirect_url=${encodeURIComponent(
-            window.location.href
-          )}`}
-        >
-          Log In With Facebook
-        </a><br/>
-        <a
-          href={`${
-            config.SERVER_HOSTNAME
-          }/.auth/login/aad?post_login_redirect_url=${encodeURIComponent(
-            window.location.href
-          )}`}
-        >
-          Log In With Microsoft
-        </a>
         <p>
           No matter which service you log in with, we do not access any data
           other than what is needed to authenticate you. If it would make you

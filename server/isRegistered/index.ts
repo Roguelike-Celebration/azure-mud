@@ -14,10 +14,11 @@ const httpTrigger: AzureFunction = async function (
   }
 
   const user = await DB.getPublicUser(userId)
+  const spaceIsClosed = await DB.isSpaceClosed()
 
   context.res = {
     status: 200,
-    body: { registered: user && user.username }
+    body: { registered: user && user.username, spaceIsClosed, isMod: user && user.isMod, isBanned: user && user.isBanned }
   }
 }
 

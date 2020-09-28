@@ -47,17 +47,24 @@ body {
 }
 
 #app {
-  padding: 0 50px;
+  padding: 0 3%;
   display: grid;
-  grid-template-columns: 250px 1fr 200px;
-  grid-gap: 50px;
+  grid-template-columns: 250px 5fr 1fr;
+  grid-gap: 3%;
+}
+
+@media only screen and (max-device-width: 500px) {
+  #app {
+    padding: 5px;
+    box-sizing: border-box;
+  }
 }
 
 #app-profile-open {
-  padding: 0 50px;
+  padding: 0 3%;
   display: grid;
-  grid-template-columns: 250px 1fr 400px;
-  grid-gap: 50px;
+  grid-template-columns: 250px 5fr 400px;
+  grid-gap: 3%;
 }
 
 @media only screen and (max-device-width: 500px) {

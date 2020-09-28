@@ -37,8 +37,8 @@ const ProfileWhisperView = (props: WhisperMessage & {id: string, otherUser: Publ
   }
 }
 
-export default function ProfileView (props: { user: PublicUser, messages: Message[] }) {
-  const { user, messages } = props
+export default function ProfileView (props: { user: PublicUser, whispers: WhisperMessage[] }) {
+  const { user, whispers } = props
   const dispatch = useContext(DispatchContext)
 
   React.useEffect(() => {
@@ -55,7 +55,7 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
       (lastMessage.parentNode as any).offsetTop
   })
 
-  const whisperMessages = messages.filter((m, _) => m.type === MessageType.Whisper && m.userId === user.id) as Array<WhisperMessage>
+  const whisperMessages = whispers.filter((m, _) => m.userId === user.id) as Array<WhisperMessage>
 
   const realName = user.realName ? (
     <div id="profile-realName">{user.realName}</div>
@@ -98,8 +98,14 @@ export default function ProfileView (props: { user: PublicUser, messages: Messag
     null
   )
 
+  const linkDecorator = (href, text, key) => (
+    <a href={href} key={key} target="_blank" rel="noopener noreferrer">
+      {text}
+    </a>
+  )
+
   return (
-    <Linkify>
+    <Linkify componentDecorator={linkDecorator}>
       <div id="profile">
         <div id="header">
           <h2 className={user.isMod ? 'mod' : ''}>{user.username} {user.isMod ? <div>(moderator)</div> : ''}</h2>

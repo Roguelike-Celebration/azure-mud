@@ -14,7 +14,8 @@ import {
   createMovedRoomMessage,
   createSameRoomMessage,
   isDeletable,
-  createCommandMessage
+  createCommandMessage,
+  WhisperMessage
 } from './message'
 import { Room } from './room'
 import {
@@ -43,6 +44,8 @@ export interface State {
   profileData?: PublicUser;
 
   messages: Message[];
+  whispers: WhisperMessage[];
+  autoscrollChat: boolean;
 
   prepopulatedInput?: string;
 
@@ -65,6 +68,11 @@ export interface State {
   // If the device is a portrait smartphone, we hide the menu in favor of a hamburger button
   // In that situation, this reflects whether the side menu is visible.
   mobileSideMenuIsVisible?: boolean
+
+  // If true, non-mods cannot access the space
+  isClosed?: boolean
+
+  isBanned: boolean
 }
 
 export const defaultState: State = {
@@ -72,11 +80,14 @@ export const defaultState: State = {
   checkedAuthentication: false,
   hasRegistered: false,
   messages: [],
+  whispers: [],
+  autoscrollChat: true,
   userMap: {},
   roomData: {},
   inMediaChat: false,
   speakingPeerIds: [],
-  activeModal: Modal.None
+  activeModal: Modal.None,
+  isBanned: false
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -94,6 +105,14 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.UpdatedCurrentRoom) {
     const oldRoomId = state.roomId
     state.roomId = action.value
+
+    if (state.roomId === 'entryway') {
+      // This will show any time anyone reloads into the entryway, which
+      // might be slightly annoying for e.g. greeters.
+      // Given our time constraints, that seems an acceptable tradeoff
+      // for not needing to QA more complex logic?
+      state.activeModal = Modal.Welcome
+    }
 
     // Add a local "you have moved to X room" message
     // Don't display if we're in the same room (issue 162)
@@ -180,10 +199,9 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.Whisper) {
-    addMessage(
-      state,
-      createWhisperMessage(action.value.name, action.value.message)
-    )
+    const whisperMessage = createWhisperMessage(action.value.name, action.value.message)
+    addMessage(state, whisperMessage)
+    saveWhisper(state, whisperMessage)
   }
 
   if (action.type === ActionType.ModMessage) {
@@ -215,6 +233,23 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UserMap) {
     state.userMap = { ...state.userMap, ...action.value }
+  }
+
+  if (action.type === ActionType.PlayerBanned) {
+    if (action.value.id === state.userId) {
+      state.isBanned = true
+    } else {
+      state.userMap[action.value.id].isBanned = true
+      addMessage(state, createErrorMessage("User " + action.value.username + " was banned!"))
+    }
+  }
+
+  // This message is never received by the banned player.
+  if (action.type === ActionType.PlayerUnbanned) {
+    if (state.userMap[action.value.id]) {
+      state.userMap[action.value.id].isBanned = false
+    }
+    addMessage(state, createErrorMessage("User " + action.value.username + " was unbanned!"))
   }
 
   if (action.type === ActionType.Error) {
@@ -298,12 +333,14 @@ export default (oldState: State, action: Action): State => {
         )
         const userId = user && user.id
         if (userId) {
-          addMessage(state, createWhisperMessage(userId, message, true))
+          const whisperMessage = createWhisperMessage(userId, message, true)
+          addMessage(state, whisperMessage)
+          saveWhisper(state, whisperMessage)
         }
       }
     } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
       state.activeModal = Modal.Help
-      addMessage(state, createCommandMessage("You consult the help docs. (You can also find them in sidebar!)"))
+      addMessage(state, createCommandMessage('You consult the help docs. (You can also find them in sidebar!)'))
     } else if (beginsWithSlash && matching.type === SlashCommandType.Look) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createCommandMessage(`You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`))
@@ -344,6 +381,14 @@ export default (oldState: State, action: Action): State => {
     state.mobileSideMenuIsVisible = false
   }
 
+  if (action.type === ActionType.DeactivateAutoscroll) {
+    state.autoscrollChat = false
+  }
+
+  if (action.type === ActionType.ActivateAutoscroll) {
+    state.autoscrollChat = true
+  }
+
   if (action.type === ActionType.Authenticate) {
     state.checkedAuthentication = true
 
@@ -373,6 +418,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.LoadMessageArchive) {
     state.messages = action.messages
+    state.whispers = action.whispers
   }
 
   // Notes
@@ -413,6 +459,21 @@ export default (oldState: State, action: Action): State => {
     }
   }
 
+  if (action.type === ActionType.SpaceIsClosed) {
+    state.isClosed = true
+  }
+
+  if (action.type === ActionType.SpaceOpenedOrClosed) {
+    if (state.userMap[state.userId].isMod) {
+      state.isClosed = action.value
+      addMessage(state, createCommandMessage(`The space is now ${action.value ? 'open' : 'closed'}`))
+    } else {
+      // Not reloading the page will show the 'go home' screen, but will still send SignalR data
+      // Just hard-reloading the page will stop them from getting messages
+      window.location.reload()
+    }
+  }
+
   return state
 }
 
@@ -426,8 +487,14 @@ function deleteMessage (state: State, messageId: String) {
   }
 }
 
+function saveWhisper (state: State, message: WhisperMessage) {
+  state.whispers.push(message)
+  localStorage.setItem('whispers', JSON.stringify(state.whispers))
+}
+
 function addMessage (state: State, message: Message) {
   state.messages.push(message)
+  state.messages = state.messages.slice(-500)
   localStorage.setItem('messages', JSON.stringify(state.messages))
   localStorage.setItem('messageTimestamp', new Date().toUTCString())
 }

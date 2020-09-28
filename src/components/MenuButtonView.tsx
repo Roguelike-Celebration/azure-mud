@@ -4,11 +4,16 @@ import { FaChevronDown } from 'react-icons/fa'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import config from '../config'
 import { ShowModalAction } from '../Actions'
-import { DispatchContext } from '../App'
+import { DispatchContext, UserMapContext } from '../App'
 import { Modal } from '../modals'
+import { openOrCloseSpace } from '../networking'
 
-export default function MenuButtonView (props: { username: string }) {
+export default function MenuButtonView (props: { username: string, spaceIsClosed: boolean }) {
   const dispatch = useContext(DispatchContext)
+  const { userMap, myId } = useContext(UserMapContext)
+
+  const user = userMap[myId]
+  const isMod = user && user.isMod
 
   const logOut = () => {
     const prompt = confirm('Are you sure you want to log out?')
@@ -20,6 +25,17 @@ export default function MenuButtonView (props: { username: string }) {
       )}`
     }
   }
+
+  const toggleSpaceAvailability = () => {
+    const doToggle = confirm(
+      `Are you sure you would like to ${props.spaceIsClosed ? 'open' : 'close'} the space for all non-mod users?`
+    )
+    if (doToggle) {
+      openOrCloseSpace(!props.spaceIsClosed)
+    }
+  }
+
+  const toggleSpaceItem = <MenuItem onClick={toggleSpaceAvailability}>{props.spaceIsClosed ? 'Open' : 'Close'} the Space</MenuItem>
 
   const showProfile = () => {
     dispatch(ShowModalAction(Modal.ProfileEdit))
@@ -37,6 +53,7 @@ export default function MenuButtonView (props: { username: string }) {
       <ContextMenu id={'topMenu'}>
         <MenuItem onClick={showProfile}>Edit Profile</MenuItem>
         <MenuItem onClick={showSettings}>Settings & Theme</MenuItem>
+        {isMod ? toggleSpaceItem : null}
         <MenuItem onClick={logOut}>Log Out</MenuItem>
       </ContextMenu>
     </div>

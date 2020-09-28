@@ -11,7 +11,9 @@ import {
   IsRegisteredAction,
   LoadMessageArchiveAction,
   ShowSideMenuAction,
-  SendMessageAction
+  SendMessageAction,
+  SpaceIsClosedAction,
+  PlayerBannedAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -29,6 +31,10 @@ import ScheduleView from './components/ScheduleView'
 import HelpView from './components/HelpView'
 import MapModalView from './components/MapModalView'
 import LoggedOutView from './components/LoggedOutView'
+import WelcomeModalView from './components/WelcomeModalView'
+import { WhisperMessage } from './message'
+import GoHomeView from './components/GoHomeView'
+import YouAreBannedView from './components/YouAreBannedView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -50,16 +56,33 @@ const App = () => {
         console.log(login)
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
-        checkIsRegistered().then((registeredUsername) => {
+        checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
             dispatch(AuthenticateAction(userId, login.user_id))
             return
           }
           dispatch(AuthenticateAction(userId, registeredUsername))
 
+          if (isBanned) {
+            dispatch(PlayerBannedAction({id: userId, username: registeredUsername, isBanned: isBanned}))
+            dispatch(IsRegisteredAction())
+            return
+          }
+
+          if (spaceIsClosed) {
+            dispatch(SpaceIsClosedAction())
+
+            if (!isMod) {
+              // non-mods shouldn't subscribe to SignalR if the space is closed
+              dispatch(IsRegisteredAction())
+              return
+            }
+          }
+
           let localLocalData = false
           const rawTimestamp = localStorage.getItem('messageTimestamp')
           const rawMessageData = localStorage.getItem('messages')
+          const rawWhisperData = localStorage.getItem('whispers')
           if (rawTimestamp) {
             try {
               const timestamp = new Date(rawTimestamp)
@@ -75,7 +98,8 @@ const App = () => {
           if (localLocalData) {
             try {
               const messages = JSON.parse(rawMessageData)
-              dispatch(LoadMessageArchiveAction(messages))
+              const whispers: WhisperMessage[] = JSON.parse(rawWhisperData) || []
+              dispatch(LoadMessageArchiveAction(messages, whispers))
             } catch (e) {
               console.log('Could not parse message JSON', e)
             }
@@ -93,7 +117,7 @@ const App = () => {
   const isMobile = window.outerWidth < 500
 
   const profile = state.visibleProfile ? (
-    <ProfileView user={state.visibleProfile} messages={state.messages} />
+    <ProfileView user={state.visibleProfile} whispers={state.whispers} />
   ) : (
     ''
   )
@@ -117,12 +141,19 @@ const App = () => {
     )
   }
 
+  if (state.isClosed && !state.userMap[state.userId].isMod) {
+    return <GoHomeView />
+  } else if (state.isBanned) {
+    return <YouAreBannedView />
+  }
+
   let videoChatView
   if (state.inMediaChat) {
     videoChatView = (
       <MediaChatView
         localMediaStreamId={state.localMediaStreamId}
-        peerIds={state.otherMediaStreamPeerIds}
+        peerIds={state.roomData[state.roomId].videoUsers}
+        connectedPeerIds={state.otherMediaStreamPeerIds}
         videoDeviceId={state.currentVideoDeviceId}
         audioDeviceId={state.currentAudioDeviceId}
         speakingPeerIds={state.speakingPeerIds}
@@ -143,8 +174,9 @@ const App = () => {
       break
     }
     case Modal.NoteWall: {
+      const room = state.roomData[state.roomId]
       innerModalView = (
-        <NoteWallView notes={state.roomData[state.roomId].notes} />
+        <NoteWallView notes={room.notes} noteWallData={room.noteWallData} user={state.profileData} />
       )
       break
     }
@@ -180,6 +212,10 @@ const App = () => {
     }
     case Modal.Help: {
       innerModalView = <HelpView />
+      break
+    }
+    case Modal.Welcome: {
+      innerModalView = <WelcomeModalView />
     }
   }
 
@@ -209,6 +245,7 @@ const App = () => {
                 <SideNavView
                   rooms={Object.values(state.roomData)}
                   username={state.userMap[state.userId].username}
+                  spaceIsClosed={state.isClosed}
                 />
               ) : (
                 <button id="show-menu" onClick={showMenu}>
@@ -226,7 +263,7 @@ const App = () => {
                     userId={state.userId}
                   />
                 ) : null}
-                <ChatView messages={state.messages} />
+                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} />
                 <InputView
                   prepopulated={state.prepopulatedInput}
                   sendMessage={(message) =>
