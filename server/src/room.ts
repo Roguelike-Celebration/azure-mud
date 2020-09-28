@@ -224,13 +224,29 @@ export const roomData: { [name: string]: Room } = {
         </div>
 
         <div id="ultimate-adom-entry" class="showcase-entry">
-          <p><a href="https://www.ultimate-adom.com" target="_blank">Ultimate ADOM: Caverns of Chaos</a>, by
-            <a href="https://twitter.com/adom_dev" target="_blank" rel="nofollow noopener noreferrer">Team ADOM</a>
+          <div style="display: inline-flex;height:  fit-content;">
+            <p style="width: fit-content;font-size: x-large;height: fit-content; margin: auto;">
+              <a href="https://www.ultimate-adom.com" target="_blank" style="color: magenta;">Ultimate ADOM: Caverns of Chaos</a>
+            </p>
+            <p style="padding-left: 1em; margin: auto;">by
+              <a href="https://twitter.com/adom_dev" target="_blank" rel="nofollow noopener noreferrer" style="color: magenta;">
+                Team ADOM</a>
+            </p>
+          </div>
+
+          <p>After over 25 years, Team ADOM brings the official successor to the award-winning original. Grab your blade, ready 
+            your spells and join one of the powerful factions vying for control or destruction of the source of ChAoS found 
+            deep within the ominous and deadly Caverns of Chaos.
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://store.steampowered.com/app/1266820/Ultimate_ADOM__Caverns_of_Chaos" target="_blank">Steam</a>! <-- if playable keys put here
+          <p>Wishlist us now on 
+            <a href="https://store.steampowered.com/app/1266820/Ultimate_ADOM__Caverns_of_Chaos" target="_blank">Steam</a> and 
+            prepare for Early Access!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/ultimate-adom/left.png" alt="Ultimate ADOM left" style="width: 49%; max-height: 215px; object-fit: contain">
+          <img src="images/ultimate-adom/right.png" alt="Ultimate ADOM right" style="width: 49%; max-height: 215px; object-fit: contain">
+          <div style="margin: 0 auto; width: fit-content;">
+            <iframe src="https://store.steampowered.com/widget/1266820/" frameborder="0" width="646" height="190"></iframe>
+          </div>
         </div>
 
         <div id="cantrip-entry" class="showcase-entry">
