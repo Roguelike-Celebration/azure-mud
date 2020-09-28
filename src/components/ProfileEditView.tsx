@@ -10,6 +10,7 @@ import { HideModalAction } from '../Actions'
 interface Props {
   isFTUE: boolean;
   defaultHandle?: string;
+  prepopulateTwitterWithDefaultHandle?: boolean
   user?: PublicUser;
 }
 
@@ -28,7 +29,7 @@ function crushSpaces (s: string) : string {
 export default function ProfileEditView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
-  const { defaultHandle, user } = props
+  const { defaultHandle, user, prepopulateTwitterWithDefaultHandle } = props
 
   const [handle, setHandle] = useState(
     (user && user.username) || defaultHandle || ''
@@ -40,6 +41,10 @@ export default function ProfileEditView (props: Props) {
   )
   const [askMeAbout, setAskMeAbout] = useState((user && user.askMeAbout) || '')
   const [url, setUrl] = useState((user && user.url) || '')
+  const [twitter, setTwitter] = useState(
+    (user && user.twitterHandle) ||
+    (prepopulateTwitterWithDefaultHandle && defaultHandle) ||
+    '')
 
   const close = () => {
     dispatch(HideModalAction())
@@ -52,6 +57,7 @@ export default function ProfileEditView (props: Props) {
       pronouns,
       description,
       askMeAbout,
+      twitterHandle: twitter,
       url
     },
     props.isFTUE)
@@ -94,16 +100,6 @@ export default function ProfileEditView (props: Props) {
             />
           </div>
           <div className="field">
-            <label htmlFor="pronouns">Pronouns</label>
-            <em>e.g. "she/her" or "he/they"</em>
-            <input
-              type="text"
-              id="pronouns"
-              value={pronouns}
-              onChange={(e) => setPronouns(e.currentTarget.value)}
-            />
-          </div>
-          <div className="field">
             <label htmlFor="description">Character Description</label>
             <em>Describe your virtual avatar!</em>
             <input
@@ -114,13 +110,33 @@ export default function ProfileEditView (props: Props) {
             />
           </div>
           <div className="field">
+            <label htmlFor="pronouns">Pronouns</label>
+            <em>e.g. "she/her" or "he/they"</em>
+            <input
+              type="text"
+              id="pronouns"
+              value={pronouns}
+              onChange={(e) => setPronouns(e.currentTarget.value)}
+            />
+          </div>
+          <div className="field">
             <label htmlFor="website">Website</label>
-            <em>Your personal site, or something else</em>
+            <em>Your personal site or something else</em>
             <input
               type="text"
               id="website"
               value={url}
               onChange={(e) => setUrl(e.currentTarget.value)}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="twitter">Twitter Handle</label>
+            <em>You don't need to include the @</em>
+            <input
+              type="text"
+              id="twitter"
+              value={twitter}
+              onChange={(e) => setTwitter(e.currentTarget.value)}
             />
           </div>
           <div className="field">

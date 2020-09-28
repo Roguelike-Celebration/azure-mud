@@ -51,20 +51,20 @@ const App = () => {
     const login = getLoginInfo().then((login) => {
       if (!login) {
         // This should really be its own action distinct from logging in
-        dispatch(AuthenticateAction(undefined, undefined))
+        dispatch(AuthenticateAction(undefined, undefined, undefined))
       } else {
         console.log(login)
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
         checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
-            dispatch(AuthenticateAction(userId, login.user_id))
+            dispatch(AuthenticateAction(userId, login.user_id, login.provider_name))
             return
           }
-          dispatch(AuthenticateAction(userId, registeredUsername))
+          dispatch(AuthenticateAction(userId, registeredUsername, login.provider_name))
 
           if (isBanned) {
-            dispatch(PlayerBannedAction({id: userId, username: registeredUsername, isBanned: isBanned}))
+            dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
             dispatch(IsRegisteredAction())
             return
           }
@@ -137,6 +137,7 @@ const App = () => {
         isFTUE={true}
         defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
+        prepopulateTwitterWithDefaultHandle={state.authenticationProvider === 'twitter'}
       />
     )
   }

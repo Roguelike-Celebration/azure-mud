@@ -34,6 +34,7 @@ import { MAX_MESSAGE_LENGTH } from '../server/src/config'
 export interface State {
   authenticated: boolean;
   checkedAuthentication: boolean;
+  authenticationProvider?: string;
 
   hasRegistered: boolean;
 
@@ -391,6 +392,8 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.Authenticate) {
     state.checkedAuthentication = true
+
+    state.authenticationProvider = action.value.provider
 
     if (action.value.userId && action.value.name) {
       state.authenticated = true
