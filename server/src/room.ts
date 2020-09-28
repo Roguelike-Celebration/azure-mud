@@ -335,10 +335,21 @@ export const roomData: { [name: string]: Room } = {
           <p><a href="https://store.steampowered.com/app/1296610/Peglin" target="_blank">Peglin</a>, by 
             <a href="https://twitter.com/rednexusgames" target="_blank" rel="nofollow noopener noreferrer">Red Nexus Games</a>
           </p>
-          <p>PEGLIN TEXT GOES HERE You can find it on 
+          <p>Peglin is a Pachinko Roguelike: Fight enemies by collecting special orbs and popping pegs to deal damage. Acquire 
+            special relics that radically change the stakes and ensure no two runs are the same. Aim carefully to survive in 
+            this unique turn-based RPG! You can find it on 
             <a href="https://store.steampowered.com/app/1296610/Peglin" target="_blank">Steam</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <div style="width: 100%">
+            <video class="showcase-video" controls style="margin: auto; width: 420; height: 240;">
+                <source src="images/peglin/peglin_video.mp4" type="video/mp4">
+                <source src="movie.ogg" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <img src="images/peglin/peglin1.png" alt="Peglin 1" style="max-width: 32%;">
+          <img src="images/peglin/peglin2.png" alt="Peglin 2" style="max-width: 32%;">
+          <img src="images/peglin/peglin3.png" alt="Peglin 3" style="max-width: 32%;">
         </div>
 
         <div id="auto-fire-entry" class="showcase-entry">
