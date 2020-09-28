@@ -193,12 +193,20 @@ export const roomData: { [name: string]: Room } = {
       <div id="east-showcase" class="showcase-container">
         <div id="roundguard-entry" class="showcase-entry">
           <p><a href="https://store.steampowered.com/app/848030/Roundguard" target="_blank">Roundguard</a>, by 
-            <a href="https://twitter.com/TanookiFruit" target="_blank" rel="nofollow noopener noreferrer">Andrea Roberts</a> <-- personal link
+            <a href="https://twitter.com/TanookiFruit" target="_blank" rel="nofollow noopener noreferrer">Andrea Roberts</a>
           </p>
-          <p>PROMO TEXT GOES HERE You can find it on 
-            <a href="https://store.steampowered.com/app/848030/Roundguard" target="_blank">Steam</a>!
+          <p>Roundguard is a bouncy dungeon crawler with pinball physics, lots of loot, and a randomized castle full of 
+            oddballs. Press your luck against hordes of dangerously cute monsters and challenging roguelike elements in this 
+            all-round bouncy adventure! You can find it on 
+            <a href="https://store.steampowered.com/app/848030/Roundguard" target="_blank">Steam</a>, 
+            <a href="https://apps.apple.com/us/app/roundguard/id1484566760" target="_blank">Apple Arcade</a>, 
+            <a href="https://www.nintendo.com/games/detail/roundguard-switch/" target="_blank">Switch</a>, 
+            <a href="https://www.microsoft.com/en-us/p/roundguard/9pb3fdwrwb9l?activetab=pivot:overviewtab" target="_blank">Xbox One</a>, and 
+            <a href="https://store.playstation.com/en-us/product/UP2199-CUSA17809_00-ROUNDGUARDNA0002" target="_blank">PS4</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/roundguard/Roundguard_1.png" alt="Roundguard 1" style="width: 32%;">
+          <img src="images/roundguard/Roundguard_2.png" alt="Roundguard 2" style="width: 32%;">
+          <img src="images/roundguard/Roundguard_3.png" alt="Roundguard 3" style="width: 32%;">
         </div>
 
         <div id="nongunz-entry" class="showcase-entry">
