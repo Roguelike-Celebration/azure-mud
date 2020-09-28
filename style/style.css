@@ -87,6 +87,7 @@ a {
 
 .whisper {
   color: var(--gray-text);
+  cursor: pointer;
   font-style: italic;
 }
 
