@@ -345,10 +345,16 @@ export const roomData: { [name: string]: Room } = {
           <p><a href="https://vertigames.itch.io/auto-fire" target="_blank">Auto Fire</a>, by 
             <a href="https://twitter.com/autofiregame" target="_blank" rel="nofollow noopener noreferrer">Patrick Lipo</a>
           </p>
-          <p>AUTOFIRE TEXT GOES HERE You can find it on 
-            <a href="https://vertigames.itch.io/auto-fire" target="_blank">itch.io</a>!
+          <p><strong>Auto Fire</strong> combines classic car combat with a Tactical RPG that roams across outlaw lands in a world 
+            where drivers are worshiped like celebrities. Salvage equipment and cars and build the sexiest, deadliest ride. 
+            Work for a corp, haul cargo, fight in the combat arena or become a savior. The choice is yours. You can play the 
+            demo at <a href="https://vertigames.itch.io/auto-fire" target="_blank">itch.io</a>, and wishlist it on 
+            <a href="https://store.steampowered.com/app/1147880/Auto_Fire/">Steam</a>!
           </p>
-          <p>MAYBE SOME PICTURES HERE</p>
+          <img src="images/auto-fire/AutoFireDesertTarget1280.jpg" alt="Auto Fire Desert Target" style="max-width: 49%;">
+          <img src="images/auto-fire/AutoFireGarage1280.jpg" alt="Auto Fire Garage" style="max-width: 49%;">
+          <img src="images/auto-fire/AutoFireOverworld1280.jpg" alt="Auto Fire Overworld" style="max-width: 49%;">
+          <img src="images/auto-fire/AutoFireRuinsCars1280.jpg" alt="Auto Fire RuinsCars" style="max-width: 49%;">
         </div>
       </div>
 
