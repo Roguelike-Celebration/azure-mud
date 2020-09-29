@@ -11,6 +11,7 @@ import { FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
+import { SpecialFeature as SpecialFeature } from '../../server/src/room'
 
 interface Props {
   room: Room;

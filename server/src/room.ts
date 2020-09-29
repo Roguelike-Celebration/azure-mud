@@ -6,6 +6,11 @@ export interface NoteWallData {
   noteWallDescription: string
 }
 
+export enum SpecialFeature {
+  RainbowDoor = 'RAINBOW_DOOR',
+  DullDoor = 'DULL_DOOR'
+}
+
 export interface Room {
   // e.g. "kitchen"
   id: string
@@ -30,6 +35,8 @@ export interface Room {
 
   // If true, don't show the room in the side list
   hidden?: boolean
+
+  specialFeatures?: SpecialFeature[]
 }
 
 export const roomData: { [name: string]: Room } = {
@@ -101,6 +108,13 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the registration desk',
     description: 'A big banner reads welcome to Roguelike Celebration! Once you\'ve got your bearings about you, you can move to the [[lounge]].',
     hidden: true
+  },
+  prototypeChatRoom: {
+    id: 'prototypeChatRoom',
+    displayName: 'Prototype Chat Room',
+    shortName: 'the prototype chat room',
+    description: 'Placeholder Text',
+    specialFeatures: [SpecialFeature.RainbowDoor]
   },
   northShowcaseHall: {
     id: 'northShowcaseHall',
