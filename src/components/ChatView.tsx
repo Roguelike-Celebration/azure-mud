@@ -42,12 +42,20 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
     }
   })
 
+  // This message filtering logic is kinda ugly and hard to read
   var showAllMovementMessages: Boolean = JSON.parse(localStorage.getItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY))
   if (showAllMovementMessages === null) {
     localStorage.setItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY, 'false')
   }
+  function shouldRemoveMessage (m: Message) {
+    return isMovementMessage(m) &&
+      (
+        m.roomId in props.serverSettings.movementMessagesHideRoomIds ||
+        m.numUsersInRoom > props.serverSettings.movementMessagesHideThreshold
+      )
+  }
   const messagesAfterMovementFilter = showAllMovementMessages ? props.messages : props.messages.filter((msg) => {
-    return !(isMovementMessage(msg) && msg.numUsersInRoom > props.serverSettings.movementMessagesHideThreshold)
+    return !shouldRemoveMessage(msg)
   })
 
   return (

@@ -176,7 +176,7 @@ export default (oldState: State, action: Action): State => {
     const roomData = state.roomData[state.roomId]
     if (!roomData.users.includes(user.id)) {
       roomData.users.push(user.id)
-      addMessage(state, createConnectedMessage(user.id, roomData.users.length))
+      addMessage(state, createConnectedMessage(user.id, state.roomId, roomData.users.length))
     }
     state.userMap[user.id] = user
   }
@@ -184,7 +184,7 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.PlayerDisconnected) {
     const roomData = state.roomData[state.roomId]
     roomData.users = roomData.users.filter((u) => u !== action.value)
-    addMessage(state, createDisconnectedMessage(action.value, roomData.users.length))
+    addMessage(state, createDisconnectedMessage(action.value, state.roomId, roomData.users.length))
   }
 
   if (action.type === ActionType.PlayerEntered) {
@@ -192,7 +192,7 @@ export default (oldState: State, action: Action): State => {
     if (!roomData.users.includes(action.value.name)) {
       roomData.users.push(action.value.name)
       addMessage(state,
-        createEnteredMessage(action.value.name, action.value.from, roomData.users.length)
+        createEnteredMessage(action.value.name, action.value.from, state.roomId, roomData.users.length)
       )
     }
   }
@@ -200,7 +200,7 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.PlayerLeft) {
     const roomData = state.roomData[state.roomId]
     roomData.users = roomData.users.filter((u) => u !== action.value.name)
-    addMessage(state, createLeftMessage(action.value.name, action.value.to, roomData.users.length))
+    addMessage(state, createLeftMessage(action.value.name, action.value.to, state.roomId, roomData.users.length))
   }
 
   if (action.type === ActionType.ChatMessage) {
