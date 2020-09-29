@@ -24,13 +24,7 @@ const httpTrigger: AzureFunction = async function (
     }
 
     const color = req.body && req.body.color
-    if (!color) {
-      context.res = {
-        status: 400,
-        body: 'Include a valid color!'
-      }
-      return
-    } else if (!(color in ValidColors)) {
+    if (color && !(color in ValidColors)) {
       context.res = {
         status: 400,
         body: 'The color included is not a valid color!'
