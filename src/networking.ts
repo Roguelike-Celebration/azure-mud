@@ -30,7 +30,8 @@ import {
   UpdatedVideoPresenceAction,
   SpaceOpenedOrClosedAction,
   PlayerBannedAction,
-  PlayerUnbannedAction
+  PlayerUnbannedAction,
+  ReceivedServerSettingsAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
@@ -73,7 +74,7 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 
 export async function getServerSettings (dispatch: Dispatch<Action>) {
   const result: ServerSettings = await callAzureFunctionGet('serverSettings')
-  console.log("SERVER SETTINGS!", result)
+  dispatch(ReceivedServerSettingsAction(result))
 }
 
 // If hardRefreshPage is true, a successful update will refresh the entire page instead of dismissing a modal

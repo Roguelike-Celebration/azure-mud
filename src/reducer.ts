@@ -30,6 +30,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import { MAX_MESSAGE_LENGTH } from '../server/src/config'
+import { ServerSettings } from '../server/src/types'
 
 export interface State {
   authenticated: boolean;
@@ -73,6 +74,8 @@ export interface State {
   isClosed?: boolean
 
   isBanned: boolean
+
+  serverSettings: ServerSettings
 }
 
 export const defaultState: State = {
@@ -87,7 +90,11 @@ export const defaultState: State = {
   inMediaChat: false,
   speakingPeerIds: [],
   activeModal: Modal.None,
-  isBanned: false
+  isBanned: false,
+  serverSettings: {
+    movementMessagesHideThreshold: 20,
+    movementMessagesHideRoomIds: []
+  }
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -100,6 +107,10 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ReceivedMyProfile) {
     state.profileData = action.value
+  }
+
+  if (action.type === ActionType.ReceivedServerSettings) {
+    state.serverSettings = action.value
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
