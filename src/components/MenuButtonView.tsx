@@ -45,6 +45,10 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
     dispatch(ShowModalAction(Modal.Settings))
   }
 
+  const showServerSettings = () => {
+    dispatch(ShowModalAction(Modal.ServerSettings))
+  }
+
   return (
     <div id="menu-button">
       <ContextMenuTrigger id="topMenu" holdToDisplay={0}>
@@ -54,6 +58,7 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
         <MenuItem onClick={showProfile}>Edit Profile</MenuItem>
         <MenuItem onClick={showSettings}>Settings & Theme</MenuItem>
         {isMod ? toggleSpaceItem : null}
+        {isMod ? <MenuItem onClick={showServerSettings}>Server Settings</MenuItem> : null}
         <MenuItem onClick={logOut}>Log Out</MenuItem>
       </ContextMenu>
     </div>

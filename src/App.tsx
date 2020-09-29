@@ -35,6 +35,7 @@ import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
+import ServerSettingsView from './components/ServerSettingsView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -217,6 +218,11 @@ const App = () => {
     }
     case Modal.Welcome: {
       innerModalView = <WelcomeModalView />
+      break
+    }
+    case Modal.ServerSettings: {
+      innerModalView = <ServerSettingsView serverSettings={state.serverSettings}/>
+      break
     }
   }
 

@@ -7,11 +7,16 @@ export interface ServerSettings {
   movementMessagesHideRoomIds: string[];
 }
 
+// There's 100% a more elegant way to do this, but I think this works and want to actually get this feature finally done.
 export function toServerSettings(obj: any): ServerSettings | null {
   try {
-    return {
-      movementMessagesHideThreshold: obj.movementMessagesHideThreshold,
-      movementMessagesHideRoomIds: obj.movementMessagesHideRoomIds
+    if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined) {
+      return null
+    } else {
+      return {
+        movementMessagesHideThreshold: obj.movementMessagesHideThreshold,
+        movementMessagesHideRoomIds: obj.movementMessagesHideRoomIds
+      }
     }
   } catch (e) {
     return null

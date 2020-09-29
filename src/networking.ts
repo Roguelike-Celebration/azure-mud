@@ -31,7 +31,8 @@ import {
   SpaceOpenedOrClosedAction,
   PlayerBannedAction,
   PlayerUnbannedAction,
-  ReceivedServerSettingsAction
+  ReceivedServerSettingsAction,
+  MediaReceivedSpeakingDataAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
@@ -75,6 +76,13 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 export async function getServerSettings (dispatch: Dispatch<Action>) {
   const result: ServerSettings = await callAzureFunctionGet('serverSettings')
   dispatch(ReceivedServerSettingsAction(result))
+}
+
+export async function updateServerSettings(serverSettings: ServerSettings) {
+  const result = await callAzureFunction('serverSettings', serverSettings)
+  if (result) {
+    myDispatch(HideModalAction())
+  }
 }
 
 // If hardRefreshPage is true, a successful update will refresh the entire page instead of dismissing a modal
@@ -266,6 +274,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('myProfile', (profile) => {
     dispatch(ReceivedMyProfileAction(profile))
+  })
+
+  connection.on('serverSettings', (serverSettings) => {
+    dispatch(MediaReceivedSpeakingDataAction(serverSettings))
   })
 
   connection.on('whisper', (otherId, message) => {
