@@ -3,7 +3,7 @@ import React, { useEffect, createContext } from 'react'
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'
 import InputView from './components/InputView'
-import { connect, getLoginInfo, checkIsRegistered } from './networking'
+import { connect, getLoginInfo, checkIsRegistered, getServerSettings } from './networking'
 import reducer, { State, defaultState } from './reducer'
 import {
   AuthenticateAction,
@@ -107,6 +107,7 @@ const App = () => {
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
+          getServerSettings(dispatch)
 
           window.addEventListener('resize', () => {})
         })
