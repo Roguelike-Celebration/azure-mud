@@ -16,7 +16,7 @@ const httpTrigger: AzureFunction = async function (
         body: 'Include a valid userId!'
       }
       return
-    } else if (userId != user.id) {
+    } else if (userId !== user.id) {
       context.res = {
         status: 401,
         body: 'You can only change your color!'
