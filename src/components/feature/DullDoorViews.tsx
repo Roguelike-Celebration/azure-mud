@@ -31,9 +31,9 @@ export default function DullDoorModalView () {
     return (
       <div>
         <h1>You see a very, very bored Octopode sitting in a cubicle.</h1>
-        <p>It's poking unenthusiastically at his computer with four of his tentacles and eating his lunch with the rest. It
+        <p>It&apos;s poking unenthusiastically at his computer with four of his tentacles and eating his lunch with the rest. It
           looks very tired. You wave to catch its attention, and it glances over at you. You can see it trying to muster some
-          effort for a greeting, but then it sighs and sinks into its seat. "I'm sorry," it says, "these reports were due two
+          effort for a greeting, but then it sighs and sinks into its seat. "I&apos;m sorry," it says, "these reports were due two
           days ago. I don't have the time or energy to chat."
         </p>
         <p>You leave it to its reports.</p>
@@ -53,6 +53,6 @@ export default function DullDoorModalView () {
           has pushed its office chair right here, why not take a seat and rest for a second?</p>
         <p>When you awake, you're standing back in front of the door, feeling somehow less.</p>
       </div>
-    ) 
+    )
   }
 }
