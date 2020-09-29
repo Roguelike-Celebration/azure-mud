@@ -12,6 +12,8 @@ export interface MinimalUser {
   pronouns?: string;
   isMod?: boolean;
   isBanned?: boolean;
+  // From https://www.w3schools.com/colors/colors_names.asp
+  nameColor?: string;
 }
 
 // A user profile. Users may fetch this about other users.
@@ -109,6 +111,18 @@ export async function updateUserProfile (userId: string, data: Partial<User>) {
 
   await DB.setUserProfile(userId, newProfile)
   return newProfile
+}
+
+export async function updateUserProfileColor (userId: string, color: string): Promise<MinimalUser> {
+  const profile: User = await DB.getPublicUser(userId)
+  profile.nameColor = color
+  await DB.setUserProfile(userId, profile)
+
+  const minimalProfile: MinimalUser = await DB.getMinimalProfileForUser(userId)
+  minimalProfile.nameColor = color
+  await DB.setMinimalProfileForUser(userId, minimalProfile)
+
+  return minimalProfile
 }
 
 export async function getFullUser (userId: string): Promise<User | undefined> {
