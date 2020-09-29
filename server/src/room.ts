@@ -114,7 +114,7 @@ export const roomData: { [name: string]: Room } = {
     displayName: 'Prototype Chat Room',
     shortName: 'the prototype chat room',
     description: 'Placeholder Text',
-    specialFeatures: [SpecialFeature.RainbowDoor]
+    specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
   },
   northShowcaseHall: {
     id: 'northShowcaseHall',
