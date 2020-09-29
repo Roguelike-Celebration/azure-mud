@@ -44,3 +44,424 @@ span.name {
   background-color: var(--highlight-line);
   color: var(--main-text);
 }
+
+.name.AliceBlue {
+  color: AliceBlue
+}
+.name.AntiqueWhite {
+  color: AntiqueWhite
+}
+.name.Aqua {
+  color: Aqua
+}
+.name.Aquamarine {
+  color: Aquamarine
+}
+.name.Azure {
+  color: Azure
+}
+.name.Beige {
+  color: Beige
+}
+.name.Bisque {
+  color: Bisque
+}
+.name.Black {
+  color: Black
+}
+.name.BlanchedAlmond {
+  color: BlanchedAlmond
+}
+.name.Blue {
+  color: Blue
+}
+.name.BlueViolet {
+  color: BlueViolet
+}
+.name.Brown {
+  color: brown
+}
+.name.BurlyWood {
+  color: BurlyWood
+}
+.name.CadetBlue {
+  color: CadetBlue
+}
+.name.Chartreuse {
+  color: Chartreuse
+}
+.name.Chocolate {
+  color: Chocolate
+}
+.name.Coral {
+  color: Coral
+}
+Cornfl.name.owerBlue {
+  color: owerBlue
+}
+.name.Cornsilk {
+  color: Cornsilk
+}
+.name.Crimson {
+  color: Crimson
+}
+.name.Cyan {
+  color: Cyan
+}
+.name.DarkBlue {
+  color: DarkBlue
+}
+.name.DarkCyan {
+  color: DarkCyan
+}
+DarkGo.name.ldenRod {
+  color: ldenRod
+}
+.name.DarkGray {
+  color: DarkGray
+}
+.name.DarkGreen {
+  color: DarkGreen
+}
+.name.DarkKhaki {
+  color: DarkKhaki
+}
+.name.DarkMagenta {
+  color: DarkMagenta
+}
+.name.DarkOliveGreen {
+  color: DarkOliveGreen
+}
+Darkor.name.ange {
+  color: ange
+}
+.name.DarkOrchid {
+  color: DarkOrchid
+}
+.name.DarkRed {
+  color: DarkRed
+}
+.name.DarkSalmon {
+  color: DarkSalmon
+}
+.name.DarkSeaGreen {
+  color: DarkSeaGreen
+}
+.name.DarkSlateBlue {
+  color: DarkSlateBlue
+}
+DarkSl.name.ateGray {
+  color: ateGray
+}
+.name.DarkTurquoise {
+  color: DarkTurquoise
+}
+.name.DarkViolet {
+  color: DarkViolet
+}
+.name.DeepPink {
+  color: DeepPink
+}
+.name.DeepSkyBlue {
+  color: DeepSkyBlue
+}
+.name.DimGray {
+  color: DimGray
+}
+Dodger.name.Blue {
+  color: Blue
+}
+.name.FireBrick {
+  color: FireBrick
+}
+.name.FloralWhite {
+  color: FloralWhite
+}
+.name.ForestGreen {
+  color: ForestGreen
+}
+.name.Fuchsia {
+  color: Fuchsia
+}
+.name.Gainsboro {
+  color: Gainsboro
+}
+GhostW.name.hite {
+  color: hite
+}
+.name.Gold {
+  color: Gold
+}
+.name.GoldenRod {
+  color: GoldenRod
+}
+.name.Gray {
+  color: Gray
+}
+.name.Green {
+  color: Green
+}
+.name.GreenYellow {
+  color: GreenYellow
+}
+HoneyD.name.ew {
+  color: ew
+}
+.name.HotPink {
+  color: HotPink
+}
+.name.IndianRed {
+  color: IndianRed
+}
+.name.Indigo {
+  color: Indigo
+}
+.name.Ivory {
+  color: Ivory
+}
+.name.Khaki {
+  color: Khaki
+}
+Lavend.name.er {
+  color: er
+}
+.name.LavenderBlush {
+  color: LavenderBlush
+}
+.name.LawnGreen {
+  color: LawnGreen
+}
+.name.LemonChiffon {
+  color: LemonChiffon
+}
+.name.LightBlue {
+  color: LightBlue
+}
+.name.LightCoral {
+  color: LightCoral
+}
+LightC.name.yan {
+  color: yan
+}
+.name.LightGoldenRodYellow {
+  color: LightGoldenRodYellow
+}
+.name.LightGrey {
+  color: LightGrey
+}
+.name.LightGreen {
+  color: LightGreen
+}
+.name.LightPink {
+  color: LightPink
+}
+.name.LightSalmon {
+  color: LightSalmon
+}
+LightS.name.eaGreen {
+  color: eaGreen
+}
+.name.LightSkyBlue {
+  color: LightSkyBlue
+}
+.name.LightSlateGray {
+  color: LightSlateGray
+}
+.name.LightSteelBlue {
+  color: LightSteelBlue
+}
+.name.LightYellow {
+  color: LightYellow
+}
+.name.Lime {
+  color: Lime
+}
+LimeGr.name.een {
+  color: een
+}
+.name.Linen {
+  color: Linen
+}
+.name.Magenta {
+  color: Magenta
+}
+.name.Maroon {
+  color: Maroon
+}
+.name.MediumAquaMarine {
+  color: MediumAquaMarine
+}
+.name.MediumBlue {
+  color: MediumBlue
+}
+Medium.name.Orchid {
+  color: Orchid
+}
+.name.MediumPurple {
+  color: MediumPurple
+}
+.name.MediumSeaGreen {
+  color: MediumSeaGreen
+}
+.name.MediumSlateBlue {
+  color: MediumSlateBlue
+}
+.name.MediumSpringGreen {
+  color: MediumSpringGreen
+}
+.name.MediumTurquoise {
+  color: MediumTurquoise
+}
+Medium.name.VioletRed {
+  color: VioletRed
+}
+.name.MidnightBlue {
+  color: MidnightBlue
+}
+.name.MintCream {
+  color: MintCream
+}
+.name.MistyRose {
+  color: MistyRose
+}
+.name.Moccasin {
+  color: Moccasin
+}
+.name.NavajoWhite {
+  color: NavajoWhite
+}
+.name.Navy {
+  color: navy
+}
+.name.OldLace {
+  color: OldLace
+}
+.name.Olive {
+  color: Olive
+}
+.name.OliveDrab {
+  color: OliveDrab
+}
+.name.Orange {
+  color: Orange
+}
+.name.OrangeRed {
+  color: OrangeRed
+}
+.name.Orchid {
+  color: orchid
+}
+.name.PaleGoldenRod {
+  color: PaleGoldenRod
+}
+.name.PaleGreen {
+  color: PaleGreen
+}
+.name.PaleTurquoise {
+  color: PaleTurquoise
+}
+.name.PaleVioletRed {
+  color: PaleVioletRed
+}
+.name.PapayaWhip {
+  color: PapayaWhip
+}
+PeachP.name.uff {
+  color: uff
+}
+.name.Peru {
+  color: Peru
+}
+.name.Pink {
+  color: Pink
+}
+.name.Plum {
+  color: Plum
+}
+.name.PowderBlue {
+  color: PowderBlue
+}
+.name.Purple {
+  color: Purple
+}
+.name.Red {
+  color: red
+}
+.name.RosyBrown {
+  color: RosyBrown
+}
+.name.RoyalBlue {
+  color: RoyalBlue
+}
+.name.SaddleBrown {
+  color: SaddleBrown
+}
+.name.Salmon {
+  color: Salmon
+}
+.name.SandyBrown {
+  color: SandyBrown
+}
+SeaGre.name.en {
+  color: en
+}
+.name.SeaShell {
+  color: SeaShell
+}
+.name.Sienna {
+  color: Sienna
+}
+.name.Silver {
+  color: Silver
+}
+.name.SkyBlue {
+  color: SkyBlue
+}
+.name.SlateBlue {
+  color: SlateBlue
+}
+SlateG.name.ray {
+  color: ray
+}
+.name.Snow {
+  color: Snow
+}
+.name.SpringGreen {
+  color: SpringGreen
+}
+.name.SteelBlue {
+  color: SteelBlue
+}
+.name.Tan {
+  color: Tan
+}
+.name.Teal {
+  color: Teal
+}
+Thistl.name.e {
+  color: e
+}
+.name.Tomato {
+  color: Tomato
+}
+.name.Turquoise {
+  color: Turquoise
+}
+.name.Violet {
+  color: Violet
+}
+.name.Wheat {
+  color: Wheat
+}
+.name.White {
+  color: White
+}
+.name.WhiteSmoke {
+  color: WhiteSmoke
+}
+.name.Yellow {
+  color: Yellow
+}
+.name.YellowGreen {
+  color: YellowGreen
+}
