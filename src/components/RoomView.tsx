@@ -13,6 +13,7 @@ import '../../style/room.css'
 import { Modal } from '../modals'
 import { SpecialFeature as SpecialFeature } from '../../server/src/room'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
+import { DullDoorRoomView } from './feature/DullDoorViews'
 
 interface Props {
   room: Room;
@@ -73,6 +74,7 @@ export default function RoomView (props: Props) {
     }
   }
 
+  // TODO: Don't hard-code order of features
   /* eslint-disable jsx-a11y/click-events-have-key-events */
   /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
   /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -89,6 +91,7 @@ export default function RoomView (props: Props) {
         }}
       />
       {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? <RainbowGateRoomView /> : ''}
+      {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.DullDoor) ? <DullDoorRoomView /> : ''}
       {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
       {noteWallView}
     </div>

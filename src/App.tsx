@@ -36,6 +36,7 @@ import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
 import RainbowGateModalView from './components/feature/RainbowGateViews'
+import DullDoorModalView from './components/feature/DullDoorViews'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -221,6 +222,11 @@ const App = () => {
     }
     case Modal.FeatureRainbowGate: {
       innerModalView = <RainbowGateModalView />
+      break
+    }
+    case Modal.FeatureDullDoor: {
+      innerModalView = <DullDoorModalView />
+      break
     }
   }
 
