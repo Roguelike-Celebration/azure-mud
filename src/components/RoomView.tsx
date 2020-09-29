@@ -171,13 +171,19 @@ function parseDescription (description: string, roomData: { [roomId: string]: Ro
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     const room = roomData[roomId]
-    const userCount = room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
+    if (!room) {
+      console.log(`Dev warning: tried to link to room ${roomId}, which doesn't exist`)
+    }
+    const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
     return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
   })
 
   description = description.replace(simpleLinkRegex, (match, roomId) => {
     const room = roomData[roomId]
-    const userCount = room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
+    if (!room) {
+      console.log(`Dev warning: tried to link to room ${roomId}, which doesn't exist`)
+    }
+    const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCount}</a>`
   })
   return description
