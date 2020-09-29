@@ -35,6 +35,7 @@ import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
+import RainbowGateView from './components/feature/RainbowGateView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -217,6 +218,9 @@ const App = () => {
     }
     case Modal.Welcome: {
       innerModalView = <WelcomeModalView />
+    }
+    case Modal.FeatureRainbowGate: {
+      innerModalView = <RainbowGateView />
     }
   }
 

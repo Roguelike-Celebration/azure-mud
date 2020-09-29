@@ -87,10 +87,25 @@ export default function RoomView (props: Props) {
             : 'Loading current room...'
         }}
       />
+      {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? <RainbowDoorView /> : ''}
       {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
       {noteWallView}
     </div>
   )
+}
+
+// When you pass through the ranbow door you get a randomly colored username
+const RainbowDoorView = () => {
+  const dispatch = React.useContext(DispatchContext)
+
+  const jumpThroughGate = () => {
+    dispatch(ShowModalAction(Modal.FeatureRainbowGate))
+  }
+
+  return <div id="rainbow-gate-div">There's an ornate stone gate, through which you see a many-colored maelstrom. In front of 
+    the gate is a sloppily-written wooden sign. It reads "Please do not jump through the gate."
+    <button id="rainbow-gate-button" onClick={jumpThroughGate}>Jump through the gate!</button>
+  </div>
 }
 
 const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[] }) => {
