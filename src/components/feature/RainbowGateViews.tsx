@@ -26,8 +26,8 @@ export const RainbowGateRoomView = () => {
   }
 
   return <div id="rainbow-gate-div">There&apos;s an ornate stone gate, through which you see a many-colored maelstrom. In front of
-    the gate is a sloppily-written wooden sign. It reads "Please do not jump through the gate."
-    <button id="rainbow-gate-button" onClick={jumpThroughGate}>Jump through the gate!</button>
+    the gate is a sloppily-written wooden sign. It reads &quot;Please do not jump through the gate.&quot; <button id="rainbow-gate-button"
+    onClick={jumpThroughGate}>Jump through the gate!</button>
   </div>
 }
 
@@ -47,7 +47,7 @@ export default function RainbowGateModalView () {
         <p>Yes, yes, okay, look, thanks for visiting, sorry we&apos;re a little bit busy, would you mind just closing the window and
           being on your way? Yes, thank you. We appreciate it.</p>
       </div>
-    ) 
+    )
   } else if (visits === 2) {
     return (
       <div>
@@ -57,7 +57,7 @@ export default function RainbowGateModalView () {
           going to be really annoying to clean up, so...we would really appreciate if you stopped.
         </p>
       </div>
-    ) 
+    )
   } else if (visits === 3) {
     return (
       <div>
@@ -69,8 +69,8 @@ export default function RainbowGateModalView () {
     return (
       <div>
         <h1>Okay, that&apos;s enough.</h1>
-        <p>You won't listen. You've been asked repeatedly not to, and you won't listen. I&apos;m breaking out the curses now and
-          you've nobody to blame but yourself.</p>
+        <p>You won&apos;t listen. You&apos;ve been asked repeatedly not to, and you won&apos;t listen. I&apos;m breaking out the curses now and
+          you&apos;ve nobody to blame but yourself.</p>
       </div>
     )
   }
