@@ -38,14 +38,14 @@ export const roomData: { [name: string]: Room } = {
     displayName: 'Kitchen',
     shortName: 'the kitchen',
     description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. On the island are a few samovars of coffee — don't worry, there's plenty of decaf too — and hot water for tea, plus a few trays of pastries.
-      From here, you can walk over to the [[bar]] or grab a seat in the [[main theatre area->theatre]].`,
+      From here, you can walk over to the [[bar]] or grab a seat in the [[main theater area->theater]].`,
     allowsMedia: true,
     hasNoteWall: true
   },
-  theatre: {
-    id: 'theatre',
-    displayName: 'Theatre',
-    shortName: 'the theatre',
+  theater: {
+    id: 'theater',
+    displayName: 'Theater',
+    shortName: 'the theater',
     // kawa: fixed typo, changed src to Twitch per issue #89. Note 'parent' will need to be changed if we change domains, see issue #88. Twitch documentation about 'parent': https://discuss.dev.twitch.tv/t/twitch-embedded-player-updates-in-2020/23956
     description: 'A stage, confusingly decorated with Halloween skulls and streamers. There are a few dozen flimsy metal chairs you can sit in, plus some comfy couches in the back. You can leave to the [[kitchen]], the [[bar]], the [[lounge]], or clamber into the [[shipping container->shippingContainer]].<br/><br/><center id="iframes"><iframe width="560" height="315" src="https://player.twitch.tv/?channel=roguelike_con&parent=chat.roguelike.club" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><iframe id="captions" width="560" height="100" src="https://www.streamtext.net/player/?event=RoguelikeCelebration&chat=false&header=false&footer=false&indicator=false&ff=Consolas&fgc=93a1a1" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe></center><br/><a href="stream.html" onClick="window.open(\'stream.html#\' + window.getComputedStyle(document.body).getPropertyValue(\'background-color\'), \'stream\', \'width=560,height=450\'); return false">Pop Out Stream</a><br/>',
     allowsMedia: true,
@@ -62,14 +62,14 @@ export const roomData: { [name: string]: Room } = {
     id: 'bar',
     displayName: 'Bar',
     shortName: 'the bar',
-    description: 'A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: the Tourist (a non-alcoholic drink with lots of fruit and a fun umbrella), the Berlin Interpretation (a mojito made with some sort of hyper-caffeinated soda), and the Walls Are Shifting (a Long Island Iced Tea).<br/><br/>You\'re a stone\'s throw away from the [[kitchen]], the [[theatre]], the [[dance floor->danceFloor]], and the [[lounge]]. You can also crawl into the [[shipping container->shippingContainer]].',
+    description: 'A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: the Tourist (a non-alcoholic drink with lots of fruit and a fun umbrella), the Berlin Interpretation (a mojito made with some sort of hyper-caffeinated soda), and the Walls Are Shifting (a Long Island Iced Tea).<br/><br/>You\'re a stone\'s throw away from the [[kitchen]], the [[theater]], the [[dance floor->danceFloor]], and the [[lounge]]. You can also crawl into the [[shipping container->shippingContainer]].',
     allowsMedia: true
   },
   lounge: {
     id: 'lounge',
     displayName: 'Lounge',
     shortName: 'the lounge',
-    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing video footage of roguelikes, and a fridge full of La Croix. <br/><br/>From here, you can get to the [[bar]] or the [[theatre]].',
+    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing video footage of roguelikes, and a fridge full of La Croix. <br/><br/>From here, you can get to the [[bar]] or the [[theater]].',
     allowsMedia: true
   },
   statue: {
@@ -92,7 +92,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the shipping container',
     description: `
       It's not quite clear why there's a shipping container in the middle of the space. Seems pretty chill, though? Somebody's set up a makeshift bench.<br/><br/>
-      After you climb out, you can get back to the [[bar]], the [[theatre]], the [[kitchen]], or the [[lounge]].`,
+      After you climb out, you can get back to the [[bar]], the [[theater]], the [[kitchen]], or the [[lounge]].`,
     allowsMedia: true
   },
   entryway: {
