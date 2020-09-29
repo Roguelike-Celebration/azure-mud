@@ -2,18 +2,17 @@ import * as React from 'react'
 import { Room } from '../room'
 import {
   moveToRoom,
-  getNetworkMediaChatStatus,
-  updateProfileColor
+  getNetworkMediaChatStatus
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext } from '../App'
-import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction, UpdateProfileColorAction } from '../Actions'
+import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction } from '../Actions'
 import { FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
 import { SpecialFeature as SpecialFeature } from '../../server/src/room'
-import { ValidColors } from '../../server/src/types'
+import { RainbowGateRoomView } from './feature/RainbowGateViews'
 
 interface Props {
   room: Room;
@@ -94,33 +93,6 @@ export default function RoomView (props: Props) {
       {noteWallView}
     </div>
   )
-}
-
-// When you pass through the ranbow door enough times, you get a randomly colored username
-const RainbowGateRoomView = () => {
-  function randomEnum<T>(anEnum: T): T[keyof T] {
-    const enumValues = (Object.values(anEnum) as unknown) as T[keyof T][];
-    const randomIndex = Math.floor(Math.random() * enumValues.length);
-    return enumValues[randomIndex];
-  }
-
-  const dispatch = React.useContext(DispatchContext)
-
-  const jumpThroughGate = () => {
-    const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited')) || 0
-    const newVisits = visits + 1
-    localStorage.setItem('FeatureRainbowGateVisited', newVisits.toString())
-    if (newVisits >= 3) {
-      dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
-    }
-
-    dispatch(ShowModalAction(Modal.FeatureRainbowGate))
-  }
-
-  return <div id="rainbow-gate-div">There's an ornate stone gate, through which you see a many-colored maelstrom. In front of 
-    the gate is a sloppily-written wooden sign. It reads "Please do not jump through the gate."
-    <button id="rainbow-gate-button" onClick={jumpThroughGate}>Jump through the gate!</button>
-  </div>
 }
 
 const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[] }) => {

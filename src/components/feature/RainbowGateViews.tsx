@@ -1,6 +1,37 @@
 import React from 'react'
+import { DispatchContext } from '../../App';
+import { ValidColors } from '../../../server/src/types';
+import { UpdateProfileColorAction, ShowModalAction } from '../../Actions';
+import { Modal } from '../../modals';
 
-export default function RainbowGateView () {
+// When you pass through the ranbow door enough times, you get a randomly colored username
+export const RainbowGateRoomView = () => {
+  function randomEnum<T>(anEnum: T): T[keyof T] {
+    const enumValues = (Object.values(anEnum) as unknown) as T[keyof T][];
+    const randomIndex = Math.floor(Math.random() * enumValues.length);
+    return enumValues[randomIndex];
+  }
+
+  const dispatch = React.useContext(DispatchContext)
+
+  const jumpThroughGate = () => {
+    const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited')) || 0
+    const newVisits = visits + 1
+    localStorage.setItem('FeatureRainbowGateVisited', newVisits.toString())
+    if (newVisits >= 3) {
+      dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
+    }
+
+    dispatch(ShowModalAction(Modal.FeatureRainbowGate))
+  }
+
+  return <div id="rainbow-gate-div">There's an ornate stone gate, through which you see a many-colored maelstrom. In front of 
+    the gate is a sloppily-written wooden sign. It reads "Please do not jump through the gate."
+    <button id="rainbow-gate-button" onClick={jumpThroughGate}>Jump through the gate!</button>
+  </div>
+}
+
+export default function RainbowGateModalView () {
   const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited'))
   if (!visits) {
     return (
