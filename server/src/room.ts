@@ -95,6 +95,7 @@ export const roomData: { [name: string]: Room } = {
       After you climb out, you can get back to the [[bar]], the [[theatre]], the [[kitchen]], or the [[lounge]].`,
     allowsMedia: true
   },
+  // If you want to remove/rename 'entryway' make sure to update the 'connect' function default behavior!
   entryway: {
     id: 'entryway',
     displayName: 'Registration Desk',
