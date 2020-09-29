@@ -18,7 +18,7 @@ export const RainbowGateRoomView = () => {
     const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited')) || 0
     const newVisits = visits + 1
     localStorage.setItem('FeatureRainbowGateVisited', newVisits.toString())
-    if (newVisits >= 3) {
+    if (newVisits > 3) {
       dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
     }
 
@@ -33,7 +33,7 @@ export const RainbowGateRoomView = () => {
 
 export default function RainbowGateModalView () {
   const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited'))
-  if (!visits) {
+  if (visits == 1) {
     return (
       <div>
         <h1>You experience something truly wonderful.</h1>
@@ -48,7 +48,7 @@ export default function RainbowGateModalView () {
           being on your way? Yes, thank you. We appreciate it.</p>
       </div>
     ) 
-  } else if (visits == 1) {
+  } else if (visits == 2) {
     return (
       <div>
         <h1>Oh it's you again.</h1>
@@ -58,7 +58,7 @@ export default function RainbowGateModalView () {
         </p>
       </div>
     ) 
-  } else if (visits == 2) {
+  } else if (visits == 3) {
     return (
       <div>
         <h1>Please stop it.</h1>
