@@ -80,7 +80,8 @@ export default function NameView (props: { userId: string; id?: string }) {
   // Tooltip: If no pronouns are set, no tooltip will show
 
   return (
-    <span className="name" data-tip={user && user.pronouns}>
+    // Are inline styles bad?
+    <span className="name" data-tip={user && user.pronouns} style={user && user.nameColor ? {color: user.nameColor} : null}>
       <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
         <strong className={isMod ? 'mod' : ''}>
           {isMod ? '[Moderator] ' : ''}

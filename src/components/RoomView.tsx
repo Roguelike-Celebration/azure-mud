@@ -2,16 +2,18 @@ import * as React from 'react'
 import { Room } from '../room'
 import {
   moveToRoom,
-  getNetworkMediaChatStatus
+  getNetworkMediaChatStatus,
+  updateProfileColor
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext } from '../App'
-import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction } from '../Actions'
+import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction, UpdateProfileColorAction } from '../Actions'
 import { FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
 import { SpecialFeature as SpecialFeature } from '../../server/src/room'
+import { ValidColors } from '../../server/src/types'
 
 interface Props {
   room: Room;
@@ -87,18 +89,31 @@ export default function RoomView (props: Props) {
             : 'Loading current room...'
         }}
       />
-      {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? <RainbowDoorView /> : ''}
+      {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? <RainbowGateRoomView /> : ''}
       {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
       {noteWallView}
     </div>
   )
 }
 
-// When you pass through the ranbow door you get a randomly colored username
-const RainbowDoorView = () => {
+// When you pass through the ranbow door enough times, you get a randomly colored username
+const RainbowGateRoomView = () => {
+  function randomEnum<T>(anEnum: T): T[keyof T] {
+    const enumValues = (Object.values(anEnum) as unknown) as T[keyof T][];
+    const randomIndex = Math.floor(Math.random() * enumValues.length);
+    return enumValues[randomIndex];
+  }
+
   const dispatch = React.useContext(DispatchContext)
 
   const jumpThroughGate = () => {
+    const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited')) || 0
+    const newVisits = visits + 1
+    localStorage.setItem('FeatureRainbowGateVisited', newVisits.toString())
+    if (newVisits >= 3) {
+      dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
+    }
+
     dispatch(ShowModalAction(Modal.FeatureRainbowGate))
   }
 

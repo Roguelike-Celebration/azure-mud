@@ -1,13 +1,8 @@
 import React from 'react'
-import { DispatchContext } from '../../App'
 
-export default function RainbowGateView (props: {}) {
-  const dispatch = React.useContext(DispatchContext)
-
+export default function RainbowGateView () {
   const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited'))
   if (!visits) {
-    const n = 1
-    localStorage.setItem('FeatureRainbowGateVisited', n.toString())
     return (
       <div>
         <h1>You experience something truly wonderful.</h1>
@@ -23,8 +18,6 @@ export default function RainbowGateView (props: {}) {
       </div>
     ) 
   } else if (visits == 1) {
-    const newVisits = visits + 1
-    localStorage.setItem('FeatureRainbowGateVisited', newVisits.toString())
     return (
       <div>
         <h1>Oh it's you again.</h1>
@@ -35,8 +28,6 @@ export default function RainbowGateView (props: {}) {
       </div>
     ) 
   } else if (visits == 2) {
-    const newVisits = visits + 1
-    localStorage.setItem('FeatureRainbowGateVisited', newVisits.toString())
     return (
       <div>
         <h1>Please stop it.</h1>
