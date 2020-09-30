@@ -15,7 +15,7 @@ interface Props {
   spaceIsClosed?: boolean;
 }
 
-export default function RoomListView (props: Props) {
+export default function SideNavView (props: Props) {
   const isMobile = useContext(IsMobileContext)
   const dispatch = useContext(DispatchContext)
 
@@ -34,6 +34,7 @@ export default function RoomListView (props: Props) {
       <ul>
         <MenuItem title="Map" modal={Modal.Map} />
         <MenuItem title="Schedule" modal={Modal.Schedule} />
+        <MenuItem title="Room List" modal={Modal.RoomList} />
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
         <MenuItem title="Help" modal={Modal.Help} />
         <hr style={{ marginTop: '1em', marginBottom: '1em' }}/>

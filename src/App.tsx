@@ -35,6 +35,7 @@ import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
+import RoomListView from './components/RoomListView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -214,6 +215,10 @@ const App = () => {
       innerModalView = (
         <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
       )
+      break
+    }
+    case Modal.RoomList: {
+      innerModalView = <RoomListView rooms={Object.values(state.roomData)} />
       break
     }
     case Modal.Help: {
