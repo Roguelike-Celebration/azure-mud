@@ -30,6 +30,7 @@ export type Action =
   | UserMapAction
   | PlayerBannedAction
   | PlayerUnbannedAction
+  | UpdateProfileColorAction
   | P2PDataReceivedAction
   | P2PStreamReceivedAction
   | P2PConnectionClosedAction
@@ -83,6 +84,7 @@ export enum ActionType {
   UserMap = 'USER_MAP',
   PlayerBanned = 'PLAYER_BANNED',
   PlayerUnbanned = 'PLAYER_UNBANNED',
+  UpdateProfileColor = 'UPDATE_PROFILE_COLOR',
   // WebRTC
   P2PDataReceived = 'P2P_DATA_RECEIVED',
   P2PStreamReceived = 'P2P_STREAM_RECEIVED',
@@ -407,6 +409,18 @@ export const PlayerUnbannedAction = (user: MinimalUser): PlayerUnbannedAction =>
   return {
     type: ActionType.PlayerUnbanned,
     value: user
+  }
+}
+
+interface UpdateProfileColorAction {
+  type: ActionType.UpdateProfileColor,
+  color: string
+}
+
+export const UpdateProfileColorAction = (color: string): UpdateProfileColorAction => {
+  return {
+    type: ActionType.UpdateProfileColor,
+    color: color
   }
 }
 

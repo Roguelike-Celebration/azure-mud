@@ -36,6 +36,8 @@ import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
 import RoomListView from './components/RoomListView'
+import RainbowGateModalView from './components/feature/RainbowGateViews'
+import DullDoorModalView from './components/feature/DullDoorViews'
 import ServerSettingsView from './components/ServerSettingsView'
 
 export const DispatchContext = createContext(null)
@@ -233,6 +235,14 @@ const App = () => {
     }
     case Modal.ServerSettings: {
       innerModalView = <ServerSettingsView serverSettings={state.serverSettings}/>
+      break
+    }
+    case Modal.FeatureRainbowGate: {
+      innerModalView = <RainbowGateModalView />
+      break
+    }
+    case Modal.FeatureDullDoor: {
+      innerModalView = <DullDoorModalView />
       break
     }
   }

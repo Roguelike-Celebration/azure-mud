@@ -44,3 +44,28 @@ span.name {
   background-color: var(--highlight-line);
   color: var(--main-text);
 }
+
+.name.Blue {
+  color: var(--blue)
+}
+.name.Cyan {
+  color: var(--cyan)
+}
+.name.Green {
+  color: var(--green)
+}
+.name.Magenta {
+  color: var(--magenta)
+}
+.name.Orange {
+  color: var(--orange)
+}
+.name.Red {
+  color: var(--red)
+}
+.name.Violet {
+  color: var(--violet)
+}
+.name.Yellow {
+  color: var(--yellow)
+}

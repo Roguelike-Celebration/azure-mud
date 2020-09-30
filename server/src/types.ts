@@ -44,3 +44,14 @@ export interface ErrorResponse {
 export interface ProfileResponse {
   user: User;
 }
+
+export enum ValidColors {
+  Blue = 'Blue',
+  Cyan = 'Cyan',
+  Green = 'Green',
+  Magenta = 'Magenta',
+  Orange = 'Orange',
+  Red = 'Red',
+  Violet = 'Violet',
+  Yellow = 'Yellow'
+}

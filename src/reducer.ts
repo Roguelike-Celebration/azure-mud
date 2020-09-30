@@ -22,7 +22,8 @@ import {
   sendChatMessage,
   toggleUserBan,
   setNetworkMediaChatStatus,
-  toggleUserMod
+  toggleUserMod,
+  updateProfileColor
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from './webRTC'
@@ -259,6 +260,13 @@ export default (oldState: State, action: Action): State => {
       state.userMap[action.value.id].isBanned = false
     }
     addMessage(state, createErrorMessage('User ' + action.value.username + ' was unbanned!'))
+  }
+
+  if (action.type === ActionType.UpdateProfileColor) {
+    state.userMap[state.userId].nameColor = action.color
+    addMessage(state, createErrorMessage('Your name color was changed to ' + action.color))
+
+    updateProfileColor(state.userId, action.color)
   }
 
   if (action.type === ActionType.Error) {

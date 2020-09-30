@@ -12,6 +12,12 @@
   --highlight-line: #888888;
   --pink: lightpink;
   --blue: lightskyblue;
+  --cyan: #2aa198;
+  --magenta: #d33682;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --violet: #6c71c4;
+  --yellow: #b58900;
 }
 
 /* solarized dark */
@@ -25,6 +31,12 @@
   --highlight-line: #fdf6e3;
   --pink: #d33682;
   --blue: #268bd2;
+  --cyan: #2aa198;
+  --magenta: #d33682;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --violet: #6c71c4;
+  --yellow: #b58900;
 }
 
 /* solarized light */
@@ -38,6 +50,12 @@
   --highlight-line: #002b36;
   --pink: #d33682;
   --blue: #268bd2;
+  --cyan: #2aa198;
+  --magenta: #d33682;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --violet: #6c71c4;
+  --yellow: #b58900;
 }
 
 body {
