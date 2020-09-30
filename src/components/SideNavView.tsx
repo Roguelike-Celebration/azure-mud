@@ -23,6 +23,10 @@ export default function SideNavView (props: Props) {
     dispatch(HideSideMenuAction())
   }
 
+  const showMap = () => {
+    dispatch(ShowModalAction(Modal.Map))
+  }
+
   return (
     <nav id="side-menu" role="navigation" aria-label="List of rooms you can navigate to">
       {isMobile ? <button
@@ -31,16 +35,12 @@ export default function SideNavView (props: Props) {
         className='close'
       >x</button> : ''}
       <MenuButtonView username={props.username} spaceIsClosed={props.spaceIsClosed} />
+      <button id='nav-map-button' onClick={showMap}>Map</button>
       <ul>
-        <MenuItem title="Map" modal={Modal.Map} />
         <MenuItem title="Schedule" modal={Modal.Schedule} />
         <MenuItem title="Room List" modal={Modal.RoomList} />
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
         <MenuItem title="Help" modal={Modal.Help} />
-        <hr style={{ marginTop: '1em', marginBottom: '1em' }}/>
-        {props.rooms.map((r) => {
-          return r.hidden ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
-        })}
       </ul>
     </nav>
   )
@@ -54,27 +54,10 @@ const MenuItem = (props: {title: string, modal: Modal}) => {
   }
   return (
     <li>
-      <button onClick={handler}>
+      <button className='nav-item' onClick={handler}>
         <strong>{props.title}</strong>
       </button>
     </li>
   )
 }
-
-const RoomListItem = (props: { room: Room }) => {
-  const { room } = props
-
-  const onClick = () => {
-    moveToRoom(room.id)
-  }
-  const userCount = room.users ? `(${room.users.length})` : ''
-  const videoIcon = room.videoUsers && room.videoUsers.length > 0 ? <FaVideo /> : ''
-
-  return (
-    <li>
-      <button onClick={onClick}>
-        <strong>{room.name}</strong> {userCount} {videoIcon}
-      </button>
-    </li>
-  )
 }
