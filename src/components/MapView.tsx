@@ -27,6 +27,16 @@ interface Props {
 export default function MapView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
+  // Scroll to make sure that the user's location is visible
+  // The empty array at the end means we only run this on first render, not every time it re-renders
+  // This ensures it only scrolls on load, not every time new presence data comes in
+  React.useEffect(() => {
+    const location = document.getElementById(`clickable-room-${props.currentRoomId}`)
+    if (location) {
+      location.scrollIntoView({ block: 'center', inline: 'center' })
+    }
+  }, [])
+
   let mapText = `                ┌────────────────────────┐
 ┌──────────┐    │........................│                    ┌─────────────────────────┐
 │..........│    │......Kitchen (01)......│                    │.........................│
@@ -269,7 +279,8 @@ export default function MapView (props: Props) {
       }}
       key={a.roomId}
       onClick={handleClick}
-      data-room={a.roomId} />
+      data-room={a.roomId}
+      id={`clickable-room-${a.roomId}`} />
   })
 
   return <div style={{ position: 'relative', margin: '15px' }}>
