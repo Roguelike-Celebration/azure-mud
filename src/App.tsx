@@ -163,6 +163,10 @@ const App = () => {
   }
 
   let innerModalView, modalView
+
+  // TODO: If we get more modal options than just a size boolean, make this an options object.
+  let modalIsFullScreen = false
+
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
       innerModalView = (
@@ -206,6 +210,7 @@ const App = () => {
       break
     }
     case Modal.Map: {
+      modalIsFullScreen = true
       innerModalView = (
         <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
       )
@@ -221,7 +226,7 @@ const App = () => {
   }
 
   if (innerModalView) {
-    modalView = <ModalView>{innerModalView}</ModalView>
+    modalView = <ModalView fullScreen={modalIsFullScreen}>{innerModalView}</ModalView>
   }
 
   const showMenu = () => {

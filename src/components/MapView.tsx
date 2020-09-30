@@ -92,7 +92,7 @@ export default function MapView (props: Props) {
 
   return <div style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
-    <pre style={{ letterSpacing: '2px', height: '500px' }}><code>
+    <pre style={{ letterSpacing: '2px' }}><code>
       {mapText}
     </code></pre>
   </div>
