@@ -17,7 +17,8 @@ const danceList = [
   "pulls a leek out of *somewhere* and starts spinning it around",
   "finds a couple glowsticks and starts waving them to the beat",
   "nods their head to the beat. Feels good.",
-  "pulls off some stair dancing technique - good at evading monsters, but a little crass, don't you think?"
+  "pulls off some stair dancing technique - good at evading monsters, but a little crass, don't you think?",
+  "does the gridderbug"
 ]
 
 const httpTrigger: AzureFunction = async function (
@@ -81,7 +82,7 @@ const httpTrigger: AzureFunction = async function (
         {
           groupName: user.roomId,
           target: 'dance',
-          arguments: [req.body.id, user.id, "do an angry dance"]
+          arguments: [req.body.id, user.id, danceList[Math.floor(Math.random() * danceList.length)]]
         }
       ]
       return
