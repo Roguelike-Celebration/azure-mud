@@ -19,7 +19,8 @@ export const DullDoorRoomView = () => {
     dispatch(ShowModalAction(Modal.FeatureDullDoor))
   }
 
-  return <div id="dull-door-div">There is the boringest door imaginable standing in front of you.
+  return <div id="dull-door-div" className="feature-room-view">
+    <p>There is the boringest door imaginable standing in front of you.</p>
     <button id="dull-door-button" onClick={walkThroughDoor}>Walk through the door</button>
   </div>
 }
