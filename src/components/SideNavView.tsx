@@ -44,8 +44,8 @@ export default function SideNavView (props: Props) {
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
         <MenuItem title="Help" modal={Modal.Help} />
       </ul>
-      {props.roomData && props.currentRoomId ? 
-        <MiniMapView roomData={props.roomData} currentRoomId={props.currentRoomId}/>
+      {props.roomData && props.currentRoomId
+        ? <MiniMapView roomData={props.roomData} currentRoomId={props.currentRoomId}/>
         : null
       }
     </nav>
@@ -65,5 +65,4 @@ const MenuItem = (props: {title: string, modal: Modal}) => {
       </button>
     </li>
   )
-}
 }
