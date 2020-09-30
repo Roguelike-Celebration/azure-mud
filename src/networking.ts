@@ -277,7 +277,7 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   })
 
   connection.on('serverSettings', (serverSettings) => {
-    dispatch(MediaReceivedSpeakingDataAction(serverSettings))
+    dispatch(ReceivedServerSettingsAction(serverSettings))
   })
 
   connection.on('whisper', (otherId, message) => {
