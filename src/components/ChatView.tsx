@@ -9,9 +9,9 @@ import { ActivateAutoscrollAction, DeactivateAutoscrollAction } from '../Actions
 import { LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY } from './SettingsView'
 import { ServerSettings } from '../../server/src/types'
 
-function isMovementMessage(message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
-  return message.type == MessageType.Connected || message.type == MessageType.Disconnected ||
-    message.type == MessageType.Entered || message.type == MessageType.Left
+function isMovementMessage (message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
+  return message.type === MessageType.Connected || message.type === MessageType.Disconnected ||
+    message.type === MessageType.Entered || message.type === MessageType.Left
 }
 
 export default function ChatView (props: { messages: Message[], autoscrollChat: Boolean, serverSettings: ServerSettings}) {

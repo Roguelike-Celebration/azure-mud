@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { ServerSettings, toServerSettings } from "../../server/src/types";
-import { updateServerSettings } from "../networking";
+import React, { useState } from 'react'
+import { ServerSettings, toServerSettings } from '../../server/src/types'
+import { updateServerSettings } from '../networking'
 
-
-export default function ServerSettingsView(props: { serverSettings: ServerSettings }) {
+export default function ServerSettingsView (props: { serverSettings: ServerSettings }) {
   const [newSettings, setNewSettings] = useState(JSON.stringify(props.serverSettings, null, 2))
 
   const submit = () => {
@@ -27,8 +26,8 @@ export default function ServerSettingsView(props: { serverSettings: ServerSettin
       <h3 id='old-settings-header'>Old settings:</h3>
       <pre id='old-settings-pretty'>{JSON.stringify(props.serverSettings, null, 2)}</pre>
       <h3 id='new-settings-header'>New settings:</h3>
-      <div className='form' id="serverSettingsForm">
-        <textarea id="new-settings-textarea"
+      <div className='form' id='serverSettingsForm'>
+        <textarea id='new-settings-textarea'
           defaultValue={newSettings}
           cols={50}
           rows={30}
@@ -39,7 +38,7 @@ export default function ServerSettingsView(props: { serverSettings: ServerSettin
           onClick={(e) => {
             submit()
           }}
-          className="submit">
+          className='submit'>
             Save Changes
         </button>
       </div>

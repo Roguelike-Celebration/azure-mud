@@ -78,7 +78,7 @@ export async function getServerSettings (dispatch: Dispatch<Action>) {
   dispatch(ReceivedServerSettingsAction(result))
 }
 
-export async function updateServerSettings(serverSettings: ServerSettings) {
+export async function updateServerSettings (serverSettings: ServerSettings) {
   const result = await callAzureFunction('serverSettings', serverSettings)
   if (result) {
     myDispatch(HideModalAction())
