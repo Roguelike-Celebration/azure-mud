@@ -8,9 +8,11 @@ import '../../style/nav.css'
 import { IsMobileContext, DispatchContext } from '../App'
 import { HideSideMenuAction, ShowModalAction } from '../Actions'
 import { Modal } from '../modals'
+import MiniMapView from './MiniMapView'
 
 interface Props {
-  rooms: Room[];
+  roomData: { [roomId: string]: Room };
+  currentRoomId: string
   username: string;
   spaceIsClosed?: boolean;
 }
@@ -42,6 +44,10 @@ export default function SideNavView (props: Props) {
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
         <MenuItem title="Help" modal={Modal.Help} />
       </ul>
+      {props.roomData && props.currentRoomId ? 
+        <MiniMapView roomData={props.roomData} currentRoomId={props.currentRoomId}/>
+        : null
+      }
     </nav>
   )
 }

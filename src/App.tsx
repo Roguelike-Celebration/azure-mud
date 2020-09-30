@@ -13,7 +13,7 @@ import {
   ShowSideMenuAction,
   SendMessageAction,
   SpaceIsClosedAction,
-  PlayerBannedAction
+  PlayerBannedAction, PrepareToStartVideoChatAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -254,7 +254,8 @@ const App = () => {
             >
               {shouldShowMenu ? (
                 <SideNavView
-                  rooms={Object.values(state.roomData)}
+                  roomData={state.roomData}
+                  currentRoomId={state.roomId}
                   username={state.userMap[state.userId].username}
                   spaceIsClosed={state.isClosed}
                 />

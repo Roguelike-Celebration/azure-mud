@@ -25,10 +25,11 @@ import { DispatchContext } from '../App'
  * (because the ASCII map numbers are 1-indexed)
  */
 
-interface Props {
-    roomData: { [roomId: string]: Room };
-    currentRoomId: string
-}
+ interface Props {
+  roomData: { [roomId: string]: Room };
+  currentRoomId: string
+  isMiniMap?: boolean
+ }
 
   interface ClickableArea {
     x: number,
@@ -40,24 +41,41 @@ interface Props {
 
 export default function MapView (props: Props) {
   const dispatch = useContext(DispatchContext)
+  const { roomData, currentRoomId } = props
+
+  // Pixel size of one ASCII character
+  let w, h
+  if (props.isMiniMap) {
+    w = 8
+    h = 12
+  } else {
+    w = 10
+    h = 15
+  }
 
   // Scroll to make sure that the user's location is visible
   // The empty array at the end means we only run this on first render, not every time it re-renders
   // This ensures it only scrolls on load, not every time new presence data comes in
   React.useEffect(() => {
-    const location = document.getElementById(`clickable-room-${props.currentRoomId}`)
+    console.log('Attempting to scroll', `${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}`)
+    const location = document.getElementById(`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}`)
     if (location) {
+      console.log(location)
       location.scrollIntoView({ block: 'center', inline: 'center' })
+    } else {
+      console.log('NO LCATION')
     }
-  }, [])
+  }, (props.isMiniMap ? null : []))
+
+  if (!roomData) { return <div/> }
 
   // mapText = mapText.replace('$0', `(${props.roomData.danceFloor.users.length})`)
 
   presenceMapping.forEach((roomId, idx) => {
     let replaceString = '(0)'
 
-    if (props.roomData[roomId] && props.roomData[roomId].users && props.roomData[roomId].users.length > 0) {
-      replaceString = `(${props.roomData[roomId].users.length})`
+    if (roomData[roomId] && roomData[roomId].users && roomData[roomId].users.length > 0) {
+      replaceString = `(${roomData[roomId].users.length})`
     }
 
     replaceString = replaceString.padEnd(4, '.')
@@ -78,19 +96,19 @@ export default function MapView (props: Props) {
     return <div
       style={{
         position: 'absolute',
-        left: `${a.x * 10}px`,
-        top: `${a.y * 15}px`,
-        width: `${a.width * 10}px`,
-        height: `${a.height * 15}px`,
+        left: `${a.x * w}px`,
+        top: `${a.y * h}px`,
+        width: `${a.width * w}px`,
+        height: `${a.height * h}px`,
         cursor: 'pointer'
       }}
       key={a.roomId}
       onClick={handleClick}
       data-room={a.roomId}
-      id={`clickable-room-${a.roomId}`} />
+      id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${a.roomId}`} />
   })
 
-  return <div style={{ position: 'relative', margin: '15px' }}>
+  return <div className='map' style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
     <pre style={{ letterSpacing: '2px' }}><code>
       {mapText}

@@ -58,3 +58,19 @@ button.nav-item:hover, button.nav-item:focus, button.nav-item:active {
   margin-left: 15px;
   margin-top: 2em;
 }
+
+#mini-map {
+  border: 1px solid var(--main-font);
+  overflow: hidden;
+  width: 100%;
+  height: 300px;
+}
+
+#mini-map .map, #mini-map .map pre {
+  width: 100%;
+  height: 100%;
+}
+
+#mini-map .map {
+  font-size: 10px;
+}
