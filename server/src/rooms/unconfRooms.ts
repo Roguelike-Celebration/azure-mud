@@ -1,4 +1,4 @@
-export const unconference: {
+export const unconference = {
   id: 'unconference',
   displayName: 'Unconferencing Room',
   shortName: 'the unconferencing room',
@@ -14,7 +14,7 @@ export const unconference: {
   }
 }
 
-export const minetown: {
+export const minetown = {
   id: 'minetown',
   displayName: 'Unconferencing: Minetown',
   shortName: 'minetown',
@@ -22,7 +22,7 @@ export const minetown: {
   hasNoteWall: true
 }
 
-export const oracle: {
+export const oracle = {
   id: 'oracle',
   displayName: 'Unconferencing: Oracle',
   shortName: 'oracle',
@@ -30,7 +30,7 @@ export const oracle: {
   hasNoteWall: true
 }
 
-export const tower: {
+export const tower = {
   id: 'tower',
   displayName: 'Unconferencing: Vlad\'s Tower',
   shortName: 'Vlad\'s Tower',
@@ -38,24 +38,24 @@ export const tower: {
   hasNoteWall: true
 }
 
-export const castle: {
+export const castle = {
   id: 'castle',
   displayName: 'Unconferencing: Castle',
   shortName: 'castle',
   description: 'A foreboding castle stands before you, surrounded by a moat that ripples with unseen shapes swimming beneath the surface. The front of the castle is taken up by a large drawbridge that is currently raised, preventing you from venturing inside. Strangely, a pile of discarded musical instruments is piled on shore by where the bridge would presumably open - and the area directly beneath the bridge\'s landing zone is smeared with what you hope is ketchup.<br/><br/>This is a room for unconferencing! The other unconferencing rooms are [[Minetown]], [[Oracle]], [[Vlad\'s Tower->tower]], [[Sokoban]], and [[Astral Plane]]. Or you can go back to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true,
   hidden: true
-  }
+}
 
-export const sokoban: {
+export const sokoban = {
   id: 'sokoban',
   displayName: 'Unconferencing: Sokoban',
   shortName: 'sokoban',
   description: 'This strange room is made up of blue walls with large circular pits dotting the floor, accompanied by many boulders of matching size. The boulders are strangely easy to roll from place to place - and even stranger is how often moving a boulder reveals a flattened snack underneath. Something about being in this room fills you with a subtle feeling of frustration.<br/><br/>This is a room for unconferencing! The other unconferencing rooms are [[Minetown]], [[Oracle]], [[Castle]], [[Vlad\'s Tower->tower]], and [[Astral Plane]]. Or you can go back to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
-  }
+}
 
-export const astralPlane: {
+export const astralPlane = {
   id: 'astralPlane',
   displayName: 'Unconferencing: Astral Plane',
   shortName: 'astral plane',
