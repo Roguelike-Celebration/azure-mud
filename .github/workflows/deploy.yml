@@ -33,3 +33,8 @@ jobs:
           app-name: roguelikecelebration-mud
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
           package: server
+
+      - name: Notify connected clients
+        run: curl --header "Content-Type: application/json" --request POST --data '{"key":${TOKEN}}' "https://roguelikecelebration-mud.azurewebsites.net/api/clientDeployedWebhook"
+        env:
+          TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}        

@@ -322,6 +322,12 @@ const Redis: Database = {
 
   async setSpaceAvailability (open: boolean) {
     return await setCache(spaceAvailabilityKey, open)
+  },
+
+  //
+
+  async webhookDeployKey () {
+    return await getCache('deployWebhookKey')
   }
 }
 

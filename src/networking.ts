@@ -32,13 +32,14 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  MediaReceivedSpeakingDataAction
+  MediaReceivedSpeakingDataAction, ShowModalAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
 import { MAX_MESSAGE_LENGTH } from '../server/src/config'
+import { Modal } from './modals'
 const axios = require('axios').default
 
 let myUserId: string
@@ -304,6 +305,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('playerUnbanned', (user) => {
     dispatch(PlayerUnbannedAction(user))
+  })
+
+  connection.on('clientDeployed', () => {
+    dispatch(ShowModalAction(Modal.ClientDeployed))
   })
 
   connection.on('videoPresence', (roomId: string, users: string[]) => {

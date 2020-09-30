@@ -39,6 +39,7 @@ import RoomListView from './components/RoomListView'
 import RainbowGateModalView from './components/feature/RainbowGateViews'
 import DullDoorModalView from './components/feature/DullDoorViews'
 import ServerSettingsView from './components/ServerSettingsView'
+import ClientDeployedModal from './components/ClientDeployedModal'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -235,6 +236,10 @@ const App = () => {
     }
     case Modal.ServerSettings: {
       innerModalView = <ServerSettingsView serverSettings={state.serverSettings}/>
+      break
+    }
+    case Modal.ClientDeployed: {
+      innerModalView = <ClientDeployedModal />
       break
     }
     case Modal.FeatureRainbowGate: {
