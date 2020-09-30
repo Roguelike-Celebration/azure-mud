@@ -1,5 +1,5 @@
 import DB from './redis'
-import { roomData } from './room'
+import { roomData } from './rooms'
 
 /** Fetches presence data for a set of rooms and returns a SignalR message
  * to broadcast current presence data to all users */

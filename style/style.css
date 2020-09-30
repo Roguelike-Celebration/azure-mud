@@ -12,6 +12,12 @@
   --highlight-line: #888888;
   --pink: lightpink;
   --blue: lightskyblue;
+  --cyan: #2aa198;
+  --magenta: #d33682;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --violet: #6c71c4;
+  --yellow: #b58900;
 }
 
 /* solarized dark */
@@ -25,6 +31,12 @@
   --highlight-line: #fdf6e3;
   --pink: #d33682;
   --blue: #268bd2;
+  --cyan: #2aa198;
+  --magenta: #d33682;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --violet: #6c71c4;
+  --yellow: #b58900;
 }
 
 /* solarized light */
@@ -38,6 +50,12 @@
   --highlight-line: #002b36;
   --pink: #d33682;
   --blue: #268bd2;
+  --cyan: #2aa198;
+  --magenta: #d33682;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --violet: #6c71c4;
+  --yellow: #b58900;
 }
 
 body {
@@ -87,6 +105,7 @@ a {
 
 .whisper {
   color: var(--gray-text);
+  cursor: pointer;
   font-style: italic;
 }
 
@@ -126,10 +145,27 @@ button {
 input[type=radio] {
   vertical-align: baseline;
   margin-right: 1em;
+  max-width: 20px;
+}
+
+#settingsContainer div {
+  display: block
 }
 
 #themeSelectionForm .radio {
   margin: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+#movementNotificationForm input[type=checkbox] {
+  margin: 1em;
+  max-width: 20px;
+}
+
+#movementNotificationForm input[type=number] {
+  margin: 1em;
+  max-width: 40px;
 }
 
 td {

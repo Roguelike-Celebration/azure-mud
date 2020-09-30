@@ -7,9 +7,11 @@ import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { getMediaStream } from './webRTC'
+import { ServerSettings } from '../server/src/types'
 
 export type Action =
   | ReceivedMyProfileAction
+  | ReceivedServerSettingsAction
   | UpdatedCurrentRoomAction
   | UpdatedRoomDataAction
   | UpdatedPresenceAction
@@ -28,6 +30,7 @@ export type Action =
   | UserMapAction
   | PlayerBannedAction
   | PlayerUnbannedAction
+  | UpdateProfileColorAction
   | P2PDataReceivedAction
   | P2PStreamReceivedAction
   | P2PConnectionClosedAction
@@ -62,6 +65,7 @@ export type Action =
 export enum ActionType {
   // Server-driven action
   ReceivedMyProfile = 'RECEIVED_MY_PROFILE',
+  ReceivedServerSettings = 'RECEIVED_SERVER_SETTINGS',
   UpdatedCurrentRoom = 'UPDATED_CURRENT_ROOM',
   UpdatedRoomData = 'UPDATED_ROOM_DATA',
   UpdatedPresence = 'UPDATED_PRESENCE',
@@ -80,6 +84,7 @@ export enum ActionType {
   UserMap = 'USER_MAP',
   PlayerBanned = 'PLAYER_BANNED',
   PlayerUnbanned = 'PLAYER_UNBANNED',
+  UpdateProfileColor = 'UPDATE_PROFILE_COLOR',
   // WebRTC
   P2PDataReceived = 'P2P_DATA_RECEIVED',
   P2PStreamReceived = 'P2P_STREAM_RECEIVED',
@@ -128,6 +133,20 @@ export const ReceivedMyProfileAction = (
   return {
     type: ActionType.ReceivedMyProfile,
     value: user
+  }
+}
+
+interface ReceivedServerSettingsAction {
+  type: ActionType.ReceivedServerSettings;
+  value: ServerSettings;
+}
+
+export const ReceivedServerSettingsAction = (
+  serverSettings: ServerSettings
+): ReceivedServerSettingsAction => {
+  return {
+    type: ActionType.ReceivedServerSettings,
+    value: serverSettings
   }
 }
 
@@ -393,6 +412,18 @@ export const PlayerUnbannedAction = (user: MinimalUser): PlayerUnbannedAction =>
   }
 }
 
+interface UpdateProfileColorAction {
+  type: ActionType.UpdateProfileColor,
+  color: string
+}
+
+export const UpdateProfileColorAction = (color: string): UpdateProfileColorAction => {
+  return {
+    type: ActionType.UpdateProfileColor,
+    color: color
+  }
+}
+
 interface P2PDataReceivedAction {
   type: ActionType.P2PDataReceived;
   value: {
@@ -623,7 +654,7 @@ export const HideModalAction = (): HideModalAction => {
 
 interface AuthenticateAction {
   type: ActionType.Authenticate;
-  value: { name: string; userId: string };
+  value: { name: string; userId: string, provider: string };
 }
 
 interface ShowSideMenuAction {
@@ -660,9 +691,10 @@ export const ActivateAutoscrollAction = (): ActivateAutoscrollAction => {
 
 export const AuthenticateAction = (
   userId: string | undefined,
-  name: string | undefined
+  name: string | undefined,
+  provider: string | undefined
 ): AuthenticateAction => {
-  return { type: ActionType.Authenticate, value: { userId, name } }
+  return { type: ActionType.Authenticate, value: { userId, name, provider } }
 }
 
 interface IsRegisteredAction {

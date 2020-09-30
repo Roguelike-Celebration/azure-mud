@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 import React, { useContext, FunctionComponent } from 'react'
 import ReactTooltip from 'react-tooltip'
 import Linkify from 'react-linkify'
@@ -22,8 +25,9 @@ import {
   CommandMessage
 } from '../message'
 import NameView from './NameView'
-import { UserMapContext } from '../App'
+import { DispatchContext, UserMapContext } from '../App'
 import { deleteMessage } from '../networking'
+import { ShowProfileAction } from '../Actions'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
@@ -153,16 +157,21 @@ const ChatMessageView = (props: ChatMessage & { id: string }) => (
 )
 
 const WhisperView = (props: WhisperMessage & { id: string }) => {
+  const dispatch = useContext(DispatchContext)
+  const openProfile = () => {
+    dispatch(ShowProfileAction(props.userId))
+  }
+
   if (props.senderIsSelf) {
     return (
-      <div className="whisper">
+      <div className="whisper" onClick={openProfile}>
         You whisper to <NameView id={props.id} userId={props.userId} />:{' '}
         {props.message}
       </div>
     )
   } else {
     return (
-      <div className="whisper">
+      <div className="whisper" onClick={openProfile}>
         <NameView userId={props.userId} id={props.id} /> whispers:{' '}
         {props.message}
       </div>

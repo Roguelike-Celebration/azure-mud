@@ -1,7 +1,7 @@
 import * as SignalR from '@aspnet/signalr'
 import { v4 as uuid } from 'uuid'
 
-import { RoomResponse, ErrorResponse } from '../server/src/types'
+import { RoomResponse, ErrorResponse, ServerSettings } from '../server/src/types'
 import { Dispatch } from 'react'
 import {
   Action,
@@ -30,7 +30,9 @@ import {
   UpdatedVideoPresenceAction,
   SpaceOpenedOrClosedAction,
   PlayerBannedAction,
-  PlayerUnbannedAction
+  PlayerUnbannedAction,
+  ReceivedServerSettingsAction,
+  MediaReceivedSpeakingDataAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
@@ -71,6 +73,18 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   connectSignalR(userId, dispatch)
 }
 
+export async function getServerSettings (dispatch: Dispatch<Action>) {
+  const result: ServerSettings = await callAzureFunctionGet('serverSettings')
+  dispatch(ReceivedServerSettingsAction(result))
+}
+
+export async function updateServerSettings (serverSettings: ServerSettings) {
+  const result = await callAzureFunction('serverSettings', serverSettings)
+  if (result) {
+    myDispatch(HideModalAction())
+  }
+}
+
 // If hardRefreshPage is true, a successful update will refresh the entire page instead of dismissing a modal
 export async function updateProfile (user: Partial<User>, hardRefreshPage: boolean) {
   const result = await callAzureFunction('updateProfile', { user })
@@ -81,6 +95,10 @@ export async function updateProfile (user: Partial<User>, hardRefreshPage: boole
       myDispatch(HideModalAction())
     }
   }
+}
+
+export async function updateProfileColor (userId: string, color: string) {
+  const result = await callAzureFunction('updateProfileColor', { userId: userId, color: color })
 }
 
 export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {
@@ -262,6 +280,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(ReceivedMyProfileAction(profile))
   })
 
+  connection.on('serverSettings', (serverSettings) => {
+    dispatch(ReceivedServerSettingsAction(serverSettings))
+  })
+
   connection.on('whisper', (otherId, message) => {
     dispatch(WhisperAction(otherId, message))
   })
@@ -349,6 +371,20 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
       console.log('Connected!')
     })
     .catch(console.error)
+}
+
+async function callAzureFunctionGet (endpoint: string): Promise<any> {
+  try {
+    const r = await axios.get(
+      `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
+      { withCredentials: true }
+    )
+    console.log(r)
+    return r.data
+  } catch (e) {
+    console.log('Error', e)
+    return undefined
+  }
 }
 
 async function callAzureFunction (endpoint: string, body?: any): Promise<any> {

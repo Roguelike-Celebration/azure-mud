@@ -8,7 +8,7 @@ import authenticate from '../src/authenticate'
 import { minimizeUser, isMod } from '../src/user'
 import { userHeartbeatReceived } from '../src/heartbeat'
 import setUpRoomsForUser from '../src/setUpRoomsForUser'
-import { roomData } from '../src/room'
+import { roomData } from '../src/rooms'
 import {
   globalPresenceMessage,
   allPresenceData
@@ -22,6 +22,13 @@ const httpTrigger: AzureFunction = async function (
 
   await authenticate(context, req, true, async (user) => {
     context.log('We have a user!', user.id)
+
+    // If the room is deleted, we might have a stranded user, so dump them in the entryway
+    if (user.room === undefined) {
+      user.roomId = 'entryway'
+      user.room = roomData.entryway
+    }
+
     await addUserToRoomPresence(user.id, user.roomId)
     await userHeartbeatReceived(user.id)
 

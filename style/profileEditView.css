@@ -39,6 +39,7 @@ input[type=text] {
 }
 
 .form label {
+  width: 600px;
   font-size: 1.4em;
 }
 

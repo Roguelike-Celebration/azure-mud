@@ -3,7 +3,7 @@ import React, { useEffect, createContext } from 'react'
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'
 import InputView from './components/InputView'
-import { connect, getLoginInfo, checkIsRegistered } from './networking'
+import { connect, getLoginInfo, checkIsRegistered, getServerSettings } from './networking'
 import reducer, { State, defaultState } from './reducer'
 import {
   AuthenticateAction,
@@ -13,7 +13,7 @@ import {
   ShowSideMenuAction,
   SendMessageAction,
   SpaceIsClosedAction,
-  PlayerBannedAction
+  PlayerBannedAction, PrepareToStartVideoChatAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -24,7 +24,7 @@ import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
-import ThemeSelectorView from './components/ThemeSelectorView'
+import SettingsView from './components/SettingsView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
@@ -35,6 +35,10 @@ import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
+import RoomListView from './components/RoomListView'
+import RainbowGateModalView from './components/feature/RainbowGateViews'
+import DullDoorModalView from './components/feature/DullDoorViews'
+import ServerSettingsView from './components/ServerSettingsView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -51,20 +55,20 @@ const App = () => {
     const login = getLoginInfo().then((login) => {
       if (!login) {
         // This should really be its own action distinct from logging in
-        dispatch(AuthenticateAction(undefined, undefined))
+        dispatch(AuthenticateAction(undefined, undefined, undefined))
       } else {
         console.log(login)
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
         checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
-            dispatch(AuthenticateAction(userId, login.user_id))
+            dispatch(AuthenticateAction(userId, login.user_id, login.provider_name))
             return
           }
-          dispatch(AuthenticateAction(userId, registeredUsername))
+          dispatch(AuthenticateAction(userId, registeredUsername, login.provider_name))
 
           if (isBanned) {
-            dispatch(PlayerBannedAction({id: userId, username: registeredUsername, isBanned: isBanned}))
+            dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
             dispatch(IsRegisteredAction())
             return
           }
@@ -107,6 +111,7 @@ const App = () => {
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
+          getServerSettings(dispatch)
 
           window.addEventListener('resize', () => {})
         })
@@ -137,6 +142,7 @@ const App = () => {
         isFTUE={true}
         defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
+        prepopulateTwitterWithDefaultHandle={state.authenticationProvider === 'twitter'}
       />
     )
   }
@@ -162,6 +168,10 @@ const App = () => {
   }
 
   let innerModalView, modalView
+
+  // TODO: If we get more modal options than just a size boolean, make this an options object.
+  let modalIsFullScreen = false
+
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
       innerModalView = (
@@ -180,8 +190,8 @@ const App = () => {
       )
       break
     }
-    case Modal.ThemeSelector: {
-      innerModalView = <ThemeSelectorView />
+    case Modal.Settings: {
+      innerModalView = <SettingsView />
       break
     }
     case Modal.MediaSelector: {
@@ -205,9 +215,14 @@ const App = () => {
       break
     }
     case Modal.Map: {
+      modalIsFullScreen = true
       innerModalView = (
         <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
       )
+      break
+    }
+    case Modal.RoomList: {
+      innerModalView = <RoomListView rooms={Object.values(state.roomData)} />
       break
     }
     case Modal.Help: {
@@ -216,11 +231,24 @@ const App = () => {
     }
     case Modal.Welcome: {
       innerModalView = <WelcomeModalView />
+      break
+    }
+    case Modal.ServerSettings: {
+      innerModalView = <ServerSettingsView serverSettings={state.serverSettings}/>
+      break
+    }
+    case Modal.FeatureRainbowGate: {
+      innerModalView = <RainbowGateModalView />
+      break
+    }
+    case Modal.FeatureDullDoor: {
+      innerModalView = <DullDoorModalView />
+      break
     }
   }
 
   if (innerModalView) {
-    modalView = <ModalView>{innerModalView}</ModalView>
+    modalView = <ModalView fullScreen={modalIsFullScreen}>{innerModalView}</ModalView>
   }
 
   const showMenu = () => {
@@ -243,7 +271,8 @@ const App = () => {
             >
               {shouldShowMenu ? (
                 <SideNavView
-                  rooms={Object.values(state.roomData)}
+                  roomData={state.roomData}
+                  currentRoomId={state.roomId}
                   username={state.userMap[state.userId].username}
                   spaceIsClosed={state.isClosed}
                 />
@@ -261,9 +290,10 @@ const App = () => {
                   <RoomView
                     room={state.roomData[state.roomId]}
                     userId={state.userId}
+                    roomData={state.roomData}
                   />
                 ) : null}
-                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} />
+                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
                 <InputView
                   prepopulated={state.prepopulatedInput}
                   sendMessage={(message) =>

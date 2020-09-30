@@ -1,18 +1,25 @@
 import React, { useContext } from 'react'
 
 import MessageView from './MessageView'
-import { Message, MessageType } from '../message'
+import { Message, MessageType, ConnectedMessage, DisconnectedMessage, EnteredMessage, LeftMessage } from '../message'
 
 import '../../style/chat.css'
 import { DispatchContext } from '../App'
 import { ActivateAutoscrollAction, DeactivateAutoscrollAction } from '../Actions'
+import { LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY } from './SettingsView'
+import { ServerSettings } from '../../server/src/types'
 
-export default function ChatView (props: { messages: Message[], autoscrollChat: Boolean }) {
+function isMovementMessage (message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
+  return message.type === MessageType.Connected || message.type === MessageType.Disconnected ||
+    message.type === MessageType.Entered || message.type === MessageType.Left
+}
+
+export default function ChatView (props: { messages: Message[], autoscrollChat: Boolean, serverSettings: ServerSettings}) {
   const dispatch = useContext(DispatchContext)
 
   const handleScroll = () => {
     const messageWindow = document.querySelector('#messages')
-    const isScrolledToBottom = messageWindow.scrollHeight == messageWindow.scrollTop + messageWindow.clientHeight
+    const isScrolledToBottom = messageWindow.scrollHeight === messageWindow.scrollTop + messageWindow.clientHeight
 
     if (isScrolledToBottom && !props.autoscrollChat) {
       dispatch(ActivateAutoscrollAction())
@@ -35,9 +42,25 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
     }
   })
 
+  // This message filtering logic is kinda ugly and hard to read
+  var showAllMovementMessages: Boolean = JSON.parse(localStorage.getItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY))
+  if (showAllMovementMessages === null) {
+    localStorage.setItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY, 'false')
+  }
+  function shouldRemoveMessage (m: Message) {
+    return isMovementMessage(m) &&
+      (
+        props.serverSettings.movementMessagesHideRoomIds.includes(m.roomId) ||
+        m.numUsersInRoom > props.serverSettings.movementMessagesHideThreshold
+      )
+  }
+  const messagesAfterMovementFilter = showAllMovementMessages ? props.messages : props.messages.filter((msg) => {
+    return !shouldRemoveMessage(msg)
+  })
+
   return (
     <div id="messages" onScroll={handleScroll}>
-      {props.messages.slice(-150).map((m, idx) => {
+      {messagesAfterMovementFilter.slice(-150).map((m, idx) => {
         let hideTimestamp = false
         const previousMessage = props.messages[idx - 1]
         if (previousMessage) {

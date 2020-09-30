@@ -22,7 +22,8 @@ import {
   sendChatMessage,
   toggleUserBan,
   setNetworkMediaChatStatus,
-  toggleUserMod
+  toggleUserMod,
+  updateProfileColor
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from './webRTC'
@@ -30,10 +31,12 @@ import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import { MAX_MESSAGE_LENGTH } from '../server/src/config'
+import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 
 export interface State {
   authenticated: boolean;
   checkedAuthentication: boolean;
+  authenticationProvider?: string;
 
   hasRegistered: boolean;
 
@@ -73,6 +76,8 @@ export interface State {
   isClosed?: boolean
 
   isBanned: boolean
+
+  serverSettings: ServerSettings
 }
 
 export const defaultState: State = {
@@ -87,7 +92,8 @@ export const defaultState: State = {
   inMediaChat: false,
   speakingPeerIds: [],
   activeModal: Modal.None,
-  isBanned: false
+  isBanned: false,
+  serverSettings: DEFAULT_SERVER_SETTINGS
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -100,6 +106,10 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ReceivedMyProfile) {
     state.profileData = action.value
+  }
+
+  if (action.type === ActionType.ReceivedServerSettings) {
+    state.serverSettings = action.value
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
@@ -162,34 +172,34 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.PlayerConnected) {
     const user = action.value
-    if (!state.roomData[state.roomId].users.includes(user.id)) {
-      state.roomData[state.roomId].users.push(user.id)
-      addMessage(state, createConnectedMessage(user.id))
+    const roomData = state.roomData[state.roomId]
+    if (!roomData.users.includes(user.id)) {
+      roomData.users.push(user.id)
+      addMessage(state, createConnectedMessage(user.id, state.roomId, roomData.users.length))
     }
     state.userMap[user.id] = user
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
-    state.roomData[state.roomId].users = state.roomData[
-      state.roomId
-    ].users.filter((u) => u !== action.value)
-    addMessage(state, createDisconnectedMessage(action.value))
+    const roomData = state.roomData[state.roomId]
+    roomData.users = roomData.users.filter((u) => u !== action.value)
+    addMessage(state, createDisconnectedMessage(action.value, state.roomId, roomData.users.length))
   }
 
   if (action.type === ActionType.PlayerEntered) {
-    if (!state.roomData[state.roomId].users.includes(action.value.name)) {
-      state.roomData[state.roomId].users.push(action.value.name)
+    const roomData = state.roomData[state.roomId]
+    if (!roomData.users.includes(action.value.name)) {
+      roomData.users.push(action.value.name)
       addMessage(state,
-        createEnteredMessage(action.value.name, action.value.from)
+        createEnteredMessage(action.value.name, action.value.from, state.roomId, roomData.users.length)
       )
     }
   }
 
   if (action.type === ActionType.PlayerLeft) {
-    state.roomData[state.roomId].users = state.roomData[
-      state.roomId
-    ].users.filter((u) => u !== action.value.name)
-    addMessage(state, createLeftMessage(action.value.name, action.value.to))
+    const roomData = state.roomData[state.roomId]
+    roomData.users = roomData.users.filter((u) => u !== action.value.name)
+    addMessage(state, createLeftMessage(action.value.name, action.value.to, state.roomId, roomData.users.length))
   }
 
   if (action.type === ActionType.ChatMessage) {
@@ -250,6 +260,13 @@ export default (oldState: State, action: Action): State => {
       state.userMap[action.value.id].isBanned = false
     }
     addMessage(state, createErrorMessage('User ' + action.value.username + ' was unbanned!'))
+  }
+
+  if (action.type === ActionType.UpdateProfileColor) {
+    state.userMap[state.userId].nameColor = action.color
+    addMessage(state, createErrorMessage('Your name color was changed to ' + action.color))
+
+    updateProfileColor(state.userId, action.color)
   }
 
   if (action.type === ActionType.Error) {
@@ -391,6 +408,8 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.Authenticate) {
     state.checkedAuthentication = true
+
+    state.authenticationProvider = action.value.provider
 
     if (action.value.userId && action.value.name) {
       state.authenticated = true
