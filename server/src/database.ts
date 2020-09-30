@@ -1,5 +1,6 @@
 import { User, MinimalUser } from './user'
 import { RoomNote } from './roomNote'
+import { ServerSettings } from './types'
 
 interface Database {
   // -----------------------------------------------------------------
@@ -80,6 +81,14 @@ interface Database {
   addMod(userId: string)
   removeMod(userId: string)
   modList(): Promise<string[]>
+
+  // -----------------------------------------------------------------
+  // SETTINGS DATA
+  // -----------------------------------------------------------------
+  /** Will return default values if no server settings are set */
+  getServerSettings(): Promise<ServerSettings>;
+
+  setServerSettings(serverSettings: ServerSettings): Promise<ServerSettings>;
 
   // -----------------------------------------------------------------
   // POST-IT NOTES

@@ -1,7 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import { look } from '../src/look'
-import { ServerSettings, toServerSettings } from '../src/types'
+import { toServerSettings } from '../src/types'
 import authenticate from '../src/authenticate'
+import { User, isMod } from '../src/user'
+import DB from '../src/redis'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -9,25 +10,30 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<void> {
   await authenticate(context, req, false, async (user) => {
     if (req.method === "GET") {
-      getServerSettings(context)
+      await getServerSettings(context)
     } else if (req.method === "POST") {
-      postServerSettings(context, req)
+      await postServerSettings(context, req, user)
     }
   })
 }
 
-function getServerSettings(context: Context) {
+async function getServerSettings(context: Context) {
+  const settings = await DB.getServerSettings()
   context.res = {
     status: 200,
-    body: {
-      movementMessagesHideThreshold: 20,
-      movementMessagesHideRoomIds: []
-    }
+    body: settings
+
   }
 }
 
-function postServerSettings(context: Context, req: HttpRequest) {
-  if (!req.body) {
+async function postServerSettings(context: Context, req: HttpRequest, user: User) {
+  if (!await isMod(user.id)) {
+    context.res = {
+      status: 403,
+      body: { error: 'You are not a mod!' }
+    }
+    return
+  } else if (!req.body) {
     context.res = {
       status: 400,
       body: { error: 'Must include a body!' }
@@ -43,14 +49,17 @@ function postServerSettings(context: Context, req: HttpRequest) {
     return
   }
 
-  // TODO: Store server settings in DB!
+  await DB.setServerSettings(newSettings)
+
+  context.bindings.signalRMessages = [
+    {
+      target: 'serverSettings',
+      arguments: [newSettings]
+    }
+  ]
 
   context.res = {
-    status: 200,
-    body: {
-      movementMessagesHideThreshold: 20,
-      movementMessagesHideRoomIds: []
-    }
+    status: 200
   }
 }
 

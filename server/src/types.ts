@@ -7,6 +7,11 @@ export interface ServerSettings {
   movementMessagesHideRoomIds: string[];
 }
 
+export const DEFAULT_SERVER_SETTINGS: ServerSettings = {
+  movementMessagesHideThreshold: 20,
+  movementMessagesHideRoomIds: ['theater']
+}
+
 // There's 100% a more elegant way to do this, but I think this works and want to actually get this feature finally done.
 export function toServerSettings(obj: any): ServerSettings | null {
   try {

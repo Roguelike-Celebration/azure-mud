@@ -30,7 +30,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import { MAX_MESSAGE_LENGTH } from '../server/src/config'
-import { ServerSettings } from '../server/src/types'
+import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 
 export interface State {
   authenticated: boolean;
@@ -91,10 +91,7 @@ export const defaultState: State = {
   speakingPeerIds: [],
   activeModal: Modal.None,
   isBanned: false,
-  serverSettings: {
-    movementMessagesHideThreshold: 20,
-    movementMessagesHideRoomIds: []
-  }
+  serverSettings: DEFAULT_SERVER_SETTINGS
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?

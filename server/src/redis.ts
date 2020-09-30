@@ -4,6 +4,7 @@ import { User, isMod, MinimalUser } from './user'
 import Database from './database'
 import { RoomNote } from './roomNote'
 import redis = require('redis');
+import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types';
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -226,6 +227,22 @@ const Redis: Database = {
     return list
   },
 
+  // Server settings
+  async getServerSettings (): Promise<ServerSettings> {
+    const rawServerSettings = await getCache(serverSettingsKey)
+    if (rawServerSettings) {
+      return toServerSettings(JSON.parse(rawServerSettings))
+    } else {
+      return DEFAULT_SERVER_SETTINGS
+    }
+  },
+
+  async setServerSettings (serverSettings: ServerSettings): Promise<ServerSettings> {
+    await setCache(serverSettingsKey, JSON.stringify(serverSettings))
+
+    return serverSettings
+  },
+
   // Post-it notes
   async addRoomNote (roomId: string, note: RoomNote) {
     const rawNotes = await getCache(roomNotesKey(roomId))
@@ -312,6 +329,8 @@ const Redis: Database = {
 const activeUsersKey = 'activeUsersList'
 
 const modListKey = 'mods'
+
+const serverSettingsKey = 'serverSettings'
 
 function shoutKeyForUser (user: string): string {
   return `${user}Shout`
