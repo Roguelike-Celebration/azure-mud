@@ -2,7 +2,7 @@ import northShowcaseHall from './northShowcaseHall'
 import southShowcaseHall from './southShowcaseHall'
 import eastShowcaseHall from './eastShowcaseHall'
 import westShowcaseHall from './westShowcaseHall'
-import unconfRooms from './unconfRooms'
+import { unconference, minetown, oracle, tower, castle, sokoban, astralPlane } from './unconfRooms'
 import theater from './theater'
 
 export interface NoteWallData {
@@ -52,7 +52,13 @@ export const roomData: { [name: string]: Room } = {
   eastShowcaseHall,
   southShowcaseHall,
   westShowcaseHall,
-  unconfRooms, // I understand all the rooms in unconfRooms need to be added to roomData. Not sure if this is how to do it. -kawa
+  unconference,
+  minetown,
+  oracle,
+  tower,
+  castle,
+  sokoban,
+  astralPlane,
   kitchen: {
     id: 'kitchen',
     displayName: 'Kitchen',
@@ -150,13 +156,13 @@ export const roomData: { [name: string]: Room } = {
     displayName: 'Procedural Generation Study',
     shortName: 'the proc-gen study',
     description: `A comfy and cozy library that is curiously shaped like a hexagon. One side of the room has a couple of well-worn leather armchairs, while the other four walls are filled top-to-bottom with books. The majority of them are apparent gibberish, but many of them contain insightful writings about the art of procedural content generation.<br/><br/>
-    From here, you can get to the the [[engineer's workbench->workbench]] or the [[artists\' atelier->atelier]].`
+    From here, you can get to the the [[engineer's workbench->workbench]] or the [[artists' atelier->atelier]].`
   },
   workbench: {
     id: 'workbench',
     displayName: 'Engineer\'s Workbench',
     shortName: 'the engineer\'s workbench',
     description: `A cluttered workspace that clearly belongs to someone who loves to tinker. A dim hum fills the room from server racks sitting in the corner, and there are blinking lights coming from every crevice. A blueprint sitting on the workbench outlines intricate plans for something called an 'entity-component system'.<br/><br/>
-    From here, you can get to the [[proc-gen study->study]] or the [[artists\' atelier->atelier]].`
+    From here, you can get to the [[proc-gen study->study]] or the [[artists' atelier->atelier]].`
   }
 }
