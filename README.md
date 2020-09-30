@@ -40,6 +40,9 @@ This requires your own [Azure subscription](https://azure.com/free/?WT.mc_id=dev
 
 8) In `src/config.ts` in this repo, update the hostname to point to your own Function App instance.
 
+## Editing the map
+The ASCII map was created with [MonoDraw](https://monodraw.helftone.com), a Mac-only ASCII art tool. You'll want to open the `map.monopic` file in that, export your changes, paste the ASCII string into `src/components/MapView.tsx`, and then update any changes to the two datasets of persistence identifiers and clickable areas. Note that the coordinates listed in the MonoDraw view are 1-indexed, whereas the app itself expects 0-indexed coordinates.
+
 ## Contributions
 
 If you're looking to get involved: awesome! There's a "Good First Issue" tag in this repo's GitHub Issues that may point you towards something. If you want to work on something, it might be nice to comment that you're looking into it in case others are already working on it or were thinking about it.

@@ -13,7 +13,7 @@ import {
   ShowSideMenuAction,
   SendMessageAction,
   SpaceIsClosedAction,
-  PlayerBannedAction
+  PlayerBannedAction, PrepareToStartVideoChatAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -35,6 +35,7 @@ import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
+import RoomListView from './components/RoomListView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -163,6 +164,10 @@ const App = () => {
   }
 
   let innerModalView, modalView
+
+  // TODO: If we get more modal options than just a size boolean, make this an options object.
+  let modalIsFullScreen = false
+
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
       innerModalView = (
@@ -206,9 +211,14 @@ const App = () => {
       break
     }
     case Modal.Map: {
+      modalIsFullScreen = true
       innerModalView = (
         <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
       )
+      break
+    }
+    case Modal.RoomList: {
+      innerModalView = <RoomListView rooms={Object.values(state.roomData)} />
       break
     }
     case Modal.Help: {
@@ -221,7 +231,7 @@ const App = () => {
   }
 
   if (innerModalView) {
-    modalView = <ModalView>{innerModalView}</ModalView>
+    modalView = <ModalView fullScreen={modalIsFullScreen}>{innerModalView}</ModalView>
   }
 
   const showMenu = () => {
@@ -244,7 +254,8 @@ const App = () => {
             >
               {shouldShowMenu ? (
                 <SideNavView
-                  rooms={Object.values(state.roomData)}
+                  roomData={state.roomData}
+                  currentRoomId={state.roomId}
                   username={state.userMap[state.userId].username}
                   spaceIsClosed={state.isClosed}
                 />

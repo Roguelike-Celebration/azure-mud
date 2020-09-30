@@ -9,5 +9,6 @@ export enum Modal {
     Schedule,
     Help,
     Map,
+    RoomList,
     Welcome
 }

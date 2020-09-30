@@ -25,6 +25,13 @@
     max-width: 800px;
 }
 
+#modal.full-screen {
+    /** This is a hard-coded value based on the current map size.
+    A more automatic-updating system would be nice. */
+    max-width: 1000px;
+    max-height: unset;
+}
+
 #close-button {
     position: absolute;
     padding: 30px;

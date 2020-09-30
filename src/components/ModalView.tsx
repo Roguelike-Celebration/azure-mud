@@ -8,7 +8,7 @@ import { DispatchContext } from '../App'
 import ReactDOM from 'react-dom'
 
 interface Props {
-    foo?: any
+    fullScreen: boolean
 }
 
 export const ModalView: React.FunctionComponent<Props> = (props) => {
@@ -34,7 +34,7 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
 
   return ReactDOM.createPortal(
     <div id='modal-wrapper' onClick={close} role='dialog' aria-modal={true}>
-      <div id='modal'>
+      <div id='modal' className={props.fullScreen ? 'full-screen' : null}>
         <button
           onClick={close}
           id='close-button'
