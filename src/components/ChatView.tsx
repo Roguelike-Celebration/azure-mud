@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import MessageView from './MessageView'
-import { Message, MessageType } from '../message'
+import { Message } from '../message'
 
 import '../../style/chat.css'
 import { DispatchContext } from '../App'
@@ -12,7 +12,7 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
 
   const handleScroll = () => {
     const messageWindow = document.querySelector('#messages')
-    const isScrolledToBottom = messageWindow.scrollHeight == messageWindow.scrollTop + messageWindow.clientHeight
+    const isScrolledToBottom = messageWindow.scrollHeight === messageWindow.scrollTop + messageWindow.clientHeight
 
     if (isScrolledToBottom && !props.autoscrollChat) {
       dispatch(ActivateAutoscrollAction())
