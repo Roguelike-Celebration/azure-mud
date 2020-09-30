@@ -1,10 +1,9 @@
 import { promisify } from 'util'
 import { User, isMod, MinimalUser } from './user'
-
+import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
 import Database from './database'
 import { RoomNote } from './roomNote'
-import redis = require('redis');
-import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types';
+import redis = require('redis')
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),

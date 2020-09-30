@@ -26,7 +26,7 @@ const httpTrigger: AzureFunction = async function (
     // If the room is deleted, we might have a stranded user, so dump them in the entryway
     if (user.room === undefined) {
       user.roomId = 'entryway'
-      user.room = roomData['entryway']
+      user.room = roomData.entryway
     }
 
     await addUserToRoomPresence(user.id, user.roomId)

@@ -13,7 +13,7 @@ export const DEFAULT_SERVER_SETTINGS: ServerSettings = {
 }
 
 // There's 100% a more elegant way to do this, but I think this works and want to actually get this feature finally done.
-export function toServerSettings(obj: any): ServerSettings | null {
+export function toServerSettings (obj: any): ServerSettings | null {
   try {
     if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined) {
       return null

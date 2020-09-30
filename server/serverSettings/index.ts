@@ -9,15 +9,15 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   await authenticate(context, req, false, async (user) => {
-    if (req.method === "GET") {
+    if (req.method === 'GET') {
       await getServerSettings(context)
-    } else if (req.method === "POST") {
+    } else if (req.method === 'POST') {
       await postServerSettings(context, req, user)
     }
   })
 }
 
-async function getServerSettings(context: Context) {
+async function getServerSettings (context: Context) {
   const settings = await DB.getServerSettings()
   context.res = {
     status: 200,
@@ -26,7 +26,7 @@ async function getServerSettings(context: Context) {
   }
 }
 
-async function postServerSettings(context: Context, req: HttpRequest, user: User) {
+async function postServerSettings (context: Context, req: HttpRequest, user: User) {
   if (!await isMod(user.id)) {
     context.res = {
       status: 403,
