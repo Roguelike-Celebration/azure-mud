@@ -35,8 +35,6 @@ jobs:
           package: server
 
       - name: Notify connected clients
-        uses: wei/curl@v1
-        with:
-          args: -H "Content-Type: application\/json" "https://roguelikecelebration-mud.azurewebsites.net/api/clientDeployedWebhook" -d "{\"key\": \"somekey\"}"
+        run: node deployWebhook.js
         env:
           TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}        
