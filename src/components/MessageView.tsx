@@ -21,6 +21,7 @@ import {
   ErrorMessage,
   ShoutMessage,
   EmoteMessage,
+  DanceMessage,
   ModMessage,
   CommandMessage
 } from '../message'
@@ -46,6 +47,7 @@ export default function MessageView (props: { message: Message; id: string, hide
     [MessageType.Whisper]: WhisperView,
     [MessageType.Shout]: ShoutView,
     [MessageType.Emote]: EmoteView,
+    [MessageType.Dance]: DanceView,
     [MessageType.Error]: ErrorView,
     [MessageType.Mod]: ModMessageView,
     [MessageType.Command]: CommandView
@@ -212,6 +214,14 @@ const ShoutView = (props: ShoutMessage & { id: string }) => {
 }
 
 const EmoteView = (props: EmoteMessage & { id: string }) => {
+  return (
+    <div className="message">
+      <em><NameView userId={props.userId} id={props.id} /> <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView></em>
+    </div>
+  )
+}
+
+const DanceView = (props: DanceMessage & { id: string }) => {
   return (
     <div className="message">
       <em><NameView userId={props.userId} id={props.id} /> <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView></em>

@@ -23,6 +23,7 @@ export type Action =
   | WhisperAction
   | ShoutAction
   | EmoteAction
+  | DanceAction
   | PlayerEnteredAction
   | PlayerLeftAction
   | UserMapAction
@@ -74,6 +75,7 @@ export enum ActionType {
   Whisper = 'WHISPER',
   Shout = 'SHOUT',
   Emote = 'EMOTE',
+  Dance = 'DANCE',
   PlayerEntered = 'PLAYER_ENTERED',
   PlayerLeft = 'PLAYER_LEFT',
   Error = 'ERROR',
@@ -315,6 +317,22 @@ interface EmoteAction {
 export const EmoteAction = (messageId: string, name: string, message: string): EmoteAction => {
   return {
     type: ActionType.Emote,
+    value: { messageId, name, message }
+  }
+}
+
+interface DanceAction {
+  type: ActionType.Dance;
+  value: {
+    messageId: string;
+    name: string;
+    message: string;
+  }
+}
+
+export const DanceAction = (messageId: string, name: string, message: string): DanceAction => {
+  return {
+    type: ActionType.Dance,
     value: { messageId, name, message }
   }
 }

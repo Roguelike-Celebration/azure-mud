@@ -7,6 +7,19 @@ import authenticate from '../src/authenticate'
 import { getUserIdForUsername } from '../src/user'
 import { MAX_MESSAGE_LENGTH } from '../src/config'
 
+const danceList = [
+  "drops to the floor to do the Purple Worm",
+  "busts out the Green Slime, undulating wildly",
+  "channels their inner jackal and howls at the moon",
+  "starts doing the Yak dance (it’s real, look it up!)",
+  "moves their arms in a demonstration of ‘Big Fish, Little Fish, Cardboard Box’",
+  "stomps their feet in some sort of jacked-up footwork… Ubi folk dancing?",
+  "pulls a leek out of *somewhere* and starts spinning it around",
+  "finds a couple glowsticks and starts waving them to the beat",
+  "nods their head to the beat. Feels good.",
+  "pulls off some stair dancing technique - good at evading monsters, but a little crass, don't you think?"
+]
+
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
@@ -57,6 +70,18 @@ const httpTrigger: AzureFunction = async function (
           groupName: user.roomId,
           target: 'emote',
           arguments: [req.body.id, user.id, emoteMatch[2]]
+        }
+      ]
+      return
+    }
+
+    const danceMatch = /^\/(dance)(.*)/.exec(message)
+    if (danceMatch) {
+      context.bindings.signalRMessages = [
+        {
+          groupName: user.roomId,
+          target: 'dance',
+          arguments: [req.body.id, user.id, "do an angry dance"]
         }
       ]
       return
