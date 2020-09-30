@@ -232,11 +232,11 @@ export default (oldState: State, action: Action): State => {
       createEmoteMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
-  
-  if (action.type == ActionType.Dance) {
+
+  if (action.type === ActionType.Dance) {
     addMessage(state,
       createDanceMessage(action.value.messageId, action.value.name, action.value.message)
-      )
+    )
   }
 
   if (action.type === ActionType.UserMap) {
