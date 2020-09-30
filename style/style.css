@@ -145,10 +145,27 @@ button {
 input[type=radio] {
   vertical-align: baseline;
   margin-right: 1em;
+  max-width: 20px;
+}
+
+#settingsContainer div {
+  display: block
 }
 
 #themeSelectionForm .radio {
   margin: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+#movementNotificationForm input[type=checkbox] {
+  margin: 1em;
+  max-width: 20px;
+}
+
+#movementNotificationForm input[type=number] {
+  margin: 1em;
+  max-width: 40px;
 }
 
 td {

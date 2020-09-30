@@ -7,9 +7,11 @@ import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { getMediaStream } from './webRTC'
+import { ServerSettings } from '../server/src/types'
 
 export type Action =
   | ReceivedMyProfileAction
+  | ReceivedServerSettingsAction
   | UpdatedCurrentRoomAction
   | UpdatedRoomDataAction
   | UpdatedPresenceAction
@@ -63,6 +65,7 @@ export type Action =
 export enum ActionType {
   // Server-driven action
   ReceivedMyProfile = 'RECEIVED_MY_PROFILE',
+  ReceivedServerSettings = 'RECEIVED_SERVER_SETTINGS',
   UpdatedCurrentRoom = 'UPDATED_CURRENT_ROOM',
   UpdatedRoomData = 'UPDATED_ROOM_DATA',
   UpdatedPresence = 'UPDATED_PRESENCE',
@@ -130,6 +133,20 @@ export const ReceivedMyProfileAction = (
   return {
     type: ActionType.ReceivedMyProfile,
     value: user
+  }
+}
+
+interface ReceivedServerSettingsAction {
+  type: ActionType.ReceivedServerSettings;
+  value: ServerSettings;
+}
+
+export const ReceivedServerSettingsAction = (
+  serverSettings: ServerSettings
+): ReceivedServerSettingsAction => {
+  return {
+    type: ActionType.ReceivedServerSettings,
+    value: serverSettings
   }
 }
 

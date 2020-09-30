@@ -3,7 +3,7 @@ import React, { useEffect, createContext } from 'react'
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'
 import InputView from './components/InputView'
-import { connect, getLoginInfo, checkIsRegistered } from './networking'
+import { connect, getLoginInfo, checkIsRegistered, getServerSettings } from './networking'
 import reducer, { State, defaultState } from './reducer'
 import {
   AuthenticateAction,
@@ -24,7 +24,7 @@ import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
-import ThemeSelectorView from './components/ThemeSelectorView'
+import SettingsView from './components/SettingsView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
@@ -38,6 +38,7 @@ import YouAreBannedView from './components/YouAreBannedView'
 import RoomListView from './components/RoomListView'
 import RainbowGateModalView from './components/feature/RainbowGateViews'
 import DullDoorModalView from './components/feature/DullDoorViews'
+import ServerSettingsView from './components/ServerSettingsView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -110,6 +111,7 @@ const App = () => {
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
+          getServerSettings(dispatch)
 
           window.addEventListener('resize', () => {})
         })
@@ -188,8 +190,8 @@ const App = () => {
       )
       break
     }
-    case Modal.ThemeSelector: {
-      innerModalView = <ThemeSelectorView />
+    case Modal.Settings: {
+      innerModalView = <SettingsView />
       break
     }
     case Modal.MediaSelector: {
@@ -229,6 +231,11 @@ const App = () => {
     }
     case Modal.Welcome: {
       innerModalView = <WelcomeModalView />
+      break
+    }
+    case Modal.ServerSettings: {
+      innerModalView = <ServerSettingsView serverSettings={state.serverSettings}/>
+      break
     }
     case Modal.FeatureRainbowGate: {
       innerModalView = <RainbowGateModalView />
@@ -286,7 +293,7 @@ const App = () => {
                     roomData={state.roomData}
                   />
                 ) : null}
-                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} />
+                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
                 <InputView
                   prepopulated={state.prepopulatedInput}
                   sendMessage={(message) =>
