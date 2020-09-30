@@ -270,12 +270,18 @@ const App = () => {
               }
             >
               {shouldShowMenu ? (
-                <SideNavView
-                  roomData={state.roomData}
-                  currentRoomId={state.roomId}
-                  username={state.userMap[state.userId].username}
-                  spaceIsClosed={state.isClosed}
-                />
+                <span>
+                  <SideNavView
+                    roomData={state.roomData}
+                    currentRoomId={state.roomId}
+                    username={state.userMap[state.userId].username}
+                    spaceIsClosed={state.isClosed}
+                  />
+                  {/* Once we moved the sidebar to be position:fixed, we still
+                  needed something to take up its space in the CSS grid.
+                  This should be fixable via CSS, but sigh, it's 3 days before the event */}
+                  <div id='side-nav-placeholder' />
+                </span>
               ) : (
                 <button id="show-menu" onClick={showMenu}>
                   <span role="img" aria-label="menu">

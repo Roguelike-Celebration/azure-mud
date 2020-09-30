@@ -1,6 +1,8 @@
 #side-menu {
   list-style: none;
   margin-top: 30px;
+  position: fixed;
+  width: 250px;
 }
 
 @media only screen and (max-device-width: 500px) {
