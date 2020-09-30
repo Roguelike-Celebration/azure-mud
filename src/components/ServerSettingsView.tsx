@@ -24,14 +24,14 @@ export default function ServerSettingsView(props: { serverSettings: ServerSettin
 
   return (
     <div className='serverSettingsContainer'>
-      <label id='old-settings-label'>Old settings:</label>
+      <h3 id='old-settings-header'>Old settings:</h3>
       <pre id='old-settings-pretty'>{JSON.stringify(props.serverSettings, null, 2)}</pre>
-      <label id='new-settings-label'>New settings:</label>
+      <h3 id='new-settings-header'>New settings:</h3>
       <div className='form' id="serverSettingsForm">
         <textarea id="new-settings-textarea"
           defaultValue={newSettings}
-          cols={40}
-          rows={40}
+          cols={50}
+          rows={30}
           onChange={(e) => setNewSettings(e.currentTarget.value)}
         />
         <button
