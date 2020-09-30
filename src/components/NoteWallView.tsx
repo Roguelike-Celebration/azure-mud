@@ -4,7 +4,7 @@ import { addNoteToWall, deleteRoomNote } from '../networking'
 import { NoteView } from './NoteView'
 
 import '../../style/noteWall.css'
-import { NoteWallData } from '../../server/src/room'
+import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
 
 export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWallData, user: PublicUser}) {
@@ -15,7 +15,7 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
   }
 
   const deleteAllNotes = () => {
-    const confirmation = confirm("Are you sure you want to delete all notes?")
+    const confirmation = confirm('Are you sure you want to delete all notes?')
     if (confirmation) {
       props.notes.map((note) => deleteRoomNote(note.id))
     }
@@ -29,8 +29,8 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
 
   const noteViews = sortedNotes.map(n => <NoteView key={n.id} note={n} />)
 
-  const description = props.noteWallData ? props.noteWallData.noteWallDescription :
-    'You are looking at a wall with space for people to place sticky notes.'
+  const description = props.noteWallData ? props.noteWallData.noteWallDescription
+    : 'You are looking at a wall with space for people to place sticky notes.'
   const buttonText = props.noteWallData ? props.noteWallData.addNoteLinkText : 'add a note'
 
   const massDeleteButton = props.user.isMod ? (

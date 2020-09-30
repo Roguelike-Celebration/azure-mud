@@ -1,4 +1,4 @@
-import { roomData } from './room'
+import { roomData } from './rooms'
 
 /** This returns an array of SignalRGroupActions that remove the given user
  * from all room-specific SignalR groups other than the specified one. */

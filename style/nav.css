@@ -27,7 +27,7 @@
   list-style: none;
 }
 
-#side-menu button {
+button.nav-item {
   background-color: transparent;
   border: none;
   outline: none;
@@ -41,7 +41,7 @@
   text-align: left;
 }
 
-#side-menu button:hover, #side-menu button:focus, #side-menu button:active {
+button.nav-item:hover, button.nav-item:focus, button.nav-item:active {
   text-decoration: none;
 }
 
@@ -52,4 +52,25 @@
 
 #side-menu ul {
   padding: 15px;
+}
+
+#nav-map-button {
+  margin-left: 15px;
+  margin-top: 2em;
+}
+
+#mini-map {
+  border: 1px solid var(--main-font);
+  overflow: hidden;
+  width: 100%;
+  height: 300px;
+}
+
+#mini-map .map, #mini-map .map pre {
+  width: 100%;
+  height: 100%;
+}
+
+#mini-map .map {
+  font-size: 10px;
 }

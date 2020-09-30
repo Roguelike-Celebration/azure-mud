@@ -1,5 +1,5 @@
 import { Context } from '@azure/functions'
-import { roomData } from './room'
+import { roomData } from './rooms'
 import { RoomResponse } from './types'
 import {
   removeUserFromRoomPresence,

@@ -1,4 +1,4 @@
-import * as Server from '../server/src/room'
+import * as Server from '../server/src/rooms'
 import { RoomNote } from '../server/src/roomNote'
 export interface Room {
   name: string;

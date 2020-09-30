@@ -1,4 +1,4 @@
-import { Room, roomData } from './room'
+import { Room, roomData } from './rooms'
 import DB from './redis'
 
 // TODO: pronouns (and realName?) shouldn't be optional
