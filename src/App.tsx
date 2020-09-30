@@ -13,7 +13,7 @@ import {
   ShowSideMenuAction,
   SendMessageAction,
   SpaceIsClosedAction,
-  PlayerBannedAction
+  PlayerBannedAction, PrepareToStartVideoChatAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -35,6 +35,7 @@ import WelcomeModalView from './components/WelcomeModalView'
 import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
+import RoomListView from './components/RoomListView'
 import ServerSettingsView from './components/ServerSettingsView'
 
 export const DispatchContext = createContext(null)
@@ -52,20 +53,20 @@ const App = () => {
     const login = getLoginInfo().then((login) => {
       if (!login) {
         // This should really be its own action distinct from logging in
-        dispatch(AuthenticateAction(undefined, undefined))
+        dispatch(AuthenticateAction(undefined, undefined, undefined))
       } else {
         console.log(login)
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
         checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
-            dispatch(AuthenticateAction(userId, login.user_id))
+            dispatch(AuthenticateAction(userId, login.user_id, login.provider_name))
             return
           }
-          dispatch(AuthenticateAction(userId, registeredUsername))
+          dispatch(AuthenticateAction(userId, registeredUsername, login.provider_name))
 
           if (isBanned) {
-            dispatch(PlayerBannedAction({id: userId, username: registeredUsername, isBanned: isBanned}))
+            dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
             dispatch(IsRegisteredAction())
             return
           }
@@ -139,6 +140,7 @@ const App = () => {
         isFTUE={true}
         defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
+        prepopulateTwitterWithDefaultHandle={state.authenticationProvider === 'twitter'}
       />
     )
   }
@@ -164,6 +166,10 @@ const App = () => {
   }
 
   let innerModalView, modalView
+
+  // TODO: If we get more modal options than just a size boolean, make this an options object.
+  let modalIsFullScreen = false
+
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
       innerModalView = (
@@ -207,9 +213,14 @@ const App = () => {
       break
     }
     case Modal.Map: {
+      modalIsFullScreen = true
       innerModalView = (
         <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
       )
+      break
+    }
+    case Modal.RoomList: {
+      innerModalView = <RoomListView rooms={Object.values(state.roomData)} />
       break
     }
     case Modal.Help: {
@@ -227,7 +238,7 @@ const App = () => {
   }
 
   if (innerModalView) {
-    modalView = <ModalView>{innerModalView}</ModalView>
+    modalView = <ModalView fullScreen={modalIsFullScreen}>{innerModalView}</ModalView>
   }
 
   const showMenu = () => {
@@ -250,7 +261,8 @@ const App = () => {
             >
               {shouldShowMenu ? (
                 <SideNavView
-                  rooms={Object.values(state.roomData)}
+                  roomData={state.roomData}
+                  currentRoomId={state.roomId}
                   username={state.userMap[state.userId].username}
                   spaceIsClosed={state.isClosed}
                 />
@@ -268,6 +280,7 @@ const App = () => {
                   <RoomView
                     room={state.roomData[state.roomId]}
                     userId={state.userId}
+                    roomData={state.roomData}
                   />
                 ) : null}
                 <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />

@@ -19,7 +19,7 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
 
   const handleScroll = () => {
     const messageWindow = document.querySelector('#messages')
-    const isScrolledToBottom = messageWindow.scrollHeight == messageWindow.scrollTop + messageWindow.clientHeight
+    const isScrolledToBottom = messageWindow.scrollHeight === messageWindow.scrollTop + messageWindow.clientHeight
 
     if (isScrolledToBottom && !props.autoscrollChat) {
       dispatch(ActivateAutoscrollAction())

@@ -10,5 +10,6 @@ export enum Modal {
     Help,
     Map,
     Welcome,
+    RoomList,
     ServerSettings
 }

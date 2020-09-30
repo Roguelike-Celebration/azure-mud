@@ -640,7 +640,7 @@ export const HideModalAction = (): HideModalAction => {
 
 interface AuthenticateAction {
   type: ActionType.Authenticate;
-  value: { name: string; userId: string };
+  value: { name: string; userId: string, provider: string };
 }
 
 interface ShowSideMenuAction {
@@ -677,9 +677,10 @@ export const ActivateAutoscrollAction = (): ActivateAutoscrollAction => {
 
 export const AuthenticateAction = (
   userId: string | undefined,
-  name: string | undefined
+  name: string | undefined,
+  provider: string | undefined
 ): AuthenticateAction => {
-  return { type: ActionType.Authenticate, value: { userId, name } }
+  return { type: ActionType.Authenticate, value: { userId, name, provider } }
 }
 
 interface IsRegisteredAction {

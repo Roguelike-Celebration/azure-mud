@@ -7,7 +7,7 @@ export async function shout (user: User, messageId: string, message: string, con
   if (user.lastShouted) {
     const cooldownMinutes = 2
     const diff = new Date().valueOf() - user.lastShouted.valueOf()
-    if (Math.floor(diff / 1000 / 60) < cooldownMinutes) {
+    if (!user.isMod && Math.floor(diff / 1000 / 60) < cooldownMinutes) {
       context.res = {
         status: 200,
         body: {

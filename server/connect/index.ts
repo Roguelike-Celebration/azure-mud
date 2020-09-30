@@ -8,7 +8,7 @@ import authenticate from '../src/authenticate'
 import { minimizeUser, isMod } from '../src/user'
 import { userHeartbeatReceived } from '../src/heartbeat'
 import setUpRoomsForUser from '../src/setUpRoomsForUser'
-import { roomData } from '../src/room'
+import { roomData } from '../src/rooms'
 import {
   globalPresenceMessage,
   allPresenceData

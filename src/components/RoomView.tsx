@@ -13,8 +13,9 @@ import '../../style/room.css'
 import { Modal } from '../modals'
 
 interface Props {
-  room?: Room;
-  userId?: string;
+  room: Room;
+  userId: string;
+  roomData: { [roomId: string]: Room };
 }
 
 export default function RoomView (props: Props) {
@@ -81,7 +82,7 @@ export default function RoomView (props: Props) {
         onClick={descriptionClick}
         dangerouslySetInnerHTML={{
           __html: room
-            ? parseDescription(room.description)
+            ? parseDescription(room.description, props.roomData)
             : 'Loading current room...'
         }}
       />
@@ -163,17 +164,27 @@ function intersperse (arr, sep) {
   )
 }
 
-function parseDescription (description: string): string {
+function parseDescription (description: string, roomData: { [roomId: string]: Room }): string {
   // eslint-disable-next-line no-useless-escape
   const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
   const simpleLinkRegex = /\[\[(.+?)\]\]/g
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    return `<a class='room-link' href='#' data-room='${roomId}'>${text}</a>`
+    const room = roomData[roomId]
+    if (!room) {
+      console.log(`Dev warning: tried to link to room ${roomId}, which doesn't exist`)
+    }
+    const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
+    return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
   })
 
   description = description.replace(simpleLinkRegex, (match, roomId) => {
-    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}</a>`
+    const room = roomData[roomId]
+    if (!room) {
+      console.log(`Dev warning: tried to link to room ${roomId}, which doesn't exist`)
+    }
+    const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
+    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCount}</a>`
   })
   return description
 }
