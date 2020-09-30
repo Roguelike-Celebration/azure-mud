@@ -1,8 +1,8 @@
 export default {
-    id: 'eastShowcaseHall',
-        displayName: 'East Showcase Hall',
-            shortName: 'the east showcase hall',
-                description: `
+  id: 'eastShowcaseHall',
+  displayName: 'East Showcase Hall',
+  shortName: 'the east showcase hall',
+  description: `
       A number of booths line the sides of the hall.<br/><br/>
       Here you can see Roundguard by Andrea Roberts, Nongunz: Doppelganger Edition by Mike Corrigan, Ultimate ADOM: Caverns of Chaos by Thomas Biskup and Team ADOM, and Cantrip by Joeri Bakker.<br/><br/>
 
@@ -80,5 +80,5 @@ export default {
       </div>
 
       You can exit to the [[north hall->northShowcaseHall]] or [[south hall->southShowcaseHall]], or head back to the [[foyer]].`,
-                    allowsMedia: true
-},
+  allowsMedia: true
+}

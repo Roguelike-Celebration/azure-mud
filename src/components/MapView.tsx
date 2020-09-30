@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext } from 'react'
-import { Room } from './room'
+import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'

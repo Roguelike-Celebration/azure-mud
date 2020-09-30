@@ -1,8 +1,8 @@
 export default {
-    id: 'southShowcaseHall',
-    displayName: 'South Showcase Hall',
-    shortName: 'the south showcase hall',
-    description: `
+  id: 'southShowcaseHall',
+  displayName: 'South Showcase Hall',
+  shortName: 'the south showcase hall',
+  description: `
       A number of booths line the sides of the hall.<br/><br/>
       Here you can see Fuzz Force: Spook Squad by Alan Igle, Mech@mor Showdown by Seth Alter, Rift Wizard by Dylan White, and Happy Grumps by Glenn LaBarre.<br/><br/>
 
@@ -73,5 +73,5 @@ export default {
       </div>
 
       You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
-    allowsMedia: true
-},
+  allowsMedia: true
+}

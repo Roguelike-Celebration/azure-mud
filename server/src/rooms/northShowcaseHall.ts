@@ -1,8 +1,8 @@
 export default {
-    id: 'northShowcaseHall',
-        displayName: 'North Showcase Hall',
-            shortName: 'the north showcase hall',
-                description: `
+  id: 'northShowcaseHall',
+  displayName: 'North Showcase Hall',
+  shortName: 'the north showcase hall',
+  description: `
       A number of booths line the sides of the hall.<br/><br/>
       Here you can see Gesuido by Ryosuke Mihara, Project Earth by Michael Taylor, and WizardWarsIO by quantompotato.<br/><br/>
 
@@ -76,4 +76,5 @@ export default {
 
 
       You can exit to the [[west hall->westShowcaseHall]], [[east hall->eastShowcaseHall]], or head up to the [[bar]] or [[@-sign statue->statue]].`,
-                    allowsMedia: true
+  allowsMedia: true
+}
