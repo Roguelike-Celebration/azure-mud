@@ -2,6 +2,13 @@ import { Room } from './rooms'
 import { User, MinimalUser, PublicUser } from './user'
 import { RoomNote } from './roomNote'
 
+
+export interface HappeningNowEntry {
+  text: string,
+  roomId?: string,
+  externalLink?: string
+}
+
 export interface ServerSettings {
   movementMessagesHideThreshold: number;
   movementMessagesHideRoomIds: string[];

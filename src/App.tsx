@@ -40,6 +40,7 @@ import RainbowGateModalView from './components/feature/RainbowGateViews'
 import DullDoorModalView from './components/feature/DullDoorViews'
 import ServerSettingsView from './components/ServerSettingsView'
 import ClientDeployedModal from './components/ClientDeployedModal'
+import HappeningNowView from './components/HappeningNowView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -240,6 +241,21 @@ const App = () => {
     }
     case Modal.ClientDeployed: {
       innerModalView = <ClientDeployedModal />
+      break
+    }
+    case Modal.HappeningNow: {
+      innerModalView = <HappeningNowView entries={[
+                { text: "Unconferencing!" },
+                { text: "All About DCSS (kitchen)", roomId: "kitchen" },
+                { text: "A Long Text String Goes Here, Like Seriously Long", roomId: "bar" },
+                { text: "More Unconferencing", roomId: "bar" },
+                { text: "Yet More Unconferencing", roomId: "bar" },
+                { text: "Hey there's a lotta these!", roomId: "bar" },
+                { text: "We do got 6 rooms...", roomId: "bar" },
+                { text: "Other Stuff" },
+                { text: "Leif's Thing", externalLink: 'www.google.com' },
+                { text: "at what point does this become overcrowded?" }
+              ]}/>
       break
     }
     case Modal.FeatureRainbowGate: {
