@@ -4,7 +4,7 @@ export default {
   shortName: 'the west showcase hall',
   description: `
       A number of booths line the sides of the hall.<br/><br/>
-      Here you can see Computer Dungeon Slash: ZZT by KKairos, Peglin by Red Nexus Games, and AutoFire by Patrick Lipo.<br/><br/>
+      Here you can see Computer Dungeon Slash: ZZT by KKairos, Peglin by Red Nexus Games, AutoFire by Patrick Lipo, and Lords of Cyberspace by Christopher Swenson (port), Mark Peterson (original author).<br/><br/>
 
       <div class="showcase-container">
         <div id="cdslash-entry" class="showcase-entry">
@@ -55,6 +55,25 @@ export default {
           <img src="images/auto-fire/AutoFireGarage1280.jpg" alt="Auto Fire Garage" style="max-width: 49%;">
           <img src="images/auto-fire/AutoFireOverworld1280.jpg" alt="Auto Fire Overworld" style="max-width: 49%;">
           <img src="images/auto-fire/AutoFireRuinsCars1280.jpg" alt="Auto Fire RuinsCars" style="max-width: 49%;">
+        </div>
+
+        <div id="lords-of-cyberspace-entry" class="showcase-entry">
+          <p><a href="https://lords-of-cyberspace.glitch.me/" target="_blank">Lords of Cyberspace</a>, by
+            <a href="https://swenson.io/" target="_blank" rel="nofollow noopener noreferrer">Christopher Swensom</a> (port),
+            <a href="http://www.spookshow.net/muinet.html" target="_blank" rel="nofollow noopener noreferrer">Mark Peterson</a> (original author)
+          </p>
+          <p>Lords of Cyberspace is a mid-1990s MajorBBS door game with a roguelike MUD theme written by Mark Peterson. To quote
+            the game manual, "Lords of Cyberspace is a multi-user cyberpunk computer terrorism game. In LoC, your goal is to use
+            the hardware and software you acquire to cause as much trouble in cyberspace as is humanly possible." Christopher
+            Swenson ported it to work on the web by adapting and recompiling it under modern Linux and macOS systems. You can see
+            an explanation video
+            <a ref="https://www.youtube.com/watch?v=3HzKYwzWFYM" target="_blank" rel="nofollow noopener noreferrer">here</a>
+            and play the game at
+            <a href="https://lords-of-cyberspace.glitch.me/" target="_blank">https://lords-of-cyberspace.glitch.me/</a>!
+          </p>
+          <img src="images/lords-of-cyberspace/loc1.png" alt="Lords of Cyberspace 1" style="max-width: 32%;">
+          <img src="images/lords-of-cyberspace/loc2.png" alt="Lords of Cyberspace 2" style="max-width: 32%;">
+          <img src="images/lords-of-cyberspace/loc3.png" alt="Lords of Cyberspace 3" style="max-width: 32%;">
         </div>
       </div>
 
