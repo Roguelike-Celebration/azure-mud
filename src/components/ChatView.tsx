@@ -50,7 +50,7 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
   function shouldRemoveMessage (m: Message) {
     return isMovementMessage(m) &&
       (
-        m.roomId in props.serverSettings.movementMessagesHideRoomIds ||
+        props.serverSettings.movementMessagesHideRoomIds.includes(m.roomId) ||
         m.numUsersInRoom > props.serverSettings.movementMessagesHideThreshold
       )
   }
