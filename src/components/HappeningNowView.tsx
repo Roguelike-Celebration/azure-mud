@@ -54,7 +54,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
       <h1>Happening Now</h1>
       <h2>From The Schedule</h2>
       {currentlyScheduledElement}
-      <h2>Live From Here</h2>
+      <h2>Other Live Activities</h2>
       <ul>
       {
         props.entries.map((e) => {
