@@ -3,11 +3,25 @@
     <title>Roguelike Celebration Stream</title>
   </head>
 </html>
+
 <body style='overflow-x: hidden'>
-  <center>
-  <iframe width="560" height="315" src="https://player.twitch.tv/?channel=roguelike_con&parent=chat.roguelike.club" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
-  <iframe id="captions" width="560" height="100" src="https://www.streamtext.net/player/?event=RoguelikeCelebration&chat=false&header=false&footer=false&indicator=false&ff=Consolas&fgc=93a1a1" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen />
-  </center>
+  <div style="height: 100%; display: flex; flex-flow: column;">
+    <div style="height: 0; width: 100%; position: relative; padding-bottom: 56.25%">
+      <iframe id="embed"
+        src="https://player.twitch.tv/?channel=roguelike_con&parent=chat.roguelike.club"
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="width: 100%; position: absolute; height: 100%; left: 0; top: 0;"
+      ></iframe>
+    </div>
+    <iframe id="captions"
+      src="https://www.streamtext.net/player/?event=RoguelikeCelebration&chat=false&header=false&footer=false&indicator=false&ff=Consolas&fgc=93a1a1"
+      frameborder="0"
+      allow="autoplay; encrypted-media;"
+      allowfullscreen
+      style="width: 100%; flex-grow: 1"
+    ></iframe>
+  </div>
 </body>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
