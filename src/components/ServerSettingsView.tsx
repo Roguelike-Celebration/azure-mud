@@ -28,10 +28,13 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
   }
 
   const deleteHappeningNowEntry = (entry: HappeningNowEntry) => {
-    // Ugh I don't feel like googling more about how to work arrays, let's just do the dumb thing
-    const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
-    settingsCopy.happeningNowEntries = props.serverSettings.happeningNowEntries.filter((i) => i.text !== entry.text)
-    updateServerSettings(settingsCopy)
+    const confirmation = confirm('Are you sure you want to delete the happening now note?')
+    if (confirmation) {
+      // Ugh I don't feel like googling more about how to work arrays, let's just do the dumb thing
+      const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
+      settingsCopy.happeningNowEntries = props.serverSettings.happeningNowEntries.filter((i) => i.text !== entry.text)
+      updateServerSettings(settingsCopy)
+    }
   }
 
   const addEntry = () => {
