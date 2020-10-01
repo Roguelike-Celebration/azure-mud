@@ -141,7 +141,7 @@ export const roomData: { [name: string]: Room } = {
     id: 'foyer',
     displayName: 'Haunted Foyer',
     shortName: 'the haunted foyer',
-    description: `A grand opulent foyer leading into the theatre. A chill runs down your spine as you walk in; something just feels ~off~ about this place.<br/><br/>
+    description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels ~off~ about this place.<br/><br/>
     You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]]`
   },
   atelier: {
