@@ -1,27 +1,49 @@
 import React from 'react'
 
-export default function ScheduleView () {
-  const dateStr = (time) => `2020-10-03T${time}:00.000-07:00`
+export interface ScheduleEntry {
+  time: Date,
+  text: string,
+  roomIds: string[]
+}
 
-  const times = [
-    ['09:15', 'Intro / Housekeeping'],
-    ['09:30', 'Lisa Brown: Why do I even like roguelikes? An exploration of player motivation'],
-    ['10:00', 'Tabitha Sable: Curses! A Story of UNIX Interface Hardware and Software Co-Evolution'],
-    ['10:30', 'Unconferencing #1'],
-    ['11:30', 'Andrew Aversa: The End of Permadeath'],
-    ['12:00', 'Tyriq Plummer: YASDery Loves Company: Multiplayer in Traditional Roguelikes'],
-    ['12:30', 'Break'],
-    ['13:30', 'Lightning Talks 1: Rosalind Miles Chapman, Julian K. Jarboe, Albert Ford, Dustin Freeman, Andrew Clifton, Mark Gritter'],
-    ['14:30', 'Darren Grey: What Is A *Rogue* Like?'],
-    ['15:00', 'Andrea Roberts: Designing a Roguelike for People Who\'ve Never Played Roguelikes'],
-    ['15:30', 'Break'],
-    ['16:00', 'Phillip Daigle: Rogue\'s Gate: Feeling Around in the Dark'],
-    ['16:30', 'Herbert Wolverson: Procedural Map Generation Techniques'],
-    ['17:00', 'bhauth: What Makes *Dungeon Crawl: Stone Soup* a Good Game?'],
-    ['17:30', 'Delve Bros: Help Me Steal the Mona Lisa'],
-    ['18:30', 'Game Showcase / Unconferencing #2 / Afterparty'],
-    ['19:30', 'Doors Close']
-  ]
+function ScheduleEntry(time: string, day: number, text: string, roomIds?: string[]) {
+  const dayOneDate = (time) => new Date(`2020-10-03T${time}:00.000-07:00`)
+  const dayTwoDate = (time) => new Date(`2020-10-04T${time}:00.000-07:00`)
+
+  if (day === 1) {
+    return {
+      time: dayOneDate(time), text: text, roomIds: roomIds
+    }
+  } else if (day === 2) {
+    return {
+      time: dayTwoDate(time), text: text, roomIds: roomIds
+    }
+  } else {
+    console.error('Your static data is messed up, somehow.')
+  }
+}
+
+export const ScheduleEntries = [
+  ScheduleEntry('09:15', 1, 'Intro / Housekeeping'),
+  ScheduleEntry('09:30', 1, 'Lisa Brown: Why do I even like roguelikes? An exploration of player motivation', ['theater']),
+  ScheduleEntry('10:00', 1, 'Tabitha Sable: Curses! A Story of UNIX Interface Hardware and Software Co-Evolution', ['theater']),
+  ScheduleEntry('10:30', 1, 'Unconferencing #1', ['unconference']),
+  ScheduleEntry('11:30', 1, 'Andrew Aversa: The End of Permadeath', ['theater']),
+  ScheduleEntry('12:00', 1, 'Tyriq Plummer: YASDery Loves Company: Multiplayer in Traditional Roguelikes', ['theater']),
+  ScheduleEntry('12:30', 1, 'Break'),
+  ScheduleEntry('13:30', 1, 'Lightning Talks 1: Rosalind Miles Chapman, Julian K. Jarboe, Albert Ford, Dustin Freeman, Andrew Clifton, Mark Gritter', ['theater']),
+  ScheduleEntry('14:30', 1, 'Darren Grey: What Is A *Rogue* Like?', ['theater']),
+  ScheduleEntry('15:00', 1, 'Andrea Roberts: Designing a Roguelike for People Who\'ve Never Played Roguelikes', ['theater']),
+  ScheduleEntry('15:30', 1, 'Break'),
+  ScheduleEntry('16:00', 1, 'Phillip Daigle: Rogue\'s Gate: Feeling Around in the Dark', ['theater']),
+  ScheduleEntry('16:30', 1, 'Herbert Wolverson: Procedural Map Generation Techniques', ['theater']),
+  ScheduleEntry('17:00', 1, 'bhauth: What Makes *Dungeon Crawl: Stone Soup* a Good Game?', ['theater']),
+  ScheduleEntry('17:30', 1, 'Delve Bros: Help Me Steal the Mona Lisa', ['theater']),
+  ScheduleEntry('18:30', 1, 'Game Showcase / Unconferencing #2 / Afterparty', ['northShowcaseHall', 'eastShowcaseHall', 'southShowcaseHall','westShowcaseHall', 'unconference']),
+  ScheduleEntry('19:30', 1, 'Doors Close')
+]
+
+export default function ScheduleView () {
 
   // Including these here to be swapped in Saturday to Sunday.
   // const SundayTimes = [
@@ -48,13 +70,11 @@ export default function ScheduleView () {
 
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
-  const rows = times.map(r => {
-    const date = new Date(dateStr(r[0]))
-
+  const rows = ScheduleEntries.map(r => {
     return (
-      <tr key={r[0]}>
-        <td>{formatter.format(date)}</td>
-        <td>{r[1]}</td>
+      <tr key={formatter.format(r.time)}>
+        <td>{formatter.format(r.time)}</td>
+        <td>{r.text}</td>
       </tr>
     )
   })
