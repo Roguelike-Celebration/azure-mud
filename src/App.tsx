@@ -236,7 +236,7 @@ const App = () => {
       break
     }
     case Modal.ServerSettings: {
-      innerModalView = <ServerSettingsView serverSettings={state.serverSettings}/>
+      innerModalView = <ServerSettingsView serverSettings={state.serverSettings} roomData={state.roomData}/>
       break
     }
     case Modal.ClientDeployed: {

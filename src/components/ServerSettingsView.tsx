@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
-import { ServerSettings, toServerSettings } from '../../server/src/types'
+import { roomData } from '../../server/src/rooms'
+import { HappeningNowEntry, ServerSettings, toServerSettings } from '../../server/src/types'
 import { updateServerSettings } from '../networking'
+import { Room } from '../room'
 
-export default function ServerSettingsView (props: { serverSettings: ServerSettings }) {
+export default function ServerSettingsView (props: { serverSettings: ServerSettings, roomData: { [roomId: string]: Room } }) {
   const [newSettings, setNewSettings] = useState(JSON.stringify(props.serverSettings, null, 2))
+
+  const [addHappeningNowText, setAddHappeningNowText] = useState('')
+  const [addHappeningNowRoomId, setAddHappeningNowRoomId] = useState('')
+  const [addHappeningNowExternalLink, setAddHappeningNowExternalLink] = useState('')
 
   const submit = () => {
     let parsedNewSettings
@@ -21,8 +27,77 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
     }
   }
 
+  const deleteHappeningNowEntry = (entry: HappeningNowEntry) => {
+    // Ugh I don't feel like googling more about how to work arrays, let's just do the dumb thing
+    const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
+    settingsCopy.happeningNowEntries = props.serverSettings.happeningNowEntries.filter((i) => i.text !== entry.text)
+    updateServerSettings(settingsCopy)
+  }
+
+  const addEntry = () => {
+    if (addHappeningNowText.length === 0) {
+      alert('You need to have text!')
+      return
+    } else if (addHappeningNowRoomId.length > 0 && addHappeningNowExternalLink.length > 0) {
+      alert('You cannot have roomId and external link')
+      return
+    } else if (addHappeningNowRoomId.length > 0 && !roomData[addHappeningNowRoomId]) {
+      alert('No such room as ' + addHappeningNowRoomId)
+    }
+
+    const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
+    settingsCopy.happeningNowEntries.push({
+      text: addHappeningNowText,
+      roomId: addHappeningNowRoomId.length > 0 ? addHappeningNowRoomId : undefined,
+      externalLink: addHappeningNowExternalLink.length > 0 ? addHappeningNowExternalLink : undefined
+    })
+    updateServerSettings(settingsCopy)
+  }
+
   return (
     <div className='serverSettingsContainer'>
+      <h1>Happening Now Controls</h1>
+      <h2>Current Entries</h2>
+      {
+        props.serverSettings.happeningNowEntries.map((e) => {
+            return <li key={e.text}>
+              {JSON.stringify(e)}
+              <button id={'delete-'+e.text} onClick={() => deleteHappeningNowEntry(e)}>Delete</button>
+            </li>
+        })
+      }
+      <div className='form' id='addHappeningNowForm'>
+        <div className="field">
+          <label htmlFor="add-happening-now-text">Text</label>
+          <input
+            type="text"
+            id="add-happening-now-text"
+            value={addHappeningNowText}
+            onChange={(e) => setAddHappeningNowText(e.currentTarget.value)}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="add-happening-now-room-id">Room ID (blank if you want to link to an external site)</label>
+          <input
+            type="text"
+            id="add-happening-now-room-id"
+            value={addHappeningNowRoomId}
+            onChange={(e) => setAddHappeningNowRoomId(e.currentTarget.value)}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="add-happening-now-external-link">External Link (blank if you want to link to a room)</label>
+          <input
+            type="text"
+            id="add-happening-now-external-link"
+            value={addHappeningNowExternalLink}
+            onChange={(e) => setAddHappeningNowExternalLink(e.currentTarget.value)}
+          />
+        </div>
+        <button id='add-entry' onClick={addEntry} className='submit'>Add Entry</button>
+      </div>
+
+      <h1>Manual Controls (Finnicky)</h1>
       <h3 id='old-settings-header'>Old settings:</h3>
       <pre id='old-settings-pretty'>{JSON.stringify(props.serverSettings, null, 2)}</pre>
       <h3 id='new-settings-header'>New settings:</h3>
