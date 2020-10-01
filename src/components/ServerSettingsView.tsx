@@ -46,6 +46,7 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
       return
     } else if (addHappeningNowRoomId.length > 0 && !roomData[addHappeningNowRoomId]) {
       alert('No such room as ' + addHappeningNowRoomId)
+      return
     }
 
     const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
