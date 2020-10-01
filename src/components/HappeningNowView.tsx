@@ -1,4 +1,5 @@
 import React, { useContext } from "react"
+import { roomData } from "../../server/src/rooms"
 import { HappeningNowEntry } from "../../server/src/types"
 import { HideModalAction } from "../Actions"
 import { DispatchContext } from "../App"
@@ -17,8 +18,12 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
   const currentlyScheduled = ReversedScheduleEntries.find((entry) => entry.time < now)
 
   const moveAndClose = (roomId: string) => {
+    if (!roomData[roomId]) {
+      console.error("Can't go to room " + roomId + " from link in happening now view, no such room!")
+    } else {
       moveToRoom(roomId)
       dispatch(HideModalAction())
+    }
   }
 
   return (
@@ -30,7 +35,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
           {currentlyScheduled.text}
           {currentlyScheduled.roomIds ?
             <ul>{currentlyScheduled.roomIds.map((id) => {
-            return <li key={id}><a className='nav-item' href='#' onClick={() => moveAndClose(id)}>{props.roomData[id].name}</a></li>
+            return <li key={id}><a className='nav-item' href='#' onClick={() => moveAndClose(id)}>{props.roomData[id] ? props.roomData[id].name : 'unknown room'}</a></li>
           })}</ul> : ''}
         </div> :
         <strong>You're in early! Check the schedule for when the doors officially open.</strong>
