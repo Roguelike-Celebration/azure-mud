@@ -28,7 +28,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
   }
 
   const buildScheduledRoomList = (roomIds: string[]) => {
-    <ul>
+    return <ul>
       {roomIds.map((id) => {
         return <li key={id}>
           <a className='nav-item' href='#' onClick={() => moveAndClose(id)}>
