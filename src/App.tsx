@@ -244,7 +244,7 @@ const App = () => {
       break
     }
     case Modal.HappeningNow: {
-      innerModalView = <HappeningNowView entries={[
+      innerModalView = <HappeningNowView roomData={state.roomData} entries={[
                 { text: "Unconferencing!" },
                 { text: "All About DCSS (kitchen)", roomId: "kitchen" },
                 { text: "A Long Text String Goes Here, Like Seriously Long", roomId: "bar" },
