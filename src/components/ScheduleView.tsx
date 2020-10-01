@@ -24,7 +24,7 @@ function ScheduleEntry(time: string, day: number, text: string, roomIds?: string
 }
 
 export const ScheduleEntries = [
-  ScheduleEntry('09:15', 1, 'Intro / Housekeeping'),
+  ScheduleEntry('09:15', 1, 'Intro / Housekeeping', ['theater']),
   ScheduleEntry('09:30', 1, 'Lisa Brown: Why do I even like roguelikes? An exploration of player motivation', ['theater']),
   ScheduleEntry('10:00', 1, 'Tabitha Sable: Curses! A Story of UNIX Interface Hardware and Software Co-Evolution', ['theater']),
   ScheduleEntry('10:30', 1, 'Unconferencing #1', ['unconference']),
