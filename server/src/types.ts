@@ -9,25 +9,36 @@ export interface HappeningNowEntry {
   externalLink?: string
 }
 
+function isHappeningNowEntry(obj: any): obj is HappeningNowEntry {
+  return obj.text && (typeof obj.text === 'string' || obj.text instanceof String) &&
+    obj.roomId ? (typeof obj.roomId === 'string' || obj.roomId instanceof String) : true &&
+    obj.externalLink ? (typeof obj.externalLink === 'string' || obj.externalLink instanceof String) : true
+}
+
 export interface ServerSettings {
   movementMessagesHideThreshold: number;
   movementMessagesHideRoomIds: string[];
+  happeningNowEntries: HappeningNowEntry[];
 }
 
 export const DEFAULT_SERVER_SETTINGS: ServerSettings = {
   movementMessagesHideThreshold: 20,
-  movementMessagesHideRoomIds: ['theater']
+  movementMessagesHideRoomIds: ['theater'],
+  happeningNowEntries: []
 }
 
 // There's 100% a more elegant way to do this, but I think this works and want to actually get this feature finally done.
 export function toServerSettings (obj: any): ServerSettings | null {
   try {
-    if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined) {
+    if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined ||
+      (obj.happeningNowEntries && obj.happeningNowEntries.every((e) => {isHappeningNowEntry(e)})))
+    {
       return null
     } else {
       return {
         movementMessagesHideThreshold: obj.movementMessagesHideThreshold,
-        movementMessagesHideRoomIds: obj.movementMessagesHideRoomIds
+        movementMessagesHideRoomIds: obj.movementMessagesHideRoomIds,
+        happeningNowEntries: obj.happeningNowEntries ? obj.happeningNowEntries : []
       }
     }
   } catch (e) {

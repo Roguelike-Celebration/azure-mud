@@ -36,17 +36,19 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
         <strong>You're in early! Check the schedule for when the doors officially open.</strong>
         }
       <h2>Live From Here</h2>
+      <ul>
       {
         props.entries.map((e) => {
-          /*if (e.roomId) {
-            return <p><a className='nav-item' href='#' onClick={() => moveAndClose(e.roomId)}>{e.text}</a></p>
+          if (e.roomId) {
+            return <li key={e.text}><a className='nav-item' href='#' onClick={() => moveAndClose(e.roomId)}>{e.text}</a></li>
           } else if (e.externalLink) {
-            return <p><a className='nav-item' href={e.externalLink} target='_blank' rel='nofollow noopener noreferrer'>{e.text}</a></p>
-          } else {*/
-            return <p key={e.text}>{e.text}</p>
-          //}
+            return <li key={e.text}><a className='nav-item' href={e.externalLink} target='_blank' rel='nofollow noopener noreferrer'>{e.text}</a></li>
+          } else {
+            return <li key={e.text}>{e.text}</li>
+          }
         })
       }
+      </ul>
     </div>
   )
 }

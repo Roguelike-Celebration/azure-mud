@@ -244,18 +244,7 @@ const App = () => {
       break
     }
     case Modal.HappeningNow: {
-      innerModalView = <HappeningNowView roomData={state.roomData} entries={[
-                { text: "Unconferencing!" },
-                { text: "All About DCSS (kitchen)", roomId: "kitchen" },
-                { text: "A Long Text String Goes Here, Like Seriously Long", roomId: "bar" },
-                { text: "More Unconferencing", roomId: "bar" },
-                { text: "Yet More Unconferencing", roomId: "bar" },
-                { text: "Hey there's a lotta these!", roomId: "bar" },
-                { text: "We do got 6 rooms...", roomId: "bar" },
-                { text: "Other Stuff" },
-                { text: "Leif's Thing", externalLink: 'www.google.com' },
-                { text: "at what point does this become overcrowded?" }
-              ]}/>
+      innerModalView = <HappeningNowView roomData={state.roomData} entries={state.serverSettings.happeningNowEntries}/>
       break
     }
     case Modal.FeatureRainbowGate: {
