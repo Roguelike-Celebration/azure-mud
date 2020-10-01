@@ -2,14 +2,13 @@ import { Room } from './rooms'
 import { User, MinimalUser, PublicUser } from './user'
 import { RoomNote } from './roomNote'
 
-
 export interface HappeningNowEntry {
   text: string,
   roomId?: string,
   externalLink?: string
 }
 
-function isHappeningNowEntry(obj: any): obj is HappeningNowEntry {
+function isHappeningNowEntry (obj: any): obj is HappeningNowEntry {
   return obj.text && (typeof obj.text === 'string' || obj.text instanceof String) &&
     obj.roomId ? (typeof obj.roomId === 'string' || obj.roomId instanceof String) : true &&
     obj.externalLink ? (typeof obj.externalLink === 'string' || obj.externalLink instanceof String) : true
@@ -31,8 +30,7 @@ export const DEFAULT_SERVER_SETTINGS: ServerSettings = {
 export function toServerSettings (obj: any): ServerSettings | null {
   try {
     if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined ||
-      (obj.happeningNowEntries && obj.happeningNowEntries.every((e) => {isHappeningNowEntry(e)})))
-    {
+        (obj.happeningNowEntries && obj.happeningNowEntries.every((e) => { isHappeningNowEntry(e) }))) {
       return null
     } else {
       return {
