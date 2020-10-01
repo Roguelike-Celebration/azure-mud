@@ -63,7 +63,7 @@ export default function MapView (props: Props) {
       console.log(location)
       location.scrollIntoView({ block: 'center', inline: 'center' })
     } else {
-      console.log('NO LCATION')
+      console.log('NO LOCATION')
     }
   }, (props.isMiniMap ? null : []))
 
