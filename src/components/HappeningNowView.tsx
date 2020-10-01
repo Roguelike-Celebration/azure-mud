@@ -31,9 +31,9 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
     return <ul>
       {roomIds.map((id) => {
         return <li key={id}>
-          <a className='nav-item' href='#' onClick={() => moveAndClose(id)}>
+          <button id={`button-happening-now${id}`} onClick={() => moveAndClose(id)} className='link-styled-button'>
             {props.roomData[id] ? props.roomData[id].name : 'unknown room'}
-          </a>
+          </button>
         </li>
       })}
     </ul>
@@ -60,7 +60,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
         props.entries.map((e) => {
           if (e.roomId) {
             return <li key={e.text}>
-              <a className='nav-item' href='#' onClick={() => moveAndClose(e.roomId)}>{e.text}</a>
+              <button id={`button-${e.text}`} onClick={() => moveAndClose(e.roomId)} className='link-styled-button'>{e.text}</button>
             </li>
           } else if (e.externalLink) {
             return <li key={e.text}>
