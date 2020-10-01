@@ -13,8 +13,9 @@ const ReversedScheduleEntries = [...ScheduleEntries].reverse()
 export default function HappeningNowView (props: { roomData: { [roomId: string]: Room }, entries: HappeningNowEntry[] }) {
   const dispatch = useContext(DispatchContext)
 
-  const now = new Date(`2020-10-03T18:45:00.000-07:00`)
-  // const now = new Date()
+  // To test this functionality, just set it at some appropriate date in the conference time
+  // const now = new Date(`2020-10-03T18:45:00.000-07:00`)
+  const now = new Date()
   const currentlyScheduled = ReversedScheduleEntries.find((entry) => entry.time < now)
 
   const moveAndClose = (roomId: string) => {
