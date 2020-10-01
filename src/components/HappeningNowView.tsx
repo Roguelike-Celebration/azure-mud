@@ -27,28 +27,45 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
     }
   }
 
+  const buildScheduledRoomList = (roomIds: string[]) => {
+    <ul>
+      {roomIds.map((id) => {
+        return <li key={id}>
+          <a className='nav-item' href='#' onClick={() => moveAndClose(id)}>
+            {props.roomData[id] ? props.roomData[id].name : 'unknown room'}
+          </a>
+        </li>
+      })}
+    </ul>
+  }
+
+  let currentlyScheduledElement
+  if (currentlyScheduled) {
+    currentlyScheduledElement = <div id ='currently-scheduled-div'>
+      {currentlyScheduled.text}
+      {currentlyScheduled.roomIds ? buildScheduledRoomList(currentlyScheduled.roomIds) : ''}
+    </div>
+  } else {
+    currentlyScheduledElement = <strong>You're in early! Check the schedule for when the doors officially open.</strong>
+  }
+
   return (
     <div id='happening-now'>
       <h1>Happening Now</h1>
       <h2>From The Schedule</h2>
-      { currentlyScheduled ?
-        <div id ='currently-scheduled-div'>
-          {currentlyScheduled.text}
-          {currentlyScheduled.roomIds ?
-            <ul>{currentlyScheduled.roomIds.map((id) => {
-            return <li key={id}><a className='nav-item' href='#' onClick={() => moveAndClose(id)}>{props.roomData[id] ? props.roomData[id].name : 'unknown room'}</a></li>
-          })}</ul> : ''}
-        </div> :
-        <strong>You're in early! Check the schedule for when the doors officially open.</strong>
-        }
+      {currentlyScheduledElement}
       <h2>Live From Here</h2>
       <ul>
       {
         props.entries.map((e) => {
           if (e.roomId) {
-            return <li key={e.text}><a className='nav-item' href='#' onClick={() => moveAndClose(e.roomId)}>{e.text}</a></li>
+            return <li key={e.text}>
+              <a className='nav-item' href='#' onClick={() => moveAndClose(e.roomId)}>{e.text}</a>
+            </li>
           } else if (e.externalLink) {
-            return <li key={e.text}><a className='nav-item' href={e.externalLink} target='_blank' rel='nofollow noopener noreferrer'>{e.text}</a></li>
+            return <li key={e.text}>
+              <a className='nav-item' href={e.externalLink} target='_blank' rel='nofollow noopener noreferrer'>{e.text}</a>
+            </li>
           } else {
             return <li key={e.text}>{e.text}</li>
           }
