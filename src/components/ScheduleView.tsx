@@ -28,7 +28,7 @@ export default function ScheduleView () {
   //   ['09:15', 'Intro / Housekeeping'],
   //   ['09:30', 'Lightning Talks 2: Xalavier Nelson Jr., Max Kreminski, Clarissa Littler, Nicholas Feinberg, Tanya X. Short'],
   //   ['10:30', 'Game Showcase / Unconferencing #3'],
-  //   ['11:00', 'The Game Band: A Mysterious Blaseball Spectacular'],
+  //   ['11:00', 'Joel Clark: A Perfectly Mundane Blaseball Experience'],
   //   ['11:30', 'Cat Manning: How To Build A Character System That Doesn\'t Fall Apart Two Turns Later (with apologies to PKD)'],
   //   ['12:00', 'Gabriel Koenig: Good Mutation/Bad Mutation: Player Agency in Procedural Generation'],
   //   ['12:30', 'Break'],
@@ -48,6 +48,8 @@ export default function ScheduleView () {
 
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
+  const userTimeZone = formatter.resolvedOptions().timeZone;
+
   const rows = times.map(r => {
     const date = new Date(dateStr(r[0]))
 
@@ -60,8 +62,9 @@ export default function ScheduleView () {
   })
 
   return (
-    <div>
+    <div id='Schedule'>
       <h1>Schedule</h1>
+      <p>Times below should be in your local time zone. We believe your time zone is {userTimeZone}.</p>
       <table>
         {rows}
       </table>
