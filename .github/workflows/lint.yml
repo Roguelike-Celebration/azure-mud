@@ -20,5 +20,8 @@ jobs:
       - name: lint
         run: npm run lint
 
+      - name: lintRooms
+        run: npm run lint-rooms
+
       - name: typecheck
         run: npm run typecheck

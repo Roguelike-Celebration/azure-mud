@@ -3,7 +3,7 @@ import { FaChevronDown } from 'react-icons/fa'
 
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import config from '../config'
-import { ShowModalAction } from '../Actions'
+import { ShowModalAction, ShowProfileAction } from '../Actions'
 import { DispatchContext, UserMapContext } from '../App'
 import { Modal } from '../modals'
 import { openOrCloseSpace } from '../networking'
@@ -38,6 +38,10 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
   const toggleSpaceItem = <MenuItem onClick={toggleSpaceAvailability}>{props.spaceIsClosed ? 'Open' : 'Close'} the Space</MenuItem>
 
   const showProfile = () => {
+    dispatch(ShowProfileAction(myId))
+  }
+
+  const showProfileEdit = () => {
     dispatch(ShowModalAction(Modal.ProfileEdit))
   }
 
@@ -55,7 +59,8 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
         <strong>{props.username}</strong> <FaChevronDown />
       </ContextMenuTrigger>
       <ContextMenu id={'topMenu'}>
-        <MenuItem onClick={showProfile}>Edit Profile</MenuItem>
+        <MenuItem onClick={showProfile}>View Profile</MenuItem>
+        <MenuItem onClick={showProfileEdit}>Edit Profile</MenuItem>
         <MenuItem onClick={showSettings}>Settings & Theme</MenuItem>
         {isMod ? toggleSpaceItem : null}
         {isMod ? <MenuItem onClick={showServerSettings}>Server Settings</MenuItem> : null}

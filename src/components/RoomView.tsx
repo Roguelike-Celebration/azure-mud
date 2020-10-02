@@ -2,10 +2,10 @@ import * as React from 'react'
 import { Room } from '../room'
 import {
   moveToRoom,
-  getNetworkMediaChatStatus
+  getNetworkMediaChatStatus, pickUpRandomItemFromList, pickUpItem, dropItem
 } from '../networking'
 import NameView from './NameView'
-import { DispatchContext } from '../App'
+import { DispatchContext, UserMapContext } from '../App'
 import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction } from '../Actions'
 import { FaVideo } from 'react-icons/fa'
 
@@ -15,6 +15,8 @@ import { SpecialFeature } from '../../server/src/rooms'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
+import { linkActions } from '../linkActions'
+import { useContext } from 'react'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
@@ -36,6 +38,17 @@ export default function RoomView (props: Props) {
       e.target && e.target.getAttribute && e.target.getAttribute('data-room')
     if (roomId) {
       moveToRoom(roomId)
+      return
+    }
+
+    const itemName = e.target && e.target.getAttribute && e.target.getAttribute('data-item')
+    if (itemName) {
+      pickUpItem(itemName)
+    }
+
+    const actionName = e.target && e.target.getAttribute && e.target.getAttribute('data-action')
+    if (actionName) {
+      linkActions[actionName]()
     }
   }
 
@@ -109,7 +122,24 @@ export default function RoomView (props: Props) {
   )
 }
 
+const HeldItemView = () => {
+  const { userMap, myId } = useContext(UserMapContext)
+  const user = userMap[myId]
+
+  const dropHeldItem = () => {
+    dropItem()
+  }
+
+  if (user.item) {
+    return <span>You are holding {user.item}. <button className='link-styled-button' onClick={dropHeldItem}>Drop it</button>.</span>
+  } else {
+    return null
+  }
+}
+
 const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[] }) => {
+  const { userMap, myId } = React.useContext(UserMapContext)
+
   let { users, userId, videoUsers } = props
 
   // Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
@@ -122,16 +152,21 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
     let names
 
     if (users.length === 0) {
-      return <div id="dynamic-room-description">You are all alone here.</div>
+      return <div id="dynamic-room-description">You are all alone here. <HeldItemView /></div>
     }
 
     const userViews = users.map((u, idx) => {
+      const user = userMap[u]
+      console.log(u, user)
+      if (!user) { return <span /> }
       const id = `presence-${idx}`
-      if (videoUsers && videoUsers.includes(u)) {
-        return <span><NameView userId={u} id={id} key={id} /> <FaVideo /></span>
-      } else {
-        return <NameView userId={u} id={id} key={id} />
-      }
+      return (
+        <span key={`room-presence-${id}`}>
+          <NameView userId={u} id={id} key={id} />
+          {videoUsers && videoUsers.includes(u) ? <FaVideo /> : null}
+          {user.item ? ` (holding ${user.item})` : null}
+        </span>
+      )
     })
 
     if (users.length === 1) {
@@ -153,7 +188,7 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
 
     return (
       <div id="dynamic-room-description">
-        Also here {users.length === 1 ? 'is' : 'are'} {names}.
+        Also here {users.length === 1 ? 'is' : 'are'} {names}. <HeldItemView />
       </div>
     )
   } else {
@@ -188,11 +223,16 @@ function parseDescription (description: string, roomData: { [roomId: string]: Ro
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     const room = roomData[roomId]
-    if (!room) {
+    if (roomId === 'item') {
+      return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
+    } else if (room) {
+      const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
+      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
+    } else if (linkActions[roomId]) {
+      return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`
+    } else {
       console.log(`Dev warning: tried to link to room ${roomId}, which doesn't exist`)
     }
-    const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
-    return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
   })
 
   description = description.replace(simpleLinkRegex, (match, roomId) => {

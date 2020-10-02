@@ -15,5 +15,6 @@ export enum Modal {
     FeatureDullDoor,
     ServerSettings,
     ClientDeployed,
-    FeatureFullRoomIndex
+    FeatureFullRoomIndex,
+    HappeningNow
 }
