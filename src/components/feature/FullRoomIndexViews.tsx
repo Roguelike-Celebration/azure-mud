@@ -27,9 +27,9 @@ export default function FullRoomIndexModalView (props: { rooms: Room[] }) {
       <p>Examples:</p>
       <ul>
         <li key='example-0'><em>/go hiddenPortalRoom</em> utilizes the true name to return here</li>
-        <li key='example-1'><em>/move leap into the shimmering portal</em> utilizes the name of the destination ('leap into the shimmering portal') from the adjacent room (here)</li>
+        <li key='example-1'><em>/move leap into the shimmering portal</em> utilizes the name of the destination (&apos;leap into the shimmering portal&apos;) from the adjacent room (here)</li>
         <li key='example-2'><em>/move Unconferencing: Sokoban</em> utilizes the first common name</li>
-        <li key='example-3'><em>/go the artists' atelier</em> utilizes the second common name</li>
+        <li key='example-3'><em>/go the artists&apos; atelier</em> utilizes the second common name</li>
       </ul>
       <table>
         <tbody>
@@ -40,11 +40,11 @@ export default function FullRoomIndexModalView (props: { rooms: Room[] }) {
           </tr>
           {
             props.rooms.map((e) => {
-            return <tr key={e.id}>
-              <td key={`common-1-${e.id}`}>{e.name}</td>
-              <td key={`common-2-${e.id}`}>{e.shortName}</td>
-              <td key={`true-${e.id}`}>{e.id}</td>
-            </tr>
+              return <tr key={e.id}>
+                <td key={`common-1-${e.id}`}>{e.name}</td>
+                <td key={`common-2-${e.id}`}>{e.shortName}</td>
+                <td key={`true-${e.id}`}>{e.id}</td>
+              </tr>
             })
           }
         </tbody>
