@@ -68,7 +68,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     ]
 
     if (privateActionString) {
-      context.bindings.signalRMessages.push({
+      context.bindings.signalRMessages.unshift({
         userId: user.id,
         target: 'privateItemPickup',
         arguments: [privateActionString]
