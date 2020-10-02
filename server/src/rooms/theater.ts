@@ -5,7 +5,7 @@ export default {
   // kawa: fixed typo, changed src to Twitch per issue #89. Note 'parent' will need to be changed if we change domains, see issue #88. Twitch documentation about 'parent': https://discuss.dev.twitch.tv/t/twitch-embedded-player-updates-in-2020/23956
   description: `
         A stage, confusingly decorated with Halloween skulls and streamers. There are a few dozen flimsy metal chairs you can sit in, plus some comfy couches in the back. 
-        You can leave to the [[kitchen]], the [[bar]], the [[foyer]], the [[@-sign statue->statue]], or clamber into the [[shipping container->shippingContainer]].
+        You can leave to the [[kitchen]], the [[bar]], the [[foyer]], the [[@-sign statue->statue]], the [[unconferencing rooms->unconference]], or clamber into the [[shipping container->shippingContainer]].
         <br/><br/>
         <div id="iframes" style="margin: auto;">
           <iframe width="560" height="315" src="https://www.youtube.com/embed/live_stream?channel=UCKv_QzXft4mD6TXmQBZtzIA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

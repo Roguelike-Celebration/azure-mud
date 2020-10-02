@@ -1,8 +1,8 @@
 export const unconference = {
   id: 'unconference',
-  displayName: 'Unconferencing Room',
-  shortName: 'the unconferencing room',
-  description: 'Winding corridors lead to a large dungeon-like room. Sticky notes and magic markers are piled up on tables along with assorted adventuring gear. White banners with blocky black text label several hallways leading to the unconferencing rooms - [[Minetown->minetown]], [[Oracle->oracle]], [[Sokoban->sokoban]], [[Castle->castle]], [[Vlad\'s Tower->tower]], and [[Astral Plane->astralPlane]]. You can also return back to the [[lounge]].',
+  displayName: 'Unconferencing Lobby',
+  shortName: 'the unconferencing lobby',
+  description: 'Winding corridors lead to a large dungeon-like room. Sticky notes and magic markers are piled up on tables along with assorted adventuring gear. White banners with blocky black text label several hallways leading to the unconferencing rooms - [[Minetown->minetown]], [[Oracle->oracle]], [[Sokoban->sokoban]], [[Castle->castle]], [[Vlad\'s Tower->tower]], and [[Astral Plane->astralPlane]]. You can also return back to the [[theater]].',
   allowsMedia: true,
   hasNoteWall: true,
   noteWallData: {
