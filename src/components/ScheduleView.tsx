@@ -6,7 +6,7 @@ export interface ScheduleEntry {
   roomIds: string[]
 }
 
-function ScheduleEntry(time: string, day: number, text: string, roomIds?: string[]) {
+function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[]) {
   const dayOneDate = (time) => new Date(`2020-10-03T${time}:00.000-07:00`)
   const dayTwoDate = (time) => new Date(`2020-10-04T${time}:00.000-07:00`)
 
@@ -40,7 +40,7 @@ export const ScheduleEntries = [
   ScheduleEntry('16:30', 1, 'Herbert Wolverson: Procedural Map Generation Techniques', ['theater']),
   ScheduleEntry('17:00', 1, 'bhauth: What Makes *Dungeon Crawl: Stone Soup* a Good Game?', ['theater']),
   ScheduleEntry('17:30', 1, 'Delve Bros: Help Me Steal the Mona Lisa', ['theater']),
-  ScheduleEntry('18:30', 1, 'Game Showcase / Unconferencing #2 / Afterparty', ['northShowcaseHall', 'eastShowcaseHall', 'southShowcaseHall','westShowcaseHall', 'unconference']),
+  ScheduleEntry('18:30', 1, 'Game Showcase / Unconferencing #2 / Afterparty', ['northShowcaseHall', 'eastShowcaseHall', 'southShowcaseHall', 'westShowcaseHall', 'unconference']),
   ScheduleEntry('19:30', 1, 'Doors Close')
 ]
 
@@ -68,18 +68,18 @@ export const ScheduleEntries = [
 
 export default function ScheduleView () {
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
-  const userTimeZone = formatter.resolvedOptions().timeZone;
+  const userTimeZone = formatter.resolvedOptions().timeZone
 
   const rows = ScheduleEntries.flatMap(r => {
-    if(r.text === 'Break') {
-      return [(<tr><th colSpan={2}><hr /></th></tr>),
-        (<tr><td>{formatter.format(r.time)}</td><td>**** BREAK ****</td></tr>),
-        (<tr><th colSpan={2}><hr /></th></tr>),]
+    if (r.text === 'Break') {
+      return [(<tr><th className='break' colSpan={2}><hr /></th></tr>),
+        (<tr><td className='time'>{formatter.format(r.time)}</td><td className='segment'>**** BREAK ****</td></tr>),
+        (<tr><th className='break' colSpan={2}><hr /></th></tr>)]
     } else {
       return [(
         <tr key={formatter.format(r.time)}>
-          <td>{formatter.format(r.time)}</td>
-          <td>{r.text}</td>
+          <td className='time'>{formatter.format(r.time)}</td>
+          <td className='segment'>{r.text}</td>
         </tr>
       )]
     }

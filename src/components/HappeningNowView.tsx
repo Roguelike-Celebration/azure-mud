@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
-import { roomData } from "../../server/src/rooms"
-import { HappeningNowEntry } from "../../server/src/types"
-import { HideModalAction } from "../Actions"
-import { DispatchContext } from "../App"
-import { moveToRoom } from "../networking"
-import { Room } from "../room"
-import { ScheduleEntries } from "./ScheduleView"
+import React, { useContext } from 'react'
+import { roomData } from '../../server/src/rooms'
+import { HappeningNowEntry } from '../../server/src/types'
+import { HideModalAction } from '../Actions'
+import { DispatchContext } from '../App'
+import { moveToRoom } from '../networking'
+import { Room } from '../room'
+import { ScheduleEntries } from './ScheduleView'
 
 // Apparently reverse() does an actual reversal! WELL. All right then, Javascript.
 const ReversedScheduleEntries = [...ScheduleEntries].reverse()
@@ -20,7 +20,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
 
   const moveAndClose = (roomId: string) => {
     if (!roomData[roomId]) {
-      console.error("Can't go to room " + roomId + " from link in happening now view, no such room!")
+      console.error('Can\'t go to room ' + roomId + ' from link in happening now view, no such room!')
     } else {
       moveToRoom(roomId)
       dispatch(HideModalAction())
@@ -56,21 +56,21 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
       {currentlyScheduledElement}
       <h2>Other Live Activities</h2>
       <ul>
-      {
-        props.entries.map((e) => {
-          if (e.roomId) {
-            return <li key={e.text}>
-              <button id={`button-${e.text}`} onClick={() => moveAndClose(e.roomId)} className='link-styled-button'>{e.text}</button>
-            </li>
-          } else if (e.externalLink) {
-            return <li key={e.text}>
-              <a className='nav-item' href={e.externalLink} target='_blank' rel='nofollow noopener noreferrer'>{e.text}</a>
-            </li>
-          } else {
-            return <li key={e.text}>{e.text}</li>
-          }
-        })
-      }
+        {
+          props.entries.map((e) => {
+            if (e.roomId) {
+              return <li key={e.text}>
+                <button id={`button-${e.text}`} onClick={() => moveAndClose(e.roomId)} className='link-styled-button'>{e.text}</button>
+              </li>
+            } else if (e.externalLink) {
+              return <li key={e.text}>
+                <a className='nav-item' href={e.externalLink} target='_blank' rel='nofollow noopener noreferrer'>{e.text}</a>
+              </li>
+            } else {
+              return <li key={e.text}>{e.text}</li>
+            }
+          })
+        }
       </ul>
     </div>
   )

@@ -32,6 +32,14 @@
     max-height: unset;
 }
 
+td.time {
+    white-space: nowrap;
+}
+
+th.break {
+    padding: 0%;
+}
+
 #close-button {
     position: absolute;
     padding: 30px;
