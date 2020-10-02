@@ -1,1 +1,2 @@
-export const MAX_MESSAGE_LENGTH = 631
+export const MESSAGE_MAX_LENGTH = 631
+export const MESSAGE_MAX_WORD_LENGTH = 60

@@ -5,7 +5,7 @@ import { shout } from '../src/shout'
 import { look } from '../src/look'
 import authenticate from '../src/authenticate'
 import { getUserIdForUsername } from '../src/user'
-import { MAX_MESSAGE_LENGTH } from '../src/config'
+import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../src/config'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -27,12 +27,17 @@ const httpTrigger: AzureFunction = async function (
         body: 'Include a user ID and a message!'
       }
       return
-    } else if (message.length > MAX_MESSAGE_LENGTH) { // Matches MAX_MESSAGE_LENGTH from client's message.ts - unsure how to share
+    } else if (message.length > MESSAGE_MAX_LENGTH) {
       context.res = {
         status: 400,
         body: 'Message length too long!'
       }
       return
+    } else if (message.split(' ').find((e: string) => e.length > MESSAGE_MAX_WORD_LENGTH)) {
+      context.res = {
+        status: 400,
+        body: 'Message contains a word that is too long!'
+      }
     }
 
     const moveMatch = /^\/(go|move) (.+)/.exec(message)

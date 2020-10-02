@@ -38,7 +38,7 @@ import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
-import { MAX_MESSAGE_LENGTH } from '../server/src/config'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
 const axios = require('axios').default
 
@@ -159,8 +159,8 @@ export async function moveToRoom (roomId: string) {
 
 export async function sendChatMessage (id: string, text: string) {
   // If it's over the character limit
-  if (text.length > MAX_MESSAGE_LENGTH) {
-    console.log(`Sorry, can't send messages over ${MAX_MESSAGE_LENGTH} characters!`)
+  if (text.length > MESSAGE_MAX_LENGTH) {
+    console.log(`Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`)
     return
   }
 
