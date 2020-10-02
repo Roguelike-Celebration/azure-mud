@@ -14,6 +14,7 @@ import { Modal } from '../modals'
 import { SpecialFeature } from '../../server/src/rooms'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
+import { linkActions } from '../linkActions'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
@@ -190,15 +191,6 @@ function intersperse (arr, sep) {
     },
     [arr[0]]
   )
-}
-
-const linkActions = {
-  generateFood: () => {
-    pickUpRandomItemFromList('vendingMachineFood')
-  },
-  pickUpPuppy: () => {
-    pickUpItem('a tiny puppy')
-  }
 }
 
 function parseDescription (description: string, roomData: { [roomId: string]: Room }): string {
