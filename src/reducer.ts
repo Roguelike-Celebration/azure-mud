@@ -495,6 +495,11 @@ export default (oldState: State, action: Action): State => {
     }
   }
 
+  if (action.type === ActionType.CommandMessage) {
+    const message = createCommandMessage(action.value)
+    addMessage(state, message)
+  }
+
   return state
 }
 

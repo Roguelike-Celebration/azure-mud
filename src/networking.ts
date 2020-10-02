@@ -32,7 +32,7 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  MediaReceivedSpeakingDataAction, ShowModalAction
+  MediaReceivedSpeakingDataAction, ShowModalAction, CommandMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
@@ -105,6 +105,14 @@ export async function updateProfileColor (userId: string, color: string) {
 export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {
   const result = await callAzureFunction('isRegistered')
   return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod, isBanned: result.isBanned }
+}
+
+export async function pickUpRandomItemFromList (listName: string) {
+  await callAzureFunction('pickUpItem', { list: listName })
+}
+
+export async function pickUpItem (item: string) {
+  await callAzureFunction('pickUpItem', { item })
 }
 
 // Post-it notes
@@ -287,6 +295,14 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('whisper', (otherId, message) => {
     dispatch(WhisperAction(otherId, message))
+  })
+
+  connection.on('whisper', (otherId, message) => {
+    dispatch(WhisperAction(otherId, message))
+  })
+
+  connection.on('privateItemPickup', (message) => {
+    dispatch(CommandMessageAction(message))
   })
 
   connection.on('playerLeft', (name, to) => {

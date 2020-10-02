@@ -2,16 +2,16 @@ import * as React from 'react'
 import { Room } from '../room'
 import {
   moveToRoom,
-  getNetworkMediaChatStatus
+  getNetworkMediaChatStatus, pickUpRandomItemFromList, pickUpItem
 } from '../networking'
 import NameView from './NameView'
-import { DispatchContext } from '../App'
+import { DispatchContext, UserMapContext } from '../App'
 import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction } from '../Actions'
 import { FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
-import { SpecialFeature as SpecialFeature } from '../../server/src/rooms'
+import { SpecialFeature } from '../../server/src/rooms'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 
@@ -35,6 +35,12 @@ export default function RoomView (props: Props) {
       e.target && e.target.getAttribute && e.target.getAttribute('data-room')
     if (roomId) {
       moveToRoom(roomId)
+      return
+    }
+
+    const actionName = e.target && e.target.getAttribute && e.target.getAttribute('data-action')
+    if (actionName) {
+      linkActions[actionName]()
     }
   }
 
@@ -108,6 +114,8 @@ export default function RoomView (props: Props) {
 }
 
 const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[] }) => {
+  const { userMap, myId } = React.useContext(UserMapContext)
+
   let { users, userId, videoUsers } = props
 
   // Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
@@ -124,12 +132,17 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
     }
 
     const userViews = users.map((u, idx) => {
+      const user = userMap[u]
+      console.log(u, user)
+      if (!user) { return <span /> }
       const id = `presence-${idx}`
-      if (videoUsers && videoUsers.includes(u)) {
-        return <span><NameView userId={u} id={id} key={id} /> <FaVideo /></span>
-      } else {
-        return <NameView userId={u} id={id} key={id} />
-      }
+      return (
+        <span key={`room-presence-${id}`}>
+          <NameView userId={u} id={id} key={id} />
+          {videoUsers && videoUsers.includes(u) ? <FaVideo /> : null}
+          {user.item ? ` (holding ${user.item})` : null}
+        </span>
+      )
     })
 
     if (users.length === 1) {
@@ -179,6 +192,15 @@ function intersperse (arr, sep) {
   )
 }
 
+const linkActions = {
+  generateFood: () => {
+    pickUpRandomItemFromList('vendingMachineFood')
+  },
+  pickUpPuppy: () => {
+    pickUpItem('a tiny puppy')
+  }
+}
+
 function parseDescription (description: string, roomData: { [roomId: string]: Room }): string {
   // eslint-disable-next-line no-useless-escape
   const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
@@ -186,11 +208,14 @@ function parseDescription (description: string, roomData: { [roomId: string]: Ro
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     const room = roomData[roomId]
-    if (!room) {
+    if (room) {
+      const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
+      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
+    } else if (linkActions[roomId]) {
+      return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`
+    } else {
       console.log(`Dev warning: tried to link to room ${roomId}, which doesn't exist`)
     }
-    const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
-    return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
   })
 
   description = description.replace(simpleLinkRegex, (match, roomId) => {

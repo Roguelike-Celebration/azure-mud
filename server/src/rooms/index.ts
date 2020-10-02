@@ -15,7 +15,8 @@ export interface NoteWallData {
 
 export enum SpecialFeature {
   RainbowDoor = 'RAINBOW_DOOR',
-  DullDoor = 'DULL_DOOR'
+  DullDoor = 'DULL_DOOR',
+  VendingMachine = 'VENDING_MACHINE'
 }
 
 export interface Room {
@@ -63,8 +64,10 @@ export const roomData: { [name: string]: Room } = {
     id: 'kitchen',
     displayName: 'Kitchen',
     shortName: 'the kitchen',
-    description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. On the island are a few samovars of coffee — don't worry, there's plenty of decaf too — and hot water for tea, plus a few trays of pastries.
-      There are three tables you can sit at, labelled [[A->kitchenTableA]], [[B->kitchenTableB]], and [[C->kitchenTableC]]. You can also walk over to the [[lounge]], the [[bar]], the [[dance floor->danceFloor]], the [[@-sign statue->statue]] or grab a seat in the [[main theater area->theater]]. You can also climb into the [[shipping container->shippingContainer]].`,
+    description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. There are empty samovars of coffee and tea sitting on the counter and a well-picked-over catering tray that, based on the crumbs, once contained pastries.<br/><br/>
+    There is, however, a curious-looking vending machine labelled "Munxip's Magnifient Munchies" and a button you can press marked [[Get Random Food->generateFood]].
+    <br/><br/>
+      There are three tables you can sit at, labelled [[A->kitchenTableA]], [[B->kitchenTableB]], and [[C->kitchenTableC]]. You can also walk over to the [[lounge]], the [[bar]], the [[dance floor->danceFloor]], the [[@-sign statue->statue]] or grab a seat in the [[main theater area->theater]]. Finally, you can climb into the [[shipping container->shippingContainer]].`,
     allowsMedia: true,
     hasNoteWall: true
   },
@@ -144,6 +147,14 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the haunted foyer',
     description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels ~off~ about this place.<br/><br/>
     You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`
+  },
+  swag: {
+    id: 'swag',
+    displayName: 'Swag Table',
+    shortName: 'the swag table',
+    description: `A table full of fun swag. And, curiously, a [[tiny little puppy->pickUpPuppy]].
+    <br/><br/>
+    From here, you can walk back to the rest of the [[foyer]].`
   },
   atelier: {
     id: 'atelier',
