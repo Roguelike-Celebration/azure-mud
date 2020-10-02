@@ -15,7 +15,7 @@ export default {
             <p>Gesuido is a Roguelike game for iPhone that's not too dissimilar in gameplay to the original Rogue, but it features early 
               Macintosh-style black and white tile graphics and cute illustrated magic cards. The game is still developing, but I’ve made a beta 
               version available for Roguelike Celebration 2020 attendees. Feedbacks are welcome. You can find it 
-              <a href="https://www.google.com" target="_blank">[beta link will be added when available]</a>!
+              <a href="https://testflight.apple.com/join/3tcSPCbC" target="_blank">here</a>!
             </p>
           </div>
           <img src="images/gesuido/gesuido_ss01.png" alt="Gesuido screenshot 1" style="width: 30%; object-fit: scale-down;">
