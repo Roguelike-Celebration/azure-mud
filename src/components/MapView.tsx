@@ -69,7 +69,7 @@ export default function MapView (props: Props) {
 
   if (!roomData) { return <div/> }
 
-  // mapText = mapText.replace('$0', `(${props.roomData.danceFloor.users.length})`)
+  let map = mapText
 
   presenceMapping.forEach((roomId, idx) => {
     let replaceString = '(0)'
@@ -79,8 +79,7 @@ export default function MapView (props: Props) {
     }
 
     replaceString = replaceString.padEnd(4, '.')
-
-    mapText = mapText.replace(`(${idx.toString().padStart(2, '0')})`, replaceString)
+    map = map.replace(`(${idx.toString().padStart(2, '0')})`, replaceString)
   })
 
   const handleClick = (e) => {
@@ -111,12 +110,12 @@ export default function MapView (props: Props) {
   return <div className='map' style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
     <pre style={{ letterSpacing: '2px' }}><code>
-      {mapText}
+      {map}
     </code></pre>
   </div>
 }
 
-let mapText = `                ┌────────────────────────┐
+const mapText = `                ┌────────────────────────┐
 ┌──────────┐    │........................│                    ┌─────────────────────────┐
 │..........│    │......Kitchen (01)......│                    │.........................│
 │..Quiet ..│    │........................│                    │.........................│
@@ -172,8 +171,8 @@ const presenceMapping = [
   'atelier',
   'statue',
   'northShowcaseHall',
-  'eastShowcaseHall',
   'westShowcaseHall',
+  'eastShowcaseHall',
   'southShowcaseHall',
   'study',
   'swag',
