@@ -6,20 +6,8 @@ import { look } from '../src/look'
 import authenticate from '../src/authenticate'
 import { getUserIdForUsername } from '../src/user'
 import { MAX_MESSAGE_LENGTH } from '../src/config'
+import { dance } from '../src/dance'
 
-const danceList = [
-  'drops to the floor to do the Purple Worm',
-  'busts out the Green Slime, undulating wildly',
-  'channels their inner jackal and howls at the moon',
-  'starts doing the Yak dance (it’s real, look it up!)',
-  'moves their arms in a demonstration of ‘Big Fish, Little Fish, Cardboard Box’',
-  'stomps their feet in some sort of jacked-up footwork… Ubi folk dancing?',
-  'pulls a leek out of *somewhere* and starts spinning it around',
-  'finds a couple glowsticks and starts waving them to the beat',
-  'nods their head to the beat. Feels good.',
-  'pulls off some stair dancing technique - good at evading monsters, but a little crass, don\'t you think?',
-  'does the gridderbug! Only cardinal directions, how curious.'
-]
 const fortuneList = [
   'Always be aware of the phase of the moon!',
   'Amulets of Yendor are hard to make.  Even for a wand of wishing.',
@@ -117,14 +105,8 @@ const httpTrigger: AzureFunction = async function (
 
     const danceMatch = /^\/(dance)(.*)/.exec(message)
     if (danceMatch) {
-      context.bindings.signalRMessages = [
-        {
-          groupName: user.roomId,
-          target: 'dance',
-          arguments: [req.body.id, user.id, danceList[Math.floor(Math.random() * danceList.length)]]
-        }
-      ]
-      return
+      dance(user, req.body.id, context);
+      return;
     }
 
     const interactMatch = /^\/(interact|get) (.*)/.exec(message)
