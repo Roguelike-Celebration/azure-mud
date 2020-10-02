@@ -8,17 +8,17 @@
   --gray-text: #b5b5b5;
   --alternate-background: #333333;
   --alternate-translucent: rgba(51,51,51,0.8);
-  --green: lightseagreen;
+  --green: #20b2aa;
   --highlight-line: #666666;
   --mod-line: #1c1c1c;
   --pink: lightpink;
-  --blue: lightskyblue;
-  --cyan: cyan;
-  --magenta: darkmagenta;
-  --orange: orange;
-  --red: red;
-  --violet: violet;
-  --yellow: yellow;
+  --blue: #87ceeb;
+  --cyan: #00ffff;
+  --magenta: #ff00ff;
+  --orange: #ffa500;
+  --red: #ff0000;
+  --violet: #ee82ee;
+  --yellow: #ffff00;
 }
 
 /* solarized dark */
