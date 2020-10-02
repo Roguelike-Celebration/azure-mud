@@ -4,6 +4,7 @@ import eastShowcaseHall from './eastShowcaseHall'
 import westShowcaseHall from './westShowcaseHall'
 import { unconference, minetown, oracle, tower, castle, sokoban, astralPlane } from './unconfRooms'
 import theater from './theater'
+import { loungeDungeonRoomData } from './loungeDungeon'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -16,6 +17,7 @@ export interface NoteWallData {
 export enum SpecialFeature {
   RainbowDoor = 'RAINBOW_DOOR',
   DullDoor = 'DULL_DOOR',
+  FullRoomIndex = 'FULL_ROOM_INDEX',
   VendingMachine = 'VENDING_MACHINE'
 }
 
@@ -47,7 +49,7 @@ export interface Room {
   specialFeatures?: SpecialFeature[]
 }
 
-export const roomData: { [name: string]: Room } = {
+const indexRoomData: { [name: string]: Room } = {
   theater,
   northShowcaseHall,
   eastShowcaseHall,
@@ -106,7 +108,7 @@ export const roomData: { [name: string]: Room } = {
     id: 'lounge',
     displayName: 'Lounge',
     shortName: 'the lounge',
-    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing video footage of roguelikes, and a fridge full of La Croix. <br/><br/>From here, you can get to the [[dance floor->danceFloor]] or the [[kitchen]].',
+    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing video footage of roguelikes, and a fridge full of La Croix. <br/><br/>From here, you can get to the [[drawing room->loungeDungeonDrawingRoom]], the [[dance floor->danceFloor]], or the [[kitchen]].',
     allowsMedia: true
   },
   statue: {
@@ -176,5 +178,19 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the engineer\'s workbench',
     description: `A cluttered workspace that clearly belongs to someone who loves to tinker. A dim hum fills the room from server racks sitting in the corner, and there are blinking lights coming from every crevice. A blueprint sitting on the workbench outlines intricate plans for something called an 'entity-component system'.<br/><br/>
     From here, you can get to the [[proc-gen study->study]] or the [[artists' atelier->atelier]].`
+  },
+  hiddenPortalRoom: {
+    id: 'hiddenPortalRoom',
+    displayName: 'Portal Room',
+    shortName: 'the portal room',
+    description: `In the center of the room is a shimmering portal. Next to the portal is a pedestal with an open book.<br/><br/>
+      Once you've finished here, you can [[leap into the shimmering portal->statue]]`,
+    specialFeatures: [SpecialFeature.FullRoomIndex],
+    hidden: true
   }
+}
+
+export const roomData: { [name: string]: Room } = {
+  ...indexRoomData,
+  ...loungeDungeonRoomData
 }
