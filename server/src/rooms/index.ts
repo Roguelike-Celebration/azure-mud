@@ -15,7 +15,8 @@ export interface NoteWallData {
 
 export enum SpecialFeature {
   RainbowDoor = 'RAINBOW_DOOR',
-  DullDoor = 'DULL_DOOR'
+  DullDoor = 'DULL_DOOR',
+  FullRoomIndex = 'FULL_ROOM_INDEX'
 }
 
 export interface Room {
@@ -267,7 +268,9 @@ export const roomData: { [name: string]: Room } = {
     id: 'hiddenPortalRoom',
     displayName: 'Portal Room',
     shortName: 'the portal room',
-    description: `In the center of the room is a shimmering portal. Next to the portal is a pedestal with an open book.`,
+    description: `In the center of the room is a shimmering portal. Next to the portal is a pedestal with an open book.<br/><br/>
+      Once you've finished here, you can [[leap into the shimmering portal->statue]]`,
+    specialFeatures: [SpecialFeature.FullRoomIndex],
     hidden: true
   }
 }

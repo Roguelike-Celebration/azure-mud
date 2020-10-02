@@ -40,6 +40,7 @@ import RainbowGateModalView from './components/feature/RainbowGateViews'
 import DullDoorModalView from './components/feature/DullDoorViews'
 import ServerSettingsView from './components/ServerSettingsView'
 import ClientDeployedModal from './components/ClientDeployedModal'
+import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -248,6 +249,10 @@ const App = () => {
     }
     case Modal.FeatureDullDoor: {
       innerModalView = <DullDoorModalView />
+      break
+    }
+    case Modal.FeatureFullRoomIndex: {
+      innerModalView = <FullRoomIndexModalView rooms={Object.values(state.roomData)}/>
       break
     }
   }
