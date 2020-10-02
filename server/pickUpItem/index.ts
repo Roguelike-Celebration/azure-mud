@@ -5,7 +5,7 @@ import DB from '../src/redis'
 import authenticate from '../src/authenticate'
 import { minimizeUser, updateUserProfile } from '../src/user'
 import generators from '../src/generators'
-import itemWhitelist from '../src/itemWhitelist'
+import allowedItems from '../src/allowedItems'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await authenticate(context, req, false, async (user) => {
@@ -36,7 +36,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
       context.log(privateActionString)
     } else if (req.body && req.body.item) {
       item = req.body.item
-      if (!itemWhitelist.includes(item)) {
+      if (!allowedItems.includes(item)) {
         context.res = {
           status: 400,
           body: { error: 'You included an invalid item' }
