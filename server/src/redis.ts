@@ -114,7 +114,6 @@ const Redis: Database = {
   },
 
   async setUserProfile (userId: string, data: User) {
-    delete data.isMod
     return await setCache(profileKeyForUser(userId), JSON.stringify(data))
   },
 

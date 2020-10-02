@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "redis": "^3.0.2",
+    "tracery-grammar": "^2.7.4",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
