@@ -70,13 +70,19 @@ export default function ScheduleView () {
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
   const userTimeZone = formatter.resolvedOptions().timeZone;
 
-  const rows = ScheduleEntries.map(r => {
-    return (
-      <tr key={formatter.format(r.time)}>
-        <td>{formatter.format(r.time)}</td>
-        <td>{r.text}</td>
-      </tr>
-    )
+  const rows = ScheduleEntries.flatMap(r => {
+    if(r.text === 'Break') {
+      return [(<tr><th colSpan={2}><hr /></th></tr>),
+        (<tr><td>{formatter.format(r.time)}</td><td>**** BREAK ****</td></tr>),
+        (<tr><th colSpan={2}><hr /></th></tr>),]
+    } else {
+      return [(
+        <tr key={formatter.format(r.time)}>
+          <td>{formatter.format(r.time)}</td>
+          <td>{r.text}</td>
+        </tr>
+      )]
+    }
   })
 
   return (
@@ -84,7 +90,9 @@ export default function ScheduleView () {
       <h1>Schedule</h1>
       <p>Times below should be in your local time zone. We believe your time zone is {userTimeZone}.</p>
       <table>
-        {rows}
+        <tbody>
+          {rows}
+        </tbody>
       </table>
     </div>
   )
