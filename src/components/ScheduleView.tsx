@@ -6,7 +6,7 @@ export interface ScheduleEntry {
   roomIds: string[]
 }
 
-function ScheduleEntry(time: string, day: number, text: string, roomIds?: string[]) {
+function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[]) {
   const dayOneDate = (time) => new Date(`2020-10-03T${time}:00.000-07:00`)
   const dayTwoDate = (time) => new Date(`2020-10-04T${time}:00.000-07:00`)
 
@@ -30,7 +30,8 @@ export const ScheduleEntries = [
   ScheduleEntry('10:30', 1, 'Unconferencing #1', ['unconference']),
   ScheduleEntry('11:30', 1, 'Andrew Aversa: The End of Permadeath', ['theater']),
   ScheduleEntry('12:00', 1, 'Tyriq Plummer: YASDery Loves Company: Multiplayer in Traditional Roguelikes', ['theater']),
-  ScheduleEntry('12:30', 1, 'Break'),
+  ScheduleEntry('12:30', 1, 'Leif Bloomquist: Dungeon of The Rogue Daemon: A multiplayer roguelike for retro and modern platforms', ['theater']),
+  ScheduleEntry('12:40', 1, 'Break'),
   ScheduleEntry('13:30', 1, 'Lightning Talks 1: Rosalind Miles Chapman, Julian K. Jarboe, Albert Ford, Dustin Freeman, Andrew Clifton, Mark Gritter', ['theater']),
   ScheduleEntry('14:30', 1, 'Darren Grey: What Is A *Rogue* Like?', ['theater']),
   ScheduleEntry('15:00', 1, 'Andrea Roberts: Designing a Roguelike for People Who\'ve Never Played Roguelikes', ['theater']),
@@ -39,7 +40,7 @@ export const ScheduleEntries = [
   ScheduleEntry('16:30', 1, 'Herbert Wolverson: Procedural Map Generation Techniques', ['theater']),
   ScheduleEntry('17:00', 1, 'bhauth: What Makes *Dungeon Crawl: Stone Soup* a Good Game?', ['theater']),
   ScheduleEntry('17:30', 1, 'Delve Bros: Help Me Steal the Mona Lisa', ['theater']),
-  ScheduleEntry('18:30', 1, 'Game Showcase / Unconferencing #2 / Afterparty', ['northShowcaseHall', 'eastShowcaseHall', 'southShowcaseHall','westShowcaseHall', 'unconference']),
+  ScheduleEntry('18:30', 1, 'Game Showcase / Unconferencing #2 / Afterparty', ['northShowcaseHall', 'eastShowcaseHall', 'southShowcaseHall', 'westShowcaseHall', 'unconference']),
   ScheduleEntry('19:30', 1, 'Doors Close')
 ]
 
@@ -48,7 +49,7 @@ export const ScheduleEntries = [
 //   ScheduleEntry('09:15', 2, 'Intro / Housekeeping', ['theater']),
 //   ScheduleEntry('09:30', 2, 'Lightning Talks 2: Xalavier Nelson Jr., Max Kreminski, Clarissa Littler, Nicholas Feinberg, Tanya X. Short', ['theater']),
 //   ScheduleEntry('10:30', 2, 'Game Showcase / Unconferencing #3', ['northShowcaseHall', 'eastShowcaseHall', 'southShowcaseHall','westShowcaseHall', 'unconference']),
-//   ScheduleEntry('11:00', 2, 'The Game Band: A Mysterious Blaseball Spectacular', ['theater']),
+//   ScheduleEntry('11:00', 2, 'Joel Clark: A Perfectly Mundane Blaseball Experience', ['theater']),
 //   ScheduleEntry('11:30', 2, 'Cat Manning: How To Build A Character System That Doesn\'t Fall Apart Two Turns Later (with apologies to PKD)', ['theater']),
 //   ScheduleEntry('12:00', 2, 'Gabriel Koenig: Good Mutation/Bad Mutation: Player Agency in Procedural Generation', ['theater']),
 //   ScheduleEntry('12:30', 2, 'Break'),
@@ -60,29 +61,38 @@ export const ScheduleEntries = [
 //   ScheduleEntry('16:00', 2, 'Julian Day: Poetry at the Edge of Roguelikes: Writing Around Iterative Media', ['theater']),
 //   ScheduleEntry('16:30', 2, 'Todd Furmanski: Mysty Roguelikes, or: Using First Person Point-and-Click Paradigms with Realtime Graphics and Simulation', ['theater']),
 //   ScheduleEntry('17:00', 2, 'Lightning Talks 3: Lee Tusman, Alexander Martin, Josh Grams, Adrian Herbez, Younès Rabii, Duke Dougal' ['theater']),
-//   ScheduleEntry('18:00', 2, 'Leif Bloomquist: Multiplayer Roguelike Gaming!', ['theater']),
-//   ScheduleEntry('18:30', 2, 'Closing Announcements', ['theater']),
-//   ScheduleEntry('18:35', 2, 'Unconferencing #4', ['unconference']),
+//   ScheduleEntry('18:00', 2, 'Closing Announcements', ['theater']),
+//   ScheduleEntry('18:15', 2, 'Unconferencing #4', ['unconference']),
 //   ScheduleEntry('19:30', 2, 'Wrap)]
 // ]
 
 export default function ScheduleView () {
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
+  const userTimeZone = formatter.resolvedOptions().timeZone
 
-  const rows = ScheduleEntries.map(r => {
-    return (
-      <tr key={formatter.format(r.time)}>
-        <td>{formatter.format(r.time)}</td>
-        <td>{r.text}</td>
-      </tr>
-    )
+  const rows = ScheduleEntries.flatMap(r => {
+    if (r.text === 'Break') {
+      return [(<tr><th className='break' colSpan={2}><hr /></th></tr>),
+        (<tr><td className='time'>{formatter.format(r.time)}</td><td className='segment'>**** BREAK ****</td></tr>),
+        (<tr><th className='break' colSpan={2}><hr /></th></tr>)]
+    } else {
+      return [(
+        <tr key={formatter.format(r.time)}>
+          <td className='time'>{formatter.format(r.time)}</td>
+          <td className='segment'>{r.text}</td>
+        </tr>
+      )]
+    }
   })
 
   return (
-    <div>
+    <div id='Schedule'>
       <h1>Schedule</h1>
+      <p>Times below should be in your local time zone. We believe your time zone is {userTimeZone}.</p>
       <table>
-        {rows}
+        <tbody>
+          {rows}
+        </tbody>
       </table>
     </div>
   )

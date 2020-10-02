@@ -64,10 +64,10 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
       <h2>Current Entries</h2>
       {
         props.serverSettings.happeningNowEntries.map((e) => {
-            return <li key={e.text}>
-              {JSON.stringify(e)}
-              <button id={'delete-'+e.text} onClick={() => deleteHappeningNowEntry(e)}>Delete</button>
-            </li>
+          return <li key={e.text}>
+            {JSON.stringify(e)}
+            <button id={'delete-' + e.text} onClick={() => deleteHappeningNowEntry(e)}>Delete</button>
+          </li>
         })
       }
       <div className='form' id='addHappeningNowForm'>
