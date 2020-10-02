@@ -30,7 +30,8 @@ export const ScheduleEntries = [
   ScheduleEntry('10:30', 1, 'Unconferencing #1', ['unconference']),
   ScheduleEntry('11:30', 1, 'Andrew Aversa: The End of Permadeath', ['theater']),
   ScheduleEntry('12:00', 1, 'Tyriq Plummer: YASDery Loves Company: Multiplayer in Traditional Roguelikes', ['theater']),
-  ScheduleEntry('12:30', 1, 'Break'),
+  ScheduleEntry('12:30', 1, 'Leif Bloomquist: Dungeon of The Rogue Daemon: A multiplayer roguelike for retro and modern platforms', ['theater']),
+  ScheduleEntry('12:40', 1, 'Break'),
   ScheduleEntry('13:30', 1, 'Lightning Talks 1: Rosalind Miles Chapman, Julian K. Jarboe, Albert Ford, Dustin Freeman, Andrew Clifton, Mark Gritter', ['theater']),
   ScheduleEntry('14:30', 1, 'Darren Grey: What Is A *Rogue* Like?', ['theater']),
   ScheduleEntry('15:00', 1, 'Andrea Roberts: Designing a Roguelike for People Who\'ve Never Played Roguelikes', ['theater']),
@@ -60,9 +61,8 @@ export const ScheduleEntries = [
 //   ScheduleEntry('16:00', 2, 'Julian Day: Poetry at the Edge of Roguelikes: Writing Around Iterative Media', ['theater']),
 //   ScheduleEntry('16:30', 2, 'Todd Furmanski: Mysty Roguelikes, or: Using First Person Point-and-Click Paradigms with Realtime Graphics and Simulation', ['theater']),
 //   ScheduleEntry('17:00', 2, 'Lightning Talks 3: Lee Tusman, Alexander Martin, Josh Grams, Adrian Herbez, Younès Rabii, Duke Dougal' ['theater']),
-//   ScheduleEntry('18:00', 2, 'Leif Bloomquist: Multiplayer Roguelike Gaming!', ['theater']),
-//   ScheduleEntry('18:30', 2, 'Closing Announcements', ['theater']),
-//   ScheduleEntry('18:35', 2, 'Unconferencing #4', ['unconference']),
+//   ScheduleEntry('18:00', 2, 'Closing Announcements', ['theater']),
+//   ScheduleEntry('18:15', 2, 'Unconferencing #4', ['unconference']),
 //   ScheduleEntry('19:30', 2, 'Wrap)]
 // ]
 
