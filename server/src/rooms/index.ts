@@ -90,7 +90,7 @@ export const roomData: { [name: string]: Room } = {
   kitchenTableC: {
     id: 'kitchenTableC',
     displayName: 'Kitchen Table C',
-    shortName: 'table A in the kitchen',
+    shortName: 'table C in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
       From here, you can see tables [[A->kitchenTableA]] or [[B->kitchenTableB]], and the [[general kitchen area->kitchen]]`,
     allowsMedia: true,
