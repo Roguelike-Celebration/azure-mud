@@ -93,8 +93,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'table A in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
       From here, you can see tables [[A->kitchenTableA]] or [[B->kitchenTableB]], and the [[general kitchen area->kitchen]]`,
-    allowsMedia: true,
-    specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
+    allowsMedia: true
   },
   bar: {
     id: 'bar',
@@ -146,7 +145,8 @@ export const roomData: { [name: string]: Room } = {
     displayName: 'Haunted Foyer',
     shortName: 'the haunted foyer',
     description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels ~off~ about this place.<br/><br/>
-    You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`
+    You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`,
+    specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
   },
   swag: {
     id: 'swag',
