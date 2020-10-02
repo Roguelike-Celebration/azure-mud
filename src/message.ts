@@ -38,48 +38,60 @@ export function isDeletable (message: Message): message is ChatMessage | EmoteMe
 export interface ConnectedMessage {
   type: MessageType.Connected;
   userId: string;
+  roomId: string;
+  numUsersInRoom: number;
   timestamp: Date;
 }
 
-export const createConnectedMessage = (userId: string): ConnectedMessage => {
-  return { type: MessageType.Connected, userId, timestamp: new Date() }
+export const createConnectedMessage = (userId: string, roomId: string, numUsersInRoom: number): ConnectedMessage => {
+  return { type: MessageType.Connected, userId, roomId, numUsersInRoom, timestamp: new Date() }
 }
 
 export interface DisconnectedMessage {
   type: MessageType.Disconnected;
   userId: string;
+  roomId: string;
+  numUsersInRoom: number;
   timestamp: Date;
 }
 
 export const createDisconnectedMessage = (
-  userId: string
+  userId: string,
+  roomId: string,
+  numUsersInRoom: number
 ): DisconnectedMessage => {
-  return { type: MessageType.Disconnected, userId, timestamp: new Date() }
+  return { type: MessageType.Disconnected, userId, roomId, numUsersInRoom, timestamp: new Date() }
 }
 
 export interface EnteredMessage {
   type: MessageType.Entered;
   userId: string;
   from: string;
+  roomId: string;
+  numUsersInRoom: number;
   timestamp: Date;
 }
 
 export const createEnteredMessage = (
   userId: string,
-  from: string
+  from: string,
+  roomId: string,
+  numUsersInRoom: number
 ): EnteredMessage => {
-  return { type: MessageType.Entered, userId, from, timestamp: new Date() }
+  return { type: MessageType.Entered, userId, from, roomId, numUsersInRoom, timestamp: new Date() }
 }
 
 export interface LeftMessage {
   type: MessageType.Left;
   userId: string;
   to: string;
+  roomId: string;
+  numUsersInRoom: number;
   timestamp: Date;
 }
 
-export const createLeftMessage = (userId: string, to: string): LeftMessage => {
-  return { type: MessageType.Left, userId, to, timestamp: new Date() }
+export const createLeftMessage = (userId: string, to: string, roomId: string, numUsersInRoom: number): LeftMessage => {
+  return { type: MessageType.Left, userId, to, roomId, numUsersInRoom, timestamp: new Date() }
 }
 
 export interface MovedRoomMessage {

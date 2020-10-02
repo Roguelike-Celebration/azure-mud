@@ -11,6 +11,11 @@ import { FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
+import { SpecialFeature as SpecialFeature } from '../../server/src/rooms'
+import { RainbowGateRoomView } from './feature/RainbowGateViews'
+import { DullDoorRoomView } from './feature/DullDoorViews'
+
+const VIDEO_CHAT_MAX_SIZE = 8
 
 interface Props {
   room: Room;
@@ -62,6 +67,13 @@ export default function RoomView (props: Props) {
           Leave Video Chat
         </button>
       )
+    } else if (room.videoUsers && room.videoUsers.length >= VIDEO_CHAT_MAX_SIZE) {
+      // Maybe make it more transparent? I think this is probably fine, but I'm no UI expert!
+      videoChatButton = (
+        <button id='join-video-chat'>
+          Video Chat Is Full (limit {VIDEO_CHAT_MAX_SIZE})
+        </button>
+      )
     } else {
       videoChatButton = (
         <button onClick={joinVideoChat} id='join-video-chat'>
@@ -71,6 +83,7 @@ export default function RoomView (props: Props) {
     }
   }
 
+  // TODO: Don't hard-code order of features
   /* eslint-disable jsx-a11y/click-events-have-key-events */
   /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
   /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -86,6 +99,8 @@ export default function RoomView (props: Props) {
             : 'Loading current room...'
         }}
       />
+      {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? <RainbowGateRoomView /> : ''}
+      {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.DullDoor) ? <DullDoorRoomView /> : ''}
       {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
       {noteWallView}
     </div>

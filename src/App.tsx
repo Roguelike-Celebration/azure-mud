@@ -3,7 +3,7 @@ import React, { useEffect, createContext } from 'react'
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'
 import InputView from './components/InputView'
-import { connect, getLoginInfo, checkIsRegistered } from './networking'
+import { connect, getLoginInfo, checkIsRegistered, getServerSettings } from './networking'
 import reducer, { State, defaultState } from './reducer'
 import {
   AuthenticateAction,
@@ -24,7 +24,7 @@ import { IconContext } from 'react-icons/lib'
 import { Modal } from './modals'
 import { NoteWallView } from './components/NoteWallView'
 import { ModalView } from './components/ModalView'
-import ThemeSelectorView from './components/ThemeSelectorView'
+import SettingsView from './components/SettingsView'
 import MediaSelectorView from './components/MediaSelectorView'
 import CodeOfConductView from './components/CodeOfConductView'
 import ScheduleView from './components/ScheduleView'
@@ -36,6 +36,10 @@ import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
 import RoomListView from './components/RoomListView'
+import RainbowGateModalView from './components/feature/RainbowGateViews'
+import DullDoorModalView from './components/feature/DullDoorViews'
+import ServerSettingsView from './components/ServerSettingsView'
+import ClientDeployedModal from './components/ClientDeployedModal'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -108,6 +112,7 @@ const App = () => {
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
+          getServerSettings(dispatch)
 
           window.addEventListener('resize', () => {})
         })
@@ -186,8 +191,8 @@ const App = () => {
       )
       break
     }
-    case Modal.ThemeSelector: {
-      innerModalView = <ThemeSelectorView />
+    case Modal.Settings: {
+      innerModalView = <SettingsView />
       break
     }
     case Modal.MediaSelector: {
@@ -227,6 +232,23 @@ const App = () => {
     }
     case Modal.Welcome: {
       innerModalView = <WelcomeModalView />
+      break
+    }
+    case Modal.ServerSettings: {
+      innerModalView = <ServerSettingsView serverSettings={state.serverSettings}/>
+      break
+    }
+    case Modal.ClientDeployed: {
+      innerModalView = <ClientDeployedModal />
+      break
+    }
+    case Modal.FeatureRainbowGate: {
+      innerModalView = <RainbowGateModalView />
+      break
+    }
+    case Modal.FeatureDullDoor: {
+      innerModalView = <DullDoorModalView />
+      break
     }
   }
 
@@ -253,12 +275,18 @@ const App = () => {
               }
             >
               {shouldShowMenu ? (
-                <SideNavView
-                  roomData={state.roomData}
-                  currentRoomId={state.roomId}
-                  username={state.userMap[state.userId].username}
-                  spaceIsClosed={state.isClosed}
-                />
+                <span>
+                  <SideNavView
+                    roomData={state.roomData}
+                    currentRoomId={state.roomId}
+                    username={state.userMap[state.userId].username}
+                    spaceIsClosed={state.isClosed}
+                  />
+                  {/* Once we moved the sidebar to be position:fixed, we still
+                  needed something to take up its space in the CSS grid.
+                  This should be fixable via CSS, but sigh, it's 3 days before the event */}
+                  <div id='side-nav-placeholder' />
+                </span>
               ) : (
                 <button id="show-menu" onClick={showMenu}>
                   <span role="img" aria-label="menu">
@@ -276,7 +304,7 @@ const App = () => {
                     roomData={state.roomData}
                   />
                 ) : null}
-                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} />
+                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
                 <InputView
                   prepopulated={state.prepopulatedInput}
                   sendMessage={(message) =>

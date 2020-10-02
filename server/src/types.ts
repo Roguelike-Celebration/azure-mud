@@ -2,6 +2,32 @@ import { Room } from './rooms'
 import { User, MinimalUser, PublicUser } from './user'
 import { RoomNote } from './roomNote'
 
+export interface ServerSettings {
+  movementMessagesHideThreshold: number;
+  movementMessagesHideRoomIds: string[];
+}
+
+export const DEFAULT_SERVER_SETTINGS: ServerSettings = {
+  movementMessagesHideThreshold: 20,
+  movementMessagesHideRoomIds: ['theater']
+}
+
+// There's 100% a more elegant way to do this, but I think this works and want to actually get this feature finally done.
+export function toServerSettings (obj: any): ServerSettings | null {
+  try {
+    if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined) {
+      return null
+    } else {
+      return {
+        movementMessagesHideThreshold: obj.movementMessagesHideThreshold,
+        movementMessagesHideRoomIds: obj.movementMessagesHideRoomIds
+      }
+    }
+  } catch (e) {
+    return null
+  }
+}
+
 export interface RoomResponse {
   roomId: string;
   presenceData?: { [roomId: string]: string[] };
@@ -17,4 +43,15 @@ export interface ErrorResponse {
 
 export interface ProfileResponse {
   user: User;
+}
+
+export enum ValidColors {
+  Blue = 'Blue',
+  Cyan = 'Cyan',
+  Green = 'Green',
+  Magenta = 'Magenta',
+  Orange = 'Orange',
+  Red = 'Red',
+  Violet = 'Violet',
+  Yellow = 'Yellow'
 }

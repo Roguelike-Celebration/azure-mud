@@ -1,5 +1,6 @@
 import { User, MinimalUser } from './user'
 import { RoomNote } from './roomNote'
+import { ServerSettings } from './types'
 
 interface Database {
   // -----------------------------------------------------------------
@@ -82,6 +83,14 @@ interface Database {
   modList(): Promise<string[]>
 
   // -----------------------------------------------------------------
+  // SETTINGS DATA
+  // -----------------------------------------------------------------
+  /** Will return default values if no server settings are set */
+  getServerSettings(): Promise<ServerSettings>;
+
+  setServerSettings(serverSettings: ServerSettings): Promise<ServerSettings>;
+
+  // -----------------------------------------------------------------
   // POST-IT NOTES
   // -----------------------------------------------------------------
   addRoomNote(roomId: string, note: RoomNote)
@@ -97,6 +106,10 @@ interface Database {
   // -----------------------------------------------------------------
   isSpaceClosed(): Promise<boolean>
   setSpaceAvailability(open: boolean)
+
+  // If you want to notify clients a new build has been deployed,
+  // you need to include the key that's hardcoded into Redis
+  webhookDeployKey()
 }
 
 // eslint-disable-next-line no-undef

@@ -27,7 +27,7 @@ export default {
           </p>
           <p>Mech@mor showdown is an ASCII roguelike about your relationships with your mech and with your opponents. Build 
             trust between you and your mecha. Fight your foes. Flirt with your rivals. Taunt your lovers. Swap out parts for 
-            better parts. Save Planet Yendor for the regime of the Kyriarch.
+            better parts. Save Planet Yendor from the regime of the Kyriarch.
           </p>
           <p> Pre-release available at <a href="https://subalterngames.itch.io/mechamor-showdown" target="_blank">itch.io</a>!</p>
           <img src="images/mech@mor-showdown/0.png" alt="Mech@amor Showdown 0" style="width: 49%;">

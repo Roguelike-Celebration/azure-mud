@@ -7,9 +7,11 @@ import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { getMediaStream } from './webRTC'
+import { ServerSettings } from '../server/src/types'
 
 export type Action =
   | ReceivedMyProfileAction
+  | ReceivedServerSettingsAction
   | UpdatedCurrentRoomAction
   | UpdatedRoomDataAction
   | UpdatedPresenceAction
@@ -29,6 +31,7 @@ export type Action =
   | UserMapAction
   | PlayerBannedAction
   | PlayerUnbannedAction
+  | UpdateProfileColorAction
   | P2PDataReceivedAction
   | P2PStreamReceivedAction
   | P2PConnectionClosedAction
@@ -63,6 +66,7 @@ export type Action =
 export enum ActionType {
   // Server-driven action
   ReceivedMyProfile = 'RECEIVED_MY_PROFILE',
+  ReceivedServerSettings = 'RECEIVED_SERVER_SETTINGS',
   UpdatedCurrentRoom = 'UPDATED_CURRENT_ROOM',
   UpdatedRoomData = 'UPDATED_ROOM_DATA',
   UpdatedPresence = 'UPDATED_PRESENCE',
@@ -82,6 +86,7 @@ export enum ActionType {
   UserMap = 'USER_MAP',
   PlayerBanned = 'PLAYER_BANNED',
   PlayerUnbanned = 'PLAYER_UNBANNED',
+  UpdateProfileColor = 'UPDATE_PROFILE_COLOR',
   // WebRTC
   P2PDataReceived = 'P2P_DATA_RECEIVED',
   P2PStreamReceived = 'P2P_STREAM_RECEIVED',
@@ -130,6 +135,20 @@ export const ReceivedMyProfileAction = (
   return {
     type: ActionType.ReceivedMyProfile,
     value: user
+  }
+}
+
+interface ReceivedServerSettingsAction {
+  type: ActionType.ReceivedServerSettings;
+  value: ServerSettings;
+}
+
+export const ReceivedServerSettingsAction = (
+  serverSettings: ServerSettings
+): ReceivedServerSettingsAction => {
+  return {
+    type: ActionType.ReceivedServerSettings,
+    value: serverSettings
   }
 }
 
@@ -408,6 +427,18 @@ export const PlayerUnbannedAction = (user: MinimalUser): PlayerUnbannedAction =>
   return {
     type: ActionType.PlayerUnbanned,
     value: user
+  }
+}
+
+interface UpdateProfileColorAction {
+  type: ActionType.UpdateProfileColor,
+  color: string
+}
+
+export const UpdateProfileColorAction = (color: string): UpdateProfileColorAction => {
+  return {
+    type: ActionType.UpdateProfileColor,
+    color: color
   }
 }
 
