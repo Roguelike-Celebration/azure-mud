@@ -67,15 +67,14 @@ const httpTrigger: AzureFunction = async function (
 
     const danceMatch = /^\/(dance)(.*)/.exec(message)
     if (danceMatch) {
-      dance(user, req.body.id, context);
-      return;
+      dance(user, req.body.id, context)
+      return
     }
 
     const interactMatch = /^\/(interact|get) (.*)/.exec(message)
     if (interactMatch) {
       var inspectedObject = interactMatch[2]
-      interact(user, req.body.id, context, inspectedObject)
-      return
+      return await interact(user, req.body.id, context, inspectedObject)
     }
 
     const modMatch = /^\/(mod|mods|moderator|moderators) (.+)/.exec(message)
