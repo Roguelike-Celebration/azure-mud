@@ -15,13 +15,13 @@ export const generate = () => {
       '#adjective# #food##postAdjective#'
     ],
     adjective: [
-      'fresh',
-      'pungent',
-      'aromatic',
-      'seared',
-      'moist',
-      'chunky',
-      'smooth'
+      'a fresh',
+      'a pungent',
+      'an aromatic',
+      'a seared',
+      'a moist',
+      'a chunky',
+      'a smooth'
     ],
     food: [
       'slime mold',

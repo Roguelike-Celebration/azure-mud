@@ -40,6 +40,11 @@ export default function RoomView (props: Props) {
       return
     }
 
+    const itemName = e.target && e.target.getAttribute && e.target.getAttribute('data-item')
+    if (itemName) {
+      pickUpItem(itemName)
+    }
+
     const actionName = e.target && e.target.getAttribute && e.target.getAttribute('data-action')
     if (actionName) {
       linkActions[actionName]()
@@ -216,7 +221,9 @@ function parseDescription (description: string, roomData: { [roomId: string]: Ro
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     const room = roomData[roomId]
-    if (room) {
+    if (roomId === 'item') {
+      return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
+    } else if (room) {
       const userCount = room && room.users && room.users.length > 0 ? ` (${room.users.length})` : ''
       return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
     } else if (linkActions[roomId]) {

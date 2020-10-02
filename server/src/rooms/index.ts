@@ -152,7 +152,7 @@ export const roomData: { [name: string]: Room } = {
     id: 'swag',
     displayName: 'Swag Table',
     shortName: 'the swag table',
-    description: `A table full of fun swag. And, curiously, a [[tiny little puppy->pickUpPuppy]].
+    description: `A table covered in a giant messy pile of mismatched swag. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) a [[tiny little puppy->item]].
     <br/><br/>
     From here, you can walk back to the rest of the [[foyer]].`
   },
