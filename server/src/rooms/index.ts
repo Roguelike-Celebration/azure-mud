@@ -64,7 +64,7 @@ export const roomData: { [name: string]: Room } = {
     displayName: 'Kitchen',
     shortName: 'the kitchen',
     description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. On the island are a few samovars of coffee — don't worry, there's plenty of decaf too — and hot water for tea, plus a few trays of pastries.
-      There are three tables you can sit at, labelled [[A->kitchenTableA]], [[B->kitchenTableB]], and [[C->kitchenTableC]]. You can also walk over to the [[bar]] or grab a seat in the [[main theater area->theater]].`,
+      There are three tables you can sit at, labelled [[A->kitchenTableA]], [[B->kitchenTableB]], and [[C->kitchenTableC]]. You can also walk over to the [[lounge]], the [[bar]], the [[dance floor->danceFloor]], the [[@-sign statue->statue]] or grab a seat in the [[main theater area->theater]]. You can also climb into the [[shipping container->shippingContainer]].`,
     allowsMedia: true,
     hasNoteWall: true
   },
@@ -97,7 +97,7 @@ export const roomData: { [name: string]: Room } = {
     id: 'bar',
     displayName: 'Bar',
     shortName: 'the bar',
-    description: 'A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: the Tourist (a non-alcoholic drink with lots of fruit and a fun umbrella), the Berlin Interpretation (a mojito made with some sort of hyper-caffeinated soda), and the Walls Are Shifting (a Long Island Iced Tea).<br/><br/>You\'re a stone\'s throw away from the [[kitchen]], the [[theater]], the [[dance floor->danceFloor]], and the [[lounge]]. You can also crawl into the [[shipping container->shippingContainer]].',
+    description: 'A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: the Tourist (a non-alcoholic drink with lots of fruit and a fun umbrella), the Berlin Interpretation (a mojito made with some sort of hyper-caffeinated soda), and the Walls Are Shifting (a Long Island Iced Tea).<br/><br/>You\'re a stone\'s throw away from the [[kitchen]], the [[@-sign statue->statue]], the [[dance floor->danceFloor]], and the [[North Showcase Hall->northShowcaseHall]]. You can also crawl into the [[shipping container->shippingContainer]].',
     allowsMedia: true
   },
   lounge: {
@@ -111,7 +111,8 @@ export const roomData: { [name: string]: Room } = {
     id: 'statue',
     displayName: '@-sign Statue',
     shortName: 'the statue',
-    description: 'A memorial to countless adventurers who have helped build this social space.<br/><br/>A plaque on the statue shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.<br/>There\'s also a suggestion wall for people to add comments about the social space.',
+    description: `A memorial to countless adventurers who have helped build this social space.<br/><br/>A plaque on the statue shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.<br/>There\'s also a suggestion wall for people to add comments about the social space.
+      From here, you can reach the [[kitchen]], the [[bar]], the [[theater]], or the [[North Showcase Hall->northShowcaseHall]]. You can also climb into the [[shipping container->shippingContainer]]`,
     hasNoteWall: true,
     allowsMedia: true
   },
@@ -119,7 +120,7 @@ export const roomData: { [name: string]: Room } = {
     id: 'danceFloor',
     displayName: 'Dance Floor',
     shortName: 'the dance floor',
-    description: 'The ping-pong table has been pushed to the side for a makeshift dance floor. A DJ booth is set up where chiptunes are playing.<br/><br/>From here, you can reach [[the kitchen]] or [[the bar]].'
+    description: 'The ping-pong table has been pushed to the side for a makeshift dance floor. A DJ booth is set up where chiptunes are playing.<br/><br/>From here, you can reach the [[lounge]], the [[kitchen]], or the [[bar]].'
   },
   shippingContainer: {
     id: 'shippingContainer',
@@ -127,7 +128,7 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the shipping container',
     description: `
       It's not quite clear why there's a shipping container in the middle of the space. Seems pretty chill, though? Somebody's set up a makeshift bench.<br/><br/>
-      After you climb out, you can get back to the [[bar]], the [[theater]], the [[kitchen]], or the [[lounge]].`,
+      After you climb out, you can get back to the [[bar]], the [[theater]], the [[kitchen]], or the [[@-sign statue->statue]].`,
     allowsMedia: true
   },
   entryway: {
