@@ -109,7 +109,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'lounge',
     displayName: 'Lounge',
     shortName: 'the lounge',
-    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing video footage of roguelikes, and a fridge full of La Croix. <br/><br/>From here, you can get to the [[drawing room->drawingRoom]], the [[dance floor->danceFloor]], or the [[kitchen]].',
+    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing video footage of roguelikes, and a fridge full of La Croix. <br/><br/>From here, you can get to the [[drawing room->loungeDungeonDrawingRoom]], the [[dance floor->danceFloor]], or the [[kitchen]].',
     allowsMedia: true
   },
   statue: {
