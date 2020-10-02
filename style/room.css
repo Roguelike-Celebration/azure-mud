@@ -39,7 +39,3 @@ a.room-link:visited {
   border-color: var(--highlight-line);
   padding-top: 5px;
 }
-
-#static-room-description iframe {
-  max-width: 100%;
-}

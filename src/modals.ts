@@ -11,8 +11,9 @@ export enum Modal {
     Map,
     Welcome,
     RoomList,
-    Welcome,
     FeatureRainbowGate,
     FeatureDullDoor,
-    ServerSettings
+    ServerSettings,
+    ClientDeployed,
+    HappeningNow
 }

@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import { Room } from '../room'
-import { moveToRoom } from '../networking'
 import MenuButtonView from './MenuButtonView'
-import { FaVideo } from 'react-icons/fa'
 
 import '../../style/nav.css'
 import { IsMobileContext, DispatchContext } from '../App'
@@ -29,6 +27,10 @@ export default function SideNavView (props: Props) {
     dispatch(ShowModalAction(Modal.Map))
   }
 
+  const showHappeningNow = () => {
+    dispatch(ShowModalAction(Modal.HappeningNow))
+  }
+
   return (
     <nav id="side-menu" role="navigation" aria-label="List of rooms you can navigate to">
       {isMobile ? <button
@@ -37,6 +39,7 @@ export default function SideNavView (props: Props) {
         className='close'
       >x</button> : ''}
       <MenuButtonView username={props.username} spaceIsClosed={props.spaceIsClosed} />
+      <button id='happening-now-button' onClick={showHappeningNow}>Happening Now</button>
       <button id='nav-map-button' onClick={showMap}>Map</button>
       <ul>
         <MenuItem title="Schedule" modal={Modal.Schedule} />

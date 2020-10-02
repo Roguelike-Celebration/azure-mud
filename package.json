@@ -25,6 +25,7 @@
     "react-icons": "^3.10.0",
     "react-linkify": "^1.0.0-alpha",
     "react-tooltip": "^4.2.8",
+    "request": "^2.88.2",
     "simple-peer": "^9.7.2"
   },
   "devDependencies": {

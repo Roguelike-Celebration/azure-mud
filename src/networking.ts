@@ -32,13 +32,14 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  MediaReceivedSpeakingDataAction
+  MediaReceivedSpeakingDataAction, ShowModalAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
-import { MAX_MESSAGE_LENGTH } from '../server/src/config'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config'
+import { Modal } from './modals'
 const axios = require('axios').default
 
 let myUserId: string
@@ -158,8 +159,8 @@ export async function moveToRoom (roomId: string) {
 
 export async function sendChatMessage (id: string, text: string) {
   // If it's over the character limit
-  if (text.length > MAX_MESSAGE_LENGTH) {
-    console.log(`Sorry, can't send messages over ${MAX_MESSAGE_LENGTH} characters!`)
+  if (text.length > MESSAGE_MAX_LENGTH) {
+    console.log(`Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`)
     return
   }
 
@@ -304,6 +305,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('playerUnbanned', (user) => {
     dispatch(PlayerUnbannedAction(user))
+  })
+
+  connection.on('clientDeployed', () => {
+    dispatch(ShowModalAction(Modal.ClientDeployed))
   })
 
   connection.on('videoPresence', (roomId: string, users: string[]) => {

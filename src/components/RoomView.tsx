@@ -15,6 +15,8 @@ import { SpecialFeature as SpecialFeature } from '../../server/src/rooms'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 
+const VIDEO_CHAT_MAX_SIZE = 8
+
 interface Props {
   room: Room;
   userId: string;
@@ -63,6 +65,13 @@ export default function RoomView (props: Props) {
       videoChatButton = (
         <button onClick={leaveVideoChat} id='join-video-chat'>
           Leave Video Chat
+        </button>
+      )
+    } else if (room.videoUsers && room.videoUsers.length >= VIDEO_CHAT_MAX_SIZE) {
+      // Maybe make it more transparent? I think this is probably fine, but I'm no UI expert!
+      videoChatButton = (
+        <button id='join-video-chat'>
+          Video Chat Is Full (limit {VIDEO_CHAT_MAX_SIZE})
         </button>
       )
     } else {

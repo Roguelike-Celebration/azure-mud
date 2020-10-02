@@ -39,6 +39,8 @@ import RoomListView from './components/RoomListView'
 import RainbowGateModalView from './components/feature/RainbowGateViews'
 import DullDoorModalView from './components/feature/DullDoorViews'
 import ServerSettingsView from './components/ServerSettingsView'
+import ClientDeployedModal from './components/ClientDeployedModal'
+import HappeningNowView from './components/HappeningNowView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -234,7 +236,15 @@ const App = () => {
       break
     }
     case Modal.ServerSettings: {
-      innerModalView = <ServerSettingsView serverSettings={state.serverSettings}/>
+      innerModalView = <ServerSettingsView serverSettings={state.serverSettings} roomData={state.roomData}/>
+      break
+    }
+    case Modal.ClientDeployed: {
+      innerModalView = <ClientDeployedModal />
+      break
+    }
+    case Modal.HappeningNow: {
+      innerModalView = <HappeningNowView roomData={state.roomData} entries={state.serverSettings.happeningNowEntries}/>
       break
     }
     case Modal.FeatureRainbowGate: {
@@ -270,12 +280,18 @@ const App = () => {
               }
             >
               {shouldShowMenu ? (
-                <SideNavView
-                  roomData={state.roomData}
-                  currentRoomId={state.roomId}
-                  username={state.userMap[state.userId].username}
-                  spaceIsClosed={state.isClosed}
-                />
+                <span>
+                  <SideNavView
+                    roomData={state.roomData}
+                    currentRoomId={state.roomId}
+                    username={state.userMap[state.userId].username}
+                    spaceIsClosed={state.isClosed}
+                  />
+                  {/* Once we moved the sidebar to be position:fixed, we still
+                  needed something to take up its space in the CSS grid.
+                  This should be fixable via CSS, but sigh, it's 3 days before the event */}
+                  <div id='side-nav-placeholder' />
+                </span>
               ) : (
                 <button id="show-menu" onClick={showMenu}>
                   <span role="img" aria-label="menu">
