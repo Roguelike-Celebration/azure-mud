@@ -224,7 +224,7 @@ const EmoteView = (props: EmoteMessage & { id: string }) => {
 const DanceView = (props: DanceMessage & { id: string }) => {
   return (
     <div className="message">
-      <em><NameView userId={props.userId} id={props.id} /> <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView></em>
+      <em><NameView userId={props.userId} id={props.id} /> <span dangerouslySetInnerHTML={{__html: props.message}}></span></em>
     </div>
   )
 }
