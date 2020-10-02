@@ -6,9 +6,43 @@ export const actionString = (item: string) => {
 
 export const generate = () => {
   var grammar = tracery.createGrammar({
-    animal: ['panda', 'fox', 'capybara', 'iguana'],
-    emotion: ['sad', 'happy', 'angry', 'jealous'],
-    origin: ['I am #emotion.a# #animal#.']
+    origin: [
+      '#adjective# #food#',
+      '#adjective# #food#',
+      '#adjective# #food#',
+      '#adjective# #food#',
+      '#food#',
+      '#adjective# #food##postAdjective#'
+    ],
+    adjective: [
+      'fresh',
+      'pungent',
+      'aromatic',
+      'seared',
+      'moist',
+      'chunky',
+      'smooth'
+    ],
+    food: [
+      'slime mold',
+      'meal ration',
+      'apple',
+      'orange',
+      'pomegranate',
+      'döner kebab',
+      'hamburger',
+      'pizza',
+      'kobold corpse',
+      'bagged sandwich',
+      'cup of soup',
+      'loaf of bread'
+    ],
+    postAdjective: [
+      ', still in the wrapper',
+      ' with a bite taken out of it',
+      ' past its expiration date',
+      ' that smells AMAZING'
+    ]
   })
 
   grammar.addModifiers(tracery.baseEngModifiers)
