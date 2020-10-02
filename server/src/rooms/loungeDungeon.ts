@@ -96,16 +96,7 @@ export const loungeDungeonRoomData = {
     displayName: 'Somewhere In The Unreasonably Large Walk-In Closet',
     shortName: 'somewhere in the unreasonably large walk-in closet',
     description: `You reach the tower of shoes. It's gigantic, six hundred feet high at least, but only some thirty feet wide. There's a door set into its base.<br/><br/>
-      You can [[escape the closet->loungeDungeonBedroom]] or enter the [[tower of shoes->loungeDungeonPortalRoom]].`,
-    hidden: true
-  },
-  loungeDungeonPortalRoom: {
-    id: 'loungeDungeonPortalRoom',
-    displayName: 'Portal Room',
-    shortName: 'the portal room',
-    description: `In the center of the room is a shimmering portal. Next to the portal is a pedestal with an open book.<br/><br/>
-      Once you've finished here, you can [[leap into the shimmering portal->statue]]`,
-    specialFeatures: [SpecialFeature.FullRoomIndex],
+      You can [[escape the closet->loungeDungeonBedroom]] or enter the [[tower of shoes->hiddenPortalRoom]].`,
     hidden: true
   }
 }

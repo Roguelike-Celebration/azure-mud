@@ -166,6 +166,15 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the engineer\'s workbench',
     description: `A cluttered workspace that clearly belongs to someone who loves to tinker. A dim hum fills the room from server racks sitting in the corner, and there are blinking lights coming from every crevice. A blueprint sitting on the workbench outlines intricate plans for something called an 'entity-component system'.<br/><br/>
     From here, you can get to the [[proc-gen study->study]] or the [[artists' atelier->atelier]].`
+  },
+  hiddenPortalRoom: {
+    id: 'hiddenPortalRoom',
+    displayName: 'Portal Room',
+    shortName: 'the portal room',
+    description: `In the center of the room is a shimmering portal. Next to the portal is a pedestal with an open book.<br/><br/>
+      Once you've finished here, you can [[leap into the shimmering portal->statue]]`,
+    specialFeatures: [SpecialFeature.FullRoomIndex],
+    hidden: true
   }
 }
 
