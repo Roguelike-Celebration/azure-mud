@@ -20,6 +20,8 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     let item: string
     let privateActionString: string
 
+    const oldItem = user.item
+
     if (req.body && req.body.list) {
       const generator = generators[req.body.list]
 
@@ -43,6 +45,8 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         }
         return
       }
+    } else if (req.body && req.body.drop) {
+      item = undefined
     } else {
       context.res = {
         status: 400,
@@ -51,7 +55,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
       return
     }
 
-    const actionString = `picks up ${item}.`
+    const actionString = (item ? `picks up ${item}.` : `drops ${oldItem}.`)
 
     const newProfile = await updateUserProfile(user.id, { item })
 

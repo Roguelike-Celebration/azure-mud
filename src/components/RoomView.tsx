@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Room } from '../room'
 import {
   moveToRoom,
-  getNetworkMediaChatStatus, pickUpRandomItemFromList, pickUpItem
+  getNetworkMediaChatStatus, pickUpRandomItemFromList, pickUpItem, dropItem
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext, UserMapContext } from '../App'
@@ -15,6 +15,7 @@ import { SpecialFeature } from '../../server/src/rooms'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 import { linkActions } from '../linkActions'
+import { useContext } from 'react'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
@@ -114,6 +115,21 @@ export default function RoomView (props: Props) {
   )
 }
 
+const HeldItemView = () => {
+  const { userMap, myId } = useContext(UserMapContext)
+  const user = userMap[myId]
+
+  const dropHeldItem = () => {
+    dropItem()
+  }
+
+  if (user.item) {
+    return <span>You are holding {user.item}. <button className='link-styled-button' onClick={dropHeldItem}>Drop it</button>.</span>
+  } else {
+    return null
+  }
+}
+
 const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[] }) => {
   const { userMap, myId } = React.useContext(UserMapContext)
 
@@ -129,7 +145,7 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
     let names
 
     if (users.length === 0) {
-      return <div id="dynamic-room-description">You are all alone here.</div>
+      return <div id="dynamic-room-description">You are all alone here. <HeldItemView /></div>
     }
 
     const userViews = users.map((u, idx) => {
@@ -165,7 +181,7 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
 
     return (
       <div id="dynamic-room-description">
-        Also here {users.length === 1 ? 'is' : 'are'} {names}.
+        Also here {users.length === 1 ? 'is' : 'are'} {names}. <HeldItemView />
       </div>
     )
   } else {

@@ -115,6 +115,10 @@ export async function pickUpItem (item: string) {
   await callAzureFunction('pickUpItem', { item })
 }
 
+export async function dropItem () {
+  await callAzureFunction('pickUpItem', { drop: true })
+}
+
 // Post-it notes
 
 export async function addNoteToWall (message: string) {
