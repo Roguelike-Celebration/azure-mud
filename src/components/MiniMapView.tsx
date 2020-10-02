@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ShowModalAction } from '../Actions'
+import { DispatchContext } from '../App'
+import { Modal } from '../modals'
 import { Room } from '../room'
 
 import MapView from './MapView'
@@ -9,8 +12,15 @@ import MapView from './MapView'
  }
 
 export default function MiniMapView (props: Props) {
+  const dispatch = useContext(DispatchContext)
+
+  const handleClickCapture = (e) => {
+    dispatch(ShowModalAction(Modal.Map))
+    e.stopPropagation()
+  }
+
   return (
-    <div id='mini-map'>
+    <div id='mini-map' onClickCapture={handleClickCapture} style={{ cursor: 'pointer' }}>
       <MapView roomData={props.roomData} currentRoomId={props.currentRoomId} isMiniMap={true} />
     </div>
   )

@@ -43,8 +43,7 @@ export const castle = {
   displayName: 'Unconferencing: Castle',
   shortName: 'castle',
   description: 'A foreboding castle stands before you, surrounded by a moat that ripples with unseen shapes swimming beneath the surface. The front of the castle is taken up by a large drawbridge that is currently raised, preventing you from venturing inside. Strangely, a pile of discarded musical instruments is piled on shore by where the bridge would presumably open - and the area directly beneath the bridge\'s landing zone is smeared with what you hope is ketchup.<br/><br/>This is a room for unconferencing! The other unconferencing rooms are [[Minetown]], [[Oracle]], [[Vlad\'s Tower->tower]], [[Sokoban]], and [[Astral Plane]]. Or you can go back to the [[unconferencing lobby->unconference]].',
-  hasNoteWall: true,
-  hidden: true
+  hasNoteWall: true
 }
 
 export const sokoban = {
