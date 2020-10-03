@@ -76,8 +76,8 @@ export function cookie (user: User, messageId: string, context: Context) {
   context.bindings.signalRMessages = [
     {
       groupName: user.roomId,
-      target: 'dance',
-      arguments: [messageId, user.id, ('opens a fortune cookie that reads: ' + fortuneList[Math.floor(Math.random() * fortuneList.length)])]
+      target: 'privateCommand',
+      arguments: ['You opens a fortune cookie that reads: "' + fortuneList[Math.floor(Math.random() * fortuneList.length)] + '"']
     }
   ]
 }
