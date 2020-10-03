@@ -41,7 +41,7 @@ span.name {
 }
 
 .mod {
-  background-color: var(--highlight-line);
+  background-color: var(--mod-line);
   color: var(--main-text);
 }
 
