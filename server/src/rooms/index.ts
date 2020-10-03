@@ -78,7 +78,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Kitchen Table A',
     shortName: 'table A in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[B->kitchenTableB]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]]`,
+      From here, you can see tables [[B->kitchenTableB]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`,
     allowsMedia: true
   },
   kitchenTableB: {
@@ -86,7 +86,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Kitchen Table B',
     shortName: 'table B in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[A->kitchenTableA]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]]`,
+      From here, you can see tables [[A->kitchenTableA]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`,
     allowsMedia: true
   },
   kitchenTableC: {
@@ -94,7 +94,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Kitchen Table C',
     shortName: 'table C in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[A->kitchenTableA]] or [[B->kitchenTableB]], and the [[general kitchen area->kitchen]]`,
+      From here, you can see tables [[A->kitchenTableA]] or [[B->kitchenTableB]], and the [[general kitchen area->kitchen]].`,
     allowsMedia: true
   },
   bar: {
@@ -146,7 +146,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'foyer',
     displayName: 'Haunted Foyer',
     shortName: 'the haunted foyer',
-    description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels ~off~ about this place.<br/><br/>
+    description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels <em>off</em> about this place.<br/><br/>
     You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`,
     specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
   },

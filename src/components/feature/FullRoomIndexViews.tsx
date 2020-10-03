@@ -20,7 +20,7 @@ export default function FullRoomIndexModalView (props: { rooms: Room[] }) {
   return (
     <div>
       <h1>Unerring Teleport</h1>
-      <p>Verbal elements - either the True Name of the destination, the two common names of the destination, or the name of the destination from an adjoining location (which can only be known from that destination, and is colored in blue for whatever reason). The name must exact, but the volume of the incantation is irrelevant.</p>
+      <p>Verbal elements - either the True Name of the destination, the two common names of the destination, or the name of the destination from an adjoining location (which can only be known from that destination, and is colored in green for whatever reason). The name must exact, but the volume of the incantation is irrelevant.</p>
       <p>Somatic elements - /go or /move</p>
       <p>Material components - none</p>
       <p>This spell will take you to whichever place you wish, hidden or not. The only issue is that the names of the hidden places are obscured by dark magics. I, the Great Wizard Teleportus, have researched long and hard, and at last produced a complete list of all the room in this space. Bow before my awesome intelligence!</p>
