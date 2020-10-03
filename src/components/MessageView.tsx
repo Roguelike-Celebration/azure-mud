@@ -234,5 +234,5 @@ const ErrorView = (props: ErrorMessage & { id: string }) => {
 }
 
 const CommandView = (props: CommandMessage & { id: string }) => {
-  return <div className="message"><em>{props.command}</em></div>
+  return <div className="message"><em><span dangerouslySetInnerHTML={{__html: props.command}}></span></em></div>
 }

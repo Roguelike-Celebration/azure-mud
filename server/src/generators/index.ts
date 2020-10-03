@@ -1,4 +1,5 @@
 import * as vendingMachineFood from './vendingMachineFood'
+import * as fortuneCookies from './fortuneCookies'
 
 interface Generator {
     generate(): string
@@ -6,7 +7,8 @@ interface Generator {
 }
 
 const generators: {[name: string]: Generator} = {
-  vendingMachineFood
+  vendingMachineFood,
+  fortuneCookies
 }
 
 export default generators
