@@ -5,13 +5,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.message-wrapper div {
-  display: inline-block
-}
-
 .message-wrapper .time {
   margin-right: 1.5em;
   color: var(--gray-text);
+  float: left;
   font-size: 0.8em;
   text-transform: lowercase;
 }
