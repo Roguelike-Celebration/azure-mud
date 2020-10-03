@@ -36,13 +36,13 @@ export async function interact (user: User, messageId: string, context: Context,
         },
         {
           target: 'usernameMap',
-          arguments: [{ [user.id]: minimizeUser(newProfile)}]
+          arguments: [{ [user.id]: minimizeUser(newProfile) }]
         }
       ]
       context.bindings.signalRMessages.unshift({
         userId: user.id,
         target: 'privateCommand',
-        arguments: ["You feel like something has changed..."]
+        arguments: ['You feel like something has changed...']
       })
 
       context.res = { status: 200 }

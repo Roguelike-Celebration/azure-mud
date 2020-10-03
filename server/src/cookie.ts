@@ -3,18 +3,18 @@ import { Context } from '@azure/functions'
 import generators from '../src/generators'
 
 export function cookie (user: User, messageId: string, context: Context) {
-  const generator = generators['fortuneCookies']
+  const generator = generators.fortuneCookies
 
   if (!generator) {
     context.res = {
       status: 400,
-      body: { error: `You included an invalid list: fortuneCookies` }
+      body: { error: 'You included an invalid list: fortuneCookies' }
     }
     return
   }
 
-  let fortune = generator.generate()
-  let privateActionString = generator.actionString(fortune)
+  const fortune = generator.generate()
+  const privateActionString = generator.actionString(fortune)
 
   context.bindings.signalRMessages = [
     {

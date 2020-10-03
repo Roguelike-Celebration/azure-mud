@@ -224,7 +224,7 @@ const EmoteView = (props: EmoteMessage & { id: string }) => {
 const DanceView = (props: DanceMessage & { id: string }) => {
   return (
     <div className="message">
-      <em><NameView userId={props.userId} id={props.id} /> <span dangerouslySetInnerHTML={{__html: props.message}}></span></em>
+      <em><NameView userId={props.userId} id={props.id} /> <span dangerouslySetInnerHTML={ { __html: props.message } }></span></em>
     </div>
   )
 }
@@ -234,5 +234,5 @@ const ErrorView = (props: ErrorMessage & { id: string }) => {
 }
 
 const CommandView = (props: CommandMessage & { id: string }) => {
-  return <div className="message"><em><span dangerouslySetInnerHTML={{__html: props.command}}></span></em></div>
+  return <div className="message"><em><span dangerouslySetInnerHTML={ { __html: props.command } }></span></em></div>
 }
