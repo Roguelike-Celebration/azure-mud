@@ -275,7 +275,7 @@ export default (oldState: State, action: Action): State => {
     if (action.color) {
       addMessage(state, createErrorMessage('Your name color was changed to ' + action.color))
     } else {
-      addMessage(state, createErrorMessage('Your name color has changed back to its original state.')
+      addMessage(state, createErrorMessage('Your name color has changed back to its original state.'))
     }
 
     updateProfileColor(state.userId, action.color)
