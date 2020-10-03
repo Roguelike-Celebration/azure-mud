@@ -79,15 +79,15 @@ export default function NameView (props: { userId: string; id?: string }) {
   //
   // Tooltip: If no pronouns are set, no tooltip will show
 
-  var className = "name"
+  var className = 'name'
   if (user && user.nameColor) {
-    className = className + " " + user.nameColor
+    className = className + ' ' + user.nameColor
   }
   return (
     <span className={className} data-tip={user && user.pronouns}>
       <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
         <strong className={isMod ? 'mod' : ''}>
-          {isMod ? '[Moderator] ' : ''}
+          {isMod ? '[Mod] ' : ''}
           {username || 'unknown'}
         </strong>
       </ContextMenuTrigger>

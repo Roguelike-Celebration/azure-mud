@@ -108,15 +108,22 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     <Linkify componentDecorator={linkDecorator}>
       <div id="profile">
         <div id="header">
-          <h2 className={user.isMod ? 'mod' : ''}>{user.username} {user.isMod ? <div>(moderator)</div> : ''}</h2>
+          <h2 className={user.isMod ? 'mod' : ''}><NameView userId={user.id} id={`profile-nameview-${user.id}`} /></h2>
           <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
         </div>
-        {realName}
-        <div id="profile-pronouns">{user.pronouns}</div>
-        {description}
-        {twitterHandle}
-        {url}
-        {askMeAbout}
+        <p>
+          {realName}
+          <div id="profile-pronouns">{user.pronouns}</div>
+          {description}
+        </p>
+
+        {user.item ? <p>{user.username} is currently holding {user.item}</p> : null}
+
+        <p>
+          {twitterHandle}
+          {url}
+          {askMeAbout}
+        </p>
         <div id="chat-container">
           <div id="chat-header">Whisper Chat</div>
           <div id="chat">

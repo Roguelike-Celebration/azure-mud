@@ -14,6 +14,8 @@ export interface MinimalUser {
   isBanned?: boolean;
   // From https://www.w3schools.com/colors/colors_names.asp
   nameColor?: string;
+
+  item?: string
 }
 
 // A user profile. Users may fetch this about other users.
@@ -90,7 +92,8 @@ export async function updateUserProfile (userId: string, data: Partial<User>) {
   }
 
   const profile: Partial<User> = (await DB.getPublicUser(userId)) || {}
-  const username = crushSpaces(data.username) || profile.username
+  let username = profile.username
+  if (data.username) { username = crushSpaces(data.username) }
   const newProfile: User = {
     ...profile,
     ...data,
@@ -99,15 +102,7 @@ export async function updateUserProfile (userId: string, data: Partial<User>) {
     isMod: profile.isMod
   } as User // TODO: Could use real validation here?
 
-  const minimalProfile: MinimalUser = {
-    id: userId,
-    username: username
-  }
-  if (newProfile.pronouns) {
-    minimalProfile.pronouns = newProfile.pronouns
-  }
-  // This may need to get fancier if MinimalProfile grows
-  await DB.setMinimalProfileForUser(userId, minimalProfile)
+  await DB.setMinimalProfileForUser(userId, minimizeUser(newProfile))
 
   await DB.setUserProfile(userId, newProfile)
   return newProfile
@@ -151,6 +146,7 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     id: user.id,
     username: user.username,
     isBanned: user.isBanned,
+    item: user.item,
     isMod: user.isMod
   }
 

@@ -4,6 +4,7 @@ import eastShowcaseHall from './eastShowcaseHall'
 import westShowcaseHall from './westShowcaseHall'
 import { unconference, minetown, oracle, tower, castle, sokoban, astralPlane } from './unconfRooms'
 import theater from './theater'
+import { loungeDungeonRoomData } from './loungeDungeon'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -15,7 +16,9 @@ export interface NoteWallData {
 
 export enum SpecialFeature {
   RainbowDoor = 'RAINBOW_DOOR',
-  DullDoor = 'DULL_DOOR'
+  DullDoor = 'DULL_DOOR',
+  FullRoomIndex = 'FULL_ROOM_INDEX',
+  VendingMachine = 'VENDING_MACHINE'
 }
 
 export interface Room {
@@ -46,7 +49,7 @@ export interface Room {
   specialFeatures?: SpecialFeature[]
 }
 
-export const roomData: { [name: string]: Room } = {
+const indexRoomData: { [name: string]: Room } = {
   theater,
   northShowcaseHall,
   eastShowcaseHall,
@@ -63,8 +66,10 @@ export const roomData: { [name: string]: Room } = {
     id: 'kitchen',
     displayName: 'Kitchen',
     shortName: 'the kitchen',
-    description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. On the island are a few samovars of coffee — don't worry, there's plenty of decaf too — and hot water for tea, plus a few trays of pastries.
-      There are three tables you can sit at, labelled [[A->kitchenTableA]], [[B->kitchenTableB]], and [[C->kitchenTableC]]. You can also walk over to the [[lounge]], the [[bar]], the [[dance floor->danceFloor]], the [[@-sign statue->statue]] or grab a seat in the [[main theater area->theater]]. You can also climb into the [[shipping container->shippingContainer]].`,
+    description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. There are empty samovars of coffee and tea sitting on the counter and a well-picked-over catering tray that, based on the crumbs, once contained pastries.<br/><br/>
+    There is, however, a curious-looking vending machine labelled "Munxip's Magnifient Munchies" and a button you can press marked [[Get Random Food->generateFood]].
+    <br/><br/>
+      There are three tables you can sit at, labelled [[A->kitchenTableA]], [[B->kitchenTableB]], and [[C->kitchenTableC]]. You can also walk over to the [[lounge]], the [[bar]], the [[dance floor->danceFloor]], the [[@-sign statue->statue]] or grab a seat in the [[main theater area->theater]]. Finally, you can climb into the [[shipping container->shippingContainer]].`,
     allowsMedia: true,
     hasNoteWall: true
   },
@@ -87,11 +92,10 @@ export const roomData: { [name: string]: Room } = {
   kitchenTableC: {
     id: 'kitchenTableC',
     displayName: 'Kitchen Table C',
-    shortName: 'table A in the kitchen',
+    shortName: 'table C in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
       From here, you can see tables [[A->kitchenTableA]] or [[B->kitchenTableB]], and the [[general kitchen area->kitchen]]`,
-    allowsMedia: true,
-    specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
+    allowsMedia: true
   },
   bar: {
     id: 'bar',
@@ -104,14 +108,14 @@ export const roomData: { [name: string]: Room } = {
     id: 'lounge',
     displayName: 'Lounge',
     shortName: 'the lounge',
-    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing video footage of roguelikes, and a fridge full of La Croix. <br/><br/>From here, you can get to the [[dance floor->danceFloor]] or the [[kitchen]].',
+    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing video footage of roguelikes, and a fridge full of La Croix. <br/><br/>From here, you can get to the [[drawing room->loungeDungeonDrawingRoom]], the [[dance floor->danceFloor]], or the [[kitchen]].',
     allowsMedia: true
   },
   statue: {
     id: 'statue',
     displayName: '@-sign Statue',
     shortName: 'the statue',
-    description: `A memorial to countless adventurers who have helped build this social space.<br/><br/>A plaque on the statue shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.<br/>There\'s also a suggestion wall for people to add comments about the social space.
+    description: `A memorial to countless adventurers who have helped build this social space.<br/><br/>A plaque on the statue shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.<br/>There's also a suggestion wall for people to add comments about the social space.
       From here, you can reach the [[kitchen]], the [[bar]], the [[theater]], or the [[North Showcase Hall->northShowcaseHall]]. You can also climb into the [[shipping container->shippingContainer]].`,
     hasNoteWall: true,
     allowsMedia: true
@@ -143,7 +147,16 @@ export const roomData: { [name: string]: Room } = {
     displayName: 'Haunted Foyer',
     shortName: 'the haunted foyer',
     description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels ~off~ about this place.<br/><br/>
-    You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`
+    You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`,
+    specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
+  },
+  swag: {
+    id: 'swag',
+    displayName: 'Swag Table',
+    shortName: 'the swag table',
+    description: `A table covered in a giant messy pile of mismatched swag. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].
+    <br/><br/>
+    From here, you can walk back to the rest of the [[foyer]].`
   },
   atelier: {
     id: 'atelier',
@@ -165,5 +178,19 @@ export const roomData: { [name: string]: Room } = {
     shortName: 'the engineer\'s workbench',
     description: `A cluttered workspace that clearly belongs to someone who loves to tinker. A dim hum fills the room from server racks sitting in the corner, and there are blinking lights coming from every crevice. A blueprint sitting on the workbench outlines intricate plans for something called an 'entity-component system'.<br/><br/>
     From here, you can get to the [[proc-gen study->study]] or the [[artists' atelier->atelier]].`
+  },
+  hiddenPortalRoom: {
+    id: 'hiddenPortalRoom',
+    displayName: 'Portal Room',
+    shortName: 'the portal room',
+    description: `In the center of the room is a shimmering portal. Next to the portal is a pedestal with an open book.<br/><br/>
+      Once you've finished here, you can [[leap into the shimmering portal->statue]]`,
+    specialFeatures: [SpecialFeature.FullRoomIndex],
+    hidden: true
   }
+}
+
+export const roomData: { [name: string]: Room } = {
+  ...indexRoomData,
+  ...loungeDungeonRoomData
 }

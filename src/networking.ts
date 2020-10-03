@@ -33,13 +33,13 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  MediaReceivedSpeakingDataAction, ShowModalAction
+  MediaReceivedSpeakingDataAction, ShowModalAction, CommandMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { startSignaling, receiveSignalData } from './webRTC'
 import Config from './config'
 import { convertServerRoomData } from './room'
-import { MAX_MESSAGE_LENGTH } from '../server/src/config'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
 const axios = require('axios').default
 
@@ -108,6 +108,18 @@ export async function checkIsRegistered (): Promise<{registeredUsername: string,
   return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod, isBanned: result.isBanned }
 }
 
+export async function pickUpRandomItemFromList (listName: string) {
+  await callAzureFunction('pickUpItem', { list: listName })
+}
+
+export async function pickUpItem (item: string) {
+  await callAzureFunction('pickUpItem', { item })
+}
+
+export async function dropItem () {
+  await callAzureFunction('pickUpItem', { drop: true })
+}
+
 // Post-it notes
 
 export async function addNoteToWall (message: string) {
@@ -160,8 +172,8 @@ export async function moveToRoom (roomId: string) {
 
 export async function sendChatMessage (id: string, text: string) {
   // If it's over the character limit
-  if (text.length > MAX_MESSAGE_LENGTH) {
-    console.log(`Sorry, can't send messages over ${MAX_MESSAGE_LENGTH} characters!`)
+  if (text.length > MESSAGE_MAX_LENGTH) {
+    console.log(`Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`)
     return
   }
 
@@ -288,6 +300,14 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('whisper', (otherId, message) => {
     dispatch(WhisperAction(otherId, message))
+  })
+
+  connection.on('whisper', (otherId, message) => {
+    dispatch(WhisperAction(otherId, message))
+  })
+
+  connection.on('privateItemPickup', (message) => {
+    dispatch(CommandMessageAction(message))
   })
 
   connection.on('playerLeft', (name, to) => {

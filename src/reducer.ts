@@ -31,7 +31,7 @@ import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from '.
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
-import { MAX_MESSAGE_LENGTH } from '../server/src/config'
+import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../server/src/config'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 
 export interface State {
@@ -337,8 +337,10 @@ export default (oldState: State, action: Action): State => {
     const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
     const matching = beginsWithSlash ? matchingSlashCommand(trimmedMessage) : undefined
 
-    if (trimmedMessage.length > MAX_MESSAGE_LENGTH) {
+    if (trimmedMessage.length > MESSAGE_MAX_LENGTH) {
       addMessage(state, createErrorMessage('Your message is too long! Please try to keep it under ~600 characters!'))
+    } else if (trimmedMessage.split(' ').find((s) => s.length > MESSAGE_MAX_WORD_LENGTH)) {
+      addMessage(state, createErrorMessage('Your message has a word that is too long! Please keep it under 60 characters!'))
     } else if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
@@ -498,6 +500,11 @@ export default (oldState: State, action: Action): State => {
       // Just hard-reloading the page will stop them from getting messages
       window.location.reload()
     }
+  }
+
+  if (action.type === ActionType.CommandMessage) {
+    const message = createCommandMessage(action.value)
+    addMessage(state, message)
   }
 
   return state

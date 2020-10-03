@@ -62,6 +62,7 @@ export type Action =
   | ActivateAutoscrollAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
+  | CommandMessageAction
 
 export enum ActionType {
   // Server-driven action
@@ -121,7 +122,9 @@ export enum ActionType {
   HideModalAction = 'HIDE_MODAL',
 
   SpaceIsClosed = 'SPACE_IS_CLOSED',
-  SpaceOpenedOrClosed = 'SPACE_OPENED_OR_CLOSED'
+  SpaceOpenedOrClosed = 'SPACE_OPENED_OR_CLOSED',
+
+  CommandMessage = 'COMMAND_MESSAGE'
 }
 
 interface ReceivedMyProfileAction {
@@ -802,4 +805,16 @@ interface SpaceOpenedOrClosedAction {
 
 export const SpaceOpenedOrClosedAction = (value: boolean): SpaceOpenedOrClosedAction => {
   return { type: ActionType.SpaceOpenedOrClosed, value }
+}
+
+interface CommandMessageAction {
+  type: ActionType.CommandMessage;
+  value: string
+}
+
+export const CommandMessageAction = (message: string): CommandMessageAction => {
+  return {
+    type: ActionType.CommandMessage,
+    value: message
+  }
 }
