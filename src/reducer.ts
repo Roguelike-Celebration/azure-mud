@@ -22,7 +22,7 @@ import {
   sendChatMessage,
   toggleUserBan,
   setNetworkMediaChatStatus,
-  toggleUserMod
+  toggleUserMod, toggleUserBlock
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from './webRTC'
@@ -43,6 +43,7 @@ export interface State {
   userMap: { [userId: string]: MinimalUser };
   roomData: { [roomId: string]: Room };
   profileData?: PublicUser;
+  blockedUsers?: string[];
 
   messages: Message[];
   whispers: WhisperMessage[];
@@ -348,6 +349,9 @@ export default (oldState: State, action: Action): State => {
       sendChatMessage(messageId, trimmedMessage)
     } else if (beginsWithSlash) {
       sendChatMessage(messageId, trimmedMessage)
+    } else if (beginsWithSlash && matching.type === SlashCommandType.Block) {
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+      toggleUserBlock(commandStr[2])
     } else {
       sendChatMessage(messageId, action.value)
       addMessage(state, createChatMessage(messageId, state.userId, action.value))
@@ -417,6 +421,10 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ModToggle) {
     toggleUserMod(action.value)
+  }
+
+  if (action.type === ActionType.BlockToggle) {
+    toggleUserBlock(action.value)
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
@@ -496,6 +504,10 @@ function saveWhisper (state: State, message: WhisperMessage) {
 }
 
 function addMessage (state: State, message: Message) {
+  if ((message as any).userId && state.blockedUsers.includes((message as any).userId)) {
+    return
+  }
+
   state.messages.push(message)
   state.messages = state.messages.slice(-500)
   localStorage.setItem('messages', JSON.stringify(state.messages))

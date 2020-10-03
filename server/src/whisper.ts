@@ -11,6 +11,8 @@ export async function whisper (
   const toUser = await getUserIdForUsername(toUsername)
   const toUserIsOnline = await getUserIdForOnlineUsername(toUsername)
 
+  // Check if user is blocked
+
   // TODO: Return this as metadata so the client can NameView the username
   // Also: I think maybe a 404 is a better error code? but we can worry about that later if at all.
   if (!toUser) {

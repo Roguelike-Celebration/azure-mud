@@ -6,7 +6,7 @@ import {
   ShowProfileAction,
   BanToggleAction,
   HideModalAction,
-  ModToggleAction
+  ModToggleAction, BlockToggleAction
 } from '../Actions'
 import { User } from '../../server/src/user'
 
@@ -21,12 +21,20 @@ export default function NameView (props: { userId: string; id?: string }) {
   const isMod = user && user.isMod
   const isBanned = user && user.isBanned
 
+  // TODO
+  const isBlocked = true
+
   const player = userMap[myId]
   const playerIsMod = player && player.isMod
 
   const handleProfile = (e, data) => {
     dispatch(HideModalAction())
     dispatch(ShowProfileAction(data.id))
+  }
+
+  const handleBlock = (e, data) => {
+    const doBlock = confirm(`Are you sure you would like to ${isBlocked ? 'unblock' : 'block'} the user '${data.username}'? While a user is blocked, you will not be able to see each others' chat messages, see you're in the same room, or whisper to each other.`)
+    if (doBlock) { dispatch(BlockToggleAction(data.id)) }
   }
 
   const handleBan = (e, data) => {
@@ -93,6 +101,9 @@ export default function NameView (props: { userId: string; id?: string }) {
         </MenuItem>
         <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
           Whisper
+        </MenuItem>
+        <MenuItem data={{ id: props.userId }} onClick={handleBlock}>
+          {isBlocked ? 'Unblock' : 'Block'}
         </MenuItem>
         {banButton}
         {modButton}

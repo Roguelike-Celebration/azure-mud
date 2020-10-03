@@ -81,6 +81,11 @@ interface Database {
   removeMod(userId: string)
   modList(): Promise<string[]>
 
+  //
+
+  toggleUserBlock(userId: string, myUserId: string)
+  getBlockList(userId: string)
+
   // -----------------------------------------------------------------
   // POST-IT NOTES
   // -----------------------------------------------------------------

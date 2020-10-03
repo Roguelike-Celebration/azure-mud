@@ -46,6 +46,7 @@ export type Action =
   | IsRegisteredAction
   | BanToggleAction
   | ModToggleAction
+  | BlockToggleAction
   | NoteAddAction
   | NoteRemoveAction
   | NoteUpdateLikesAction
@@ -105,6 +106,7 @@ export enum ActionType {
   IsRegistered = 'IS_REGISTERED',
   BanToggle = 'BAN_TOGGLE',
   ModToggle = 'MOD_TOGGLE',
+  BlockToggle = 'BLCK_TOGGLE',
   LoadMessageArchive = 'LOAD_MESSAGE_ARCHIVE',
   // Note Wall
   NoteAdd = 'NOTE_ADD',
@@ -681,6 +683,15 @@ interface BanToggleAction {
 
 export const BanToggleAction = (userId: string): BanToggleAction => {
   return { type: ActionType.BanToggle, value: userId }
+}
+
+interface BlockToggleAction {
+  type: ActionType.BlockToggle;
+  value: string;
+}
+
+export const BlockToggleAction = (userId: string): BlockToggleAction => {
+  return { type: ActionType.BlockToggle, value: userId }
 }
 
 interface ModToggleAction {

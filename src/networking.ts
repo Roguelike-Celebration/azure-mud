@@ -178,6 +178,10 @@ export async function toggleUserBan (userId: string) {
   const result = await callAzureFunction('banUser', { userId })
 }
 
+export async function toggleUserBlock (userId: string) {
+  const result = await callAzureFunction('blockUser', { userId })
+}
+
 export async function toggleUserMod (userId: string) {
   const result = await callAzureFunction('toggleModStatus', { userId })
 }

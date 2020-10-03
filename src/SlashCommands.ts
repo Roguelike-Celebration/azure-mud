@@ -19,7 +19,8 @@ export enum SlashCommandType {
   Shout = 'SHOUT',
   Emote = 'EMOTE',
   ContactMod = 'CONTACT_MOD',
-  Look = 'LOOK'
+  Look = 'LOOK',
+  Block = 'BLOCK'
 }
 
 export const SlashCommands: SlashCommand[] = [
@@ -29,7 +30,8 @@ export const SlashCommands: SlashCommand[] = [
   SlashCommand(SlashCommandType.Shout, 'Sends a message to everybody at once - has a 5 minute cooldown. Do not abuse this!', ['/shout'], false),
   SlashCommand(SlashCommandType.Emote, 'Like a normal message, but in italics!', ['/emote', '/me'], false),
   SlashCommand(SlashCommandType.ContactMod, 'Sends a message to the mod team. We will be in touch shortly afterwards.', ['/mod', '/mods', '/moderator', '/moderators'], false),
-  SlashCommand(SlashCommandType.Look, 'View the profile of another user. You can also click on their name and select the Profile option.', ['/look'], false)
+  SlashCommand(SlashCommandType.Look, 'View the profile of another user. You can also click on their name and select the Profile option.', ['/look'], false),
+  SlashCommand(SlashCommandType.Block, 'Block or unblock another user. While a user is blocked, you will not be able to see each others\' chat messages, see you\'re in the same room, or whisper to each other.', ['/block', '/unblock'], false)
 ]
 
 export function matchingSlashCommand (message: String): SlashCommand | undefined {
