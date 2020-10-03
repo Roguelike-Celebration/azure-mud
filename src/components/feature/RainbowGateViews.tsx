@@ -1,5 +1,5 @@
-import React from 'react'
-import { DispatchContext } from '../../App'
+import React, { useContext } from 'react'
+import { DispatchContext, UserMapContext } from '../../App'
 import { ValidColors } from '../../../server/src/types'
 import { UpdateProfileColorAction, ShowModalAction } from '../../Actions'
 import { Modal } from '../../modals'
@@ -32,6 +32,8 @@ export const RainbowGateRoomView = () => {
 }
 
 export default function RainbowGateModalView () {
+  const { userMap, myId } = useContext(UserMapContext)
+
   const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited'))
   if (visits === 1) {
     return (
@@ -71,6 +73,7 @@ export default function RainbowGateModalView () {
         <h1>Okay, that&apos;s enough.</h1>
         <p>You won&apos;t listen. You&apos;ve been asked repeatedly not to, and you won&apos;t listen. I&apos;m breaking out the curses now and
           you&apos;ve nobody to blame but yourself.</p>
+        <p><em>Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></em>.</p>
       </div>
     )
   }
