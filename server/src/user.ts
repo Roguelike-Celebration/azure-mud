@@ -146,6 +146,7 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     id: user.id,
     username: user.username,
     isBanned: user.isBanned,
+    nameColor: user.nameColor,
     item: user.item,
     isMod: user.isMod
   }
