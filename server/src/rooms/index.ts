@@ -78,7 +78,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Kitchen Table A',
     shortName: 'table A in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[B->kitchenTableB]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]]`,
+      From here, you can see tables [[B->kitchenTableB]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`,
     allowsMedia: true
   },
   kitchenTableB: {
@@ -86,7 +86,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Kitchen Table B',
     shortName: 'table B in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[A->kitchenTableA]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]]`,
+      From here, you can see tables [[A->kitchenTableA]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`,
     allowsMedia: true
   },
   kitchenTableC: {
@@ -101,9 +101,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'bar',
     displayName: 'Bar',
     shortName: 'the bar',
-    description: `A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight's specials: the Tourist (a non-alcoholic drink with lots of fruit and a fun umbrella), the Berlin Interpretation (a mojito made with some sort of hyper-caffeinated soda), and the Walls Are Shifting (a Long Island Iced Tea).<br/>
-    A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]
-    <br/><br/>You're a stone's throw away from the [[kitchen]], the [[@-sign statue->statue]], the [[dance floor->danceFloor]], and the [[North Showcase Hall->northShowcaseHall]]. You can also crawl into the [[shipping container->shippingContainer]].`,
+    description: 'A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[the Tourist->item]] (a non-alcoholic drink with lots of fruit and a fun umbrella), [[the Berlin Interpretation->item]] (a mojito made with some sort of hyper-caffeinated soda), and [[the Walls Are Shifting->item]] (a Long Island Iced Tea).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>You\'re a stone\'s throw away from the [[kitchen]], the [[@-sign statue->statue]], the [[dance floor->danceFloor]], and the [[North Showcase Hall->northShowcaseHall]]. You can also crawl into the [[shipping container->shippingContainer]].',
     allowsMedia: true
   },
   lounge: {
@@ -148,7 +146,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'foyer',
     displayName: 'Haunted Foyer',
     shortName: 'the haunted foyer',
-    description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels ~off~ about this place.<br/><br/>
+    description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels <em>off</em> about this place.<br/><br/>
     You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`,
     specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
   },

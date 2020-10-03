@@ -9,5 +9,8 @@ export default [
   'a Proof of Stremf',
   'a shotgun',
   'a pair of seven league boots',
-  'Planepacked'
+  'Planepacked',
+  'the Tourist',
+  'the Berlin Interpretation',
+  'the Walls are Shifting'
 ]
