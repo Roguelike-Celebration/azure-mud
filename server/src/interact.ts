@@ -1,10 +1,7 @@
 import { minimizeUser, updateUserProfile, User } from './user'
 import { Context } from '@azure/functions'
 import { cookie } from '../src/cookie'
-
-const potionList = [
-  '🐶', '🐕', '🐩', '🐕‍🦺', '🐺', '🦊', '🐰', '🐇', '🦝', '🐀', '🐅', '🐎', '🦄', '🦓', '🦌', '🐮', '🐷', '🐫', '🐭', '🐹', '🐇', '🦇', '🐿', '🐨', '🐻', '🐼', '🦦', '🦥', '🐌', '🦨', '🐣', '🐥', '🐔', '🦩', '🦉', ', 🕊', '🦜', '🦚', '🐸', '🐲', '🐬', '🐳', '🐙', '🦑', '🦈', '🐛', '🦋', '🐞', '🐝', '🦖', '🦕', '🦠', '🦀', '🦞', '🦐', '🌸', '🌺', '🌷', '🌱', '🌲', '🌴', '🌵', '🍁', '🍄', '🌝', '🌞', '☁', '⛄', '👾', '👻', '👹', '👺'
-]
+import { polymorph, cancellation } from '../src/polymorph'
 
 export async function interact (user: User, messageId: string, context: Context, inspectedObject: string) {
   if (user.roomId === 'kitchenTableC' && (inspectedObject.includes('cookie') || inspectedObject.includes('fortune'))) {
@@ -14,11 +11,10 @@ export async function interact (user: User, messageId: string, context: Context,
   if (user.roomId === 'bar') {
     if (inspectedObject.includes('potion')) {
       // Inspecting a potion
-      let polymorph: string
       if (inspectedObject.includes('colourful') || inspectedObject.includes('colorful') || inspectedObject.includes('coloured') || inspectedObject.includes('colored')) {
-        polymorph = potionList[Math.floor(Math.random() * potionList.length)]
+        return await polymorph(user, messageId, context)
       } else if (inspectedObject.includes('clear') || inspectedObject.includes('plain')) {
-        polymorph = ''
+        return await cancellation(user, messageId, context)
       } else {
         context.res = {
           status: 200,
@@ -26,27 +22,6 @@ export async function interact (user: User, messageId: string, context: Context,
         }
         return
       }
-      const newProfile = await updateUserProfile(user.id, { polymorph })
-
-      context.bindings.signalRMessages = [
-        {
-          groupName: user.roomId,
-          target: 'emote',
-          arguments: [messageId, user.id, 'quaffs a potion and changes form!']
-        },
-        {
-          target: 'usernameMap',
-          arguments: [{ [user.id]: minimizeUser(newProfile) }]
-        }
-      ]
-      context.bindings.signalRMessages.unshift({
-        userId: user.id,
-        target: 'privateCommand',
-        arguments: ['You feel like something has changed...']
-      })
-
-      context.res = { status: 200 }
-      return
     }
   }
   context.res = {

@@ -1,5 +1,6 @@
 import * as vendingMachineFood from './vendingMachineFood'
 import * as fortuneCookies from './fortuneCookies'
+import * as polymorph from './polymorph'
 
 interface Generator {
     generate(): string
@@ -8,7 +9,8 @@ interface Generator {
 
 const generators: {[name: string]: Generator} = {
   vendingMachineFood,
-  fortuneCookies
+  fortuneCookies,
+  polymorph
 }
 
 export default generators
