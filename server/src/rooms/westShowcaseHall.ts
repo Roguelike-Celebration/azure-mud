@@ -59,7 +59,7 @@ export default {
 
         <div id="lords-of-cyberspace-entry" class="showcase-entry">
           <p><a href="https://lords-of-cyberspace.glitch.me/" target="_blank">Lords of Cyberspace</a>, by
-            <a href="https://swenson.io/" target="_blank" rel="nofollow noopener noreferrer">Christopher Swensom</a> (port),
+            <a href="https://swenson.io/" target="_blank" rel="nofollow noopener noreferrer">Christopher Swenson</a> (port),
             <a href="http://www.spookshow.net/muinet.html" target="_blank" rel="nofollow noopener noreferrer">Mark Peterson</a> (original author)
           </p>
           <p>Lords of Cyberspace is a mid-1990s MajorBBS door game with a roguelike MUD theme written by Mark Peterson. To quote
