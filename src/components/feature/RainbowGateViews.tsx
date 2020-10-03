@@ -53,7 +53,7 @@ export default function RainbowGateModalView () {
   } else if (visits === 2) {
     return (
       <div>
-        <h1>Oh it&apos;s you again.</h1>
+        <h1>Oh, it&apos;s you again.</h1>
         <p>Oh, hey, not to be, uh, not to be touchy or anything but we&apos;d appreciate it if you stopped portaling through our
           living room. You might not notice but uh, you&apos;re kind of leaving an ectoplasmic wake as you pass through which is
           going to be really annoying to clean up, so...we would really appreciate if you stopped.
