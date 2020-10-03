@@ -14,6 +14,7 @@ import {
   PlayerLeftAction,
   ShoutAction,
   EmoteAction,
+  DanceAction,
   ShowProfileActionForFetchedUser,
   UserMapAction,
   ModMessageAction,
@@ -305,6 +306,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(WhisperAction(otherId, message))
   })
 
+  connection.on('privateCommand', (message) => {
+    dispatch(CommandMessageAction(message))
+  })
+
   connection.on('privateItemPickup', (message) => {
     dispatch(CommandMessageAction(message))
   })
@@ -344,6 +349,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('emote', (messageId, name, message) => {
     dispatch(EmoteAction(messageId, name, message))
+  })
+
+  connection.on('dance', (messageId, name, message) => {
+    dispatch(DanceAction(messageId, name, message))
   })
 
   connection.on('webrtcSignalData', (peerId, data) => {

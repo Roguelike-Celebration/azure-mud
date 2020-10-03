@@ -34,6 +34,18 @@ export default function LoggedOutView () {
         >
           Log In With Google
         </a><br/>
+        {(window as any).safari ?
+          <p>
+            <strong style={{color: "red"}}> You appear to be using Safari.</strong> <br/>
+            If you are having difficulty logging in, you may need to allow third-party cookies 
+            <ul>
+              <li>On macOS, Safari -> Preferences -> uncheck "Prevent cross-site tracking"</li>
+              <li>On iOS, Settings -> Safari -> uncheck "Prevent cross-site tracking"</li>
+              </ul>
+            We know this is sketchy! We cpromise we're not capturing or selling data to any third party, it's just a limitation of the way we're handling logins.<br/> 
+            If you're not comfortable with this, feel free to switch to Chrome, Firefox, or another non-Safari browser on your Mac.
+            </p> : null
+          }        
         <p>
           No matter which service you log in with, we do not access any data
           other than what is needed to authenticate you. If it would make you
