@@ -42,7 +42,7 @@ export default function LoggedOutView () {
               <li>On macOS, Safari -> Preferences -> uncheck "Prevent cross-site tracking"</li>
               <li>On iOS, Settings -> Safari -> uncheck "Prevent cross-site tracking"</li>
               </ul>
-            We know this is sketchy! We cpromise we're not capturing or selling data to any third party, it's just a limitation of the way we're handling logins.<br/> 
+            We know this is sketchy! We promise we're not capturing or selling data to any third party, it's just a limitation of the way we're handling logins.<br/> 
             If you're not comfortable with this, feel free to switch to Chrome, Firefox, or another non-Safari browser on your Mac.
             </p> : null
           }        
