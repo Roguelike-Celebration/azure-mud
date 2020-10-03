@@ -7,7 +7,6 @@ export default {
         A stage, confusingly decorated with Halloween skulls and streamers. There are a few dozen flimsy metal chairs you can sit in, plus some comfy couches in the back. 
         You can leave to the [[kitchen]], the [[bar]], the [[foyer]], the [[@-sign statue->statue]], the [[unconferencing rooms->unconference]], or clamber into the [[shipping container->shippingContainer]].
         <br/><br/>
-        <br/>
         <a href="stream.html" onClick="window.open(\'stream.html#\' + window.getComputedStyle(document.body).getPropertyValue(\'background-color\'), \'stream\', \'width=560,height=460\'); return false">View Stream</a><br/>
         `,
   allowsMedia: true,
