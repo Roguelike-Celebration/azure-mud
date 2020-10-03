@@ -302,10 +302,6 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(WhisperAction(otherId, message))
   })
 
-  connection.on('whisper', (otherId, message) => {
-    dispatch(WhisperAction(otherId, message))
-  })
-
   connection.on('privateCommand', (message) => {
     dispatch(CommandMessageAction(message))
   })
