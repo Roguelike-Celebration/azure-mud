@@ -3,14 +3,14 @@
 
 /* Default theme */
 :root {
-  --main-background: black;
+  --main-background: #111111;
   --main-font: white;
   --gray-text: #b5b5b5;
   --alternate-background: #333333;
   --alternate-translucent: rgba(51,51,51,0.8);
   --green: #20b2aa;
   --highlight-line: #666666;
-  --mod-line: #1c1c1c;
+  --mod-line: #2f2f2f;
   --pink: lightpink;
   --blue: #87ceeb;
   --cyan: #00ffff;
@@ -30,7 +30,7 @@
   --alternate-translucent: rgba(7,54,66,0.8);
   --green: #859900;
   --highlight-line: #fdf6e3;
-  --mod-line: #fdf6e3;
+  --mod-line: #073642;
   --pink: #d33682;
   --blue: #268bd2;
   --cyan: #2aa198;
@@ -50,7 +50,7 @@
   --alternate-translucent: rgba(238,232,213,0.8);
   --green:#859900;
   --highlight-line: #002b36;
-  --mod-line: #002b36;
+  --mod-line: #eee8d5;
   --pink: #d33682;
   --blue: #268bd2;
   --cyan: #2aa198;
