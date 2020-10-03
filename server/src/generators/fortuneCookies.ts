@@ -65,7 +65,9 @@ export const generate = () => {
       'birthday cake',
       'caramel',
       'hazelnut',
-      'coffee'
+      'coffee',
+      'lavender',
+      'pistachio'
     ],
     goodFortune: [
       'Always be aware of the phase of the moon!',
@@ -134,7 +136,10 @@ export const generate = () => {
       'Live as you play: Randomly',
       'The corridor is your friend.',
       'You\'ll be happier if you finish making it!',
-      'Every monster you date is a monster you don\'t have to slay.'
+      'Every monster you date is a monster you don\'t have to slay.',
+      'You are lucky! Full moon tonight.',
+      'Lucky you! You have a cookie to eat.',
+      'Your luck is glorious, and so use your luck for good!'
     ],
     bad: [
       '#ugh#, #gross#!',
@@ -227,8 +232,9 @@ export const generate = () => {
       'Unfortunately, this message was left intentionally blank.',
       'Warning:  fortune reading can be hazardous to your health.',
       'Yet Another Silly Message (YASM).',
-      'You swallowed the fortune!'
-
+      'You swallowed the fortune!',
+      'You are Xom\'s most beloved teddy bear. Lucky you...?',
+      'nglormp dglflnngr'
     ]
   })
 

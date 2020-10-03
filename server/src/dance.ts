@@ -12,7 +12,14 @@ const danceList = [
   'finds a couple glowsticks and starts waving them to the beat',
   'nods their head to the beat. Feels good.',
   'pulls off some stair dancing technique - good at evading monsters, but a little crass, don\'t you think?',
-  'does the Gritterbug - cardinal directions only!'
+  'does the Gritterbug - cardinal directions only!',
+  'does some sharp moves - learned from Tukima, perhaps?',
+  'waltzes with a nearby pillar',
+  'does the hack and back - intense!',
+  'does the shoot and scoot - radical!',
+  'gets a conga line going in a narrow corridor',
+  'is temporarily cursed with choreomania! Can\'t. Stop. Dancing.',
+  'starts a lovely tarantella'
 ]
 
 export function dance (user: User, messageId: string, context: Context) {
