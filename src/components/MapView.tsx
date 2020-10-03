@@ -44,14 +44,9 @@ export default function MapView (props: Props) {
   const { roomData, currentRoomId } = props
 
   // Pixel size of one ASCII character
-  let w, h
-  if (props.isMiniMap) {
-    w = 8
-    h = 12
-  } else {
-    w = 10
-    h = 15
-  }
+  // This will not apply to the minimap, but we don't currently render clickable areas there
+  const w = 10
+  const h = 21
 
   // Scroll to make sure that the user's location is visible
   // The empty array at the end means we only run this on first render, not every time it re-renders
@@ -109,7 +104,7 @@ export default function MapView (props: Props) {
 
   return <div className='map' style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
-    <pre style={{ letterSpacing: '2px' }}><code>
+    <pre style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono' }}><code>
       {map}
     </code></pre>
   </div>
@@ -239,35 +234,35 @@ const clickableAreas: ClickableArea[] = [
   },
   {
     roomId: 'shippingContainer',
-    x: 45,
+    x: 44,
     y: 4,
     width: 12,
     height: 5
   },
   {
     roomId: 'statue',
-    x: 46,
+    x: 45,
     y: 12,
     width: 10,
     height: 7
   },
   {
     roomId: 'theater',
-    x: 62,
+    x: 60,
     y: 1,
     width: 27,
     height: 26
   },
   {
     roomId: 'foyer',
-    x: 63,
+    x: 61,
     y: 28,
     width: 21,
     height: 8
   },
   {
     roomId: 'swag',
-    x: 84,
+    x: 82,
     y: 28,
     width: 11,
     height: 8
@@ -323,42 +318,42 @@ const clickableAreas: ClickableArea[] = [
   },
   {
     roomId: 'unconference',
-    x: 94,
+    x: 92,
     y: 3,
     width: 25,
     height: 8
   },
   {
     roomId: 'minetown',
-    x: 94,
+    x: 92,
     y: 11,
     width: 12,
     height: 7
   },
   {
     roomId: 'oracle',
-    x: 107,
+    x: 105,
     y: 11,
     width: 12,
     height: 7
   },
   {
     roomId: 'sokoban',
-    x: 94,
+    x: 92,
     y: 18,
     width: 12,
     height: 7
   },
   {
     roomId: 'castle',
-    x: 108,
+    x: 105,
     y: 18,
     width: 12,
     height: 7
   },
   {
     roomId: 'astralPlane',
-    x: 96,
+    x: 94,
     y: 26,
     width: 10,
     height: 7
