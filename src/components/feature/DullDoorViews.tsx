@@ -44,7 +44,7 @@ export default function DullDoorModalView () {
         <p>It&apos;s poking unenthusiastically at his computer with four of his tentacles and eating his lunch with the rest. It
           looks very tired. You wave to catch its attention, and it glances over at you. You can see it trying to muster some
           effort for a greeting, but then it sighs and sinks into its seat. &quot;I&apos;m sorry,&quot; it says, &quot;these reports were due two
-          days ago. I don&pos;t have the time or energy to chat.&quot;
+          days ago. I don&apos;t have the time or energy to chat.&quot;
         </p>
         <p>You leave it to its reports.</p>
       </div>
