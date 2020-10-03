@@ -3,8 +3,8 @@
 
 /* Default theme */
 :root {
-  --main-background: #111111;
-  --main-font: white;
+  --main-background: #212121;
+  --main-font: #eee;
   --gray-text: #b5b5b5;
   --alternate-background: #333333;
   --alternate-translucent: rgba(51,51,51,0.8);
