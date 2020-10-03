@@ -117,7 +117,7 @@ export default function RoomView (props: Props) {
       {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? <RainbowGateRoomView /> : ''}
       {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.DullDoor) ? <DullDoorRoomView /> : ''}
       {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.FullRoomIndex) ? <FullRoomIndexRoomView /> : ''}
-      {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
+      {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} roomId={room.id} /> : ''}
       {noteWallView}
     </div>
   )
@@ -138,7 +138,7 @@ const HeldItemView = () => {
   }
 }
 
-const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[] }) => {
+const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[], roomId: string }) => {
   const { userMap, myId } = React.useContext(UserMapContext)
 
   let { users, userId, videoUsers } = props
@@ -154,6 +154,10 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
 
     if (users.length === 0) {
       return <div id="dynamic-room-description">You are all alone here. <HeldItemView /></div>
+    }
+
+    if (props.roomId === 'theater') {
+      return <div id="dynamic-room-description">There are {users.length} other people sitting in here.</div>
     }
 
     const userViews = users.map((u, idx) => {
