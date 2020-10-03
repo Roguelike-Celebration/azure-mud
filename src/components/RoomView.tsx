@@ -113,10 +113,11 @@ export default function RoomView (props: Props) {
             : 'Loading current room...'
         }}
       />
+      {room && room.id === 'theater' ? <StreamEmbed /> : null }
       {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? <RainbowGateRoomView /> : ''}
       {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.DullDoor) ? <DullDoorRoomView /> : ''}
       {room && room.specialFeatures && room.specialFeatures.includes(SpecialFeature.FullRoomIndex) ? <FullRoomIndexRoomView /> : ''}
-      {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} /> : ''}
+      {room ? <PresenceView users={room.users} userId={props.userId} videoUsers={room.videoUsers} roomId={room.id} /> : ''}
       {noteWallView}
     </div>
   )
@@ -137,7 +138,7 @@ const HeldItemView = () => {
   }
 }
 
-const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[] }) => {
+const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: string[], roomId: string }) => {
   const { userMap, myId } = React.useContext(UserMapContext)
 
   let { users, userId, videoUsers } = props
@@ -155,9 +156,12 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
       return <div id="dynamic-room-description">You are all alone here. <HeldItemView /></div>
     }
 
+    if (props.roomId === 'theater') {
+      return <div id="dynamic-room-description">There are {users.length} other people sitting in here.</div>
+    }
+
     const userViews = users.map((u, idx) => {
       const user = userMap[u]
-      console.log(u, user)
       if (!user) { return <span /> }
       const id = `presence-${idx}`
       return (
@@ -244,4 +248,16 @@ function parseDescription (description: string, roomData: { [roomId: string]: Ro
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCount}</a>`
   })
   return description
+}
+
+export function StreamEmbed () {
+  const streamRef = React.useRef<HTMLIFrameElement>(null)
+  const captionsRef = React.useRef<HTMLIFrameElement>(null)
+
+  return (
+    <div id="iframes" style={{ margin: 'auto' }}>
+      <iframe width="560" title="stream" ref={streamRef} height="315" src="https://www.youtube.com/embed/live_stream?channel=UCKv_QzXft4mD6TXmQBZtzIA" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+      <iframe id="captions" title="captions" ref={captionsRef} width="560" height="100" src="https://www.streamtext.net/player/?event=RoguelikeCelebration&chat=false&header=false&footer=false&indicator=false&ff=Consolas&fgc=93a1a1" frameBorder="0" allow="autoplay; encrypted-media;" allowFullScreen></iframe>
+    </div>
+  )
 }
