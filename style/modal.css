@@ -28,8 +28,7 @@
 #modal.full-screen {
     /** This is a hard-coded value based on the current map size.
     A more automatic-updating system would be nice. */
-    max-width: 1000px;
-    max-height: unset;
+    max-width: 1300px;
 }
 
 td.time {
