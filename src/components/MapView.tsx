@@ -44,9 +44,14 @@ export default function MapView (props: Props) {
   const { roomData, currentRoomId } = props
 
   // Pixel size of one ASCII character
-  // This will not apply to the minimap, but we don't currently render clickable areas there
-  const w = 10
-  const h = 21
+  let w, h
+  if (props.isMiniMap) {
+    w = 8
+    h = 13
+  } else {
+    w = 10
+    h = 21
+  }
 
   // Scroll to make sure that the user's location is visible
   // The empty array at the end means we only run this on first render, not every time it re-renders
