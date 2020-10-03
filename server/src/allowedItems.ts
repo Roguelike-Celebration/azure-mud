@@ -12,5 +12,5 @@ export default [
   'Planepacked',
   'the Tourist',
   'the Berlin Interpretation',
-  'the Walls are Shifting'
+  'the Walls Are Shifting'
 ]
