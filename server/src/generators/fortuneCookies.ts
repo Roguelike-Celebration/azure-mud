@@ -7,9 +7,67 @@ export const actionString = (fortune: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      'Mmm, tasty! The fortune reads "#fortune#"'
+      '#good# The fortune reads "#goodFortune#"',
+      '#good# The fortune reads "#goodFortune#"',
+      '#good# The fortune reads "#goodFortune#"',
+      '#bad# The fortune reads "#badFortune#"'
     ],
-    fortune: [
+    good: [
+      '#ooh#, #tasty#!',
+      '#ooh#, tastes like #goodFlavor#!',
+      'A #tasty# cookie #thatsLike# #goodFlavor#.'
+    ],
+    ooh: [
+      'Ooh',
+      'Mmm',
+      'Ahhhh',
+      'Hmm',
+      'Hooray',
+      'Nice',
+      'Wonderful',
+      'Delightful'
+    ],
+    tasty: [
+      'tasty',
+      'delicious',
+      'delightful',
+      'scrumptious'
+    ],
+    thatsLike: [
+      'that tastes like',
+      'with notes of',
+      'that reminds you of',
+      'that\'s just like'
+    ],
+    goodFlavor: [
+      'apple',
+      'banana',
+      'almond',
+      'peanut butter',
+      'walnut',
+      'lychee',
+      'mango',
+      'red bean',
+      'vanilla',
+      'chocolate',
+      'strawberry',
+      'matcha',
+      'cinnamon',
+      'cheesecake',
+      'snickerdoodle',
+      'gingersnap',
+      's\'more',
+      'shortbread',
+      'tiramisu',
+      'lemon',
+      'raspberry',
+      'honey',
+      'birthday cake',
+      'caramel',
+      'hazelnut',
+      'coffee'
+    ],
+    goodFortune: [
       'Always be aware of the phase of the moon!',
       'Amulets of Yendor are hard to make.  Even for a wand of wishing.',
       'Be careful!  The Wizard may plan an ambush!',
@@ -77,6 +135,100 @@ export const generate = () => {
       'The corridor is your friend.',
       'You\'ll be happier if you finish making it!',
       'Every monster you date is a monster you don\'t have to slay.'
+    ],
+    bad: [
+      '#ugh#, #gross#!',
+      '#ugh#, tastes like #badFlavor#.',
+      'A #gross# cookie #thatsLike# #badFlavor##weirdly#.'
+    ],
+    ugh: [
+      'Ugh',
+      'Eww',
+      'Blergh',
+      'Blah'
+    ],
+    gross: [
+      'gross',
+      'bizarre',
+      'awful',
+      'nasty',
+      'icky',
+      'vile',
+      'odious'
+    ],
+    badFlavor: [
+      'shakespeariansm',
+      'frustration',
+      'floppy disks',
+      'dadaism',
+      'entity component systems',
+      'Dijkstra maps',
+      'the infinte',
+      'deadlines',
+      'production schedules',
+      'social interaction',
+      'impostor syndrome',
+      'prequel films',
+      'discourse',
+      'uncertainty (maybe?)',
+      'prime numbers',
+      'shadows',
+      'friendship',
+      'red',
+      'orange',
+      'yellow',
+      'green',
+      'purple',
+      'violet',
+      'hot pink',
+      'fuchsia',
+      'blue',
+      'beige',
+      'octarine',
+      'electricity',
+      'spikes'
+    ],
+    weirdly: [
+      '',
+      ', weirdly',
+      ', strangely',
+      ', as odd as that sounds',
+      ', somehow'
+    ],
+    badFortune: [
+      'Be careful when eating bananas. Monsters might slip on the peels.',
+      'Does your boss know what you\'re doing right now?',
+      'Don\'t tell a soul you found a secret door, otherwise it isn\'t a secret anymore.',
+      'Help!  I\'m being held prisoner in a fortune cookie factory!',
+      'If you thought the Wizard was bad, just wait till you meet the Warlord!',
+      'Never play leapfrog with a unicorn.',
+      'Never trust a random generator in magic fields.',
+      'Ouch.  I hate when that happens.',
+      'PLEASE ignore previous rumor.',
+      'Sorry, no fortune this time.  Better luck next cookie!',
+      'Suddenly, the dungeon will collapse…',
+      'The magic word is "XYZZY".',
+      'The mines are dark and deep, and I have levels to go before I sleep.',
+      'They say that a black pudding is simply a brown pudding gone bad.',
+      'They say that a fortune only has 1 line and you can\'t read between it.',
+      'They say that a hot dog and a taco are the same thing.',
+      'They say your vanilla soy latte is a three bean soup.',
+      'Solitaire is a roguelike.',
+      'Hearts is a roguelike.',
+      'Chess is a roguelike.',
+      'Go Fish is a roguelike.',
+      'Blaseball is a roguelike.',
+      'Neopets is a roguelike.',
+      'Eve Online is a roguelike.',
+      'ASCII, dungeons - by certain interpretations, you\'re playing a roguelike right now!',
+      'Is *this* a roguelike?',
+      'They say that no one will admit to starting a rumor.',
+      'They say that there is no such thing as free advice.',
+      'Unfortunately, this message was left intentionally blank.',
+      'Warning:  fortune reading can be hazardous to your health.',
+      'Yet Another Silly Message (YASM).',
+      'You swallowed the fortune!'
+
     ]
   })
 
