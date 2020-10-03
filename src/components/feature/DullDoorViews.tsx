@@ -60,7 +60,7 @@ export default function DullDoorModalView () {
           stuck here for the last four nights doing these reports! They&apos;re overdue two days and they won&apos;t let me leave
           until they&apos;re done!&quot;</p>
 
-        <p>&quot;That color you have in your name, that&apos;ll do the trick! I don't have time to explain, but suffice it to say I&apos;m in a very tight spot and that color will fix things.&quot;</p>
+        <p>&quot;That color you have in your name, that&apos;ll do the trick! I don&apos;t have time to explain, but suffice it to say I&apos;m in a very tight spot and that color will fix things.&quot;</p>
         <p>&quot;You&apos;re free to go either way, but I&apos;d be really grateful if you could leave me your
           color.&quot;</p>
 
