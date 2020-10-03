@@ -21,7 +21,9 @@ export const generate = () => {
       'a seared',
       'a moist',
       'a chunky',
-      'a smooth'
+      'a smooth',
+      'a delicate',
+      'a hefty'
     ],
     food: [
       'slime mold',
@@ -30,18 +32,30 @@ export const generate = () => {
       'orange',
       'pomegranate',
       'döner kebab',
+      'donair',
       'hamburger',
       'pizza',
       'kobold corpse',
       'bagged sandwich',
       'cup of soup',
-      'loaf of bread'
+      'loaf of bread',
+      'lembas wafer',
+      'Cloaca Surprise',
+      'gnomish candy',
+      'choko',
+      'fig',
+      'cheesecake',
+      'plump helmet mince',
+      'bunch of grapes',
+      'guava'
     ],
     postAdjective: [
       ', still in the wrapper',
       ' with a bite taken out of it',
       ' past its expiration date',
-      ' that smells AMAZING'
+      ' that smells AMAZING',
+      ', still frozen',
+      ', with a sauce packet attached'
     ]
   })
 

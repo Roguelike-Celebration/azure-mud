@@ -14,8 +14,8 @@ export interface MinimalUser {
   isBanned?: boolean;
   // From https://www.w3schools.com/colors/colors_names.asp
   nameColor?: string;
-
   item?: string
+  polymorph?: string;
 }
 
 // A user profile. Users may fetch this about other users.
@@ -148,6 +148,7 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     isBanned: user.isBanned,
     nameColor: user.nameColor,
     item: user.item,
+    polymorph: user.polymorph,
     isMod: user.isMod
   }
 

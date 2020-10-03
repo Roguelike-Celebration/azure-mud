@@ -6,6 +6,8 @@ import { look } from '../src/look'
 import authenticate from '../src/authenticate'
 import { getUserIdForUsername } from '../src/user'
 import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../src/config'
+import { dance } from '../src/dance'
+import { interact } from '../src/interact'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -65,6 +67,18 @@ const httpTrigger: AzureFunction = async function (
         }
       ]
       return
+    }
+
+    const danceMatch = /^\/(dance)(.*)/.exec(message)
+    if (danceMatch) {
+      dance(user, req.body.id, context)
+      return
+    }
+
+    const interactMatch = /^\/(interact|get) (.*)/.exec(message)
+    if (interactMatch) {
+      var inspectedObject = interactMatch[2]
+      return await interact(user, req.body.id, context, inspectedObject)
     }
 
     const modMatch = /^\/(mod|mods|moderator|moderators) (.+)/.exec(message)

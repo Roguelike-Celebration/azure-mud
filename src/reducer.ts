@@ -10,6 +10,7 @@ import {
   createErrorMessage,
   createShoutMessage,
   createEmoteMessage,
+  createDanceMessage,
   createModMessage,
   createMovedRoomMessage,
   createSameRoomMessage,
@@ -238,6 +239,12 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.Emote) {
     addMessage(state,
       createEmoteMessage(action.value.messageId, action.value.name, action.value.message)
+    )
+  }
+
+  if (action.type === ActionType.Dance) {
+    addMessage(state,
+      createDanceMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
