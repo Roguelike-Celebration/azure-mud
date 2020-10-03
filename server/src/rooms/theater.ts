@@ -7,12 +7,7 @@ export default {
         A stage, confusingly decorated with Halloween skulls and streamers. There are a few dozen flimsy metal chairs you can sit in, plus some comfy couches in the back. 
         You can leave to the [[kitchen]], the [[bar]], the [[foyer]], the [[@-sign statue->statue]], the [[unconferencing rooms->unconference]], or clamber into the [[shipping container->shippingContainer]].
         <br/><br/>
-        <div id="iframes" style="margin: auto;">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/live_stream?channel=UCKv_QzXft4mD6TXmQBZtzIA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          <iframe id="captions" width="560" height="100" src="https://www.streamtext.net/player/?event=RoguelikeCelebration&chat=false&header=false&footer=false&indicator=false&ff=Consolas&fgc=93a1a1" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
-        </div>
-        <br/>
-        <a href="stream.html" onClick="window.open(\'stream.html#\' + window.getComputedStyle(document.body).getPropertyValue(\'background-color\'), \'stream\', \'width=560,height=460\'); return false">Pop Out Stream</a><br/>
+        <a href="stream.html" onClick="window.open(\'stream.html#\' + window.getComputedStyle(document.body).getPropertyValue(\'background-color\'), \'stream\', \'width=560,height=460\'); return false">View Stream</a><br/>
         `,
   allowsMedia: true,
   hasNoteWall: true,
