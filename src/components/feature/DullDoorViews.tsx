@@ -52,22 +52,19 @@ export default function DullDoorModalView () {
     return (
       <div>
         <h1>You see a very, very bored octopode sitting in a cubicle.</h1>
-        <p>It&apos;s poking unenthusiastically at his computer with four of his tentacles and eating his lunch with the rest. It
-          looks very tired. You wave to catch its attention, and it glances over at you. Its eyes go wide. The coffee mug it has
-          in its #5 tentacle drops to its desk with a loud thump, and the fork in its #7 tentacle clatters to the ground.
+        <p>It&apos;s poking unenthusiastically at his computer with four tentacles and eating lunch with the rest. As it spots you, its eyes go wide. A coffee mug in one tentacle drops to its desk with a loud thump, and a fork in another clatters to the ground.
         </p>
-        <p>&quot;Oh!&quot; it shouts, &quot;how energetic you are! Stay right where you are!&quot;</p>
-        <p>That sounds ominous. You turn around to exit the door, but before you can reach it the octopode jets in front of you
+        <p>&quot;Oh!&quot; it shouts, &quot;Stay right where you are!&quot;. Before you can even turn to the door, the octopode jets in front of you
           in a cloud of dark gray smoke.</p>
         <p>&quot;Look,&quot; says the octopode, &quot;I&apos;m begging you! You don&apos;t know how dull this place is, and I&apos;ve been
-          stuck here for the last four nights in a row doing these reports! They&apos;re overdue two days and they won&apos;t let me leave
-          until they&apos;re done! That color you have, that&apos;ll do the trick! I just need something to help me get this report filed,
-          which, I might add, is two days late because the invoices were held up on some random accountant&apos;s desk, because the
-          memo I sent didn&apos;t get read, and so we never got the invoices and we can&apos;t do the books without the invoices, and when
-          I told my boss that I&apos;d just walk down to accounting and pick them up, he said that&apos;d cause a fight with accounting,
-          because -&quot;</p>
-        <p>&quot;Look I&apos;m in a tight spot here. You&apos;re free to go either way, but I&apos;d be really grateful if you could leave me your
+          stuck here for the last four nights doing these reports! They&apos;re overdue two days and they won&apos;t let me leave
+          until they&apos;re done!&quot;</p>
+
+        <p>&quot;That color you have in your name, that&apos;ll do the trick! I don't have time to explain, but suffice it to say I'm in a very tight spot and that color will fix things.&quot;</p>
+        <p>&quot;You&apos;re free to go either way, but I&apos;d be really grateful if you could leave me your
           color.&quot;</p>
+
+        <p><strong>Leave your name color behind?</strong></p>
         <button id='dull-door-agree' onClick={giveColor}>Agree</button>
         <button id='dull-door-agree' onClick={leave}>Leave</button>
       </div>
