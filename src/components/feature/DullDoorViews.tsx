@@ -20,8 +20,7 @@ export const DullDoorRoomView = () => {
   }
 
   return <div id="dull-door-div" className="feature-room-view">
-    <p>There is the boringest door imaginable standing in front of you.</p>
-    <button id="dull-door-button" onClick={walkThroughDoor}>Walk through the door</button>
+    <p>There is the boringest door imaginable standing in front of you. <button id="dull-door-button" className='link-styled-button' onClick={walkThroughDoor}>Walk through the door</button>.</p>
   </div>
 }
 

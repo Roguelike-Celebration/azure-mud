@@ -27,9 +27,7 @@ export const RainbowGateRoomView = () => {
 
   return <div id="rainbow-gate-div" className="feature-room-view">
     <p>There&apos;s an ornate stone gate, through which you see a many-colored maelstrom. In front of the gate is a
-      sloppily-written wooden sign. It reads &quot;Please do not jump through the gate.&quot;
-    </p>
-    <button id="rainbow-gate-button" onClick={jumpThroughGate}>Jump through the gate!</button>
+      sloppily-written wooden sign. It reads &quot;Please do not jump through the gate.&quot; <button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Jump through the gate!</button></p>
   </div>
 }
 
