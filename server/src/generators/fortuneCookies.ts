@@ -144,7 +144,7 @@ export const generate = () => {
     bad: [
       '#ugh#, #gross#!',
       '#ugh#, tastes like #badFlavor#.',
-      'A #gross# cookie #thatsLike# #badFlavor##weirdly#.'
+      '#aGross# cookie #thatsLike# #badFlavor##weirdly#.'
     ],
     ugh: [
       'Ugh',
@@ -152,13 +152,19 @@ export const generate = () => {
       'Blergh',
       'Blah'
     ],
+    aGross: [
+      "A #gross#",
+      "An #awful#"
+    ],
     gross: [
       'gross',
       'bizarre',
-      'awful',
       'nasty',
+      'vile'
+    ],
+    awful: [
+      'awful',
       'icky',
-      'vile',
       'odious'
     ],
     badFlavor: [
