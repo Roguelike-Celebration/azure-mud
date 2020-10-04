@@ -67,7 +67,7 @@ export default {
             the hardware and software you acquire to cause as much trouble in cyberspace as is humanly possible." Christopher
             Swenson ported it to work on the web by adapting and recompiling it under modern Linux and macOS systems. You can see
             an explanation video
-            <a ref="https://www.youtube.com/watch?v=3HzKYwzWFYM" target="_blank" rel="nofollow noopener noreferrer">here</a>
+            <a href="https://www.youtube.com/watch?v=3HzKYwzWFYM" target="_blank" rel="nofollow noopener noreferrer">here</a>
             and play the game at
             <a href="https://lords-of-cyberspace.glitch.me/" target="_blank">https://lords-of-cyberspace.glitch.me/</a>!
           </p>

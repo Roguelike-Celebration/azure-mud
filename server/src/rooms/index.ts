@@ -178,7 +178,7 @@ const indexRoomData: { [name: string]: Room } = {
       noteWallButton: 'Add a link',
       addNoteLinkText: 'add a link',
       addNotePrompt: 'What would you like to link to?',
-      noteWallDescription: 'Links to slides, videos, files, and articles the community should look into.'
+      noteWallDescription: 'Links to slides, videos, files, and articles of interest.'
     }
   },
   workbench: {
