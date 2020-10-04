@@ -110,7 +110,7 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
         <div className='fixed'>
           <div id="header">
             <h2 className={user.isMod ? 'mod' : ''}><NameView userId={user.id} id={`profile-nameview-${user.id}`} /></h2>
-            <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
+            <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>X</button>
           </div>
           <p>
             {realName}
