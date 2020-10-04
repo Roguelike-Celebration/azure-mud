@@ -163,7 +163,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'atelier',
     displayName: 'Artists\' Atelier',
     shortName: 'the artists\' atelier',
-    description: `A bright sun-lit space for an artist to work. In the corner of the room are crates full of [[fresh pixels->item]] of all colors, waiting to be placed on a canvas. In the middle of the room is a giant contraption made of various [[pieces of scrap metal->item]]; you can't honestly tell whether it's intended to be art or just leftover scrap.<br/><br/>
+    description: `A bright sun-lit space for an artist to work. In the corner of the room are crates full of [[fresh pixels->item]] of all colors, waiting to be placed on a canvas. A screen on one wall shows a rotating slideshow of works by <a href=https://christen.carrd.co/ target=_blank>Christen Alqueza</a>, who also made the overlays and background for the livestream. In the middle of the room is a giant contraption made of various [[pieces of scrap metal->item]]; you can't honestly tell whether it's intended to be art or just leftover scrap.<br/><br/>
     From here, you can get to the [[west showcase hall->westShowcaseHall]], the [[engineer's work room->workbench]], or the [[proc-gen study->study]].`
   },
   study: {
