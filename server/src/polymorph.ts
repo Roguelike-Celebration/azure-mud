@@ -25,7 +25,7 @@ export async function polymorph (user: User, messageId: string, context: Context
       arguments: [messageId, user.id, 'drinks a colourful potion and changes form!']
     },
     {
-      groupName: user.roomId,
+      groupName: user.id,
       target: 'privateCommand',
       arguments: [actionText]
     },
@@ -47,7 +47,7 @@ export async function cancellation (user: User, messageId: string, context: Cont
       arguments: [messageId, user.id, 'drinks a clear potion and returns to normal.']
     },
     {
-      groupName: user.roomId,
+      groupName: user.id,
       target: 'privateCommand',
       arguments: ['You quaff the clear potion and return to your usual self.']
     },
