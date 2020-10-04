@@ -32,6 +32,7 @@ export function NoteView (props: { note: RoomNote }) {
   }
 
   const onClickLike = () => {
+    if (!canLike) return
     if (hasLiked) {
       unlikeRoomNote(n.id)
     } else {
@@ -50,12 +51,10 @@ export function NoteView (props: { note: RoomNote }) {
       <div className='note'>
         {canDelete ? <button onClick={onClickDelete} className='link-styled-button note-delete'>X</button> : ''}
         {n.message} <br/>
-        {canLike
-          ? <button className={`link-styled-button like-button ${hasLiked ? 'liked' : 'unliked'}`} onClick={onClickLike} data-tip={likeNames}>
-            {likes}{hasLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
-            <ReactTooltip />
-          </button>
-          : ''}
+        <button className={`link-styled-button like-button ${hasLiked || !canLike ? 'liked' : 'unliked'}`} onClick={onClickLike} data-tip={likeNames}>
+          {likes}{hasLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
+          <ReactTooltip />
+        </button>
         -<NameView userId={n.authorId} id={`noteAuthor-${n.id}`}/> <br/>
       </div>
     </Linkify>
