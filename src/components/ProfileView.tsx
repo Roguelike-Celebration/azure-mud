@@ -107,32 +107,34 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
   return (
     <Linkify componentDecorator={linkDecorator}>
       <div id="profile">
-        <div id="header">
-          <h2 className={user.isMod ? 'mod' : ''}><NameView userId={user.id} id={`profile-nameview-${user.id}`} /></h2>
-          <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
-        </div>
-        <p>
-          {realName}
-          <div id="profile-pronouns">{user.pronouns}</div>
-          {description}
-        </p>
-
-        {user.item ? <p>{user.username} is currently holding {user.item}</p> : null}
-
-        <p>
-          {twitterHandle}
-          {url}
-          {askMeAbout}
-        </p>
-        <div id="chat-container">
-          <div id="chat-header">Whisper Chat</div>
-          <div id="chat">
-            {whisperMessages.length > 0 ? whisperMessages.map((m, idx) => {
-              const id = `whisper-message-${idx}`
-              return <ProfileWhisperView {...m} key={id} id={id} otherUser={user} />
-            }) : <em>{`This is the beginning of your whisper chat with ${user.username}`}</em>}
+        <div className='fixed'>
+          <div id="header">
+            <h2 className={user.isMod ? 'mod' : ''}><NameView userId={user.id} id={`profile-nameview-${user.id}`} /></h2>
+            <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>Close</button>
           </div>
-          <InputView sendMessage={(message) => dispatch(SendMessageAction(`/whisper ${user.username} ${message}`))}/>
+          <p>
+            {realName}
+            <div id="profile-pronouns">{user.pronouns}</div>
+            {description}
+          </p>
+
+          {user.item ? <p>{user.username} is currently holding {user.item}</p> : null}
+
+          <p>
+            {twitterHandle}
+            {url}
+            {askMeAbout}
+          </p>
+          <div id="chat-container">
+            <div id="chat-header">Whisper Chat</div>
+            <div id="chat">
+              {whisperMessages.length > 0 ? whisperMessages.map((m, idx) => {
+                const id = `whisper-message-${idx}`
+                return <ProfileWhisperView {...m} key={id} id={id} otherUser={user} />
+              }) : <em>{`This is the beginning of your whisper chat with ${user.username}`}</em>}
+            </div>
+            <InputView sendMessage={(message) => dispatch(SendMessageAction(`/whisper ${user.username} ${message}`))}/>
+          </div>
         </div>
       </div>
     </Linkify>

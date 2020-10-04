@@ -1,4 +1,8 @@
 
+#profile .fixed {
+  position: fixed;
+}
+
 @media only screen and (max-device-width: 500px) {
   #profile {
     background-color:var(--main-background);
