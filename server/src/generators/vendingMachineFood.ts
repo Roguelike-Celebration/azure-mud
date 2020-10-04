@@ -47,7 +47,8 @@ export const generate = () => {
       'cheesecake',
       'plump helmet mince',
       'bunch of grapes',
-      'guava'
+      'guava',
+      'pancake'
     ],
     postAdjective: [
       ', still in the wrapper',
@@ -55,7 +56,8 @@ export const generate = () => {
       ' past its expiration date',
       ' that smells AMAZING',
       ', still frozen',
-      ', with a sauce packet attached'
+      ', with a sauce packet attached',
+      ', with an @ on the packaging'
     ]
   })
 

@@ -19,7 +19,9 @@ const danceList = [
   'does the shoot and scoot - radical!',
   'gets a conga line going in a narrow corridor',
   'is temporarily cursed with choreomania! Can\'t. Stop. Dancing.',
-  'starts a lovely tarantella'
+  'starts a lovely tarantella',
+  'begins a scottish sword dance - wait, where\'d you get the sword?',
+  'does a bit of an irish jig - it\'s weird to watch someone bob around and not move their arms.'
 ]
 
 export function dance (user: User, messageId: string, context: Context) {

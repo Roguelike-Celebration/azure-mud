@@ -118,6 +118,7 @@ export const generate = () => {
       'Past dance mixes by <a href=https://soundcloud.com/funkip/tracks target="_blank">Funkip</a>!',
       'Thank you once again to <a href=https://whitecoatcaptioning.com/ target="_blank">White Coat Captioning</a>!',
       'Buy a <a href=https://roguelike-celebration.myshopify.com/ target="_blank">t-shirt</a>, designed by <a href=http://www.fourbitfriday.com/ target="_blank">Tyriq Plummer</a>!',
+      'The beautiful stream overlays are made by <a href=https://christen.carrd.co/ target="_blank">Christen Alqueza</a>!',
       'Crush monsters, THEN get loots',
       'Spike pits are best avoided and bad for your health',
       'Always put a bag of holding into another bag of holding. I mean, what could possibly happen? <u>Nothing bad.</u>',
@@ -139,7 +140,8 @@ export const generate = () => {
       'Every monster you date is a monster you don\'t have to slay.',
       'You are lucky! Full moon tonight.',
       'Lucky you! You have a cookie to eat.',
-      'Your luck is glorious, and so use your luck for good!'
+      'Your luck is glorious, and so use your luck for good!',
+      'Jessie won\'t like if you go through that door in the foyer, but what if you went anyway?'
     ],
     bad: [
       '#ugh#, #gross#!',
@@ -191,7 +193,10 @@ export const generate = () => {
       'beige',
       'octarine',
       'electricity',
-      'spikes'
+      'spikes',
+      'wave function collapse',
+      'capitalism',
+      'meetings'
     ],
     weirdly: [
       '',
@@ -219,12 +224,7 @@ export const generate = () => {
       'They say that a hot dog and a taco are the same thing.',
       'They say your vanilla soy latte is a three bean soup.',
       'Solitaire is a roguelike.',
-      'Hearts is a roguelike.',
-      'Chess is a roguelike.',
-      'Go Fish is a roguelike.',
-      'Blaseball is a roguelike.',
-      'Neopets is a roguelike.',
-      'Eve Online is a roguelike.',
+      '#game# is a roguelike.',
       'ASCII, dungeons - by certain interpretations, you\'re playing a roguelike right now!',
       'Is *this* a roguelike?',
       'They say that no one will admit to starting a rumor.',
@@ -234,7 +234,22 @@ export const generate = () => {
       'Yet Another Silly Message (YASM).',
       'You swallowed the fortune!',
       'You are Xom\'s most beloved teddy bear. Lucky you...?',
-      'nglormp dglflnngr'
+      'nglormp dglflnngr',
+      'You open the cookie like a pillowcase!!! The cookie suddenly stops moving!'
+    ],
+    game: [
+      'Hearts',
+      'Chess',
+      'Go Fish',
+      'Blaseball',
+      'Neopets',
+      'Eve Online',
+      'Among Us',
+      'Overwatch',
+      'Fortnite',
+      'Calvinball',
+      'Real life',
+      'Thriving in 2020'
     ]
   })
 
