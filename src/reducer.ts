@@ -149,7 +149,7 @@ export default (oldState: State, action: Action): State => {
      * TODO: There may be cases other than moving rooms where we want to disconnect you.
      * If so, we need to dupe this logic there.
      */
-    (action as Action).type = ActionType.StopVideoChat
+    // (action as Action).type = ActionType.StopVideoChat
   }
 
   if (action.type === ActionType.UpdatedRoomData) {
