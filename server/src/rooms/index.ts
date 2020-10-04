@@ -171,7 +171,15 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Procedural Generation Study',
     shortName: 'the proc-gen study',
     description: `A comfy and cozy library that is curiously shaped like a hexagon. One side of the room has a couple of well-worn leather armchairs, while the other four walls are filled top-to-bottom with books. The majority of them are apparent gibberish, but many of them contain insightful writings about the art of procedural content generation.<br/><br/>
-    From here, you can get to the the [[engineer's workbench->workbench]] or the [[artists' atelier->atelier]].`
+    From here, you can get to the the [[engineer's workbench->workbench]] or the [[artists' atelier->atelier]].`,
+    hasNoteWall: true,
+    noteWallData: {
+      roomWallDescription: 'There is a chalkboard that says "BOOKMARKS" on the top.',
+      noteWallButton: 'Add a link',
+      addNoteLinkText: 'add a link',
+      addNotePrompt: 'What would you like to link to?',
+      noteWallDescription: 'Links to slides, videos, files, and articles the community should look into.'
+    }
   },
   workbench: {
     id: 'workbench',
