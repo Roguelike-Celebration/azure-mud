@@ -8,7 +8,8 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   await authenticate(context, req, false, async (user) => {
-    const videoChatters = await DB.addUserToVideoPresence(user.id, user.roomId)
+    await DB.addUserToVideoPresence(user.id, user.roomId)
+    const videoChatters = DB.getVideoPresenceForRoom(user.roomId)
 
     context.log('Broadcasting peer ID', user.roomId, user.id)
     context.bindings.signalRMessages = [
