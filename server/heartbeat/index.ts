@@ -1,5 +1,4 @@
 import { AzureFunction, Context } from '@azure/functions'
-import { removeUserFromRoomPresence } from '../src/roomPresence'
 import { getFullUser } from '../src/user'
 import DB from '../src/redis'
 import { getHeartbeatData } from '../src/heartbeat'
@@ -43,7 +42,8 @@ const timerTrigger: AzureFunction = async function (
     const userId = usersToRemove[i]
     const user = await getFullUser(userId)
 
-    await removeUserFromRoomPresence(userId, user.roomId)
+    await DB.removeOccupantFromRoom(user.roomId, userId)
+    await DB.setUserAsInactive(userId)
     signalRGroupActions.push(
       {
         userId,
@@ -51,7 +51,6 @@ const timerTrigger: AzureFunction = async function (
         action: 'remove'
       }
     )
-    roomsTouched.add(user.roomId)
   }
 
   if (usersToRemove.length > 0) {
@@ -59,8 +58,6 @@ const timerTrigger: AzureFunction = async function (
       `Removing the following inactive users: ${usersToRemove.join(', ')}`
     )
   }
-
-  await DB.setActiveUsers(activeUsers)
 
   // This is a hack because sometimes people, for unknown reasons, get removed from activeUsers but *not* room presences
   const roomIds = Object.values(roomData).map((r) => r.id)
@@ -73,7 +70,7 @@ const timerTrigger: AzureFunction = async function (
       if (!activeUsers.includes(occupantId)) {
         context.log(`User ${occupantId} was in room ${roomId} but was not active; removing.`)
 
-        await removeUserFromRoomPresence(occupantId, roomId)
+        await DB.removeOccupantFromRoom(roomId, occupantId)
         roomsTouched.add(roomId)
       }
     }

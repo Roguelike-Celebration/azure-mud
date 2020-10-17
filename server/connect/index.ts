@@ -3,7 +3,6 @@ import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import DB from '../src/redis'
 
 import { RoomResponse } from '../src/types'
-import { addUserToRoomPresence } from '../src/roomPresence'
 import authenticate from '../src/authenticate'
 import { minimizeUser, isMod } from '../src/user'
 import { userHeartbeatReceived } from '../src/heartbeat'
@@ -29,7 +28,8 @@ const httpTrigger: AzureFunction = async function (
       user.room = roomData.entryway
     }
 
-    await addUserToRoomPresence(user.id, user.roomId)
+    await DB.setCurrentRoomForUser(user.id, user.roomId)
+    await DB.addOccupantToRoom(user.roomId, user.id)
     await userHeartbeatReceived(user.id)
 
     const userMap = await DB.minimalProfileUserMap()

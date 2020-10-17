@@ -17,12 +17,13 @@ const cache = redis.createClient(
 const getCache = promisify(cache.get).bind(cache)
 const setCache = promisify(cache.set).bind(cache)
 
+const addToSet = promisify(cache.sadd).bind(cache)
+const removeFromSet = promisify(cache.srem).bind(cache)
+const getSet = promisify(cache.smembers).bind(cache)
+
 const Redis: Database = {
   async getActiveUsers () {
-    return JSON.parse(await getCache(activeUsersKey)) || []
-  },
-  async setActiveUsers (users: string[]) {
-    return await setCache(activeUsersKey, JSON.stringify(users))
+    return getSet(activeUsersKey) || []
   },
 
   async getUserHeartbeat (userId: string): Promise<number> {
@@ -33,25 +34,29 @@ const Redis: Database = {
     await setCache(heartbeatKeyForUser(userId), new Date().valueOf())
   },
 
-  // TODO: This could theoretically use Redis lists
   async setUserAsActive (userId: string) {
-    const activeUsers = await Redis.getActiveUsers()
-    if (!activeUsers.includes(userId)) {
-      activeUsers.push(userId)
-      await Redis.setActiveUsers(activeUsers)
-    }
+    return await addToSet(activeUsersKey, userId)
+  },
+
+  async setUserAsInactive (userId: string) {
+    return await removeFromSet(activeUsersKey, userId)
   },
 
   // Room presence
 
   async roomOccupants (roomId: string) {
     const presenceKey = roomPresenceKey(roomId)
-    return JSON.parse(await getCache(presenceKey)) || []
+    return await getSet(presenceKey) || []
   },
 
-  async setRoomOccupants (roomId: string, occupants: string[]) {
+  async addOccupantToRoom (roomId: string, userId: string) {
     const presenceKey = roomPresenceKey(roomId)
-    await setCache(presenceKey, JSON.stringify(occupants))
+    return await addToSet(presenceKey, userId)
+  },
+
+  async removeOccupantFromRoom (roomId: string, userId: string) {
+    const presenceKey = roomPresenceKey(roomId)
+    return await removeFromSet(presenceKey, userId)
   },
 
   async setCurrentRoomForUser (userId: string, roomId: string) {
@@ -63,37 +68,15 @@ const Redis: Database = {
   },
 
   async addUserToVideoPresence (userId: string, roomId: string) {
-    const rawList = await getCache(videoPresenceKey(roomId))
-    let list: string[]
-    if (rawList) {
-      list = JSON.parse(rawList)
-    } else {
-      list = []
-    }
-
-    console.log(list)
-
-    if (!list.includes(userId)) {
-      list.push(userId)
-    }
-
-    return list
+    await addToSet(videoPresenceKey(roomId), userId)
   },
 
   async removeUserFromVideoPresence (userId: string, roomId: string) {
-    const rawList = await getCache(videoPresenceKey(roomId))
-    let list: string[]
-    if (rawList) {
-      list = JSON.parse(rawList)
-    } else {
-      list = []
-    }
-    console.log(list)
+    await removeFromSet(videoPresenceKey(roomId), userId)
+  },
 
-    list = list.filter(l => l !== userId)
-
-    await setCache(videoPresenceKey(roomId), JSON.stringify(list))
-    return list
+  async getVideoPresenceForRoom (roomId: string) {
+    return await getSet(videoPresenceKey(roomId)) || []
   },
 
   // User
@@ -194,35 +177,15 @@ const Redis: Database = {
   },
 
   async modList (): Promise<string[]> {
-    let modList = []
-    const rawModList = await getCache(modListKey)
-    if (rawModList) {
-      modList = JSON.parse(rawModList)
-    }
-
-    return modList
+    return await getSet(modListKey) || []
   },
 
   async addMod (userId: string) {
-    const list = await Redis.modList()
-
-    if (!list.includes(userId)) {
-      list.push(userId)
-      await setCache(modListKey, JSON.stringify(list))
-    }
-
-    return list
+    await addToSet(modListKey, userId)
   },
 
   async removeMod (userId: string) {
-    let list = await Redis.modList()
-
-    if (list.includes(userId)) {
-      list = list.filter(id => id !== userId)
-      await setCache(modListKey, JSON.stringify(list))
-    }
-
-    return list
+    await removeFromSet(modListKey, userId)
   },
 
   // Server settings
@@ -240,6 +203,9 @@ const Redis: Database = {
 
     return serverSettings
   },
+
+  // TODO: It would be great to refactor post-its to use Redis sets.
+  // That's complicated because we currently store an array of full objects, but deleting/liking is referenced by the ID within the objects
 
   // Post-it notes
   async addRoomNote (roomId: string, note: RoomNote) {

@@ -1,5 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import { removeUserFromRoomPresence } from '../src/roomPresence'
 import authenticate from '../src/authenticate'
 import DB from '../src/redis'
 import { globalPresenceMessage } from '../src/globalPresenceMessage'
@@ -13,13 +12,8 @@ const httpTrigger: AzureFunction = async function (
       status: 200
     }
 
-    await removeUserFromRoomPresence(user.id, user.roomId)
-
-    let activeUsers = await DB.getActiveUsers()
-    if (activeUsers.includes(user.id)) {
-      activeUsers = activeUsers.filter((u) => u !== user.id)
-      await DB.setActiveUsers(activeUsers)
-    }
+    await DB.removeOccupantFromRoom(user.roomId, user.id)
+    await DB.setUserAsInactive(user.id)
 
     context.bindings.signalRGroupActions = [
       {

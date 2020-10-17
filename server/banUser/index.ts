@@ -2,11 +2,6 @@ import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import authenticate from '../src/authenticate'
 import { isMod, getFullUser, minimizeUser, User } from '../src/user'
 import DB from '../src/redis'
-import setUpRoomsForUser from '../src/setUpRoomsForUser'
-import {
-  addUserToRoomPresence,
-  removeUserFromRoomPresence
-} from '../src/roomPresence'
 import { globalPresenceMessage } from '../src/globalPresenceMessage'
 
 // Copied and modified from disconnect/index.ts
@@ -18,13 +13,8 @@ async function disconnectAndBan (user: User, target: User, context: Context) {
   context.res = {
     status: 200
   }
-  await removeUserFromRoomPresence(target.id, target.roomId)
-
-  let activeUsers = await DB.getActiveUsers()
-  if (activeUsers.includes(target.id)) {
-    activeUsers = activeUsers.filter((u) => u !== target.id)
-    await DB.setActiveUsers(activeUsers)
-  }
+  await DB.removeOccupantFromRoom(target.roomId, target.id)
+  await DB.setUserAsInactive(target.id)
 
   context.bindings.signalRGroupActions = [
     {

@@ -1,10 +1,6 @@
 import { Context } from '@azure/functions'
 import { roomData } from './rooms'
 import { RoomResponse } from './types'
-import {
-  removeUserFromRoomPresence,
-  addUserToRoomPresence
-} from './roomPresence'
 import { User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
 import DB from '../src/redis'
@@ -65,8 +61,9 @@ export async function moveToRoom (
   // If you're already in the room and try to 're-enter' the room,
   // nothing should happen: issue 162
   if (user.roomId !== to.id) {
-    await removeUserFromRoomPresence(user.id, user.roomId)
-    await addUserToRoomPresence(user.id, to.id)
+    await DB.removeOccupantFromRoom(user.roomId, user.id)
+    await DB.setCurrentRoomForUser(user.id, to.id)
+    await DB.addOccupantToRoom(to.id, user.id)
 
     context.bindings.signalRMessages = [
       {

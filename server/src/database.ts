@@ -10,17 +10,17 @@ interface Database {
   /** Returns an array of user IDs for all active logged-in users */
   getActiveUsers(): Promise<string[]>;
 
-  /** TODO: Why does this take in all users, not just the new one? */
-  setActiveUsers(users: string[]): Promise<void>;
+  /** Adds a user to the current list of logged-in users */
+  setUserAsActive(userId: string);
+
+  /** Removes a user from the current list of logged-in users */
+  setUserAsInactive(userId: string);
 
   /** Returns a Unix timestamp for when a user last pinged in */
   getUserHeartbeat(userId: string): Promise<number>;
 
   /** Sets the current Unix timestamp for a user pinging in */
   setUserHeartbeat(userId: string);
-
-  /** Adds a user to the current list of logged-in users */
-  setUserAsActive(userId: string);
 
   // -----------------------------------------------------------------
   // ROOM PRESENCE
@@ -29,8 +29,11 @@ interface Database {
   /** Returns an array of userIds who are currently in the given room */
   roomOccupants(roomId: string): Promise<string[]>;
 
-  /** Take an array of users and overwrite the current presence for the room */
-  setRoomOccupants(roomId: string, occupants: string[]);
+  /** Adds a user to a room's list of occupants */
+  addOccupantToRoom(roomId: string, userId: string)
+
+  /** Remvoes a user from a room's list of occupants */
+  removeOccupantFromRoom(roomId: string, userId: string)
 
   // The cache for what room a given user is in is different.
   // This sets a given user as "in" a room.
@@ -40,13 +43,14 @@ interface Database {
   /** Returns the room ID for the room a user is currently in */
   currentRoomForUser(userId: string): Promise<string | undefined>;
 
-  /** Add a user to the videochat presence for a room.
-   * Returns a list of users currently in videochat */
-  addUserToVideoPresence(userId: string, roomId: string): Promise<string[]>
+  /** Add a user to the videochat presence for a room. */
+  addUserToVideoPresence(userId: string, roomId: string)
 
-  /** Removes a user from the videochat presence for a room.
-   * Returns a list of users currently in videochat */
-  removeUserFromVideoPresence(userId: string, roomId: string): Promise<string[]>
+  /** Removes a user from the videochat presence for a room. */
+  removeUserFromVideoPresence(userId: string, roomId: string)
+
+  /* Returns a list of users currently in videochat */
+  getVideoPresenceForRoom(roomId: string): Promise<string[]>
 
   // -----------------------------------------------------------------
   // USER DATA
