@@ -1,4 +1,5 @@
 # Yet Another Browser Mud
+![Linting and Validation Checks](https://github.com/lazerwalker/azure-mud/workflows/Linting%20and%20Validation%20Checks/badge.svg)
 
 This is a playful text-based online social chat space. You can think of it as a hybrid between communication apps like Slack and Discord and traditional text-based online game spaces such as MUDs and MOOs.
 
