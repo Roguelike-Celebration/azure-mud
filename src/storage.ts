@@ -72,16 +72,6 @@ export async function currentTheme (): Promise<string> {
   return localStorage.getItem(themeKey) || 'default'
 }
 
-// Show all movement messages
-
-export async function getShouldShowAllMovementMessages (): Promise<boolean> {
-  return JSON.parse(localStorage.getItem(showMovementMessagesKey)) || false
-}
-
-export async function setShouldShowAllMovementMessages (value: boolean) {
-  localStorage.setItem(showMovementMessagesKey, JSON.stringify(value))
-}
-
 // Keys
 
 const messagesKey = 'messages'
@@ -90,4 +80,3 @@ const whisperKey = 'whispers'
 const rainbowGateKey = 'FeatureRainbowGateVisited'
 const wasColoredEnteringKey = 'WasColoredEntering'
 const themeKey = 'UserSelectedTheme'
-const showMovementMessagesKey = 'ShowAllMovementMessages'

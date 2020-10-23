@@ -2,19 +2,17 @@ import React, { useContext, useEffect } from 'react'
 
 import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
-import { currentTheme, getShouldShowAllMovementMessages, setShouldShowAllMovementMessages, setTheme } from '../storage'
+import { currentTheme, setTheme } from '../storage'
 
 export default function SettingsView () {
   const dispatch = useContext(DispatchContext)
 
   // Set the selection of the radio group upon opening the modal
   const [selectedTheme, setSelectedTheme] = React.useState('default')
-  const [showMovementMessages, setShowMovementMessages] = React.useState(false)
 
   useEffect(() => {
     (async () => {
       setSelectedTheme(await currentTheme())
-      setShowMovementMessages(await getShouldShowAllMovementMessages())
     })()
   })
 
@@ -27,11 +25,6 @@ export default function SettingsView () {
     document.body.classList.replace(selectedTheme, event.target.value)
     setSelectedTheme(event.target.value)
     setTheme(event.target.value)
-  }
-
-  const handleToggleMovement = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setShowMovementMessages(event.target.checked)
-    setShouldShowAllMovementMessages(event.target.checked)
   }
 
   return (
@@ -69,18 +62,6 @@ export default function SettingsView () {
               onChange = {handleThemeSelection}
             />
             Solarized Light
-          </label>
-        </div>
-      </div>
-      <div className='form' id='movementNotificationForm'>
-        <label htmlFor='movementNotificationForm'>Movement Messages:</label>
-        <div>
-          <label>
-            <input type='checkbox'
-              id='showMoveToggle'
-              defaultChecked={showMovementMessages}
-              onChange={handleToggleMovement} />
-              Show all movement messages (messages hidden by default in high-traffic areas)
           </label>
         </div>
       </div>
