@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { DispatchContext, UserMapContext } from '../../App'
 import { UpdateProfileColorAction, ShowModalAction, HideModalAction } from '../../Actions'
 import { Modal } from '../../modals'
@@ -28,6 +28,14 @@ export const DullDoorRoomView = () => {
 export default function DullDoorModalView () {
   const dispatch = React.useContext(DispatchContext)
 
+  const [wasColoredEntering, setWasColoredEntering] = useState(false)
+
+  useEffect(() => {
+    (async () => {
+      setWasColoredEntering(await Storage.getWasColoredEntering())
+    })()
+  }, [])
+
   const giveColor = () => {
     dispatch(UpdateProfileColorAction(null))
     dispatch(HideModalAction())
@@ -36,7 +44,6 @@ export default function DullDoorModalView () {
     dispatch(HideModalAction())
   }
 
-  const wasColoredEntering = Storage.getWasColoredEntering()
   if (!wasColoredEntering) {
     return (
       <div>

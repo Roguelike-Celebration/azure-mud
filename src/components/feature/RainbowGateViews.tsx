@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { DispatchContext, UserMapContext } from '../../App'
 import { ValidColors } from '../../../server/src/types'
 import { UpdateProfileColorAction, ShowModalAction } from '../../Actions'
@@ -15,8 +15,8 @@ export const RainbowGateRoomView = () => {
 
   const dispatch = React.useContext(DispatchContext)
 
-  const jumpThroughGate = () => {
-    const newVisits = incrementGateVisits()
+  const jumpThroughGate = async () => {
+    const newVisits = await incrementGateVisits()
     if (newVisits > 3) {
       dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
     }
@@ -33,7 +33,14 @@ export const RainbowGateRoomView = () => {
 export default function RainbowGateModalView () {
   const { userMap, myId } = useContext(UserMapContext)
 
-  const visits = getGateVisits()
+  const [visits, setVisits] = useState(0)
+
+  useEffect(() => {
+    (async () => {
+      setVisits(await getGateVisits())
+    })()
+  }, [])
+
   if (visits === 1) {
     return (
       <div>

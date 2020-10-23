@@ -516,6 +516,9 @@ export default (oldState: State, action: Action): State => {
   return state
 }
 
+// WARNING: These three functions modify the message state without awaiting on the result.
+// If you're seeing weird race conditions with the message store, that's probably the issue.
+
 function deleteMessage (state: State, messageId: String) {
   const target = state.messages.find(m => isDeletable(m) && m.messageId === messageId)
   // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
@@ -525,12 +528,12 @@ function deleteMessage (state: State, messageId: String) {
   }
 }
 
-function saveWhisper (state: State, message: WhisperMessage) {
+async function saveWhisper (state: State, message: WhisperMessage) {
   state.whispers.push(message)
   Storage.setWhispers(state.whispers)
 }
 
-function addMessage (state: State, message: Message) {
+async function addMessage (state: State, message: Message) {
   state.messages.push(message)
   state.messages = state.messages.slice(-500)
   Storage.setMessages(state.messages)

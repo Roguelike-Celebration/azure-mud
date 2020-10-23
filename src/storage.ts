@@ -2,7 +2,7 @@ import { Message, WhisperMessage } from './message'
 
 // Message cache
 
-export function getMessages (): {messages: Message[], whispers: WhisperMessage[]}|undefined {
+export async function getMessages (): Promise<{messages: Message[], whispers: WhisperMessage[]}|undefined> {
   let localLocalData = false
   const rawTimestamp = localStorage.getItem(messageTimestampKey)
   const rawMessageData = localStorage.getItem(messagesKey)
@@ -30,55 +30,55 @@ export function getMessages (): {messages: Message[], whispers: WhisperMessage[]
   }
 }
 
-export function setMessages (messages: Message[], timestamp?: Date) {
+export async function setMessages (messages: Message[], timestamp?: Date) {
   localStorage.setItem(messagesKey, JSON.stringify(messages))
 
   const timeString = (timestamp || new Date()).toUTCString()
   localStorage.setItem(messageTimestampKey, timeString)
 }
 
-export function setWhispers (whispers: WhisperMessage[]) {
+export async function setWhispers (whispers: WhisperMessage[]) {
   localStorage.setItem(whisperKey, JSON.stringify(whispers))
 }
 
 // Rainbow gate
 
-export function getGateVisits (): number {
+export async function getGateVisits (): Promise<number> {
   return parseInt(localStorage.getItem(rainbowGateKey)) || 0
 }
 
-export function incrementGateVisits () {
-  const visits = getGateVisits() + 1
+export async function incrementGateVisits () {
+  const visits = await getGateVisits() + 1
   localStorage.setItem(rainbowGateKey, visits.toString())
   return visits
 }
 
 // Username coloring
 
-export function getWasColoredEntering (): boolean {
-  return localStorage.get(wasColoredEnteringKey)
+export async function getWasColoredEntering (): Promise<boolean> {
+  return JSON.parse(localStorage.getItem(wasColoredEnteringKey)) || false
 }
 
-export function setWasColoredEntering (value: boolean) {
+export async function setWasColoredEntering (value: boolean) {
   localStorage.setItem(wasColoredEnteringKey, JSON.stringify(value))
 }
 
 // User theme
-export function setTheme (theme: string) {
+export async function setTheme (theme: string) {
   localStorage.setItem(themeKey, theme)
 }
 
-export function currentTheme (): string {
+export async function currentTheme (): Promise<string> {
   return localStorage.getItem(themeKey) || 'default'
 }
 
 // Show all movement messages
 
-export function getShouldShowAllMovementMessages (): boolean {
+export async function getShouldShowAllMovementMessages (): Promise<boolean> {
   return JSON.parse(localStorage.getItem(showMovementMessagesKey)) || false
 }
 
-export function setShouldShowAllMovementMessages (value: boolean) {
+export async function setShouldShowAllMovementMessages (value: boolean) {
   localStorage.setItem(showMovementMessagesKey, JSON.stringify(value))
 }
 

@@ -64,7 +64,7 @@ const App = () => {
         console.log(login)
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
-        checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
+        checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
             dispatch(AuthenticateAction(userId, login.user_id, login.provider_name))
             return
@@ -87,7 +87,7 @@ const App = () => {
             }
           }
 
-          const messageArchive = Storage.getMessages()
+          const messageArchive = await Storage.getMessages()
           if (messageArchive) {
             dispatch(LoadMessageArchiveAction(messageArchive.messages, messageArchive.whispers))
           }
