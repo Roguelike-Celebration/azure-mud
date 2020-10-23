@@ -1,75 +1,64 @@
 import { Message, WhisperMessage } from './message'
+import localforage from 'localforage'
 
 // Message cache
 
 export async function getMessages (): Promise<{messages: Message[], whispers: WhisperMessage[]}|undefined> {
-  let localLocalData = false
-  const rawTimestamp = localStorage.getItem(messageTimestampKey)
-  const rawMessageData = localStorage.getItem(messagesKey)
-  const rawWhisperData = localStorage.getItem(whisperKey)
-  if (rawTimestamp) {
-    try {
-      const timestamp = new Date(rawTimestamp)
-      // A janky way to say "Is it older than an hour"
-      localLocalData =
-                  rawMessageData &&
-                  new Date().getTime() - timestamp.getTime() < 1000 * 60 * 60
-    } catch {
-      console.log('Did not find a valid timestamp for message cache')
-    }
-  }
+  try {
+    const timestamp: Date = await localforage.getItem(messageTimestampKey)
+    const messages: Message[] = await localforage.getItem(messagesKey)
+    const whispers: WhisperMessage[] = await localforage.getItem(whisperKey)
 
-  if (localLocalData) {
-    try {
-      const messages = JSON.parse(rawMessageData)
-      const whispers: WhisperMessage[] = JSON.parse(rawWhisperData) || []
+    // A janky way to say "Is it older than an hour"
+    if (timestamp && new Date().getTime() - timestamp.getTime() < 1000 * 60 * 60) {
+      console.log(messages, whispers)
       return { messages, whispers }
-    } catch (e) {
-      console.log('Could not parse message JSON', e)
     }
+
+    // If we haven't returned yet, there's either no valid timestamp, or too old a timestamp
+  } catch (err) {
+    console.log('Storage error', err)
   }
 }
 
 export async function setMessages (messages: Message[], timestamp?: Date) {
-  localStorage.setItem(messagesKey, JSON.stringify(messages))
-
-  const timeString = (timestamp || new Date()).toUTCString()
-  localStorage.setItem(messageTimestampKey, timeString)
+  await localforage.setItem(messagesKey, messages)
+  await localforage.setItem(messageTimestampKey, timestamp || new Date())
 }
 
 export async function setWhispers (whispers: WhisperMessage[]) {
-  localStorage.setItem(whisperKey, JSON.stringify(whispers))
+  await localforage.setItem(whisperKey, whispers)
 }
 
 // Rainbow gate
 
 export async function getGateVisits (): Promise<number> {
-  return parseInt(localStorage.getItem(rainbowGateKey)) || 0
+  return await localforage.getItem(rainbowGateKey) || 0
 }
 
 export async function incrementGateVisits () {
   const visits = await getGateVisits() + 1
-  localStorage.setItem(rainbowGateKey, visits.toString())
+  await localforage.setItem(rainbowGateKey, visits)
   return visits
 }
 
 // Username coloring
 
 export async function getWasColoredEntering (): Promise<boolean> {
-  return JSON.parse(localStorage.getItem(wasColoredEnteringKey)) || false
+  return await localforage.getItem(wasColoredEnteringKey) || false
 }
 
 export async function setWasColoredEntering (value: boolean) {
-  localStorage.setItem(wasColoredEnteringKey, JSON.stringify(value))
+  await localforage.setItem(wasColoredEnteringKey, value)
 }
 
 // User theme
 export async function setTheme (theme: string) {
-  localStorage.setItem(themeKey, theme)
+  await localforage.setItem(themeKey, theme)
 }
 
 export async function currentTheme (): Promise<string> {
-  return localStorage.getItem(themeKey) || 'default'
+  return await localforage.getItem(themeKey) || 'default'
 }
 
 // Keys
