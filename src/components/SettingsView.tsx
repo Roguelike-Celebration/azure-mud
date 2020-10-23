@@ -3,9 +3,9 @@ import React, { useContext } from 'react'
 import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
 import { HideModalAction } from '../Actions'
+import { currentTheme, getShouldShowAllMovementMessages, setShouldShowAllMovementMessages, setTheme } from '../storage'
 
-export const LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY = 'ShowAllMovementMessages'
-
+// TODO: Pass in current values for theme and movement message, and then do everything in state.
 export default function SettingsView () {
   const dispatch = useContext(DispatchContext)
 
@@ -17,9 +17,7 @@ export default function SettingsView () {
   // Otherwise, set the state in local storage to be Default
 
   // Set the selection of the radio group upon opening the modal
-  const [selectedTheme, setSelectedTheme] = React.useState(
-    localStorage.getItem('UserSelectedTheme') || 'default'
-  )
+  const [selectedTheme, setSelectedTheme] = React.useState(currentTheme())
 
   // Handle what happens when you change the modal
   /// change the value in local storage
@@ -29,12 +27,14 @@ export default function SettingsView () {
     console.log(selectedTheme, event.target.value)
     document.body.classList.replace(selectedTheme, event.target.value)
     setSelectedTheme(event.target.value)
-    localStorage.setItem('UserSelectedTheme', event.target.value)
+    setTheme(event.target.value)
   }
 
   const handleToggleMovement = (event: React.ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY, JSON.stringify(event.target.checked))
+    setShouldShowAllMovementMessages(event.target.checked)
   }
+
+  const defaultChecked = getShouldShowAllMovementMessages()
 
   return (
     <div className='settingsContainer'>
@@ -80,7 +80,7 @@ export default function SettingsView () {
           <label>
             <input type='checkbox'
               id='showMoveToggle'
-              defaultChecked={JSON.parse(localStorage.getItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY))}
+              defaultChecked={defaultChecked}
               onChange={handleToggleMovement} />
               Show all movement messages (messages hidden by default in high-traffic areas)
           </label>

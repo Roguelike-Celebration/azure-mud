@@ -3,6 +3,7 @@ import { DispatchContext, UserMapContext } from '../../App'
 import { ValidColors } from '../../../server/src/types'
 import { UpdateProfileColorAction, ShowModalAction } from '../../Actions'
 import { Modal } from '../../modals'
+import { getGateVisits, incrementGateVisits } from '../../storage'
 
 // When you pass through the ranbow door enough times, you get a randomly colored username
 export const RainbowGateRoomView = () => {
@@ -15,9 +16,7 @@ export const RainbowGateRoomView = () => {
   const dispatch = React.useContext(DispatchContext)
 
   const jumpThroughGate = () => {
-    const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited')) || 0
-    const newVisits = visits + 1
-    localStorage.setItem('FeatureRainbowGateVisited', newVisits.toString())
+    const newVisits = incrementGateVisits()
     if (newVisits > 3) {
       dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
     }
@@ -34,7 +33,7 @@ export const RainbowGateRoomView = () => {
 export default function RainbowGateModalView () {
   const { userMap, myId } = useContext(UserMapContext)
 
-  const visits = parseInt(localStorage.getItem('FeatureRainbowGateVisited'))
+  const visits = getGateVisits()
   if (visits === 1) {
     return (
       <div>
