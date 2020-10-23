@@ -363,17 +363,19 @@ interface PlayerEnteredAction {
   type: ActionType.PlayerEntered;
   value: {
     name: string;
-    from: string;
+    fromId: string;
+    fromName: string;
   };
 }
 
 export const PlayerEnteredAction = (
   name: string,
-  from: string
+  fromId: string,
+  fromName: string
 ): PlayerEnteredAction => {
   return {
     type: ActionType.PlayerEntered,
-    value: { name, from }
+    value: { name, fromId, fromName }
   }
 }
 
@@ -381,17 +383,19 @@ interface PlayerLeftAction {
   type: ActionType.PlayerLeft;
   value: {
     name: string;
-    to: string;
+    toId: string;
+    toName: string;
   };
 }
 
 export const PlayerLeftAction = (
   name: string,
-  to: string
+  toId: string,
+  toName: string
 ): PlayerLeftAction => {
   return {
     type: ActionType.PlayerLeft,
-    value: { name, to }
+    value: { name, toId, toName }
   }
 }
 

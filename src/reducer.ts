@@ -192,7 +192,7 @@ export default (oldState: State, action: Action): State => {
     if (!roomData.users.includes(action.value.name)) {
       roomData.users.push(action.value.name)
       addMessage(state,
-        createEnteredMessage(action.value.name, action.value.from, state.roomId, roomData.users.length)
+        createEnteredMessage(action.value.name, action.value.fromId, action.value.fromName, state.roomId, roomData.users.length)
       )
     }
   }
@@ -200,7 +200,7 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.PlayerLeft) {
     const roomData = state.roomData[state.roomId]
     roomData.users = roomData.users.filter((u) => u !== action.value.name)
-    addMessage(state, createLeftMessage(action.value.name, action.value.to, state.roomId, roomData.users.length))
+    addMessage(state, createLeftMessage(action.value.name, action.value.toId, action.value.toName, state.roomId, roomData.users.length))
   }
 
   if (action.type === ActionType.ChatMessage) {

@@ -27,7 +27,7 @@ import {
 } from '../message'
 import NameView from './NameView'
 import { DispatchContext, UserMapContext } from '../App'
-import { deleteMessage } from '../networking'
+import { deleteMessage, moveToRoom } from '../networking'
 import { ShowProfileAction } from '../Actions'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
@@ -129,27 +129,36 @@ const DisconnectedMessageView = (
 )
 
 const EnteredView = (props: EnteredMessage & { id: string }) => {
+  const onClick = () => {
+    moveToRoom(props.fromId)
+  }
+
   return (
     <div className="message">
       <NameView userId={props.userId} id={props.id} /> has entered from{' '}
-      {props.from}.
+      <button onClick={onClick} className='link-styled-button'>{props.fromName}.</button>
     </div>
   )
 }
 
-const LeftView = (props: LeftMessage & { id: string }) => (
-  <div className="message">
-    <NameView id={props.id} userId={props.userId} /> has wandered off to{' '}
-    {props.to}.
-  </div>
-)
+const LeftView = (props: LeftMessage & { id: string }) => {
+  const onClick = () => {
+    moveToRoom(props.toId)
+  }
+  return (
+    <div className="message">
+      <NameView id={props.id} userId={props.userId} /> has wandered off to{' '}
+      <button onClick={onClick} className='link-styled-button'>{props.toName}.</button>
+    </div>
+  )
+}
 
 const MovedView = (props: MovedRoomMessage & { id: string }) => (
   <div className="message">You have moved to {props.to}.</div>
 )
 
 const SameView = (props: SameRoomMessage & { id: string }) => (
-  <div className="message">You are already in {props.room}.</div>
+  <div className="message">You are already in {props.roomId}.</div>
 )
 
 const ChatMessageView = (props: ChatMessage & { id: string }) => (
