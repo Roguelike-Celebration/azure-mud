@@ -42,6 +42,7 @@ import ServerSettingsView from './components/ServerSettingsView'
 import ClientDeployedModal from './components/ClientDeployedModal'
 import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import HappeningNowView from './components/HappeningNowView'
+import * as Storage from './storage'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -63,7 +64,7 @@ const App = () => {
         console.log(login)
         const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
 
-        checkIsRegistered().then(({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
+        checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
             dispatch(AuthenticateAction(userId, login.user_id, login.provider_name))
             return
@@ -86,30 +87,9 @@ const App = () => {
             }
           }
 
-          let localLocalData = false
-          const rawTimestamp = localStorage.getItem('messageTimestamp')
-          const rawMessageData = localStorage.getItem('messages')
-          const rawWhisperData = localStorage.getItem('whispers')
-          if (rawTimestamp) {
-            try {
-              const timestamp = new Date(rawTimestamp)
-              // A janky way to say "Is it older than an hour"
-              localLocalData =
-                  rawMessageData &&
-                  new Date().getTime() - timestamp.getTime() < 1000 * 60 * 60
-            } catch {
-              console.log('Did not find a valid timestamp for message cache')
-            }
-          }
-
-          if (localLocalData) {
-            try {
-              const messages = JSON.parse(rawMessageData)
-              const whispers: WhisperMessage[] = JSON.parse(rawWhisperData) || []
-              dispatch(LoadMessageArchiveAction(messages, whispers))
-            } catch (e) {
-              console.log('Could not parse message JSON', e)
-            }
+          const messageArchive = await Storage.getMessages()
+          if (messageArchive) {
+            dispatch(LoadMessageArchiveAction(messageArchive.messages, messageArchive.whispers))
           }
 
           dispatch(IsRegisteredAction())

@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { DispatchContext, UserMapContext } from '../../App'
 import { UpdateProfileColorAction, ShowModalAction, HideModalAction } from '../../Actions'
 import { Modal } from '../../modals'
+import * as Storage from '../../storage'
 
 // When you pass through the ranbow door enough times, you get a randomly colored username
 export const DullDoorRoomView = () => {
@@ -12,9 +13,9 @@ export const DullDoorRoomView = () => {
 
   const walkThroughDoor = () => {
     if (user.nameColor) {
-      localStorage.setItem('WasColoredEntering', JSON.stringify(true))
+      Storage.setWasColoredEntering(true)
     } else {
-      localStorage.setItem('WasColoredEntering', JSON.stringify(false))
+      Storage.setWasColoredEntering(false)
     }
     dispatch(ShowModalAction(Modal.FeatureDullDoor))
   }
@@ -27,6 +28,14 @@ export const DullDoorRoomView = () => {
 export default function DullDoorModalView () {
   const dispatch = React.useContext(DispatchContext)
 
+  const [wasColoredEntering, setWasColoredEntering] = useState(false)
+
+  useEffect(() => {
+    (async () => {
+      setWasColoredEntering(await Storage.getWasColoredEntering())
+    })()
+  }, [])
+
   const giveColor = () => {
     dispatch(UpdateProfileColorAction(null))
     dispatch(HideModalAction())
@@ -35,7 +44,6 @@ export default function DullDoorModalView () {
     dispatch(HideModalAction())
   }
 
-  const wasColoredEntering: boolean = JSON.parse(localStorage.getItem('WasColoredEntering'))
   if (!wasColoredEntering) {
     return (
       <div>

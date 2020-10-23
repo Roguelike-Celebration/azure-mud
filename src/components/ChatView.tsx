@@ -6,7 +6,6 @@ import { Message, MessageType, ConnectedMessage, DisconnectedMessage, EnteredMes
 import '../../style/chat.css'
 import { DispatchContext } from '../App'
 import { ActivateAutoscrollAction, DeactivateAutoscrollAction } from '../Actions'
-import { LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY } from './SettingsView'
 import { ServerSettings } from '../../server/src/types'
 
 function isMovementMessage (message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
@@ -43,10 +42,6 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
   })
 
   // This message filtering logic is kinda ugly and hard to read
-  var showAllMovementMessages: Boolean = JSON.parse(localStorage.getItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY))
-  if (showAllMovementMessages === null) {
-    localStorage.setItem(LOCALSTORAGE_SHOW_ALL_MOVEMENT_MESSAGES_KEY, 'false')
-  }
   function shouldRemoveMessage (m: Message) {
     return isMovementMessage(m) &&
       (
@@ -54,7 +49,7 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
         m.numUsersInRoom > props.serverSettings.movementMessagesHideThreshold
       )
   }
-  const messagesAfterMovementFilter = showAllMovementMessages ? props.messages : props.messages.filter((msg) => {
+  const messagesAfterMovementFilter = props.messages.filter((msg) => {
     return !shouldRemoveMessage(msg)
   })
 
