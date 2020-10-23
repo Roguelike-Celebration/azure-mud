@@ -72,12 +72,12 @@ export async function moveToRoom (
       {
         groupName: user.room.id,
         target: 'playerLeft',
-        arguments: [user.id, to.shortName]
+        arguments: [user.id, to.id, to.shortName]
       },
       {
         groupName: to.id,
         target: 'playerEntered',
-        arguments: [user.id, user.room.shortName]
+        arguments: [user.id, user.room.id, user.room.shortName]
       },
       await globalPresenceMessage([user.roomId, to.id])
     ]
