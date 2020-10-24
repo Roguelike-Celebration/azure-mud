@@ -15,7 +15,7 @@ import {
   ShoutAction,
   EmoteAction,
   DanceAction,
-  ShowProfileActionForFetchedUser,
+  ShowProfileAction,
   UserMapAction,
   ModMessageAction,
   UpdatedCurrentRoomAction,
@@ -94,8 +94,11 @@ export async function updateProfile (user: Partial<User>, hardRefreshPage: boole
     if (hardRefreshPage) {
       window.location.reload()
     } else {
+      myDispatch(ReceivedMyProfileAction(result.user))
       myDispatch(HideModalAction())
     }
+  } else if (result.error) {
+    alert(result.error)
   }
 }
 
@@ -191,18 +194,18 @@ export async function sendChatMessage (id: string, text: string) {
   if (result && result.roomId) {
     myDispatch(UpdatedCurrentRoomAction(result.roomId))
   } else if (result && result.user) {
-    myDispatch(ShowProfileActionForFetchedUser(result.user))
+    myDispatch(ShowProfileAction(result.user))
   } else if (result && result.error) {
     myDispatch(ErrorAction(result.error))
   }
 }
 
-export async function fetchProfile (userId: string): Promise<User | undefined> {
+export async function fetchProfile (userId: string) {
   const result = await callAzureFunction('fetchProfile', { userId })
   if (result.error) {
     console.log('Could not fetch profile', result.erroc)
   } else {
-    return result.user
+    myDispatch(ShowProfileAction(result.user))
   }
 }
 

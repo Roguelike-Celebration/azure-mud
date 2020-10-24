@@ -94,6 +94,15 @@ export async function updateUserProfile (userId: string, data: Partial<User>) {
   const profile: Partial<User> = (await DB.getPublicUser(userId)) || {}
   let username = profile.username
   if (data.username) { username = crushSpaces(data.username) }
+
+  // If someone's trying to set a new username, validate it
+  if (data.username && profile.username !== username) {
+    const userIdForNewUsername = await getUserIdForUsername(username)
+    if (userIdForNewUsername && userIdForNewUsername !== userId) {
+      throw new Error(`Username '${username}' is already taken`)
+    }
+  }
+
   const newProfile: User = {
     ...profile,
     ...data,

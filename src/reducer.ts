@@ -24,7 +24,8 @@ import {
   toggleUserBan,
   setNetworkMediaChatStatus,
   toggleUserMod,
-  updateProfileColor
+  updateProfileColor,
+  fetchProfile
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from './webRTC'
@@ -251,6 +252,11 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UserMap) {
     state.userMap = { ...state.userMap, ...action.value }
+
+    // If the actively-viewed profile updated, do a clean fetch
+    if (state.visibleProfile && state.userMap[state.visibleProfile.id]) {
+      fetchProfile(state.visibleProfile.id)
+    }
   }
 
   if (action.type === ActionType.PlayerBanned) {

@@ -3,10 +3,10 @@ import { FaChevronDown } from 'react-icons/fa'
 
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import config from '../config'
-import { ShowModalAction, ShowProfileAction } from '../Actions'
+import { ShowModalAction } from '../Actions'
 import { DispatchContext, UserMapContext } from '../App'
 import { Modal } from '../modals'
-import { openOrCloseSpace } from '../networking'
+import { fetchProfile, openOrCloseSpace } from '../networking'
 
 export default function MenuButtonView (props: { username: string, spaceIsClosed: boolean }) {
   const dispatch = useContext(DispatchContext)
@@ -38,7 +38,7 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
   const toggleSpaceItem = <MenuItem onClick={toggleSpaceAvailability}>{props.spaceIsClosed ? 'Open' : 'Close'} the Space</MenuItem>
 
   const showProfile = () => {
-    dispatch(ShowProfileAction(myId))
+    fetchProfile(myId)
   }
 
   const showProfileEdit = () => {

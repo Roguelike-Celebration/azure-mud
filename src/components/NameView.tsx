@@ -3,7 +3,6 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu'
 import { DispatchContext, UserMapContext } from '../App'
 import ReactTooltip from 'react-tooltip'
 import {
-  ShowProfileAction,
   BanToggleAction,
   HideModalAction,
   ModToggleAction
@@ -11,6 +10,7 @@ import {
 import { User } from '../../server/src/user'
 
 import '../../style/nameView.css'
+import { fetchProfile } from '../networking'
 
 export default function NameView (props: { userId: string; id?: string }) {
   const dispatch = useContext(DispatchContext)
@@ -26,7 +26,7 @@ export default function NameView (props: { userId: string; id?: string }) {
 
   const handleProfile = (e, data) => {
     dispatch(HideModalAction())
-    dispatch(ShowProfileAction(data.id))
+    fetchProfile(data.id)
   }
 
   const handleBan = (e, data) => {
