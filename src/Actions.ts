@@ -621,25 +621,6 @@ export const StartWhisperAction = (name: string): StartWhisperAction => {
   return { type: ActionType.StartWhisper, value: name }
 }
 
-interface ShowProfileAction {
-  type: ActionType.ShowProfile;
-  value: PublicUser;
-}
-
-export const ShowProfileAction = (
-  userId: string
-): ((dispatch: ThunkDispatch<Action, State>) => void) => {
-  return async (dispatch: ThunkDispatch<Action, State>) => {
-    console.log('lol')
-    const user = await fetchProfile(userId)
-    if (!user) {
-      console.log('No user')
-      return
-    }
-    dispatch(ShowProfileActionForFetchedUser(user))
-  }
-}
-
 interface HideProfileAction {
   type: ActionType.HideProfile;
 }
@@ -648,7 +629,12 @@ export const HideProfileAction = (): HideProfileAction => {
   return { type: ActionType.HideProfile }
 }
 
-export const ShowProfileActionForFetchedUser = (
+interface ShowProfileAction {
+  type: ActionType.ShowProfile;
+  value: PublicUser;
+}
+
+export const ShowProfileAction = (
   user: PublicUser
 ): ShowProfileAction => {
   return {

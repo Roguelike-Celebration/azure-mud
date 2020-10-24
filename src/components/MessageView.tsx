@@ -27,8 +27,7 @@ import {
 } from '../message'
 import NameView from './NameView'
 import { DispatchContext, UserMapContext } from '../App'
-import { deleteMessage, moveToRoom } from '../networking'
-import { ShowProfileAction } from '../Actions'
+import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
@@ -170,7 +169,7 @@ const ChatMessageView = (props: ChatMessage & { id: string }) => (
 const WhisperView = (props: WhisperMessage & { id: string }) => {
   const dispatch = useContext(DispatchContext)
   const openProfile = () => {
-    dispatch(ShowProfileAction(props.userId))
+    fetchProfile(props.userId)
   }
 
   if (props.senderIsSelf) {
