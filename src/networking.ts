@@ -94,8 +94,11 @@ export async function updateProfile (user: Partial<User>, hardRefreshPage: boole
     if (hardRefreshPage) {
       window.location.reload()
     } else {
+      myDispatch(ReceivedMyProfileAction(result.user))
       myDispatch(HideModalAction())
     }
+  } else if (result.error) {
+    alert(result.error)
   }
 }
 
