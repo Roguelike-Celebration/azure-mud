@@ -1,31 +1,34 @@
 import { User } from './user'
-import { Context } from '@azure/functions'
 import generators from '../src/generators'
+import { Result } from './endpoint'
 
-export function cookie (user: User, messageId: string, context: Context) {
+export function cookie (user: User, messageId: string): Result {
   const generator = generators.fortuneCookies
 
   if (!generator) {
-    context.res = {
-      status: 400,
-      body: { error: 'You included an invalid list: fortuneCookies' }
+    return {
+      httpResponse: {
+        status: 400,
+        body: { error: 'You included an invalid list: fortuneCookies' }
+      }
     }
-    return
   }
 
   const fortune = generator.generate()
   const privateActionString = generator.actionString(fortune)
 
-  context.bindings.signalRMessages = [
-    {
-      groupName: user.roomId,
-      target: 'emote',
-      arguments: [messageId, user.id, 'cracks open a fortune cookie.']
-    },
-    {
-      groupName: user.id,
-      target: 'privateCommand',
-      arguments: [privateActionString]
-    }
-  ]
+  return {
+    messages: [
+      {
+        groupName: user.roomId,
+        target: 'emote',
+        arguments: [messageId, user.id, 'cracks open a fortune cookie.']
+      },
+      {
+        groupName: user.id,
+        target: 'privateCommand',
+        arguments: [privateActionString]
+      }
+    ]
+  }
 }

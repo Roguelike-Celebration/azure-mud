@@ -1,23 +1,9 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import DB from '../src/redis'
+import { azureWrap } from '../src/azureWrap'
+import clientDeployedWebhook from '../src/endpoints/clientDeployedWebhook'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  const inputtedKey = req.body && req.body.key
-  const actualKey = await DB.webhookDeployKey()
-  if (!inputtedKey || inputtedKey !== actualKey) {
-    context.res = {
-      status: 403
-    }
-    return
-  }
-
-  context.bindings.signalRMessages = [
-    {
-      target: 'clientDeployed',
-      arguments: []
-    }
-  ]
-  context.res = {}
+  await azureWrap(context, req, clientDeployedWebhook)
 }
 
 export default httpTrigger

@@ -1,6 +1,11 @@
-import { User, getFullUser } from './user'
+import { User, getFullUser, isMod } from './user'
 import { Context, HttpRequest } from '@azure/functions'
 import { v4 as uuid } from 'uuid'
+
+export interface AuthenticationOptions {
+  audit?: boolean
+  mod?: boolean
+}
 
 /** This wraps an HTTP function and calls it with a hydrated authenticated user.
  * Returns true if execution should continue. */
@@ -8,7 +13,7 @@ import { v4 as uuid } from 'uuid'
 export default async function authenticate (
   context: Context,
   req: HttpRequest,
-  audit: boolean,
+  options: AuthenticationOptions = {},
   handler: (user: User) => void
 ) {
   const userId = req.headers && req.headers['x-ms-client-principal-id']
@@ -20,7 +25,8 @@ export default async function authenticate (
     context.log('Failed to include a user ID')
     return
   }
-  if (audit && !context.bindingDefinitions.find(def => def.name === 'tableBinding')) {
+
+  if (options.audit && !context.bindingDefinitions.find(def => def.name === 'tableBinding')) {
     context.res = {
       status: 501,
       body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
@@ -30,6 +36,16 @@ export default async function authenticate (
   }
 
   const user = await getFullUser(userId)
+
+  if (options.mod) {
+    if (!(await isMod(user.id))) {
+      context.res = {
+        status: 403,
+        body: { error: 'This action requires moderator privileges.' }
+      }
+      return
+    }
+  }
 
   if (user.isBanned) {
     context.res = {
@@ -42,7 +58,7 @@ export default async function authenticate (
 
   const handled = await handler(user)
 
-  if (audit) {
+  if (options.audit) {
     context.bindings.tableBinding = [{
       PartitionKey: user.id,
       RowKey: uuid(),
