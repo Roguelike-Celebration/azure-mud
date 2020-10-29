@@ -3,11 +3,13 @@
 
 This is a playful text-based online social chat space. You can think of it as a hybrid between communication apps like Slack and Discord and traditional text-based online game spaces such as MUDs and MOOs.
 
-It is primarily being built for [Roguelike Celebration 2020](https://roguelike.club), but can hopefully eventually be repurposed for other events or communities.
+It is primarily being built for [Roguelike Celebration 2020](https://roguelike.club), but can hopefully eventually be repurposed for other events or communities. 
 
 On the backend, it's powered by a serverless system made up of Azure Functions, Azure SignalR Service, and a Redis instance (currently provided by Azure Cache for Redis).
 
 On the frontend, it's a rich single-page webapp built in TypeScript and React, using the Flux architecture via the `useContext` React hook.
+
+As a warning, this project (and this README) are very much in the middle of transitioning from something thrown together quickly for our event into something meant for broader use and adaptation. I'm more than happy to answer questions opened via GH Issues, but know that for now this won't necessarily be a plug-and-play project. Work to change that is actively underway!
 
 ## Setting up a development environment
 
