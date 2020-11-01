@@ -1,9 +1,10 @@
 import DB from './redis'
 import { roomData } from './rooms'
+import { Message } from './endpoint'
 
 /** Fetches presence data for a set of rooms and returns a SignalR message
  * to broadcast current presence data to all users */
-export async function globalPresenceMessage (roomIds: string[]) {
+export async function globalPresenceMessage (roomIds: string[]): Promise<Message> {
   const data: { [roomId: string]: string[] } = {}
 
   await Promise.all(

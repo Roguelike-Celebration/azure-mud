@@ -1,15 +1,14 @@
-import { Context } from '@azure/functions'
 import { roomData } from './rooms'
 import { RoomResponse } from './types'
 import { User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
 import DB from '../src/redis'
+import { Result } from './endpoint'
 
 export async function moveToRoom (
   user: User,
-  newRoomId: string,
-  context: Context
-) {
+  newRoomId: string
+): Promise<Result> {
   let to = roomData[newRoomId]
 
   if (!to) {
@@ -43,11 +42,12 @@ export async function moveToRoom (
   }
 
   if (!to) {
-    context.res = {
-      status: 404,
-      body: { error: 'Invalid room ID' }
+    return {
+      httpResponse: {
+        status: 404,
+        body: { error: 'Invalid room ID' }
+      }
     }
-    return
   }
 
   const response: RoomResponse = {
@@ -58,6 +58,13 @@ export async function moveToRoom (
     response.roomNotes = await DB.getRoomNotes(to.id)
   }
 
+  const result: Result = {
+    httpResponse: {
+      status: 200,
+      body: response
+    }
+  }
+
   // If you're already in the room and try to 're-enter' the room,
   // nothing should happen: issue 162
   if (user.roomId !== to.id) {
@@ -65,7 +72,7 @@ export async function moveToRoom (
     await DB.setCurrentRoomForUser(user.id, to.id)
     await DB.addOccupantToRoom(to.id, user.id)
 
-    context.bindings.signalRMessages = [
+    result.messages = [
       {
         groupName: user.room.id,
         target: 'playerLeft',
@@ -78,22 +85,19 @@ export async function moveToRoom (
       },
       await globalPresenceMessage([user.roomId, to.id])
     ]
-    context.bindings.signalRGroupActions = [
+    result.groupManagementTasks = [
       {
         userId: user.id,
-        groupName: user.room.id,
+        groupId: user.room.id,
         action: 'remove'
       },
       {
         userId: user.id,
-        groupName: to.id,
+        groupId: to.id,
         action: 'add'
       }
     ]
   }
 
-  context.res = {
-    status: 200,
-    body: response
-  }
+  return result
 }

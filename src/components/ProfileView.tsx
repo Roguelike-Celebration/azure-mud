@@ -55,7 +55,7 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
       (lastMessage.parentNode as any).offsetTop
   })
 
-  const whisperMessages = whispers.filter((m, _) => m.userId === user.id) as Array<WhisperMessage>
+  const whisperMessages = (whispers || []).filter((m, _) => m.userId === user.id) as Array<WhisperMessage>
 
   const realName = user.realName ? (
     <div id="profile-realName">{user.realName}</div>

@@ -1,25 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import DB from '../src/redis'
+import { azureWrap } from '../src/azureWrap'
+import isRegistered from '../src/endpoints/isRegistered'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  const userId = req.headers && req.headers['x-ms-client-principal-id']
-  if (!userId) {
-    context.res = {
-      status: 401,
-      body: { registered: false, error: 'You are not logged in!' }
-    }
-  }
-
-  const user = await DB.getPublicUser(userId)
-  const spaceIsClosed = await DB.isSpaceClosed()
-
-  context.res = {
-    status: 200,
-    body: { registered: user && user.username, spaceIsClosed, isMod: user && user.isMod, isBanned: user && user.isBanned }
-  }
+  await azureWrap(context, req, isRegistered, { userId: req.headers['x-ms-client-principal-id'] })
 }
 
 export default httpTrigger

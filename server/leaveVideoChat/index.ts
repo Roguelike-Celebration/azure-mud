@@ -1,19 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
 import authenticate from '../src/authenticate'
+import { authenticatedAzureWrap } from '../src/azureWrap'
+import leaveVideoChat from '../src/endpoints/leaveVideoChat'
 import DB from '../src/redis'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  await authenticate(context, req, false, async (user) => {
-    const videoChatters = await DB.removeUserFromVideoPresence(user.id, user.roomId)
-
-    context.bindings.signalRMessages = [
-      {
-        target: 'videoPresence',
-        arguments: [user.roomId, videoChatters]
-      }
-    ]
-  })
+  await authenticatedAzureWrap(context, req, leaveVideoChat)
 }
 
 export default httpTrigger

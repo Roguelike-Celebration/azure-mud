@@ -1,11 +1,13 @@
-import { Context } from '@azure/functions'
+import { Result } from './endpoint'
 import DB from './redis'
 
-export async function look (target: string, context: Context) {
+export async function look (target: string): Promise<Result> {
   const profile = await DB.getPublicUser(target)
 
-  context.res = {
-    status: 200,
-    body: { user: profile }
+  return {
+    httpResponse: {
+      status: 200,
+      body: { user: profile }
+    }
   }
 }

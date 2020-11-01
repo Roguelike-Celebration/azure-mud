@@ -1,5 +1,5 @@
 import { User } from './user'
-import { Context } from '@azure/functions'
+import { Result } from './endpoint'
 
 const danceList = [
   'drops to the floor to do the Purple Worm',
@@ -24,12 +24,14 @@ const danceList = [
   'does a bit of an irish jig - it\'s weird to watch someone bob around and not move their arms.'
 ]
 
-export function dance (user: User, messageId: string, context: Context) {
-  context.bindings.signalRMessages = [
-    {
-      groupName: user.roomId,
-      target: 'dance',
-      arguments: [messageId, user.id, danceList[Math.floor(Math.random() * danceList.length)]]
-    }
-  ]
+export function dance (user: User, messageId: string): Result {
+  return {
+    messages: [
+      {
+        groupName: user.roomId,
+        target: 'dance',
+        arguments: [messageId, user.id, danceList[Math.floor(Math.random() * danceList.length)]]
+      }
+    ]
+  }
 }
