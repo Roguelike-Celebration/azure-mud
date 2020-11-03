@@ -67,10 +67,10 @@
 							"name": "WEBSITE_NODE_DEFAULT_VERSION",
 							"value": "~12"
 						},
-                        {
-                            "name": "WEBSITE_RUN_FROM_PACKAGE",
-                            "value": "1"
-                        }
+						{
+							"name": "WEBSITE_RUN_FROM_PACKAGE",
+							"value": "1"
+						},
 						{
 							"name": "AzureWebJobsStorage",
 							"value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2018-11-01').keys[0].value,';')]"
@@ -106,28 +106,26 @@
 					]
 				}
 			},
-			"resources": [
-				{
-					"name": "authsettings",
-					"apiVersion": "2016-08-01",
-					"type": "config",
-					"location": "[resourceGroup().location]",
-					"dependsOn": [
-						"[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
-					],
-					"properties": {
-						"enabled": true,
-						"unauthenticatedClientAction": "AllowAnonymous",
-						"tokenStoreEnabled": true,
-						"defaultProvider": "Twitter",
+			"resources": [{
+				"name": "authsettings",
+				"apiVersion": "2016-08-01",
+				"type": "config",
+				"location": "[resourceGroup().location]",
+				"dependsOn": [
+					"[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
+				],
+				"properties": {
+					"enabled": true,
+					"unauthenticatedClientAction": "AllowAnonymous",
+					"tokenStoreEnabled": true,
+					"defaultProvider": "Twitter",
 
-						"allowedExternalRedirectUrls": [
-							"http://localhost:1234",
-							"[parameters('clientHostname')]"
-						],
-					}
+					"allowedExternalRedirectUrls": [
+						"http://localhost:1234",
+						"[parameters('clientHostname')]"
+					]
 				}
-			]
+			}]
 		},
 		{
 			"type": "Microsoft.Cache/Redis",
