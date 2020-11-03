@@ -4,7 +4,7 @@
 	"parameters": {
 		"appName": {
 			"type": "string",
-            "defaultValue": "[concat('app', uniqueString(resourceGroup().id))]",
+            "defaultValue": "your-app-name",
 			"metadata": {
 				"description": "The name of the function app that you wish to create."
 			}
