@@ -31,6 +31,8 @@ After cloning this repo, the `server` directory contains all of the backend code
 
 However, you cannot actually run the backend locally. You'll need to deploy your own server instance of the backend to test changes.
 
+For now, customizing the rooms and room descriptions requires making code changes to the backend server, so using this project means you will need to fork this repo and deploy your own customized version of the backend server.
+
 ## Deploying This Project
 Currently, this project only runs on Azure. This requires your own [Azure subscription](https://azure.com/free/?WT.mc_id=spatial-8206-emwalker). 
 
