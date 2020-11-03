@@ -9,20 +9,6 @@
 				"description": "The name of the function app that you wish to create."
 			}
 		},
-		"repoURL": {
-			"type": "string",
-			"defaultValue": "https://github.com/lazerwalker/azure-mud.git",
-			"metadata": {
-				"description": "The URL for the GitHub repository that contains the project to deploy."
-			}
-		},
-		"branch": {
-			"type": "string",
-			"defaultValue": "main",
-			"metadata": {
-				"description": "The branch of the GitHub repository to use."
-			}
-		},
 		"clientHostname": {
 			"type": "string",
 			"defaultValue": "https://lazerwalker.com",
@@ -120,19 +106,7 @@
 					]
 				}
 			},
-			"resources": [{
-					"apiVersion": "2020-06-01",
-					"name": "web",
-					"type": "sourcecontrols",
-					"dependsOn": [
-						"[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
-					],
-					"properties": {
-						"repoUrl": "[parameters('repoURL')]",
-						"branch": "[parameters('branch')]",
-						"isManualIntegration": true
-					}
-				},
+			"resources": [
 				{
 					"name": "authsettings",
 					"apiVersion": "2016-08-01",
