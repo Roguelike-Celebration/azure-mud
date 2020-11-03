@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel *.html",
-    "build": "parcel build *.html; cp CNAME dist; rsync -r images dist",
+    "build": "parcel build *.html --public-url ./ ; cp CNAME dist; rsync -r images dist",
     "deploy": "npm run build; cp CNAME dist; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
     "typecheck": "tsc --noEmit",
