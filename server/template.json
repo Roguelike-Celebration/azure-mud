@@ -1,0 +1,213 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"appName": {
+			"type": "string",
+			"defaultValue": "[concat('funtionapp-', uniqueString(resourceGroup().id))]",
+			"metadata": {
+				"description": "The name of the function app that you wish to create."
+			}
+		},
+		"clientHostname": {
+			"type": "string",
+			"defaultValue": "https://lazerwalker.com",
+			"metadata": {
+				"description": "The hostname for where your frontend will be hosted (include HTTP/HTTPS)"
+			}
+		}
+	},
+	"variables": {
+		"functionAppName": "[parameters('appName')]",
+		"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'functions')]",
+		"signalRName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-signalr')]",
+		"redisCacheName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-redis')]",
+		"appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-ai')]"
+	},
+	"resources": [{
+			"type": "Microsoft.Storage/storageAccounts",
+			"apiVersion": "2018-11-01",
+			"name": "[variables('storageAccountName')]",
+			"location": "[resourceGroup().location]",
+			"kind": "Storage",
+			"sku": {
+				"name": "Standard_LRS"
+			}
+		},
+		{
+			"apiVersion": "2018-11-01",
+			"type": "Microsoft.Web/sites",
+			"name": "[variables('functionAppName')]",
+			"location": "[resourceGroup().location]",
+			"kind": "functionapp",
+			"dependsOn": [
+				"[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+				"[resourceId('Microsoft.Cache/Redis/', variables('redisCacheName'))]",
+				"[resourceId('Microsoft.SignalRService/SignalR', variables('signalRName'))]"
+			],
+			"properties": {
+				"name": "[variables('functionAppName')]",
+				"siteConfig": {
+					"cors": {
+						"allowedOrigins": [
+							"http://localhost:1234",
+							"[parameters('clientHostname')]"
+						],
+						"supportCredentials": true
+					},
+					"appSettings": [{
+							"name": "FUNCTIONS_EXTENSION_VERSION",
+							"value": "~3"
+						},
+						{
+							"name": "FUNCTIONS_WORKER_RUNTIME",
+							"value": "node"
+						},
+						{
+							"name": "WEBSITE_NODE_DEFAULT_VERSION",
+							"value": "~12"
+						},
+                        {
+                            "name": "WEBSITE_RUN_FROM_PACKAGE",
+                            "value": "1"
+                        }
+						{
+							"name": "AzureWebJobsStorage",
+							"value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2018-11-01').keys[0].value,';')]"
+						},
+						{
+							"name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+							"value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountName'),'2015-05-01-preview').key1)]"
+						},
+						{
+							"name": "WEBSITE_CONTENTSHARE",
+							"value": "[variables('functionAppName')]"
+						},
+						{
+							"name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+							"value": "[reference(concat('microsoft.insights/components/', variables('appInsightsName'))).InstrumentationKey]"
+						},
+						{
+							"name": "AzureSignalRConnectionString",
+							"value": "[listKeys(resourceId('Microsoft.SignalRService/SignalR', variables('signalRName')), '2020-05-01').primaryConnectionString]"
+						},
+						{
+							"name": "RedisKey",
+							"value": "[listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2018-03-01').primaryKey]"
+						},
+						{
+							"name": "RedisHostname",
+							"value": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2018-03-01').hostname]"
+						},
+						{
+							"name": "RedisPort",
+							"value": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2018-03-01').sslPort]"
+						}
+					]
+				}
+			},
+			"resources": [
+				{
+					"name": "authsettings",
+					"apiVersion": "2016-08-01",
+					"type": "config",
+					"location": "[resourceGroup().location]",
+					"dependsOn": [
+						"[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
+					],
+					"properties": {
+						"enabled": true,
+						"unauthenticatedClientAction": "AllowAnonymous",
+						"tokenStoreEnabled": true,
+						"defaultProvider": "Twitter",
+
+						"allowedExternalRedirectUrls": [
+							"http://localhost:1234",
+							"[parameters('clientHostname')]"
+						],
+					}
+				}
+			]
+		},
+		{
+			"type": "Microsoft.Cache/Redis",
+			"apiVersion": "2020-06-01",
+			"name": "[variables('redisCacheName')]",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"enableNonSslPort": "false",
+				"minimumTlsVersion": "1.2",
+				"sku": {
+					"capacity": "0",
+					"family": "C",
+					"name": "Basic"
+				}
+			}
+		},
+		{
+			"apiVersion": "2014-04-01",
+			"name": "[variables('appInsightsName')]",
+			"type": "Microsoft.Insights/components",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"applicationId": "[variables('appInsightsName')]"
+			}
+		},
+		{
+			"type": "Microsoft.SignalRService/SignalR",
+			"apiVersion": "2020-07-01-preview",
+			"name": "[variables('signalRName')]",
+			"location": "[resourceGroup().location]",
+			"sku": {
+				"capacity": "1",
+				"name": "Free_F1"
+			},
+			"kind": "SignalR",
+			"properties": {
+				"hostNamePrefix": "[variables('signalRName')]",
+				"features": [{
+						"flag": "ServiceMode",
+						"value": "Serverless"
+					},
+					{
+						"flag": "EnableConnectivityLogs",
+						"value": "true"
+					},
+					{
+						"flag": "EnableMessagingLogs",
+						"value": "true"
+					}
+				],
+				"cors": {
+					"allowedOrigins": [
+						"http://localhost:1234",
+						"[parameters('clientHostname')]"
+					],
+					"supportCredentials": true
+				},
+				"networkACLs": {
+					"defaultAction": "deny",
+					"publicNetwork": {
+						"allow": [
+							"ClientConnection"
+						]
+					},
+					"privateEndpoints": [{
+						"name": "mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+						"allow": [
+							"ServerConnection"
+						]
+					}]
+				},
+				"upstream": {
+					"templates": [{
+						"categoryPattern": "*",
+						"eventPattern": "connect,disconnect",
+						"hubPattern": "*",
+						"urlTemplate": "https://example.com/chat/api/connect"
+					}]
+				}
+			}
+		}
+	]
+}
