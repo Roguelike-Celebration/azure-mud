@@ -55,9 +55,13 @@ There are still a few things you need to manually configure before the app will 
 
 By default, every time code is merged into the `main` branch in this repo, both the frontend and backend are deployed. It's very little work to configure this same behavior on your GitHub fork of this project:
 
-1. In `.github/workflows/deploy.yml`, find the "Deploy Backend" step. Replace the `app-name` with your own Azure app name, and follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?WT.mc_id=spatial-8206-emwalker) to generate a publish profile and add that as a GH Secret
+1. Add a GitHub Secret (Settings -> Secrets) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?WT.mc_id=spatial-8206-emwalker) to generate a publish profile and add that as a GH Secret as well.
 
 2. If you want to continue to use GH Pages, make sure it is enabled for your project in the GH repo Settings (serving from the root of the `gh-pages` branch). This will also work with a custom domain if properly configured. If you would like to use a different static site host, simply remove the "Deploy Frontend" step from the `.github/workflows/deploy.yml` file.
+
+3. Go to the "Actions" tab of your repo, and click the button to enable the preexisting forked Actions in your project.
+
+The next time you commit code to the `main` branch, your workflow should run and code should deploy!
 
 #### Deploying new Changes via VS Code
 
