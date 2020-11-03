@@ -37,4 +37,5 @@ jobs:
       - name: Notify connected clients
         run: node deployWebhook.js
         env:
-          TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}        
+          APP_NAME: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
+          TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}
