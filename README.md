@@ -38,9 +38,10 @@ If you don't already have an Azure account/subscription, you'll get a few hundre
 
 ### Deploying via ARM Template
 
-![Button here]()
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
 
-The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](TODO) will deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
+
+The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json) will allow you to deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
 
 There are still a few things you need to manually configure before the app will function.
 
@@ -48,7 +49,7 @@ There are still a few things you need to manually configure before the app will 
 
 2. You'll need to modify the frontend to actually use your new backend! In `src/config.ts`, update the hostname to point to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template).
 
-3. Finally, you need to actually deploy the backend code before everything will work. You have three main options:
+3. Finally, you need to actually deploy the backend code before everything will work. You have three main options (below), but after doing this you should have a working app!
 
 #### Deploying new Changes via GitHub Actions
 
