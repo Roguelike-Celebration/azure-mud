@@ -3,7 +3,7 @@
 
 This is a playful text-based online social chat space. You can think of it as a hybrid between communication apps like Slack and Discord and traditional text-based online game spaces such as MUDs and MOOs.
 
-It was primarily being built for [Roguelike Celebration 2020](https://roguelike.club), but can hopefully be repurposed for other events or communities.
+It was primarily built for [Roguelike Celebration 2020](https://roguelike.club), but can hopefully be repurposed for other events or communities.
 
 On the backend, it's powered by a serverless system made up of Azure Functions, Azure SignalR Service, and a Redis instance (currently provided by Azure Cache for Redis).
 
