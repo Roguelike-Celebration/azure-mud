@@ -11,6 +11,8 @@ On the frontend, it's a rich single-page webapp built in TypeScript and React, u
 
 [This article](https://dev.to/lazerwalker/using-game-design-to-make-virtual-events-more-social-24o) provides some insight into the design principles underlying this project.
 
+[This GH issue](https://github.com/lazerwalker/azure-mud/issues/385) contains my rough development roadmap for this project.
+
 ## Setting up a development environment
 
 ### Frontend Dev
