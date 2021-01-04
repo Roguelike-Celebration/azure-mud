@@ -36,7 +36,7 @@ import {
   MediaReceivedSpeakingDataAction, ShowModalAction, CommandMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
-import { startSignaling, receiveSignalData } from './webRTC'
+import { startSignaling, receiveSignalData } from './videoChat'
 import Config from './config'
 import { convertServerRoomData } from './room'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
@@ -229,7 +229,7 @@ export async function deleteMessage (messageId: string) {
 // Any connected WebRTC clients will start signaling, which happens over SignalR.
 export async function startVideoChat () {
   inMediaChat = true
-  callAzureFunction('broadcastPeerId')
+  connectToAcsRoom('test')
 }
 
 export async function sendSignalData (peerId: string, data: string) {
@@ -353,6 +353,8 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   connection.on('dance', (messageId, name, message) => {
     dispatch(DanceAction(messageId, name, message))
   })
+
+  // WebRTC
 
   connection.on('webrtcSignalData', (peerId, data) => {
     console.log('Received signaling data from', peerId)
