@@ -1,4 +1,5 @@
 import React, { useEffect, createContext } from 'react'
+import 'regenerator-runtime/runtime'
 
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'
@@ -140,7 +141,7 @@ const App = () => {
   if (state.inMediaChat) {
     videoChatView = (
       <MediaChatView
-        localMediaStreamId={state.localMediaStreamId}
+        cameraDevices={state.cameraDevices}
         peerIds={state.roomData[state.roomId].videoUsers}
         connectedPeerIds={state.otherMediaStreamPeerIds}
         videoDeviceId={state.currentVideoDeviceId}
@@ -180,7 +181,8 @@ const App = () => {
     case Modal.MediaSelector: {
       innerModalView = (
         <MediaSelectorView
-          devices={state.mediaDevices}
+          cameraDevices={state.cameraDevices}
+          microphoneDevices={state.microphoneDevices}
           initialAudioDeviceId={state.currentAudioDeviceId}
           initialVideoDeviceId={state.currentVideoDeviceId}
           showJoinButton={!state.inMediaChat}

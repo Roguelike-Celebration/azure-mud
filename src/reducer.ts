@@ -35,6 +35,7 @@ import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../server/src/config'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
+import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling'
 
 export interface State {
   authenticated: boolean;
@@ -59,10 +60,12 @@ export interface State {
   otherMediaStreamPeerIds?: string[];
 
   inMediaChat: boolean;
-  mediaDevices?: MediaDeviceInfo[];
+  cameraDevices?: DeviceInfo[];
+  microphoneDevices?: DeviceInfo[];
   currentVideoDeviceId?: string;
   currentAudioDeviceId?: string;
   speakingPeerIds?: string[];
+  acsToken?: string;
 
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
@@ -97,6 +100,11 @@ export const defaultState: State = {
   activeModal: Modal.None,
   isBanned: false,
   serverSettings: DEFAULT_SERVER_SETTINGS
+}
+
+export interface DeviceInfo {
+  id: string;
+  name: string;
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -324,8 +332,24 @@ export default (oldState: State, action: Action): State => {
     state.inMediaChat = true
   }
 
-  if (action.type === ActionType.LocalMediaDeviceListReceived) {
-    state.mediaDevices = action.value
+  if (action.type === ActionType.ACSReceivedToken) {
+    state.acsToken = action.value
+  }
+
+  if (action.type === ActionType.LocalMediaCameraListReceived) {
+    state.cameraDevices = action.value
+  }
+
+  if (action.type === ActionType.LocalMediaMicrophoneListReceived) {
+    state.microphoneDevices = action.value
+  }
+
+  if (action.type === ActionType.LocalMediaSelectedCamera) {
+    state.currentVideoDeviceId = action.value
+  }
+
+  if (action.type === ActionType.LocalMediaSelectedMicrophone) {
+    state.currentAudioDeviceId = action.value
   }
 
   if (action.type === ActionType.MediaReceivedSpeakingData) {
@@ -373,7 +397,6 @@ export default (oldState: State, action: Action): State => {
         if (userId) {
           const whisperMessage = createWhisperMessage(userId, message, true)
           addMessage(state, whisperMessage)
-          saveWhisper(state, whisperMessage)
         }
       }
     } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {

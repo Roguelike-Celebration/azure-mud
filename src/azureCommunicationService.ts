@@ -1,7 +1,7 @@
-import { CallClient, LocalVideoStream } from '@azure/communication-calling'
+import { CallClient, LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling'
 import { AzureCommunicationUserCredential } from '@azure/communication-common'
 
-export async function connectToAcsRoom (roomId: string, stream: MediaStream) {
+export async function connectToAcsRoom (roomId: string, deviceInfo: VideoDeviceInfo) {
   const userToken = '<user token>'
   const callClient = new CallClient()
   const tokenCredential = new AzureCommunicationUserCredential(userToken)
@@ -11,7 +11,7 @@ export async function connectToAcsRoom (roomId: string, stream: MediaStream) {
   // const deviceManager = await callClient.getDeviceManager()
 
   // TODO: How to construct this info?
-  const localStream = new LocalVideoStream(stream)
+  const localStream = new LocalVideoStream(deviceInfo)
   const placeCallOptions = { videoOptions: { localVideoStreams: [localStream] } }
   const groupOptions = { groupId: roomId }
   const call = callAgent.join(groupOptions, placeCallOptions)

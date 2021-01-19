@@ -33,10 +33,11 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  MediaReceivedSpeakingDataAction, ShowModalAction, CommandMessageAction
+  ShowModalAction, CommandMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
-import { startSignaling, receiveSignalData } from './videoChat'
+import { connectToAcsRoom } from './azureCommunicationService'
+
 import Config from './config'
 import { convertServerRoomData } from './room'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
@@ -121,6 +122,11 @@ export async function pickUpItem (item: string) {
 
 export async function dropItem () {
   await callAzureFunction('pickUpItem', { drop: true })
+}
+
+export async function fetchAcsToken () {
+  // TODO: This should thread through state
+  return await callAzureFunction('issueToken')
 }
 
 // Post-it notes
@@ -229,7 +235,7 @@ export async function deleteMessage (messageId: string) {
 // Any connected WebRTC clients will start signaling, which happens over SignalR.
 export async function startVideoChat () {
   inMediaChat = true
-  connectToAcsRoom('test')
+  connectToAcsRoom('test', undefined)
 }
 
 export async function sendSignalData (peerId: string, data: string) {

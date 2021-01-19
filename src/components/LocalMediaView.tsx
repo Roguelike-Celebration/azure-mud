@@ -1,15 +1,18 @@
 import React, { useState, useContext } from 'react'
 import { FaCog, FaVolumeUp, FaVolumeMute, FaVideo, FaVideoSlash } from 'react-icons/fa'
 
-import { toggleVideo, toggleAudio, localMediaStream } from '../webRTC'
-import { Video } from './MediaChatView'
+import { toggleVideo, toggleAudio } from '../webRTC'
+import { AcsVideo } from './MediaChatView'
 import { DispatchContext } from '../App'
 import { ShowModalAction } from '../Actions'
 import { Modal } from '../modals'
+import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling'
 
 interface Props {
   speaking: boolean
   hideUI?: boolean
+  videoId: string
+  cameraDevices: VideoDeviceInfo[]
 }
 
 export default function LocalMediaView (props: Props) {
@@ -31,13 +34,17 @@ export default function LocalMediaView (props: Props) {
     dispatch(ShowModalAction(Modal.MediaSelector))
   }
 
+  const video = props.cameraDevices.find(d => d.id === props.videoId)
+
+  // TODO: Figure out how to thread through the stream ID
+
   return (
     <div className="my-video">
       You:
-      <Video
-        srcObject={localMediaStream()}
-        className={`self ${props.speaking ? 'speaking' : ''}`}
-        muted={true}
+      <AcsVideo
+        src={new LocalVideoStream(video)}
+        // className={`self ${props.speaking ? 'speaking' : ''}`}
+        // muted={true}
       />
       {props.hideUI ? '' : (
         <div>

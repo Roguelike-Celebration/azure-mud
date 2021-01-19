@@ -74,28 +74,28 @@ export default function RoomView (props: Props) {
   }
 
   let videoChatButton
-  // if (room && room.allowsMedia) {
-  //   if (getNetworkMediaChatStatus()) {
-  //     videoChatButton = (
-  //       <button onClick={leaveVideoChat} id='join-video-chat'>
-  //         Leave Video Chat
-  //       </button>
-  //     )
-  //   } else if (room.videoUsers && room.videoUsers.length >= VIDEO_CHAT_MAX_SIZE) {
-  //     // Maybe make it more transparent? I think this is probably fine, but I'm no UI expert!
-  //     videoChatButton = (
-  //       <button id='join-video-chat'>
-  //         Video Chat Is Full (limit {VIDEO_CHAT_MAX_SIZE})
-  //       </button>
-  //     )
-  //   } else {
-  //     videoChatButton = (
-  //       <button onClick={joinVideoChat} id='join-video-chat'>
-  //         Join Video Chat (Beta) {room.videoUsers && room.videoUsers.length > 0 ? `(${room.videoUsers.length})` : ''}
-  //       </button>
-  //     )
-  //   }
-  // }
+  if (room && room.allowsMedia) {
+    if (getNetworkMediaChatStatus()) {
+      videoChatButton = (
+        <button onClick={leaveVideoChat} id='join-video-chat'>
+          Leave Video Chat
+        </button>
+      )
+    } else if (room.videoUsers && room.videoUsers.length >= VIDEO_CHAT_MAX_SIZE) {
+      // Maybe make it more transparent? I think this is probably fine, but I'm no UI expert!
+      videoChatButton = (
+        <button id='join-video-chat'>
+          Video Chat Is Full (limit {VIDEO_CHAT_MAX_SIZE})
+        </button>
+      )
+    } else {
+      videoChatButton = (
+        <button onClick={joinVideoChat} id='join-video-chat'>
+          Join Video Chat (Beta) {room.videoUsers && room.videoUsers.length > 0 ? `(${room.videoUsers.length})` : ''}
+        </button>
+      )
+    }
+  }
 
   // TODO: Don't hard-code order of features
   /* eslint-disable jsx-a11y/click-events-have-key-events */

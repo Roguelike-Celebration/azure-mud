@@ -1,13 +1,14 @@
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
-import { State } from './reducer'
-import { fetchProfile } from './networking'
+import { DeviceInfo, State } from './reducer'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
 import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
-import { getMediaStream } from './webRTC'
 import { ServerSettings } from '../server/src/types'
+import { CallClient } from '@azure/communication-calling'
+import { fetchAcsToken } from './networking'
+import { AzureCommunicationUserCredential } from '@azure/communication-common'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -36,8 +37,12 @@ export type Action =
   | P2PStreamReceivedAction
   | P2PConnectionClosedAction
   | P2PWaitingForConnectionsAction
+  | ACSReceivedTokenAction
   | LocalMediaStreamOpenedAction
-  | LocalMediaDeviceListReceivedAction
+  | LocalMediaMicrophoneListReceivedAction
+  | LocalMediaSelectedCameraAction
+  | LocalMediaSelectedMicrophoneAction
+  | LocalMediaCameraListReceivedAction
   | MediaReceivedSpeakingDataAction
   | StopVideoChatAction
   | ErrorAction
@@ -95,8 +100,12 @@ export enum ActionType {
   P2PWaitingForConnections = 'P2P_WAITING_FOR_CONNECTIONS',
   LocalMediaStreamOpened = 'LOCAL_MEDIASTREAM_OPENED',
   StopVideoChat = 'STOP_VIDEO_CHAT',
-  LocalMediaDeviceListReceived = 'LOCAL_MEDIA_DEVICE_LIST_RECEIVED',
+  LocalMediaMicrophoneListReceived = 'LOCAL_MEDIA_MICROPHONE_LIST_RECEIVED',
+  LocalMediaCameraListReceived = 'LOCAL_MEDIA_CAMERA_LIST_RECEIVED',
+  LocalMediaSelectedCamera = 'LOCAL_MEDIA_SELECTED_CAMERA',
+  LocalMediaSelectedMicrophone = 'LOCAL_MEDIA_SELECTED_MICROPHONE',
   MediaReceivedSpeakingData = 'MEDIA_RECEIVED_SPEAKING_DATA',
+  ACSReceivedToken = 'ACS_RECEIVED_TOKEN',
   // UI actions
   SendMessage = 'SEND_MESSAGE',
   SetName = 'SET_NAME',
@@ -510,10 +519,51 @@ export const PrepareToStartVideoChatAction = (): ((dispatch: ThunkDispatch<Actio
   // We show a "here's what you look like, select your input devices, toggle audio/video" before you connect
   // We need to grab a local feed first so we can get pretty names for the list of inputs.
   return async (dispatch: ThunkDispatch<Action, State>) => {
+    // TODO: Decomplect this
     // The act of fetching the local media stream triggers a local view of your webcam
-    await getMediaStream(dispatch)
-    const devices = await navigator.mediaDevices.enumerateDevices()
-    dispatch(LocalMediaDeviceListReceivedAction(devices))
+    // await getMediaStream(dispatch)
+
+    // TODO: Action.ts shouldn't be aware of ACS
+    const token = await fetchAcsToken()
+    const tokenCredential = new AzureCommunicationUserCredential(token.token)
+    dispatch(ACSReceivedTokenAction(token.token))
+
+    const callClient = new CallClient()
+    const callAgent = await callClient.createCallAgent(tokenCredential)
+    const deviceManager = await callClient.getDeviceManager()
+    const result = await deviceManager.askDevicePermission(true, true)
+
+    // VideoDeviceInfo and AudioDeviceInfo are instantiated classes that get unhappy
+    // if we deep-clone them as part of the data store.
+    //
+    // We'll just store name/id pairs and later index back into a proper
+    // DeviceManager list.
+
+    if (result.audio) {
+      const mics = deviceManager
+        .getMicrophoneList()
+        .map((c) => {
+          return {
+            id: c.id,
+            name: c.name
+          }
+        })
+      dispatch(LocalMediaMicrophoneListReceivedAction(mics))
+    }
+
+    if (result.video) {
+      const cameras = deviceManager
+        .getCameraList()
+        .map((c) => {
+          return {
+            id: c.id,
+            name: c.name
+          }
+        })
+
+      dispatch(LocalMediaCameraListReceivedAction(cameras))
+    }
+
     dispatch(ShowModalAction(Modal.MediaSelector))
   }
 }
@@ -538,20 +588,73 @@ export const LocalMediaStreamOpenedAction = (
   }
 }
 
-interface LocalMediaDeviceListReceivedAction {
-  type: ActionType.LocalMediaDeviceListReceived;
-  value: MediaDeviceInfo[];
+interface LocalMediaMicrophoneListReceivedAction {
+  type: ActionType.LocalMediaMicrophoneListReceived;
+  value: DeviceInfo[];
 }
 
-export const LocalMediaDeviceListReceivedAction = (
-  devices: MediaDeviceInfo[]
-): LocalMediaDeviceListReceivedAction => {
+export const LocalMediaMicrophoneListReceivedAction = (
+  devices: DeviceInfo[]
+): LocalMediaMicrophoneListReceivedAction => {
   return {
-    type: ActionType.LocalMediaDeviceListReceived,
+    type: ActionType.LocalMediaMicrophoneListReceived,
     value: devices
   }
 }
 
+interface LocalMediaCameraListReceivedAction {
+  type: ActionType.LocalMediaCameraListReceived;
+  value: DeviceInfo[];
+}
+
+export const LocalMediaCameraListReceivedAction = (
+  devices: DeviceInfo[]
+): LocalMediaCameraListReceivedAction => {
+  return {
+    type: ActionType.LocalMediaCameraListReceived,
+    value: devices
+  }
+}
+
+interface ACSReceivedTokenAction {
+  type: ActionType.ACSReceivedToken
+  value: string
+}
+
+export const ACSReceivedTokenAction = (token: string): ACSReceivedTokenAction => {
+  return {
+    type: ActionType.ACSReceivedToken,
+    value: token
+  }
+}
+
+interface LocalMediaSelectedCameraAction {
+  type: ActionType.LocalMediaSelectedCamera;
+  value: string;
+}
+
+export const LocalMediaSelectedCameraAction = (
+  deviceId: string
+): LocalMediaSelectedCameraAction => {
+  return {
+    type: ActionType.LocalMediaSelectedCamera,
+    value: deviceId
+  }
+}
+
+interface LocalMediaSelectedMicrophoneAction {
+  type: ActionType.LocalMediaSelectedMicrophone;
+  value: string;
+}
+
+export const LocalMediaSelectedMicrophoneAction = (
+  deviceId: string
+): LocalMediaSelectedMicrophoneAction => {
+  return {
+    type: ActionType.LocalMediaSelectedMicrophone,
+    value: deviceId
+  }
+}
 interface MediaReceivedSpeakingDataAction {
   type: ActionType.MediaReceivedSpeakingData;
   value: string[];

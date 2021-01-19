@@ -10,6 +10,7 @@ import LocalMediaView from './LocalMediaView'
 import { DispatchContext } from '../App'
 
 import '../../style/videoChat.css'
+import { LocalVideoStream, RemoteVideoStream, Renderer, VideoDeviceInfo } from '@azure/communication-calling'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
@@ -21,12 +22,11 @@ interface MediaProps {
   // prop lets React auto-rerender this component when a new stream is opened
   connectedPeerIds?: string[];
 
-  localMediaStreamId?: string;
-
   speakingPeerIds: string[];
 
   videoDeviceId?: string;
   audioDeviceId?: string;
+  cameraDevices?: VideoDeviceInfo[]
 }
 
 export default function MediaChatView (props: MediaProps) {
@@ -35,7 +35,7 @@ export default function MediaChatView (props: MediaProps) {
   console.log('Re-rendering media chat view?')
 
   const playerVideo = (
-    <LocalMediaView speaking={props.speakingPeerIds.includes('self')} />
+    <LocalMediaView speaking={props.speakingPeerIds.includes('self')} cameraDevices={props.cameraDevices} videoId={props.videoDeviceId}/>
   )
 
   if (props.peerIds) {
@@ -66,12 +66,34 @@ export default function MediaChatView (props: MediaProps) {
   )
 }
 
+type AcsVideoProps = {
+  src: LocalVideoStream|RemoteVideoStream
+}
+
+export function AcsVideo ({ src }: AcsVideoProps) {
+  const vidRef = useRef<HTMLDivElement>(null)
+  const renderer = new Renderer(src)
+
+  useEffect(() => {
+    if (!vidRef.current) return
+    if (!renderer) return
+
+    renderer.createView().then(view => {
+      vidRef.current!.appendChild(view.target)
+    })
+  }, [src])
+
+  return (
+    <div ref={vidRef}></div>
+  )
+}
+
 // via https://github.com/facebook/react/issues/11163
 type PropsType = VideoHTMLAttributes<HTMLVideoElement> & {
   srcObject: MediaStream;
 };
 
-export function Video ({ srcObject, ...props }: PropsType) {
+export function HtmlVideo ({ srcObject, ...props }: PropsType) {
   const refVideo = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
