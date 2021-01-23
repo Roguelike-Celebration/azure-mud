@@ -16,5 +16,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/issueToken/index.js"
+  "scriptFile": "../dist/acsToken/index.js"
 }

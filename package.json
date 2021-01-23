@@ -31,7 +31,8 @@
     "react-tooltip": "^4.2.8",
     "request": "^2.88.2",
     "simple-peer": "^9.7.2",
-    "ts-node": "^9.0.0"
+    "ts-node": "^9.0.0",
+    "twilio-video": "^2.8.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.158",
