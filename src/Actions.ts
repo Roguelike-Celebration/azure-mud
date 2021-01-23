@@ -1,14 +1,10 @@
-import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
-import { DeviceInfo, State } from './reducer'
+import { DeviceInfo } from './reducer'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
 import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { ServerSettings } from '../server/src/types'
-import { CallClient } from '@azure/communication-calling'
-import { fetchAcsToken } from './networking'
-import { AzureCommunicationUserCredential } from '@azure/communication-common'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -39,10 +35,8 @@ export type Action =
   | P2PWaitingForConnectionsAction
   | ACSReceivedTokenAction
   | LocalMediaStreamOpenedAction
-  | LocalMediaMicrophoneListReceivedAction
   | LocalMediaSelectedCameraAction
   | LocalMediaSelectedMicrophoneAction
-  | LocalMediaCameraListReceivedAction
   | MediaReceivedSpeakingDataAction
   | StopVideoChatAction
   | ErrorAction
@@ -513,61 +507,6 @@ export const P2PWaitingForConnectionsAction = (): P2PWaitingForConnectionsAction
     type: ActionType.P2PWaitingForConnections
   }
 }
-
-export const PrepareToStartVideoChatAction = (): ((dispatch: ThunkDispatch<Action, State>) => void) => {
-  // This loads a local webcam view
-  // We show a "here's what you look like, select your input devices, toggle audio/video" before you connect
-  // We need to grab a local feed first so we can get pretty names for the list of inputs.
-  return async (dispatch: ThunkDispatch<Action, State>) => {
-    // TODO: Decomplect this
-    // The act of fetching the local media stream triggers a local view of your webcam
-    // await getMediaStream(dispatch)
-
-    // TODO: Action.ts shouldn't be aware of ACS
-    const token = await fetchAcsToken()
-    const tokenCredential = new AzureCommunicationUserCredential(token.token)
-    dispatch(ACSReceivedTokenAction(token.token))
-
-    const callClient = new CallClient()
-    const callAgent = await callClient.createCallAgent(tokenCredential)
-    const deviceManager = await callClient.getDeviceManager()
-    const result = await deviceManager.askDevicePermission(true, true)
-
-    // VideoDeviceInfo and AudioDeviceInfo are instantiated classes that get unhappy
-    // if we deep-clone them as part of the data store.
-    //
-    // We'll just store name/id pairs and later index back into a proper
-    // DeviceManager list.
-
-    if (result.audio) {
-      const mics = deviceManager
-        .getMicrophoneList()
-        .map((c) => {
-          return {
-            id: c.id,
-            name: c.name
-          }
-        })
-      dispatch(LocalMediaMicrophoneListReceivedAction(mics))
-    }
-
-    if (result.video) {
-      const cameras = deviceManager
-        .getCameraList()
-        .map((c) => {
-          return {
-            id: c.id,
-            name: c.name
-          }
-        })
-
-      dispatch(LocalMediaCameraListReceivedAction(cameras))
-    }
-
-    dispatch(ShowModalAction(Modal.MediaSelector))
-  }
-}
-
 interface LocalMediaStreamOpenedAction {
   type: ActionType.LocalMediaStreamOpened;
   value: {

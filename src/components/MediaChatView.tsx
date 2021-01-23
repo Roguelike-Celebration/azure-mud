@@ -2,62 +2,51 @@ import React, {
   useEffect,
   VideoHTMLAttributes,
   useRef,
-  useContext
+  useContext,
+  useState
 } from 'react'
 import NameView from './NameView'
-import { otherMediaStreams } from '../webRTC'
 import LocalMediaView from './LocalMediaView'
 import { DispatchContext } from '../App'
 
 import '../../style/videoChat.css'
-import { LocalVideoStream, RemoteVideoStream, Renderer, VideoDeviceInfo } from '@azure/communication-calling'
+import { Renderer, LocalVideoStream, RemoteVideoStream } from '@azure/communication-calling'
+import { useUserCallSettingsContext } from '../acs/useUserCallSettings'
+import { useActiveCallContext } from '../acs/useActiveCallContext'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
   // All peers that the server considers to be 'in' videochat
   peerIds?: string[];
 
-  // All peers who have open WebRTC streams
-  // We don't (as of writing this) use this data in logic, but tracking it as a
-  // prop lets React auto-rerender this component when a new stream is opened
-  connectedPeerIds?: string[];
-
   speakingPeerIds: string[];
-
-  videoDeviceId?: string;
-  audioDeviceId?: string;
-  cameraDevices?: VideoDeviceInfo[]
 }
 
 export default function MediaChatView (props: MediaProps) {
-  let otherVideos, mediaSelector
+  let mediaSelector
   const dispatch = useContext(DispatchContext)
+  const { remoteParticipants } = useActiveCallContext()
   console.log('Re-rendering media chat view?')
 
   const playerVideo = (
-    <LocalMediaView speaking={props.speakingPeerIds.includes('self')} cameraDevices={props.cameraDevices} videoId={props.videoDeviceId}/>
+    <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
   )
 
-  if (props.peerIds) {
-    console.log(props.peerIds)
-    const otherStreams = otherMediaStreams()
-    otherVideos = props.peerIds.map((peerId) => {
-      const stream = otherStreams[peerId]
-      if (!stream) return null
-      return (
-        <div key={`stream-wrapper-${peerId}`}>
-          <NameView userId={peerId} id={`stream-nameview-${peerId}`} />:
-          <Video
-            srcObject={stream}
-            id={`stream-${peerId}`}
-            className={
-              props.speakingPeerIds.includes(peerId) ? 'speaking' : ''
-            }
-          />
-        </div>
-      )
-    }).filter(el => !!el)
-  }
+  const otherVideos = remoteParticipants.map((p) => {
+    return (
+      <div key={`stream-wrapper-${p.displayName}`}>
+        <NameView userId={p.displayName} id={`stream-nameview-${p.displayName}`} />:
+        <AcsVideo
+          // TODO: Select correct stream?
+          videoStream={p.videoStreams[0]}
+          // id={`stream-${peerId}`}
+          // className={
+          //   props.speakingPeerIds.includes(peerId) ? 'speaking' : ''
+          // }
+        />
+      </div>
+    )
+  })
 
   return (
     <div id="media-view">
@@ -66,22 +55,30 @@ export default function MediaChatView (props: MediaProps) {
   )
 }
 
-type AcsVideoProps = {
-  src: LocalVideoStream|RemoteVideoStream
-}
-
-export function AcsVideo ({ src }: AcsVideoProps) {
+export function AcsVideo (props: {videoStream: LocalVideoStream|RemoteVideoStream}) {
+  const { videoStream } = props
   const vidRef = useRef<HTMLDivElement>(null)
-  const renderer = new Renderer(src)
+  const [renderer, setRenderer] = useState<Renderer>()
 
   useEffect(() => {
-    if (!vidRef.current) return
-    if (!renderer) return
+    if (videoStream && !renderer) {
+      setRenderer(new Renderer(videoStream))
+    }
+  }, [videoStream, renderer])
 
-    renderer.createView().then(view => {
-      vidRef.current!.appendChild(view.target)
-    })
-  }, [src])
+  useEffect(() => {
+    if (renderer) {
+      renderer.createView().then((view) => {
+        vidRef.current!.appendChild(view.target)
+      })
+    }
+
+    return () => {
+      if (renderer) {
+        renderer.dispose()
+      }
+    }
+  }, [renderer, vidRef])
 
   return (
     <div ref={vidRef}></div>

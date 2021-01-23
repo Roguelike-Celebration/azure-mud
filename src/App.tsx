@@ -14,7 +14,7 @@ import {
   ShowSideMenuAction,
   SendMessageAction,
   SpaceIsClosedAction,
-  PlayerBannedAction, PrepareToStartVideoChatAction
+  PlayerBannedAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -33,7 +33,6 @@ import HelpView from './components/HelpView'
 import MapModalView from './components/MapModalView'
 import LoggedOutView from './components/LoggedOutView'
 import WelcomeModalView from './components/WelcomeModalView'
-import { WhisperMessage } from './message'
 import GoHomeView from './components/GoHomeView'
 import YouAreBannedView from './components/YouAreBannedView'
 import RoomListView from './components/RoomListView'
@@ -44,6 +43,9 @@ import ClientDeployedModal from './components/ClientDeployedModal'
 import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import HappeningNowView from './components/HappeningNowView'
 import * as Storage from './storage'
+import { CallingContextProvider } from './acs/useCallingContext'
+import { UserCallSettingsContextProvider } from './acs/useUserCallSettings'
+import { ActiveCallContextProvider } from './acs/useActiveCallContext'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -141,11 +143,7 @@ const App = () => {
   if (state.inMediaChat) {
     videoChatView = (
       <MediaChatView
-        cameraDevices={state.cameraDevices}
         peerIds={state.roomData[state.roomId].videoUsers}
-        connectedPeerIds={state.otherMediaStreamPeerIds}
-        videoDeviceId={state.currentVideoDeviceId}
-        audioDeviceId={state.currentAudioDeviceId}
         speakingPeerIds={state.speakingPeerIds}
       />
     )
@@ -181,8 +179,6 @@ const App = () => {
     case Modal.MediaSelector: {
       innerModalView = (
         <MediaSelectorView
-          cameraDevices={state.cameraDevices}
-          microphoneDevices={state.microphoneDevices}
           initialAudioDeviceId={state.currentAudioDeviceId}
           initialVideoDeviceId={state.currentVideoDeviceId}
           showJoinButton={!state.inMediaChat}
@@ -257,57 +253,64 @@ const App = () => {
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <IsMobileContext.Provider value={isMobile}>
-          <UserMapContext.Provider
-            value={{ userMap: state.userMap, myId: state.userId }}
-          >
-            <div
-              id={
-                state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
-              }
-            >
-              {shouldShowMenu ? (
-                <span>
-                  <SideNavView
-                    roomData={state.roomData}
-                    currentRoomId={state.roomId}
-                    username={state.userMap[state.userId].username}
-                    spaceIsClosed={state.isClosed}
-                  />
-                  {/* Once we moved the sidebar to be position:fixed, we still
+        <UserCallSettingsContextProvider>
+          <CallingContextProvider>
+            <ActiveCallContextProvider>
+              <IsMobileContext.Provider value={isMobile}>
+                <UserMapContext.Provider
+                  value={{ userMap: state.userMap, myId: state.userId }}
+                >
+                  <div
+                    id={
+                      state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
+                    }
+                  >
+                    {shouldShowMenu ? (
+                      <span>
+                        <SideNavView
+                          roomData={state.roomData}
+                          currentRoomId={state.roomId}
+                          username={state.userMap[state.userId].username}
+                          spaceIsClosed={state.isClosed}
+                        />
+                        {/* Once we moved the sidebar to be position:fixed, we still
                   needed something to take up its space in the CSS grid.
                   This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                  <div id='side-nav-placeholder' />
-                </span>
-              ) : (
-                <button id="show-menu" onClick={showMenu}>
-                  <span role="img" aria-label="menu">
+                        <div id='side-nav-placeholder' />
+                      </span>
+                    ) : (
+                      <button id="show-menu" onClick={showMenu}>
+                        <span role="img" aria-label="menu">
                     🍔
-                  </span>
-                </button>
-              )}
-              {modalView}
-              <div id="main" role="main">
-                {videoChatView}
-                {state.roomData[state.roomId] ? (
-                  <RoomView
-                    room={state.roomData[state.roomId]}
-                    userId={state.userId}
-                    roomData={state.roomData}
-                  />
-                ) : null}
-                <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
-                <InputView
-                  prepopulated={state.prepopulatedInput}
-                  sendMessage={(message) =>
-                    dispatch(SendMessageAction(message))
-                  }
-                />
-              </div>
-              {profile}
-            </div>
-          </UserMapContext.Provider>
-        </IsMobileContext.Provider>
+                        </span>
+                      </button>
+                    )}
+                    {modalView}
+                    <div id="main" role="main">
+                      {videoChatView}
+                      {state.roomData[state.roomId] ? (
+                        <RoomView
+                          room={state.roomData[state.roomId]}
+                          userId={state.userId}
+                          roomData={state.roomData}
+                        />
+                      ) : null}
+                      <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
+                      <InputView
+                        prepopulated={state.prepopulatedInput}
+                        sendMessage={(message) =>
+                          dispatch(SendMessageAction(message))
+                        }
+                      />
+                    </div>
+                    {profile}
+                  </div>
+                </UserMapContext.Provider>
+              </IsMobileContext.Provider>
+            </ActiveCallContextProvider>
+          </CallingContextProvider>
+
+        </UserCallSettingsContextProvider>
       </DispatchContext.Provider>
     </IconContext.Provider>
   )

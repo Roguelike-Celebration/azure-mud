@@ -1,16 +1,15 @@
 /* eslint-disable jsx-a11y/no-onchange */
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { DispatchContext } from '../App'
-import { P2PWaitingForConnectionsAction, HideModalAction, LocalMediaSelectedCameraAction, LocalMediaSelectedMicrophoneAction } from '../Actions'
+import { P2PWaitingForConnectionsAction, HideModalAction } from '../Actions'
 import { startVideoChat } from '../networking'
 import LocalMediaView from './LocalMediaView'
-import { AudioDeviceInfo, CallClient, VideoDeviceInfo, VideoOptions } from '@azure/communication-calling'
-import { AzureCommunicationUserCredential } from '@azure/communication-common'
+import { useCallingContext } from '../acs/useCallingContext'
+import { useUserCallSettingsContext } from '../acs/useUserCallSettings'
+import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling'
+import { useActiveCallContext } from '../acs/useActiveCallContext'
 
 interface Props {
-  cameraDevices: VideoDeviceInfo[];
-  microphoneDevices: AudioDeviceInfo[];
-
   initialVideoDeviceId?: string;
   initialAudioDeviceId?: string;
 
@@ -21,12 +20,13 @@ interface Props {
   showJoinButton?: boolean
 }
 
-export default async function MediaSelectorView (props: Props) {
+export default function MediaSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
+  const { micList, cameraList } = useCallingContext()
+  const { setCurrentCamera, setCurrentMic, currentCamera, currentMic } = useUserCallSettingsContext()
+  const { joinCall } = useActiveCallContext()
+  console.log(micList, cameraList)
 
-  const [videoId, setVideoId] = useState('')
-  const [audioId, setAudioId] = useState('')
-  console.log(props.cameraDevices.map(c => c.name), props.microphoneDevices)
   const deviceToOption = (d: VideoDeviceInfo|AudioDeviceInfo) => {
     return (
       <option value={d.id} key={d.id}>
@@ -35,34 +35,21 @@ export default async function MediaSelectorView (props: Props) {
     )
   }
 
-  useEffect(() => {
-    const callClient = new CallClient()
-    const tokenCredential = new AzureCommunicationUserCredential(props.acsToken)
-    callClient.createCallAgent(tokenCredential).then(callAgent => {
-      callClient.getDeviceManager().then(deviceManager => {
-        // Set AV bundles
-      })
-    })
-  }, [])
-  // TODO: Construct this once
-
   // TODO: These audio/video changes immediately affect your outgoing stream.
   // Eventually, they shouldn't.
   const onVideoChange = (e) => {
-    console.log('Changed')
-    setVideoId(e.target.value)
-    dispatch(LocalMediaSelectedCameraAction(e.target.id))
+    setCurrentCamera(cameraList.find(c => c.id === e.target.value))
   }
 
   const onAudioChange = (e) => {
-    setAudioId(e.target.value)
-    dispatch(LocalMediaSelectedMicrophoneAction(e.target.id))
+    setCurrentMic(micList.find(m => m.id === e.target.value))
   }
 
   const clickJoin = () => {
     dispatch(HideModalAction())
     dispatch(P2PWaitingForConnectionsAction())
     startVideoChat()
+    joinCall('b0720a25-7bd2-44f3-af6b-8e84328bdb58')
   }
 
   return (
@@ -74,8 +61,9 @@ export default async function MediaSelectorView (props: Props) {
           name="Video"
           id="video-select"
           onChange={onVideoChange}
+          defaultValue={currentCamera && currentCamera.id}
         >
-          {props.cameraDevices.map(deviceToOption)}
+          {cameraList.map(deviceToOption)}
         </select>
         <br/>
         <label htmlFor="#audio-select">Audio</label>
@@ -83,8 +71,9 @@ export default async function MediaSelectorView (props: Props) {
           name="Audio"
           id="audio-select"
           onChange={onAudioChange}
+          defaultValue={currentMic && currentMic.id}
         >
-          {props.microphoneDevices.map(deviceToOption)}
+          {micList.map(deviceToOption)}
         </select>
       </div>
       {props.showJoinButton

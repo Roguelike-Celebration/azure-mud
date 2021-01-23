@@ -6,17 +6,18 @@ import { AcsVideo } from './MediaChatView'
 import { DispatchContext } from '../App'
 import { ShowModalAction } from '../Actions'
 import { Modal } from '../modals'
-import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling'
+import { LocalVideoStream } from '@azure/communication-calling'
+import { useUserCallSettingsContext } from '../acs/useUserCallSettings'
 
 interface Props {
   speaking: boolean
   hideUI?: boolean
-  videoId: string
-  cameraDevices: VideoDeviceInfo[]
 }
 
 export default function LocalMediaView (props: Props) {
   const dispatch = useContext(DispatchContext)
+  const { currentCamera } = useUserCallSettingsContext()
+
   const [sendVideo, setUseVideo] = useState(true)
   const [sendAudio, setUseAudio] = useState(true)
 
@@ -34,15 +35,15 @@ export default function LocalMediaView (props: Props) {
     dispatch(ShowModalAction(Modal.MediaSelector))
   }
 
-  const video = props.cameraDevices.find(d => d.id === props.videoId)
-
-  // TODO: Figure out how to thread through the stream ID
+  if (!currentCamera) {
+    return null
+  }
 
   return (
     <div className="my-video">
       You:
       <AcsVideo
-        src={new LocalVideoStream(video)}
+        videoStream={new LocalVideoStream(currentCamera)}
         // className={`self ${props.speaking ? 'speaking' : ''}`}
         // muted={true}
       />

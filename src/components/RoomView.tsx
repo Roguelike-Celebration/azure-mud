@@ -6,7 +6,7 @@ import {
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext, UserMapContext } from '../App'
-import { StopVideoChatAction, ShowModalAction, PrepareToStartVideoChatAction } from '../Actions'
+import { StopVideoChatAction, ShowModalAction } from '../Actions'
 import { FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
@@ -17,6 +17,7 @@ import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
 import { linkActions } from '../linkActions'
 import { useContext } from 'react'
+import { useActiveCallContext } from '../acs/useActiveCallContext'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
@@ -28,6 +29,8 @@ interface Props {
 
 export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
+  const { leaveCall } = useActiveCallContext()
+
   const { room } = props
 
   // This is very silly.
@@ -53,11 +56,12 @@ export default function RoomView (props: Props) {
   }
 
   const joinVideoChat = async () => {
-    dispatch(PrepareToStartVideoChatAction())
+    dispatch(ShowModalAction(Modal.MediaSelector))
   }
 
   const leaveVideoChat = () => {
     dispatch(StopVideoChatAction())
+    leaveCall()
   }
 
   const showNoteWall = () => {

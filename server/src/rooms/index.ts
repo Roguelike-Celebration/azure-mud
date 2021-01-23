@@ -47,6 +47,11 @@ export interface Room {
   hidden?: boolean
 
   specialFeatures?: SpecialFeature[]
+
+  // The GUID for a corresponding ACS videochat room
+  // This should hopefully eventually be auto-generated and mandatory
+  // but hand-coding for testing purposes now
+  chatGuid?: string
 }
 
 const indexRoomData: { [name: string]: Room } = {
@@ -102,7 +107,8 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Bar',
     shortName: 'the bar',
     description: 'A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[the Tourist->item]] (a non-alcoholic drink with lots of fruit and a fun umbrella), [[the Berlin Interpretation->item]] (a mojito made with some sort of hyper-caffeinated soda), and [[the Walls Are Shifting->item]] (a Long Island Iced Tea).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>You\'re a stone\'s throw away from the [[kitchen]], the [[@-sign statue->statue]], the [[dance floor->danceFloor]], and the [[North Showcase Hall->northShowcaseHall]]. You can also crawl into the [[shipping container->shippingContainer]].',
-    allowsMedia: true
+    allowsMedia: true,
+    chatGuid: 'b0720a25-7bd2-44f3-af6b-8e84328bdb58'
   },
   lounge: {
     id: 'lounge',

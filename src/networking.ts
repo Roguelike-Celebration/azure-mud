@@ -36,12 +36,10 @@ import {
   ShowModalAction, CommandMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
-import { connectToAcsRoom } from './azureCommunicationService'
-
-import Config from './config'
 import { convertServerRoomData } from './room'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
+import Config from './config'
 const axios = require('axios').default
 
 let myUserId: string
@@ -235,7 +233,6 @@ export async function deleteMessage (messageId: string) {
 // Any connected WebRTC clients will start signaling, which happens over SignalR.
 export async function startVideoChat () {
   inMediaChat = true
-  connectToAcsRoom('test', undefined)
 }
 
 export async function sendSignalData (peerId: string, data: string) {
