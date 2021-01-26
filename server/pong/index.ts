@@ -8,3 +8,5 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<void> {
   await azureWrap(context, req, pong, { userId: req.headers['x-ms-client-principal-id'] })
 }
+
+export default httpTrigger
