@@ -2,12 +2,10 @@ import React, { useState, useContext } from 'react'
 import { FaCog, FaVolumeUp, FaVolumeMute, FaVideo, FaVideoSlash } from 'react-icons/fa'
 
 import { toggleVideo, toggleAudio } from '../webRTC'
-import { AcsVideo } from './MediaChatView'
 import { DispatchContext } from '../App'
 import { ShowModalAction } from '../Actions'
 import { Modal } from '../modals'
-import { LocalVideoStream } from '@azure/communication-calling'
-import { useUserCallSettingsContext } from '../acs/useUserCallSettings'
+import { useMediaChatContext } from '../videochat/mediaChatContext'
 
 interface Props {
   speaking: boolean
@@ -16,7 +14,7 @@ interface Props {
 
 export default function LocalMediaView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { currentCamera } = useUserCallSettingsContext()
+  const { localStreamView } = useMediaChatContext()
 
   const [sendVideo, setUseVideo] = useState(true)
   const [sendAudio, setUseAudio] = useState(true)
@@ -35,18 +33,14 @@ export default function LocalMediaView (props: Props) {
     dispatch(ShowModalAction(Modal.MediaSelector))
   }
 
-  if (!currentCamera) {
+  if (!localStreamView) {
     return null
   }
 
   return (
     <div className="my-video">
       You:
-      <AcsVideo
-        videoStream={new LocalVideoStream(currentCamera)}
-        // className={`self ${props.speaking ? 'speaking' : ''}`}
-        // muted={true}
-      />
+      {localStreamView}
       {props.hideUI ? '' : (
         <div>
           <button id='send-video' onClick={onChangeVideo} className={`link-styled-button video-button ${sendVideo ? 'enabled' : 'disabled'}`} aria-label='Toggle Video'>

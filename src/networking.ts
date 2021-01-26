@@ -40,6 +40,7 @@ import { convertServerRoomData } from './room'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
 import Config from './config'
+import { receiveSignalData, startSignaling } from './webRTC'
 const axios = require('axios').default
 
 let myUserId: string
@@ -123,8 +124,7 @@ export async function dropItem () {
 }
 
 export async function fetchAcsToken () {
-  // TODO: This should thread through state
-  return await callAzureFunction('issueToken')
+  return await callAzureFunction('acsToken')
 }
 
 // Post-it notes

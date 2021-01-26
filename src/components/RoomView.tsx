@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Room } from '../room'
 import {
   moveToRoom,
-  getNetworkMediaChatStatus, pickUpRandomItemFromList, pickUpItem, dropItem
+  getNetworkMediaChatStatus, pickUpItem, dropItem
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext, UserMapContext } from '../App'
@@ -17,7 +17,7 @@ import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
 import { linkActions } from '../linkActions'
 import { useContext } from 'react'
-import { useActiveCallContext } from '../acs/useActiveCallContext'
+import { useMediaChatContext } from '../videochat/mediaChatContext'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
@@ -29,7 +29,7 @@ interface Props {
 
 export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
-  const { leaveCall } = useActiveCallContext()
+  const { leaveCall } = useMediaChatContext()
 
   const { room } = props
 

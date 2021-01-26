@@ -1,13 +1,10 @@
 /* eslint-disable jsx-a11y/no-onchange */
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { DispatchContext } from '../App'
 import { P2PWaitingForConnectionsAction, HideModalAction } from '../Actions'
 import { startVideoChat } from '../networking'
 import LocalMediaView from './LocalMediaView'
-import { useCallingContext } from '../acs/useCallingContext'
-import { useUserCallSettingsContext } from '../acs/useUserCallSettings'
-import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling'
-import { useActiveCallContext } from '../acs/useActiveCallContext'
+import { DeviceInfo, useMediaChatContext } from '../videochat/mediaChatContext'
 
 interface Props {
   initialVideoDeviceId?: string;
@@ -22,12 +19,13 @@ interface Props {
 
 export default function MediaSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { micList, cameraList } = useCallingContext()
-  const { setCurrentCamera, setCurrentMic, currentCamera, currentMic } = useUserCallSettingsContext()
-  const { joinCall } = useActiveCallContext()
-  console.log(micList, cameraList)
+  const { prepareForMediaChat, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, joinCall } = useMediaChatContext()
 
-  const deviceToOption = (d: VideoDeviceInfo|AudioDeviceInfo) => {
+  useEffect(() => {
+    prepareForMediaChat()
+  }, [])
+
+  const deviceToOption = (d: DeviceInfo) => {
     return (
       <option value={d.id} key={d.id}>
         {d.name}
@@ -38,11 +36,11 @@ export default function MediaSelectorView (props: Props) {
   // TODO: These audio/video changes immediately affect your outgoing stream.
   // Eventually, they shouldn't.
   const onVideoChange = (e) => {
-    setCurrentCamera(cameraList.find(c => c.id === e.target.value))
+    setCurrentCamera(e.target.value)
   }
 
   const onAudioChange = (e) => {
-    setCurrentMic(micList.find(m => m.id === e.target.value))
+    setCurrentMic(e.target.value)
   }
 
   const clickJoin = () => {
@@ -63,7 +61,7 @@ export default function MediaSelectorView (props: Props) {
           onChange={onVideoChange}
           defaultValue={currentCamera && currentCamera.id}
         >
-          {cameraList.map(deviceToOption)}
+          {(cameras || []).map(deviceToOption)}
         </select>
         <br/>
         <label htmlFor="#audio-select">Audio</label>
@@ -73,7 +71,7 @@ export default function MediaSelectorView (props: Props) {
           onChange={onAudioChange}
           defaultValue={currentMic && currentMic.id}
         >
-          {micList.map(deviceToOption)}
+          {(mics || []).map(deviceToOption)}
         </select>
       </div>
       {props.showJoinButton

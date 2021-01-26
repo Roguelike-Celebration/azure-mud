@@ -10,9 +10,7 @@ import LocalMediaView from './LocalMediaView'
 import { DispatchContext } from '../App'
 
 import '../../style/videoChat.css'
-import { Renderer, LocalVideoStream, RemoteVideoStream } from '@azure/communication-calling'
-import { useUserCallSettingsContext } from '../acs/useUserCallSettings'
-import { useActiveCallContext } from '../acs/useActiveCallContext'
+import { useMediaChatContext } from '../videochat/mediaChatContext'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
@@ -24,26 +22,18 @@ interface MediaProps {
 
 export default function MediaChatView (props: MediaProps) {
   let mediaSelector
-  const dispatch = useContext(DispatchContext)
-  const { remoteParticipants } = useActiveCallContext()
+  const { callParticipants } = useMediaChatContext()
   console.log('Re-rendering media chat view?')
 
   const playerVideo = (
     <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
   )
 
-  const otherVideos = remoteParticipants.map((p) => {
+  const otherVideos = (callParticipants || []).map((p) => {
     return (
-      <div key={`stream-wrapper-${p.displayName}`}>
-        <NameView userId={p.displayName} id={`stream-nameview-${p.displayName}`} />:
-        <AcsVideo
-          // TODO: Select correct stream?
-          videoStream={p.videoStreams[0]}
-          // id={`stream-${peerId}`}
-          // className={
-          //   props.speakingPeerIds.includes(peerId) ? 'speaking' : ''
-          // }
-        />
+      <div key={`stream-wrapper-${p.userId}`}>
+        <NameView userId={p.userId} id={`stream-nameview-${p.userId}`} />:
+        {p.streamView}
       </div>
     )
   })
@@ -52,36 +42,6 @@ export default function MediaChatView (props: MediaProps) {
     <div id="media-view">
       {playerVideo} {mediaSelector} {otherVideos}
     </div>
-  )
-}
-
-export function AcsVideo (props: {videoStream: LocalVideoStream|RemoteVideoStream}) {
-  const { videoStream } = props
-  const vidRef = useRef<HTMLDivElement>(null)
-  const [renderer, setRenderer] = useState<Renderer>()
-
-  useEffect(() => {
-    if (videoStream && !renderer) {
-      setRenderer(new Renderer(videoStream))
-    }
-  }, [videoStream, renderer])
-
-  useEffect(() => {
-    if (renderer) {
-      renderer.createView().then((view) => {
-        vidRef.current!.appendChild(view.target)
-      })
-    }
-
-    return () => {
-      if (renderer) {
-        renderer.dispose()
-      }
-    }
-  }, [renderer, vidRef])
-
-  return (
-    <div ref={vidRef}></div>
   )
 }
 
