@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import * as Twilio from 'twilio-video'
 
 import { fetchTwilioToken } from '../networking'
@@ -109,6 +109,23 @@ export const TwilioChatContextProvider = (props: {
           }
         },
         preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }]
+      })
+
+      // TODO: I worry this will send a single video/audio frame if disabled on start? To test
+      room.localParticipant.videoTracks.forEach(publication => {
+        if (cameraEnabled) {
+          publication.track.enable()
+        } else {
+          publication.track.disable()
+        }
+      })
+
+      room.localParticipant.audioTracks.forEach(publication => {
+        if (micEnabled) {
+          publication.track.enable()
+        } else {
+          publication.track.disable()
+        }
       })
 
       const addParticipant = (participant: Twilio.Participant) => {
