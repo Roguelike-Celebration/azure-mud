@@ -1,10 +1,10 @@
-import { DeviceInfo } from './reducer'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { Room } from './room'
 import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { ServerSettings } from '../server/src/types'
+import { DeviceInfo } from './videochat/mediaChatContext'
 
 export type Action =
   | ReceivedMyProfileAction
