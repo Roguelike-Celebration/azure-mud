@@ -79,6 +79,5 @@ export default {
       </div>
       </div>
 
-      You can exit to the [[north hall->northShowcaseHall]] or [[south hall->southShowcaseHall]], or head back to the [[foyer]].`,
-  allowsMedia: true
+      You can exit to the [[north hall->northShowcaseHall]] or [[south hall->southShowcaseHall]], or head back to the [[foyer]].`
 }

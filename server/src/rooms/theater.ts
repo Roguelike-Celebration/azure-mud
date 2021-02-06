@@ -9,7 +9,7 @@ export default {
         <br/><br/>
         <a href="stream.html" onClick="window.open(\'stream.html#\' + window.getComputedStyle(document.body).getPropertyValue(\'background-color\'), \'stream\', \'width=560,height=460\'); return false">Pop Out Stream</a><br/>
         `,
-  allowsMedia: true,
+  noMediaChat: true,
   hasNoteWall: true,
   noteWallData: {
     roomWallDescription: 'There is a whiteboard set up to the side with "SPEAKER QUESTIONS" written at the top. "Questions for speakers not questions from speakers!" is hastily scrawled below it.',

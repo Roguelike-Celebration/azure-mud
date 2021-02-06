@@ -78,7 +78,7 @@ export default function RoomView (props: Props) {
   }
 
   let videoChatButton
-  if (room && room.allowsMedia) {
+  if (room && !room.noMediaChat) {
     if (getNetworkMediaChatStatus()) {
       videoChatButton = (
         <button onClick={leaveVideoChat} id='join-video-chat'>

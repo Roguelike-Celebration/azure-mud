@@ -63,6 +63,5 @@ export default {
       </div>
 
 
-      You can exit to the [[west hall->westShowcaseHall]], [[east hall->eastShowcaseHall]], or head up to the [[bar]] or [[@-sign statue->statue]].`,
-  allowsMedia: true
+      You can exit to the [[west hall->westShowcaseHall]], [[east hall->eastShowcaseHall]], or head up to the [[bar]] or [[@-sign statue->statue]].`
 }

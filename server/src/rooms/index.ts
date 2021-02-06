@@ -33,8 +33,8 @@ export interface Room {
 
   description: string
 
-  // If true, webRTC audio/video chat can happen
-  allowsMedia?: boolean
+  // If false, webRTC audio/video chat is blocked
+  noMediaChat?: boolean
 
   // Indicates whether the room should let users place post-it notes
   // As we add more pieces of one-off functionality,
@@ -75,7 +75,6 @@ const indexRoomData: { [name: string]: Room } = {
     There is, however, a curious-looking vending machine labelled "Munxip's Magnifient Munchies" and a button you can press marked [[Get Random Food->generateFood]].
     <br/><br/>
       There are three tables you can sit at, labelled [[A->kitchenTableA]], [[B->kitchenTableB]], and [[C->kitchenTableC]]. You can also walk over to the [[lounge]], the [[bar]], the [[dance floor->danceFloor]], the [[@-sign statue->statue]] or grab a seat in the [[main theater area->theater]]. Finally, you can climb into the [[shipping container->shippingContainer]].`,
-    allowsMedia: true,
     hasNoteWall: true
   },
   kitchenTableA: {
@@ -83,39 +82,34 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Kitchen Table A',
     shortName: 'table A in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[B->kitchenTableB]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`,
-    allowsMedia: true
+      From here, you can see tables [[B->kitchenTableB]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`
   },
   kitchenTableB: {
     id: 'kitchenTableB',
     displayName: 'Kitchen Table B',
     shortName: 'table B in the kitchen',
     description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[A->kitchenTableA]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`,
-    allowsMedia: true
+      From here, you can see tables [[A->kitchenTableA]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`
   },
   kitchenTableC: {
     id: 'kitchenTableC',
     displayName: 'Kitchen Table C',
     shortName: 'table C in the kitchen',
     description: `A rustic wooden picnic table in the kitchen. For some reason this table and *only* this table contains a basket loaded with [[fortune cookies->getFortune]], and a sign next to it reading "Roguelike Celebration is not responsible for any consequences of taking advice from a cookie - so help yourself!"<br/><br/>
-      From here, you can see tables [[A->kitchenTableA]] or [[B->kitchenTableB]], and the [[general kitchen area->kitchen]]`,
-    allowsMedia: true
+      From here, you can see tables [[A->kitchenTableA]] or [[B->kitchenTableB]], and the [[general kitchen area->kitchen]]`
   },
   bar: {
     id: 'bar',
     displayName: 'Bar',
     shortName: 'the bar',
     description: 'A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[the Tourist->item]] (a non-alcoholic drink with lots of fruit and a fun umbrella), [[the Berlin Interpretation->item]] (a mojito made with some sort of hyper-caffeinated soda), and [[the Walls Are Shifting->item]] (a Long Island Iced Tea).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>You\'re a stone\'s throw away from the [[kitchen]], the [[@-sign statue->statue]], the [[dance floor->danceFloor]], and the [[North Showcase Hall->northShowcaseHall]]. You can also crawl into the [[shipping container->shippingContainer]].',
-    allowsMedia: true,
     chatGuid: 'b0720a25-7bd2-44f3-af6b-8e84328bdb58'
   },
   lounge: {
     id: 'lounge',
     displayName: 'Lounge',
     shortName: 'the lounge',
-    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing the latest scores in some incomprehensible splort, and a fridge full of La Croix.<br/><br/>From here, you can get to the [[drawing room->loungeDungeonDrawingRoom]], the [[dance floor->danceFloor]], or the [[kitchen]].',
-    allowsMedia: true
+    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing the latest scores in some incomprehensible splort, and a fridge full of La Croix.<br/><br/>From here, you can get to the [[drawing room->loungeDungeonDrawingRoom]], the [[dance floor->danceFloor]], or the [[kitchen]].'
   },
   statue: {
     id: 'statue',
@@ -123,8 +117,7 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the statue',
     description: `A memorial to countless adventurers who have helped build this social space.<br/><br/>A plaque on the statue shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.<br/>There's also a suggestion wall for people to add comments about the social space.
       From here, you can reach the [[kitchen]], the [[bar]], the [[theater]], or the [[North Showcase Hall->northShowcaseHall]]. You can also climb into the [[shipping container->shippingContainer]].`,
-    hasNoteWall: true,
-    allowsMedia: true
+    hasNoteWall: true
   },
   danceFloor: {
     id: 'danceFloor',
@@ -138,8 +131,7 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the shipping container',
     description: `
       It's not quite clear why there's a shipping container in the middle of the space. Seems pretty chill, though? Somebody's set up a makeshift bench.<br/><br/>
-      After you climb out, you can get back to the [[bar]], the [[theater]], the [[kitchen]], or the [[@-sign statue->statue]].`,
-    allowsMedia: true
+      After you climb out, you can get back to the [[bar]], the [[theater]], the [[kitchen]], or the [[@-sign statue->statue]].`
   },
   entryway: {
     id: 'entryway',

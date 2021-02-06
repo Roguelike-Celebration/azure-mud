@@ -77,6 +77,5 @@ export default {
         </div>
       </div>
 
-      You can exit to the [[north hall->northShowcaseHall]], [[south hall->southShowcaseHall]], or head over to the [[artist's atelier->atelier]] or [[proc-gen study->study]].`,
-  allowsMedia: true
+      You can exit to the [[north hall->northShowcaseHall]], [[south hall->southShowcaseHall]], or head over to the [[artist's atelier->atelier]] or [[proc-gen study->study]].`
 }

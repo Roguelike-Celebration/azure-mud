@@ -3,7 +3,6 @@ export const unconference = {
   displayName: 'Unconferencing Lobby',
   shortName: 'the unconferencing lobby',
   description: 'Winding corridors lead to a large dungeon-like room. Sticky notes and magic markers are piled up on tables along with assorted adventuring gear. White banners with blocky black text label several hallways leading to the unconferencing rooms - [[Minetown->minetown]], [[Oracle->oracle]], [[Sokoban->sokoban]], [[Castle->castle]], [[Vlad\'s Tower->tower]], and [[Astral Plane->astralPlane]]. You can also return back to the [[theater]].',
-  allowsMedia: true,
   hasNoteWall: true,
   noteWallData: {
     roomWallDescription: 'One wall of this room is taken up by a large whiteboard titled "UNCONFERENCE TOPIC SUGGESTIONS!" Smaller font clarifies "Write what you want to chat with others about, and upvote topics you find interesting. Moderators will assign the top six topics rooms, 5 minutes into each unconference block. Have fun!"',

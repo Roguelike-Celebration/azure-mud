@@ -72,6 +72,5 @@ export default {
         </div>
       </div>
 
-      You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`,
-  allowsMedia: true
+      You can exit to the [[west hall->westShowcaseHall]] or [[east hall->eastShowcaseHall]]`
 }
