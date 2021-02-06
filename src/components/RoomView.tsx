@@ -95,7 +95,7 @@ export default function RoomView (props: Props) {
     } else {
       videoChatButton = (
         <button onClick={joinVideoChat} id='join-video-chat'>
-          Join Video Chat (Beta) {room.videoUsers && room.videoUsers.length > 0 ? `(${room.videoUsers.length})` : ''}
+          Join Video Chat {room.videoUsers && room.videoUsers.length > 0 ? `(${room.videoUsers.length})` : ''}
         </button>
       )
     }
