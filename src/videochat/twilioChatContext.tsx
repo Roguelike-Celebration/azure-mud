@@ -148,6 +148,18 @@ export const TwilioChatContextProvider = (props: {
           }
         })
 
+        // TODO: These two events are what will let us remove disabled video streams
+        // There's rendering logic to sort out here (how do we update components?)
+        // Presumably, we should show someone differently if they have only audio or neither audio nor video
+
+        // participant.on('trackDisabled', track => {
+        //   setRemoteParticipants(remoteParticipants)
+        // })
+
+        // participant.on('trackEnabled', track => {
+        //   setRemoteParticipants(remoteParticipants)
+        // })
+
         setRemoteParticipants(remoteParticipants.concat([p]))
 
         // TODO: Handle mute/unmute events for each track
