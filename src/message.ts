@@ -14,7 +14,8 @@ export type Message =
   | DanceMessage
   | ModMessage
   | ErrorMessage
-  | CommandMessage;
+  | CommandMessage
+  | CaptionMessage
 
 export enum MessageType {
   Connected = 'CONNECTED',
@@ -31,10 +32,11 @@ export enum MessageType {
   Mod = 'MOD',
   Error = 'ERROR',
   Command = 'COMMAND',
+  Caption = 'CAPTION'
 }
 
 export function isDeletable (message: Message): message is ChatMessage | EmoteMessage | ShoutMessage | DanceMessage {
-  return [MessageType.Chat, MessageType.Emote, MessageType.Shout, MessageType.Dance].includes(message.type)
+  return [MessageType.Chat, MessageType.Emote, MessageType.Shout, MessageType.Dance, MessageType.Caption].includes(message.type)
 }
 
 export interface ConnectedMessage {
@@ -133,6 +135,22 @@ export const createChatMessage = (
   message: string
 ): ChatMessage => {
   return { type: MessageType.Chat, messageId, userId, message, timestamp: new Date() }
+}
+
+export interface CaptionMessage {
+  type: MessageType.Caption;
+  messageId: string;
+  userId: string;
+  message: string;
+  timestamp: Date;
+}
+
+export const createCaptionMessage = (
+  messageId: string,
+  userId: string,
+  message: string
+): CaptionMessage => {
+  return { type: MessageType.Caption, messageId, userId, message, timestamp: new Date() }
 }
 
 export interface WhisperMessage {

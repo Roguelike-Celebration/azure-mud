@@ -1,8 +1,10 @@
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import * as Twilio from 'twilio-video'
+import { DispatchContext } from '../App'
 
 import { fetchTwilioToken } from '../networking'
+import { setUpSpeechRecognizer, stopSpeechRecognizer } from '../speechRecognizer'
 import { DeviceInfo, MediaChatContext, Participant } from './mediaChatContext'
 import ParticipantTracks from './twilio/ParticipantTracks'
 import VideoTrack from './twilio/VideoTrack'
@@ -10,6 +12,8 @@ import VideoTrack from './twilio/VideoTrack'
 export const TwilioChatContextProvider = (props: {
   children: React.ReactNode;
 }) => {
+  const dispatch = useContext(DispatchContext)
+
   const [token, setToken] = useState<string>()
   const [room, setRoom] = useState<Twilio.Room>()
 
@@ -55,8 +59,33 @@ export const TwilioChatContextProvider = (props: {
     setLocalStreamView(<VideoTrack track={track} />)
   }
 
+  const startTranscription = () => {
+    if (!currentMic) return
+    setUpSpeechRecognizer(currentMic.id, dispatch)
+  }
+
+  const stopTranscription = () => {
+    stopSpeechRecognizer()
+  }
+
   useEffect(() => { fetchLocalVideoTrack() }, [currentCamera])
-  useEffect(() => { fetchLocalAudioTrack() }, [currentMic])
+  useEffect(() => {
+    fetchLocalAudioTrack()
+
+    if (micEnabled) {
+      startTranscription()
+    } else {
+      stopTranscription()
+    }
+  }, [currentMic])
+
+  useEffect(() => {
+    if (micEnabled) {
+      startTranscription()
+    } else {
+      stopTranscription()
+    }
+  }, [micEnabled])
 
   async function prepareForMediaChat () {
     console.log('Preparing for media chat')

@@ -16,6 +16,7 @@ export type Action =
   | PlayerConnectedAction
   | PlayerDisconnectedAction
   | ChatMessageAction
+  | CaptionMessageAction
   | ModMessageAction
   | DeleteMessageAction
   | LoadMessageArchiveAction
@@ -41,6 +42,7 @@ export type Action =
   | StopVideoChatAction
   | ErrorAction
   | SendMessageAction
+  | SendCaptionAction
   | SetNameAction
   | StartWhisperAction
   | ShowProfileAction
@@ -74,6 +76,7 @@ export enum ActionType {
   PlayerConnected = 'PLAYER_CONNECTED',
   PlayerDisconnected = 'PLAYER_DISCONNECTED',
   ChatMessage = 'CHAT_MESSAGE',
+  CaptionMessage = 'CAPTION_MESSAGE',
   ModMessage = 'MOD_MESSAGE',
   DeleteMessage = 'DELETE_MESSAGE',
   Whisper = 'WHISPER',
@@ -102,6 +105,7 @@ export enum ActionType {
   ACSReceivedToken = 'ACS_RECEIVED_TOKEN',
   // UI actions
   SendMessage = 'SEND_MESSAGE',
+  SendCaption = 'SEND_CAPTION',
   SetName = 'SET_NAME',
   StartWhisper = 'START_WHISPER',
   ShowProfile = 'SHOW_PROFILE',
@@ -259,6 +263,26 @@ export const ChatMessageAction = (
 ): ChatMessageAction => {
   return {
     type: ActionType.ChatMessage,
+    value: { messageId, name, message }
+  }
+}
+
+interface CaptionMessageAction {
+  type: ActionType.CaptionMessage;
+  value: {
+    messageId: string;
+    name: string;
+    message: string;
+  };
+}
+
+export const CaptionMessageAction = (
+  messageId: string,
+  name: string,
+  message: string
+): CaptionMessageAction => {
+  return {
+    type: ActionType.CaptionMessage,
     value: { messageId, name, message }
   }
 }
@@ -632,6 +656,17 @@ export const ErrorAction = (error: string): ErrorAction => {
 
 interface SendMessageAction {
   type: ActionType.SendMessage;
+  value: string;
+}
+
+export const SendCaptionAction = (message: string): SendCaptionAction => {
+  return {
+    type: ActionType.SendCaption,
+    value: message
+  }
+}
+interface SendCaptionAction {
+  type: ActionType.SendCaption;
   value: string;
 }
 

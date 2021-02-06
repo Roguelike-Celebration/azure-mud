@@ -16,7 +16,8 @@ import {
   createSameRoomMessage,
   isDeletable,
   createCommandMessage,
-  WhisperMessage
+  WhisperMessage,
+  createCaptionMessage
 } from './message'
 import { Room } from './room'
 import {
@@ -25,7 +26,8 @@ import {
   setNetworkMediaChatStatus,
   toggleUserMod,
   updateProfileColor,
-  fetchProfile
+  fetchProfile,
+  sendCaption
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
 import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from './webRTC'
@@ -210,6 +212,12 @@ export default (oldState: State, action: Action): State => {
     )
   }
 
+  if (action.type === ActionType.CaptionMessage) {
+    addMessage(state,
+      createCaptionMessage(action.value.messageId, action.value.name, action.value.message)
+    )
+  }
+
   if (action.type === ActionType.Whisper) {
     const whisperMessage = createWhisperMessage(action.value.name, action.value.message)
     addMessage(state, whisperMessage)
@@ -391,6 +399,12 @@ export default (oldState: State, action: Action): State => {
       sendChatMessage(messageId, action.value)
       addMessage(state, createChatMessage(messageId, state.userId, action.value))
     }
+  }
+
+  if (action.type === ActionType.SendCaption) {
+    const messageId: string = uuidv4()
+    sendCaption(messageId, action.value)
+    addMessage(state, createCaptionMessage(messageId, state.userId, action.value))
   }
 
   if (action.type === ActionType.StartWhisper) {

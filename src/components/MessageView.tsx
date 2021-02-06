@@ -23,7 +23,8 @@ import {
   EmoteMessage,
   DanceMessage,
   ModMessage,
-  CommandMessage
+  CommandMessage,
+  CaptionMessage
 } from '../message'
 import NameView from './NameView'
 import { DispatchContext, UserMapContext } from '../App'
@@ -47,6 +48,7 @@ export default function MessageView (props: { message: Message; id: string, hide
     [MessageType.Shout]: ShoutView,
     [MessageType.Emote]: EmoteView,
     [MessageType.Dance]: DanceView,
+    [MessageType.Caption]: CaptionView,
     [MessageType.Error]: ErrorView,
     [MessageType.Mod]: ModMessageView,
     [MessageType.Command]: CommandView
@@ -163,6 +165,12 @@ const SameView = (props: SameRoomMessage & { id: string }) => (
 const ChatMessageView = (props: ChatMessage & { id: string }) => (
   <div className="message">
     <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView>
+  </div>
+)
+
+const CaptionView = (props: CaptionMessage & { id: string }) => (
+  <div className="message">
+    <NameView userId={props.userId} id={props.id} /> (spoken): <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView>
   </div>
 )
 

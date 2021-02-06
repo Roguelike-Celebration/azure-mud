@@ -33,7 +33,7 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  ShowModalAction, CommandMessageAction
+  ShowModalAction, CommandMessageAction, CaptionMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { convertServerRoomData } from './room'
@@ -131,6 +131,10 @@ export async function fetchTwilioToken () {
   return await callAzureFunction('twilioToken')
 }
 
+export async function fetchCognitiveServicesKey () {
+  return await callAzureFunction('cognitiveServicesKey')
+}
+
 // Post-it notes
 
 export async function addNoteToWall (message: string) {
@@ -204,6 +208,28 @@ export async function sendChatMessage (id: string, text: string) {
   } else if (result && result.user) {
     myDispatch(ShowProfileAction(result.user))
   } else if (result && result.error) {
+    myDispatch(ErrorAction(result.error))
+  }
+}
+
+export async function sendCaption (id: string, text: string) {
+  // TODO: This may or may not be problematic
+  if (text.length > MESSAGE_MAX_LENGTH) {
+    console.log(`Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`)
+    return
+  }
+
+  const result: RoomResponse | Error | any = await callAzureFunction(
+    'sendCaption',
+    {
+      id: id,
+      text: text
+    }
+  )
+
+  console.log(result)
+
+  if (result && result.error) {
     myDispatch(ErrorAction(result.error))
   }
 }
@@ -285,6 +311,14 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     if (otherId === userId) return
 
     dispatch(ChatMessageAction(messageId, otherId, message))
+  })
+
+  connection.on('caption', (messageId, otherId, message) => {
+    console.log('Received caption', otherId, message)
+    console.log(otherId, message, userId)
+    if (otherId === userId) return
+
+    dispatch(CaptionMessageAction(messageId, otherId, message))
   })
 
   connection.on('mods', (otherId, message) => {
