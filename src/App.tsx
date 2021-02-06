@@ -182,6 +182,7 @@ const App = () => {
           initialVideoDeviceId={state.currentVideoDeviceId}
           showJoinButton={!state.inMediaChat}
           userIsSpeaking={state.speakingPeerIds.includes('self')}
+          roomId={state.roomId}
         />
       )
       break

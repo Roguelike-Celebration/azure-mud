@@ -10,9 +10,9 @@ interface Props {
   initialVideoDeviceId?: string;
   initialAudioDeviceId?: string;
 
-  acsToken?: string
-
   userIsSpeaking: boolean
+
+  roomId: string
 
   showJoinButton?: boolean
 }
@@ -50,7 +50,7 @@ export default function MediaSelectorView (props: Props) {
     dispatch(HideModalAction())
     dispatch(P2PWaitingForConnectionsAction())
     startVideoChat()
-    joinCall('b0720a25-7bd2-44f3-af6b-8e84328bdb58')
+    joinCall(props.roomId)
   }
 
   return (
