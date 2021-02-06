@@ -1,3 +1,4 @@
+import { CallClient } from '@azure/communication-calling'
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 import * as Twilio from 'twilio-video'
@@ -165,14 +166,21 @@ export const TwilioChatContextProvider = (props: {
         // TODO: Handle mute/unmute events for each track
       }
 
+      const removeParticipant = (participant: Twilio.Participant) => {
+        console.log('Participant disconnected')
+        setRemoteParticipants(remoteParticipants
+          .filter(p => p.userId !== participant.identity))
+      }
+
       console.log('In room?', room)
       setLocalStreamView(<ParticipantTracks participant={room.localParticipant}/>)
       room.participants.forEach(addParticipant)
       room.on('participantConnected', addParticipant)
 
-      room.on('participantDisconnected', (participant: Twilio.Participant) => {
-        setRemoteParticipants(remoteParticipants
-          .filter(p => p.userId !== participant.identity))
+      room.on('participantDisconnected', removeParticipant)
+
+      window.addEventListener('beforeunload', (event) => {
+        room.disconnect()
       })
 
       setRoom(room)
