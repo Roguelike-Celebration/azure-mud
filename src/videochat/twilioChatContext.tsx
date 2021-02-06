@@ -1,4 +1,3 @@
-import { CallClient } from '@azure/communication-calling'
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 import * as Twilio from 'twilio-video'
@@ -14,8 +13,8 @@ export const TwilioChatContextProvider = (props: {
   const [token, setToken] = useState<string>()
   const [room, setRoom] = useState<Twilio.Room>()
 
-  const [micEnabled, setMicEnabled] = useState<boolean>()
-  const [cameraEnabled, setCameraEnabled] = useState<boolean>()
+  const [micEnabled, setMicEnabled] = useState<boolean>(true)
+  const [cameraEnabled, setCameraEnabled] = useState<boolean>(true)
 
   const [cameras, setCameras] = useState<DeviceInfo[]>([])
   const [mics, setMics] = useState<DeviceInfo[]>([])
