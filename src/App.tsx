@@ -43,7 +43,7 @@ import ClientDeployedModal from './components/ClientDeployedModal'
 import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import HappeningNowView from './components/HappeningNowView'
 import * as Storage from './storage'
-import { AcsChatContextProvider } from './videochat/acsChatContext'
+import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -252,7 +252,7 @@ const App = () => {
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <AcsChatContextProvider>
+        <TwilioChatContextProvider>
           <IsMobileContext.Provider value={isMobile}>
             <UserMapContext.Provider
               value={{ userMap: state.userMap, myId: state.userId }}
@@ -304,7 +304,7 @@ const App = () => {
               </div>
             </UserMapContext.Provider>
           </IsMobileContext.Provider>
-        </AcsChatContextProvider>
+        </TwilioChatContextProvider>
       </DispatchContext.Provider>
     </IconContext.Provider>
   )

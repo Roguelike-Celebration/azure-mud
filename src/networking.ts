@@ -127,6 +127,10 @@ export async function fetchAcsToken () {
   return await callAzureFunction('acsToken')
 }
 
+export async function fetchTwilioToken () {
+  return await callAzureFunction('twilioToken')
+}
+
 // Post-it notes
 
 export async function addNoteToWall (message: string) {

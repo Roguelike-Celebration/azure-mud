@@ -1,13 +1,10 @@
 import React, {
   useEffect,
   VideoHTMLAttributes,
-  useRef,
-  useContext,
-  useState
+  useRef
 } from 'react'
 import NameView from './NameView'
 import LocalMediaView from './LocalMediaView'
-import { DispatchContext } from '../App'
 
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
@@ -29,6 +26,7 @@ export default function MediaChatView (props: MediaProps) {
     <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
   )
 
+  console.log(callParticipants)
   const otherVideos = (callParticipants || []).map((p) => {
     return (
       <div key={`stream-wrapper-${p.userId}`}>

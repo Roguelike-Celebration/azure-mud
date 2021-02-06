@@ -57,13 +57,13 @@ export default function MapView (props: Props) {
   // The empty array at the end means we only run this on first render, not every time it re-renders
   // This ensures it only scrolls on load, not every time new presence data comes in
   React.useEffect(() => {
-    console.log('Attempting to scroll', `${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}`)
+    // console.log('Attempting to scroll', `${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}`)
     const location = document.getElementById(`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}`)
     if (location) {
-      console.log(location)
+      // console.log(location)
       location.scrollIntoView({ block: 'center', inline: 'center' })
     } else {
-      console.log('NO LOCATION')
+      // console.log('NO LOCATION')
     }
   }, (props.isMiniMap ? null : []))
 

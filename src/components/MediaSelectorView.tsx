@@ -22,7 +22,10 @@ export default function MediaSelectorView (props: Props) {
   const { prepareForMediaChat, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, joinCall } = useMediaChatContext()
 
   useEffect(() => {
-    prepareForMediaChat()
+    const run = async () => {
+      await prepareForMediaChat()
+    }
+    run()
   }, [])
 
   const deviceToOption = (d: DeviceInfo) => {
