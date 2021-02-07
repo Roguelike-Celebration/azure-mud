@@ -5,7 +5,7 @@ import {
   CancellationReason
 } from 'microsoft-cognitiveservices-speech-sdk'
 import { Dispatch } from 'react'
-import { Action, SendCaptionAction } from './actions'
+import { Action, SendCaptionAction } from './Actions'
 import { fetchCognitiveServicesKey } from './networking'
 
 let recognizer: sdk.SpeechRecognizer | undefined
