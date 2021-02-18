@@ -27,7 +27,7 @@ const sendCaption: AuthenticatedEndpointFunction = async (user: User, inputs: an
   return {
     messages: [
       {
-        groupName: user.roomId,
+        groupId: user.roomId,
         target: 'caption',
         arguments: [inputs.id, user.id, message]
       }

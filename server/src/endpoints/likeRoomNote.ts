@@ -24,7 +24,7 @@ const likeRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: a
   return {
     messages: [
       {
-        groupName: user.roomId,
+        groupId: user.roomId,
         target: 'noteLikesUpdated',
         arguments: [user.roomId, noteId, likes]
       }

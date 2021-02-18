@@ -20,12 +20,12 @@ export function cookie (user: User, messageId: string): Result {
   return {
     messages: [
       {
-        groupName: user.roomId,
+        groupId: user.roomId,
         target: 'emote',
         arguments: [messageId, user.id, 'cracks open a fortune cookie.']
       },
       {
-        groupName: user.id,
+        groupId: user.id,
         target: 'privateCommand',
         arguments: [privateActionString]
       }

@@ -67,7 +67,7 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
 
   result.messages = [
     {
-      groupName: user.roomId,
+      groupId: user.roomId,
       target: 'playerConnected',
       arguments: [minimalUser]
     },

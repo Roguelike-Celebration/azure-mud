@@ -28,7 +28,7 @@ interface PrivateMessage {
 }
 
 interface GroupMessage {
-    groupName: string
+    groupId: string
     target: string
     arguments: any[]
 }
@@ -49,7 +49,7 @@ export function isPrivateMessage (m: Message): m is PrivateMessage {
 }
 
 export function isGroupMessage (m: Message): m is GroupMessage {
-  return (m as GroupMessage).groupName !== undefined
+  return (m as GroupMessage).groupId !== undefined
 }
 
 export interface Result {

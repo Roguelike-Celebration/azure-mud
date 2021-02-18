@@ -70,7 +70,7 @@ async function disconnectAndBan (user: User, target: User, result: Result) {
 
   result.messages = [
     {
-      groupName: target.roomId,
+      groupId: target.roomId,
       target: 'playerBanned',
       arguments: [minimizeUser(target)]
     },
@@ -87,7 +87,7 @@ async function disconnectAndBan (user: User, target: User, result: Result) {
     },
     // Disconnect logic
     {
-      groupName: target.roomId,
+      groupId: target.roomId,
       target: 'playerDisconnected',
       arguments: [target.id]
     },

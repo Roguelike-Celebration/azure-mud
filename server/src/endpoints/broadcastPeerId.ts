@@ -10,7 +10,7 @@ const broadcastPeerId: AuthenticatedEndpointFunction = async (user: User, inputs
   return {
     messages: [
       {
-        groupName: user.roomId,
+        groupId: user.roomId,
         target: 'webrtcPeerId',
         arguments: [user.id]
       },

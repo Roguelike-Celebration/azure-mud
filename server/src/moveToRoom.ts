@@ -78,12 +78,12 @@ export async function moveToRoom (
 
     result.messages = [
       {
-        groupName: user.roomId,
+        groupId: user.roomId,
         target: 'playerLeft',
         arguments: [user.id, to.id, to.shortName]
       },
       {
-        groupName: to.id,
+        groupId: to.id,
         target: 'playerEntered',
         arguments: [user.id, user.roomId, currentRoom.shortName]
       },
@@ -105,5 +105,3 @@ export async function moveToRoom (
 
   return result
 }
-
-const foo = { httpResponse: { status: 200, body: { roomId: 'lounge', presenceData: [], users: [], roomData: [], profile: [] } }, groupManagementTasks: [{ userId: '19924413', groupId: 'theater', action: 'remove' }, { userId: '19924413', groupId: 'northShowcaseHall', action: 'remove' }, { userId: '19924413', groupId: 'eastShowcaseHall', action: 'remove' }, { userId: '19924413', groupId: 'southShowcaseHall', action: 'remove' }, { userId: '19924413', groupId: 'westShowcaseHall', action: 'remove' }, { userId: '19924413', groupId: 'unconference', action: 'remove' }, { userId: '19924413', groupId: 'minetown', action: 'remove' }, { userId: '19924413', groupId: 'oracle', action: 'remove' }, { userId: '19924413', groupId: 'tower', action: 'remove' }, { userId: '19924413', groupId: 'castle', action: 'remove' }, { userId: '19924413', groupId: 'sokoban', action: 'remove' }, { userId: '19924413', groupId: 'astralPlane', action: 'remove' }, { userId: '19924413', groupId: 'kitchen', action: 'remove' }, { userId: '19924413', groupId: 'kitchenTableA', action: 'remove' }, { userId: '19924413', groupId: 'kitchenTableB', action: 'remove' }, { userId: '19924413', groupId: 'kitchenTableC', action: 'remove' }, { userId: '19924413', groupId: 'bar', action: 'remove' }, { userId: '19924413', groupId: 'statue', action: 'remove' }, { userId: '19924413', groupId: 'danceFloor', action: 'remove' }, { userId: '19924413', groupId: 'shippingContainer', action: 'remove' }, { userId: '19924413', groupId: 'entryway', action: 'remove' }, { userId: '19924413', groupId: 'foyer', action: 'remove' }, { userId: '19924413', groupId: 'swag', action: 'remove' }, { userId: '19924413', groupId: 'atelier', action: 'remove' }, { userId: '19924413', groupId: 'study', action: 'remove' }, { userId: '19924413', groupId: 'workbench', action: 'remove' }, { userId: '19924413', groupId: 'hiddenPortalRoom', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonDrawingRoom', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonBedroom', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetEntryway', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetPath', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetShoePath', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetShoePathEnd', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetBowtiePrep', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetBowtieWeapon', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetBowtieCoat', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetBowtieCoatFight', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetMannequinAmbush', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetTowerOfShoesDoor', action: 'remove' }, { userId: '19924413', groupId: 'lounge', action: 'add' }], messages: [{ groupName: 'lounge', target: 'playerConnected', arguments: [] }, { target: 'usernameMap', arguments: [] }, { target: 'presenceData', arguments: [] }] }

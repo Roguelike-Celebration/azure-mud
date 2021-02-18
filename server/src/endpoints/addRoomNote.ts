@@ -19,7 +19,7 @@ const addRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: an
   return {
     messages: [
       {
-        groupName: user.roomId,
+        groupId: user.roomId,
         target: 'noteAdded',
         arguments: [user.roomId, id, message, user.id]
       }

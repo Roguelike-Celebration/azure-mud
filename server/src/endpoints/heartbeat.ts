@@ -45,7 +45,7 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
     groupManagementTasks.push(
       {
         userId,
-        groupName: user.roomId,
+        groupId: user.roomId,
         action: 'remove'
       }
     )

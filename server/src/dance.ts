@@ -28,7 +28,7 @@ export function dance (user: User, messageId: string): Result {
   return {
     messages: [
       {
-        groupName: user.roomId,
+        groupId: user.roomId,
         target: 'dance',
         arguments: [messageId, user.id, danceList[Math.floor(Math.random() * danceList.length)]]
       }

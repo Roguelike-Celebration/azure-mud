@@ -53,7 +53,7 @@ const pickUpItem: AuthenticatedEndpointFunction = async (user: User, inputs: any
 
   const messages: Message[] = [
     {
-      groupName: user.roomId,
+      groupId: user.roomId,
       target: 'emote',
       arguments: [uuid(), user.id, actionString]
     },

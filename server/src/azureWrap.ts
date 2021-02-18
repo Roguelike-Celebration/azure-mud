@@ -33,7 +33,7 @@ function outputToAzure (context: Context, req: HttpRequest, result: Result) {
         }
       } else if (isGroupMessage(m)) {
         return {
-          groupId: m.groupName,
+          groupName: m.groupId,
           target: m.target,
           arguments: m.arguments
         }

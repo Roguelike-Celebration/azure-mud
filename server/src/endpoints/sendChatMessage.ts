@@ -54,7 +54,7 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
     return {
       messages: [
         {
-          groupName: user.roomId,
+          groupId: user.roomId,
           target: 'emote',
           arguments: [inputs.id, user.id, emoteMatch[2]]
         }
@@ -79,7 +79,7 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
       messages: [
       // Send to the mod-only group
         {
-          groupName: 'mods',
+          groupId: 'mods',
           target: 'mods',
           arguments: [user.id, modMatch[2]]
         },
@@ -112,7 +112,7 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
   return {
     messages: [
       {
-        groupName: user.roomId,
+        groupId: user.roomId,
         target: 'chatMessage',
         arguments: [inputs.id, user.id, message]
       }

@@ -31,7 +31,7 @@ const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs:
 
   const messages: Message[] = [
     {
-      groupName: user.roomId,
+      groupId: user.roomId,
       target: 'noteRemoved',
       arguments: [user.roomId, noteId]
     }
