@@ -1,7 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import { moveToRoom } from '../src/moveToRoom'
-import authenticate from '../src/authenticate'
-import logSignalR from '../src/logSignalR'
 import { authenticatedAzureWrap } from '../src/azureWrap'
 import moveRoom from '../src/endpoints/moveRoom'
 

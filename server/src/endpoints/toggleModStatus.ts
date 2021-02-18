@@ -1,6 +1,6 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { isMod, updateModStatus, User } from '../user'
-import DB from '../redis'
+import { isMod, minimizeUser, updateModStatus, User } from '../user'
+import DB from '../cosmosdb'
 
 const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const userId = inputs.userId
@@ -14,22 +14,16 @@ const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs
   }
 
   if (await isMod(userId)) {
-    await DB.removeMod(userId)
+    await DB.setModStatus(userId, false)
   } else {
-    await DB.addMod(userId)
+    await DB.setModStatus(userId, true)
   }
 
-  // addMod/removeMod only affect a DB list of all mods
-  // We also need to update the user's full and minimal profiles
-  // This is aching for a refactoring when it's not the week of the conf :)
-  await updateModStatus(userId)
-
   // Update mod status for everyone else
-  const minimalUser = await DB.getMinimalProfileForUser(userId)
   return {
     messages: [{
       target: 'usernameMap',
-      arguments: [{ [userId]: minimalUser }]
+      arguments: [{ [userId]: minimizeUser(user) }]
     }]
   }
 }

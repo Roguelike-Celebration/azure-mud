@@ -6,7 +6,9 @@ export async function whisper (
   toUsername: string,
   message: string
 ): Promise<Result> {
+  console.log('Attempting to whisper to username', toUsername)
   const toUser = await getUserIdForUsername(toUsername)
+  console.log('toUser', toUser)
   const toUserIsOnline = await getUserIdForOnlineUsername(toUsername)
 
   // TODO: Return this as metadata so the client can NameView the username

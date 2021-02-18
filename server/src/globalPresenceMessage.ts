@@ -1,12 +1,16 @@
-import DB from './redis'
-import { roomData } from './rooms'
+import DB from './cosmosdb'
 import { Message } from './endpoint'
 
 /** Fetches presence data for a set of rooms and returns a SignalR message
  * to broadcast current presence data to all users */
 export async function globalPresenceMessage (roomIds: string[]): Promise<Message> {
+  // TODO: This could be written as a single DB query for all rooms, instead of n queries for n rooms
+  // However, we currently call this primarily with 1 room, and only once with 2
+  // so this optimization is relatively low-priority for now.
+
   const data: { [roomId: string]: string[] } = {}
 
+  console.log(roomIds)
   await Promise.all(
     roomIds.map(async (id) => {
       const occupants = await DB.roomOccupants(id)
@@ -18,22 +22,4 @@ export async function globalPresenceMessage (roomIds: string[]): Promise<Message
     target: 'presenceData',
     arguments: [data]
   }
-}
-
-/** Fetches presence data for all rooms and returns a JSON object with all that data
- * Intended to only be used in `/connect` to seed the presence data
- */
-export async function allPresenceData (): Promise<{
-  [roomId: string]: string[];
-}> {
-  const data: { [roomId: string]: string[] } = {}
-
-  await Promise.all(
-    Object.keys(roomData).map(async (id) => {
-      const occupants = await DB.roomOccupants(id)
-      data[id] = occupants
-    })
-  )
-
-  return data
 }

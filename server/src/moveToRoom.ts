@@ -2,7 +2,8 @@ import { roomData } from './rooms'
 import { RoomResponse } from './types'
 import { User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
-import DB from '../src/redis'
+import DB from '../src/cosmosdb'
+import Redis from '../src/redis'
 import { Result } from './endpoint'
 
 export async function moveToRoom (
@@ -10,6 +11,7 @@ export async function moveToRoom (
   newRoomId: string
 ): Promise<Result> {
   let to = roomData[newRoomId]
+  const currentRoom = roomData[user.roomId]
 
   if (!to) {
     // If the user typed a command, rather than clicking a link,
@@ -33,7 +35,7 @@ export async function moveToRoom (
     // eslint-disable-next-line no-useless-escape
     const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
     let result
-    while ((result = complexLinkRegex.exec(user.room.description))) {
+    while ((result = complexLinkRegex.exec(currentRoom.description))) {
       // "a [[foo->bar]]"" yields a result of ["[[friendly description->roomId]]", "friendly description", "roomId"]
       if (result[1] === newRoomId) {
         to = roomData[result[2]]
@@ -55,7 +57,7 @@ export async function moveToRoom (
   }
 
   if (roomData[to.id].hasNoteWall) {
-    response.roomNotes = await DB.getRoomNotes(to.id)
+    response.roomNotes = await Redis.getRoomNotes(to.id)
   }
 
   const result: Result = {
@@ -68,27 +70,29 @@ export async function moveToRoom (
   // If you're already in the room and try to 're-enter' the room,
   // nothing should happen: issue 162
   if (user.roomId !== to.id) {
-    await DB.removeOccupantFromRoom(user.roomId, user.id)
-    await DB.setCurrentRoomForUser(user.id, to.id)
-    await DB.addOccupantToRoom(to.id, user.id)
+    console.log(`Moving from ${user.roomId} to ${to.id}`)
+    console.log(await globalPresenceMessage([user.roomId, to.id]))
+    await DB.setCurrentRoomForUser(user, to.id)
+    console.log('After setting')
+    console.log(await globalPresenceMessage([user.roomId, to.id]))
 
     result.messages = [
       {
-        groupName: user.room.id,
+        groupName: user.roomId,
         target: 'playerLeft',
         arguments: [user.id, to.id, to.shortName]
       },
       {
         groupName: to.id,
         target: 'playerEntered',
-        arguments: [user.id, user.room.id, user.room.shortName]
+        arguments: [user.id, user.roomId, currentRoom.shortName]
       },
       await globalPresenceMessage([user.roomId, to.id])
     ]
     result.groupManagementTasks = [
       {
         userId: user.id,
-        groupId: user.room.id,
+        groupId: user.roomId,
         action: 'remove'
       },
       {
@@ -101,3 +105,5 @@ export async function moveToRoom (
 
   return result
 }
+
+const foo = { httpResponse: { status: 200, body: { roomId: 'lounge', presenceData: [], users: [], roomData: [], profile: [] } }, groupManagementTasks: [{ userId: '19924413', groupId: 'theater', action: 'remove' }, { userId: '19924413', groupId: 'northShowcaseHall', action: 'remove' }, { userId: '19924413', groupId: 'eastShowcaseHall', action: 'remove' }, { userId: '19924413', groupId: 'southShowcaseHall', action: 'remove' }, { userId: '19924413', groupId: 'westShowcaseHall', action: 'remove' }, { userId: '19924413', groupId: 'unconference', action: 'remove' }, { userId: '19924413', groupId: 'minetown', action: 'remove' }, { userId: '19924413', groupId: 'oracle', action: 'remove' }, { userId: '19924413', groupId: 'tower', action: 'remove' }, { userId: '19924413', groupId: 'castle', action: 'remove' }, { userId: '19924413', groupId: 'sokoban', action: 'remove' }, { userId: '19924413', groupId: 'astralPlane', action: 'remove' }, { userId: '19924413', groupId: 'kitchen', action: 'remove' }, { userId: '19924413', groupId: 'kitchenTableA', action: 'remove' }, { userId: '19924413', groupId: 'kitchenTableB', action: 'remove' }, { userId: '19924413', groupId: 'kitchenTableC', action: 'remove' }, { userId: '19924413', groupId: 'bar', action: 'remove' }, { userId: '19924413', groupId: 'statue', action: 'remove' }, { userId: '19924413', groupId: 'danceFloor', action: 'remove' }, { userId: '19924413', groupId: 'shippingContainer', action: 'remove' }, { userId: '19924413', groupId: 'entryway', action: 'remove' }, { userId: '19924413', groupId: 'foyer', action: 'remove' }, { userId: '19924413', groupId: 'swag', action: 'remove' }, { userId: '19924413', groupId: 'atelier', action: 'remove' }, { userId: '19924413', groupId: 'study', action: 'remove' }, { userId: '19924413', groupId: 'workbench', action: 'remove' }, { userId: '19924413', groupId: 'hiddenPortalRoom', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonDrawingRoom', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonBedroom', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetEntryway', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetPath', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetShoePath', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetShoePathEnd', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetBowtiePrep', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetBowtieWeapon', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetBowtieCoat', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetBowtieCoatFight', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetMannequinAmbush', action: 'remove' }, { userId: '19924413', groupId: 'loungeDungeonClosetTowerOfShoesDoor', action: 'remove' }, { userId: '19924413', groupId: 'lounge', action: 'add' }], messages: [{ groupName: 'lounge', target: 'playerConnected', arguments: [] }, { target: 'usernameMap', arguments: [] }, { target: 'presenceData', arguments: [] }] }

@@ -1,7 +1,8 @@
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
 import { globalPresenceMessage } from '../globalPresenceMessage'
 import { User, getFullUser, minimizeUser } from '../user'
-import DB from '../redis'
+import DB from '../cosmosdb'
+import Redis from '../redis'
 
 const banUser: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const targetId = inputs.userId
@@ -29,7 +30,7 @@ const banUser: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
 
   if (target.isBanned) {
     target.isBanned = false
-    await DB.unbanUser(targetId)
+    await DB.banUser(target, false)
     result.messages = [
       {
         userId: user.id,
@@ -54,11 +55,10 @@ export default banUser
 // This was originally a modified version of the 'disconnect' endpoint
 async function disconnectAndBan (user: User, target: User, result: Result) {
   target.isBanned = true
-  await DB.banUser(target.id)
+  await DB.banUser(target, true)
 
   // Below is basically the code for disconnect but with additional SignalR Messages
-  await DB.removeOccupantFromRoom(target.roomId, target.id)
-  await DB.setUserAsInactive(target.id)
+  await DB.setUserAsActive(target, false)
 
   result.groupManagementTasks = [
     {
@@ -93,7 +93,7 @@ async function disconnectAndBan (user: User, target: User, result: Result) {
     },
     {
       target: 'videoPresence',
-      arguments: [target.roomId, await DB.removeUserFromVideoPresence(target.id, target.roomId)]
+      arguments: [target.roomId, await Redis.removeUserFromVideoPresence(target.id, target.roomId)]
     },
     await globalPresenceMessage([target.roomId])
   ]

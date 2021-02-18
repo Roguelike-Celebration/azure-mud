@@ -1,17 +1,9 @@
-import { EndpointFunction, LogFn } from '../endpoint'
-import DB from '../redis'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
+import DB from '../cosmosdb'
+import { User } from '../user'
 
-const pong: EndpointFunction = async (inputs: any, log: LogFn) => {
-  if (!inputs.userId) {
-    return {
-      httpResponse: {
-        status: 500,
-        body: 'You did not include a user ID'
-      }
-    }
-  }
-
-  await DB.setUserHeartbeat(inputs.userId)
+const pong: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
+  await DB.setUserHeartbeat(user)
 
   return { httpResponse: { status: 200 } }
 }

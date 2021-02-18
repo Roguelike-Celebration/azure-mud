@@ -1,5 +1,6 @@
 import { EndpointFunction, LogFn } from '../endpoint'
-import DB from '../redis'
+import DB from '../cosmosdb'
+
 const fetchProfile: EndpointFunction = async (inputs: any, log: LogFn) => {
   const userId = inputs.userId
   if (!inputs.userId) {

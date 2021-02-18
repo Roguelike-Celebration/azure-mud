@@ -1,8 +1,6 @@
 import { getFullUser } from '../user'
-import DB from '../redis'
+import DB from '../cosmosdb'
 import { getHeartbeatData } from '../heartbeat'
-import { roomData } from '../rooms'
-import { globalPresenceMessage } from '../globalPresenceMessage'
 import { EndpointFunction, LogFn } from '../endpoint'
 
 const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
@@ -20,7 +18,6 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
 
   const activeUsers = []
   const usersToRemove = []
-  const roomsTouched = new Set<string>()
   Object.keys(data).forEach((user) => {
     const time = data[user]
     const diff = nowValue - time
@@ -31,13 +28,20 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
     }
   })
 
+  log(usersToRemove)
+
   const groupManagementTasks = []
   for (let i = 0; i < usersToRemove.length; i++) {
-    const userId = usersToRemove[i]
+    log('Trying to index into usersToRemove', i)
+    log(usersToRemove[i])
+    const userId: string = usersToRemove[i]
     const user = await getFullUser(userId)
+    log('Got user?', user)
 
-    await DB.removeOccupantFromRoom(user.roomId, userId)
-    await DB.setUserAsInactive(userId)
+    if (!user) continue
+
+    await DB.setUserAsActive(user, false)
+    log('Set user as inactive')
     groupManagementTasks.push(
       {
         userId,
@@ -53,30 +57,12 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
     )
   }
 
-  // This is a hack because sometimes people, for unknown reasons, get removed from activeUsers but *not* room presences
-  const roomIds = Object.values(roomData).map((r) => r.id)
-  for (let i = 0; i < roomIds.length; i++) {
-    const roomId = roomIds[i]
-    const occupantIds = await DB.roomOccupants(roomIds[i])
-
-    for (let j = 0; j < occupantIds.length; j++) {
-      const occupantId = occupantIds[j]
-      if (!activeUsers.includes(occupantId)) {
-        log(`User ${occupantId} was in room ${roomId} but was not active; removing.`)
-
-        await DB.removeOccupantFromRoom(roomId, occupantId)
-        roomsTouched.add(roomId)
-      }
-    }
-  }
-
   return {
     messages: [
       {
         target: 'ping',
         arguments: []
-      },
-      await globalPresenceMessage(Array.from(roomsTouched))
+      }
     ],
     groupManagementTasks
   }

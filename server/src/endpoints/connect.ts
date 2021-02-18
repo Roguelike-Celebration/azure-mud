@@ -1,39 +1,42 @@
-import { allPresenceData, globalPresenceMessage } from '../globalPresenceMessage'
+import { globalPresenceMessage } from '../globalPresenceMessage'
 import { userHeartbeatReceived } from '../heartbeat'
 import { roomData } from '../rooms'
 import setUpRoomsForUser from '../setUpRoomsForUser'
 import { RoomResponse } from '../types'
 import { User, isMod, minimizeUser } from '../user'
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
-import DB from '../redis'
+import DB from '../cosmosdb'
+import Redis from '../redis'
 
 const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   log('We have a user!', user.id)
   const result: Result = {}
 
-  // If the room is deleted, we might have a stranded user, so dump them in the entryway
-  if (user.room === undefined) {
+  if (user.roomId === undefined) {
+    log('Setting default roomId')
     user.roomId = 'entryway'
-    user.room = roomData.entryway
   }
 
-  await DB.setCurrentRoomForUser(user.id, user.roomId)
-  await DB.addOccupantToRoom(user.roomId, user.id)
-  await userHeartbeatReceived(user.id)
+  await DB.setCurrentRoomForUser(user, user.roomId)
+  await userHeartbeatReceived(user)
 
-  const userMap = await DB.minimalProfileUserMap()
+  const users = await DB.getAllUsers()
+  const userMap = {}
+  users.forEach(u => {
+    userMap[u.id] = minimizeUser(u)
+  })
 
   const response: RoomResponse = {
-    roomId: user.room.id,
-    presenceData: await allPresenceData(),
+    roomId: user.roomId,
+    presenceData: await DB.allRoomOccupants(),
     users: userMap,
     roomData,
-    // TODO: Instead of another DB call, delete the non-public fields from the user we already have?
-    profile: await DB.getPublicUser(user.id)
+    // TODO: Have a function to delete the keys we don't need
+    profile: user
   }
 
   if (roomData[user.roomId].hasNoteWall) {
-    response.roomNotes = await DB.getRoomNotes(user.roomId)
+    response.roomNotes = await Redis.getRoomNotes(user.roomId)
   }
 
   result.httpResponse = {

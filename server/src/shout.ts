@@ -1,5 +1,5 @@
 import { User } from './user'
-import DB from './redis'
+import DB from './cosmosdb'
 import { Result } from './endpoint'
 
 export async function shout (user: User, messageId: string, message: string): Promise<Result> {
@@ -20,7 +20,7 @@ export async function shout (user: User, messageId: string, message: string): Pr
     }
   }
 
-  await DB.userJustShouted(user.id)
+  await DB.userJustShouted(user)
   return {
     messages: [
       {

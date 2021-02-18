@@ -1,11 +1,11 @@
 import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 import { User } from '../user'
-import DB from '../redis'
+import DB from '../cosmosdb'
+import Redis from '../redis'
 import { globalPresenceMessage } from '../globalPresenceMessage'
 
 const disconnect: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  await DB.removeOccupantFromRoom(user.roomId, user.id)
-  await DB.setUserAsInactive(user.id)
+  await DB.setUserAsActive(user, false)
 
   return {
     groupManagementTasks: [{
@@ -21,7 +21,7 @@ const disconnect: AuthenticatedEndpointFunction = async (user: User, inputs: any
       },
       {
         target: 'videoPresence',
-        arguments: [user.roomId, await DB.removeUserFromVideoPresence(user.id, user.roomId)]
+        arguments: [user.roomId, await Redis.removeUserFromVideoPresence(user.id, user.roomId)]
       },
       await globalPresenceMessage([user.roomId])
     ],

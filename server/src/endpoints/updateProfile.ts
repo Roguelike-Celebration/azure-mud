@@ -22,7 +22,7 @@ const updateProfile: EndpointFunction = async (inputs: any, log: LogFn) => {
   }
 
   try {
-    const profile = await updateUserProfile(inputs.userId, data)
+    const profile = await updateUserProfile(inputs.userId, data, inputs.isNew)
     const minimalUser = minimizeUser(profile)
 
     return {

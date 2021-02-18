@@ -1,5 +1,6 @@
 import { EndpointFunction, LogFn } from '../endpoint'
-import DB from '../redis'
+import DB from '../cosmosdb'
+import Redis from '../redis'
 
 const isRegistered: EndpointFunction = async (inputs: any, log: LogFn) => {
   if (!inputs.userId) {
@@ -11,8 +12,12 @@ const isRegistered: EndpointFunction = async (inputs: any, log: LogFn) => {
     }
   }
 
+  log('Checking if user is registered', inputs.userId)
+
   const user = await DB.getPublicUser(inputs.userId)
-  const spaceIsClosed = await DB.isSpaceClosed()
+  const spaceIsClosed = await Redis.isSpaceClosed()
+
+  log('Got user?', user)
 
   return {
     httpResponse: {

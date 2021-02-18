@@ -1,5 +1,5 @@
 import { Result } from './endpoint'
-import DB from './redis'
+import DB from './cosmosdb'
 
 export async function look (target: string): Promise<Result> {
   const profile = await DB.getPublicUser(target)

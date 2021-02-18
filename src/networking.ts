@@ -87,11 +87,11 @@ export async function updateServerSettings (serverSettings: ServerSettings) {
   }
 }
 
-// If hardRefreshPage is true, a successful update will refresh the entire page instead of dismissing a modal
-export async function updateProfile (user: Partial<User>, hardRefreshPage: boolean) {
-  const result = await callAzureFunction('updateProfile', { user })
+// If isNewUser is true, a successful update will refresh the entire page instead of dismissing a modal
+export async function updateProfile (user: Partial<User>, isNew: boolean) {
+  const result = await callAzureFunction('updateProfile', { user, isNew })
   if (result.valid) {
-    if (hardRefreshPage) {
+    if (isNew) {
       window.location.reload()
     } else {
       myDispatch(ReceivedMyProfileAction(result.user))

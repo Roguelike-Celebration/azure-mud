@@ -1,4 +1,5 @@
-import DB from './redis'
+import DB from './cosmosdb'
+import { User } from './user'
 
 /** All of these store heartbeats as Unix timestamps as numbers.
  * When I stored either a timestamp number or a ISO8601 string,
@@ -9,24 +10,20 @@ import DB from './redis'
 export async function getHeartbeatData (): Promise<{
   [userId: string]: number;
 }> {
-  const activeUsers: string[] = await DB.getActiveUsers()
+  const activeUsers: User[] = await DB.getActiveUsers()
 
   const data: { [userId: string]: number } = {}
 
-  const dates = await Promise.all(
-    activeUsers.map(async (u) => await DB.getUserHeartbeat(u))
-  )
-
   for (let i = 0; i < activeUsers.length; i++) {
     const user = activeUsers[i]
-    const date = dates[i]
-    data[user] = date
+    const date = user.heartbeat
+    data[user.id] = date
   }
 
   return data
 }
 
-export async function userHeartbeatReceived (userId: string) {
-  await DB.setUserHeartbeat(userId)
-  await DB.setUserAsActive(userId)
+export async function userHeartbeatReceived (user: User) {
+  await DB.setUserHeartbeat(user)
+  await DB.setUserAsActive(user, true)
 }

@@ -1,7 +1,6 @@
 import { promisify } from 'util'
 import { User, isMod, MinimalUser } from './user'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
-import Database from './database'
 import { RoomNote } from './roomNote'
 import redis = require('redis')
 
@@ -21,7 +20,7 @@ const addToSet = promisify(cache.sadd).bind(cache)
 const removeFromSet = promisify(cache.srem).bind(cache)
 const getSet = promisify(cache.smembers).bind(cache)
 
-const Redis: Database = {
+const Redis = {
   async getActiveUsers () {
     return getSet(activeUsersKey) || []
   },

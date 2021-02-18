@@ -6,6 +6,7 @@ import { PublicUser } from '../../server/src/user'
 import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
 import { HideModalAction } from '../Actions'
+import config from '../config'
 
 interface Props {
   isFTUE: boolean;
@@ -58,7 +59,8 @@ export default function ProfileEditView (props: Props) {
       description,
       askMeAbout,
       twitterHandle: twitter,
-      url
+      url,
+      hostname: config.SERVER_HOSTNAME
     },
     props.isFTUE)
   }

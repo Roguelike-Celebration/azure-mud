@@ -2,6 +2,7 @@ import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 import { isMod, User } from '../user'
 import DB from '../redis'
 import { v4 as uuid } from 'uuid'
+import { roomData } from '../rooms'
 
 const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const noteId = inputs.noteId
@@ -37,10 +38,11 @@ const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs:
   ]
 
   if (note.authorId !== user.id) {
+    const room = roomData[user.roomId]
     messages.push({
       userId: note.authorId,
       target: 'emote',
-      arguments: [uuid(), user.id, `has removed a note of yours from ${user.room.shortName} wall`]
+      arguments: [uuid(), user.id, `has removed a note of yours from ${room.shortName} wall`]
     })
   }
 
