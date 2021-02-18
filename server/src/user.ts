@@ -1,5 +1,4 @@
 import DB from './cosmosdb'
-import Redis from './redis'
 
 // TODO: pronouns (and realName?) shouldn't be optional
 // but leaving like this til they actually exist in the DB.
@@ -135,12 +134,9 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
     await DB.setCurrentRoomForUser(profile, profile.roomId)
   }
 
-  const lastShouted = await Redis.lastShoutedForUser(userId)
-
   return {
     ...profile,
-    id: userId,
-    lastShouted
+    id: userId
   }
 }
 

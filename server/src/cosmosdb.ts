@@ -1,9 +1,10 @@
 import { CosmosClient } from '@azure/cosmos'
+import { getServerSettings } from './endpoints/serverSettings'
 
 // TODO: Partition key issues
 
 import { RoomNote } from './roomNote'
-import { DEFAULT_SERVER_SETTINGS } from './types'
+import { DEFAULT_SERVER_SETTINGS, ServerSettings } from './types'
 import { User } from './user'
 
 const partitionKey = 'https://roguelikecelebration-mud.azurewebsites.net'
@@ -131,15 +132,14 @@ const CosmosDB = {
     }
   },
 
-  async updateVideoPresenceForUser (user: User, roomId?: string) {
-    const data = { ...user, videoRoomId: roomId }
-    if (!roomId) { delete data.videoRoomId }
+  async updateVideoPresenceForUser (user: User, isActive: boolean) {
+    const data = { ...user, isInVideoChat: isActive }
 
     try {
       const container = getContainer('users')
       return await container.item(user.id, partitionKey).replace(data)
     } catch (e) {
-      console.log('ERROR: Could not update user video presence', user.id, roomId, e)
+      console.log('ERROR: Could not update user video presence', user.id, isActive, e)
     }
   },
 
@@ -212,15 +212,17 @@ const CosmosDB = {
     return users
   },
 
-  async getServerSettings () {
-    return DEFAULT_SERVER_SETTINGS
-    // const container = getContainer('serverSettings')
-    // return await container.item('serverSettings').read().resource
+  async getServerSettings (): Promise<ServerSettings> {
+    const container = getContainer('serverSettings')
+    const { resource: result } = await container.item('serverSettings').read()
+    return result || DEFAULT_SERVER_SETTINGS
   },
 
-  async setServerSettings (data: any) {
-    const container = await getContainer('serverSettings')
-    return container.items.upsert(data)
+  async setServerSettings (data: Partial<ServerSettings>) {
+    const settings = await CosmosDB.getServerSettings()
+
+    const container = getContainer('serverSettings')
+    return container.item('serverSettings').replace({ ...settings, ...data })
   }
 
   // async addRoomNote(roomId: string, note: RoomNote) {}
@@ -230,20 +232,7 @@ const CosmosDB = {
   //   async likeRoomNote(roomId: string, noteId: string, userId: string) {}
   //   async unlikeRoomNote(roomId: string, noteId: string, userId: string) {}
 
-  //   async getRoomNotes(roomId: string) {}
-
-  //   // -----------------------------------------------------------------
-  //   // AVAILABILITY
-  //   // -----------------------------------------------------------------
-  //   async isSpaceClosed() {}
-  //   async setSpaceAvailability(open: boolean) {}
-
-  //   // If you want to notify clients a new build has been deployed,
-  //   // you need to include the key that's hardcoded into Redis
-  //   async webhookDeployKey() {
-
-  //   }
-
+  //   async getRoomNotes(roomId: string) {
 }
 
 export default CosmosDB

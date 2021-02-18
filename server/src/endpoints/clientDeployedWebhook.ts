@@ -1,9 +1,9 @@
-import DB from '../redis'
+import DB from '../cosmosdb'
 import { EndpointFunction, LogFn } from '../endpoint'
 
 const clientDeployedWebhook: EndpointFunction = async (inputs: any, log: LogFn) => {
   const inputtedKey = inputs.key
-  const actualKey = await DB.webhookDeployKey()
+  const actualKey = (await DB.getServerSettings()).webhookDeployKey
   if (!inputtedKey || inputtedKey !== actualKey) {
     return {
       httpResponse: {

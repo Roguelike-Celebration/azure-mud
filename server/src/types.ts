@@ -18,12 +18,15 @@ export interface ServerSettings {
   movementMessagesHideThreshold: number;
   movementMessagesHideRoomIds: string[];
   happeningNowEntries: HappeningNowEntry[];
+  spaceIsClosed: boolean
+  webhookDeployKey?: string
 }
 
 export const DEFAULT_SERVER_SETTINGS: ServerSettings = {
   movementMessagesHideThreshold: 20,
   movementMessagesHideRoomIds: ['theater'],
-  happeningNowEntries: []
+  happeningNowEntries: [],
+  spaceIsClosed: false
 }
 
 // There's 100% a more elegant way to do this, but I think this works and want to actually get this feature finally done.
@@ -36,7 +39,8 @@ export function toServerSettings (obj: any): ServerSettings | null {
       return {
         movementMessagesHideThreshold: obj.movementMessagesHideThreshold,
         movementMessagesHideRoomIds: obj.movementMessagesHideRoomIds,
-        happeningNowEntries: obj.happeningNowEntries ? obj.happeningNowEntries : []
+        happeningNowEntries: obj.happeningNowEntries ? obj.happeningNowEntries : [],
+        spaceIsClosed: obj.spaceIsClosed ? obj.spaceIsOpen : false
       }
     }
   } catch (e) {

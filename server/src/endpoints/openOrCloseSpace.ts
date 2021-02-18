@@ -1,6 +1,6 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { User } from '../user'
-import DB from '../redis'
+import DB from '../cosmosdb'
 
 const openOrCloseSpace: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const spaceIsClosed = inputs.spaceIsClosed
@@ -14,7 +14,7 @@ const openOrCloseSpace: AuthenticatedEndpointFunction = async (user: User, input
   }
 
   // Coercing this to a bool makes sure nothing bad happens if clients pass in something unexpected
-  await DB.setSpaceAvailability(!!spaceIsClosed)
+  await DB.setServerSettings({ spaceIsClosed: !!spaceIsClosed })
 
   return {
     messages: [

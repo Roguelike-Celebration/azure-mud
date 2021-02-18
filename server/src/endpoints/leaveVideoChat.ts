@@ -1,9 +1,9 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { User } from '../user'
-import DB from '../redis'
+import DB from '../cosmosdb'
 
 const leaveVideoChat: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  const videoChatters = await DB.removeUserFromVideoPresence(user.id, user.roomId)
+  const videoChatters = await DB.updateVideoPresenceForUser(user, false)
 
   return {
     messages: [

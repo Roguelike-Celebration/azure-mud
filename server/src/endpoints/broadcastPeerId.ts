@@ -1,9 +1,9 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { User } from '../user'
-import DB from '../redis'
+import DB from '../cosmosdb'
 
 const broadcastPeerId: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  await DB.addUserToVideoPresence(user.id, user.roomId)
+  await DB.updateVideoPresenceForUser(user, true)
   const videoChatters = DB.getVideoPresenceForRoom(user.roomId)
 
   log('Broadcasting peer ID', user.roomId, user.id)

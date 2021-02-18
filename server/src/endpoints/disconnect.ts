@@ -1,7 +1,6 @@
 import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 import { User } from '../user'
 import DB from '../cosmosdb'
-import Redis from '../redis'
 import { globalPresenceMessage } from '../globalPresenceMessage'
 
 const disconnect: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
@@ -21,7 +20,7 @@ const disconnect: AuthenticatedEndpointFunction = async (user: User, inputs: any
       },
       {
         target: 'videoPresence',
-        arguments: [user.roomId, await Redis.removeUserFromVideoPresence(user.id, user.roomId)]
+        arguments: [user.roomId, await DB.updateVideoPresenceForUser(user, false)]
       },
       await globalPresenceMessage([user.roomId])
     ],

@@ -93,7 +93,7 @@ async function disconnectAndBan (user: User, target: User, result: Result) {
     },
     {
       target: 'videoPresence',
-      arguments: [target.roomId, await Redis.removeUserFromVideoPresence(target.id, target.roomId)]
+      arguments: [target.roomId, await DB.updateVideoPresenceForUser(target, false)]
     },
     await globalPresenceMessage([target.roomId])
   ]
