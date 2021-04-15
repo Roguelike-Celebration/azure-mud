@@ -20,7 +20,7 @@
     "@aspnet/signalr": "^1.1.4",
     "@azure/communication-calling": "^1.0.0-beta.3",
     "@azure/communication-common": "^1.0.0-beta.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "localforage": "^1.9.0",
     "microsoft-cognitiveservices-speech-sdk": "^1.15.0",
     "node-emoji": "^1.10.0",
