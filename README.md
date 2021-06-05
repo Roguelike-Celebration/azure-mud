@@ -1,5 +1,5 @@
 # Yet Another Browser Mud
-![Linting and Validation Checks](https://github.com/lazerwalker/azure-mud/workflows/Linting%20and%20Validation%20Checks/badge.svg) [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
+![Linting and Validation Checks](https://github.com/lazerwalker/azure-mud/workflows/Linting%20and%20Validation%20Checks/badge.svg) [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com?WT.mc_id=spatial-8206-emwalker/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
 
 This is a playful text-based online social chat space. You can think of it as a hybrid between communication apps like Slack and Discord and traditional text-based online game spaces such as MUDs and MOOs.
 
@@ -42,10 +42,10 @@ If you don't already have an Azure account/subscription, you'll get a few hundre
 
 ### Deploying via ARM Template
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/?WT.mc_id=spatial-8206-emwalker#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
 
 
-The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json) will allow you to deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
+The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](https://portal.azure.com/?WT.mc_id=spatial-8206-emwalker#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json) will allow you to deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
 
 There are still a few things you need to manually configure before the app will function.
 
@@ -69,11 +69,11 @@ The next time you commit code to the `main` branch, your workflow should run and
 
 #### Deploying new Changes via VS Code
 
-If you use VS Code as an IDE, the Azure Functions extensino makes it extremely easy to deploy directly from there. Check out [this tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-javascript?WT.mc_id=spatial-8206-emwalker) for more info.
+If you use VS Code as an IDE, the Azure Functions extensino makes it extremely easy to deploy directly from there. Check out [this tutorial](https://docs.microsoft.com/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-javascript&WT.mc_id=spatial-8206-emwalker) for more info.
 
 #### Deploying new Changes via CLI
 
-If you have the [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?WT.mc_id=spatial-8206-emwalker) installed, you can run `func azure functionapp publish [project name]` to deploy directly from the CLI.
+If you have the [Azure Functions Core Tools](https://docs.microsoft.com/azure/azure-functions/functions-run-local&WT.mc_id=spatial-8206-emwalker?WT.mc_id=spatial-0000-emwalker) installed, you can run `func azure functionapp publish [project name]` to deploy directly from the CLI.
 
 
 ### Costs and Scaling
@@ -88,7 +88,7 @@ Other than managing SignalR units, you won't need to worry about adjusting capac
 
 If you would prefer to not use the ARM template above, here is how you can manually configure a set of Azure resources to run this project.
 
-1. Deploy the project to a new Azure Function App instance you control. I recommend using VS Code and the VS Code Azure Functions extension. See the "Publish the project to Azure" section of [this tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-javascript?WT.mc_id=spatial-8206-emwalker) for details. You can also use the Azure CLI or any other method.
+1. Deploy the project to a new Azure Function App instance you control. I recommend using VS Code and the VS Code Azure Functions extension. See the "Publish the project to Azure" section of [this tutorial](https://docs.microsoft.com/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-javascript%3FWT.mc_id%3Dspatial-8206-emwalker&WT.mc_id=spatial-0000-emwalker) for details. You can also use the Azure CLI or any other method.
 
 2) In the Azure Portal, sign up for a new [Azure SignalR Service](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview?WT.mc_id=spatial-8206-emwalker) instance. For development purposes, you can probably start with the free tier.
 
