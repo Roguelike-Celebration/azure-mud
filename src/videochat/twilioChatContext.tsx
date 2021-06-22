@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import * as Twilio from 'twilio-video'
 import { DispatchContext } from '../App'
 
@@ -44,6 +44,7 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const fetchLocalVideoTrack = async () => {
+    console.log('Fetching local video track')
     const options: Twilio.CreateLocalTrackOptions = { // TODO: Shrink size if mobile
       height: 720,
       frameRate: 24,
@@ -68,8 +69,15 @@ export const TwilioChatContextProvider = (props: {
     stopSpeechRecognizer()
   }
 
-  useEffect(() => { fetchLocalVideoTrack() }, [currentCamera])
   useEffect(() => {
+    console.log('In useeffect for camera')
+    if (!currentCamera) return
+    console.log('Has camera')
+    fetchLocalVideoTrack()
+  }, [currentCamera])
+
+  useEffect(() => {
+    if (!currentMic) return
     fetchLocalAudioTrack()
 
     if (micEnabled) {
@@ -105,14 +113,19 @@ export const TwilioChatContextProvider = (props: {
     const fetchDevices = navigator.mediaDevices.enumerateDevices()
       .then((devices) => {
         console.log('Fetched devices')
-        setCameras(devices
+
+        const cameras = devices
           .filter(d => d.kind === 'videoinput')
-          .map(mapToDeviceInfo))
+          .map(mapToDeviceInfo)
 
-        setMics(devices
+        const mics = devices
           .filter(d => d.kind === 'audioinput')
-          .map(mapToDeviceInfo))
+          .map(mapToDeviceInfo)
 
+        setCameras(cameras)
+        setMics(mics)
+
+        console.log('Setting current camera', cameras[0])
         setCurrentCamera(cameras[0])
         setCurrentMic(mics[0])
       })
@@ -234,7 +247,10 @@ export const TwilioChatContextProvider = (props: {
         localStreamView,
 
         joinCall,
-        leaveCall: () => room.disconnect(),
+        leaveCall: () => {
+          room.disconnect()
+          // TODO: Turn off mic/camera locally
+        },
 
         callParticipants: remoteParticipants,
 
