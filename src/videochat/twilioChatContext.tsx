@@ -249,7 +249,8 @@ export const TwilioChatContextProvider = (props: {
         joinCall,
         leaveCall: () => {
           room.disconnect()
-          // TODO: Turn off mic/camera locally
+          localVideoTrack.stop()
+          localAudioTrack.stop()
         },
 
         callParticipants: remoteParticipants,
