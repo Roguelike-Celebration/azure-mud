@@ -19,13 +19,29 @@ interface Props {
 
 export default function MediaSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { prepareForMediaChat, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, joinCall } = useMediaChatContext()
+  const { prepareForMediaChat, cameras, mics, currentMic, leaveCall, setCurrentMic, currentCamera, setCurrentCamera, joinCall } = useMediaChatContext()
 
   useEffect(() => {
     const run = async () => {
       await prepareForMediaChat()
+      console.log('Prepared for media chat')
     }
     run()
+
+    /* Okay! So!
+    * This is intended to make it so that when you close out the modal,
+    * it turns off your webcam/mic (and webcam indicator light).
+    * It... doesn't work, and I don't know why.
+    * I also had a flag for whether the user explicitly clicked the 'join' button or not
+    * (to not run this logic in that case, since we want to stay in the call)
+    * and that didn't work either.
+    * For that, I'm not sure what I don't understand about the relationship between
+    * useState and these useEffect return blocks.
+    *
+    */
+    // return () => {
+    //   leaveCall()
+    // }
   }, [])
 
   const deviceToOption = (d: DeviceInfo) => {

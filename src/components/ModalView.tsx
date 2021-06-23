@@ -28,10 +28,15 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
 
   const close = (e) => {
     if (e.target.id === 'modal-wrapper' || e.target.id === 'close-button') {
+      if (modalViewRef.current && (modalViewRef.current as ClosableView).onClose) {
+        (modalViewRef.current as ClosableView).onClose()
+      }
       dispatch(HideModalAction())
     }
   }
 
+  // createPortal means we can shove the modal in the top-level document body,
+  // instead of as part of our view hierarchy
   return ReactDOM.createPortal(
     <div id='modal-wrapper' onClick={close} role='dialog' aria-modal={true}>
       <div id='modal' className={props.fullScreen ? 'full-screen' : null}>

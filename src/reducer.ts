@@ -345,9 +345,9 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.StopVideoChat) {
     setNetworkMediaChatStatus(false)
-    disconnectAllPeers()
     stopAudioAnalyserLoop()
-    stopAllDeviceUsage()
+    // disconnectAllPeers()
+    // stopAllDeviceUsage()
     delete state.localMediaStreamId
     delete state.otherMediaStreamPeerIds
     state.inMediaChat = false

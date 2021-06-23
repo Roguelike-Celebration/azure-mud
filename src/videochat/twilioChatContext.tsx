@@ -230,6 +230,14 @@ export const TwilioChatContextProvider = (props: {
     }
   }
 
+  function leaveCall () {
+    console.log('In leave call', localVideoTrack)
+    if (room) room.disconnect()
+    if (localVideoTrack) localVideoTrack.stop()
+    if (localAudioTrack) localAudioTrack.stop()
+    stopTranscription()
+  }
+
   return (
     <MediaChatContext.Provider
       value={{
@@ -247,11 +255,7 @@ export const TwilioChatContextProvider = (props: {
         localStreamView,
 
         joinCall,
-        leaveCall: () => {
-          room.disconnect()
-          localVideoTrack.stop()
-          localAudioTrack.stop()
-        },
+        leaveCall,
 
         callParticipants: remoteParticipants,
 
