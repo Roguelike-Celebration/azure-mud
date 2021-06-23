@@ -3,7 +3,7 @@ import { useState, useEffect, useContext, useRef } from 'react'
 import * as Twilio from 'twilio-video'
 import { DispatchContext } from '../App'
 
-import { fetchTwilioToken } from '../networking'
+import { fetchTwilioToken, setNetworkMediaChatStatus } from '../networking'
 import { setUpSpeechRecognizer, stopSpeechRecognizer } from '../speechRecognizer'
 import { DeviceInfo, MediaChatContext, Participant } from './mediaChatContext'
 import ParticipantTracks from './twilio/ParticipantTracks'
@@ -71,13 +71,18 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const publishMedia = () => {
+    setNetworkMediaChatStatus(true)
+
     if (room) {
       if (localAudioTrack) {
         room.localParticipant.publishTrack(localAudioTrack)
+        localAudioTrack.restart()
+        startTranscription()
       }
 
       if (localVideoTrack) {
         room.localParticipant.publishTrack(localVideoTrack)
+        localVideoTrack.restart()
 
         if (!localStreamView) {
           setLocalStreamView(<VideoTrack track={localVideoTrack} />)
@@ -87,14 +92,18 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const unpublishMedia = () => {
+    setNetworkMediaChatStatus(false)
+
     if (room) {
       if (localAudioTrack) {
         room.localParticipant.unpublishTrack(localAudioTrack)
+        localAudioTrack.stop()
         stopSpeechRecognizer()
       }
 
       if (localVideoTrack) {
         room.localParticipant.unpublishTrack(localVideoTrack)
+        localVideoTrack.stop()
       }
     }
 
