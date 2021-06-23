@@ -19,11 +19,11 @@ interface Props {
 
 export default function MediaSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { prepareForMediaChat, cameras, mics, currentMic, leaveCall, setCurrentMic, currentCamera, setCurrentCamera, joinCall } = useMediaChatContext()
+  const { prepareMediaDevices, cameras, mics, currentMic, leaveCall, setCurrentMic, currentCamera, setCurrentCamera, publishMedia } = useMediaChatContext()
 
   useEffect(() => {
     const run = async () => {
-      await prepareForMediaChat()
+      await prepareMediaDevices()
       console.log('Prepared for media chat')
     }
     run()
@@ -66,7 +66,7 @@ export default function MediaSelectorView (props: Props) {
     dispatch(HideModalAction())
     dispatch(P2PWaitingForConnectionsAction())
     startVideoChat()
-    joinCall(props.roomId)
+    publishMedia()
   }
 
   return (

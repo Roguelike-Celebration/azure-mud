@@ -29,7 +29,7 @@ interface Props {
 
 export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
-  const { leaveCall } = useMediaChatContext()
+  const { prepareForMediaChat, joinCall, unpublishMedia } = useMediaChatContext()
 
   const { room } = props
 
@@ -55,13 +55,22 @@ export default function RoomView (props: Props) {
     }
   }
 
+  // TODO: Running this just once really isn't what we want.
+  // Probably hinge on roomId?
+  React.useEffect(() => {
+    if (room && !room.noMediaChat) {
+      prepareForMediaChat()
+      joinCall(props.room.id)
+    }
+  }, [])
+
   const joinVideoChat = async () => {
     dispatch(ShowModalAction(Modal.MediaSelector))
   }
 
   const leaveVideoChat = () => {
     dispatch(StopVideoChatAction())
-    leaveCall()
+    unpublishMedia()
   }
 
   const showNoteWall = () => {

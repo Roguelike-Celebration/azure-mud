@@ -138,7 +138,7 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.inMediaChat) {
+  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
       <MediaChatView
         peerIds={state.roomData[state.roomId].videoUsers}

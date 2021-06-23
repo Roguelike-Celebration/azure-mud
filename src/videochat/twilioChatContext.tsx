@@ -15,6 +15,7 @@ export const TwilioChatContextProvider = (props: {
   const dispatch = useContext(DispatchContext)
 
   const [token, setToken] = useState<string>()
+  const [roomId, setRoomId] = useState<string>()
   const [room, setRoom] = useState<Twilio.Room>()
 
   const [micEnabled, setMicEnabled] = useState<boolean>(true)
@@ -69,6 +70,32 @@ export const TwilioChatContextProvider = (props: {
     stopSpeechRecognizer()
   }
 
+  const publishMedia = () => {
+    if (room) {
+      if (localAudioTrack) {
+        room.localParticipant.publishTrack(localAudioTrack)
+      }
+
+      if (localVideoTrack) {
+        room.localParticipant.publishTrack(localVideoTrack)
+      }
+    }
+  }
+
+  const unpublishMedia = () => {
+    if (room) {
+      if (localAudioTrack) {
+        room.localParticipant.unpublishTrack(localAudioTrack)
+      }
+
+      if (localVideoTrack) {
+        room.localParticipant.unpublishTrack(localVideoTrack)
+      }
+    }
+
+    setLocalStreamView(undefined)
+  }
+
   useEffect(() => {
     console.log('In useeffect for camera')
     if (!currentCamera) return
@@ -95,22 +122,28 @@ export const TwilioChatContextProvider = (props: {
     }
   }, [micEnabled])
 
-  async function prepareForMediaChat () {
-    console.log('Preparing for media chat')
-    // TODO: one-line this once I know what the output looks like
-    const fetchToken = fetchTwilioToken()
-      .then((token) => {
-        console.log(token)
-        setToken(token)
-      })
+  useEffect(() => {
+    // The initial token might get set after calling joinCall
+    // This calls joinCall when we're ready after that initial setup
+    if (token && roomId && !room) {
+      joinCall(roomId)
+    }
+  }, [token, roomId])
 
+  async function prepareForMediaChat () {
+    if (token) return
+    return fetchTwilioToken()
+      .then((token) => { setToken(token) })
+  }
+
+  async function prepareMediaDevices () {
     const mapToDeviceInfo = (d: MediaDeviceInfo): DeviceInfo => {
       return {
         id: d.deviceId,
         name: d.label
       }
     }
-    const fetchDevices = navigator.mediaDevices.enumerateDevices()
+    return navigator.mediaDevices.enumerateDevices()
       .then((devices) => {
         console.log('Fetched devices')
 
@@ -129,15 +162,22 @@ export const TwilioChatContextProvider = (props: {
         setCurrentCamera(cameras[0])
         setCurrentMic(mics[0])
       })
-
-    return Promise.all([fetchToken, fetchDevices])
   }
 
   async function joinCall (roomId: string) {
+    // A useEffect hook will re-call this once the token exists
+    if (!token) {
+      setRoomId(roomId)
+      return
+    }
+
+    // We're real sloppy re: calling this multiple times
+    if (room && room.name === roomId) return
+
     try {
-      const room = await Twilio.connect(token, {
+      const opts: Twilio.ConnectOptions = {
         name: roomId,
-        tracks: [localAudioTrack, localVideoTrack],
+        tracks: [],
         maxAudioBitrate: 16000, // For music remove this line
         bandwidthProfile: {
           video: {
@@ -151,7 +191,17 @@ export const TwilioChatContextProvider = (props: {
           }
         },
         preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }]
-      })
+      }
+
+      if (localVideoTrack) {
+        opts.tracks.push(localVideoTrack)
+      }
+
+      if (localAudioTrack) {
+        opts.tracks.push(localAudioTrack)
+      }
+
+      const room = await Twilio.connect(token, opts)
 
       // TODO: I worry this will send a single video/audio frame if disabled on start? To test
       room.localParticipant.videoTracks.forEach(publication => {
@@ -194,13 +244,15 @@ export const TwilioChatContextProvider = (props: {
         // There's rendering logic to sort out here (how do we update components?)
         // Presumably, we should show someone differently if they have only audio or neither audio nor video
 
-        // participant.on('trackDisabled', track => {
-        //   setRemoteParticipants(remoteParticipants)
-        // })
+        participant.on('trackDisabled', track => {
+          console.log('Track disabled', track, participant)
+          // setRemoteParticipants(remoteParticipants)
+        })
 
-        // participant.on('trackEnabled', track => {
-        //   setRemoteParticipants(remoteParticipants)
-        // })
+        participant.on('trackEnabled', track => {
+          console.log('Track enabled', track, participant)
+          // setRemoteParticipants(remoteParticipants)
+        })
 
         setRemoteParticipants(remoteParticipants.concat([p]))
 
@@ -242,6 +294,7 @@ export const TwilioChatContextProvider = (props: {
     <MediaChatContext.Provider
       value={{
         prepareForMediaChat,
+        prepareMediaDevices,
 
         cameras,
         mics,
@@ -253,6 +306,9 @@ export const TwilioChatContextProvider = (props: {
         setCurrentMic: (id: string) => setCurrentMic(mics.find(c => c.id === id)),
 
         localStreamView,
+
+        publishMedia,
+        unpublishMedia,
 
         joinCall,
         leaveCall,
