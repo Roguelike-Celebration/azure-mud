@@ -78,6 +78,10 @@ export const TwilioChatContextProvider = (props: {
 
       if (localVideoTrack) {
         room.localParticipant.publishTrack(localVideoTrack)
+
+        if (!localStreamView) {
+          setLocalStreamView(<VideoTrack track={localVideoTrack} />)
+        }
       }
     }
   }

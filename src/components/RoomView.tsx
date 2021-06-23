@@ -29,7 +29,7 @@ interface Props {
 
 export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
-  const { prepareForMediaChat, joinCall, unpublishMedia } = useMediaChatContext()
+  const { prepareForMediaChat, currentMic, currentCamera, joinCall, publishMedia, unpublishMedia } = useMediaChatContext()
 
   const { room } = props
 
@@ -65,7 +65,11 @@ export default function RoomView (props: Props) {
   }, [])
 
   const joinVideoChat = async () => {
-    dispatch(ShowModalAction(Modal.MediaSelector))
+    if (currentMic || currentCamera) {
+      publishMedia()
+    } else {
+      dispatch(ShowModalAction(Modal.MediaSelector))
+    }
   }
 
   const leaveVideoChat = () => {
