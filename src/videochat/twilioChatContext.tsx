@@ -90,6 +90,7 @@ export const TwilioChatContextProvider = (props: {
     if (room) {
       if (localAudioTrack) {
         room.localParticipant.unpublishTrack(localAudioTrack)
+        stopSpeechRecognizer()
       }
 
       if (localVideoTrack) {
