@@ -355,7 +355,7 @@ export const TwilioChatContextProvider = (props: {
         micEnabled,
         setMicEnabled: (enabled: boolean) => {
           setMicEnabled(enabled)
-          if (room) return
+          if (!room) return
 
           room.localParticipant.audioTracks.forEach(publication => {
             if (enabled) {
