@@ -39,3 +39,8 @@ a.room-link:visited {
   border-color: var(--highlight-line);
   padding-top: 5px;
 }
+
+#big-reconfigure-media-selector {
+  margin-left: 0.8em;
+  color: white;
+}

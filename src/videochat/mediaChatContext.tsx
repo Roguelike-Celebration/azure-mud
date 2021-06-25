@@ -6,7 +6,11 @@ export const MediaChatContext = React.createContext<MediaChatContextProps>({
   prepareMediaDevices: async () => console.log('Not implemented'),
 
   publishMedia: () => console.log('Not implemented'),
+  publishAudio: () => console.log('Not implemented'),
   unpublishMedia: () => console.log('Not implemented'),
+
+  publishingCamera: false,
+  publishingMic: false,
 
   cameras: [],
   mics: [],
@@ -36,6 +40,9 @@ type MediaChatContextProps = {
     prepareForMediaChat: () => Promise<any>
     prepareMediaDevices: () => Promise<any>
 
+    publishingCamera: boolean
+    publishingMic: boolean
+
     cameras: DeviceInfo[]
     mics: DeviceInfo[]
 
@@ -53,7 +60,10 @@ type MediaChatContextProps = {
     // Does it conceptually make sense to add one to the public interface?
 
     // Hide or show your camera/mic across the network
+    // Note that the Twilio implementation has publishVideo() as well,
+    // but we don't currently reference it externally.
     publishMedia: () => void
+    publishAudio: () => void
     unpublishMedia: () => void
 
     callParticipants?: Participant[]

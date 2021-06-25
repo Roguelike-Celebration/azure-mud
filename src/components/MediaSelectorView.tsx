@@ -15,11 +15,12 @@ interface Props {
   roomId: string
 
   showJoinButton?: boolean
+  hideVideo?: boolean
 }
 
 export default function MediaSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { prepareMediaDevices, cameras, mics, currentMic, leaveCall, setCurrentMic, currentCamera, setCurrentCamera, publishMedia } = useMediaChatContext()
+  const { prepareMediaDevices, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, publishMedia, publishAudio } = useMediaChatContext()
 
   useEffect(() => {
     const run = async () => {
@@ -65,24 +66,34 @@ export default function MediaSelectorView (props: Props) {
   const clickJoin = () => {
     dispatch(HideModalAction())
     dispatch(P2PWaitingForConnectionsAction())
-    startVideoChat()
-    publishMedia()
+
+    if (props.hideVideo) {
+      publishAudio()
+    } else {
+      startVideoChat()
+      publishMedia()
+    }
+  }
+
+  let video
+  if (!props.hideVideo) {
+    video = (
+      <><label htmlFor="#video-select">Webcam</label><select
+        name="Video"
+        id="video-select"
+        onChange={onVideoChange}
+        defaultValue={currentCamera && currentCamera.id}
+      >
+        {(cameras || []).map(deviceToOption)}
+      </select><br /></>
+    )
   }
 
   return (
     <div id='media-selector'>
-      <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>
+      {props.hideVideo ? '' : <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>}
       <div className='selects'>
-        <label htmlFor="#video-select">Webcam</label>
-        <select
-          name="Video"
-          id="video-select"
-          onChange={onVideoChange}
-          defaultValue={currentCamera && currentCamera.id}
-        >
-          {(cameras || []).map(deviceToOption)}
-        </select>
-        <br/>
+        {video}
         <label htmlFor="#audio-select">Audio</label>
         <select
           name="Audio"

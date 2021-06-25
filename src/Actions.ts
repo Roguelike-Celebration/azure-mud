@@ -5,6 +5,7 @@ import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { ServerSettings } from '../server/src/types'
 import { DeviceInfo } from './videochat/mediaChatContext'
+import { ModalOptions } from './reducer'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -47,6 +48,7 @@ export type Action =
   | StartWhisperAction
   | ShowProfileAction
   | ShowModalAction
+  | ShowModalWithOptionsAction
   | AuthenticateAction
   | IsRegisteredAction
   | BanToggleAction
@@ -111,6 +113,7 @@ export enum ActionType {
   ShowProfile = 'SHOW_PROFILE',
   HideProfile = 'HIDE_PROFILE',
   ShowModal = 'SHOW_MODAL',
+  ShowModalWithOptions = 'SHOW_MODAL_WITH_OPTIONS',
   ShowSideMenu = 'SHOW_SIDE_MENU',
   HideSideMenu = 'HIDE_SIDE_MENU',
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
@@ -729,6 +732,21 @@ export const ShowModalAction = (modal: Modal): ShowModalAction => {
   return {
     type: ActionType.ShowModal,
     value: modal
+  }
+}
+
+interface ShowModalWithOptionsAction {
+  type: ActionType.ShowModalWithOptions;
+  value: {
+    modal: Modal,
+    options: ModalOptions
+  }
+}
+
+export const ShowModalWithOptionsAction = (modal: Modal, options: ModalOptions): ShowModalWithOptionsAction => {
+  return {
+    type: ActionType.ShowModalWithOptions,
+    value: { modal, options }
   }
 }
 

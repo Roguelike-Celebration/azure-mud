@@ -27,6 +27,12 @@ export const TwilioChatContextProvider = (props: {
   const [currentMic, setCurrentMic] = useState<DeviceInfo>()
   const [currentCamera, setCurrentCamera] = useState<DeviceInfo>()
 
+  // These are separate from current to handle the case of the media selector
+  // where we need both mic and camera enabled, but may not want to show
+  // the camera in the background
+  const [publishingCamera, setPublishingCamera] = useState<boolean>()
+  const [publishingMic, setPublishingMic] = useState<boolean>()
+
   const [remoteParticipants, setRemoteParticipants] = useState<Participant[]>([])
 
   const [localVideoTrack, setLocalVideoTrack] = useState<Twilio.LocalVideoTrack>()
@@ -71,7 +77,13 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const publishMedia = () => {
+    publishAudio()
+    publishVideo()
+  }
+
+  const publishAudio = () => {
     setNetworkMediaChatStatus(true)
+    setPublishingMic(true)
 
     if (room) {
       if (localAudioTrack) {
@@ -79,20 +91,27 @@ export const TwilioChatContextProvider = (props: {
         localAudioTrack.restart()
         startTranscription()
       }
+    }
+  }
 
-      if (localVideoTrack) {
-        room.localParticipant.publishTrack(localVideoTrack)
-        localVideoTrack.restart()
+  const publishVideo = () => {
+    setNetworkMediaChatStatus(true)
+    setPublishingCamera(true)
 
-        if (!localStreamView) {
-          setLocalStreamView(<VideoTrack track={localVideoTrack} />)
-        }
+    if (localVideoTrack) {
+      room.localParticipant.publishTrack(localVideoTrack)
+      localVideoTrack.restart()
+
+      if (!localStreamView) {
+        setLocalStreamView(<VideoTrack track={localVideoTrack} />)
       }
     }
   }
 
   const unpublishMedia = () => {
     setNetworkMediaChatStatus(false)
+    setPublishingCamera(false)
+    setPublishingMic(false)
 
     if (room) {
       if (localAudioTrack) {
@@ -316,6 +335,9 @@ export const TwilioChatContextProvider = (props: {
         currentMic,
         currentCamera,
 
+        publishingCamera,
+        publishingMic,
+
         setCurrentCamera: (id: string) => setCurrentCamera(cameras.find(c => c.id === id)),
         setCurrentMic: (id: string) => setCurrentMic(mics.find(c => c.id === id)),
 
@@ -323,6 +345,7 @@ export const TwilioChatContextProvider = (props: {
 
         publishMedia,
         unpublishMedia,
+        publishAudio,
 
         joinCall,
         leaveCall,
