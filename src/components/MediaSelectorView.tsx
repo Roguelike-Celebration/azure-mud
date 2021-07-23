@@ -15,17 +15,34 @@ interface Props {
   roomId: string
 
   showJoinButton?: boolean
+  hideVideo?: boolean
 }
 
 export default function MediaSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { prepareForMediaChat, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, joinCall } = useMediaChatContext()
+  const { prepareMediaDevices, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, publishMedia, publishAudio } = useMediaChatContext()
 
   useEffect(() => {
     const run = async () => {
-      await prepareForMediaChat()
+      await prepareMediaDevices()
+      console.log('Prepared for media chat')
     }
     run()
+
+    /* Okay! So!
+    * This is intended to make it so that when you close out the modal,
+    * it turns off your webcam/mic (and webcam indicator light).
+    * It... doesn't work, and I don't know why.
+    * I also had a flag for whether the user explicitly clicked the 'join' button or not
+    * (to not run this logic in that case, since we want to stay in the call)
+    * and that didn't work either.
+    * For that, I'm not sure what I don't understand about the relationship between
+    * useState and these useEffect return blocks.
+    *
+    */
+    // return () => {
+    //   leaveCall()
+    // }
   }, [])
 
   const deviceToOption = (d: DeviceInfo) => {
@@ -49,24 +66,34 @@ export default function MediaSelectorView (props: Props) {
   const clickJoin = () => {
     dispatch(HideModalAction())
     dispatch(P2PWaitingForConnectionsAction())
-    startVideoChat()
-    joinCall(props.roomId)
+
+    if (props.hideVideo) {
+      publishAudio()
+    } else {
+      startVideoChat()
+      publishMedia()
+    }
+  }
+
+  let video
+  if (!props.hideVideo) {
+    video = (
+      <><label htmlFor="#video-select">Webcam</label><select
+        name="Video"
+        id="video-select"
+        onChange={onVideoChange}
+        defaultValue={currentCamera && currentCamera.id}
+      >
+        {(cameras || []).map(deviceToOption)}
+      </select><br /></>
+    )
   }
 
   return (
     <div id='media-selector'>
-      <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>
+      {props.hideVideo ? '' : <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>}
       <div className='selects'>
-        <label htmlFor="#video-select">Webcam</label>
-        <select
-          name="Video"
-          id="video-select"
-          onChange={onVideoChange}
-          defaultValue={currentCamera && currentCamera.id}
-        >
-          {(cameras || []).map(deviceToOption)}
-        </select>
-        <br/>
+        {video}
         <label htmlFor="#audio-select">Audio</label>
         <select
           name="Audio"

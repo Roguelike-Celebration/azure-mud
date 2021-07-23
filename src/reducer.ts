@@ -37,7 +37,6 @@ import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../server/src/config'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
-
 export interface State {
   authenticated: boolean;
   checkedAuthentication: boolean;
@@ -68,6 +67,7 @@ export interface State {
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
   activeModal: Modal
+  activeModalOptions: ModalOptions,
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
@@ -96,6 +96,7 @@ export const defaultState: State = {
   inMediaChat: false,
   speakingPeerIds: [],
   activeModal: Modal.None,
+  activeModalOptions: {},
   isBanned: false,
   serverSettings: DEFAULT_SERVER_SETTINGS
 }
@@ -345,9 +346,9 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.StopVideoChat) {
     setNetworkMediaChatStatus(false)
-    disconnectAllPeers()
     stopAudioAnalyserLoop()
-    stopAllDeviceUsage()
+    // disconnectAllPeers()
+    // stopAllDeviceUsage()
     delete state.localMediaStreamId
     delete state.otherMediaStreamPeerIds
     state.inMediaChat = false
@@ -425,6 +426,13 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ShowModal) {
     state.activeModal = action.value
+    state.activeModalOptions = {}
+  }
+
+  if (action.type === ActionType.ShowModalWithOptions) {
+    console.log('Showing', action)
+    state.activeModal = action.value.modal
+    state.activeModalOptions = action.value.options
   }
 
   if (action.type === ActionType.ShowSideMenu) {
@@ -559,4 +567,11 @@ async function addMessage (state: State, message: Message) {
   state.messages.push(message)
   state.messages = state.messages.slice(-500)
   Storage.setMessages(state.messages)
+}
+
+// This is intended to be a big old unreadable grab bag,
+// but seems better than alternatives
+export interface ModalOptions {
+    hideVideo?: boolean,
+    showJoinButton?: boolean
 }

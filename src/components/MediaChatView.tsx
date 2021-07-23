@@ -19,12 +19,15 @@ interface MediaProps {
 
 export default function MediaChatView (props: MediaProps) {
   let mediaSelector
-  const { callParticipants } = useMediaChatContext()
+  const { publishingCamera, callParticipants } = useMediaChatContext()
   console.log('Re-rendering media chat view?')
 
-  const playerVideo = (
-    <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
-  )
+  let playerVideo
+  if (publishingCamera) {
+    playerVideo = (
+      <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
+    )
+  }
 
   console.log(callParticipants)
   const otherVideos = (callParticipants || []).map((p) => {

@@ -3,6 +3,14 @@ import { nie } from '../utils'
 
 export const MediaChatContext = React.createContext<MediaChatContextProps>({
   prepareForMediaChat: async () => console.log('Not implemented'),
+  prepareMediaDevices: async () => console.log('Not implemented'),
+
+  publishMedia: () => console.log('Not implemented'),
+  publishAudio: () => console.log('Not implemented'),
+  unpublishMedia: () => console.log('Not implemented'),
+
+  publishingCamera: false,
+  publishingMic: false,
 
   cameras: [],
   mics: [],
@@ -30,6 +38,10 @@ export const MediaChatContext = React.createContext<MediaChatContextProps>({
 type MediaChatContextProps = {
     // Request media permissions, also do any token handshaking needed
     prepareForMediaChat: () => Promise<any>
+    prepareMediaDevices: () => Promise<any>
+
+    publishingCamera: boolean
+    publishingMic: boolean
 
     cameras: DeviceInfo[]
     mics: DeviceInfo[]
@@ -44,7 +56,15 @@ type MediaChatContextProps = {
 
     joinCall: (room: string) => void
     leaveCall: () => void
-    // Object referencing active call? Maybe just a bool?
+    // The Twilio implementation has an object referencing the active call.
+    // Does it conceptually make sense to add one to the public interface?
+
+    // Hide or show your camera/mic across the network
+    // Note that the Twilio implementation has publishVideo() as well,
+    // but we don't currently reference it externally.
+    publishMedia: () => void
+    publishAudio: () => void
+    unpublishMedia: () => void
 
     callParticipants?: Participant[]
 

@@ -174,6 +174,10 @@ export const AcsChatContextProvider = (props: {
         cameras: cameraList,
         mics: micList,
 
+        publishMedia: () => {},
+        unpublishMedia: () => {},
+        prepareMediaDevices: async () => {},
+
         currentMic,
         currentCamera,
 

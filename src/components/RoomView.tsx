@@ -6,8 +6,8 @@ import {
 } from '../networking'
 import NameView from './NameView'
 import { DispatchContext, UserMapContext } from '../App'
-import { StopVideoChatAction, ShowModalAction } from '../Actions'
-import { FaVideo } from 'react-icons/fa'
+import { StopVideoChatAction, ShowModalAction, ShowModalWithOptionsAction } from '../Actions'
+import { FaCog, FaVideo } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
@@ -29,7 +29,7 @@ interface Props {
 
 export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
-  const { leaveCall } = useMediaChatContext()
+  const { prepareForMediaChat, currentMic, currentCamera, joinCall, publishMedia, publishAudio, unpublishMedia } = useMediaChatContext()
 
   const { room } = props
 
@@ -55,17 +55,42 @@ export default function RoomView (props: Props) {
     }
   }
 
+  // TODO: Running this just once really isn't what we want.
+  // Probably hinge on roomId?
+  React.useEffect(() => {
+    if (room && !room.noMediaChat) {
+      prepareForMediaChat()
+      joinCall(props.room.id)
+    }
+  }, [])
+
   const joinVideoChat = async () => {
-    dispatch(ShowModalAction(Modal.MediaSelector))
+    if (currentMic || currentCamera) {
+      publishMedia()
+    } else {
+      dispatch(ShowModalAction(Modal.MediaSelector))
+    }
+  }
+
+  const joinAudioChat = async () => {
+    if (currentMic) {
+      publishAudio()
+    } else {
+      dispatch(ShowModalWithOptionsAction(Modal.MediaSelector, { hideVideo: true }))
+    }
   }
 
   const leaveVideoChat = () => {
     dispatch(StopVideoChatAction())
-    leaveCall()
+    unpublishMedia()
   }
 
   const showNoteWall = () => {
     dispatch(ShowModalAction(Modal.NoteWall))
+  }
+
+  const showMediaSelector = () => {
+    dispatch(ShowModalAction(Modal.MediaSelector))
   }
 
   let noteWallView
@@ -77,27 +102,30 @@ export default function RoomView (props: Props) {
     }
   }
 
-  let videoChatButton
+  let chatButtons
   if (room && !room.noMediaChat) {
     if (getNetworkMediaChatStatus()) {
-      videoChatButton = (
-        <button onClick={leaveVideoChat} id='join-video-chat'>
-          Leave Video Chat
+      chatButtons = (
+        <><button onClick={leaveVideoChat} id='join-video-chat'>
+          Leave Chat
         </button>
-      )
-    } else if (room.videoUsers && room.videoUsers.length >= VIDEO_CHAT_MAX_SIZE) {
-      // Maybe make it more transparent? I think this is probably fine, but I'm no UI expert!
-      videoChatButton = (
-        <button id='join-video-chat'>
-          Video Chat Is Full (limit {VIDEO_CHAT_MAX_SIZE})
+        <button key='show-media-selector' id='big-reconfigure-media-selector' onClick={showMediaSelector} className='link-styled-button video-button' aria-label='Show Media Selector'>
+          <FaCog />
         </button>
+        </>
       )
     } else {
-      videoChatButton = (
-        <button onClick={joinVideoChat} id='join-video-chat'>
-          Join Video Chat {room.videoUsers && room.videoUsers.length > 0 ? `(${room.videoUsers.length})` : ''}
+      chatButtons = [
+        <button key='join-video' onClick={joinVideoChat} id='join-video-chat'>
+          Join Video + Audio
+        </button>,
+        <button key='join-audio' onClick={joinAudioChat} id='join-video-chat'>
+          Join Audio
+        </button>,
+        <button key='show-media-selector' id='big-reconfigure-media-selector' onClick={showMediaSelector} className='link-styled-button video-button' aria-label='Show Media Selector'>
+          <FaCog />
         </button>
-      )
+      ]
     }
   }
 
@@ -107,7 +135,7 @@ export default function RoomView (props: Props) {
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
     <div id="room">
-      <h1 id="room-name">{room ? room.name : 'Loading...'}{videoChatButton}</h1>
+      <h1 id="room-name">{room ? room.name : 'Loading...'}{chatButtons}</h1>
       <div
         id="static-room-description"
         onClick={descriptionClick}

@@ -138,7 +138,7 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.inMediaChat) {
+  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
       <MediaChatView
         peerIds={state.roomData[state.roomId].videoUsers}
@@ -180,7 +180,8 @@ const App = () => {
         <MediaSelectorView
           initialAudioDeviceId={state.currentAudioDeviceId}
           initialVideoDeviceId={state.currentVideoDeviceId}
-          showJoinButton={!state.inMediaChat}
+          showJoinButton={!state.inMediaChat || state.activeModalOptions.showJoinButton}
+          hideVideo={state.activeModalOptions.hideVideo}
           userIsSpeaking={state.speakingPeerIds.includes('self')}
           roomId={state.roomId}
         />
