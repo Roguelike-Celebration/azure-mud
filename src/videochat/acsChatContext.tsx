@@ -17,6 +17,7 @@ import { fetchAcsToken } from '../networking'
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { MediaChatContext, Participant } from '../videochat/mediaChatContext'
 
+/*
 export const AcsChatContextProvider = (props: {
   children: React.ReactNode;
 }) => {
@@ -56,12 +57,13 @@ export const AcsChatContextProvider = (props: {
     (streams: { added: RemoteParticipant[]; removed: RemoteParticipant[] }) => {
       setRemoteParticipants(streams.added)
 
-      const participants = streams.added.map((s) => {
+      const participants: Participant[] = streams.added.map((s) => {
         // TODO: Handle multiple streams
         return {
           userId: s.displayName, // TODO: May be wrong
           muted: false, // TODO
-          streamView: <AcsVideo videoStream={s.videoStreams[0]} />
+          streamView: <AcsVideo videoStream={s.videoStreams[0]} />,
+          shouldShow: false // TODO: Threw this in to make this happy
         }
       })
 
@@ -232,3 +234,5 @@ export function AcsVideo (props: {videoStream?: LocalVideoStream|RemoteVideoStre
     <div ref={vidRef}></div>
   )
 }
+
+*/
