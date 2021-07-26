@@ -231,11 +231,14 @@ export const TwilioChatContextProvider = (props: {
       }
 
       if (localVideoTrack) {
-        opts.tracks.push(localVideoTrack)
+        // This cast shouldn't be necessary, but I'm not sure how to fix it
+        // (Because we define tracks as [] above, TS doesn't know if it's
+        // LocalTrack[] or MediaStreamTrack[])
+        (opts.tracks as Twilio.LocalTrack[]).push(localVideoTrack)
       }
 
       if (localAudioTrack) {
-        opts.tracks.push(localAudioTrack)
+        (opts.tracks as Twilio.LocalTrack[]).push(localAudioTrack)
       }
 
       const room = await Twilio.connect(token, opts)
