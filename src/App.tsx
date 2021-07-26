@@ -1,5 +1,4 @@
 import React, { useEffect, createContext } from 'react'
-import 'regenerator-runtime/runtime'
 
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'

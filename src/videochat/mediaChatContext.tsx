@@ -79,6 +79,7 @@ export type Participant = {
     userId: string
     muted: boolean
     streamView: React.ReactNode
+    shouldShow: boolean
 }
 
 export type DeviceInfo = {

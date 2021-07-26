@@ -65,6 +65,10 @@ export const TwilioChatContextProvider = (props: {
     const track = await Twilio.createLocalVideoTrack(options)
     setLocalVideoTrack(track)
     setLocalStreamView(<VideoTrack track={track} />)
+
+    if (publishingCamera) {
+      publishVideo()
+    }
   }
 
   const startTranscription = () => {
@@ -254,10 +258,12 @@ export const TwilioChatContextProvider = (props: {
       })
 
       const addParticipant = (participant: Twilio.Participant) => {
+        // TODO: Need to update shouldShow when other shit happens, like adding/removing tracks
         const p: Participant = {
           userId: participant.identity,
           muted: false, // TODO
-          streamView: <ParticipantTracks participant={participant} />
+          streamView: <ParticipantTracks participant={participant} />,
+          shouldShow: participant.tracks.entries.length > 0
         }
         console.log('Adding participant', participant, p)
 
@@ -338,8 +344,33 @@ export const TwilioChatContextProvider = (props: {
         publishingCamera,
         publishingMic,
 
-        setCurrentCamera: (id: string) => setCurrentCamera(cameras.find(c => c.id === id)),
-        setCurrentMic: (id: string) => setCurrentMic(mics.find(c => c.id === id)),
+        // TODO: Should this function be moved elsewhere?
+        // Should this logic live in a useEffect hook?
+        setCurrentCamera: (id: string) => {
+          console.log('Setting current camera', id, currentCamera, currentCamera.id)
+          if (currentCamera && currentCamera.id !== id) {
+            console.log('Removing old camera', room)
+            if (room) {
+              // TODO: room.unpublishTrack(localVideoTrack) wasn't working for some reason
+              // This blunt approach works for now, but will need changing if we
+              // e.g. add in screen sharing
+              room.localParticipant.videoTracks.forEach(publication => {
+                publication.unpublish()
+              })
+            }
+          }
+          setCurrentCamera(cameras.find(c => c.id === id))
+        },
+        setCurrentMic: (id: string) => {
+          if (currentMic && currentMic.id !== id) {
+            if (room) {
+              room.localParticipant.audioTracks.forEach(publication => {
+                publication.unpublish()
+              })
+            }
+          }
+          setCurrentMic(mics.find(c => c.id === id))
+        },
 
         localStreamView,
 

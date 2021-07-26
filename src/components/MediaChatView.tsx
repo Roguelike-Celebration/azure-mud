@@ -30,14 +30,18 @@ export default function MediaChatView (props: MediaProps) {
   }
 
   console.log(callParticipants)
-  const otherVideos = (callParticipants || []).map((p) => {
-    return (
-      <div key={`stream-wrapper-${p.userId}`}>
-        <NameView userId={p.userId} id={`stream-nameview-${p.userId}`} />:
-        {p.streamView}
-      </div>
-    )
-  })
+  const otherVideos = (callParticipants || [])
+    .filter(p => {
+      return p.shouldShow
+    })
+    .map((p) => {
+      return (
+        <div key={`stream-wrapper-${p.userId}`}>
+          <NameView userId={p.userId} id={`stream-nameview-${p.userId}`} />:
+          {p.streamView}
+        </div>
+      )
+    })
 
   return (
     <div id="media-view">
