@@ -275,9 +275,11 @@ export const TwilioChatContextProvider = (props: {
           // This should ideally not mutate, but I don't know what happens if we try to deep-copy React nodes
           const i = remoteParticipants.findIndex(p => p.userId === participant.identity)
           if (i !== -1) {
+            p.shouldShow = true
             remoteParticipants[i] = p
             setRemoteParticipants(remoteParticipants)
           } else {
+            p.shouldShow = true
             setRemoteParticipants(remoteParticipants.concat([p]))
           }
         })
