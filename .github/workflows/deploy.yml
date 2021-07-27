@@ -33,6 +33,8 @@ jobs:
           app-name: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
           package: server
+          scm-do-build-during-deployment: true
+          enable-oryx-build: true
 
       - name: Notify connected clients
         run: node deployWebhook.js
