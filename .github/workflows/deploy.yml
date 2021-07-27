@@ -11,9 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.1.0
+      - run: npm install
 
       - name: Build Frontend
-        run: npm install && npx parcel -V && npm run build
+        run: npm run build
 
       - name: Deploy Frontend
         uses: peaceiris/actions-gh-pages@v3
