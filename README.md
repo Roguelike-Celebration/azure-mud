@@ -55,6 +55,7 @@ There are still a few things you need to manually configure before the app will 
 
 3. Finally, you need to actually deploy the backend code before everything will work. You have three main options (below), but after doing this you should have a working app!
 
+**WARNING**: The project currently (as of 7/27/2021) has a dependency on Twilio Programmable Video, but we have not yet automated deployment or included setup instructions. The short version is your Function App will need valid Application Settings with keys `TWILIO_ACCOUNT_SID`, `TWILIO_API_KEY`, and `TWILIO_API_SECRET`, but while we're barrelling towards Roguelike Celebration 2021, third-party users of azure-mud should consider videochat unstable and a work-in-progress.
 #### Deploying new Changes via GitHub Actions
 
 By default, every time code is merged into the `main` branch in this repo, both the frontend and backend are deployed. It's very little work to configure this same behavior on your GitHub fork of this project:
