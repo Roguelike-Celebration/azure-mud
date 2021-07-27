@@ -106,11 +106,11 @@
 						},
 						{	
 							"name": "COSMOSDB_ENDPOINT",
-							"value": "[]"
+							"value": "[reference(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('cosmosDBName')), '2021-05-15').url]"
 						},
 						{
 							"name": "COSMOSDB_KEY",
-							"value": "[]"
+							"value": "[reference(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('cosmosDBName')), '2021-05-15').primaryKey]"
 						}
 					]
 				}
