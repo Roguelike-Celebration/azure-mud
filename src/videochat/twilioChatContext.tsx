@@ -272,14 +272,16 @@ export const TwilioChatContextProvider = (props: {
 
         participant.on('trackSubscribed', track => {
           console.log('Track subscribed', track)
-          // This should ideally not mutate, but I don't know what happens if we try to deep-copy React nodes
+          // This is all ugly and shouldn't mutate, but I don't know what happens if we try to deep-copy React nodes
           const i = remoteParticipants.findIndex(p => p.userId === participant.identity)
           if (i !== -1) {
             p.shouldShow = true
+            p.streamView = <ParticipantTracks participant={participant} />
             remoteParticipants[i] = p
             setRemoteParticipants(remoteParticipants)
           } else {
             p.shouldShow = true
+            p.streamView = <ParticipantTracks participant={participant} />
             setRemoteParticipants(remoteParticipants.concat([p]))
           }
         })
