@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v2.1.0
 
       - name: Build Frontend
-        run: npm install && run build
+        run: npm install && npm run build
 
       - name: Deploy Frontend
         uses: peaceiris/actions-gh-pages@v3
