@@ -3,7 +3,6 @@ import { User, isMod, MinimalUser } from './user'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
 import { RoomNote } from './roomNote'
 import redis = require('redis')
-import { getHeartbeatData } from './heartbeat'
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -22,16 +21,6 @@ const removeFromSet = promisify(cache.srem).bind(cache)
 const getSet = promisify(cache.smembers).bind(cache)
 
 const Redis = {
-  async getData(key: string): Promise<any|undefined> {
-    return getCache(key)
-  },
-
-  async setData(key: string, value: any): Promise<any|undefined> {
-    return setCache(key, value)
-  },
-
-  // ---
-
   async getActiveUsers () {
     return getSet(activeUsersKey) || []
   },
