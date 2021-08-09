@@ -1,7 +1,4 @@
-import northShowcaseHall from './northShowcaseHall'
-import southShowcaseHall from './southShowcaseHall'
-import eastShowcaseHall from './eastShowcaseHall'
-import westShowcaseHall from './westShowcaseHall'
+
 import { unconference, minetown, oracle, tower, castle, sokoban, astralPlane } from './unconfRooms'
 import theater from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
@@ -56,10 +53,6 @@ export interface Room {
 
 const indexRoomData: { [name: string]: Room } = {
   theater,
-  northShowcaseHall,
-  eastShowcaseHall,
-  southShowcaseHall,
-  westShowcaseHall,
   unconference,
   minetown,
   oracle,
