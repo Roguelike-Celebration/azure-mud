@@ -116,6 +116,13 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the bar',
     description: `A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[the Tourist->item]] (a non-alcoholic drink with lots of fruit and a fun umbrella), [[the Berlin Interpretation->item]] (a mojito made with some sort of hyper-caffeinated soda), and [[the Walls Are Shifting->item]] (a Long Island Iced Tea).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>
     There are three booths you can sit at, labelled [[A->barBoothA]], [[B->barBoothB]], and [[C->barBoothC]]. You\'re a stone\'s throw away from the [[dance floor->danceFloor]], [[theater]], and the [[Central Hall->hall]].`,
+    hasNoteWall: true,
+    noteWallData: {
+      roomWallDescription: 'There is a guestbook here.',
+      noteWallButton: 'Sign',
+      addNoteLinkText: 'Sign the guest book',
+      addNotePrompt: 'Sign the guest book!',
+      noteWallDescription: 'Leave heartfelt memories and general good vibes.'
     chatGuid: 'b0720a25-7bd2-44f3-af6b-8e84328bdb58'
   },
   danceFloor: {
