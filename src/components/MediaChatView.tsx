@@ -45,6 +45,7 @@ export default function MediaChatView (props: MediaProps) {
 
   return (
     <div id="media-view">
+      <div>Number of participants other than you: {otherVideos.length}</div>
       {playerVideo} {mediaSelector} {otherVideos}
     </div>
   )

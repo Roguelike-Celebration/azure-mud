@@ -160,9 +160,11 @@ export const TwilioChatContextProvider = (props: {
   }, [micEnabled])
 
   useEffect(() => {
+    console.log("In token roomId useEffect")
     // The initial token might get set after calling joinCall
     // This calls joinCall when we're ready after that initial setup
     if (token && roomId && !room) {
+      console.log("Joining room")
       joinCall(roomId)
     }
   }, [token, roomId])
@@ -287,11 +289,13 @@ export const TwilioChatContextProvider = (props: {
             p.shouldShow = true
             p.streamView = <ParticipantTracks participant={participant} />
             remoteParticipants[i] = p
+            console.log(`Total participants: ${remoteParticipants.length}`)
             setRemoteParticipants(remoteParticipants)
           } else {
             p.shouldShow = true
             p.streamView = <ParticipantTracks participant={participant} />
             setRemoteParticipants(remoteParticipants.concat([p]))
+            console.log(`Total participants: ${remoteParticipants.length + 1}`)
           }
         })
 
@@ -310,6 +314,7 @@ export const TwilioChatContextProvider = (props: {
         })
 
         setRemoteParticipants(remoteParticipants.concat([p]))
+        console.log(`Total participants: ${remoteParticipants.length + 1}`)
 
         // TODO: Handle mute/unmute events for each track
       }
