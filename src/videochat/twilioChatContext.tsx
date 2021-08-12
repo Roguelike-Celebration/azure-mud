@@ -175,30 +175,39 @@ export const TwilioChatContextProvider = (props: {
 
   async function prepareMediaDevices () {
     const mapToDeviceInfo = (d: MediaDeviceInfo): DeviceInfo => {
+      console.log(d)
       return {
         id: d.deviceId,
         name: d.label
       }
     }
-    return navigator.mediaDevices.enumerateDevices()
-      .then((devices) => {
-        console.log('Fetched devices')
 
-        const cameras = devices
-          .filter(d => d.kind === 'videoinput')
-          .map(mapToDeviceInfo)
+    try {
+      // This is just to try to force the prompt early enough
+      await navigator.mediaDevices.getUserMedia({video: true, audio: true})
 
-        const mics = devices
-          .filter(d => d.kind === 'audioinput')
-          .map(mapToDeviceInfo)
+      await navigator.mediaDevices.enumerateDevices()
+        .then((devices) => {
+          console.log('Fetched devices')
 
-        setCameras(cameras)
-        setMics(mics)
+          const cameras = devices
+            .filter(d => d.kind === 'videoinput')
+            .map(mapToDeviceInfo)
 
-        console.log('Setting current camera', cameras[0])
-        setCurrentCamera(cameras[0])
-        setCurrentMic(mics[0])
-      })
+          const mics = devices
+            .filter(d => d.kind === 'audioinput')
+            .map(mapToDeviceInfo)
+
+          setCameras(cameras)
+          setMics(mics)
+
+          console.log('Setting current camera', cameras[0])
+          setCurrentCamera(cameras[0])
+          setCurrentMic(mics[0])
+        }) 
+      } catch (e) {
+        console.log("Error fetching media devices", e)
+      }
   }
 
   async function joinCall (roomId: string) {
