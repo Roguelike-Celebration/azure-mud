@@ -60,109 +60,47 @@ const indexRoomData: { [name: string]: Room } = {
   castle,
   sokoban,
   astralPlane,
-  kitchen: {
-    id: 'kitchen',
-    displayName: 'Kitchen',
-    shortName: 'the kitchen',
-    description: `A series of long picnic tables made of rustic wood abut a stainless steel kitchen island. There are empty samovars of coffee and tea sitting on the counter and a well-picked-over catering tray that, based on the crumbs, once contained pastries.<br/><br/>
-    There is, however, a curious-looking vending machine labelled "Munxip's Magnifient Munchies" and a button you can press marked [[Get Random Food->generateFood]].
-    <br/><br/>
-      There are three tables you can sit at, labelled [[A->kitchenTableA]], [[B->kitchenTableB]], and [[C->kitchenTableC]]. You can also walk over to the [[lounge]], the [[bar]], the [[dance floor->danceFloor]], the [[@-sign statue->statue]] or grab a seat in the [[main theater area->theater]]. Finally, you can climb into the [[shipping container->shippingContainer]].`,
-    hasNoteWall: true
-  },
-  kitchenTableA: {
-    id: 'kitchenTableA',
-    displayName: 'Kitchen Table A',
-    shortName: 'table A in the kitchen',
-    description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[B->kitchenTableB]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`
-  },
-  kitchenTableB: {
-    id: 'kitchenTableB',
-    displayName: 'Kitchen Table B',
-    shortName: 'table B in the kitchen',
-    description: `A rustic wooden picnic table in the kitchen.
-      From here, you can see tables [[A->kitchenTableA]] or [[C->kitchenTableC]], and the [[general kitchen area->kitchen]].`
-  },
-  kitchenTableC: {
-    id: 'kitchenTableC',
-    displayName: 'Kitchen Table C',
-    shortName: 'table C in the kitchen',
-    description: `A rustic wooden picnic table in the kitchen. For some reason this table and *only* this table contains a basket loaded with [[fortune cookies->getFortune]], and a sign next to it reading "Roguelike Celebration is not responsible for any consequences of taking advice from a cookie - so help yourself!"<br/><br/>
-      From here, you can see tables [[A->kitchenTableA]] or [[B->kitchenTableB]], and the [[general kitchen area->kitchen]]`
-  },
-  bar: {
-    id: 'bar',
-    displayName: 'Bar',
-    shortName: 'the bar',
-    description: 'A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[the Tourist->item]] (a non-alcoholic drink with lots of fruit and a fun umbrella), [[the Berlin Interpretation->item]] (a mojito made with some sort of hyper-caffeinated soda), and [[the Walls Are Shifting->item]] (a Long Island Iced Tea).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>You\'re a stone\'s throw away from the [[kitchen]], the [[@-sign statue->statue]], the [[dance floor->danceFloor]], and the [[North Showcase Hall->northShowcaseHall]]. You can also crawl into the [[shipping container->shippingContainer]].',
-    chatGuid: 'b0720a25-7bd2-44f3-af6b-8e84328bdb58'
-  },
-  lounge: {
-    id: 'lounge',
-    displayName: 'Lounge',
-    shortName: 'the lounge',
-    description: 'A chill space to hang away from the hustle and bustle of the main space. Comfy chairs, TVs showing the latest scores in some incomprehensible splort, and a fridge full of La Croix.<br/><br/>From here, you can get to the [[drawing room->loungeDungeonDrawingRoom]], the [[dance floor->danceFloor]], or the [[kitchen]].'
-  },
-  statue: {
-    id: 'statue',
-    displayName: '@-sign Statue',
-    shortName: 'the statue',
-    description: `A memorial to countless adventurers who have helped build this social space.<br/><br/>A plaque on the statue shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.<br/>There's also a suggestion wall for people to add comments about the social space.
-      From here, you can reach the [[kitchen]], the [[bar]], the [[theater]], or the [[North Showcase Hall->northShowcaseHall]]. You can also climb into the [[shipping container->shippingContainer]].`,
-    hasNoteWall: true
-  },
-  danceFloor: {
-    id: 'danceFloor',
-    displayName: 'Dance Floor',
-    shortName: 'the dance floor',
-    description: 'The ping-pong table has been pushed to the side for a makeshift dance floor. Colourful skeletons raise and lower their arms to the beat of chiptune music coming from a DJ booth near the wall. The DJ smoothly transitions between old favourites and requests from years past.<br/><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/511460973&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/funkip" title="Funkip ♥" target="_blank" style="color: #cccccc; text-decoration: none;">Funkip ♥</a> · <a href="https://soundcloud.com/funkip/roguelike-celebration-2018-saturday-night" title="Roguelike Celebration 2018" target="_blank" style="color: #cccccc; text-decoration: none;">Roguelike Celebration 2018</a></div><br/><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/699462760&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/funkip" title="Funkip ♥" target="_blank" style="color: #cccccc; text-decoration: none;">Funkip ♥</a> · <a href="https://soundcloud.com/funkip/rand-gen-mem" title="💖 Roguelike Celebration 2019 Mix" target="_blank" style="color: #cccccc; text-decoration: none;">💖 Roguelike Celebration 2019 Mix</a></div><br/><br/>From here, you can reach the [[lounge]], the [[kitchen]], or the [[bar]].'
-  },
-  shippingContainer: {
-    id: 'shippingContainer',
-    displayName: 'Shipping Container',
-    shortName: 'the shipping container',
-    description: `
-      It's not quite clear why there's a shipping container in the middle of the space. Seems pretty chill, though? Somebody's set up a makeshift bench.<br/><br/>
-      After you climb out, you can get back to the [[bar]], the [[theater]], the [[kitchen]], or the [[@-sign statue->statue]].`
-  },
   entryway: {
     id: 'entryway',
     displayName: 'Registration Desk',
     shortName: 'the registration desk',
-    description: 'A big banner reads \'Welcome to Roguelike Celebration 2020!\' Once you\'ve got your bearings about you, you can move to the [[foyer]].',
+    description: 'A big banner reads \'Welcome to Roguelike Celebration 2020!\' Once you\'ve got your bearings about you, you can move to the [[Central Hall->hall]].',
     hidden: true
   },
-  foyer: {
-    id: 'foyer',
-    displayName: 'Haunted Foyer',
-    shortName: 'the haunted foyer',
-    description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels <em>off</em> about this place.<br/><br/>
-    You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`,
-    specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
+  hall: {
+    id: 'hall',
+    displayName: 'Central Hall',
+    shortName: 'the hall',
+    description: `A large open area, a meeting place. There is a curious-looking vending machine labelled "Munxip's Magnifient Munchies" and a button you can press marked [[Get Random Food->generateFood]].
+    <br/><br/>
+    There are two large boards for notes: one labeled [[Feedback For The Social Space->spaceFeedback]], and another labeled [[References->references]]. There's also a [[swag table]] set up.
+    <br/><br/>
+      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. There's also three long hallways, and it's hard from here to tell where they'll go: one shining with glass and chrome, one made of ancient-looking hash marks, and one overgrown with plant life.`,
+    hasNoteWall: true
+  },
+  spaceFeedback: {
+    id: 'spaceFeedback',
+    displayName: 'Feedback Wall',
+    shortName: 'the feedback wall',
+    description: `A plaque next to the wall shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.<br/>There's also a suggestion wall for people to add comments about the social space.
+      You can always turn around and return to the [[hall]]`,
+    hasNoteWall: true
   },
   swag: {
     id: 'swag',
     displayName: 'Swag Table',
     shortName: 'the swag table',
     description: `A table covered in a giant messy pile of mismatched swag. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>
-    There are also a whole bunch of absolutely beautiful <a href="https://roguelike-celebration.myshopify.com/" target="_blank" rel="noreferrer">conference t-shirts</a> (actual physical shirts!) available <a href="https://roguelike-celebration.myshopify.com/" target="_blank" rel="noreferrer">for sale</a>.
+    There is also a sign that says "Physical Roguelike Celebration Shirts - Coming Soon!".
     <br/><br/>
-    From here, you can walk back to the rest of the [[foyer]].`
+    From here, you can walk back to the rest of the [[hall]].`
   },
-  atelier: {
-    id: 'atelier',
-    displayName: 'Artists\' Atelier',
-    shortName: 'the artists\' atelier',
-    description: `A bright sun-lit space for an artist to work. In the corner of the room are crates full of [[fresh pixels->item]] of all colors, waiting to be placed on a canvas. A screen on one wall shows a rotating slideshow of works by <a href=https://christen.carrd.co/ target=_blank>Christen Alqueza</a>, who also made the overlays and background for the livestream. In the middle of the room is a giant contraption made of various [[pieces of scrap metal->item]]; you can't honestly tell whether it's intended to be art or just leftover scrap.<br/><br/>
-    From here, you can get to the [[west showcase hall->westShowcaseHall]], the [[engineer's work room->workbench]], or the [[proc-gen study->study]].`
-  },
-  study: {
-    id: 'study',
-    displayName: 'Procedural Generation Study',
-    shortName: 'the proc-gen study',
-    description: `A comfy and cozy library that is curiously shaped like a hexagon. One side of the room has a couple of well-worn leather armchairs, while the other four walls are filled top-to-bottom with books. The majority of them are apparent gibberish, but many of them contain insightful writings about the art of procedural content generation.<br/><br/>
-    From here, you can get to the the [[engineer's workbench->workbench]] or the [[artists' atelier->atelier]].`,
+  references: {
+    id: 'references',
+    displayName: 'References Wall',
+    shortName: 'the reference wall',
+    description: `A large board invites you contribute slide decks, videos, files, and articles that would be of interest to the community.<br/><br/>
+    From here, you can walk back to the rest of the [[hall]].`,
     hasNoteWall: true,
     noteWallData: {
       roomWallDescription: 'There is a chalkboard that says "BOOKMARKS" on the top.',
@@ -172,13 +110,55 @@ const indexRoomData: { [name: string]: Room } = {
       noteWallDescription: 'Links to slides, videos, files, and articles of interest.'
     }
   },
-  workbench: {
-    id: 'workbench',
-    displayName: 'Engineer\'s Workbench',
-    shortName: 'the engineer\'s workbench',
-    description: `A cluttered workspace that clearly belongs to someone who loves to tinker. A dim hum fills the room from server racks sitting in the corner, and there are blinking lights coming from every crevice. A blueprint sitting on the workbench outlines intricate plans for something called an 'entity-component system'.<br/><br/>
-    From here, you can get to the [[proc-gen study->study]] or the [[artists' atelier->atelier]].`
+  bar: {
+    id: 'bar',
+    displayName: 'Bar',
+    shortName: 'the bar',
+    description: `A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[the Tourist->item]] (a non-alcoholic drink with lots of fruit and a fun umbrella), [[the Berlin Interpretation->item]] (a mojito made with some sort of hyper-caffeinated soda), and [[the Walls Are Shifting->item]] (a Long Island Iced Tea).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>
+    There are three booths you can sit at, labelled [[A->barBoothA]], [[B->barBoothB]], and [[C->barBoothC]]. You\'re a stone\'s throw away from the [[dance floor->danceFloor]], [[theater]], and the [[Central Hall->hall]].`,
+    chatGuid: 'b0720a25-7bd2-44f3-af6b-8e84328bdb58'
   },
+  danceFloor: {
+    id: 'danceFloor',
+    displayName: 'Dance Floor',
+    shortName: 'the dance floor',
+    description: `The ping-pong table has been pushed to the side for a makeshift dance floor. Colourful skeletons raise and lower their arms to the beat of chiptune music coming from a DJ booth near the wall. The DJ smoothly transitions between old favourites and requests from years past.<br/>
+    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/511460973&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/funkip" title="Funkip ♥" target="_blank" style="color: #cccccc; text-decoration: none;">Funkip ♥</a> · <a href="https://soundcloud.com/funkip/roguelike-celebration-2018-saturday-night" title="Roguelike Celebration 2018" target="_blank" style="color: #cccccc; text-decoration: none;">Roguelike Celebration 2018</a></div><br/><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/699462760&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/funkip" title="Funkip ♥" target="_blank" style="color: #cccccc; text-decoration: none;">Funkip ♥</a> · <a href="https://soundcloud.com/funkip/rand-gen-mem" title="💖 Roguelike Celebration 2019 Mix" target="_blank" style="color: #cccccc; text-decoration: none;">💖 Roguelike Celebration 2019 Mix</a></div><br/><br/>
+    Or you can head back to the [[bar]].`
+  },
+  barBoothA: {
+    id: 'barBoothA',
+    displayName: 'Bar Booth A',
+    shortName: 'table A in the kitchen',
+    description: `A cozy booth, far enough from the bar for a smaller conversation.
+      From here, you can see tables [[B->barBoothB]] or [[C->barBoothC]], and the [[rest of the bar->bar]].`
+  },
+  barBoothB: {
+    id: 'barBoothB',
+    displayName: 'Bar Booth B',
+    shortName: 'table B in the kitchen',
+    description: `A cozy booth, far enough from the bar for a smaller conversation.
+      From here, you can see tables [[A->barBoothA]] or [[C->barBoothC]], and the [[rest of the bar->bar]].`
+  },
+  barBoothC: {
+    id: 'barBoothC',
+    displayName: 'Bar Booth C',
+    shortName: 'table C in the kitchen',
+    description: `A cozy booth, far enough from the bar for a smaller conversation. For some reason this table and *only* this table contains a basket loaded with [[fortune cookies->getFortune]], and a sign next to it reading "Roguelike Celebration is not responsible for any consequences of taking advice from a cookie - so help yourself!"<br/><br/>
+      From here, you can see tables [[A->barBoothA]] or [[B->barBoothB]], and the [[rest of the bar->bar]]`
+  },
+
+/*  Not deleting this yet because I want to figure out what to do with the doorways / color minigame, but it *shouldn't* link anywhere.
+    foyer: {
+    id: 'foyer',
+    displayName: 'Haunted Foyer',
+    shortName: 'the haunted foyer',
+    description: `A grand opulent foyer leading into the theater. A chill runs down your spine as you walk in; something just feels <em>off</em> about this place.<br/><br/>
+    You can see a [[swag table->swag]] in the corner, and can also leave to the [[theater]] or the [[west showcase hall->westShowcaseHall]].`,
+    specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
+  }, */
+
+  // I think right now you can't get here. It'd be nice to turn the items into something neat, though I'm not sure the full room index 'feature' was sufficiently compelling.
   hiddenPortalRoom: {
     id: 'hiddenPortalRoom',
     displayName: 'Portal Room',
