@@ -51,7 +51,7 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const fetchLocalVideoTrack = async () => {
-    console.log('Fetching local video track')
+    console.log('[TWILIO] Fetching local video track')
     const options: Twilio.CreateLocalTrackOptions = { // TODO: Shrink size if mobile
       height: 720,
       frameRate: 24,
@@ -134,9 +134,9 @@ export const TwilioChatContextProvider = (props: {
   }
 
   useEffect(() => {
-    console.log('In useeffect for camera')
+    console.log('[TWILIO] In useeffect for camera')
     if (!currentCamera) return
-    console.log('Has camera')
+    console.log('[TWILIO] Has camera')
     fetchLocalVideoTrack()
   }, [currentCamera])
 
@@ -160,11 +160,11 @@ export const TwilioChatContextProvider = (props: {
   }, [micEnabled])
 
   useEffect(() => {
-    console.log("In token roomId useEffect")
+    console.log('[TWILIO] In token roomId useEffect')
     // The initial token might get set after calling joinCall
     // This calls joinCall when we're ready after that initial setup
     if (token && roomId && !room) {
-      console.log("Joining room")
+      console.log('[TWILIO] Joining room')
       joinCall(roomId)
     }
   }, [token, roomId])
@@ -186,11 +186,11 @@ export const TwilioChatContextProvider = (props: {
 
     try {
       // This is just to try to force the prompt early enough
-      await navigator.mediaDevices.getUserMedia({video: true, audio: true})
+      await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
 
       await navigator.mediaDevices.enumerateDevices()
         .then((devices) => {
-          console.log('Fetched devices')
+          console.log('[TWILIO] Fetched devices')
 
           const cameras = devices
             .filter(d => d.kind === 'videoinput')
@@ -203,13 +203,13 @@ export const TwilioChatContextProvider = (props: {
           setCameras(cameras)
           setMics(mics)
 
-          console.log('Setting current camera', cameras[0])
+          console.log('[TWILIO] Setting current camera', cameras[0])
           setCurrentCamera(cameras[0])
           setCurrentMic(mics[0])
-        }) 
-      } catch (e) {
-        console.log("Error fetching media devices", e)
-      }
+        })
+    } catch (e) {
+      console.log('[TWILIO] Error fetching media devices', e)
+    }
   }
 
   async function joinCall (roomId: string) {
@@ -271,64 +271,38 @@ export const TwilioChatContextProvider = (props: {
         }
       })
 
-      const addParticipant = (participant: Twilio.Participant) => {
-        // TODO: Need to update shouldShow when other shit happens, like adding/removing tracks
-        const p: Participant = {
+      const twilioParticipantToParticipant = (participant: Twilio.Participant): Participant => {
+        // TODO: The existence of this object (rather than just a React view)
+        // only makes sense in a world where muted and shouldShow are tracked here
+        // instead of within ParticipantTracks.
+        // ShouldShow should be tracked within there (based on remote mute)
+        // Muted will eventually need to be set outside (for client blocking)
+        // but we can skip that for now and refactor later?
+        return {
           userId: participant.identity,
           muted: false, // TODO
           streamView: <ParticipantTracks participant={participant} />,
-          shouldShow: participant.tracks.entries.length > 0
+          shouldShow: true
         }
-        console.log('Adding participant', participant, p)
-
-        participant.on('trackSubscribed', track => {
-          console.log('Track subscribed', track)
-          // This is all ugly and shouldn't mutate, but I don't know what happens if we try to deep-copy React nodes
-          const i = remoteParticipants.findIndex(p => p.userId === participant.identity)
-          if (i !== -1) {
-            p.shouldShow = true
-            p.streamView = <ParticipantTracks participant={participant} />
-            remoteParticipants[i] = p
-            console.log(`Total participants: ${remoteParticipants.length}`)
-            setRemoteParticipants(remoteParticipants)
-          } else {
-            p.shouldShow = true
-            p.streamView = <ParticipantTracks participant={participant} />
-            setRemoteParticipants(remoteParticipants.concat([p]))
-            console.log(`Total participants: ${remoteParticipants.length + 1}`)
-          }
-        })
-
-        // TODO: These two events are what will let us remove disabled video streams
-        // There's rendering logic to sort out here (how do we update components?)
-        // Presumably, we should show someone differently if they have only audio or neither audio nor video
-
-        participant.on('trackDisabled', track => {
-          console.log('Track disabled', track, participant)
-          // setRemoteParticipants(remoteParticipants)
-        })
-
-        participant.on('trackEnabled', track => {
-          console.log('Track enabled', track, participant)
-          // setRemoteParticipants(remoteParticipants)
-        })
-
-        setRemoteParticipants(remoteParticipants.concat([p]))
-        console.log(`Total participants: ${remoteParticipants.length + 1}`)
-
-        // TODO: Handle mute/unmute events for each track
       }
 
       const removeParticipant = (participant: Twilio.Participant) => {
-        console.log('Participant disconnected')
+        console.log('[TWILIO] Participant disconnected')
         setRemoteParticipants(remoteParticipants
           .filter(p => p.userId !== participant.identity))
       }
 
-      console.log('In room?', room)
+      console.log('[TWILIO] In room?', room)
+      console.log('[TWILIO] Attached participant count:', room.participants.size)
+
       setLocalStreamView(<ParticipantTracks participant={room.localParticipant}/>)
-      room.participants.forEach(addParticipant)
-      room.on('participantConnected', addParticipant)
+      setRemoteParticipants(Array.from(room.participants.values()).map(twilioParticipantToParticipant))
+
+      room.on('participantConnected', (twilioParticipant) => {
+        console.log('[TWILIO] New participant connected', remoteParticipants.length + 1)
+        const p = twilioParticipantToParticipant(twilioParticipant)
+        setRemoteParticipants(remoteParticipants.concat(p))
+      })
 
       room.on('participantDisconnected', removeParticipant)
 
@@ -338,12 +312,12 @@ export const TwilioChatContextProvider = (props: {
 
       setRoom(room)
     } catch (e) {
-      console.log('Could not connect to room', e)
+      console.log('[TWILIO] Could not connect to room', e)
     }
   }
 
   function leaveCall () {
-    console.log('In leave call', localVideoTrack)
+    console.log('[TWILIO] In leave call', localVideoTrack)
     if (room) room.disconnect()
     if (localVideoTrack) localVideoTrack.stop()
     if (localAudioTrack) localAudioTrack.stop()

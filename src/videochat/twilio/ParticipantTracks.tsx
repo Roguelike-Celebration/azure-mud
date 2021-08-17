@@ -20,6 +20,8 @@ interface ParticipantTracksProps {
  *  and the Publication component renders Tracks.
  */
 
+// TODO: This should handle mute
+
 export default function ParticipantTracks ({
   participant,
   videoOnly,
@@ -29,17 +31,17 @@ export default function ParticipantTracks ({
 }: ParticipantTracksProps) {
   const publications = usePublications(participant)
 
-  let filteredPublications
+  // let filteredPublications
 
-  if (enableScreenShare && publications.some(p => p.trackName.includes('screen'))) {
-    filteredPublications = publications.filter(p => !p.trackName.includes('camera'))
-  } else {
-    filteredPublications = publications.filter(p => !p.trackName.includes('screen'))
-  }
+  // if (enableScreenShare && publications.some(p => p.trackName.includes('screen'))) {
+  //   filteredPublications = publications.filter(p => !p.trackName.includes('camera'))
+  // } else {
+  //   filteredPublications = publications.filter(p => !p.trackName.includes('screen'))
+  // }
 
   return (
     <>
-      {filteredPublications.map(publication => (
+      {publications.map(publication => (
         <Publication
           key={publication.kind}
           publication={publication}
