@@ -1,3 +1,8 @@
+// 8/13: Storyboard-lang now theoretically compiles the script.
+// However, our storyboard-lang code is currently broken in Parcel.
+// It removes some parens in a way that result in invalid JS.
+// Try switching back to old parcel?
+
 // 6/16 NOTE FOR TOMORROW EM
 // My "node history length > 0" check is presumably faulty
 // Since some items will expectedly not trigger a node, they'll never have a successful state check
@@ -143,27 +148,26 @@ export async function attemptActionOnItem (params: { action?: TextInput, itemSta
         game.completePassage(passageId)
       })
 
-      game.stateListener = (state) => {
+      game.addObserver('bag.nodeHistory', (newValue) => {
         // We only want to fire this logic after a node is finished.
         // The handler signature should be something like
         // game.addEventListener('nodeComplete', (nodeId, state) => {
         // But this check is a hacky stopgap for now ("for now" ;))
         if (itemState.itemId === 'cauldron') {
-          console.log('In state listener for cauldron', state.bag, state.clickableAction)
-        }
-        if (Object.keys(state.bag.nodeHistory).length === 0) { return }
-
-        if (state.player && state.player.holding) {
-          delete state.player.holding.player
+          console.log('In state listener for cauldron', game.state.bag, game.state.clickableAction)
         }
 
-        console.log(`Resolving state for ${itemState.itemId}`, state)
+        if (game.state.player && game.state.player.holding) {
+          delete game.state.player.holding.player
+        }
 
-        resolve(state)
+        console.log(`Resolving state for ${itemState.itemId}`, game.state)
+
+        resolve(game.state)
 
         // TODO: Actually stop things!
         // game.stop()
-      }
+      })
 
       game.start()
 
