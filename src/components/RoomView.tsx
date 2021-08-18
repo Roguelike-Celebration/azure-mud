@@ -37,7 +37,7 @@ export default function RoomView (props: Props) {
   const { prepareForMediaChat, currentMic, currentCamera, joinCall, publishMedia, publishAudio, unpublishMedia } = useMediaChatContext()
 
   const { room, roomData, self, itemData } = props
-  if (self.item) {
+  if (self.item && itemData) {
     const heldItem = itemData[self.item]
     delete heldItem.player;
     (self as any).holding = heldItem
