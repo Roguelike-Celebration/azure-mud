@@ -33,7 +33,7 @@ export const TwilioChatContextProvider = (props: {
   const [publishingCamera, setPublishingCamera] = useState<boolean>()
   const [publishingMic, setPublishingMic] = useState<boolean>()
 
-  const [remoteParticipants, setRemoteParticipants] = useState<Participant[]>([])
+  const [remoteParticipants, setRemoteParticipants] = useState<Map<String, Twilio.Participant>>()
 
   const [localVideoTrack, setLocalVideoTrack] = useState<Twilio.LocalVideoTrack>()
   const [localAudioTrack, setLocalAudioTrack] = useState<Twilio.LocalAudioTrack>()
@@ -271,40 +271,15 @@ export const TwilioChatContextProvider = (props: {
         }
       })
 
-      const twilioParticipantToParticipant = (participant: Twilio.Participant): Participant => {
-        // TODO: The existence of this object (rather than just a React view)
-        // only makes sense in a world where muted and shouldShow are tracked here
-        // instead of within ParticipantTracks.
-        // ShouldShow should be tracked within there (based on remote mute)
-        // Muted will eventually need to be set outside (for client blocking)
-        // but we can skip that for now and refactor later?
-        return {
-          userId: participant.identity,
-          muted: false, // TODO
-          streamView: <ParticipantTracks participant={participant} />,
-          shouldShow: true
-        }
-      }
-
-      const removeParticipant = (participant: Twilio.Participant) => {
-        console.log('[TWILIO] Participant disconnected')
-        setRemoteParticipants(remoteParticipants
-          .filter(p => p.userId !== participant.identity))
-      }
-
       console.log('[TWILIO] In room?', room)
       console.log('[TWILIO] Attached participant count:', room.participants.size)
 
       setLocalStreamView(<ParticipantTracks participant={room.localParticipant}/>)
-      setRemoteParticipants(Array.from(room.participants.values()).map(twilioParticipantToParticipant))
+      setRemoteParticipants(room.participants)
 
-      room.on('participantConnected', (twilioParticipant) => {
-        console.log('[TWILIO] New participant connected', remoteParticipants.length + 1)
-        const p = twilioParticipantToParticipant(twilioParticipant)
-        setRemoteParticipants(remoteParticipants.concat(p))
-      })
+      room.on('participantConnected', () => { setRemoteParticipants(room.participants) })
 
-      room.on('participantDisconnected', removeParticipant)
+      room.on('participantDisconnected', () => { setRemoteParticipants(room.participants) })
 
       window.addEventListener('beforeunload', (event) => {
         room.disconnect()

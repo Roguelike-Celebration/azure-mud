@@ -8,6 +8,7 @@ import LocalMediaView from './LocalMediaView'
 
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
+import ParticipantTracks from '../videochat/twilio/ParticipantTracks'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
@@ -29,23 +30,21 @@ export default function MediaChatView (props: MediaProps) {
     )
   }
 
+  let otherVideos
   console.log(callParticipants)
-  const otherVideos = (callParticipants || [])
-    .filter(p => {
-      return p.shouldShow
-    })
-    .map((p) => {
+  if(callParticipants) {
+    otherVideos = (Array.from(callParticipants.values())).map((p) => {
       return (
-        <div key={`stream-wrapper-${p.userId}`}>
-          <NameView userId={p.userId} id={`stream-nameview-${p.userId}`} />:
-          {p.streamView}
+        <div key={`stream-wrapper-${p.identity}`}>
+          <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />:
+          <ParticipantTracks participant={p} />
         </div>
       )
     })
+  }
 
   return (
     <div id="media-view">
-      <div>Number of participants other than you: {otherVideos.length}</div>
       {playerVideo} {mediaSelector} {otherVideos}
     </div>
   )
