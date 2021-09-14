@@ -55,13 +55,14 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
 
   return (
     <div id="messages" onScroll={handleScroll}>
-      {messagesAfterMovementFilter.slice(-150).map((m, idx) => {
+      {messagesAfterMovementFilter.slice(-150).reverse().map((m, idx) => {
         let hideTimestamp = false
-        const previousMessage = props.messages[idx - 1]
+        const previousMessage = props.messages[idx + 1]
         if (previousMessage) {
           // TODO: Give all messages a userId for this to be meaningful
+          // TODO: This logic broke with the naive reverse()
           if ((previousMessage as any).userId && (m as any).userId && (previousMessage as any).userId === (m as any).userId) {
-            const diff = (new Date(m.timestamp).getTime() - new Date(previousMessage.timestamp).getTime())
+            const diff = Math.abs(new Date(m.timestamp).getTime() - new Date(previousMessage.timestamp).getTime())
             // This is a bad way to calculate '3 minutes' and I should feel bad -em
             if (diff < 1000 * 60 * 3) {
               hideTimestamp = true
