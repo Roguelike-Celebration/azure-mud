@@ -1,4 +1,5 @@
 import { CosmosClient } from '@azure/cosmos'
+import Database from './database'
 import { getServerSettings } from './endpoints/serverSettings'
 
 // TODO: Partition key issues
@@ -24,6 +25,9 @@ const getContainer = (containerId: string) => {
 
 // TODO: All times we fetch all users, filter out banned
 
+// TODO: This no longer properly conforms to Database
+// If we need it to, uh, let TypeScript tell us what Em broke
+// (Sorry! -Em)
 const CosmosDB = {
   // TODO: I think I'm only using this for the equivalent of minimalProfileMap. I could just make a minimalProfileMap fn?
   async getAllUsers (): Promise<User[]> {
@@ -81,7 +85,7 @@ const CosmosDB = {
     }
   },
 
-  async allRoomOccupants () {
+  async allRoomOccupants (): Promise<{[roomId: string]: string[]}> {
     console.log('Attempting to fetch all roomOccupants')
     try {
       const container = getContainer('users')
@@ -98,10 +102,10 @@ const CosmosDB = {
       console.log('Error fetching all room occupants', e)
     }
 
-    return []
+    return {}
   },
 
-  async roomOccupants (roomId: string) {
+ async roomOccupants (roomId: string) {
     console.log('Attempting to fetch roomOccupants for roomId', roomId)
     try {
       const container = getContainer('users')
@@ -133,12 +137,15 @@ const CosmosDB = {
     }
   },
 
+  // WARNING: This is currently broken. 
+  // Needs to be updated to return a string list of all userIds in the user's current room
   async updateVideoPresenceForUser (user: User, isActive: boolean) {
     const data = { ...user, isInVideoChat: isActive }
 
     try {
       const container = getContainer('users')
-      return await container.item(user.id, partitionKey).replace(data)
+      await container.item(user.id, partitionKey).replace(data)
+      return []
     } catch (e) {
       console.log('ERROR: Could not update user video presence', user.id, isActive, e)
     }
@@ -223,7 +230,8 @@ const CosmosDB = {
     const settings = await CosmosDB.getServerSettings()
 
     const container = getContainer('serverSettings')
-    return container.item('serverSettings').replace({ ...settings, ...data })
+    const update = await container.item('serverSettings').replace({ ...settings, ...data })
+      return (update.item as unknown) as ServerSettings
   },
 
   // async addRoomNote(roomId: string, note: RoomNote) {}

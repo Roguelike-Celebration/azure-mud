@@ -1,8 +1,10 @@
 import { promisify } from 'util'
-import { User, isMod, MinimalUser } from './user'
+import { User, isMod } from './user'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
 import { RoomNote } from './roomNote'
+import { roomData } from './rooms'
 import redis = require('redis')
+import Database from './database'
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -20,25 +22,65 @@ const addToSet = promisify(cache.sadd).bind(cache)
 const removeFromSet = promisify(cache.srem).bind(cache)
 const getSet = promisify(cache.smembers).bind(cache)
 
-const Redis = {
-  async getActiveUsers () {
+interface RedisInternal extends Database {
+  addOccupantToRoom (roomId: string, userId: string),
+  removeOccupantFromRoom (roomId: string, userId: string)
+
+    addMod (userId: string)
+    removeMod (userId: string)
+}
+
+const Redis: RedisInternal = {
+  async getActiveUsers (): Promise<string[]> {
     return getSet(activeUsersKey) || []
+  },
+
+  // TODO: This is potentially unperformant
+  // Storing all users as a Redis set is tricky, 
+  // since profile updates need to replace the existing user,
+  // but I'm not sure we can key our JSONified blobs in a set
+  async getAllUsers() {
+    const allUserIds: string[] = await getSet(allUserIdsKey)
+    return await Promise.all(allUserIds.map(async u => {
+      return await Redis.getUser(u)
+    }))
+  },
+
+  async allRoomOccupants(): Promise<{[roomId: string]: string[]}> {
+    const allRoomIds = Object.keys(roomData)
+    let data = {}
+    await Promise.all(allRoomIds.map(async id => {
+      const occupants = await Redis.roomOccupants(id)
+      data[id] = occupants
+    }))
+    return data
   },
 
   async getUserHeartbeat (userId: string): Promise<number> {
     return await getCache(heartbeatKeyForUser(userId))
   },
 
-  async setUserHeartbeat (userId: string) {
-    await setCache(heartbeatKeyForUser(userId), new Date().valueOf())
+  async setUserHeartbeat (user: User) {
+    await setCache(heartbeatKeyForUser(user.id), new Date().valueOf())
   },
 
-  async setUserAsActive (userId: string) {
-    return await addToSet(activeUsersKey, userId)
+  async setUserAsActive (user: User, isActive: boolean = true) {
+    if (isActive) {
+      return await addToSet(activeUsersKey, user.id)
+    } else {
+      return await removeFromSet(activeUsersKey, user.id)
+    }
   },
 
-  async setUserAsInactive (userId: string) {
-    return await removeFromSet(activeUsersKey, userId)
+  async getUserIdForUsername(username: string, onlineUsersOnly: boolean) {
+    const userId = await getCache(userIdKeyForUsername(username))
+    if (onlineUsersOnly) {
+      const activeUsers = await Redis.getActiveUsers()
+      if (!activeUsers.includes(userId)) {
+        return undefined 
+      }
+    }
+    return userId
   },
 
   // Room presence
@@ -53,25 +95,27 @@ const Redis = {
     return await addToSet(presenceKey, userId)
   },
 
-  async removeOccupantFromRoom (roomId: string, userId: string) {
+    async removeOccupantFromRoom (roomId: string, userId: string) {
     const presenceKey = roomPresenceKey(roomId)
     return await removeFromSet(presenceKey, userId)
   },
 
-  async setCurrentRoomForUser (userId: string, roomId: string) {
-    await setCache(roomKeyForUser(userId), roomId)
+  async setCurrentRoomForUser (user: User, roomId: string) {
+    await Redis.addOccupantToRoom(roomId, user.id)
+
+    if (user.roomId !== roomId) {
+      await Redis.removeOccupantFromRoom(user.roomId, user.id)
+    }
   },
 
-  async currentRoomForUser (userId: string) {
-    return await getCache(roomKeyForUser(userId))
-  },
+  async updateVideoPresenceForUser(user: User, isActive: boolean) {
+    if (isActive) {
+     await addToSet(videoPresenceKey(user.roomId), user.id)
+    } else {
+      await removeFromSet(videoPresenceKey(user.roomId), user.id)
+    }
 
-  async addUserToVideoPresence (userId: string, roomId: string) {
-    await addToSet(videoPresenceKey(roomId), userId)
-  },
-
-  async removeUserFromVideoPresence (userId: string, roomId: string) {
-    await removeFromSet(videoPresenceKey(roomId), userId)
+    return await Redis.getVideoPresenceForRoom(user.roomId)
   },
 
   async getVideoPresenceForRoom (roomId: string) {
@@ -79,15 +123,16 @@ const Redis = {
   },
 
   // User
-  async getPublicUser (userId: string) {
+  async getUser (userId: string) {
     const userData = await getCache(profileKeyForUser(userId))
+    console.log("Got user data", userId, userData)
 
     if (!userData) {
       return undefined
     }
 
     const user: User = JSON.parse(userData)
-
+    console.log("Parsed user", user)
     if (await isMod(user.id)) {
       user.isMod = true
     }
@@ -95,43 +140,13 @@ const Redis = {
     return user
   },
 
-  async setUserProfile (userId: string, data: User) {
-    return await setCache(profileKeyForUser(userId), JSON.stringify(data))
-  },
+  // TODO: it would be great if this function accepted Partial<User>
+  async setUserProfile (userId: string, user: User): Promise<User> {
+    await setCache(profileKeyForUser(userId), JSON.stringify(user))
+    await addToSet(allUserIdsKey, userId)
+    await setCache(userIdKeyForUsername(user.username), user.id)
 
-  async getMinimalProfileForUser (userId: string) {
-    const user = JSON.parse(await getCache(usernameKeyForUser(userId)))
-
-    if (await isMod(userId)) {
-      user.isMod = true
-    }
     return user
-  },
-
-  async setMinimalProfileForUser (userId: string, data: MinimalUser) {
-    delete data.isMod
-    delete data.isBanned
-    const result = await setCache(usernameKeyForUser(userId), JSON.stringify(data))
-
-    const rawUserMap = await getCache(userMapKey)
-    let userMap: {[userId: string]: MinimalUser} = {}
-    if (rawUserMap) {
-      userMap = JSON.parse(rawUserMap)
-    }
-
-    // We don't trust the data the user has sent in from the client
-    // so unsetting that field and manually setting it here is the solution!
-    if (await isMod(userId)) {
-      data.isMod = true
-    }
-    userMap[userId] = data
-
-    await setCache(userMapKey, JSON.stringify(userMap))
-    return result
-  },
-
-  async minimalProfileUserMap () {
-    return JSON.parse((await getCache(userMapKey) || '{}'))
   },
 
   async lastShoutedForUser (userId: string) {
@@ -141,42 +156,28 @@ const Redis = {
     }
   },
 
-  async userJustShouted (userId: string) {
-    await setCache(shoutKeyForUser(userId), JSON.stringify(new Date()))
+  async userJustShouted (user: User) {
+    await setCache(shoutKeyForUser(user.id), JSON.stringify(new Date()))
   },
 
-  // Because this data lives in both the minimal user profile and the real user data,
-  // we need to read/write in two places. Sigh.
-  async banUser (userId: string) {
-    const presenceData = await JSON.parse(
-      await getCache(usernameKeyForUser(userId))
-    )
-    presenceData.isBanned = true
-    await setCache(usernameKeyForUser(userId), JSON.stringify(presenceData))
-
-    const profileData = await JSON.parse(
-      await getCache(profileKeyForUser(userId))
-    )
-    profileData.isBanned = true
-    await setCache(profileKeyForUser(userId), JSON.stringify(profileData))
-  },
-
-  async unbanUser (userId: string) {
-    const profile = await JSON.parse(
-      await getCache(usernameKeyForUser(userId))
-    )
-    profile.isBanned = false
-    await setCache(usernameKeyForUser(userId), JSON.stringify(profile))
-
-    const profileData = await JSON.parse(
-      await getCache(profileKeyForUser(userId))
-    )
-    profileData.isBanned = false
-    await setCache(profileKeyForUser(userId), JSON.stringify(profileData))
+  // TODO: this used to set some now-deprecated presence data
+  // make sure this actually works
+  async banUser (user: User, isBanned: boolean = true) {
+      const profile = await Redis.getUser(user.id)
+      profile.isBanned = isBanned
+      await Redis.setUserProfile(user.id, profile)
   },
 
   async modList (): Promise<string[]> {
     return await getSet(modListKey) || []
+  },
+
+  async setModStatus(user: User, isMod: boolean) {
+    if (isMod) {
+      return await Redis.addMod(user.id)
+    } else {
+      return await Redis.removeMod(user.id)
+    }
   },
 
   async addMod (userId: string) {
@@ -292,6 +293,10 @@ const Redis = {
 
   async webhookDeployKey () {
     return await getCache('deployWebhookKey')
+  },
+
+  async setWebhookDeployKey (key: string) {
+    return await setCache('deployWebhookKey', key)
   }
 }
 
@@ -301,17 +306,19 @@ const modListKey = 'mods'
 
 const serverSettingsKey = 'serverSettings'
 
+const allUserIdsKey = 'allUserIds'
+
 function shoutKeyForUser (user: string): string {
   return `${user}Shout`
-}
-
-function usernameKeyForUser (userId: string): string {
-  return `${userId}Handle`
 }
 
 function profileKeyForUser (userId: string): string {
   return `${userId}Profile`
 }
+
+function userIdKeyForUsername (username: string): string {
+  return `${username}Username`
+} 
 
 function heartbeatKeyForUser (user: string): string {
   return `${user}Heartbeat`
@@ -319,14 +326,6 @@ function heartbeatKeyForUser (user: string): string {
 
 function roomPresenceKey (roomName: string): string {
   return `${roomName}Presence`
-}
-
-function roomKeyForUser (user: string): string {
-  return `${user}Room`
-}
-
-function roomKey (name: string) {
-  return `${name}RoomData`
 }
 
 function roomNotesKey (roomId: string): string {

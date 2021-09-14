@@ -1,12 +1,13 @@
 import { User } from './user'
-import DB from './cosmosdb'
+import { DB } from './database'
 import { Result } from './endpoint'
 
 export async function shout (user: User, messageId: string, message: string): Promise<Result> {
   // Currently hardcode a 2-minute shout cooldown
-  if (user.lastShouted) {
+  const date = await DB.lastShoutedForUser(user.id)
+  if (date) {
     const cooldownMinutes = 2
-    const diff = new Date().valueOf() - user.lastShouted.valueOf()
+    const diff = new Date().valueOf() - date.valueOf()
     if (!user.isMod && Math.floor(diff / 1000 / 60) < cooldownMinutes) {
       return {
         httpResponse: {

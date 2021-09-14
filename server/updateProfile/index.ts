@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { azureWrap } from '../src/azureWrap'
 import updateProfile from '../src/endpoints/updateProfile'
-import DB from '../src/cosmosdb'
+import {DB} from '../src/database'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -13,7 +13,7 @@ const httpTrigger: AzureFunction = async function (
   // Adding a lil bit of business logic here is a quick fix for now.
   if (req.headers && req.headers['x-ms-client-principal-id']) {
     const userId = req.headers['x-ms-client-principal-id']
-    const username = (await DB.getPublicUser(userId)).username
+    const username = (await DB.getUser(userId)).username
 
     // Special case audit log entry - see authenticate(...) for general case audit
     context.bindings.tableBinding = [{

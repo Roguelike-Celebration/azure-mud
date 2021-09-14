@@ -5,7 +5,7 @@ import setUpRoomsForUser from '../setUpRoomsForUser'
 import { RoomResponse } from '../types'
 import { User, isMod, minimizeUser } from '../user'
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
-import DB from '../cosmosdb'
+import DB from '../redis'
 import Redis from '../redis'
 
 const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
@@ -13,7 +13,6 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
   const result: Result = {}
 
   if (user.roomId === undefined) {
-    log('Setting default roomId')
     user.roomId = 'entryway'
   }
 
@@ -35,10 +34,11 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     profile: user
   }
 
+
   if (roomData[user.roomId].hasNoteWall) {
     response.roomNotes = await Redis.getRoomNotes(user.roomId)
   }
-
+  
   result.httpResponse = {
     status: 200,
     body: response
@@ -61,8 +61,6 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     })
   }
 
-  log('Setting messages')
-
   const minimalUser = minimizeUser(user)
 
   result.messages = [
@@ -78,7 +76,7 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     await globalPresenceMessage([user.roomId])
   ]
 
-  log('Finished the thing')
+  log('Finished all of "connect"')
   log(result)
 
   return result

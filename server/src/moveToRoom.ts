@@ -2,7 +2,7 @@ import { roomData } from './rooms'
 import { RoomResponse } from './types'
 import { User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
-import DB from '../src/cosmosdb'
+import {DB} from './database'
 import Redis from '../src/redis'
 import { Result } from './endpoint'
 
