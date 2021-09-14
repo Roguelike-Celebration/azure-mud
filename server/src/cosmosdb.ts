@@ -105,7 +105,7 @@ const CosmosDB = {
     return {}
   },
 
- async roomOccupants (roomId: string) {
+  async roomOccupants (roomId: string) {
     console.log('Attempting to fetch roomOccupants for roomId', roomId)
     try {
       const container = getContainer('users')
@@ -137,7 +137,7 @@ const CosmosDB = {
     }
   },
 
-  // WARNING: This is currently broken. 
+  // WARNING: This is currently broken.
   // Needs to be updated to return a string list of all userIds in the user's current room
   async updateVideoPresenceForUser (user: User, isActive: boolean) {
     const data = { ...user, isInVideoChat: isActive }
@@ -231,7 +231,7 @@ const CosmosDB = {
 
     const container = getContainer('serverSettings')
     const update = await container.item('serverSettings').replace({ ...settings, ...data })
-      return (update.item as unknown) as ServerSettings
+    return (update.item as unknown) as ServerSettings
   },
 
   // async addRoomNote(roomId: string, note: RoomNote) {}

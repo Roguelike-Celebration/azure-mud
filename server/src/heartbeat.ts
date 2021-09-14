@@ -23,9 +23,9 @@ export async function getHeartbeatData (): Promise<{
 }
 
 export async function userHeartbeatReceived (user: User) {
-  console.log("userHeartbeatReceived")
+  console.log('userHeartbeatReceived')
   await DB.setUserHeartbeat(user)
-  console.log("Did setUserHeartbeat")
+  console.log('Did setUserHeartbeat')
   await DB.setUserAsActive(user, true)
-console.log("Did setAsActive")
+  console.log('Did setAsActive')
 }

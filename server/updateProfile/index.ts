@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { azureWrap } from '../src/azureWrap'
 import updateProfile from '../src/endpoints/updateProfile'
-import {DB} from '../src/database'
+import { DB } from '../src/database'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

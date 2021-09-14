@@ -2,6 +2,8 @@ import { User } from './user'
 import { RoomNote } from './roomNote'
 import { ServerSettings } from './types'
 
+import Redis from './redis'
+
 interface Database {
   // -----------------------------------------------------------------
   // WORLD PRESENCE
@@ -99,6 +101,4 @@ interface Database {
 
 // eslint-disable-next-line no-undef
 export default Database
-
-import Redis from './redis'
 export { Redis as DB }

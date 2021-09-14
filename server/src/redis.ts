@@ -3,8 +3,8 @@ import { User, isMod } from './user'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
 import { RoomNote } from './roomNote'
 import { roomData } from './rooms'
-import redis = require('redis')
 import Database from './database'
+import redis = require('redis')
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -36,19 +36,19 @@ const Redis: RedisInternal = {
   },
 
   // TODO: This is potentially unperformant
-  // Storing all users as a Redis set is tricky, 
+  // Storing all users as a Redis set is tricky,
   // since profile updates need to replace the existing user,
   // but I'm not sure we can key our JSONified blobs in a set
-  async getAllUsers() {
+  async getAllUsers () {
     const allUserIds: string[] = await getSet(allUserIdsKey)
     return await Promise.all(allUserIds.map(async u => {
       return await Redis.getUser(u)
     }))
   },
 
-  async allRoomOccupants(): Promise<{[roomId: string]: string[]}> {
+  async allRoomOccupants (): Promise<{[roomId: string]: string[]}> {
     const allRoomIds = Object.keys(roomData)
-    let data = {}
+    const data = {}
     await Promise.all(allRoomIds.map(async id => {
       const occupants = await Redis.roomOccupants(id)
       data[id] = occupants
@@ -72,12 +72,12 @@ const Redis: RedisInternal = {
     }
   },
 
-  async getUserIdForUsername(username: string, onlineUsersOnly: boolean) {
+  async getUserIdForUsername (username: string, onlineUsersOnly: boolean) {
     const userId = await getCache(userIdKeyForUsername(username))
     if (onlineUsersOnly) {
       const activeUsers = await Redis.getActiveUsers()
       if (!activeUsers.includes(userId)) {
-        return undefined 
+        return undefined
       }
     }
     return userId
@@ -95,7 +95,7 @@ const Redis: RedisInternal = {
     return await addToSet(presenceKey, userId)
   },
 
-    async removeOccupantFromRoom (roomId: string, userId: string) {
+  async removeOccupantFromRoom (roomId: string, userId: string) {
     const presenceKey = roomPresenceKey(roomId)
     return await removeFromSet(presenceKey, userId)
   },
@@ -108,9 +108,9 @@ const Redis: RedisInternal = {
     }
   },
 
-  async updateVideoPresenceForUser(user: User, isActive: boolean) {
+  async updateVideoPresenceForUser (user: User, isActive: boolean) {
     if (isActive) {
-     await addToSet(videoPresenceKey(user.roomId), user.id)
+      await addToSet(videoPresenceKey(user.roomId), user.id)
     } else {
       await removeFromSet(videoPresenceKey(user.roomId), user.id)
     }
@@ -125,14 +125,14 @@ const Redis: RedisInternal = {
   // User
   async getUser (userId: string) {
     const userData = await getCache(profileKeyForUser(userId))
-    console.log("Got user data", userId, userData)
+    console.log('Got user data', userId, userData)
 
     if (!userData) {
       return undefined
     }
 
     const user: User = JSON.parse(userData)
-    console.log("Parsed user", user)
+    console.log('Parsed user', user)
     if (await isMod(user.id)) {
       user.isMod = true
     }
@@ -163,16 +163,16 @@ const Redis: RedisInternal = {
   // TODO: this used to set some now-deprecated presence data
   // make sure this actually works
   async banUser (user: User, isBanned: boolean = true) {
-      const profile = await Redis.getUser(user.id)
-      profile.isBanned = isBanned
-      await Redis.setUserProfile(user.id, profile)
+    const profile = await Redis.getUser(user.id)
+    profile.isBanned = isBanned
+    await Redis.setUserProfile(user.id, profile)
   },
 
   async modList (): Promise<string[]> {
     return await getSet(modListKey) || []
   },
 
-  async setModStatus(user: User, isMod: boolean) {
+  async setModStatus (user: User, isMod: boolean) {
     if (isMod) {
       return await Redis.addMod(user.id)
     } else {
@@ -318,7 +318,7 @@ function profileKeyForUser (userId: string): string {
 
 function userIdKeyForUsername (username: string): string {
   return `${username}Username`
-} 
+}
 
 function heartbeatKeyForUser (user: string): string {
   return `${user}Heartbeat`
