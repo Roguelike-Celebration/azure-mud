@@ -1,24 +1,47 @@
-import { initializeApp } from 'firebase/app'
-import { getAuth } from "firebase/auth";
-import firebaseui from 'firebaseui'
+// Note - we're doing firebase 8 because the firebaseui stuff doesn't work with 9, big F
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import React from 'react'
 import config from '../config'
 
-export default function LoggedOutView () {
-  console.log('wtf');
-  const firebaseConfig = {
-    apiKey: config.FIREBASE_API_KEY,
-    authDomain: config.FIREBASE_AUTH_DOMAIN,
-    projectId: config.FIREBASE_PROJECT_ID,
-    storageBucket: config.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: config.FIREBASE_MESSAGING_SENDER_ID,
-    appId: config.FIREBASE_APP_ID
-  }
-  console.log(firebaseConfig);
+const firebaseConfig = {
+  apiKey: config.FIREBASE_API_KEY,
+  authDomain: config.FIREBASE_AUTH_DOMAIN,
+  projectId: config.FIREBASE_PROJECT_ID,
+  storageBucket: config.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: config.FIREBASE_MESSAGING_SENDER_ID,
+  appId: config.FIREBASE_APP_ID
+}
+console.log(firebaseConfig)
 
-  const app = initializeApp(firebaseConfig);
-  var ui = new firebaseui.auth.AuthUI(getAuth());
-  ui.start()
+const uiConfig = {
+  // Popup signin flow rather than redirect flow.
+  signInFlow: 'popup',
+  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+  // signInSuccessUrl: '/signedIn',
+  callbacks: {
+    // The documentation on the firebaseui README appears totally borked at time of writing; the structure of
+    // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
+    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+      authResult.user.getIdToken().then(function (token) {
+        // TODO: yeet it off to the server
+        // TODO: reducer
+        console.log(token)
+      })
+    }
+  },
+  // privacyPolicyUrl: '/privacyPolicy',
+  // tosUrl: '/tosUrl',
+  signInOptions: [
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID
+  ]
+}
+
+export default function LoggedOutView () {
+  // A hack so I can see firebase working
+  var app = firebase.initializeApp(firebaseConfig)
   return (
     <div>
       <header role="banner">
@@ -33,6 +56,7 @@ export default function LoggedOutView () {
           game design. It&apos;s for fans, players, developers, scholars, and
           everyone else!
         </p>
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <a
           href={`${
             config.SERVER_HOSTNAME
