@@ -1,11 +1,28 @@
+import { initializeApp } from 'firebase/app'
+import { getAuth } from "firebase/auth";
+import firebaseui from 'firebaseui'
 import React from 'react'
 import config from '../config'
 
 export default function LoggedOutView () {
+  console.log('wtf');
+  const firebaseConfig = {
+    apiKey: config.FIREBASE_API_KEY,
+    authDomain: config.FIREBASE_AUTH_DOMAIN,
+    projectId: config.FIREBASE_PROJECT_ID,
+    storageBucket: config.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: config.FIREBASE_MESSAGING_SENDER_ID,
+    appId: config.FIREBASE_APP_ID
+  }
+  console.log(firebaseConfig);
+
+  const app = initializeApp(firebaseConfig);
+  var ui = new firebaseui.auth.AuthUI(getAuth());
+  ui.start()
   return (
     <div>
       <header role="banner">
-        <h1>Welcome to Roguelike Celebration 2020!</h1>
+        <h1>!hm.</h1>
       </header>
       <main role="main">
         <p>
