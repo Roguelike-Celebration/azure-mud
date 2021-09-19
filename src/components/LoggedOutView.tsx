@@ -21,8 +21,17 @@ const uiConfig = {
         }, {
           withCredentials: true
         })
-        // TODO: store it locally
         console.log(r)
+
+        const n = await axios.post(`${config.SERVER_HOSTNAME}/api/firebaseTest`, {
+          token: firebaseToken
+        }, {
+          withCredentials: true
+        })
+        console.log(n)
+
+        // TODO: store it locally
+        console.log('now we should store it')
       })
     }
   },

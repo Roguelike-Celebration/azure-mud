@@ -31,6 +31,18 @@ interface RedisInternal extends Database {
 }
 
 const Redis: RedisInternal = {
+  async userIdForFirebaseToken (token: string): Promise<string | undefined> {
+    return await getCache(keyForFirebaseToken(token))
+  },
+
+  // TODO: Handle expiration. For whatever reason, using the 4-parameter sig with 'EXAT' and the expirty doesn't work.
+  // It doesn't seem to save, but it appears to fail silently (?) - whatever, anyways, just switch the stored value to
+  // a json object with { userId, expiration }
+  async addFirebaseTokenToCache (token: string, userId: string, expiry: number) {
+    // await setCache(keyForFirebaseToken(token), userId, 'EXAT', expiry)
+    await setCache(keyForFirebaseToken(token), userId)
+  },
+
   async getActiveUsers (): Promise<string[]> {
     return getSet(activeUsersKey) || []
   },
@@ -318,6 +330,10 @@ function profileKeyForUser (userId: string): string {
 
 function userIdKeyForUsername (username: string): string {
   return `${username}Username`
+}
+
+function keyForFirebaseToken (token: string): string {
+  return `${token}FirebaseToken`
 }
 
 function heartbeatKeyForUser (user: string): string {

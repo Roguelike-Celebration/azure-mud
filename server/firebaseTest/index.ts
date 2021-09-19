@@ -1,4 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { getFullUser, User } from '../src/user'
+import { DB } from '../src/database'
 import * as admin from 'firebase-admin'
 
 // TODO: write up that you need to generate firebase key json & store it & set the GOOGLE_APPLICATION_CREDENTIALS
@@ -23,17 +25,30 @@ const httpTrigger: AzureFunction = async function (
     })
   }
 
+  var cachedUserId = await DB.userIdForFirebaseToken(clientIdToken)
+  if (cachedUserId) {
+    context.res = {
+      status: 200,
+      body: {
+        method: 'cache',
+        cachedUserId: cachedUserId,
+        reqBody: req.body
+      }
+    }
+    return
+  }
+
   // If we successfully decode the token, we want to cache it.
-  // TODO: cache token
-  // TODO: check expiry on token
-  await admin.auth().verifyIdToken(clientIdToken).then((decoded) => {
-    const uid = decoded.uid
+  await admin.auth().verifyIdToken(clientIdToken).then(async (decoded) => {
+    const userId = decoded.uid
+
+    DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
 
     context.res = {
       status: 200,
       body: {
         decoded: decoded,
-        decodedUid: uid,
+        decodedUid: userId,
         reqBody: req.body
       }
     }
