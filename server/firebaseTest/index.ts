@@ -1,16 +1,21 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import * as admin from 'firebase-admin';
+import * as admin from 'firebase-admin'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<any> {
   context.log('In Firebase')
+  var clientIdToken = req.body.token
+
   context.res = {
-    status: 500,
-    body: 'Firebase! v: ' + admin.SDK_VERSION
+    status: 200,
+    body: {
+      words: 'words words words',
+      reqBody: req.body,
+      reqFull: req
+    }
   }
-  return
 }
 
 export default httpTrigger

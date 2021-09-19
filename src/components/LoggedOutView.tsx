@@ -4,16 +4,7 @@ import 'firebase/auth'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import React from 'react'
 import config from '../config'
-
-const firebaseConfig = {
-  apiKey: config.FIREBASE_API_KEY,
-  authDomain: config.FIREBASE_AUTH_DOMAIN,
-  projectId: config.FIREBASE_PROJECT_ID,
-  storageBucket: config.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: config.FIREBASE_MESSAGING_SENDER_ID,
-  appId: config.FIREBASE_APP_ID
-}
-console.log(firebaseConfig)
+const axios = require('axios').default
 
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
@@ -24,10 +15,14 @@ const uiConfig = {
     // The documentation on the firebaseui README appears totally borked at time of writing; the structure of
     // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      authResult.user.getIdToken().then(function (token) {
-        // TODO: yeet it off to the server
-        // TODO: reducer
-        console.log(token)
+      authResult.user.getIdToken().then(async function (firebaseToken) {
+        const r = await axios.post(`${config.SERVER_HOSTNAME}/api/firebaseTest`, {
+          token: firebaseToken
+        }, {
+          withCredentials: true
+        })
+        // TODO: store it locally
+        console.log(r)
       })
     }
   },
@@ -40,8 +35,6 @@ const uiConfig = {
 }
 
 export default function LoggedOutView () {
-  // A hack so I can see firebase working
-  var app = firebase.initializeApp(firebaseConfig)
   return (
     <div>
       <header role="banner">
