@@ -17,6 +17,7 @@ const cache = redis.createClient(
 
 const getCache = promisify(cache.get).bind(cache)
 const setCache = promisify(cache.set).bind(cache)
+const expireAt = promisify(cache.expireat).bind(cache)
 
 const addToSet = promisify(cache.sadd).bind(cache)
 const removeFromSet = promisify(cache.srem).bind(cache)
@@ -35,12 +36,11 @@ const Redis: RedisInternal = {
     return await getCache(keyForFirebaseToken(token))
   },
 
-  // TODO: Handle expiration. For whatever reason, using the 4-parameter sig with 'EXAT' and the expirty doesn't work.
-  // It doesn't seem to save, but it appears to fail silently (?) - whatever, anyways, just switch the stored value to
-  // a json object with { userId, expiration }
   async addFirebaseTokenToCache (token: string, userId: string, expiry: number) {
-    // await setCache(keyForFirebaseToken(token), userId, 'EXAT', expiry)
-    await setCache(keyForFirebaseToken(token), userId)
+    // Expiry is set independently instead of using the 4-parameter setCache sig because I tried it and it seemed to
+    // silently fail without setting anything.
+    await setCache(keyForFirebaseToken(token), JSON.stringify({ userId: userId, unixExpiry: expiry }))
+    await expireAt(keyForFirebaseToken(token), expiry)
   },
 
   async getActiveUsers (): Promise<string[]> {

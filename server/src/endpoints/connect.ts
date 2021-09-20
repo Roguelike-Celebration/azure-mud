@@ -34,11 +34,10 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     profile: user
   }
 
-
   if (roomData[user.roomId].hasNoteWall) {
     response.roomNotes = await Redis.getRoomNotes(user.roomId)
   }
-  
+
   result.httpResponse = {
     status: 200,
     body: response

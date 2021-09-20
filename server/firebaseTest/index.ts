@@ -13,9 +13,6 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<any> {
-  var clientIdToken = req.body.token
-  context.log('In Firebase, token: ' + req.body.token)
-
   // Apparently, the initialization persists across function calls (!?) which I didn't realize was something that
   // could happen! Clearly I don't quite understand 'serverless' (gosh I resent that term! it's still on somebody's
   // server!)
@@ -25,20 +22,42 @@ const httpTrigger: AzureFunction = async function (
     })
   }
 
+  // Gah! One thing to note - server sees all headers as all lowercase.
+  if (!req.headers.authorization) {
+    context.res = {
+      status: 401,
+      body: req.headers
+    }
+    return
+  }
+
+  const authHeaderParts = req.headers.authorization.split(' ')
+
+  // I think 'Bearer' is technically OAuth 2.0 and I don't know if that's precisely what we're using
+  if (authHeaderParts.length !== 2 || authHeaderParts[0] !== 'Bearer') {
+    context.res = {
+      status: 400,
+      body: {
+        error: 'Auth must be of type Bearer & be properly formatted.'
+      }
+    }
+    return
+  }
+
+  const clientIdToken = authHeaderParts[1]
+
   var cachedUserId = await DB.userIdForFirebaseToken(clientIdToken)
   if (cachedUserId) {
     context.res = {
       status: 200,
       body: {
         method: 'cache',
-        cachedUserId: cachedUserId,
-        reqBody: req.body
+        userId: cachedUserId
       }
     }
     return
   }
 
-  // If we successfully decode the token, we want to cache it.
   await admin.auth().verifyIdToken(clientIdToken).then(async (decoded) => {
     const userId = decoded.uid
 
@@ -47,9 +66,8 @@ const httpTrigger: AzureFunction = async function (
     context.res = {
       status: 200,
       body: {
-        decoded: decoded,
-        decodedUid: userId,
-        reqBody: req.body
+        method: 'decoded',
+        userId: userId
       }
     }
   }).catch((error) => {
