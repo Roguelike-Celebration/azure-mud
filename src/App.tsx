@@ -43,6 +43,8 @@ import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import HappeningNowView from './components/HappeningNowView'
 import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -56,20 +58,19 @@ const App = () => {
 
   useEffect(() => {
     // TODO: This logic is gnarly enough I'd love to abstract it somewhere
-    const login = getLoginInfo().then((login) => {
-      if (!login) {
-        // This should really be its own action distinct from logging in
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (!user) {
         dispatch(AuthenticateAction(undefined, undefined, undefined))
       } else {
-        console.log(login)
-        const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
+        const userId = firebase.auth().currentUser.uid
+        const providerId = firebase.auth().currentUser.providerId
 
         checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
-            dispatch(AuthenticateAction(userId, login.user_id, login.provider_name))
+            dispatch(AuthenticateAction(userId, userId, providerId))
             return
           }
-          dispatch(AuthenticateAction(userId, registeredUsername, login.provider_name))
+          dispatch(AuthenticateAction(userId, registeredUsername, providerId))
 
           if (isBanned) {
             dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
@@ -81,7 +82,7 @@ const App = () => {
             dispatch(SpaceIsClosedAction())
 
             if (!isMod) {
-              // non-mods shouldn't subscribe to SignalR if the space is closed
+            // non-mods shouldn't subscribe to SignalR if the space is closed
               dispatch(IsRegisteredAction())
               return
             }

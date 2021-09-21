@@ -24,6 +24,7 @@ const uiConfig = {
             Authorization: `Bearer ${firebaseToken}`
           }
         })
+        console.log(r)
       })
     }
   },

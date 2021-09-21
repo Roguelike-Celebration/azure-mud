@@ -472,6 +472,9 @@ export default (oldState: State, action: Action): State => {
     }
   }
 
+  // TODO
+  // if (action.type === ActionType.SendFirebaseToken) { }
+
   if (action.type === ActionType.IsRegistered) {
     state.hasRegistered = true
   }
