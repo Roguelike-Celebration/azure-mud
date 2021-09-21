@@ -77,6 +77,10 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   connectSignalR(userId, dispatch)
 }
 
+export async function disconnect (userId: string) {
+  const result = await callAzureFunction('disconnect')
+}
+
 export async function getServerSettings (dispatch: Dispatch<Action>) {
   const result: ServerSettings = await callAzureFunctionGet('serverSettings')
   dispatch(ReceivedServerSettingsAction(result))

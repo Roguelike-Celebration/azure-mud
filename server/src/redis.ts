@@ -27,8 +27,8 @@ interface RedisInternal extends Database {
   addOccupantToRoom (roomId: string, userId: string),
   removeOccupantFromRoom (roomId: string, userId: string)
 
-    addMod (userId: string)
-    removeMod (userId: string)
+  addMod (userId: string)
+  removeMod (userId: string)
 }
 
 const Redis: RedisInternal = {
