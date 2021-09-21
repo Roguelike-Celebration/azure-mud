@@ -7,6 +7,8 @@ import { ShowModalAction } from '../Actions'
 import { DispatchContext, UserMapContext } from '../App'
 import { Modal } from '../modals'
 import { fetchProfile, openOrCloseSpace } from '../networking'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 export default function MenuButtonView (props: { username: string, spaceIsClosed: boolean }) {
   const dispatch = useContext(DispatchContext)
@@ -17,12 +19,15 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
 
   const logOut = () => {
     const prompt = confirm('Are you sure you want to log out?')
+    // TODO: This doesn't actually log out the user from the MUD, just from firebase, so the MUD thinks the user's
+    // still in the room and everything. Uh, fix that somehow.
     if (prompt) {
-      window.location.href = `${
-        config.SERVER_HOSTNAME
-      }/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(
-        window.location.href
-      )}`
+      firebase.auth().signOut().then(() => {
+        window.location.reload()
+      }).catch((error) => {
+        console.log('error signing out', error)
+        window.location.reload()
+      })
     }
   }
 
