@@ -39,7 +39,7 @@ const Redis: RedisInternal = {
   async addFirebaseTokenToCache (token: string, userId: string, expiry: number) {
     // Expiry is set independently instead of using the 4-parameter setCache sig because I tried it and it seemed to
     // silently fail without setting anything.
-    await setCache(keyForFirebaseToken(token), JSON.stringify({ userId: userId, unixExpiry: expiry }))
+    await setCache(keyForFirebaseToken(token), userId)
     await expireAt(keyForFirebaseToken(token), expiry)
   },
 
