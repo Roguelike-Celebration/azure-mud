@@ -26,8 +26,8 @@ interface RedisInternal extends Database {
   addOccupantToRoom (roomId: string, userId: string),
   removeOccupantFromRoom (roomId: string, userId: string)
 
-    addMod (userId: string)
-    removeMod (userId: string)
+  addMod (userId: string)
+  removeMod (userId: string)
 }
 
 const Redis: RedisInternal = {
@@ -68,6 +68,7 @@ const Redis: RedisInternal = {
     if (isActive) {
       return await addToSet(activeUsersKey, user.id)
     } else {
+      await Redis.removeOccupantFromRoom(user.roomId, user.id)
       return await removeFromSet(activeUsersKey, user.id)
     }
   },
@@ -98,11 +99,15 @@ const Redis: RedisInternal = {
   },
 
   async removeOccupantFromRoom (roomId: string, userId: string) {
+    // WARNING: Note that this consciously *does not* remove the current roomId
+    // from that user's User object.
+    // The design here is that, when someone logs off / is set inactive, this is called
+    // which removes them from the presence list for this room
+    // but leaves their roomId set on their user
+    // so that we can remember where they are.
+    // TODO: Fetching presence data should just filter by active users instead.
     const presenceKey = roomPresenceKey(roomId)
     return await removeFromSet(presenceKey, userId)
-
-    // TODO: If this is ever called outside the context of setCurrentRoomForUser,
-    // we'll need to manually wipe out the User obj's roomId
   },
 
   async setCurrentRoomForUser (user: User, roomId: string) {
