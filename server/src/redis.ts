@@ -91,6 +91,8 @@ const Redis: RedisInternal = {
   },
 
   async addOccupantToRoom (roomId: string, userId: string) {
+    await Redis.setPartialUserProfile(userId, {roomId})
+
     const presenceKey = roomPresenceKey(roomId)
     return await addToSet(presenceKey, userId)
   },
@@ -98,14 +100,18 @@ const Redis: RedisInternal = {
   async removeOccupantFromRoom (roomId: string, userId: string) {
     const presenceKey = roomPresenceKey(roomId)
     return await removeFromSet(presenceKey, userId)
+
+    // TODO: If this is ever called outside the context of setCurrentRoomForUser,
+    // we'll need to manually wipe out the User obj's roomId
   },
 
   async setCurrentRoomForUser (user: User, roomId: string) {
-    await Redis.addOccupantToRoom(roomId, user.id)
-
     if (user.roomId !== roomId) {
+      console.log("Removing from last room")
       await Redis.removeOccupantFromRoom(user.roomId, user.id)
     }
+
+    await Redis.addOccupantToRoom(roomId, user.id)
   },
 
   async updateVideoPresenceForUser (user: User, isActive: boolean) {
@@ -132,12 +138,17 @@ const Redis: RedisInternal = {
     }
 
     const user: User = JSON.parse(userData)
-    console.log('Parsed user', user)
     if (await isMod(user.id)) {
       user.isMod = true
     }
 
     return user
+  },
+
+  async setPartialUserProfile (userId: string, user: Partial<User>): Promise<User> {
+    const existingUser = await Redis.getUser(userId)
+    const data = {...existingUser, ...user}
+    return await Redis.setUserProfile(userId, data)
   },
 
   // TODO: it would be great if this function accepted Partial<User>

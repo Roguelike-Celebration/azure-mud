@@ -12,7 +12,9 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
   log('We have a user!', user.id)
   const result: Result = {}
 
-  if (user.roomId === undefined) {
+  // WARNING: For now, checking the existence of a roomId in roomData is a good safeguard
+  // But this may bite us when/if we ever have programmatic room creation
+  if (user.roomId === undefined || !roomData[user.roomId]) {
     user.roomId = 'entryway'
   }
 

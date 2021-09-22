@@ -54,6 +54,8 @@ interface Database {
   /** Overwrites the stored user profile with a new one */
   setUserProfile(userId: string, data: User): Promise<User>;
 
+  setPartialUserProfile (userId: string, user: Partial<User>): Promise<User>
+
   /** Sets that the user shouted right now */
   userJustShouted(user: User);
 
