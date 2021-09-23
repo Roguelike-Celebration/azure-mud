@@ -64,7 +64,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'entryway',
     displayName: 'Registration Desk',
     shortName: 'the registration desk',
-    description: 'A big banner reads \'Welcome to Roguelike Celebration 2020!\' Once you\'ve got your bearings about you, you can move to the [[Central Hall->hall]].',
+    description: 'A big banner reads \'Welcome to Roguelike Celebration 2021!\' Once you\'ve got your bearings about you, you can move to the [[Central Hall->hall]].',
     hidden: true
   },
   hall: {
@@ -75,7 +75,7 @@ const indexRoomData: { [name: string]: Room } = {
     <br/><br/>
     There are two large boards for notes: one labeled [[Feedback For The Social Space->spaceFeedback]], and another labeled [[References->references]]. There's also a [[swag table]] set up.
     <br/><br/>
-      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. There's also three long hallways, and it's hard from here to tell where they'll go: one shining with glass and chrome, one made of ancient-looking hash marks, and one overgrown with plant life.`,
+      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. A short hallway leads to the [[unconferencing rooms]] There's also two longer hallways, and it's hard from here to tell where they'll go: one shining with [[glass and chrome->SFhub]], and one [[overgrown with plant life->DungeonHub]].`,
     hasNoteWall: true
   },
   spaceFeedback: {
@@ -114,16 +114,16 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'bar',
     displayName: 'Bar',
     shortName: 'the bar',
-    description: `A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[the Tourist->item]] (a non-alcoholic drink with lots of fruit and a fun umbrella), [[the Berlin Interpretation->item]] (a mojito made with some sort of hyper-caffeinated soda), and [[the Walls Are Shifting->item]] (a Long Island Iced Tea).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>
+    description: `A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[Divine Nectar->item]] (a locally crafted mead), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>
     There are three booths you can sit at, labelled [[A->barBoothA]], [[B->barBoothB]], and [[C->barBoothC]]. You\'re a stone\'s throw away from the [[dance floor->danceFloor]], [[theater]], and the [[Central Hall->hall]].`,
     hasNoteWall: true,
     noteWallData: {
-      roomWallDescription: 'There is a guestbook here.',
-      noteWallButton: 'Sign',
-      addNoteLinkText: 'Sign the guest book',
-      addNotePrompt: 'Sign the guest book!',
-      noteWallDescription: 'Leave heartfelt memories and general good vibes.'
-    chatGuid: 'b0720a25-7bd2-44f3-af6b-8e84328bdb58'
+      roomWallDescription: 'The wall to the bathroom is covered in strange markings.',
+      noteWallButton: 'Add your mark',
+      addNoteLinkText: 'Contribute',
+      addNotePrompt: 'Contribute to the graffitti?',
+      noteWallDescription: 'Someone has scratched ‘Rodney was here’ on an absurdly large unisex bathroom stall wall.'
+    }
   },
   danceFloor: {
     id: 'danceFloor',
@@ -131,7 +131,7 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the dance floor',
     description: `The ping-pong table has been pushed to the side for a makeshift dance floor. Colourful skeletons raise and lower their arms to the beat of chiptune music coming from a DJ booth near the wall. The DJ smoothly transitions between old favourites and requests from years past.<br/>
     <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/511460973&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/funkip" title="Funkip ♥" target="_blank" style="color: #cccccc; text-decoration: none;">Funkip ♥</a> · <a href="https://soundcloud.com/funkip/roguelike-celebration-2018-saturday-night" title="Roguelike Celebration 2018" target="_blank" style="color: #cccccc; text-decoration: none;">Roguelike Celebration 2018</a></div><br/><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/699462760&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/funkip" title="Funkip ♥" target="_blank" style="color: #cccccc; text-decoration: none;">Funkip ♥</a> · <a href="https://soundcloud.com/funkip/rand-gen-mem" title="💖 Roguelike Celebration 2019 Mix" target="_blank" style="color: #cccccc; text-decoration: none;">💖 Roguelike Celebration 2019 Mix</a></div><br/><br/>
-    Or you can head back to the [[bar]].`
+    You can head back to the [[bar]].`
   },
   barBoothA: {
     id: 'barBoothA',
@@ -151,7 +151,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'barBoothC',
     displayName: 'Bar Booth C',
     shortName: 'table C in the kitchen',
-    description: `A cozy booth, far enough from the bar for a smaller conversation. For some reason this table and *only* this table contains a basket loaded with [[fortune cookies->getFortune]], and a sign next to it reading "Roguelike Celebration is not responsible for any consequences of taking advice from a cookie - so help yourself!"<br/><br/>
+    description: `A cozy booth, far enough from the bar for a smaller conversation.<br/><br/>
       From here, you can see tables [[A->barBoothA]] or [[B->barBoothB]], and the [[rest of the bar->bar]]`
   },
 
