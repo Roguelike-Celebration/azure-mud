@@ -1,6 +1,6 @@
 
 import { unconference, minetown, oracle, tower, castle, sokoban, astralPlane } from './unconfRooms'
-import theater from './theater'
+import { breakout1, breakout2, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 
 export interface NoteWallData {
@@ -53,6 +53,8 @@ export interface Room {
 
 const indexRoomData: { [name: string]: Room } = {
   theater,
+  breakout1,
+  breakout2,
   unconference,
   minetown,
   oracle,
@@ -75,7 +77,7 @@ const indexRoomData: { [name: string]: Room } = {
     <br/><br/>
     There are two large boards for notes: one labeled [[Feedback For The Social Space->spaceFeedback]], and another labeled [[References->references]]. There's also a [[swag table]] set up.
     <br/><br/>
-      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. A short hallway leads to the [[unconferencing rooms]] There's also two longer hallways, and it's hard from here to tell where they'll go: one shining with [[glass and chrome->SFhub]], and one [[overgrown with plant life->DungeonHub]].`,
+      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. A short hallway leads to the [[unconferencing rooms->unconference]] There's also two longer hallways, and it's hard from here to tell where they'll go: one shining with [[glass and chrome->SFhub]], and one [[overgrown with plant life->DungeonHub]].`,
     hasNoteWall: true
   },
   spaceFeedback: {
@@ -91,7 +93,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Swag Table',
     shortName: 'the swag table',
     description: `A table covered in a giant messy pile of mismatched swag. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>
-    There is also a sign that says "Physical Roguelike Celebration Shirts - Coming Soon!".
+    There is also a set of <a href="https://roguelikecelebration.itemorder.com/" target="_blank">beautiful physical shirts you can buy in real life</a>, designed by <a href="https://marlowedobbe.com/" target="_blank">Marlowe Dobbe</a> and printed by Ann Arbor T-shirt Company.
     <br/><br/>
     From here, you can walk back to the rest of the [[hall]].`
   },
