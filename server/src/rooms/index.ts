@@ -2,6 +2,7 @@
 import { unconference, minetown, oracle, tower, castle, sokoban, astralPlane } from './unconfRooms'
 import { breakout1, breakout2, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
+import { sfHub, robots, timeMachine} from './sfHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -62,6 +63,9 @@ const indexRoomData: { [name: string]: Room } = {
   castle,
   sokoban,
   astralPlane,
+  sfHub,
+  robots,
+  timeMachine,
   entryway: {
     id: 'entryway',
     displayName: 'Registration Desk',
@@ -75,18 +79,17 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the hall',
     description: `A large open area, a meeting place. There is a curious-looking vending machine labelled "Munxip's Magnifient Munchies" and a button you can press marked [[Get Random Food->generateFood]].
     <br/><br/>
-    There are two large boards for notes: one labeled [[Feedback For The Social Space->spaceFeedback]], and another labeled [[References->references]]. There's also a [[swag table]] set up.
+    A plaque next to the wall shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>. There's also a [[swag table]] set up.
     <br/><br/>
-      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. A short hallway leads to the [[unconferencing rooms->unconference]] There's also two longer hallways, and it's hard from here to tell where they'll go: one shining with [[glass and chrome->SFhub]], and one [[overgrown with plant life->DungeonHub]].`,
-    hasNoteWall: true
-  },
-  spaceFeedback: {
-    id: 'spaceFeedback',
-    displayName: 'Feedback Wall',
-    shortName: 'the feedback wall',
-    description: `A plaque next to the wall shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.<br/>There's also a suggestion wall for people to add comments about the social space.
-      You can always turn around and return to the [[hall]]`,
-    hasNoteWall: true
+      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. A short hallway leads to the [[unconferencing rooms->unconference]] There's also two longer hallways, and it's hard from here to tell where they'll go: one shining with [[glass and chrome->sfhub]], and one [[overgrown with plant life->dungeonhub]].`,
+    hasNoteWall: true,
+    noteWallData: {
+      roomWallDescription: 'A large bulletin board is here, with a banner on top - "Social Space Feedback". An array of markers and sticky notes are nearby.',
+      noteWallButton: 'Add feedback',
+      addNoteLinkText: 'Add feedback',
+      addNotePrompt: 'What feedback do you have about the social space itself?',
+      noteWallDescription: 'Social Space Feedback'
+    }
   },
   swag: {
     id: 'swag',
@@ -96,21 +99,6 @@ const indexRoomData: { [name: string]: Room } = {
     There is also a set of <a href="https://roguelikecelebration.itemorder.com/" target="_blank">beautiful physical shirts you can buy in real life</a>, designed by <a href="https://marlowedobbe.com/" target="_blank">Marlowe Dobbe</a> and printed by Ann Arbor T-shirt Company.
     <br/><br/>
     From here, you can walk back to the rest of the [[hall]].`
-  },
-  references: {
-    id: 'references',
-    displayName: 'References Wall',
-    shortName: 'the reference wall',
-    description: `A large board invites you contribute slide decks, videos, files, and articles that would be of interest to the community.<br/><br/>
-    From here, you can walk back to the rest of the [[hall]].`,
-    hasNoteWall: true,
-    noteWallData: {
-      roomWallDescription: 'There is a chalkboard that says "BOOKMARKS" on the top.',
-      noteWallButton: 'Add a link',
-      addNoteLinkText: 'add a link',
-      addNotePrompt: 'What would you like to link to?',
-      noteWallDescription: 'Links to slides, videos, files, and articles of interest.'
-    }
   },
   bar: {
     id: 'bar',
