@@ -71,10 +71,10 @@ export async function moveToRoom (
   // nothing should happen: issue 162
   if (user.roomId !== to.id) {
     console.log(`Moving from ${user.roomId} to ${to.id}`)
-    console.log(await globalPresenceMessage([user.roomId, to.id]))
+    console.log(JSON.stringify(await globalPresenceMessage([user.roomId, to.id]), null, 2))
     await DB.setCurrentRoomForUser(user, to.id)
     console.log('After setting')
-    console.log(await globalPresenceMessage([user.roomId, to.id]))
+    console.log(JSON.stringify(await globalPresenceMessage([user.roomId, to.id]), null, 2))
 
     result.messages = [
       {

@@ -80,6 +80,7 @@ const Redis: RedisInternal = {
     if (isActive) {
       return await addToSet(activeUsersKey, user.id)
     } else {
+      await Redis.removeOccupantFromRoom(user.roomId, user.id)
       return await removeFromSet(activeUsersKey, user.id)
     }
   },
@@ -103,21 +104,31 @@ const Redis: RedisInternal = {
   },
 
   async addOccupantToRoom (roomId: string, userId: string) {
+    await Redis.setPartialUserProfile(userId, {roomId})
+
     const presenceKey = roomPresenceKey(roomId)
     return await addToSet(presenceKey, userId)
   },
 
   async removeOccupantFromRoom (roomId: string, userId: string) {
+    // WARNING: Note that this consciously *does not* remove the current roomId
+    // from that user's User object.
+    // The design here is that, when someone logs off / is set inactive, this is called
+    // which removes them from the presence list for this room
+    // but leaves their roomId set on their user
+    // so that we can remember where they are.
+    // TODO: Fetching presence data should just filter by active users instead.
     const presenceKey = roomPresenceKey(roomId)
     return await removeFromSet(presenceKey, userId)
   },
 
   async setCurrentRoomForUser (user: User, roomId: string) {
-    await Redis.addOccupantToRoom(roomId, user.id)
-
     if (user.roomId !== roomId) {
+      console.log("Removing from last room")
       await Redis.removeOccupantFromRoom(user.roomId, user.id)
     }
+
+    await Redis.addOccupantToRoom(roomId, user.id)
   },
 
   async updateVideoPresenceForUser (user: User, isActive: boolean) {
@@ -144,12 +155,17 @@ const Redis: RedisInternal = {
     }
 
     const user: User = JSON.parse(userData)
-    console.log('Parsed user', user)
     if (await isMod(user.id)) {
       user.isMod = true
     }
 
     return user
+  },
+
+  async setPartialUserProfile (userId: string, user: Partial<User>): Promise<User> {
+    const existingUser = await Redis.getUser(userId)
+    const data = {...existingUser, ...user}
+    return await Redis.setUserProfile(userId, data)
   },
 
   // TODO: it would be great if this function accepted Partial<User>
