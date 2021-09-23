@@ -1,4 +1,4 @@
-import DB from './cosmosdb'
+import { DB } from './database'
 import { User } from './user'
 
 /** All of these store heartbeats as Unix timestamps as numbers.
@@ -10,20 +10,22 @@ import { User } from './user'
 export async function getHeartbeatData (): Promise<{
   [userId: string]: number;
 }> {
-  const activeUsers: User[] = await DB.getActiveUsers()
-
+  const activeUserIds: string[] = await DB.getActiveUsers()
   const data: { [userId: string]: number } = {}
 
-  for (let i = 0; i < activeUsers.length; i++) {
-    const user = activeUsers[i]
-    const date = user.heartbeat
-    data[user.id] = date
+  for (let i = 0; i < activeUserIds.length; i++) {
+    const userId = activeUserIds[i]
+    const date = await DB.getUserHeartbeat(userId)
+    data[userId] = date
   }
 
   return data
 }
 
 export async function userHeartbeatReceived (user: User) {
+  console.log('userHeartbeatReceived')
   await DB.setUserHeartbeat(user)
+  console.log('Did setUserHeartbeat')
   await DB.setUserAsActive(user, true)
+  console.log('Did setAsActive')
 }

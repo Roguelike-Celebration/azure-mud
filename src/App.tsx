@@ -293,13 +293,13 @@ const App = () => {
                       roomData={state.roomData}
                     />
                   ) : null}
-                  <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
                   <InputView
                     prepopulated={state.prepopulatedInput}
                     sendMessage={(message) =>
                       dispatch(SendMessageAction(message))
                     }
                   />
+                  <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
                 </div>
                 {profile}
               </div>

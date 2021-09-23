@@ -1,4 +1,4 @@
-import DB from './cosmosdb'
+import { DB } from './database'
 import { Message } from './endpoint'
 
 /** Fetches presence data for a set of rooms and returns a SignalR message

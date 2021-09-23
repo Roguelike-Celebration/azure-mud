@@ -1,20 +1,32 @@
-import { User, MinimalUser } from './user'
+import { User } from './user'
 import { RoomNote } from './roomNote'
 import { ServerSettings } from './types'
+
+import Redis from './redis'
 
 interface Database {
   // -----------------------------------------------------------------
   // WORLD PRESENCE
   // -----------------------------------------------------------------
 
-  /** Returns an array of user IDs for all active logged-in users */
-  getActiveUsers(): Promise<User[]>;
+  /** Returns an array of users for all active logged-in users */
+  getActiveUsers(): Promise<string[]>;
+
+  /** Returns all registered user objects */
+  getAllUsers(): Promise<User[]>;
+
+  /** Returns a mapping from room IDs to the user IDs of each user in there */
+  allRoomOccupants(): Promise<{[roomId: string]: string[]}>;
 
   /** Adds a user to the current list of logged-in users */
-  setUserAsActive(userId: string, active: boolean);
+  setUserAsActive(user: User, active: boolean);
 
   /** Sets the current Unix timestamp for a user pinging in */
-  setUserHeartbeat(userId: string);
+  setUserHeartbeat(user: User);
+
+  getUserHeartbeat (user: string): Promise<number>
+
+  getUserIdForUsername(username: string, onlineUsersOnly: boolean)
 
   // -----------------------------------------------------------------
   // ROOM PRESENCE
@@ -23,12 +35,11 @@ interface Database {
   /** Returns an array of userIds who are currently in the given room */
   roomOccupants(roomId: string): Promise<string[]>;
 
-  setCurrentRoomForUser(userId: string, roomId: string);
+  /** Removes a user from their current room, and adds them to a new room */
+  setCurrentRoomForUser(user: User, roomId: string);
 
-  /** Returns the room ID for the room a user is currently in */
-  currentRoomForUser(userId: string): Promise<string | undefined>;
-
-  updateVideoPresenceForUser (userId: string, roomId?: string);
+  /** Updates the status and returns an array of userIds with active video in the given user's room */
+  updateVideoPresenceForUser (user: User, isActive: boolean): Promise<string[]>;
 
   /* Returns a list of users currently in videochat */
   getVideoPresenceForRoom(roomId: string): Promise<string[]>
@@ -38,15 +49,21 @@ interface Database {
   // -----------------------------------------------------------------
 
   /** Returns public profile data for a given user */
-  getPublicUser(userId: string): Promise<User | undefined>;
+  getUser(userId: string): Promise<User | undefined>;
 
   /** Overwrites the stored user profile with a new one */
   setUserProfile(userId: string, data: User): Promise<User>;
 
-  /** Sets that the user shouted right now */
-  userJustShouted(userId: string);
+  setPartialUserProfile (userId: string, user: Partial<User>): Promise<User>
 
-  setModStatus(userId: string, isMod: boolean)
+  /** Sets that the user shouted right now */
+  userJustShouted(user: User);
+
+  lastShoutedForUser (userId: string)
+
+  setModStatus(user: User, isMod: boolean)
+
+  banUser(user: User, isBanned: boolean)
 
   modList(): Promise<string[]>
 
@@ -56,7 +73,9 @@ interface Database {
   /** Will return default values if no server settings are set */
   getServerSettings(): Promise<ServerSettings>;
 
-  setServerSettings(serverSettings: ServerSettings): Promise<ServerSettings>;
+  // TODO: This partial here is complicated
+  // CosmosDB allows partials; Redis (the way we're using it) does not
+  setServerSettings(serverSettings: Partial<ServerSettings>): Promise<ServerSettings>;
 
   // -----------------------------------------------------------------
   // POST-IT NOTES
@@ -79,8 +98,9 @@ interface Database {
   // you need to include the key that's hardcoded into Redis
   webhookDeployKey()
 
-  setWebhookDeployKey(key)
+  setWebhookDeployKey(key: string)
 }
 
 // eslint-disable-next-line no-undef
 export default Database
+export { Redis as DB }

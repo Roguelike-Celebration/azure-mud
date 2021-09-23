@@ -178,6 +178,10 @@ const PresenceView = (props: { users?: string[]; userId?: string, videoUsers: st
   // Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
   if (users && userId) {
     users = users.filter((u) => u !== userId)
+
+    // The server is bad at only sending users who are active
+    // This is potentially unnecessary, but easy enough to do
+    users = users.filter(u => userMap[u].isActive)
   }
 
   if (users) {

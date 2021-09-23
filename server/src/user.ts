@@ -1,4 +1,9 @@
-import DB from './cosmosdb'
+import { DB } from './database'
+
+// TODO: If we have tooltip popups showing profile info,
+// the distinction between a 'full' and 'minimal' user is no longer useful
+// We can just collapse the two
+// (especially since the db just stores full user and we minimize in JS)
 
 // TODO: pronouns (and realName?) shouldn't be optional
 // but leaving like this til they actually exist in the DB.
@@ -48,7 +53,7 @@ export async function isMod (userId: string) {
 export async function updateModStatus (userId: string) {
   const userIsMod = await isMod(userId)
 
-  const profile = await DB.getPublicUser(userId)
+  const profile = await DB.getUser(userId)
 
   if (!profile) {
     console.log('ERROR: Could not find user ', userId)
@@ -66,7 +71,7 @@ export async function getUserIdForOnlineUsername (username: string) {
 }
 
 export async function getUserIdForUsername (username: string) {
-  return DB.getUserIdForUsername(username)
+  return DB.getUserIdForUsername(username, false)
 }
 
 export async function updateUserProfile (userId: string, data: Partial<User>, isNew: boolean = false) {
@@ -83,11 +88,9 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
     return s
   }
 
-  const profile: Partial<User> = (await DB.getPublicUser(userId)) || {}
-  console.log('Fetched user', profile)
+  const profile: Partial<User> = (await DB.getUser(userId)) || {}
   let username = profile.username
   if (data.username) { username = crushSpaces(data.username) }
-  console.log('Past futzy stuff')
   // If someone's trying to set a new username, validate it
   if (data.username && profile.username !== username) {
     console.log('Validating username', username)
@@ -107,18 +110,13 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   } as User // TODO: Could use real validation here?
   console.log('New profile data', newProfile)
 
-  let result
-  if (isNew) {
-    result = await DB.createUserProfile(newProfile)
-  } else {
-    result = await DB.setUserProfile(userId, newProfile)
-  }
+  const result = await DB.setUserProfile(userId, newProfile)
   console.log('Update user result', result)
   return newProfile
 }
 
 export async function updateUserProfileColor (userId: string, color: string): Promise<MinimalUser> {
-  const profile: User = await DB.getPublicUser(userId)
+  const profile: User = await DB.getUser(userId)
   profile.nameColor = color
   await DB.setUserProfile(userId, profile)
 
@@ -126,7 +124,7 @@ export async function updateUserProfileColor (userId: string, color: string): Pr
 }
 
 export async function getFullUser (userId: string): Promise<User | undefined> {
-  const profile = await DB.getPublicUser(userId)
+  const profile = await DB.getUser(userId)
   if (!profile) return
 
   if (!profile.roomId) {

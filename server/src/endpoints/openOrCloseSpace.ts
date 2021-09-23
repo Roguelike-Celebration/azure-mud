@@ -1,6 +1,6 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { User } from '../user'
-import DB from '../cosmosdb'
+import {DB} from '../database'
 
 const openOrCloseSpace: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const spaceIsClosed = inputs.spaceIsClosed
