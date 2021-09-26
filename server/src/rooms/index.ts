@@ -81,7 +81,7 @@ const indexRoomData: { [name: string]: Room } = {
     <br/><br/>
     A plaque next to the wall shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>. There's also a [[swag table]] set up.
     <br/><br/>
-      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. A short hallway leads to the [[unconferencing rooms->unconference]] There's also two longer hallways, and it's hard from here to tell where they'll go: one shining with [[glass and chrome->sfhub]], and one [[overgrown with plant life->dungeonhub]].`,
+      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. A short hallway leads to the [[unconferencing rooms->unconference]] There's also two longer hallways, and it's hard from here to tell where they'll go: one shining with [[glass and chrome->sfHub]], and one [[overgrown with plant life->exploreHub]].`,
     hasNoteWall: true,
     noteWallData: {
       roomWallDescription: 'A large bulletin board is here, with a banner on top - "Social Space Feedback". An array of markers and sticky notes are nearby.',
