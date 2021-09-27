@@ -15,17 +15,7 @@ const uiConfig = {
     // The documentation on the firebaseui README appears totally borked at time of writing; the structure of
     // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      authResult.user.getIdToken().then(async function (firebaseToken) {
-        const r = await axios.post(`${config.SERVER_HOSTNAME}/api/firebaseTest`, {
-          token: firebaseToken
-        }, {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${firebaseToken}`
-          }
-        })
-        console.log(r)
-      })
+      console.log('Sign-in successful!')
     }
   },
   // privacyPolicyUrl: '/privacyPolicy',

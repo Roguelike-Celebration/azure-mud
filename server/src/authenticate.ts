@@ -44,9 +44,9 @@ export async function getUserIdFromHeaders (
     return cachedUserId
   }
 
-  await admin.auth().verifyIdToken(clientIdToken).then(async (decoded) => {
+  return await admin.auth().verifyIdToken(clientIdToken).then(async (decoded) => {
     const userId = decoded.uid
-    DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
+    await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
     return userId
   }).catch((error) => {
     context.log('Error authenticating token: ' + clientIdToken + ' error: ' + error)

@@ -61,7 +61,7 @@ const httpTrigger: AzureFunction = async function (
   await admin.auth().verifyIdToken(clientIdToken).then(async (decoded) => {
     const userId = decoded.uid
 
-    DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
+    await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
 
     context.res = {
       status: 200,
