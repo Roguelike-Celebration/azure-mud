@@ -49,7 +49,15 @@ The easiest way to deploy a backend is to use the template we have prepared. Goi
 
 There are still a few things you need to manually configure before the app will function.
 
-1. In order for users to log in, you will need to configure Twitter and/or Google authentication. Follow [these](https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-provider-twitter?WT.mc_id=spatial-8206-emwalker) instructions for Twitter, and [these](https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-provider-google?WT.mc_id=spatial-8206-emwalker) for Google.
+1. You will need to set up Firebase. Strap in, this is non-trivial.
+    1. Create a new Firebase project. To do this, follow steps 1, 3, and 5 in the setup guide here: https://firebase.google.com/docs/web/setup#create-project
+    2. Register your app with the Firebase project you just created. To do this, follow steps 1-3 here: https://firebase.google.com/docs/web/setup#register-app
+    * Set up the client
+        1. Go to the General tab in the Settings section for your new project
+        2. Copy the values from the npm "SDK setup and configuration" snippet into their corresponding values in `src/config.ts`
+    * Set up the server
+        1. Generate a private key file for your new project as instructed here: https://firebase.google.com/docs/admin/setup#initialize-sdk
+        2. Move and rename the private key file into your local installation under the `server` directory as `server/firebase-admin.json`. The name must match exactly.
 
 2. You'll need to modify the frontend to actually use your new backend! In `src/config.ts`, update the hostname to point to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template).
 
