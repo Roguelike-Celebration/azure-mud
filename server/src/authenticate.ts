@@ -63,7 +63,7 @@ export default async function authenticate (
   const userId = await getUserIdFromHeaders(context, req)
   if (!userId) {
     context.res = {
-      status: 500,
+      status: 400,
       body: 'You did not include a user ID'
     }
     context.log('Failed to include a user ID')
