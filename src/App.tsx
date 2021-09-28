@@ -42,6 +42,7 @@ import ClientDeployedModal from './components/ClientDeployedModal'
 import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import HappeningNowView from './components/HappeningNowView'
 import VerifyEmailView from './components/VerifyEmailView'
+import EmailVerifiedView from './components/EmailVerifiedView'
 import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import firebase from 'firebase/app'
@@ -115,6 +116,11 @@ const App = () => {
   ) : (
     ''
   )
+
+  // This is kind of janky!
+  if (firebase.auth().currentUser && firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    return <EmailVerifiedView />
+  }
 
   if (!state.checkedAuthentication) {
     return <div />

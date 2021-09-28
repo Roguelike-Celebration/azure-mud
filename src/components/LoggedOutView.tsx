@@ -4,15 +4,28 @@ import 'firebase/auth'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import React from 'react'
 
+// TODO: deduplicate with VerifyEmailView
+const actionCodeSettings = {
+  // This URL should be changed to the frontend location for production. It must also be added to the authorized
+  // domains list in the Firebase Console.
+  url: 'http://localhost:1234',
+  // This must be true, you'll get an error if it's not.
+  handleCodeInApp: true
+};
+
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
   signInFlow: 'popup',
   callbacks: {
-    // The documentation on the firebaseui README appears totally borked at time of writing; the structure of
+    // The documentation on the firebaseui README appears somewhat borked at time of writing; the structure of
     // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      const providerData = firebase.auth().currentUser.providerData.map((p) => p.providerId)
-      console.log('Sign-in successful!', providerData)
+      const user = firebase.auth().currentUser
+      if (user.providerData.length == 1 && user.providerData[0].providerId == 'password' && !user.emailVerified) {
+        firebase.auth().sendSignInLinkToEmail(user.email, actionCodeSettings).then(() => {
+          console.log('Sign-in email sent!')
+        })
+      }
     }
   },
   signInOptions: [
@@ -22,6 +35,7 @@ const uiConfig = {
   ]
 }
 
+// TODO: Implement broadcast channels or something to dispatch when we log in?
 export default function LoggedOutView () {
   return (
     <div>

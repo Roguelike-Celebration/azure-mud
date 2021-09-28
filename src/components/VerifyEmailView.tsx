@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { DispatchContext } from '../App'
 import { AuthenticateAction, HideSideMenuAction } from '../Actions'
-import config from '../config'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
@@ -11,11 +10,10 @@ interface Props {
 }
 
 const actionCodeSettings = {
-  // URL must be in the authorized domains list in the Firebase Console.
-  // TODO: Implement this, lol
-  url: `${config.SERVER_HOSTNAME}/api/verifyEmail`,
-  // url: 'https://rlc-old-dev-app-one.firebaseapp.com/__/auth/action?mode=verifyEmail',
-  // This must be true.
+  // This URL should be changed to the frontend location for production. It must also be added to the authorized
+  // domains list in the Firebase Console.
+  url: 'http://localhost:1234',
+  // This must be true, you'll get an error if it's not.
   handleCodeInApp: true
 };
 
@@ -39,19 +37,19 @@ export default function VerifyEmailView (props: Props) {
       <main role="main">
         <p>
           You're currently attempting to log in as <strong>{props.userEmail}</strong>, but your email is not yet
-          verified. Please check your email!
+          verified. Please follow the link in your email to complete the registration process.
         </p>
         <button
           onClick={(e) => {
             firebase.auth().sendSignInLinkToEmail(props.userEmail, actionCodeSettings).then(() => {
-              console.log('You clicked the button')
+              console.log('Sending a sign-in email!')
             })
           }}>
             Resend Verification Email
         </button>
         <br/>
         <button onClick={goToAuth}>
-            Use a Different Email/Provider
+            Use a Different Provider or Email
         </button>
       </main>
     </div>
