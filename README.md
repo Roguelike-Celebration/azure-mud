@@ -59,6 +59,11 @@ There are still a few things you need to manually configure before the app will 
         1. Generate a private key file for your new project as instructed here: https://firebase.google.com/docs/admin/setup#initialize-sdk
         2. Move and rename the private key file into your local installation under the `server` directory as `server/firebase-admin.json`. The name must match exactly.
     5. Go to the `Firebase console` -> `Authentication` -> `Sign-in method` and enable the providers as desired (we currently support email, Google, and Twitter) by following the instructions in each provider's section. For a dev setup, `Email/Password` should be sufficient.
+      1. To enable email, you must:
+        1. Check the `Email link (passwordless sign-in)` button.
+        2. Add your server domain to the `Authorized domains` section beneath the providers list.
+      2. Google is simple, just add the provider.
+      3. For Twitter you have to get the API information from the Twitter dev portal (https://developer.twitter.com/en/portal/dashboard) and place it into the form.
 
 2. You'll need to modify the frontend to actually use your new backend! In `src/config.ts`, update the hostname to point to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template).
 

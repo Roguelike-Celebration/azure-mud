@@ -44,6 +44,7 @@ export interface State {
   authenticated: boolean;
   checkedAuthentication: boolean;
   authenticationProvider?: string;
+  mustVerifyEmail?: boolean;
 
   hasRegistered: boolean;
 
@@ -459,6 +460,7 @@ export default (oldState: State, action: Action): State => {
     state.checkedAuthentication = true
 
     state.authenticationProvider = action.value.provider
+    state.mustVerifyEmail = action.value.mustVerifyEmail
 
     if (action.value.userId && action.value.name) {
       state.authenticated = true
@@ -469,11 +471,11 @@ export default (oldState: State, action: Action): State => {
         id: action.value.userId,
         username: action.value.name
       }
+    } else {
+      state.authenticated = undefined
+      state.userId = undefined
     }
   }
-
-  // TODO
-  // if (action.type === ActionType.SendFirebaseToken) { }
 
   if (action.type === ActionType.IsRegistered) {
     state.hasRegistered = true

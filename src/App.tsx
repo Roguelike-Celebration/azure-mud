@@ -3,7 +3,7 @@ import React, { useEffect, createContext } from 'react'
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'
 import InputView from './components/InputView'
-import { connect, getLoginInfo, checkIsRegistered, getServerSettings } from './networking'
+import { connect, checkIsRegistered, getServerSettings } from './networking'
 import reducer, { State, defaultState } from './reducer'
 import {
   AuthenticateAction,
@@ -45,6 +45,7 @@ import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import VerifyEmailView from './components/VerifyEmailView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -60,17 +61,21 @@ const App = () => {
     // TODO: This logic is gnarly enough I'd love to abstract it somewhere
     firebase.auth().onAuthStateChanged(function (user) {
       if (!user) {
-        dispatch(AuthenticateAction(undefined, undefined, undefined))
+        dispatch(AuthenticateAction(undefined, undefined, undefined, undefined))
+      } else if (user.providerData.length === 1 && user.providerData[0].providerId === 'password' && !user.emailVerified) {
+        const userId = firebase.auth().currentUser.uid
+        const providerId = firebase.auth().currentUser.providerId
+        dispatch(AuthenticateAction(userId, userId, providerId, true))
       } else {
         const userId = firebase.auth().currentUser.uid
         const providerId = firebase.auth().currentUser.providerId
 
         checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
-            dispatch(AuthenticateAction(userId, userId, providerId))
+            dispatch(AuthenticateAction(userId, userId, providerId, false))
             return
           }
-          dispatch(AuthenticateAction(userId, registeredUsername, providerId))
+          dispatch(AuthenticateAction(userId, registeredUsername, providerId, false))
 
           if (isBanned) {
             dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
@@ -113,6 +118,13 @@ const App = () => {
 
   if (!state.checkedAuthentication) {
     return <div />
+  }
+
+  if (state.checkedAuthentication && state.mustVerifyEmail) {
+    return <VerifyEmailView
+      userEmail={firebase.auth().currentUser.email}
+      dispatch={dispatch}
+    />
   }
 
   if (state.checkedAuthentication && !state.authenticated) {

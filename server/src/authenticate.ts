@@ -46,6 +46,15 @@ export async function getUserIdFromHeaders (
 
   return await admin.auth().verifyIdToken(clientIdToken).then(async (decoded) => {
     const userId = decoded.uid
+
+    const userRecord = await admin.auth().getUser(userId)
+    const providers = userRecord.providerData
+    // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
+    // email address.
+    if (providers.length == 1 && providers[0].providerId == 'password' && !userRecord.emailVerified) {
+      return undefined
+    }
+
     await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
     return userId
   }).catch((error) => {
