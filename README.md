@@ -50,7 +50,7 @@ The easiest way to deploy a backend is to use the template we have prepared. Goi
 There are still a few things you need to manually configure before the app will function.
 
 1. You will need to set up Firebase. Strap in, this is non-trivial.
-    1. Create a new Firebase project. To do this, follow steps 1, 3, and 5 in the setup guide here: https://firebase.google.com/docs/web/setup#create-project
+    1. Create a new Firebase project. To do this, follow steps 1, 3, and 5 in the setup guide here: https://firebase.google.com/docs/web/setup#create-project. Make sure the title is appropriate for display, since by default that's what will go in the confirmation emails.
     2. Register your app with the Firebase project you just created. To do this, follow steps 1-3 here: https://firebase.google.com/docs/web/setup#register-app
     3. Set up the client
         1. Go to the General tab in the Settings section for your new project

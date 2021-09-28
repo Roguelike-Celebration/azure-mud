@@ -13,7 +13,8 @@ interface Props {
 const actionCodeSettings = {
   // URL must be in the authorized domains list in the Firebase Console.
   // TODO: Implement this, lol
-  url: `${config}/api/verifyEmail`,
+  url: `${config.SERVER_HOSTNAME}/api/verifyEmail`,
+  // url: 'https://rlc-old-dev-app-one.firebaseapp.com/__/auth/action?mode=verifyEmail',
   // This must be true.
   handleCodeInApp: true
 };

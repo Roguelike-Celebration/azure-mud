@@ -41,11 +41,11 @@ import ServerSettingsView from './components/ServerSettingsView'
 import ClientDeployedModal from './components/ClientDeployedModal'
 import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import HappeningNowView from './components/HappeningNowView'
+import VerifyEmailView from './components/VerifyEmailView'
 import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import VerifyEmailView from './components/VerifyEmailView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
