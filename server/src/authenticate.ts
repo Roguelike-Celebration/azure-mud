@@ -51,7 +51,7 @@ export async function getUserIdFromHeaders (
     const providers = userRecord.providerData
     // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
     // email address.
-    if (providers.length == 1 && providers[0].providerId == 'password' && !userRecord.emailVerified) {
+    if (providers.length === 1 && providers[0].providerId === 'password' && !userRecord.emailVerified) {
       return undefined
     }
 
