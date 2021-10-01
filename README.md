@@ -65,7 +65,7 @@ There are still a few things you need to manually configure before the app will 
       2. Google is simple, just add the provider.
       3. For Twitter you have to get the API information from the Twitter dev portal (https://developer.twitter.com/en/portal/dashboard) and place it into the form.
 
-2. You'll need to modify the frontend to actually use your new backend! In `src/config.ts`, update the hostname to point to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template).
+2. You'll need to modify the frontend to actually use your new backend! In `src/config.ts`, update the hostname to point to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template). Update the frontend target to point to the server where the app is being hosted - if you're doing local development, that's probably `http://localhost:1234`.
 
 3. Finally, you need to actually deploy the backend code before everything will work. You have three main options (below), but after doing this you should have a working app!
 
