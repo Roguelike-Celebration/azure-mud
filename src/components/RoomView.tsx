@@ -71,14 +71,12 @@ export default function RoomView(props: Props) {
     }
   };
 
-  // TODO: Running this just once really isn't what we want.
-  // Probably hinge on roomId?
   React.useEffect(() => {
     if (room && !room.noMediaChat) {
       prepareForMediaChat();
       joinCall(props.room.id);
     }
-  }, []);
+  }, [props.room.id]);
 
   const joinVideoChat = async () => {
     if (currentMic || currentCamera) {
