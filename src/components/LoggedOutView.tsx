@@ -24,6 +24,7 @@ const uiConfig = {
           console.log('Sign-in email sent!')
         })
       }
+      return true
     }
   },
   signInOptions: [
