@@ -45,6 +45,7 @@ import VerifyEmailView from './components/VerifyEmailView'
 import EmailVerifiedView from './components/EmailVerifiedView'
 import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
+import { shouldVerifyEmail } from './firebaseUtils'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
@@ -63,17 +64,19 @@ const App = () => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (!user) {
         dispatch(AuthenticateAction(undefined, undefined, undefined, undefined))
-      } else if (user.providerData.length === 1 && user.providerData[0].providerId === 'password' && !user.emailVerified) {
+      } else if (shouldVerifyEmail(user)) {
         const userId = firebase.auth().currentUser.uid
         const providerId = firebase.auth().currentUser.providerId
-        dispatch(AuthenticateAction(userId, userId, providerId, true))
+        dispatch(AuthenticateAction(userId, user.email, providerId, true))
       } else {
         const userId = firebase.auth().currentUser.uid
         const providerId = firebase.auth().currentUser.providerId
 
         checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
-            dispatch(AuthenticateAction(userId, userId, providerId, false))
+            // Use email if we have it, otherwise use service's default display name (for Twitter, their handle)
+            const defaultDisplayName = user.email ? user.email : user.displayName
+            dispatch(AuthenticateAction(userId, defaultDisplayName, providerId, false))
             return
           }
           dispatch(AuthenticateAction(userId, registeredUsername, providerId, false))

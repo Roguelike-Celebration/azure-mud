@@ -19,7 +19,7 @@ export default function VerifyEmailView (props: Props) {
   const handleVisibilityChange = (visibility) => {
     if (visibility && firebase.auth().currentUser && firebase.auth().currentUser.emailVerified) {
       var user = firebase.auth().currentUser
-      dispatch(AuthenticateAction(user.uid, user.uid, user.providerId, false))
+      dispatch(AuthenticateAction(user.uid, user.email, user.providerId, false))
     }
   }
 
