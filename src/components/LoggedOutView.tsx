@@ -1,17 +1,9 @@
 // Note - we're doing firebase 8 because the firebaseui stuff doesn't work with 9, big F
+import { shouldVerifyEmail, sendSignInLinkToEmail } from '../firebaseUtils'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import React from 'react'
-
-// TODO: deduplicate with VerifyEmailView
-const actionCodeSettings = {
-  // This URL should be changed to the frontend location for production. It must also be added to the authorized
-  // domains list in the Firebase Console.
-  url: 'http://localhost:1234',
-  // This must be true, you'll get an error if it's not.
-  handleCodeInApp: true
-};
 
 const uiConfig = {
   callbacks: {
@@ -19,10 +11,8 @@ const uiConfig = {
     // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
       const user = firebase.auth().currentUser
-      if (user.providerData.length == 1 && user.providerData[0].providerId == 'password' && !user.emailVerified) {
-        firebase.auth().sendSignInLinkToEmail(user.email, actionCodeSettings).then(() => {
-          console.log('Sign-in email sent!')
-        })
+      if (shouldVerifyEmail(user)) {
+        sendSignInLinkToEmail(user.email)
       }
       return true
     }

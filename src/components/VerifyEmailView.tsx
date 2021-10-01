@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import PageVisibility from 'react-page-visibility';
-import { DispatchContext } from '../App'
-import { AuthenticateAction, HideSideMenuAction } from '../Actions'
+import { AuthenticateAction } from '../Actions'
+import { sendSignInLinkToEmail } from '../firebaseUtils'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
@@ -9,14 +9,6 @@ interface Props {
   userEmail: string;
   dispatch: any;
 }
-
-const actionCodeSettings = {
-  // This URL should be changed to the frontend location for production. It must also be added to the authorized
-  // domains list in the Firebase Console.
-  url: 'http://localhost:1234',
-  // This must be true, you'll get an error if it's not.
-  handleCodeInApp: true
-};
 
 export default function VerifyEmailView (props: Props) {
   // For some reason, this doesn't work - dispatch ends up as null. So I injected it into props. This is weird and if
@@ -54,9 +46,7 @@ export default function VerifyEmailView (props: Props) {
           </p>
           <button
             onClick={(e) => {
-              firebase.auth().sendSignInLinkToEmail(props.userEmail, actionCodeSettings).then(() => {
-                console.log('Sending a sign-in email!')
-              })
+              sendSignInLinkToEmail(props.userEmail)
             }}>
               Resend Verification Email
           </button>
