@@ -34,8 +34,6 @@ const uiConfig = {
   ]
 }
 
-// TODO: Implement broadcast channels or something to dispatch when we log in?
-// https://caniuse.com/broadcastchannel
 export default function LoggedOutView () {
   return (
     <div>

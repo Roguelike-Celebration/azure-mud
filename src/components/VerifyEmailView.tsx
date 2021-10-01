@@ -48,6 +48,10 @@ export default function VerifyEmailView (props: Props) {
             You're currently attempting to log in as <strong>{props.userEmail}</strong>, but your email is not yet
             verified. Please follow the link in your email to complete the registration process.
           </p>
+          <p>
+            <strong>If you have verified your email and this page has not automatically logged you in, please refresh
+              the page manually.</strong>
+          </p>
           <button
             onClick={(e) => {
               firebase.auth().sendSignInLinkToEmail(props.userEmail, actionCodeSettings).then(() => {
