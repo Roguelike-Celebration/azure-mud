@@ -92,7 +92,7 @@ const Redis: RedisInternal = {
   },
 
   async addOccupantToRoom (roomId: string, userId: string) {
-    await Redis.setPartialUserProfile(userId, { roomId })
+    await Redis.setPartialUserProfile(userId, {roomId})
 
     const presenceKey = roomPresenceKey(roomId)
     return await addToSet(presenceKey, userId)
@@ -112,7 +112,7 @@ const Redis: RedisInternal = {
 
   async setCurrentRoomForUser (user: User, roomId: string) {
     if (user.roomId !== roomId) {
-      console.log('Removing from last room')
+      console.log("Removing from last room")
       await Redis.removeOccupantFromRoom(user.roomId, user.id)
     }
 
@@ -152,7 +152,7 @@ const Redis: RedisInternal = {
 
   async setPartialUserProfile (userId: string, user: Partial<User>): Promise<User> {
     const existingUser = await Redis.getUser(userId)
-    const data = { ...existingUser, ...user }
+    const data = {...existingUser, ...user}
     return await Redis.setUserProfile(userId, data)
   },
 
