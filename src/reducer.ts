@@ -38,7 +38,7 @@ import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../server/src/confi
 import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
 import firebase from 'firebase/app'
-import { FIREBASE_CONFIG } from './utils'
+import FIREBASE_CONFIG from './config'
 export interface State {
   firebaseApp: firebase.app.App;
   authenticated: boolean;
