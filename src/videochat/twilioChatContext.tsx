@@ -222,6 +222,11 @@ export const TwilioChatContextProvider = (props: {
     // We're real sloppy re: calling this multiple times
     if (room && room.name === roomId) return
 
+    if (room && room.name !== roomId) {
+      // Remove from previous room
+      room.disconnect();
+    }
+
     try {
       const opts: Twilio.ConnectOptions = {
         name: roomId,

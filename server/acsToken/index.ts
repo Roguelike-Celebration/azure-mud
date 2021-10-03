@@ -22,6 +22,8 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
+  // Ignoring this on my sweep, but FYI if you come back to this, userId is now decoupled from x-ms-client-principal -
+  // see the authenticate file for how to get it from headers against Firebase.
   const header = req.headers['x-ms-client-principal']
   const encoded = Buffer.from(header, 'base64')
   const decoded = encoded.toString('ascii')

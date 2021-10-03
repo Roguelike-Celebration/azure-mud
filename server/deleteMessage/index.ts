@@ -1,5 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import authenticate from '../src/authenticate'
 import { authenticatedAzureWrap } from '../src/azureWrap'
 import deleteMessage from '../src/endpoints/deleteMessage'
 

@@ -37,10 +37,14 @@ import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../server/src/config'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
+import firebase from 'firebase/app'
+import Config from './config'
 export interface State {
+  firebaseApp: firebase.app.App;
   authenticated: boolean;
   checkedAuthentication: boolean;
   authenticationProvider?: string;
+  mustVerifyEmail?: boolean;
 
   hasRegistered: boolean;
 
@@ -84,7 +88,9 @@ export interface State {
   serverSettings: ServerSettings
 }
 
+console.log(Config.FIREBASE_CONFIG)
 export const defaultState: State = {
+  firebaseApp: firebase.initializeApp(Config.FIREBASE_CONFIG),
   authenticated: false,
   checkedAuthentication: false,
   hasRegistered: false,
@@ -455,6 +461,7 @@ export default (oldState: State, action: Action): State => {
     state.checkedAuthentication = true
 
     state.authenticationProvider = action.value.provider
+    state.mustVerifyEmail = action.value.mustVerifyEmail
 
     if (action.value.userId && action.value.name) {
       state.authenticated = true
@@ -465,6 +472,9 @@ export default (oldState: State, action: Action): State => {
         id: action.value.userId,
         username: action.value.name
       }
+    } else {
+      state.authenticated = undefined
+      state.userId = undefined
     }
   }
 
