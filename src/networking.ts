@@ -41,6 +41,8 @@ import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
 import Config from './config'
 import { receiveSignalData, startSignaling } from './webRTC'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 const axios = require('axios').default
 
 let myUserId: string
@@ -73,6 +75,10 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   dispatch(UpdatedPresenceAction(result.presenceData))
 
   connectSignalR(userId, dispatch)
+}
+
+export async function disconnect (userId: string) {
+  const result = await callAzureFunction('disconnect')
 }
 
 export async function getServerSettings (dispatch: Dispatch<Action>) {
@@ -284,8 +290,21 @@ export function getNetworkMediaChatStatus (): boolean {
 // Setup
 
 async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
+  class CustomHttpClient extends SignalR.DefaultHttpClient {
+    public async send (request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
+      const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
+      request.headers = {
+        ...request.headers,
+        userid: firebase.auth().currentUser.uid
+      }
+      return super.send(request)
+    }
+  }
+
   const connection = new SignalR.HubConnectionBuilder()
-    .withUrl(`${Config.SERVER_HOSTNAME}/api`)
+    .withUrl(`${Config.SERVER_HOSTNAME}/api`, {
+      httpClient: new CustomHttpClient(console)
+    })
     .configureLogging(SignalR.LogLevel.Debug)
     .build()
 
@@ -451,9 +470,15 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
 async function callAzureFunctionGet (endpoint: string): Promise<any> {
   try {
+    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
     const r = await axios.get(
       `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${firebaseToken}`
+        }
+      }
     )
     console.log(r)
     return r.data
@@ -465,29 +490,21 @@ async function callAzureFunctionGet (endpoint: string): Promise<any> {
 
 async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
   try {
+    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
     const r = await axios.post(
       `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
       body,
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${firebaseToken}`
+        }
+      }
     )
     console.log(r)
     return r.data
   } catch (e) {
     console.log('Error', e)
-    return undefined
-  }
-}
-
-export async function getLoginInfo () {
-  try {
-    console.log('Fetching')
-    const r = await axios.post(`${Config.SERVER_HOSTNAME}/.auth/me`, null, {
-      withCredentials: true
-    })
-    console.log(r)
-    return r.data[0]
-  } catch (e) {
-    console.log(e)
     return undefined
   }
 }

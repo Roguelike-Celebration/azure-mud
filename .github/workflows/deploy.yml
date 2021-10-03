@@ -21,7 +21,13 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-      
+
+      - name: Create Firebase JSON file
+        working-directory: server
+        run: echo $FIREBASE_SERVER_JSON > firebase-admin.json
+        env:
+          FIREBASE_SERVER_JSON: ${{ secrets.FIREBASE_SERVER_JSON }}
+
       - name: Build Backend
         working-directory: server
         run: npm install && npm run build

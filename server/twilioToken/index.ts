@@ -1,11 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { getUserIdFromHeaders } from '../src/authenticate'
 const { jwt: { AccessToken } } = require('twilio')
 
 const VideoGrant = AccessToken.VideoGrant
 const MAX_ALLOWED_SESSION_DURATION = 14400
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  const userId = req.headers && req.headers['x-ms-client-principal-id']
+  const userId = await getUserIdFromHeaders(context, req)
 
   if (!userId) {
     context.res = {
