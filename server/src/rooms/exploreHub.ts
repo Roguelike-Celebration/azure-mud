@@ -1,7 +1,7 @@
 export const exploreHub = {
 	id: 'exploreHub',
-	displayName: 'Verdant Passages',
-	shortName: 'green passageways',
+	displayName: "Adventurer's Guild Hall",
+	shortName: 'the Guild',
 	description: `Something about digging into a lush world. Avoid feeling like you're colonizing it, though. You can go back to the central [[hall]], or into the [[temple]].` ,
 	hasNoteWall: true,
 	noteWallData: {

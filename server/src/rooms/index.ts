@@ -1,6 +1,6 @@
 
 import { unconference, minetown, oracle, tower, castle, sokoban, astralPlane } from './unconfRooms'
-import { breakout1, breakout2, theater } from './theater'
+import { breakout1, breakout2, breakout3, breakout4, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine} from './sfHub'
 
@@ -56,6 +56,8 @@ const indexRoomData: { [name: string]: Room } = {
   theater,
   breakout1,
   breakout2,
+  breakout3,
+  breakout4,
   unconference,
   minetown,
   oracle,
