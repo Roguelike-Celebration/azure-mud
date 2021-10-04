@@ -17,12 +17,12 @@ export const robots = {
   id: 'robots',
   displayName: 'Robot Fabrication Lab',
   shortName: 'robot lab',
-  description: 'Something witty about making a robot friend. Go back to the [[hallway->sfHub]].'
+  description: 'Something witty about making a robot friend. Go back to the [[Spacehanger->sfHub]].'
 }
 
 export const timeMachine = {
   id: 'timeMachine',
   displayName: 'strange item',
   shortName: 'strange item',
-  description: `make a minigame that eventually leads to the old school hub. Go back to the [[hallway->sfHub]].`
+  description: `make a minigame that eventually leads to the [[old school hub->oldHub]]. Go back to the [[Spacehanger->sfHub]].`
 }
