@@ -42,6 +42,7 @@ export type Action =
   | MediaReceivedSpeakingDataAction
   | StopVideoChatAction
   | ErrorAction
+  | RefreshReactAction
   | SendMessageAction
   | SendCaptionAction
   | SetNameAction
@@ -106,6 +107,7 @@ export enum ActionType {
   MediaReceivedSpeakingData = 'MEDIA_RECEIVED_SPEAKING_DATA',
   ACSReceivedToken = 'ACS_RECEIVED_TOKEN',
   // UI actions
+  RefreshReact = 'REFRESH_REACT',
   SendMessage = 'SEND_MESSAGE',
   SendCaption = 'SEND_CAPTION',
   SetName = 'SET_NAME',
@@ -656,6 +658,18 @@ export const ErrorAction = (error: string): ErrorAction => {
 }
 
 // UI Actions
+
+// HACK ALERT: Used to force a re-render, but ideally the data relevant to the re-render should be tied to the action.
+// Used right now because of timing issues in room presence between the client state and Twilio.
+interface RefreshReactAction {
+  type: ActionType.RefreshReact;
+}
+
+export const RefreshReactAction = (): RefreshReactAction => {
+  return {
+    type: ActionType.RefreshReact
+  }
+}
 
 interface SendMessageAction {
   type: ActionType.SendMessage;

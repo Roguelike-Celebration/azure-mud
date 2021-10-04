@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect, useContext, useRef } from 'react'
 import * as Twilio from 'twilio-video'
+import { RefreshReactAction } from '../Actions'
 import { DispatchContext } from '../App'
 
 import { fetchTwilioToken, setNetworkMediaChatStatus } from '../networking'
@@ -283,15 +284,21 @@ export const TwilioChatContextProvider = (props: {
       setRemoteParticipants(room.participants)
 
       room.on('participantConnected', () => {
-        // This means that the other participants in the scene will not see the new user.
-        console.error('The participent connected, but the media view was not re-rendered.')
         setRemoteParticipants(room.participants)
+        // HACK ALERT: setRemoteParticipants(...) does not trigger a re-render of the MediaView, hence I force it here.
+        // This function actually resolves *after* the room presence changes, so the client thinks nobody else is in
+        // the MUD room and doesn't bring up the chat client. This then resolves, but the client still doesn't see the
+        // user, so forcing a re-render surfaces that.
+        dispatch(RefreshReactAction())
       })
 
       room.on('participantDisconnected', () => {
-        // This means that there's a black square in the media view with the disconnected user's name.
-        console.error('The user disconnected, but the media view was not re-rendered.')
         setRemoteParticipants(room.participants)
+        // HACK ALERT: setRemoteParticipants(...) does not trigger a re-render of the MediaView, hence I force it here.
+        // This function actually resolves *after* the room presence changes, so the client thinks nobody else is in
+        // the MUD room and doesn't bring up the chat client. This then resolves, but the client still doesn't see the
+        // user, so forcing a re-render surfaces that.
+        dispatch(RefreshReactAction())
       })
 
       window.addEventListener('beforeunload', (event) => {
