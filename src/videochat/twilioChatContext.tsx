@@ -41,6 +41,10 @@ export const TwilioChatContextProvider = (props: {
   const [localStreamView, setLocalStreamView] = useState<React.ReactNode>()
 
   const fetchLocalAudioTrack = async () => {
+    if (localAudioTrack) {
+      return localAudioTrack
+    }
+
     const trackObj: any = {}
     if (currentMic) {
       trackObj.audio = { deviceId: currentMic.id }
@@ -52,6 +56,10 @@ export const TwilioChatContextProvider = (props: {
 
   const fetchLocalVideoTrack = async () => {
     console.log('[TWILIO] Fetching local video track')
+    if (localVideoTrack) {
+      return localVideoTrack
+    }
+
     const options: Twilio.CreateLocalTrackOptions = { // TODO: Shrink size if mobile
       height: 720,
       frameRate: 24,
