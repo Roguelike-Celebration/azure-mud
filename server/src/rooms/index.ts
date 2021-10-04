@@ -1,8 +1,9 @@
 
-import { unconference, minetown, oracle, tower, castle, sokoban, astralPlane } from './unconfRooms'
+import { unconference, minetown, tower, castle, sokoban, astralPlane } from './unconfRooms'
 import { breakout1, breakout2, breakout3, breakout4, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine} from './sfHub'
+import { oldHub, Oracle, jelly, vault } from './oldHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -60,7 +61,7 @@ const indexRoomData: { [name: string]: Room } = {
   breakout4,
   unconference,
   minetown,
-  oracle,
+  Oracle,
   tower,
   castle,
   sokoban,
@@ -68,6 +69,9 @@ const indexRoomData: { [name: string]: Room } = {
   sfHub,
   robots,
   timeMachine,
+  oldHub,
+  jelly,
+  vault,
   entryway: {
     id: 'entryway',
     displayName: 'Registration Desk',
