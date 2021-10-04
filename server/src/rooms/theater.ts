@@ -36,3 +36,16 @@ export const  breakout2 = {
 }
 
 
+export const  breakout3 = {
+  id: 'breakout3',
+  displayName: 'third breakout room',
+  shortName: 'third breakout room',
+  description: 'Something witty of the third kind here. Or you can head back to the [[theater]].'
+}
+
+export const  breakout4 = {
+  id: 'breakout4',
+  displayName: 'last breakout room',
+  shortName: 'last breakout room',
+  description: 'Something witty of the final kind here. Or you can head back to the [[theater]].'
+}

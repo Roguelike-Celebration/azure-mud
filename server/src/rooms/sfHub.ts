@@ -1,7 +1,7 @@
 export const sfHub = {
   id: 'sfHub',
-  displayName: 'Chrome Hallways',
-  shortName: 'Shiny Hub',
+  displayName: 'Spacehanger Observation Lounge',
+  shortName: 'Space Lounge',
   description: `Something about the future, probably. You can go back to the central [[hall]], or forge ahead to the [[Robot Fabrication Lab->robots]].<br><br>There's also an unusual [[device->timeMachine]] you can poke at.`,
   hasNoteWall: true,
   noteWallData: {
