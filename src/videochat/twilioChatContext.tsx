@@ -282,9 +282,17 @@ export const TwilioChatContextProvider = (props: {
       setLocalStreamView(<ParticipantTracks participant={room.localParticipant}/>)
       setRemoteParticipants(room.participants)
 
-      room.on('participantConnected', () => { setRemoteParticipants(room.participants) })
+      room.on('participantConnected', () => {
+        // This means that the other participants in the scene will not see the new user.
+        console.error('The participent connected, but the media view was not re-rendered.')
+        setRemoteParticipants(room.participants)
+      })
 
-      room.on('participantDisconnected', () => { setRemoteParticipants(room.participants) })
+      room.on('participantDisconnected', () => {
+        // This means that there's a black square in the media view with the disconnected user's name.
+        console.error('The user disconnected, but the media view was not re-rendered.')
+        setRemoteParticipants(room.participants)
+      })
 
       window.addEventListener('beforeunload', (event) => {
         room.disconnect()
