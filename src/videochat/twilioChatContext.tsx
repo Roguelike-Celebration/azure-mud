@@ -291,6 +291,20 @@ export const TwilioChatContextProvider = (props: {
       setLocalStreamView(<ParticipantTracks participant={room.localParticipant}/>)
       setRemoteParticipants(room.participants)
 
+      // Required so that when a user who is in the room begins publishing, it shows the user on the client, as the
+      // client participant state can be out of sync with Twilio's state.
+      room.on('trackPublished', (publication: Twilio.RemoteTrackPublication, participant: Twilio.RemoteParticipant) => {
+        dispatch(RefreshReactAction())
+      })
+
+      // I believe there's a race condition when another user leaves the video/audio channels between the draws due to
+      // the event and the Twilio resolution, so sometimes the client re-renders before the person has finished
+      // unpublishing. I'm not a huge fan of how many times we're pushing out the renders for the video chat, but to
+      // properly sync everything up can wait, given that the conf is in...like, less than two weeks now.
+      room.on('trackUnpublished', (publication: Twilio.RemoteTrackPublication, participant: Twilio.RemoteParticipant) => {
+        dispatch(RefreshReactAction())
+      })
+
       room.on('participantConnected', () => {
         setRemoteParticipants(room.participants)
         // HACK ALERT: setRemoteParticipants(...) does not trigger a re-render of the MediaView, hence I force it here.
