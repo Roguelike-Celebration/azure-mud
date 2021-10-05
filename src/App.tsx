@@ -192,7 +192,7 @@ const App = () => {
       break
     }
     case Modal.Settings: {
-      innerModalView = <SettingsView />
+      innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} />
       break
     }
     case Modal.MediaSelector: {

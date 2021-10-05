@@ -4,7 +4,11 @@ import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
 import { currentTheme, setTheme } from '../storage'
 
-export default function SettingsView () {
+interface Props {
+  keepCameraWhenMoving: boolean;
+}
+
+export default function SettingsView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
   // Set the selection of the radio group upon opening the modal
@@ -25,6 +29,10 @@ export default function SettingsView () {
     document.body.classList.replace(selectedTheme, event.target.value)
     setSelectedTheme(event.target.value)
     setTheme(event.target.value)
+  }
+
+  const handleKeepCameraWhenMovingSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('TODO: Implement this.')
   }
 
   return (
@@ -62,6 +70,31 @@ export default function SettingsView () {
               onChange = {handleThemeSelection}
             />
             Solarized Light
+          </label>
+        </div>
+      </div>
+      <div className='form' id='video-audio-selection-form'>
+        <label htmlFor='video-audio-selection-form'>Video/Audio Options:</label>
+        <div className='radio'>
+          <label>
+            <input type = 'radio'
+              id = 'keep-camera-when-moving'
+              value = 'default'
+              checked = {props.keepCameraWhenMoving === true}
+              onChange = {handleKeepCameraWhenMovingSelection}
+            />
+            Keep video/audio status when moving rooms
+          </label>
+        </div>
+        <div className='radio'>
+          <label>
+            <input type = 'radio'
+              id = 'keep-camera-when-moving'
+              value = 'default'
+              checked = {props.keepCameraWhenMoving === false}
+              onChange = {handleKeepCameraWhenMovingSelection}
+            />
+            Always leave video/audio when moving rooms
           </label>
         </div>
       </div>

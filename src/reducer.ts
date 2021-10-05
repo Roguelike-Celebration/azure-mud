@@ -67,6 +67,7 @@ export interface State {
   currentVideoDeviceId?: string;
   currentAudioDeviceId?: string;
   speakingPeerIds?: string[];
+  keepCameraWhenMoving: boolean;
 
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
@@ -101,6 +102,7 @@ export const defaultState: State = {
   roomData: {},
   inMediaChat: false,
   speakingPeerIds: [],
+  keepCameraWhenMoving: true,
   activeModal: Modal.None,
   activeModalOptions: {},
   isBanned: false,
