@@ -1,10 +1,11 @@
 import * as React from 'react'
-import { useState, useEffect, useContext, useRef } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import * as Twilio from 'twilio-video'
 import { RefreshReactAction } from '../Actions'
+import { StartVideoChatAction, StopVideoChatAction } from '../Actions'
 import { DispatchContext } from '../App'
 
-import { fetchTwilioToken, setNetworkMediaChatStatus } from '../networking'
+import { fetchTwilioToken } from '../networking'
 import { setUpSpeechRecognizer, stopSpeechRecognizer } from '../speechRecognizer'
 import { DeviceInfo, MediaChatContext, Participant } from './mediaChatContext'
 import ParticipantTracks from './twilio/ParticipantTracks'
@@ -95,7 +96,7 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const publishAudio = () => {
-    setNetworkMediaChatStatus(true)
+    dispatch(StartVideoChatAction())
     setPublishingMic(true)
 
     if (room) {
@@ -108,7 +109,6 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const publishVideo = () => {
-    setNetworkMediaChatStatus(true)
     setPublishingCamera(true)
 
     if (localVideoTrack) {
@@ -122,7 +122,7 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const unpublishMedia = () => {
-    setNetworkMediaChatStatus(false)
+    dispatch(StopVideoChatAction());
     setPublishingCamera(false)
     setPublishingMic(false)
 

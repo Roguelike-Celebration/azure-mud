@@ -313,6 +313,7 @@ const App = () => {
                       room={state.roomData[state.roomId]}
                       userId={state.userId}
                       roomData={state.roomData}
+                      inMediaChat={state.inMediaChat}
                     />
                   ) : null}
                   <InputView
