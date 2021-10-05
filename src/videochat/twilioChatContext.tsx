@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect, useContext, useRef } from 'react'
 import * as Twilio from 'twilio-video'
+import { RefreshReactAction } from '../Actions'
 import { DispatchContext } from '../App'
 
 import { fetchTwilioToken, setNetworkMediaChatStatus } from '../networking'
@@ -290,9 +291,23 @@ export const TwilioChatContextProvider = (props: {
       setLocalStreamView(<ParticipantTracks participant={room.localParticipant}/>)
       setRemoteParticipants(room.participants)
 
-      room.on('participantConnected', () => { setRemoteParticipants(room.participants) })
+      room.on('participantConnected', () => {
+        setRemoteParticipants(room.participants)
+        // HACK ALERT: setRemoteParticipants(...) does not trigger a re-render of the MediaView, hence I force it here.
+        // This function actually resolves *after* the room presence changes, so the client thinks nobody else is in
+        // the MUD room and doesn't bring up the chat client. This then resolves, but the client still doesn't see the
+        // user, so forcing a re-render surfaces that.
+        dispatch(RefreshReactAction())
+      })
 
-      room.on('participantDisconnected', () => { setRemoteParticipants(room.participants) })
+      room.on('participantDisconnected', () => {
+        setRemoteParticipants(room.participants)
+        // HACK ALERT: setRemoteParticipants(...) does not trigger a re-render of the MediaView, hence I force it here.
+        // This function actually resolves *after* the room presence changes, so the client thinks nobody else is in
+        // the MUD room and doesn't bring up the chat client. This then resolves, but the client still doesn't see the
+        // user, so forcing a re-render surfaces that.
+        dispatch(RefreshReactAction())
+      })
 
       window.addEventListener('beforeunload', (event) => {
         room.disconnect()
