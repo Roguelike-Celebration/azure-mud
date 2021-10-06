@@ -2,7 +2,6 @@ import * as React from "react";
 import { Room } from "../room";
 import {
   moveToRoom,
-  getNetworkMediaChatStatus,
   pickUpItem,
   dropItem,
 } from "../networking";
@@ -31,6 +30,7 @@ interface Props {
   room: Room;
   userId: string;
   roomData: { [roomId: string]: Room };
+  inMediaChat: boolean;
 }
 
 export default function RoomView(props: Props) {
@@ -133,7 +133,7 @@ export default function RoomView(props: Props) {
 
   let chatButtons;
   if (room && !room.noMediaChat) {
-    if (getNetworkMediaChatStatus()) {
+    if (props.inMediaChat) {
       chatButtons = (
         <>
           <button onClick={leaveVideoChat} id="join-video-chat">

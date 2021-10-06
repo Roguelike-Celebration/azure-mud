@@ -23,14 +23,12 @@ import { Room } from './room'
 import {
   sendChatMessage,
   toggleUserBan,
-  setNetworkMediaChatStatus,
   toggleUserMod,
   updateProfileColor,
   fetchProfile,
   sendCaption
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
-import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
@@ -59,9 +57,6 @@ export interface State {
   autoscrollChat: boolean;
 
   prepopulatedInput?: string;
-
-  localMediaStreamId?: string;
-  otherMediaStreamPeerIds?: string[];
 
   inMediaChat: boolean;
   currentVideoDeviceId?: string;
@@ -174,13 +169,6 @@ export default (oldState: State, action: Action): State => {
         state.roomData[roomId].users = action.value[roomId]
       }
     })
-  }
-
-  if (action.type === ActionType.UpdatedVideoPresence) {
-    const { roomId, users } = action.value
-    if (state.roomData[roomId]) {
-      state.roomData[roomId].videoUsers = users
-    }
   }
 
   if (action.type === ActionType.PlayerConnected) {
@@ -308,57 +296,17 @@ export default (oldState: State, action: Action): State => {
     addMessage(state, createErrorMessage(action.value))
   }
 
-  // WebRTC
-  if (action.type === ActionType.LocalMediaStreamOpened) {
-    state.localMediaStreamId = action.value.streamId
-    state.currentAudioDeviceId = action.value.audioDeviceId
-    state.currentVideoDeviceId = action.value.videoDeviceId
-  }
-
-  if (action.type === ActionType.P2PStreamReceived) {
-    if (!state.otherMediaStreamPeerIds) {
-      state.otherMediaStreamPeerIds = []
-    }
-
-    if (!state.otherMediaStreamPeerIds.includes(action.value)) {
-      state.otherMediaStreamPeerIds.push(action.value)
-    }
-  }
-
-  if (action.type === ActionType.P2PDataReceived) {
-    console.log('Received P2P data!', action.value.peerId, action.value.data)
-  }
-
-  if (action.type === ActionType.P2PConnectionClosed) {
-    state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds || []
-    state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds.filter(
-      (p) => p !== action.value
-    )
-  }
-
-  if (action.type === ActionType.P2PWaitingForConnections) {
-    state.inMediaChat = true
-  }
-
-  if (action.type === ActionType.LocalMediaSelectedCamera) {
-    state.currentVideoDeviceId = action.value
-  }
-
-  if (action.type === ActionType.LocalMediaSelectedMicrophone) {
-    state.currentAudioDeviceId = action.value
-  }
-
+  // see audioAnalysis.ts for context
   if (action.type === ActionType.MediaReceivedSpeakingData) {
     state.speakingPeerIds = action.value
   }
 
+   if (action.type === ActionType.StartVideoChat) {
+     state.inMediaChat = true;
+   }
+
   if (action.type === ActionType.StopVideoChat) {
-    setNetworkMediaChatStatus(false)
-    stopAudioAnalyserLoop()
-    // disconnectAllPeers()
-    // stopAllDeviceUsage()
-    delete state.localMediaStreamId
-    delete state.otherMediaStreamPeerIds
+    // stopAudioAnalyserLoop()
     state.inMediaChat = false
   }
 

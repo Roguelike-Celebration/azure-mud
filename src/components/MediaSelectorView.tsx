@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React, { useContext, useEffect } from 'react'
 import { DispatchContext } from '../App'
-import { P2PWaitingForConnectionsAction, HideModalAction } from '../Actions'
-import { startVideoChat } from '../networking'
+import { HideModalAction, StartVideoChatAction } from '../Actions'
 import LocalMediaView from './LocalMediaView'
 import { DeviceInfo, useMediaChatContext } from '../videochat/mediaChatContext'
 
@@ -65,12 +64,11 @@ export default function MediaSelectorView (props: Props) {
 
   const clickJoin = () => {
     dispatch(HideModalAction())
-    dispatch(P2PWaitingForConnectionsAction())
 
     if (props.hideVideo) {
       publishAudio()
     } else {
-      startVideoChat()
+      dispatch(StartVideoChatAction())
       publishMedia()
     }
   }
