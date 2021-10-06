@@ -221,6 +221,8 @@ export const TwilioChatContextProvider = (props: {
     }
   }
 
+  // TODO: I want to get a "should you broadcast tracks" in here to prevent the broadcast/unbroadcast that happens on
+  // room switches.
   async function joinCall (roomId: string) {
     // A useEffect hook will re-call this once the token exists
     if (!token) {
@@ -269,23 +271,20 @@ export const TwilioChatContextProvider = (props: {
       const room = await Twilio.connect(token, opts)
 
       // TODO: I worry this will send a single video/audio frame if disabled on start? To test
-      // Here's where we publish, right...?
       room.localParticipant.videoTracks.forEach(publication => {
-        publication.track.stop()
-        // if (cameraEnabled) {
-        //   publication.track.enable()
-        // } else {
-        //   publication.track.disable()
-        // }
+        if (cameraEnabled) {
+          publication.track.enable()
+        } else {
+          publication.track.disable()
+        }
       })
 
       room.localParticipant.audioTracks.forEach(publication => {
-        publication.track.stop()
-        // if (micEnabled) {
-        //   publication.track.enable()
-        // } else {
-        //   publication.track.disable()
-        // }
+        if (micEnabled) {
+          publication.track.enable()
+        } else {
+          publication.track.disable()
+        }
       })
 
       console.log('[TWILIO] In room?', room)

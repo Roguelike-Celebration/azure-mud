@@ -31,6 +31,7 @@ interface Props {
   userId: string;
   roomData: { [roomId: string]: Room };
   inMediaChat: boolean;
+  keepCameraWhenMoving: boolean;
 }
 
 export default function RoomView(props: Props) {
@@ -73,9 +74,16 @@ export default function RoomView(props: Props) {
 
   React.useEffect(() => {
     if (room && !room.noMediaChat) {
-      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
       prepareForMediaChat();
       joinCall(props.room.id);
+      // HACK ALERT: Joining, and then leaving is an AWFUL method of implementing this. It has some bad side effects
+      // such as, well, wasting network and compute power, but it also seems to sometimes flash you for other users,
+      // and it definitely puts you up as a full square for a short period of time.
+      // Also, remember - "join" = room presence; "leave" = "don't publish yourself" - the nomenclature is a little
+      // fuzzy given how right now you default join to listen, but don't join to talk.
+      if (!props.keepCameraWhenMoving) {
+        leaveVideoChat();
+      }
     }
   }, [props.room.id]);
 

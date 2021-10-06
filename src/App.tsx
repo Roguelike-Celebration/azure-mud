@@ -272,6 +272,7 @@ const App = () => {
 
   const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
+  // TODO: Inject into TwilioChatContextProvider?
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
@@ -314,6 +315,7 @@ const App = () => {
                       userId={state.userId}
                       roomData={state.roomData}
                       inMediaChat={state.inMediaChat}
+                      keepCameraWhenMoving={state.keepCameraWhenMoving}
                     />
                   ) : null}
                   <InputView
