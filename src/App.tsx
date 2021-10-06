@@ -205,6 +205,7 @@ const App = () => {
           hideVideo={state.activeModalOptions.hideVideo}
           userIsSpeaking={state.speakingPeerIds.includes('self')}
           roomId={state.roomId}
+          keepCameraWhenMoving={state.keepCameraWhenMoving}
         />
       )
       break
