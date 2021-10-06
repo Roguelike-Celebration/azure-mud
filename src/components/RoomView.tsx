@@ -73,6 +73,7 @@ export default function RoomView(props: Props) {
 
   React.useEffect(() => {
     if (room && !room.noMediaChat) {
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
       prepareForMediaChat();
       joinCall(props.room.id);
     }

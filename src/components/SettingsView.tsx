@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 
 import '../../style/profileEditView.css'
+import { SetKeepCameraWhenMovingAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { currentTheme, setTheme } from '../storage'
 
@@ -32,7 +33,8 @@ export default function SettingsView (props: Props) {
   }
 
   const handleKeepCameraWhenMovingSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('TODO: Implement this.')
+    const newValue = event.target.value === 'true' ? true : false
+    dispatch(SetKeepCameraWhenMovingAction(newValue))
   }
 
   return (
@@ -79,7 +81,7 @@ export default function SettingsView (props: Props) {
           <label>
             <input type = 'radio'
               id = 'keep-camera-when-moving'
-              value = 'default'
+              value = 'true'
               checked = {props.keepCameraWhenMoving === true}
               onChange = {handleKeepCameraWhenMovingSelection}
             />
@@ -90,7 +92,7 @@ export default function SettingsView (props: Props) {
           <label>
             <input type = 'radio'
               id = 'keep-camera-when-moving'
-              value = 'default'
+              value = 'false'
               checked = {props.keepCameraWhenMoving === false}
               onChange = {handleKeepCameraWhenMovingSelection}
             />

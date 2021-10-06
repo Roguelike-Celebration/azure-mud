@@ -269,20 +269,23 @@ export const TwilioChatContextProvider = (props: {
       const room = await Twilio.connect(token, opts)
 
       // TODO: I worry this will send a single video/audio frame if disabled on start? To test
+      // Here's where we publish, right...?
       room.localParticipant.videoTracks.forEach(publication => {
-        if (cameraEnabled) {
-          publication.track.enable()
-        } else {
-          publication.track.disable()
-        }
+        publication.track.stop()
+        // if (cameraEnabled) {
+        //   publication.track.enable()
+        // } else {
+        //   publication.track.disable()
+        // }
       })
 
       room.localParticipant.audioTracks.forEach(publication => {
-        if (micEnabled) {
-          publication.track.enable()
-        } else {
-          publication.track.disable()
-        }
+        publication.track.stop()
+        // if (micEnabled) {
+        //   publication.track.enable()
+        // } else {
+        //   publication.track.disable()
+        // }
       })
 
       console.log('[TWILIO] In room?', room)

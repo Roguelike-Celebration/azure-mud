@@ -459,6 +459,10 @@ export default (oldState: State, action: Action): State => {
     state.autoscrollChat = true
   }
 
+  if (action.type === ActionType.SetKeepCameraWhenMoving) {
+    state.keepCameraWhenMoving = action.value
+  }
+
   if (action.type === ActionType.Authenticate) {
     state.checkedAuthentication = true
 
