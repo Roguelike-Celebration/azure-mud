@@ -32,15 +32,34 @@ export default function MediaChatView (props: MediaProps) {
 
   let otherVideos
   console.log(callParticipants)
-  if(callParticipants) {
-    otherVideos = (Array.from(callParticipants.values())).map((p) => {
-      return (
-        <div key={`stream-wrapper-${p.identity}`}>
-          <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />:
-          <ParticipantTracks participant={p} />
-        </div>
-      )
-    })
+  if (callParticipants) {
+    const liveTracks = (Array.from(callParticipants.values())).map((p) => {
+      var anyAudioTracks = false
+      p.audioTracks.forEach((value, _) => {
+        if (value.on) {
+          anyAudioTracks = true
+        }
+      })
+      var anyVideoTracks = false
+      p.videoTracks.forEach((value, _) => {
+        if (value.on) {
+          anyVideoTracks = true
+        }
+      })
+      if (anyAudioTracks || anyVideoTracks) {
+        return (
+          <div key={`stream-wrapper-${p.identity}`}>
+            <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />:
+            <ParticipantTracks participant={p} />
+          </div>
+        )
+      } else {
+        return null
+      }
+    }).filter(p => p)
+    if (liveTracks.length > 0) {
+      otherVideos = liveTracks
+    }
   }
 
   return (
