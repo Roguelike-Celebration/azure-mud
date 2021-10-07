@@ -91,15 +91,16 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const publishMedia = () => {
+    // If we don't have a room we should no-op instead of attempting to publish
+    if (!room) { return }
     publishAudio()
     publishVideo()
   }
 
   const publishAudio = () => {
-    dispatch(StartVideoChatAction())
-    setPublishingMic(true)
-
     if (room) {
+      dispatch(StartVideoChatAction())
+      setPublishingMic(true)
       if (localAudioTrack) {
         room.localParticipant.publishTrack(localAudioTrack)
         localAudioTrack.restart()
@@ -109,6 +110,10 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const publishVideo = () => {
+    if (!room) {
+      return
+    }
+
     setPublishingCamera(true)
 
     if (localVideoTrack) {
@@ -266,17 +271,15 @@ export const TwilioChatContextProvider = (props: {
         (opts.tracks as Twilio.LocalTrack[]).push(localAudioTrack)
       }
 
-      // TODO: There's a race condition where if you set the keepCamera setting to false, switch rooms, and immediately
-      // rejoin the room, it will rejoin but won't publish the video tracks properly. This is because the
-      // Twilio.connect call is slow. Theory is:
-      // 1) room switch happens; this function is called with shouldPublishTracks=false; Twilio.connect begins
-      // 2) user hits join; their local tracks get spun up; tracks are never published
-      // 3) user ends up in a state where they are joined, their UI thinks they're joined, but they have no tracks
-      // You can recover by leaving/rejoining, but it does seem to introduce a bad state.
-      const room = await Twilio.connect(token, opts)
+      // This is to prevent a possible race condition where the user has the leave room setting on, switches rooms,
+      // and then quickly rejoins. Because Twilio.connect can take seconds to resolve, this would lead to the user
+      // joining the *previous* room before the Twilio.connect resolved and booted them with non-functioning tracks
+      // into the new room.
+      setRoom(undefined)
+      const newRoom = await Twilio.connect(token, opts)
 
       // TODO: I worry this will send a single video/audio frame if disabled on start? To test
-      room.localParticipant.videoTracks.forEach(publication => {
+      newRoom.localParticipant.videoTracks.forEach(publication => {
         if (cameraEnabled) {
           publication.track.enable()
         } else {
@@ -284,7 +287,7 @@ export const TwilioChatContextProvider = (props: {
         }
       })
 
-      room.localParticipant.audioTracks.forEach(publication => {
+      newRoom.localParticipant.audioTracks.forEach(publication => {
         if (micEnabled) {
           publication.track.enable()
         } else {
@@ -295,11 +298,11 @@ export const TwilioChatContextProvider = (props: {
       console.log('[TWILIO] In room?', room)
       console.log('[TWILIO] Attached participant count:', room.participants.size)
 
-      setLocalStreamView(<ParticipantTracks participant={room.localParticipant}/>)
-      setRemoteParticipants(room.participants)
+      setLocalStreamView(<ParticipantTracks participant={newRoom.localParticipant}/>)
+      setRemoteParticipants(newRoom.participants)
 
-      room.on('participantConnected', () => {
-        setRemoteParticipants(room.participants)
+      newRoom.on('participantConnected', () => {
+        setRemoteParticipants(newRoom.participants)
         // HACK ALERT: setRemoteParticipants(...) does not trigger a re-render of the MediaView, hence I force it here.
         // This function actually resolves *after* the room presence changes, so the client thinks nobody else is in
         // the MUD room and doesn't bring up the chat client. This then resolves, but the client still doesn't see the
@@ -307,8 +310,8 @@ export const TwilioChatContextProvider = (props: {
         dispatch(RefreshReactAction())
       })
 
-      room.on('participantDisconnected', () => {
-        setRemoteParticipants(room.participants)
+      newRoom.on('participantDisconnected', () => {
+        setRemoteParticipants(newRoom.participants)
         // HACK ALERT: setRemoteParticipants(...) does not trigger a re-render of the MediaView, hence I force it here.
         // This function actually resolves *after* the room presence changes, so the client thinks nobody else is in
         // the MUD room and doesn't bring up the chat client. This then resolves, but the client still doesn't see the
@@ -317,10 +320,10 @@ export const TwilioChatContextProvider = (props: {
       })
 
       window.addEventListener('beforeunload', (event) => {
-        room.disconnect()
+        newRoom.disconnect()
       })
 
-      setRoom(room)
+      setRoom(newRoom)
     } catch (e) {
       console.log('[TWILIO] Could not connect to room', e)
     }
