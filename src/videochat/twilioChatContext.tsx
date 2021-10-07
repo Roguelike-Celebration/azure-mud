@@ -174,7 +174,7 @@ export const TwilioChatContextProvider = (props: {
     // This calls joinCall when we're ready after that initial setup
     if (token && roomId && !room) {
       console.log('[TWILIO] Joining room')
-      joinCall(roomId)
+      joinCall(roomId, true)
     }
   }, [token, roomId])
 
@@ -221,9 +221,7 @@ export const TwilioChatContextProvider = (props: {
     }
   }
 
-  // TODO: I want to get a "should you broadcast tracks" in here to prevent the broadcast/unbroadcast that happens on
-  // room switches.
-  async function joinCall (roomId: string) {
+  async function joinCall (roomId: string, shouldPublishTracks: boolean) {
     // A useEffect hook will re-call this once the token exists
     if (!token) {
       setRoomId(roomId)
@@ -257,17 +255,24 @@ export const TwilioChatContextProvider = (props: {
         preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }]
       }
 
-      if (localVideoTrack) {
+      if (shouldPublishTracks && localVideoTrack) {
         // This cast shouldn't be necessary, but I'm not sure how to fix it
         // (Because we define tracks as [] above, TS doesn't know if it's
         // LocalTrack[] or MediaStreamTrack[])
         (opts.tracks as Twilio.LocalTrack[]).push(localVideoTrack)
       }
 
-      if (localAudioTrack) {
+      if (shouldPublishTracks && localAudioTrack) {
         (opts.tracks as Twilio.LocalTrack[]).push(localAudioTrack)
       }
 
+      // TODO: There's a race condition where if you set the keepCamera setting to false, switch rooms, and immediately
+      // rejoin the room, it will rejoin but won't publish the video tracks properly. This is because the
+      // Twilio.connect call is slow. Theory is:
+      // 1) room switch happens; this function is called with shouldPublishTracks=false; Twilio.connect begins
+      // 2) user hits join; their local tracks get spun up; tracks are never published
+      // 3) user ends up in a state where they are joined, their UI thinks they're joined, but they have no tracks
+      // You can recover by leaving/rejoining, but it does seem to introduce a bad state.
       const room = await Twilio.connect(token, opts)
 
       // TODO: I worry this will send a single video/audio frame if disabled on start? To test

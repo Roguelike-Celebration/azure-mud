@@ -55,7 +55,7 @@ type MediaChatContextProps = {
 
     localStreamView: React.ReactNode
 
-    joinCall: (room: string) => void
+    joinCall: (room: string, keepCameraWhenMoving: boolean) => void
     leaveCall: () => void
     // The Twilio implementation has an object referencing the active call.
     // Does it conceptually make sense to add one to the public interface?
