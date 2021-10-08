@@ -37,7 +37,9 @@ export async function setUpSpeechRecognizer (
   recognizer.recognized = (s, e) => {
     if (e.result.reason === ResultReason.RecognizedSpeech) {
       console.log(`RECOGNIZED: Text=${e.result.text}`)
-      dispatch(SendCaptionAction(e.result.text))
+      if (e.result.text !== '') {
+        dispatch(SendCaptionAction(e.result.text))
+      }
     } else if (e.result.reason === ResultReason.NoMatch) {
       console.log('NOMATCH: Speech could not be recognized.')
     }
