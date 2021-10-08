@@ -155,8 +155,8 @@ export const generate = () => {
       'Blah'
     ],
     aGross: [
-      "A #gross#",
-      "An #awful#"
+      'A #gross#',
+      'An #awful#'
     ],
     gross: [
       'gross',

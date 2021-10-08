@@ -1,6 +1,6 @@
 import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 import { User } from '../user'
-import {DB} from '../database'
+import { DB } from '../database'
 import { globalPresenceMessage } from '../globalPresenceMessage'
 
 const disconnect: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {

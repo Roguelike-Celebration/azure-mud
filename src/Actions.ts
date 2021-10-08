@@ -4,7 +4,6 @@ import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { ServerSettings } from '../server/src/types'
-import { DeviceInfo } from './videochat/mediaChatContext'
 import { ModalOptions } from './reducer'
 
 export type Action =
@@ -13,7 +12,6 @@ export type Action =
   | UpdatedCurrentRoomAction
   | UpdatedRoomDataAction
   | UpdatedPresenceAction
-  | UpdatedVideoPresenceAction
   | PlayerConnectedAction
   | PlayerDisconnectedAction
   | ChatMessageAction
@@ -31,17 +29,11 @@ export type Action =
   | PlayerBannedAction
   | PlayerUnbannedAction
   | UpdateProfileColorAction
-  | P2PDataReceivedAction
-  | P2PStreamReceivedAction
-  | P2PConnectionClosedAction
-  | P2PWaitingForConnectionsAction
-  | ACSReceivedTokenAction
-  | LocalMediaStreamOpenedAction
-  | LocalMediaSelectedCameraAction
-  | LocalMediaSelectedMicrophoneAction
   | MediaReceivedSpeakingDataAction
   | StopVideoChatAction
+  | StartVideoChatAction
   | ErrorAction
+  | RefreshReactAction
   | SendMessageAction
   | SendCaptionAction
   | SetNameAction
@@ -63,6 +55,7 @@ export type Action =
   | HideSideMenuAction
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
+  | SetKeepCameraWhenMovingAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
@@ -74,7 +67,6 @@ export enum ActionType {
   UpdatedCurrentRoom = 'UPDATED_CURRENT_ROOM',
   UpdatedRoomData = 'UPDATED_ROOM_DATA',
   UpdatedPresence = 'UPDATED_PRESENCE',
-  UpdatedVideoPresence = 'UPDATED_VIDEO_PRESENCE',
   PlayerConnected = 'PLAYER_CONNECTED',
   PlayerDisconnected = 'PLAYER_DISCONNECTED',
   ChatMessage = 'CHAT_MESSAGE',
@@ -93,19 +85,11 @@ export enum ActionType {
   PlayerUnbanned = 'PLAYER_UNBANNED',
   UpdateProfileColor = 'UPDATE_PROFILE_COLOR',
   // WebRTC
-  P2PDataReceived = 'P2P_DATA_RECEIVED',
-  P2PStreamReceived = 'P2P_STREAM_RECEIVED',
-  P2PConnectionClosed = 'P2P_CONNECTION_CLOSED',
-  P2PWaitingForConnections = 'P2P_WAITING_FOR_CONNECTIONS',
-  LocalMediaStreamOpened = 'LOCAL_MEDIASTREAM_OPENED',
   StopVideoChat = 'STOP_VIDEO_CHAT',
-  LocalMediaMicrophoneListReceived = 'LOCAL_MEDIA_MICROPHONE_LIST_RECEIVED',
-  LocalMediaCameraListReceived = 'LOCAL_MEDIA_CAMERA_LIST_RECEIVED',
-  LocalMediaSelectedCamera = 'LOCAL_MEDIA_SELECTED_CAMERA',
-  LocalMediaSelectedMicrophone = 'LOCAL_MEDIA_SELECTED_MICROPHONE',
+  StartVideoChat = 'START_VIDEO_CHAT',
   MediaReceivedSpeakingData = 'MEDIA_RECEIVED_SPEAKING_DATA',
-  ACSReceivedToken = 'ACS_RECEIVED_TOKEN',
   // UI actions
+  RefreshReact = 'REFRESH_REACT',
   SendMessage = 'SEND_MESSAGE',
   SendCaption = 'SEND_CAPTION',
   SetName = 'SET_NAME',
@@ -118,6 +102,7 @@ export enum ActionType {
   HideSideMenu = 'HIDE_SIDE_MENU',
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
+  SetKeepCameraWhenMoving = 'SET_KEEP_CAMERA_WHEN_MOVING',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -204,21 +189,6 @@ export const UpdatedPresenceAction = (data: {
   return {
     type: ActionType.UpdatedPresence,
     value: data
-  }
-}
-
-interface UpdatedVideoPresenceAction {
-  type: ActionType.UpdatedVideoPresence;
-  value: {
-    roomId: string,
-    users: string[]
-  }
-}
-
-export const UpdatedVideoPresenceAction = (roomId: string, users: string[]): UpdatedVideoPresenceAction => {
-  return {
-    type: ActionType.UpdatedVideoPresence,
-    value: { roomId, users }
   }
 }
 
@@ -479,148 +449,6 @@ export const UpdateProfileColorAction = (color: string): UpdateProfileColorActio
   }
 }
 
-interface P2PDataReceivedAction {
-  type: ActionType.P2PDataReceived;
-  value: {
-    peerId: string;
-    data: string;
-  };
-}
-
-export const P2PDataReceivedAction = (
-  peerId: string,
-  data: string
-): P2PDataReceivedAction => {
-  return {
-    type: ActionType.P2PDataReceived,
-    value: { peerId, data }
-  }
-}
-
-interface P2PStreamReceivedAction {
-  type: ActionType.P2PStreamReceived;
-  value: string;
-}
-
-export const P2PStreamReceivedAction = (
-  peerId: string
-): P2PStreamReceivedAction => {
-  return {
-    type: ActionType.P2PStreamReceived,
-    value: peerId
-  }
-}
-
-interface P2PConnectionClosedAction {
-  type: ActionType.P2PConnectionClosed;
-  value: string;
-}
-
-export const P2PConnectionClosedAction = (
-  peerId: string
-): P2PConnectionClosedAction => {
-  return {
-    type: ActionType.P2PConnectionClosed,
-    value: peerId
-  }
-}
-
-interface P2PWaitingForConnectionsAction {
-  type: ActionType.P2PWaitingForConnections;
-}
-
-export const P2PWaitingForConnectionsAction = (): P2PWaitingForConnectionsAction => {
-  return {
-    type: ActionType.P2PWaitingForConnections
-  }
-}
-interface LocalMediaStreamOpenedAction {
-  type: ActionType.LocalMediaStreamOpened;
-  value: {
-    streamId: string;
-    videoDeviceId: string;
-    audioDeviceId: string;
-  };
-}
-
-export const LocalMediaStreamOpenedAction = (
-  streamId: string,
-  devices: { videoDeviceId: string; audioDeviceId: string }
-): LocalMediaStreamOpenedAction => {
-  const { videoDeviceId, audioDeviceId } = devices
-  return {
-    type: ActionType.LocalMediaStreamOpened,
-    value: { streamId, videoDeviceId, audioDeviceId }
-  }
-}
-
-interface LocalMediaMicrophoneListReceivedAction {
-  type: ActionType.LocalMediaMicrophoneListReceived;
-  value: DeviceInfo[];
-}
-
-export const LocalMediaMicrophoneListReceivedAction = (
-  devices: DeviceInfo[]
-): LocalMediaMicrophoneListReceivedAction => {
-  return {
-    type: ActionType.LocalMediaMicrophoneListReceived,
-    value: devices
-  }
-}
-
-interface LocalMediaCameraListReceivedAction {
-  type: ActionType.LocalMediaCameraListReceived;
-  value: DeviceInfo[];
-}
-
-export const LocalMediaCameraListReceivedAction = (
-  devices: DeviceInfo[]
-): LocalMediaCameraListReceivedAction => {
-  return {
-    type: ActionType.LocalMediaCameraListReceived,
-    value: devices
-  }
-}
-
-interface ACSReceivedTokenAction {
-  type: ActionType.ACSReceivedToken
-  value: string
-}
-
-export const ACSReceivedTokenAction = (token: string): ACSReceivedTokenAction => {
-  return {
-    type: ActionType.ACSReceivedToken,
-    value: token
-  }
-}
-
-interface LocalMediaSelectedCameraAction {
-  type: ActionType.LocalMediaSelectedCamera;
-  value: string;
-}
-
-export const LocalMediaSelectedCameraAction = (
-  deviceId: string
-): LocalMediaSelectedCameraAction => {
-  return {
-    type: ActionType.LocalMediaSelectedCamera,
-    value: deviceId
-  }
-}
-
-interface LocalMediaSelectedMicrophoneAction {
-  type: ActionType.LocalMediaSelectedMicrophone;
-  value: string;
-}
-
-export const LocalMediaSelectedMicrophoneAction = (
-  deviceId: string
-): LocalMediaSelectedMicrophoneAction => {
-  return {
-    type: ActionType.LocalMediaSelectedMicrophone,
-    value: deviceId
-  }
-}
 interface MediaReceivedSpeakingDataAction {
   type: ActionType.MediaReceivedSpeakingData;
   value: string[];
@@ -643,6 +471,14 @@ export const StopVideoChatAction = (): StopVideoChatAction => {
   return { type: ActionType.StopVideoChat }
 }
 
+interface StartVideoChatAction {
+  type: ActionType.StartVideoChat;
+}
+
+export const StartVideoChatAction = (): StartVideoChatAction => {
+  return { type: ActionType.StartVideoChat }
+}
+
 interface ErrorAction {
   type: ActionType.Error;
   value: string;
@@ -656,6 +492,18 @@ export const ErrorAction = (error: string): ErrorAction => {
 }
 
 // UI Actions
+
+// HACK ALERT: Used to force a re-render, but ideally the data relevant to the re-render should be tied to the action.
+// Used right now because of timing issues in room presence between the client state and Twilio.
+interface RefreshReactAction {
+  type: ActionType.RefreshReact;
+}
+
+export const RefreshReactAction = (): RefreshReactAction => {
+  return {
+    type: ActionType.RefreshReact
+  }
+}
 
 interface SendMessageAction {
   type: ActionType.SendMessage;
@@ -793,6 +641,17 @@ interface ActivateAutoscrollAction {
 
 export const ActivateAutoscrollAction = (): ActivateAutoscrollAction => {
   return { type: ActionType.ActivateAutoscroll }
+}
+
+interface SetKeepCameraWhenMovingAction {
+  type: ActionType.SetKeepCameraWhenMoving;
+  value: boolean;
+}
+
+export const SetKeepCameraWhenMovingAction = (
+  keepCameraWhenMoving: boolean
+): SetKeepCameraWhenMovingAction => {
+  return { type: ActionType.SetKeepCameraWhenMoving, value: keepCameraWhenMoving }
 }
 
 export const AuthenticateAction = (

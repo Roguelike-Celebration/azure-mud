@@ -1,5 +1,5 @@
-import Config from "./config";
+import Config from './config'
 
 export const nie = <T extends unknown>(_: T): void => {
-  throw Error("Not Implemented");
-};
+  throw Error('Not Implemented')
+}

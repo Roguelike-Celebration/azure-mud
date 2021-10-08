@@ -13,7 +13,8 @@ import {
   ShowSideMenuAction,
   SendMessageAction,
   SpaceIsClosedAction,
-  PlayerBannedAction
+  PlayerBannedAction,
+  SetKeepCameraWhenMovingAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -101,6 +102,9 @@ const App = () => {
           if (messageArchive) {
             dispatch(LoadMessageArchiveAction(messageArchive.messages, messageArchive.whispers))
           }
+
+          const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
+          dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
@@ -192,7 +196,7 @@ const App = () => {
       break
     }
     case Modal.Settings: {
-      innerModalView = <SettingsView />
+      innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} />
       break
     }
     case Modal.MediaSelector: {
@@ -205,6 +209,7 @@ const App = () => {
           hideVideo={state.activeModalOptions.hideVideo}
           userIsSpeaking={state.speakingPeerIds.includes('self')}
           roomId={state.roomId}
+          keepCameraWhenMoving={state.keepCameraWhenMoving}
         />
       )
       break
@@ -272,6 +277,7 @@ const App = () => {
 
   const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
+  // TODO: Inject into TwilioChatContextProvider?
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
@@ -313,6 +319,8 @@ const App = () => {
                       room={state.roomData[state.roomId]}
                       userId={state.userId}
                       roomData={state.roomData}
+                      inMediaChat={state.inMediaChat}
+                      keepCameraWhenMoving={state.keepCameraWhenMoving}
                     />
                   ) : null}
                   <InputView

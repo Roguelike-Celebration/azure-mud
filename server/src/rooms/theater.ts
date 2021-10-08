@@ -1,4 +1,5 @@
-export const theater = {
+/* eslint-disable no-useless-escape */
+export default {
   id: 'theater',
   displayName: 'Theater',
   shortName: 'the theater',

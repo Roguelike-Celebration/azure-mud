@@ -1,40 +1,41 @@
-import * as React from "react";
-import { Room } from "../room";
+import * as React from 'react'
+import { Room } from '../room'
 import {
   moveToRoom,
-  getNetworkMediaChatStatus,
   pickUpItem,
-  dropItem,
-} from "../networking";
-import NameView from "./NameView";
-import { DispatchContext, UserMapContext } from "../App";
+  dropItem
+} from '../networking'
+import NameView from './NameView'
+import { DispatchContext, UserMapContext } from '../App'
 import {
   StopVideoChatAction,
   ShowModalAction,
-  ShowModalWithOptionsAction,
-} from "../Actions";
-import { FaCog, FaVideo } from "react-icons/fa";
+  ShowModalWithOptionsAction
+} from '../Actions'
+import { FaCog, FaVideo } from 'react-icons/fa'
 
-import "../../style/room.css";
-import { Modal } from "../modals";
-import { SpecialFeature } from "../../server/src/rooms";
-import { RainbowGateRoomView } from "./feature/RainbowGateViews";
-import { DullDoorRoomView } from "./feature/DullDoorViews";
-import { FullRoomIndexRoomView } from "./feature/FullRoomIndexViews";
-import { linkActions } from "../linkActions";
-import { useContext } from "react";
-import { useMediaChatContext } from "../videochat/mediaChatContext";
+import '../../style/room.css'
+import { Modal } from '../modals'
+import { SpecialFeature } from '../../server/src/rooms'
+import { RainbowGateRoomView } from './feature/RainbowGateViews'
+import { DullDoorRoomView } from './feature/DullDoorViews'
+import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
+import { linkActions } from '../linkActions'
+import { useContext } from 'react'
+import { useMediaChatContext } from '../videochat/mediaChatContext'
 
-const VIDEO_CHAT_MAX_SIZE = 8;
+const VIDEO_CHAT_MAX_SIZE = 8
 
 interface Props {
   room: Room;
   userId: string;
   roomData: { [roomId: string]: Room };
+  inMediaChat: boolean;
+  keepCameraWhenMoving: boolean;
 }
 
-export default function RoomView(props: Props) {
-  const dispatch = React.useContext(DispatchContext);
+export default function RoomView (props: Props) {
+  const dispatch = React.useContext(DispatchContext)
   const {
     prepareForMediaChat,
     currentMic,
@@ -42,97 +43,103 @@ export default function RoomView(props: Props) {
     joinCall,
     publishMedia,
     publishAudio,
-    unpublishMedia,
-  } = useMediaChatContext();
+    unpublishMedia
+  } = useMediaChatContext()
 
-  const { room } = props;
+  const { room } = props
 
   // This is very silly.
   // Since we're manually setting raw HTML, we can't get refs to add proper click handlers
   // Instead, we just hijack ALL clicks in the description, and check if they're for a link
   const descriptionClick = (e) => {
     const roomId =
-      e.target && e.target.getAttribute && e.target.getAttribute("data-room");
+      e.target && e.target.getAttribute && e.target.getAttribute('data-room')
     if (roomId) {
-      moveToRoom(roomId);
-      return;
+      moveToRoom(roomId)
+      return
     }
 
     const itemName =
-      e.target && e.target.getAttribute && e.target.getAttribute("data-item");
+      e.target && e.target.getAttribute && e.target.getAttribute('data-item')
     if (itemName) {
-      pickUpItem(itemName);
+      pickUpItem(itemName)
     }
 
     const actionName =
-      e.target && e.target.getAttribute && e.target.getAttribute("data-action");
+      e.target && e.target.getAttribute && e.target.getAttribute('data-action')
     if (actionName) {
-      linkActions[actionName]();
+      linkActions[actionName]()
     }
-  };
+  }
 
   React.useEffect(() => {
     if (room && !room.noMediaChat) {
-      prepareForMediaChat();
-      joinCall(props.room.id);
+      // HACK ALERT: This call is necessary to properly set the state variables related to leaving video chat, since
+      // our Twilio state isn't quite synchronized with our react state. We never publish if we don't want to (due to
+      // passing keepCameraWhenMoving into joinCall) so we aren't publishing and unpublishing. We still need to sync.
+      if (!props.keepCameraWhenMoving) {
+        leaveVideoChat()
+      }
+      prepareForMediaChat()
+      joinCall(props.room.id, props.keepCameraWhenMoving)
     }
-  }, [props.room.id]);
+  }, [props.room.id])
 
   const joinVideoChat = async () => {
     if (currentMic || currentCamera) {
-      publishMedia();
+      publishMedia()
     } else {
-      dispatch(ShowModalAction(Modal.MediaSelector));
+      dispatch(ShowModalAction(Modal.MediaSelector))
     }
-  };
+  }
 
   const joinAudioChat = async () => {
     if (currentMic) {
-      publishAudio();
+      publishAudio()
     } else {
       dispatch(
         ShowModalWithOptionsAction(Modal.MediaSelector, { hideVideo: true })
-      );
+      )
     }
-  };
+  }
 
   const leaveVideoChat = () => {
-    dispatch(StopVideoChatAction());
-    unpublishMedia();
-  };
+    dispatch(StopVideoChatAction())
+    unpublishMedia()
+  }
 
   const showNoteWall = () => {
-    dispatch(ShowModalAction(Modal.NoteWall));
-  };
+    dispatch(ShowModalAction(Modal.NoteWall))
+  }
 
   const showMediaSelector = () => {
-    dispatch(ShowModalAction(Modal.MediaSelector));
-  };
+    dispatch(ShowModalAction(Modal.MediaSelector))
+  }
 
-  let noteWallView;
+  let noteWallView
   if (room && room.hasNoteWall) {
     if (room.noteWallData) {
       noteWallView = (
         <div>
-          {room.noteWallData.roomWallDescription}{" "}
+          {room.noteWallData.roomWallDescription}{' '}
           <button onClick={showNoteWall}>
             {room.noteWallData.noteWallButton}
           </button>
         </div>
-      );
+      )
     } else {
       noteWallView = (
         <div>
-          One of the walls has space for attendees to put up sticky notes.{" "}
+          One of the walls has space for attendees to put up sticky notes.{' '}
           <button onClick={showNoteWall}>View note wall</button>
         </div>
-      );
+      )
     }
   }
 
-  let chatButtons;
+  let chatButtons
   if (room && !room.noMediaChat) {
-    if (getNetworkMediaChatStatus()) {
+    if (props.inMediaChat) {
       chatButtons = (
         <>
           <button onClick={leaveVideoChat} id="join-video-chat">
@@ -148,7 +155,7 @@ export default function RoomView(props: Props) {
             <FaCog />
           </button>
         </>
-      );
+      )
     } else {
       chatButtons = [
         <button key="join-video" onClick={joinVideoChat} id="join-video-chat">
@@ -165,8 +172,8 @@ export default function RoomView(props: Props) {
           aria-label="Show Media Selector"
         >
           <FaCog />
-        </button>,
-      ];
+        </button>
+      ]
     }
   }
 
@@ -177,7 +184,7 @@ export default function RoomView(props: Props) {
   return (
     <div id="room">
       <h1 id="room-name">
-        {room ? room.name : "Loading..."}
+        {room ? room.name : 'Loading...'}
         {chatButtons}
       </h1>
       <div
@@ -186,31 +193,31 @@ export default function RoomView(props: Props) {
         dangerouslySetInnerHTML={{
           __html: room
             ? parseDescription(room.description, props.roomData)
-            : "Loading current room...",
+            : 'Loading current room...'
         }}
       />
-      {room && room.id === "theater" ? <StreamEmbed /> : null}
+      {room && room.id === 'theater' ? <StreamEmbed /> : null}
       {room &&
       room.specialFeatures &&
       room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? (
-        <RainbowGateRoomView />
-      ) : (
-        ""
-      )}
+          <RainbowGateRoomView />
+        ) : (
+          ''
+        )}
       {room &&
       room.specialFeatures &&
       room.specialFeatures.includes(SpecialFeature.DullDoor) ? (
-        <DullDoorRoomView />
-      ) : (
-        ""
-      )}
+          <DullDoorRoomView />
+        ) : (
+          ''
+        )}
       {room &&
       room.specialFeatures &&
       room.specialFeatures.includes(SpecialFeature.FullRoomIndex) ? (
-        <FullRoomIndexRoomView />
-      ) : (
-        ""
-      )}
+          <FullRoomIndexRoomView />
+        ) : (
+          ''
+        )}
       {room ? (
         <PresenceView
           users={room.users}
@@ -219,35 +226,35 @@ export default function RoomView(props: Props) {
           roomId={room.id}
         />
       ) : (
-        ""
+        ''
       )}
       {noteWallView}
     </div>
-  );
+  )
 }
 
 const HeldItemView = () => {
-  const { userMap, myId } = useContext(UserMapContext);
-  const user = userMap[myId];
+  const { userMap, myId } = useContext(UserMapContext)
+  const user = userMap[myId]
 
   const dropHeldItem = () => {
-    dropItem();
-  };
+    dropItem()
+  }
 
   if (user.item) {
     return (
       <span>
-        You are holding {user.item}.{" "}
+        You are holding {user.item}.{' '}
         <button className="link-styled-button" onClick={dropHeldItem}>
           Drop it
         </button>
         .
       </span>
-    );
+    )
   } else {
-    return null;
+    return null
   }
-};
+}
 
 const PresenceView = (props: {
   users?: string[];
@@ -255,80 +262,80 @@ const PresenceView = (props: {
   videoUsers: string[];
   roomId: string;
 }) => {
-  const { userMap, myId } = React.useContext(UserMapContext);
+  const { userMap, myId } = React.useContext(UserMapContext)
 
-  let { users, userId, videoUsers } = props;
+  let { users, userId, videoUsers } = props
 
   // Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
   if (users && userId) {
-    users = users.filter((u) => u !== userId);
+    users = users.filter((u) => u !== userId)
 
     // The server is bad at only sending users who are active
     // This is potentially unnecessary, but easy enough to do
-    users = users.filter((u) => userMap[u].isActive);
+    users = users.filter((u) => userMap[u].isActive)
   }
 
   if (users) {
     // TODO: This should happen in the reducer
-    let names;
+    let names
 
     if (users.length === 0) {
       return (
         <div id="dynamic-room-description">
           You are all alone here. <HeldItemView />
         </div>
-      );
+      )
     }
 
-    if (props.roomId === "theater") {
+    if (props.roomId === 'theater') {
       return (
         <div id="dynamic-room-description">
           There are {users.length} other people sitting in here.
         </div>
-      );
+      )
     }
 
     const userViews = users.map((u, idx) => {
-      const user = userMap[u];
+      const user = userMap[u]
       if (!user) {
-        return <span />;
+        return <span />
       }
-      const id = `presence-${idx}`;
+      const id = `presence-${idx}`
       return (
         <span key={`room-presence-${id}`}>
           <NameView userId={u} id={id} key={id} />
           {videoUsers && videoUsers.includes(u) ? <FaVideo /> : null}
           {user.item ? ` (holding ${user.item})` : null}
         </span>
-      );
-    });
+      )
+    })
 
     if (users.length === 1) {
-      names = userViews[0];
+      names = userViews[0]
     } else if (users.length === 2) {
       names = (
         <span>
           {userViews[0]} and {userViews[1]}
         </span>
-      );
+      )
     } else {
       names = (
         <span>
-          {intersperse(userViews.slice(0, users.length - 1), ", ")}, and{" "}
+          {intersperse(userViews.slice(0, users.length - 1), ', ')}, and{' '}
           {userViews[userViews.length - 1]}
         </span>
-      );
+      )
     }
 
     return (
       <div id="dynamic-room-description">
-        Also here {users.length === 1 ? "is" : "are"} {names}. <HeldItemView />
+        Also here {users.length === 1 ? 'is' : 'are'} {names}. <HeldItemView />
       </div>
-    );
+    )
   } else {
-    return <div id="dynamic-room-description" />;
+    return <div id="dynamic-room-description" />
   }
-};
+}
 
 // https://stackoverflow.com/questions/23618744/rendering-comma-separated-list-of-links
 /* intersperse: Return an array with the separator interspersed between
@@ -337,68 +344,68 @@ const PresenceView = (props: {
  * > _([1,2,3]).intersperse(0)
  * [1,0,2,0,3]
  */
-function intersperse(arr, sep) {
+function intersperse (arr, sep) {
   if (arr.length === 0) {
-    return [];
+    return []
   }
 
   return arr.slice(1).reduce(
     function (xs, x, i) {
-      return xs.concat([sep, x]);
+      return xs.concat([sep, x])
     },
     [arr[0]]
-  );
+  )
 }
 
-function parseDescription(
+function parseDescription (
   description: string,
   roomData: { [roomId: string]: Room }
 ): string {
   // eslint-disable-next-line no-useless-escape
-  const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g;
-  const simpleLinkRegex = /\[\[(.+?)\]\]/g;
+  const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
+  const simpleLinkRegex = /\[\[(.+?)\]\]/g
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    const room = roomData[roomId];
-    if (roomId === "item") {
-      return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`;
+    const room = roomData[roomId]
+    if (roomId === 'item') {
+      return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
     } else if (room) {
       const userCount =
         room && room.users && room.users.length > 0
           ? ` (${room.users.length})`
-          : "";
-      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`;
+          : ''
+      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
     } else if (linkActions[roomId]) {
-      return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`;
+      return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`
     } else {
       console.log(
         `Dev warning: tried to link to room ${roomId}, which doesn't exist`
-      );
+      )
     }
-  });
+  })
 
   description = description.replace(simpleLinkRegex, (match, roomId) => {
-    const room = roomData[roomId];
+    const room = roomData[roomId]
     if (!room) {
       console.log(
         `Dev warning: tried to link to room ${roomId}, which doesn't exist`
-      );
+      )
     }
     const userCount =
       room && room.users && room.users.length > 0
         ? ` (${room.users.length})`
-        : "";
-    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCount}</a>`;
-  });
-  return description;
+        : ''
+    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCount}</a>`
+  })
+  return description
 }
 
-export function StreamEmbed() {
-  const streamRef = React.useRef<HTMLIFrameElement>(null);
-  const captionsRef = React.useRef<HTMLIFrameElement>(null);
+export function StreamEmbed () {
+  const streamRef = React.useRef<HTMLIFrameElement>(null)
+  const captionsRef = React.useRef<HTMLIFrameElement>(null)
 
   return (
-    <div id="iframes" style={{ margin: "auto" }}>
+    <div id="iframes" style={{ margin: 'auto' }}>
       <iframe
         width="560"
         title="stream"
@@ -421,5 +428,5 @@ export function StreamEmbed() {
         allowFullScreen
       ></iframe>
     </div>
-  );
+  )
 }

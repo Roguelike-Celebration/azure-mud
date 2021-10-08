@@ -1,4 +1,4 @@
-import {DB} from '../database'
+import { DB } from '../database'
 import { EndpointFunction, LogFn } from '../endpoint'
 
 const clientDeployedWebhook: EndpointFunction = async (inputs: any, log: LogFn) => {

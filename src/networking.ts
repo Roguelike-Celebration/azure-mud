@@ -28,7 +28,6 @@ import {
   NoteUpdateRoomAction,
   NoteUpdateLikesAction,
   HideModalAction,
-  UpdatedVideoPresenceAction,
   SpaceOpenedOrClosedAction,
   PlayerBannedAction,
   PlayerUnbannedAction,
@@ -40,7 +39,6 @@ import { convertServerRoomData } from './room'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
 import Config from './config'
-import { receiveSignalData, startSignaling } from './webRTC'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 const axios = require('axios').default
@@ -48,7 +46,7 @@ const axios = require('axios').default
 let myUserId: string
 let myDispatch: Dispatch<Action>
 
-let inMediaChat: boolean = false
+const inMediaChat: boolean = false
 
 export async function connect (userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId
@@ -127,10 +125,6 @@ export async function pickUpItem (item: string) {
 
 export async function dropItem () {
   await callAzureFunction('pickUpItem', { drop: true })
-}
-
-export async function fetchAcsToken () {
-  return await callAzureFunction('acsToken')
 }
 
 export async function fetchTwilioToken () {
@@ -261,32 +255,6 @@ export async function deleteMessage (messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
 }
 
-// WebRTC
-// A note: the WebRTC handshake process generally avoids the Flux store / reducer
-// The app store is only aware of actual video streams it has to present.
-
-// This kicks off the whole peering process.
-// Any connected WebRTC clients will start signaling, which happens over SignalR.
-export async function startVideoChat () {
-  inMediaChat = true
-}
-
-export async function sendSignalData (peerId: string, data: string) {
-  return await callAzureFunction('sendSignalData', { peerId, data })
-}
-
-export async function setNetworkMediaChatStatus (isInMediaChat: boolean) {
-  inMediaChat = isInMediaChat
-
-  if (!isInMediaChat) {
-    return await callAzureFunction('leaveVideoChat')
-  }
-}
-
-export function getNetworkMediaChatStatus (): boolean {
-  return inMediaChat
-}
-
 // Setup
 
 async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
@@ -395,11 +363,6 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(ShowModalAction(Modal.ClientDeployed))
   })
 
-  connection.on('videoPresence', (roomId: string, users: string[]) => {
-    console.log('Changed video presence')
-    dispatch(UpdatedVideoPresenceAction(roomId, users))
-  })
-
   connection.on('shout', (messageId, name, message) => {
     // We don't gate on your own userId here.
     // Because shouting can fail at the server level, we don't show it preemptively.
@@ -412,20 +375,6 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('dance', (messageId, name, message) => {
     dispatch(DanceAction(messageId, name, message))
-  })
-
-  // WebRTC
-
-  connection.on('webrtcSignalData', (peerId, data) => {
-    console.log('Received signaling data from', peerId)
-    receiveSignalData(peerId, data, dispatch)
-  })
-
-  connection.on('webrtcPeerId', (peerId) => {
-    if (peerId === userId) return
-    if (!inMediaChat) return
-    console.log('Starting signaling with', peerId)
-    startSignaling(peerId, dispatch)
   })
 
   // Post-It Note Wall
