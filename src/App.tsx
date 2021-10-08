@@ -13,7 +13,8 @@ import {
   ShowSideMenuAction,
   SendMessageAction,
   SpaceIsClosedAction,
-  PlayerBannedAction
+  PlayerBannedAction,
+  SetKeepCameraWhenMovingAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -101,6 +102,9 @@ const App = () => {
           if (messageArchive) {
             dispatch(LoadMessageArchiveAction(messageArchive.messages, messageArchive.whispers))
           }
+
+          const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
+          dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
