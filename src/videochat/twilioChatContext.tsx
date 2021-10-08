@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import * as Twilio from 'twilio-video'
-import { RefreshReactAction } from '../Actions'
-import { StartVideoChatAction, StopVideoChatAction } from '../Actions'
+import { RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
+
 import { DispatchContext } from '../App'
 
 import { fetchTwilioToken } from '../networking'
@@ -127,7 +127,7 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const unpublishMedia = () => {
-    dispatch(StopVideoChatAction());
+    dispatch(StopVideoChatAction())
     setPublishingCamera(false)
     setPublishingMic(false)
 
@@ -238,7 +238,7 @@ export const TwilioChatContextProvider = (props: {
 
     if (room && room.name !== roomId) {
       // Remove from previous room
-      room.disconnect();
+      room.disconnect()
     }
 
     try {

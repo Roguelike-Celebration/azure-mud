@@ -34,7 +34,7 @@ export default function SettingsView (props: Props) {
   }
 
   const handleKeepCameraWhenMovingSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value === 'true' ? true : false
+    const newValue = event.target.value === 'true'
     dispatch(SetKeepCameraWhenMovingAction(newValue))
   }
 

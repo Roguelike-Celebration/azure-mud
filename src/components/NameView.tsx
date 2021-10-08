@@ -88,7 +88,7 @@ export default function NameView (props: { userId: string; id?: string }) {
       <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
         <strong className={isMod ? 'mod' : ''}>
           {isMod ? '[Mod] ' : ''}
-          {user && user.polymorph || ''}
+          {(user && user.polymorph) || ''}
           {username || 'unknown'}
         </strong>
       </ContextMenuTrigger>

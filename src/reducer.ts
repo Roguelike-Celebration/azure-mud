@@ -300,9 +300,9 @@ export default (oldState: State, action: Action): State => {
     state.speakingPeerIds = action.value
   }
 
-   if (action.type === ActionType.StartVideoChat) {
-     state.inMediaChat = true;
-   }
+  if (action.type === ActionType.StartVideoChat) {
+    state.inMediaChat = true
+  }
 
   if (action.type === ActionType.StopVideoChat) {
     // stopAudioAnalyserLoop()

@@ -1,5 +1,5 @@
 import React from 'react'
-import PageVisibility from 'react-page-visibility';
+import PageVisibility from 'react-page-visibility'
 import { AuthenticateAction } from '../Actions'
 import { sendSignInLinkToEmail } from '../firebaseUtils'
 import firebase from 'firebase/app'
@@ -37,7 +37,7 @@ export default function VerifyEmailView (props: Props) {
         </header>
         <main role="main">
           <p>
-            You're currently attempting to log in as <strong>{props.userEmail}</strong>, but your email is not yet
+            You&apos;re currently attempting to log in as <strong>{props.userEmail}</strong>, but your email is not yet
             verified. Please follow the link in your email to complete the registration process.
           </p>
           <p>
@@ -56,6 +56,6 @@ export default function VerifyEmailView (props: Props) {
           </button>
         </main>
       </div>
-      </PageVisibility>
+    </PageVisibility>
   )
 }

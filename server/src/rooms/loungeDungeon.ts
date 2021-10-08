@@ -1,4 +1,4 @@
-import { SpecialFeature } from ".";
+import { SpecialFeature } from '.'
 
 export const loungeDungeonRoomData = {
   loungeDungeonDrawingRoom: {

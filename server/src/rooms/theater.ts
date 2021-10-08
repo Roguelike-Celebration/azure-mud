@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export default {
   id: 'theater',
   displayName: 'Theater',

@@ -1,6 +1,6 @@
 import { AuthenticatedEndpointFunction, EndpointFunction, LogFn } from '../endpoint'
 import { User } from '../user'
-import {DB} from '../database'
+import { DB } from '../database'
 import { toServerSettings } from '../types'
 
 const getServerSettings: EndpointFunction = async (inputs: any, log: LogFn) => {

@@ -10,7 +10,7 @@ export default function VideoAudioSettingsView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
   const handleKeepCameraWhenMovingSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value === 'true' ? true : false
+    const newValue = event.target.value === 'true'
     dispatch(SetKeepCameraWhenMovingAction(newValue))
   }
 
@@ -43,5 +43,4 @@ export default function VideoAudioSettingsView (props: Props) {
       </div>
     </div>
   )
-
 }
