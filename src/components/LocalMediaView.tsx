@@ -48,7 +48,6 @@ export default function LocalMediaView (props: Props) {
           </button>
         </div>
       )}
-
     </div>
   )
 }

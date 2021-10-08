@@ -55,6 +55,7 @@ export type Action =
   | HideSideMenuAction
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
+  | SetKeepCameraWhenMovingAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
@@ -101,6 +102,7 @@ export enum ActionType {
   HideSideMenu = 'HIDE_SIDE_MENU',
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
+  SetKeepCameraWhenMoving = 'SET_KEEP_CAMERA_WHEN_MOVING',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -639,6 +641,17 @@ interface ActivateAutoscrollAction {
 
 export const ActivateAutoscrollAction = (): ActivateAutoscrollAction => {
   return { type: ActionType.ActivateAutoscroll }
+}
+
+interface SetKeepCameraWhenMovingAction {
+  type: ActionType.SetKeepCameraWhenMoving;
+  value: boolean;
+}
+
+export const SetKeepCameraWhenMovingAction = (
+  keepCameraWhenMoving: boolean
+): SetKeepCameraWhenMovingAction => {
+  return { type: ActionType.SetKeepCameraWhenMoving, value: keepCameraWhenMoving }
 }
 
 export const AuthenticateAction = (

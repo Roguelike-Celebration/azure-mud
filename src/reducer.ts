@@ -62,6 +62,7 @@ export interface State {
   currentVideoDeviceId?: string;
   currentAudioDeviceId?: string;
   speakingPeerIds?: string[];
+  keepCameraWhenMoving?: boolean;
 
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
@@ -403,6 +404,11 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ActivateAutoscroll) {
     state.autoscrollChat = true
+  }
+
+  if (action.type === ActionType.SetKeepCameraWhenMoving) {
+    state.keepCameraWhenMoving = action.value
+    Storage.setKeepCameraWhenMoving(action.value)
   }
 
   if (action.type === ActionType.Authenticate) {
