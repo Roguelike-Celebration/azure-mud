@@ -9,6 +9,7 @@ import LocalMediaView from './LocalMediaView'
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import ParticipantTracks from '../videochat/twilio/ParticipantTracks'
+import { JsxElement } from 'typescript'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
@@ -19,7 +20,6 @@ interface MediaProps {
 }
 
 export default function MediaChatView (props: MediaProps) {
-  let mediaSelector
   const { publishingCamera, callParticipants } = useMediaChatContext()
   console.log('Re-rendering media chat view?')
 
@@ -30,7 +30,7 @@ export default function MediaChatView (props: MediaProps) {
     )
   }
 
-  let otherVideos
+  let otherVideos: JSX.Element[]
   console.log(callParticipants)
   if (callParticipants) {
     const liveTracks = (Array.from(callParticipants.values())).map((p) => {
@@ -64,7 +64,7 @@ export default function MediaChatView (props: MediaProps) {
 
   return (
     <div id="media-view">
-      {playerVideo} {mediaSelector} {otherVideos}
+      {playerVideo} {otherVideos}
     </div>
   )
 }
