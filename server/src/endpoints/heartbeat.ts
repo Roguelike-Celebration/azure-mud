@@ -1,5 +1,5 @@
 import { getFullUser } from '../user'
-import {DB} from '../database'
+import { DB } from '../database'
 import { getHeartbeatData } from '../heartbeat'
 import { EndpointFunction, LogFn } from '../endpoint'
 

@@ -9,8 +9,8 @@
     "deploy": "npm run build; cp CNAME dist; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/**/**/* server/**/*.ts",
-    "lint-fix": "eslint src/**/**/* server/**/*.ts --fix",
+    "lint": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\"",
+    "lint-fix": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" --fix",
     "lint-rooms": "ts-node lintLinks.ts"
   },
   "author": "",

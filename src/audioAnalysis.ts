@@ -8,21 +8,21 @@ import {
  * In another iteration of videochat, all audio streams got run through this audio analyzer code
  * Such that, when someone made a bunch of noise, their WebRTC PeerID got dispatched and set on an array of
  * IDs of "people who are speaking", which gets passed into MediaChatView.
- * 
+ *
  * What currently exists:
  * - this analysis code is currently not referenced, but probably needs tweaking to handle Twilio IDs
  * - MediaChatView still gets a list of 'speaking' peers, but doesn't do anything with that data.
- * 
- * I suspect we want to throw this out, and each individual speaker view should be responsible for detecting 
+ *
+ * I suspect we want to throw this out, and each individual speaker view should be responsible for detecting
  * whether it's speaking and updating the UI appropriately.
  * I also believe Twilio might give us some of this data automatically if we ask for it.
- * 
+ *
  * I'm temporarily leaving all this code in place in case we want it.
- * But if you implement a different system and don't touch any of this, feel free to completely remove 
+ * But if you implement a different system and don't touch any of this, feel free to completely remove
  * this file, MediaReceivedSpeakingDataAction, state.speakingPeerIds, and everything that falls out from that.
 */
 
-let peerAnalysers: [string, AnalyserNode][] = [];
+const peerAnalysers: [string, AnalyserNode][] = []
 
 function setUpAnalyser (stream: MediaStream): AnalyserNode {
   const audioCtx = new (window.AudioContext ||

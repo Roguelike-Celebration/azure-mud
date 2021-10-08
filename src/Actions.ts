@@ -476,8 +476,8 @@ interface StartVideoChatAction {
 }
 
 export const StartVideoChatAction = (): StartVideoChatAction => {
-  return { type: ActionType.StartVideoChat };
-};
+  return { type: ActionType.StartVideoChat }
+}
 
 interface ErrorAction {
   type: ActionType.Error;

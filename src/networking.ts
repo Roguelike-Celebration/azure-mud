@@ -46,7 +46,7 @@ const axios = require('axios').default
 let myUserId: string
 let myDispatch: Dispatch<Action>
 
-let inMediaChat: boolean = false
+const inMediaChat: boolean = false
 
 export async function connect (userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId

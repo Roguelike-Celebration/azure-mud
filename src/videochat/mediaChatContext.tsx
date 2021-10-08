@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { nie } from '../utils'
 import * as Twilio from 'twilio-video'
-       
+
 export const MediaChatContext = React.createContext<MediaChatContextProps>({
   prepareForMediaChat: async () => console.log('Not implemented'),
   prepareMediaDevices: async () => console.log('Not implemented'),
@@ -67,7 +67,7 @@ type MediaChatContextProps = {
     publishAudio: () => void
     unpublishMedia: () => void
 
-    callParticipants?: Map<String, Twilio.Participant> 
+    callParticipants?: Map<String, Twilio.Participant>
     cameraEnabled: boolean
     micEnabled: boolean
 

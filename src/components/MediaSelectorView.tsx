@@ -114,7 +114,7 @@ export default function MediaSelectorView (props: Props) {
         </div>
       </div>
       <div>
-      <VideoAudioSettingsView keepCameraWhenMoving={props.keepCameraWhenMoving} />
+        <VideoAudioSettingsView keepCameraWhenMoving={props.keepCameraWhenMoving} />
       </div>
       {props.showJoinButton
         ? <button id="join" onClick={clickJoin}>Join</button>
