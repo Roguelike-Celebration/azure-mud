@@ -19,11 +19,52 @@ interface MediaProps {
   speakingPeerIds: string[];
 }
 
+// Collapses repeated calls during the duration to occur only once, [ms] ms after the last invocation of the wrapper.
+function rateLimit(fn, ms) {
+  let timer
+  return _ => {
+    clearTimeout(timer)
+    timer = setTimeout(_ => {
+      timer = null
+      fn()
+    }, ms)
+  };
+}
+
 export default function MediaChatView (props: MediaProps) {
+  // TODO: Figure out how to tie this into the css or something?
+  const ROW_HEIGHT = 195
+  const FEED_WIDTH = 180
+
   const { publishingCamera, callParticipants } = useMediaChatContext()
+  const ref = useRef(null)
+
+  const [numHiddenFeeds, setNumHiddenFeeds] = React.useState<number>(0)
+  const [rowsToDisplay, setRowsToDisplay] = React.useState<number>(1)
+
   console.log('Re-rendering media chat view?')
 
-  let playerVideo
+  useEffect(() => {
+    function onResize () {
+      const renderedWidth = ref.current.clientWidth
+      const renderedHeight = ref.current.clientHeight
+      const collection: HTMLCollection = ref.current.children
+
+      const numRows = Math.floor(renderedHeight / ROW_HEIGHT)
+      const shownPerRow = Math.floor(renderedWidth / FEED_WIDTH)
+      const spaceFor = numRows * shownPerRow
+
+      setNumHiddenFeeds(Math.max(0, collection.length - spaceFor))
+    }
+
+    onResize()
+    const limitedOnResize = rateLimit(onResize, 100)
+
+    window.addEventListener('resize', limitedOnResize)
+    return () => window.removeEventListener('resize', limitedOnResize)
+  })
+
+  let playerVideo: JSX.Element
   if (publishingCamera) {
     playerVideo = (
       <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
@@ -62,9 +103,23 @@ export default function MediaChatView (props: MediaProps) {
     }
   }
 
+  // Test code
+  /*
+  otherVideos = []
+  for (var i = 0; i < 21; i++) {
+    otherVideos[i] = (
+      <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
+    )
+  }*/
+
   return (
-    <div id="media-view">
-      {playerVideo} {otherVideos}
+    <div>
+      <label>{otherVideos ? otherVideos.length : 0} other chatters ({numHiddenFeeds} offscreen). </label>
+      <button onClick={() => setRowsToDisplay(rowsToDisplay + 1)}>Show More</button>
+      <button onClick={() => setRowsToDisplay(Math.max(0, rowsToDisplay - 1))}>Show Less</button>
+      <div id="media-view" ref={ref} style={{maxHeight: rowsToDisplay * ROW_HEIGHT}}>
+          {playerVideo} {otherVideos}
+      </div>
     </div>
   )
 }

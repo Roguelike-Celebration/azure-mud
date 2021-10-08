@@ -1,7 +1,8 @@
 video {
   display: block;
   box-sizing: border-box;
-  width: 180px;
+  width: 180px; /** I guess this is where we set the width? */
+  height: 135px;
 }
 
 input#send-audio {
@@ -11,6 +12,8 @@ input#send-audio {
 #media-view {
   display: flex;
   flex-flow: row wrap;
+  max-height: 190px;
+  overflow: hidden;
 }
 
 video.speaking {
