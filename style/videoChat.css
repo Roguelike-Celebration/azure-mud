@@ -12,8 +12,19 @@ input#send-audio {
 #media-view {
   display: flex;
   flex-flow: row wrap;
-  max-height: 190px;
+  max-height: 195px;
   overflow: hidden;
+  border-style: solid;
+  border-color: white;
+  border-width: 1px;
+}
+
+.participant-track-square {
+  max-height: 195px;
+  min-height: 195px;
+  min-width: 180px;
+  max-width: 180px;
+  overflow: hidden
 }
 
 video.speaking {

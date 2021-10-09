@@ -89,8 +89,8 @@ export default function MediaChatView (props: MediaProps) {
       })
       if (anyAudioTracks || anyVideoTracks) {
         return (
-          <div key={`stream-wrapper-${p.identity}`}>
-            <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />:
+          <div key={`stream-wrapper-${p.identity}`} className='participant-track-square'>
+            <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
             <ParticipantTracks participant={p} />
           </div>
         )
@@ -117,7 +117,7 @@ export default function MediaChatView (props: MediaProps) {
       <label>{otherVideos ? otherVideos.length : 0} other chatters ({numHiddenFeeds} offscreen). </label>
       <button onClick={() => setRowsToDisplay(rowsToDisplay + 1)}>Show More</button>
       <button onClick={() => setRowsToDisplay(Math.max(0, rowsToDisplay - 1))}>Show Less</button>
-      <div id="media-view" ref={ref} style={{maxHeight: rowsToDisplay * ROW_HEIGHT}}>
+      <div id="media-view" ref={ref} style={{height: rowsToDisplay * ROW_HEIGHT, maxHeight: rowsToDisplay * ROW_HEIGHT}}>
           {playerVideo} {otherVideos}
       </div>
     </div>
