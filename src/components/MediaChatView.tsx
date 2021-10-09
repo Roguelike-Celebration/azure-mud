@@ -5,6 +5,7 @@ import React, {
 } from 'react'
 import NameView from './NameView'
 import LocalMediaView from './LocalMediaView'
+import { DominantSpeakerData } from '../reducer'
 
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
@@ -13,10 +14,7 @@ import { JsxElement } from 'typescript'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
-  // All peers that the server considers to be 'in' videochat
-  peerIds?: string[];
-
-  speakingPeerIds: string[];
+  dominantSpeakerData?: DominantSpeakerData;
 }
 
 // Collapses repeated calls during the duration to occur only once, [ms] ms after the last invocation of the wrapper.
@@ -67,7 +65,8 @@ export default function MediaChatView (props: MediaProps) {
   let playerVideo: JSX.Element
   if (publishingCamera) {
     playerVideo = (
-      <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
+      // TODO: To make this work, find the client's participantId
+      <LocalMediaView speaking={false}/>
     )
   }
 
@@ -89,7 +88,7 @@ export default function MediaChatView (props: MediaProps) {
       })
       if (anyAudioTracks || anyVideoTracks) {
         // TODO: Clean this up, it's a mess!
-        if (props.speakingPeerIds.length > 0 && props.speakingPeerIds[0] === p.identity) {
+        if (props.dominantSpeakerData && props.dominantSpeakerData.dominantSpeakerId === p.identity) {
           return (
             <div key={`stream-wrapper-${p.identity}`} className='participant-track-square' style={{ border: 'solid' }}>
               <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
@@ -118,7 +117,7 @@ export default function MediaChatView (props: MediaProps) {
   otherVideos = []
   for (var i = 0; i < 21; i++) {
     otherVideos[i] = (
-      <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
+      <LocalMediaView speaking={false}/>
     )
   } */
 

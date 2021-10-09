@@ -282,9 +282,9 @@ export const TwilioChatContextProvider = (props: {
       // Note that dominantSpeaker can be set to null
       newRoom.on('dominantSpeakerChanged', (participant: Twilio.Participant) => {
         if (participant) {
-          dispatch(MediaReceivedSpeakingDataAction([participant.identity]))
+          dispatch(MediaReceivedSpeakingDataAction(participant.identity))
         } else {
-          dispatch(MediaReceivedSpeakingDataAction([]))
+          dispatch(MediaReceivedSpeakingDataAction(null))
         }
       })
 
