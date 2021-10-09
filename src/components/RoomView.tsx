@@ -142,15 +142,15 @@ export default function RoomView (props: Props) {
   let chatButtons
   if (room && !room.noMediaChat) {
     if (props.inMediaChat) {
-        let leaveButtonLabel = ""
-        if (publishingCamera && publishingMic) {
-          leaveButtonLabel = "Turn off Camera and Mic"
-        } else if (publishingCamera) {
-          // This case shouldn't ever exist with the current UI
-          leaveButtonLabel = "Turn off Camera";
-        } else if (publishingMic) {
-          leaveButtonLabel = "Turn off Mic";
-        }
+      let leaveButtonLabel = ''
+      if (publishingCamera && publishingMic) {
+        leaveButtonLabel = 'Turn off Camera and Mic'
+      } else if (publishingCamera) {
+        // This case shouldn't ever exist with the current UI
+        leaveButtonLabel = 'Turn off Camera'
+      } else if (publishingMic) {
+        leaveButtonLabel = 'Turn off Mic'
+      }
       chatButtons = (
         <>
           <button onClick={leaveVideoChat} id="join-video-chat">
