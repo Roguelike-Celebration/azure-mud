@@ -20,7 +20,7 @@ interface MediaProps {
 }
 
 // Collapses repeated calls during the duration to occur only once, [ms] ms after the last invocation of the wrapper.
-function rateLimit(fn, ms) {
+function rateLimit (fn, ms) {
   let timer
   return _ => {
     clearTimeout(timer)
@@ -28,7 +28,7 @@ function rateLimit(fn, ms) {
       timer = null
       fn()
     }, ms)
-  };
+  }
 }
 
 export default function MediaChatView (props: MediaProps) {
@@ -88,12 +88,22 @@ export default function MediaChatView (props: MediaProps) {
         }
       })
       if (anyAudioTracks || anyVideoTracks) {
-        return (
-          <div key={`stream-wrapper-${p.identity}`} className='participant-track-square'>
-            <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
-            <ParticipantTracks participant={p} />
-          </div>
-        )
+        // TODO: Clean this up, it's a mess!
+        if (props.speakingPeerIds.length > 0 && props.speakingPeerIds[0] === p.identity) {
+          return (
+            <div key={`stream-wrapper-${p.identity}`} className='participant-track-square' style={{ border: 'solid' }}>
+              <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
+              <ParticipantTracks participant={p} />
+            </div>
+          )
+        } else {
+          return (
+            <div key={`stream-wrapper-${p.identity}`} className='participant-track-square'>
+              <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
+              <ParticipantTracks participant={p} />
+            </div>
+          )
+        }
       } else {
         return null
       }
@@ -110,15 +120,15 @@ export default function MediaChatView (props: MediaProps) {
     otherVideos[i] = (
       <LocalMediaView speaking={props.speakingPeerIds.includes('self')}/>
     )
-  }*/
+  } */
 
   return (
     <div>
       <label>{otherVideos ? otherVideos.length : 0} other chatters ({numHiddenFeeds} offscreen). </label>
       <button onClick={() => setRowsToDisplay(rowsToDisplay + 1)}>Show More</button>
       <button onClick={() => setRowsToDisplay(Math.max(0, rowsToDisplay - 1))}>Show Less</button>
-      <div id="media-view" ref={ref} style={{height: rowsToDisplay * ROW_HEIGHT, maxHeight: rowsToDisplay * ROW_HEIGHT}}>
-          {playerVideo} {otherVideos}
+      <div id="media-view" ref={ref} style={{ height: rowsToDisplay * ROW_HEIGHT, maxHeight: rowsToDisplay * ROW_HEIGHT }}>
+        {playerVideo} {otherVideos}
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import * as Twilio from 'twilio-video'
-import { RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
+import { MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
 
 import { DispatchContext } from '../App'
 
@@ -257,7 +257,8 @@ export const TwilioChatContextProvider = (props: {
             }
           }
         },
-        preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }]
+        preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
+        dominantSpeaker: true
       }
 
       if (shouldPublishTracks && localVideoTrack) {
@@ -277,6 +278,15 @@ export const TwilioChatContextProvider = (props: {
       // into the new room.
       setRoom(undefined)
       const newRoom = await Twilio.connect(token, opts)
+
+      // Note that dominantSpeaker can be set to null
+      newRoom.on('dominantSpeakerChanged', (participant: Twilio.Participant) => {
+        if (participant) {
+          dispatch(MediaReceivedSpeakingDataAction([participant.identity]))
+        } else {
+          dispatch(MediaReceivedSpeakingDataAction([]))
+        }
+      })
 
       // TODO: I worry this will send a single video/audio frame if disabled on start? To test
       newRoom.localParticipant.videoTracks.forEach(publication => {
