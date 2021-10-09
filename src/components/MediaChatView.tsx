@@ -10,7 +10,7 @@ import { DominantSpeakerData } from '../reducer'
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import ParticipantTracks from '../videochat/twilio/ParticipantTracks'
-import { JsxElement } from 'typescript'
+import * as Twilio from 'twilio-video'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
@@ -27,6 +27,22 @@ function rateLimit (fn, ms) {
       fn()
     }, ms)
   }
+}
+
+function hasAnyLiveTracks (participant: Twilio.Participant): boolean {
+  var anyAudioTracks = false
+  participant.audioTracks.forEach((value, _) => {
+    if (value.on) {
+      anyAudioTracks = true
+    }
+  })
+  var anyVideoTracks = false
+  participant.videoTracks.forEach((value, _) => {
+    if (value.on) {
+      anyVideoTracks = true
+    }
+  })
+  return anyAudioTracks || anyVideoTracks
 }
 
 export default function MediaChatView (props: MediaProps) {
@@ -73,22 +89,10 @@ export default function MediaChatView (props: MediaProps) {
   let otherVideos: JSX.Element[]
   console.log(callParticipants)
   if (callParticipants) {
-    const liveTracks = (Array.from(callParticipants.values())).map((p) => {
-      var anyAudioTracks = false
-      p.audioTracks.forEach((value, _) => {
-        if (value.on) {
-          anyAudioTracks = true
-        }
-      })
-      var anyVideoTracks = false
-      p.videoTracks.forEach((value, _) => {
-        if (value.on) {
-          anyVideoTracks = true
-        }
-      })
-      if (anyAudioTracks || anyVideoTracks) {
+    const liveTracks: JSX.Element[] = (Array.from(callParticipants.values())).map((p) => {
+      if (hasAnyLiveTracks(p)) {
         // TODO: Clean this up, it's a mess!
-        if (props.dominantSpeakerData && props.dominantSpeakerData.dominantSpeakerId === p.identity) {
+        if (props.dominantSpeakerData.dominantSpeakerId === p.identity) {
           return (
             <div key={`stream-wrapper-${p.identity}`} className='participant-track-square' style={{ border: 'solid' }}>
               <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
