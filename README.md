@@ -86,11 +86,13 @@ There are still a few things you need to manually configure before the app will 
 
 By default, every time code is merged into the `main` branch in this repo, both the frontend and backend are deployed. It's very little work to configure this same behavior on your GitHub fork of this project:
 
-1. Add a GitHub Secret (Settings -> Secrets) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?WT.mc_id=spatial-8206-emwalker) to generate a publish profile and add that as a GH Secret as well.
+1. Add a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?WT.mc_id=spatial-8206-emwalker) to generate a publish profile and add that as a GH Secret as well.
 
-2. If you want to continue to use GH Pages, enable it for your project by going to Settings -> General and setting it to serve from the `gh-pages` branch and the root directory. Also, you should delete the `CNAME` file from the project root, or replace it with your own if you intend to use GitHub Actions with a custom domain. If you would like to use a different static site host, simply remove the "Deploy Frontend" step from the `.github/workflows/deploy.yml` file. 
+2. If you want to continue to use GH Pages, enable it for your project by going to Settings -> General and setting it to serve from the `gh-pages` branch and the root directory. Also, you should delete the `CNAME` file from the project root, or replace it with your own if you intend to use GitHub Actions with a custom domain. If you would like to use a different static site host, simply remove the "Deploy Frontend" step from the `.github/workflows/deploy.yml` file.
 
 3. Go to the "Actions" tab of your repo, and click the button to enable the preexisting forked Actions in your project.
+
+4. Optionally, the GitHub Action workflow will send a webhook to the server when a new deployment has completed, which allows us to notify connected clients that a new browser app has been deployed and they should refresh the page. To enable this, create a random string to use as a token (we recommend running `uuidgen` on a Mac or a Linux machine). Store it as a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) under the key `DEPLOY_WEBHOOK_KEY`. Also store it as an ENV variable in the Azure Functions App (while viewing the Function App in the Portal, Configuration -> New Application Setting) under the key `DEPLOY_WEBHOOK_KEY`. Now, if you have your frontend open when you deploy via GitHub Actions, you should see a pop-up in the frontend instructing you to refresh.
 
 The next time you commit code to the `main` branch, your workflow should run and code should deploy!
 

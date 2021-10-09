@@ -59,8 +59,6 @@ export interface State {
   prepopulatedInput?: string;
 
   inMediaChat: boolean;
-  currentVideoDeviceId?: string;
-  currentAudioDeviceId?: string;
   speakingPeerIds?: string[];
   keepCameraWhenMoving?: boolean;
 

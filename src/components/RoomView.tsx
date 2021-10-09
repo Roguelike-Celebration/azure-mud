@@ -40,6 +40,8 @@ export default function RoomView (props: Props) {
     prepareForMediaChat,
     currentMic,
     currentCamera,
+    publishingCamera,
+    publishingMic,
     joinCall,
     publishMedia,
     publishAudio,
@@ -140,10 +142,19 @@ export default function RoomView (props: Props) {
   let chatButtons
   if (room && !room.noMediaChat) {
     if (props.inMediaChat) {
+      let leaveButtonLabel = ''
+      if (publishingCamera && publishingMic) {
+        leaveButtonLabel = 'Turn off Camera and Mic'
+      } else if (publishingCamera) {
+        // This case shouldn't ever exist with the current UI
+        leaveButtonLabel = 'Turn off Camera'
+      } else if (publishingMic) {
+        leaveButtonLabel = 'Turn off Mic'
+      }
       chatButtons = (
         <>
           <button onClick={leaveVideoChat} id="join-video-chat">
-            Leave Chat
+            {leaveButtonLabel}
           </button>
           <button
             key="show-media-selector"
@@ -263,16 +274,11 @@ const PresenceView = (props: {
   roomId: string;
 }) => {
   const { userMap, myId } = React.useContext(UserMapContext)
-
   let { users, userId, videoUsers } = props
 
   // Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
   if (users && userId) {
     users = users.filter((u) => u !== userId)
-
-    // The server is bad at only sending users who are active
-    // This is potentially unnecessary, but easy enough to do
-    users = users.filter((u) => userMap[u].isActive)
   }
 
   if (users) {
