@@ -1,9 +1,8 @@
-import { DB } from '../database'
 import { EndpointFunction, LogFn } from '../endpoint'
 
 const clientDeployedWebhook: EndpointFunction = async (inputs: any, log: LogFn) => {
   const inputtedKey = inputs.key
-  const actualKey = (await DB.getServerSettings()).webhookDeployKey
+  const actualKey = process.env.DEPLOY_WEBHOOK_KEY
   if (!inputtedKey || inputtedKey !== actualKey) {
     return {
       httpResponse: {
