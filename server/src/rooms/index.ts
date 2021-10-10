@@ -1,6 +1,6 @@
 
 import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak } from './unconfRooms'
-import { breakout1, breakout2, breakout3, breakout4, theater } from './theater'
+import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine } from './sfHub'
 import { oldHub, Oracle, jelly, vault } from './oldHub'
@@ -55,10 +55,10 @@ export interface Room {
 
 const indexRoomData: { [name: string]: Room } = {
   theater,
-  breakout1,
-  breakout2,
-  breakout3,
-  breakout4,
+  warrior,
+  mage,
+  rogue,
+  tourist,
   unconference,
   cockatrice,
   dragon,
