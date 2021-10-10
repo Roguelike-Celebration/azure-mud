@@ -93,7 +93,7 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the hall',
     description: `A magnificently hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmer of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
     <br/><br/>
-    In the center of the hall you see a circular booth overflowing with bits and bobs, labelled the [[Swag Table]]. Further on, an ornate staircase leads up to the [[Bar]], and blinking lights above a door advertize the [[Theater->theater]] entrance. 
+    In the center of the hall you see a circular booth overflowing with bits and bobs, labelled the [[Swag Table->swag]]. Further on, an ornate staircase leads up to the [[Bar->bar]], and blinking lights above a door advertise the [[Theater->theater]] entrance. 
     <br/><br/>
     To your right, a short hallway leads to the [[unconferencing rooms->unconference]]. To your left, a much longer hallway labelled [[Destinations->destinations]].`,
     hasNoteWall: true,
