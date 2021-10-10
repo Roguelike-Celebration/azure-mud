@@ -27,14 +27,12 @@ export const breakout1 = {
   description: 'Something witty of the first kind here. Or you can head back to the [[theater]].'
 }
 
-
 export const  breakout2 = {
   id: 'breakout2',
   displayName: 'second breakout room',
   shortName: 'second breakout room',
   description: 'Something witty of the second kind here. Or you can head back to the [[theater]].'
 }
-
 
 export const  breakout3 = {
   id: 'breakout3',

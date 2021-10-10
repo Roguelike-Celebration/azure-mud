@@ -1,6 +1,6 @@
 import { SpecialFeature } from '.'
 
-// Right now none of this should be used. 
+// Right now none of this should be used.
 
 export const loungeDungeonRoomData = {
   loungeDungeonDrawingRoom: {

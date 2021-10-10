@@ -1,8 +1,8 @@
 
-import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak} from './unconfRooms'
+import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak } from './unconfRooms'
 import { breakout1, breakout2, breakout3, breakout4, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
-import { sfHub, robots, timeMachine} from './sfHub'
+import { sfHub, robots, timeMachine } from './sfHub'
 import { oldHub, Oracle, jelly, vault } from './oldHub'
 
 export interface NoteWallData {
@@ -116,13 +116,13 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'bar',
     displayName: 'Bar',
     shortName: 'the bar',
-    description: `The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight\'s specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).
+    description: `The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight's specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).
     <br/>A self-serve table nearby has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]
     <br/><br/>
     Three booths provide opportunities to sit and enjoy conversation in smaller groups - by the [[railing->barBoothA]], seated [[along the bar->barBoothB]], and tucked away [[at the back->barBoothC]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->hall]].`,
     hasNoteWall: true,
     noteWallData: {
-      roomWallDescription: 'By the entrance to the bathrooms there is a pile of pens and markers - it seems the bar has decided if they can\'t stop graffitti, they might as well encourage patrons to use glitter pens instead of a pen knife.',
+      roomWallDescription: 'By the bathrooms there\'s a pile of pens and markers - it seems the bar decided if they can\'t stop graffitti, they might as well encourage patrons to use glitter pens instead of boring ballpoint.',
       noteWallButton: 'Add your mark',
       addNoteLinkText: 'Contribute',
       addNotePrompt: 'Contribute to the graffitti?',
@@ -133,14 +133,14 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'barBoothA',
     displayName: 'Booth Along the Railing',
     shortName: 'the booth by the railing',
-    description: `A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.
+    description: `A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.</br></br>
       From here, you can see [[the seats at the bar->barBoothB]] or [[at the back of the room->barBoothC]], and the [[rest of the bar->bar]].`
   },
   barBoothB: {
     id: 'barBoothB',
     displayName: 'Seats Along the Bar',
     shortName: 'the booth by the bar',
-    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, the seats swivel.
+    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel. Whee!</br></br>
       From here, you can see tables [[by the railing->barBoothA]] or [[at the back->barBoothC]], and the [[rest of the bar->bar]].`
   },
   barBoothC: {
@@ -151,7 +151,7 @@ const indexRoomData: { [name: string]: Room } = {
       From here, you can see tables [[at the railing->barBoothA]] or [[along the bar->barBoothB]], and the [[rest of the bar->bar]]`
   },
 
-/*  Not deleting this yet because I want to figure out what to do with the doorways / color minigame, but it *shouldn't* link anywhere.
+  /*  Not deleting this yet because I want to figure out what to do with the doorways / color minigame, but it *shouldn't* link anywhere.
     foyer: {
     id: 'foyer',
     displayName: 'Haunted Foyer',
