@@ -2,7 +2,7 @@
 import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak } from './unconfRooms'
 import { breakout1, breakout2, breakout3, breakout4, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
-import { sfHub, robots, timeMachine } from './sfHub'
+import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
 import { oldHub, Oracle, jelly, vault } from './oldHub'
 
 export interface NoteWallData {
@@ -69,6 +69,7 @@ const indexRoomData: { [name: string]: Room } = {
   sfHub,
   robots,
   timeMachine,
+  vendingMachine,
   oldHub,
   Oracle,
   jelly,
@@ -86,13 +87,9 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the hall',
     description: `A magnificently hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmer of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
     <br/><br/>
-    Along a wall sits a curious-looking vending machine labelled "Munxip's Magnifient Munchies" with a button you can press marked [[Get Random Food->generateFood]]. Next to it is a circular booth overflowing with bits and bobs, labelled the [[swag table]].
+    In the center of the hall you see a circular booth overflowing with bits and bobs, labelled the [[Swag Table]]. Further on, an ornate staircase leads up to the [[Bar]], and blinking lights above a door advertize the [[Theater->theater]] entrance. 
     <br/><br/>
-    A plaque near the door shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.
-    <br/><br/>
-    Looking down the hall, you can see an ornate staircase leading up to the [[bar]], while straight ahead blinking lights advertize the [[main theater area->theater]]. 
-    <br/>
-    To your right, a short hallway leads to the [[unconferencing rooms->unconference]]. To your left, huge doorways promising journeys to thrilling destinations span the length of the hall. The majority of them are shut, with taped up paper signs providing increasingly ludicrous reasons for their inaccessability. Only two halls are open, and while it's hard from here to tell where they'll go, one shines with [[glass and chrome->sfHub]], and the other is [[crumbling and overgrown with plant life->exploreHub]].`,
+    To your right, a short hallway leads to the [[unconferencing rooms->unconference]]. To your left, a much longer hallway labelled [[Destinations->destinations]].`,
     hasNoteWall: true,
     noteWallData: {
       roomWallDescription: 'A big bulletin board sits in the middle of the hall, with a banner on top - "Social Space Feedback". An array of markers and sticky notes are nearby.',
@@ -102,6 +99,12 @@ const indexRoomData: { [name: string]: Room } = {
       noteWallDescription: 'Social Space Feedback'
     }
   },
+  destinations: {
+    id: 'destinations',
+    displayName: 'Destinations',
+    shortName: 'destinations',
+    description: 'Lining both sides of this hall, huge doorways promise journeys to thrilling destinations. The majority of them are shut, with taped up [[paper signs->readClosedSign]] providing increasingly ludicrous reasons for their closure.<br/><br/>Only two halls are open, and while it\'s hard from here to tell where they\'ll go, one door shines with [[glass and chrome->sfHub]], and the other is [[crumbling and overgrown with plant life->exploreHub]].<br/><br/>You can also return to the [[Central Hall->hall]]'
+  },
   swag: {
     id: 'swag',
     displayName: 'Swag Table',
@@ -109,6 +112,8 @@ const indexRoomData: { [name: string]: Room } = {
     description: `A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration mousepads->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].
     <br/><br/>
     There's also a set of <a href="https://www.aatwebstore.com/rc2021/shop/home" target="_blank">beautiful physical shirts and mousepads you can buy in real life</a>, designed by <a href="https://marlowedobbe.com/" target="_blank">Marlowe Dobbe</a> and printed by Ann Arbor T-shirt Company.
+    <br/><br/>
+    A plaque set into the floor here shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.
     <br/><br/>
     From here, you can walk back to the rest of the [[hall]].`
   },
