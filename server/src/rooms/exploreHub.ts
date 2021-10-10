@@ -24,7 +24,7 @@ export const temple = {
   id: 'temple',
   displayName: 'Temple of Transmutations',
   shortName: 'the temple',
-  description: 'Most of the priests of the temple are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the bar. There are three areas available though: [[Light]], [[Libations]], and [[Quest]].'
+  description: 'Most of the priests of the temple are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the bar. There are three areas available though: [[Light->lights]], [[Libations->libations]], and [[Quest->quest]].'
 }
 // Right now I am *fairly* sure this leads into *exactly* the modals of 2020's 'rainbow door' and 'dull door', the text of which is way over in /src/components/feature. TO DO: update that text.
 
