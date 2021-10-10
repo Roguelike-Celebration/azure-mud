@@ -19,7 +19,7 @@ const displayMessage: AuthenticatedEndpointFunction = async (user: User, inputs:
     }
 
     displayMessage = generator.generate()
-    actionMessage = generator.actionString(displayMessage);
+    actionMessage = generator.actionString(displayMessage)
     log(displayMessage)
     log(actionMessage)
   } else if (inputs.message) {

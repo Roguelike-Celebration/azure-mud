@@ -1,7 +1,7 @@
 var tracery = require('tracery-grammar')
 
 export const actionString = (poster: string) => {
-    return `You look more closely at one of the pieces of paper - ${poster}.`
+  return `You look more closely at one of the pieces of paper - ${poster}.`
 }
 
 export const generate = () => {
@@ -10,16 +10,16 @@ export const generate = () => {
       'it reads "#apology# - #closedReason#" in a #writingMethod#'
     ],
     apology: [
-      "Sorry",
-      "Apologies to our guests",
+      'Sorry',
+      'Apologies to our guests',
       "This one's my bad",
-      "Oops"
+      'Oops'
     ],
     closedReason: [
       'overrun with crabs',
       '400 destination not found',
       'we lost this one',
-      'dog ate our airport',
+      'dog ate our airport'
     ],
     writingMethod: [
       'hasty handwritten scrawl',
