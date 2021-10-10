@@ -11,11 +11,12 @@ export const exploreHub = {
   description: 'Something about digging into a lush world. Avoid feeling like you\'re colonizing it, though. You can go back to the central [[hall]], or into the [[temple]].',
   hasNoteWall: true,
   noteWallData: {
-    roomWallDescription: 'A mage\'s tome rests on a pillar, labeled "True Facts about Roguelikes 2021".',
-    noteWallLinkText: '??',
-    addNoteLinkText: '??',
-    addNotePrompt: '??',
-    noteWallDescription: '??'
+    roomWallDescription: 'A mage\'s tome rests on a pillar, labeled \"True Facts about Roguelikes 2021\".',
+    noteWallLinkText: 'placeholder',
+    addNoteLinkText: 'placeholder',
+    addNotePrompt: 'placeholder',
+    noteWallDescription: 'placeholder',
+    noteWallButton: 'placeholder'
   }
 }
 

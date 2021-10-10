@@ -46,5 +46,5 @@ export const tourist = {
   id: 'tourist',
   displayName: 'Breakout room: Tourist\'s Gate',
   shortName: 'Tourist Breakout',
-  description: 'Shockingly modern - the gate to an airport. Two very good dogs are manning the desk. One dog wants to give you a [[Platinum Yendorian Express Card->item]] the other want you to tell them of the [[clacks->GNUTerryPratchett]]. Or you can head back to the [[theater]].'
+  description: 'Shockingly modern - the gate to an airport. Two very good dogs are manning the desk. One dog wants to give you a [[Platinum Yendorian Express Card->item]] the other has a dog tag labeled "GNU Terry Pratchett" and wants you to tell it about the clacks. Or you can head back to the [[theater]].'
 }

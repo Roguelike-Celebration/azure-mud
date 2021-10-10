@@ -23,7 +23,8 @@ export const generate = () => {
       'a chunky',
       'a smooth',
       'a delicate',
-      'a hefty'
+      'a hefty',
+      'a perfectly cube-shaped'
     ],
     food: [
       'slime mold',
@@ -48,7 +49,8 @@ export const generate = () => {
       'plump helmet mince',
       'bunch of grapes',
       'guava',
-      'pancake'
+      'pancake',
+      'pomegranate'
     ],
     postAdjective: [
       ', still in the wrapper',
@@ -57,8 +59,7 @@ export const generate = () => {
       ' that smells AMAZING',
       ', still frozen',
       ', with a sauce packet attached',
-      ', with an @ on the packaging',
-      ' that is somehow perfectly square'
+      ', with an @ on the packaging'
     ]
   })
 
