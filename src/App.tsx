@@ -166,8 +166,7 @@ const App = () => {
   if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
       <MediaChatView
-        peerIds={state.roomData[state.roomId].videoUsers}
-        speakingPeerIds={state.speakingPeerIds}
+        dominantSpeakerData={state.dominantSpeakerData}
       />
     )
   }
@@ -201,11 +200,12 @@ const App = () => {
     }
     case Modal.MediaSelector: {
       console.log('Opening media selector')
+      // TODO: Fix this userIsSpeaking (it was...broken in the first place but if we're bordering we should do it here)
       innerModalView = (
         <MediaSelectorView
           showJoinButton={!state.inMediaChat || state.activeModalOptions.showJoinButton}
           hideVideo={state.activeModalOptions.hideVideo}
-          userIsSpeaking={state.speakingPeerIds.includes('self')}
+          userIsSpeaking={false}
           roomId={state.roomId}
           keepCameraWhenMoving={state.keepCameraWhenMoving}
         />

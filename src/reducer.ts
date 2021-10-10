@@ -59,7 +59,7 @@ export interface State {
   prepopulatedInput?: string;
 
   inMediaChat: boolean;
-  speakingPeerIds?: string[];
+  dominantSpeakerData?: DominantSpeakerData;
   keepCameraWhenMoving?: boolean;
 
   // If this is set to something other than Modal.None, that will indicate
@@ -94,7 +94,7 @@ export const defaultState: State = {
   userMap: {},
   roomData: {},
   inMediaChat: false,
-  speakingPeerIds: [],
+  dominantSpeakerData: { dominantSpeakerId: null, currentlyDisplayed: [], timesLastSpoken: [] },
   activeModal: Modal.None,
   activeModalOptions: {},
   isBanned: false,
@@ -295,7 +295,7 @@ export default (oldState: State, action: Action): State => {
 
   // see audioAnalysis.ts for context
   if (action.type === ActionType.MediaReceivedSpeakingData) {
-    state.speakingPeerIds = action.value
+    state.dominantSpeakerData.dominantSpeakerId = action.value
   }
 
   if (action.type === ActionType.StartVideoChat) {
@@ -536,4 +536,11 @@ async function addMessage (state: State, message: Message) {
 export interface ModalOptions {
     hideVideo?: boolean,
     showJoinButton?: boolean
+}
+
+export interface DominantSpeakerData {
+  dominantSpeakerId: string;
+  // currentlyDisplayed and timesLastSpoken are indexed in parallel
+  currentlyDisplayed: string[];
+  timesLastSpoken: number[];
 }

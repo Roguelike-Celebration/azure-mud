@@ -22,6 +22,7 @@ import {
  * this file, MediaReceivedSpeakingDataAction, state.speakingPeerIds, and everything that falls out from that.
 */
 
+/*
 const peerAnalysers: [string, AnalyserNode][] = []
 
 function setUpAnalyser (stream: MediaStream): AnalyserNode {
@@ -80,3 +81,4 @@ function startAnalyserLoop (dispatch: Dispatch<Action>) {
 export function stopAudioAnalyserLoop () {
   shouldStopAnalysing = true
 }
+*/

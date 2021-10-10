@@ -451,15 +451,15 @@ export const UpdateProfileColorAction = (color: string): UpdateProfileColorActio
 
 interface MediaReceivedSpeakingDataAction {
   type: ActionType.MediaReceivedSpeakingData;
-  value: string[];
+  value: string;
 }
 
 export const MediaReceivedSpeakingDataAction = (
-  peerIds: string[]
+  participantId: string
 ): MediaReceivedSpeakingDataAction => {
   return {
     type: ActionType.MediaReceivedSpeakingData,
-    value: peerIds
+    value: participantId
   }
 }
 
