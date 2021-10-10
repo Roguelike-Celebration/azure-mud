@@ -1,16 +1,15 @@
 export default [
-  'Roguelike Celebration socks',
+  'Roguelike Celebration mousepads',
   'a +1 longbow',
   'an unidentified scroll',
   'a tiny puppy',
-  'fresh pixels',
-  'pieces of scrap metal',
+  'Platinum Yendorian Express Card',
   'a wand of digging',
   'a Proof of Stremf',
   'a shotgun',
   'a pair of seven league boots',
   'Planepacked',
-  'the Tourist',
-  'the Berlin Interpretation',
-  'the Walls Are Shifting'
+  'Divine Nectar',
+  'the Fizzbuzz',
+  'Yet Another Silly Drink'
 ]

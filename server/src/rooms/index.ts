@@ -1,9 +1,10 @@
 
 import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak } from './unconfRooms'
-import { breakout1, breakout2, breakout3, breakout4, theater } from './theater'
+import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine } from './sfHub'
 import { oldHub, Oracle, jelly, vault } from './oldHub'
+import { exploreHub, temple, lights, libations, quest } from './exploreHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -55,10 +56,10 @@ export interface Room {
 
 const indexRoomData: { [name: string]: Room } = {
   theater,
-  breakout1,
-  breakout2,
-  breakout3,
-  breakout4,
+  warrior,
+  mage,
+  rogue,
+  tourist,
   unconference,
   cockatrice,
   dragon,
@@ -73,6 +74,11 @@ const indexRoomData: { [name: string]: Room } = {
   Oracle,
   jelly,
   vault,
+  exploreHub,
+  temple,
+  lights,
+  libations,
+  quest,
   entryway: {
     id: 'entryway',
     displayName: 'Registration Desk',
@@ -86,7 +92,7 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the hall',
     description: `A magnificently hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmer of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
     <br/><br/>
-    Along a wall sits a curious-looking vending machine labelled "Munxip's Magnifient Munchies" with a button you can press marked [[Get Random Food->generateFood]]. Next to it is a circular booth overflowing with bits and bobs, labelled the [[swag table]].
+    Along a wall sits a curious-looking vending machine labelled "Munxip's Magnifient Munchies" with a button you can press marked [[Get Random Food->generateFood]]. Next to it is a circular booth overflowing with bits and bobs, labelled the [[swag table->swag]].
     <br/><br/>
     A plaque near the door shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.
     <br/><br/>
@@ -167,7 +173,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Portal Room',
     shortName: 'the portal room',
     description: `In the center of the room is a shimmering portal. Next to the portal is a pedestal with an open book. To your right is a table with a sign hung behind it, reading "Lending Table" in flowery wizard script. On the table you can see [[a wand of digging->item]], [[a Proof of Stremf->item]], [[a pair of seven league boots->item]], and [[Planepacked->item]], the legendary limestone statue.<br/><br/>
-      Once you've finished here, you can [[leap into the shimmering portal->statue]]`,
+      Once you've finished here, you can [[leap into the shimmering portal->hall]]`,
     specialFeatures: [SpecialFeature.FullRoomIndex],
     hidden: true
   }

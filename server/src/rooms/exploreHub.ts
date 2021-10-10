@@ -12,10 +12,11 @@ export const exploreHub = {
   hasNoteWall: true,
   noteWallData: {
     roomWallDescription: 'A mage\'s tome rests on a pillar, labeled "True Facts about Roguelikes 2021".',
-    noteWallLinkText: '??',
-    addNoteLinkText: '??',
-    addNotePrompt: '??',
-    noteWallDescription: '??'
+    noteWallLinkText: 'placeholder',
+    addNoteLinkText: 'placeholder',
+    addNotePrompt: 'placeholder',
+    noteWallDescription: 'placeholder',
+    noteWallButton: 'placeholder'
   }
 }
 
