@@ -9,6 +9,7 @@ export const generate = () => {
     origin: [
       'it reads "#apology# - #closedReason#" in a #writingMethod#',
       'but all it says is "#closedReason#"',
+      'but all it says is #apology#',
       'it\'s #cramped#, but you can make out #closedReason#'
     ],
     apology: [
@@ -26,7 +27,8 @@ export const generate = () => {
       'we could\'nt figure out the code to lower the drawbridge',
       'we require #n# #runes#',
       'a cat is sitting on me and won\'t leave',
-      'Xom finds this hilarious!'
+      'Xom finds this hilarious!',
+      'robot can\'t find kitten'
     ],
     writingMethod: [
       'hasty handwritten scrawl',
@@ -49,7 +51,8 @@ export const generate = () => {
       'spikes',
       'plump helmets',
       'sharks',
-      'excuses'
+      'excuses',
+      'orbs'
     ],
     n: [
       '#thousands##digit##digit##digit#',
