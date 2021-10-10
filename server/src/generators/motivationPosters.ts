@@ -9,7 +9,7 @@ export const generate = () => {
     origin: [
       'It says "#slogan#" in bold face type.',
       'Someone has scrawled "#slogan#" over it, large enough you cannot see the original text.',
-      `It's filled with all sorts of text, but you can make out "#slogan#"`,
+      'It\'s filled with all sorts of text in small type, but you can make out "#slogan#"',
       '#afriendly# skeleton is saying "#slogan#'
     ],
     slogan: [
