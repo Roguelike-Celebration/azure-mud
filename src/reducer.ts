@@ -94,7 +94,7 @@ export const defaultState: State = {
   userMap: {},
   roomData: {},
   inMediaChat: false,
-  dominantSpeakerData: { dominantSpeakerId: null, currentlyDisplayed: [], timesLastSpoken: [] },
+  dominantSpeakerData: { dominantSpeakerId: null },
   activeModal: Modal.None,
   activeModalOptions: {},
   isBanned: false,
@@ -540,7 +540,4 @@ export interface ModalOptions {
 
 export interface DominantSpeakerData {
   dominantSpeakerId: string;
-  // currentlyDisplayed and timesLastSpoken are indexed in parallel
-  currentlyDisplayed: string[];
-  timesLastSpoken: number[];
 }
