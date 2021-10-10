@@ -57,7 +57,8 @@ export const generate = () => {
       ' that smells AMAZING',
       ', still frozen',
       ', with a sauce packet attached',
-      ', with an @ on the packaging'
+      ', with an @ on the packaging',
+      ' that is somehow perfectly square'
     ]
   })
 
