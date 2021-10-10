@@ -24,6 +24,7 @@ export const timeMachine = {
   id: 'timeMachine',
   displayName: 'strange item',
   shortName: 'strange item',
+  hidden: true,
   description: 'make a minigame that eventually leads to the [[old school hub->oldHub]]. Go back to the [[Spacehanger->sfHub]].'
 }
 
