@@ -11,7 +11,7 @@ import { DispatchContext } from '../App'
  *
  * The map itself is just plaintext ASCII pasted in here, generated using the
  * Mac app MonoDraw app (see the map.monopic file in the root of this repo)
- * 
+ *
  * (In 2021, this was switched to the Windows/Mac/Linux app Playscii - that's
  * map2021.psci.)
  *
