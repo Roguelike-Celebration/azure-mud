@@ -58,7 +58,7 @@ export const generate = () => {
       '#leading#',
       '#leading#'
     ],
-    thousands:[
+    thousands: [
       '1',
       '2',
       '3',
