@@ -1,4 +1,4 @@
-import { pickUpRandomItemFromList, pickUpItem, sendChatMessage } from './networking'
+import { pickUpRandomItemFromList, pickUpItem, sendChatMessage, displayMessageFromList } from './networking'
 import { v4 as uuidv4 } from 'uuid'
 
 export const linkActions = {
@@ -18,6 +18,9 @@ export const linkActions = {
     sendChatMessage(uuidv4(), '/get fortune cookie')
   },
   readPoster: () => {
-    pickUpRandomItemFromList('motivationPosters')
+    displayMessageFromList('motivationPosters')
+  },
+  readClosedSign: () => {
+    displayMessageFromList('closedSigns')
   }
 }

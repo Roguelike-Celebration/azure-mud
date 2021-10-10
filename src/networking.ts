@@ -127,6 +127,14 @@ export async function dropItem () {
   await callAzureFunction('pickUpItem', { drop: true })
 }
 
+export async function displayMessage (message: string) {
+  await callAzureFunction('displayMessage', { message: message })
+}
+
+export async function displayMessageFromList (listName: string) {
+  await callAzureFunction('displayMessage', { list: listName })
+}
+
 export async function fetchTwilioToken () {
   return await callAzureFunction('twilioToken')
 }

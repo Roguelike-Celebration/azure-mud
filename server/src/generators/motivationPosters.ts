@@ -1,7 +1,7 @@
 var tracery = require('tracery-grammar')
 
-export const actionString = (item: string) => {
-  return `You look more closely at one of the many posters - ${item}.`
+export const actionString = (poster: string) => {
+  return `You look more closely at one of the many posters - ${poster}.`
 }
 
 export const generate = () => {
