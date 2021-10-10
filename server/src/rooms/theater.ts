@@ -22,21 +22,21 @@ export const theater = {
 
 export const warrior = {
   id: 'warrior',
-  displayName: `Breakout room: Warrior's Training Grounds`,
+  displayName: 'Breakout room: Warrior\'s Training Grounds',
   shortName: 'Warrior Breakout',
   description: 'Stout training dummies, plenty of armour, a large variety of weapons - polearms with funny names, extremely sharp swords. A poster on the wall describes creatures that should not be attacked with blades - hydras, puddings. Or you can head back to the [[theater]].'
 }
 
 export const mage = {
   id: 'mage',
-  displayName: `Breakout room: Mage's Circle`,
+  displayName: 'Breakout room: Mage\'s Circle',
   shortName: 'Mage Breakout',
   description: 'Ever-changing sigils on the ground, pulsing with an eerie glow. A cauldrun bubbling in the corner, being stirred continuously by a capybara with a purple cape. Or you can head back to the [[theater]].'
 }
 
 export const rogue = {
   id: 'rogue',
-  displayName: `Breakout room: Rogue's Hideaway`,
+  displayName: 'Breakout room: Rogue\'s Hideaway',
   shortName: 'Rogue Breakout',
   description: 'A mostly dark room; what you can see looks like scrolls in incomprehensible codes, and cloaks that flicker in and out of view. In another corner, targets, plus bows and crossbows and plenty of arrows and bolts. Or you can head back to the [[theater]].'
 }
@@ -44,7 +44,7 @@ export const rogue = {
 // Really not sure what the GNU Terry Pratchett should do here, but want to acknowledge it.
 export const tourist = {
   id: 'tourist',
-  displayName: `Breakout room: Tourist's Gate`,
+  displayName: 'Breakout room: Tourist\'s Gate',
   shortName: 'Tourist Breakout',
   description: 'Shockingly modern - the gate to an airport. Two very good dogs are manning the desk. One dog wants to give you a [[Platinum Yendorian Express Card->item]] the other want you to tell them of the [[clacks->GNUTerryPratchett]]. Or you can head back to the [[theater]].'
 }
