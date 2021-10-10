@@ -77,21 +77,25 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'entryway',
     displayName: 'Registration Desk',
     shortName: 'the registration desk',
-    description: 'A big banner reads \'Welcome to Roguelike Celebration 2021!\' Once you\'ve got your bearings about you, you can move to the [[Central Hall->hall]].',
+    description: 'A big banner before you reads \'Welcome to Roguelike Celebration 2021!\' Beyond the doorway you hear welcoming chatter and merriment. Once you\'ve got your bearings about you, you can move through to the [[Central Hall->hall]].',
     hidden: true
   },
   hall: {
     id: 'hall',
     displayName: 'Central Hall',
     shortName: 'the hall',
-    description: `A large open area, a meeting place. There is a curious-looking vending machine labelled "Munxip's Magnifient Munchies" and a button you can press marked [[Get Random Food->generateFood]].
+    description: `A magnificently hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmer of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
     <br/><br/>
-    A plaque next to the wall shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>. There's also a [[swag table]] set up.
+    Along a wall sits a curious-looking vending machine labelled "Munxip's Magnifient Munchies" with a button you can press marked [[Get Random Food->generateFood]]. Next to it is a circular booth overflowing with bits and bobs, labelled the [[swag table]].
     <br/><br/>
-      You can get to the [[bar]] or grab a seat in the [[main theater area->theater]]. A short hallway leads to the [[unconferencing rooms->unconference]] There's also two longer hallways, and it's hard from here to tell where they'll go: one shining with [[glass and chrome->sfHub]], and one [[overgrown with plant life->exploreHub]].`,
+    A plaque near the door shows a list of <a href="https://github.com/lazerwalker/azure-mud/graphs/contributors" target="_blank" rel="noreferrer">code contributors</a>.
+    <br/><br/>
+    Looking down the hall, you can see an ornate staircase leading up to the [[bar]], while straight ahead blinking lights advertize the [[main theater area->theater]]. 
+    <br/>
+    To your right, a short hallway leads to the [[unconferencing rooms->unconference]]. To your left, huge doorways promising journeys to thrilling destinations span the length of the hall. The majority of them are shut, with taped up paper signs providing increasingly ludicrous reasons for their inaccessability. Only two halls are open, and while it's hard from here to tell where they'll go, one shines with [[glass and chrome->sfHub]], and the other is [[crumbling and overgrown with plant life->exploreHub]].`,
     hasNoteWall: true,
     noteWallData: {
-      roomWallDescription: 'A large bulletin board is here, with a banner on top - "Social Space Feedback". An array of markers and sticky notes are nearby.',
+      roomWallDescription: 'A big bulletin board sits in the middle of the hall, with a banner on top - "Social Space Feedback". An array of markers and sticky notes are nearby.',
       noteWallButton: 'Add feedback',
       addNoteLinkText: 'Add feedback',
       addNotePrompt: 'What feedback do you have about the social space itself?',
@@ -102,8 +106,9 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'swag',
     displayName: 'Swag Table',
     shortName: 'the swag table',
-    description: `A table covered in a giant messy pile of mismatched swag. At the top of the pile, you see items such as [[Roguelike Celebration mousepads->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>
-    There is also a set of <a href="https://www.aatwebstore.com/rc2021/shop/home" target="_blank">beautiful physical shirts and mousepads you can buy in real life</a>, designed by <a href="https://marlowedobbe.com/" target="_blank">Marlowe Dobbe</a> and printed by Ann Arbor T-shirt Company.
+    description: `A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration mousepads->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].
+    <br/><br/>
+    There's also a set of <a href="https://www.aatwebstore.com/rc2021/shop/home" target="_blank">beautiful physical shirts and mousepads you can buy in real life</a>, designed by <a href="https://marlowedobbe.com/" target="_blank">Marlowe Dobbe</a> and printed by Ann Arbor T-shirt Company.
     <br/><br/>
     From here, you can walk back to the rest of the [[hall]].`
   },
@@ -111,45 +116,39 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'bar',
     displayName: 'Bar',
     shortName: 'the bar',
-    description: `A beautiful long bar with hundreds of bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want. A laminated sign on the bartop advertises tonight\'s specials: [[Divine Nectar->item]] (a locally crafted mead), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice).<br/>A self-serve table has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]<br/><br/>
-    There are three booths you can sit at, labelled [[A->barBoothA]], [[B->barBoothB]], and [[C->barBoothC]]. You\'re a stone\'s throw away from the [[dance floor->danceFloor]], [[theater]], and the [[Central Hall->hall]].`,
+    description: `The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight\'s specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).
+    <br/>A self-serve table nearby has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]
+    <br/><br/>
+    Three booths provide opportunities to sit and enjoy conversation in smaller groups - by the [[railing->barBoothA]], seated [[along the bar->barBoothB]], and tucked away [[at the back->barBoothC]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->hall]].`,
     hasNoteWall: true,
     noteWallData: {
-      roomWallDescription: 'The wall to the bathroom is covered in strange markings.',
+      roomWallDescription: 'By the entrance to the bathrooms there is a pile of pens and markers - it seems the bar has decided if they can\'t stop graffitti, they might as well encourage patrons to use glitter pens instead of a pen knife.',
       noteWallButton: 'Add your mark',
       addNoteLinkText: 'Contribute',
       addNotePrompt: 'Contribute to the graffitti?',
       noteWallDescription: 'Someone has scratched ‘Rodney was here’ on an absurdly large unisex bathroom stall wall.'
     }
   },
-  danceFloor: {
-    id: 'danceFloor',
-    displayName: 'Dance Floor',
-    shortName: 'the dance floor',
-    description: `The ping-pong table has been pushed to the side for a makeshift dance floor. Colourful skeletons raise and lower their arms to the beat of chiptune music coming from a DJ booth near the wall. The DJ smoothly transitions between old favourites and requests from years past.<br/>
-    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/511460973&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/funkip" title="Funkip ♥" target="_blank" style="color: #cccccc; text-decoration: none;">Funkip ♥</a> · <a href="https://soundcloud.com/funkip/roguelike-celebration-2018-saturday-night" title="Roguelike Celebration 2018" target="_blank" style="color: #cccccc; text-decoration: none;">Roguelike Celebration 2018</a></div><br/><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/699462760&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/funkip" title="Funkip ♥" target="_blank" style="color: #cccccc; text-decoration: none;">Funkip ♥</a> · <a href="https://soundcloud.com/funkip/rand-gen-mem" title="💖 Roguelike Celebration 2019 Mix" target="_blank" style="color: #cccccc; text-decoration: none;">💖 Roguelike Celebration 2019 Mix</a></div><br/><br/>
-    You can head back to the [[bar]].`
-  },
   barBoothA: {
     id: 'barBoothA',
-    displayName: 'Bar Booth A',
-    shortName: 'table A in the kitchen',
-    description: `A cozy booth, far enough from the bar for a smaller conversation.
-      From here, you can see tables [[B->barBoothB]] or [[C->barBoothC]], and the [[rest of the bar->bar]].`
+    displayName: 'Booth Along the Railing',
+    shortName: 'the booth by the railing',
+    description: `A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.
+      From here, you can see [[the seats at the bar->barBoothB]] or [[at the back of the room->barBoothC]], and the [[rest of the bar->bar]].`
   },
   barBoothB: {
     id: 'barBoothB',
-    displayName: 'Bar Booth B',
-    shortName: 'table B in the kitchen',
-    description: `A cozy booth, far enough from the bar for a smaller conversation.
-      From here, you can see tables [[A->barBoothA]] or [[C->barBoothC]], and the [[rest of the bar->bar]].`
+    displayName: 'Seats Along the Bar',
+    shortName: 'the booth by the bar',
+    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, the seats swivel.
+      From here, you can see tables [[by the railing->barBoothA]] or [[at the back->barBoothC]], and the [[rest of the bar->bar]].`
   },
   barBoothC: {
     id: 'barBoothC',
-    displayName: 'Bar Booth C',
-    shortName: 'table C in the kitchen',
-    description: `A cozy booth, far enough from the bar for a smaller conversation.<br/><br/>
-      From here, you can see tables [[A->barBoothA]] or [[B->barBoothB]], and the [[rest of the bar->bar]]`
+    displayName: 'Booth at the Back',
+    shortName: 'the booth at the back',
+    description: `A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>
+      From here, you can see tables [[at the railing->barBoothA]] or [[along the bar->barBoothB]], and the [[rest of the bar->bar]]`
   },
 
 /*  Not deleting this yet because I want to figure out what to do with the doorways / color minigame, but it *shouldn't* link anywhere.

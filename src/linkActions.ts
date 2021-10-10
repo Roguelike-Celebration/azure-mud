@@ -16,5 +16,8 @@ export const linkActions = {
   },
   getFortune: () => {
     sendChatMessage(uuidv4(), '/get fortune cookie')
+  },
+  readPoster: () => {
+    pickUpRandomItemFromList('motivationPosters')
   }
 }
