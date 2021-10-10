@@ -1,9 +1,10 @@
 
 import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak } from './unconfRooms'
-import { breakout1, breakout2, breakout3, breakout4, theater } from './theater'
+import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
 import { oldHub, Oracle, jelly, vault } from './oldHub'
+import { exploreHub, temple, lights, libations, quest } from './exploreHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -55,10 +56,10 @@ export interface Room {
 
 const indexRoomData: { [name: string]: Room } = {
   theater,
-  breakout1,
-  breakout2,
-  breakout3,
-  breakout4,
+  warrior,
+  mage,
+  rogue,
+  tourist,
   unconference,
   cockatrice,
   dragon,
@@ -74,6 +75,11 @@ const indexRoomData: { [name: string]: Room } = {
   Oracle,
   jelly,
   vault,
+  exploreHub,
+  temple,
+  lights,
+  libations,
+  quest,
   entryway: {
     id: 'entryway',
     displayName: 'Registration Desk',
@@ -172,7 +178,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Portal Room',
     shortName: 'the portal room',
     description: `In the center of the room is a shimmering portal. Next to the portal is a pedestal with an open book. To your right is a table with a sign hung behind it, reading "Lending Table" in flowery wizard script. On the table you can see [[a wand of digging->item]], [[a Proof of Stremf->item]], [[a pair of seven league boots->item]], and [[Planepacked->item]], the legendary limestone statue.<br/><br/>
-      Once you've finished here, you can [[leap into the shimmering portal->statue]]`,
+      Once you've finished here, you can [[leap into the shimmering portal->hall]]`,
     specialFeatures: [SpecialFeature.FullRoomIndex],
     hidden: true
   }

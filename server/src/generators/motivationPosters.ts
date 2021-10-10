@@ -7,12 +7,34 @@ export const actionString = (poster: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      'it says #slogan# in bold face type'
+      'It says "#slogan#" in bold face type.',
+      'Someone has scrawled "#slogan#" over it, large enough you cannot see the original text.',
+      'It\'s filled with all sorts of text in small type, but you can make out "#slogan#"',
+      '#afriendly# skeleton is saying "#slogan#'
     ],
     slogan: [
       'bones bones bones',
       'The Enemy Within',
-      'The Power Inside You - Bones'
+      'The Power Inside You - Bones',
+      'Hit da bricks! Real winners quit!',
+      'Did you know you have a skeleton inside you right now?',
+      'Drink more milk! Calcium is good for you!',
+      'Flesh is overrated.',
+      'I can see right through you!'
+    ],
+    aFriendly: [
+      'A #friendly#',
+      'An #appealing#'
+    ],
+    friendly: [
+      'friendly',
+      'delightful',
+      'boisterous'
+    ],
+    appealing: [
+      'appealing',
+      'excited',
+      'oddly attractive'
     ]
   })
 
