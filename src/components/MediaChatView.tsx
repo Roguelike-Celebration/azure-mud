@@ -3,14 +3,13 @@ import React, {
   VideoHTMLAttributes,
   useRef
 } from 'react'
-import NameView from './NameView'
 import LocalMediaView from './LocalMediaView'
 import { DominantSpeakerData } from '../reducer'
 
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
-import ParticipantTracks from '../videochat/twilio/ParticipantTracks'
 import * as Twilio from 'twilio-video'
+import ParticipantChatView from './ParticipantChatView'
 
 // TODO: We should allow you to not send media but still consume it
 interface MediaProps {
@@ -103,21 +102,9 @@ export default function MediaChatView (props: MediaProps) {
     Array.from(callParticipants.values())
       .filter(hasAnyLiveTracks)
       .map((p) => {
-        if (props.dominantSpeakerData.dominantSpeakerId === p.identity) {
-          tracksByParticipant.set(p.identity, (
-            <div key={`stream-wrapper-${p.identity}`} className='participant-track-square' style={{ border: 'solid' }}>
-              <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
-              <ParticipantTracks participant={p} />
-            </div>
-          ))
-        } else {
-          tracksByParticipant.set(p.identity, (
-            <div key={`stream-wrapper-${p.identity}`} className='participant-track-square'>
-              <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
-              <ParticipantTracks participant={p} />
-            </div>
-          ))
-        }
+        tracksByParticipant.set(p.identity, (
+          <ParticipantChatView participant={p} isDominant={props.dominantSpeakerData.dominantSpeakerId === p.identity} />
+        ))
       })
 
     // Assign the tracks to positions, noting where we put the dominant speaker

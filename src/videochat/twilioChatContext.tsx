@@ -308,7 +308,7 @@ export const TwilioChatContextProvider = (props: {
       console.log('[TWILIO] In room?', newRoom)
       console.log('[TWILIO] Attached participant count:', newRoom.participants.size)
 
-      setLocalStreamView(<ParticipantTracks participant={newRoom.localParticipant}/>)
+      setLocalStreamView(<ParticipantTracks participant={newRoom.localParticipant} displayVideo={cameraEnabled} displayAudio={micEnabled} />)
       setRemoteParticipants(newRoom.participants)
 
       // Required so that when a user who is in the room begins publishing, it shows the user on the client, as the
