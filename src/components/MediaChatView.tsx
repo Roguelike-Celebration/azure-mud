@@ -45,6 +45,11 @@ function hasAnyLiveTracks (participant: Twilio.Participant): boolean {
   return anyAudioTracks || anyVideoTracks
 }
 
+interface ParticipantInfo {
+  id: string;
+  lastDominant: number
+}
+
 export default function MediaChatView (props: MediaProps) {
   // TODO: Figure out how to tie this into the css or something?
   const ROW_HEIGHT = 195
@@ -53,8 +58,10 @@ export default function MediaChatView (props: MediaProps) {
   const { publishingCamera, callParticipants } = useMediaChatContext()
   const ref = useRef(null)
 
+  const [spaceFor, setSpaceFor] = React.useState<number>(0)
   const [numHiddenFeeds, setNumHiddenFeeds] = React.useState<number>(0)
   const [rowsToDisplay, setRowsToDisplay] = React.useState<number>(1)
+  const [participantsWithTracksOrdered] = React.useState<ParticipantInfo[]>([])
 
   console.log('Re-rendering media chat view?')
 
@@ -66,9 +73,10 @@ export default function MediaChatView (props: MediaProps) {
 
       const numRows = Math.floor(renderedHeight / ROW_HEIGHT)
       const shownPerRow = Math.floor(renderedWidth / FEED_WIDTH)
-      const spaceFor = numRows * shownPerRow
+      const currentSpaceFor = numRows * shownPerRow
 
-      setNumHiddenFeeds(Math.max(0, collection.length - spaceFor))
+      setSpaceFor(currentSpaceFor)
+      setNumHiddenFeeds(Math.max(0, collection.length - currentSpaceFor))
     }
 
     onResize()
@@ -89,30 +97,80 @@ export default function MediaChatView (props: MediaProps) {
   let otherVideos: JSX.Element[]
   console.log(callParticipants)
   if (callParticipants) {
-    const liveTracks: JSX.Element[] = (Array.from(callParticipants.values())).map((p) => {
-      if (hasAnyLiveTracks(p)) {
-        // TODO: Clean this up, it's a mess!
+    // Build a map of live participant ids -> Element
+    const tracksByParticipant: Map<string, JSX.Element> = new Map()
+    Array.from(callParticipants.values())
+      .filter(hasAnyLiveTracks)
+      .map((p) => {
         if (props.dominantSpeakerData.dominantSpeakerId === p.identity) {
-          return (
+          tracksByParticipant.set(p.identity, (
             <div key={`stream-wrapper-${p.identity}`} className='participant-track-square' style={{ border: 'solid' }}>
               <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
               <ParticipantTracks participant={p} />
             </div>
-          )
+          ))
         } else {
-          return (
+          tracksByParticipant.set(p.identity, (
             <div key={`stream-wrapper-${p.identity}`} className='participant-track-square'>
               <NameView userId={p.identity} id={`stream-nameview-${p.identity}`} />
               <ParticipantTracks participant={p} />
             </div>
-          )
+          ))
+        }
+      })
+
+    // Assign the tracks to positions, noting where we put the dominant speaker
+    const unassignedIds = new Set<string>(tracksByParticipant.keys())
+    const dominantSpeakerId = props.dominantSpeakerData.dominantSpeakerId
+    var dominantSpeakerIdx = 0
+    const nowMs = Date.now()
+
+    // Remove all tracks we don't need from the participants list
+    const toRemove = []
+    for (var i = 0; i < participantsWithTracksOrdered.length; i++) {
+      const oldId = participantsWithTracksOrdered[i].id
+      if (unassignedIds.has(oldId)) {
+        unassignedIds.delete(oldId)
+        if (oldId === dominantSpeakerId) {
+          dominantSpeakerIdx = i
+          participantsWithTracksOrdered[i].lastDominant = nowMs
         }
       } else {
-        return null
+        toRemove.push(oldId)
       }
-    }).filter(p => p)
-    if (liveTracks.length > 0) {
-      otherVideos = liveTracks
+    }
+    toRemove.forEach((id) => participantsWithTracksOrdered.splice(participantsWithTracksOrdered.indexOf(id), 1))
+
+    // Slap anything left over onto the end
+    unassignedIds.forEach((unassignedId) => {
+      if (unassignedId === dominantSpeakerId) {
+        dominantSpeakerIdx = participantsWithTracksOrdered.length
+        participantsWithTracksOrdered.push({ id: unassignedId, lastDominant: nowMs })
+      } else {
+        participantsWithTracksOrdered.push({ id: unassignedId, lastDominant: 0 })
+      }
+    })
+
+    // If the dominant speaker is not in the frame, evict the oldest item in the frame
+    const spacesAvailable = publishingCamera ? spaceFor - 1 : spaceFor
+
+    if (dominantSpeakerIdx >= spacesAvailable) {
+      var lastDominantComp = nowMs
+      var evictIdx = 0
+      for (var j = 0; j < spacesAvailable; j++) {
+        const participant = participantsWithTracksOrdered[j]
+        if (participant.lastDominant < lastDominantComp) {
+          lastDominantComp = participant.lastDominant
+          evictIdx = j
+        }
+      }
+      const dominantInfo = participantsWithTracksOrdered[dominantSpeakerIdx]
+      participantsWithTracksOrdered[dominantSpeakerIdx] = participantsWithTracksOrdered[evictIdx]
+      participantsWithTracksOrdered[evictIdx] = dominantInfo
+    }
+
+    if (tracksByParticipant.size > 0) {
+      otherVideos = participantsWithTracksOrdered.map((participantInfo) => tracksByParticipant.get(participantInfo.id))
     }
   }
 
