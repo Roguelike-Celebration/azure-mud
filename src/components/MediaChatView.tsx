@@ -60,6 +60,7 @@ export default function MediaChatView (props: MediaProps) {
 
   const [spaceFor, setSpaceFor] = React.useState<number>(0)
   const [numHiddenFeeds, setNumHiddenFeeds] = React.useState<number>(0)
+  // This is effectively set to 1, since I removed the buttons to let the user control it
   const [rowsToDisplay, setRowsToDisplay] = React.useState<number>(1)
   const [participantsWithTracksOrdered] = React.useState<ParticipantInfo[]>([])
 
@@ -186,8 +187,6 @@ export default function MediaChatView (props: MediaProps) {
   return (
     <div>
       <label>{otherVideos ? otherVideos.length : 0} other chatters ({numHiddenFeeds} offscreen). </label>
-      <button onClick={() => setRowsToDisplay(rowsToDisplay + 1)}>Show More</button>
-      <button onClick={() => setRowsToDisplay(Math.max(0, rowsToDisplay - 1))}>Show Less</button>
       <div id="media-view" ref={ref} style={{ height: rowsToDisplay * ROW_HEIGHT, maxHeight: rowsToDisplay * ROW_HEIGHT }}>
         {playerVideo} {otherVideos}
       </div>
