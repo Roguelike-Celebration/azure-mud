@@ -27,7 +27,7 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
 export const ScheduleEntries = [
   ScheduleEntry('09:00', 1, 'Doors Open'),
   // TODO: Are we doing this?
-  ScheduleEntry('09:15', 1, 'Intro / Housekeeping', ['theater']),
+  ScheduleEntry('09:15', 1, 'Kickoff', ['theater']),
   ScheduleEntry('09:30', 1, 'Michael Brough: Possibility of Roguelike Elements', ['theater']),
   ScheduleEntry('10:00', 1, 'Jeremiah Reid: Juice Your Turns', ['theater']),
   ScheduleEntry('10:30', 1, 'Social Time'),
@@ -40,14 +40,14 @@ export const ScheduleEntries = [
   ScheduleEntry('13:30', 1, 'Shawn Main: You May Already Be a Roguelike', ['theater']),
   ScheduleEntry('14:00', 1, 'Social Time'),
   ScheduleEntry('14:30', 1, 'Jason Grinblat: Before you fix a leak ask if it\'s a fountain (a paean for bugs and edge cases)', ['theater']),
-  ScheduleEntry('15:00', 1, 'Allie Signet & Joe Maliksi, Society for Internet Blaseball Research: SIBR - Sports, Splorts, and Statistics: Why Data Accessibility Matters in Blaseball and Beyond ', ['theater']),
+  ScheduleEntry('15:00', 1, 'Allie Signet & Joe Maliksi, Society for Internet Blaseball Research: SIBR - Sports, Splorts, and Statistics: Why Data Accessibility Matters in Blaseball and Beyond', ['theater']),
+  ScheduleEntry('15:30', 1, 'Evan Debenham: Community-Driven Roguelike Development', ['theater']),
   ScheduleEntry('16:00', 1, 'Social Time'),
   ScheduleEntry('17:00', 1, 'Spencer Egart: Tooling for Roguelikes and Procgen', ['theater']),
   ScheduleEntry('17:15', 1, 'Thomas Robertson: Towards a New Understanding of Procedural Super Attacks', ['theater']),
   ScheduleEntry('17:30', 1, 'Dylan White: The Cost of Magic', ['theater']),
   ScheduleEntry('17:45', 1, 'Qristy Overton: Exhibition: Attempting Brogue on a Dance Mat', ['theater']),
-  // TODO: Add the unconferencing room(s) when they're implemented
-  ScheduleEntry('18:00', 1, 'Unconferencing', ['theater']),
+  ScheduleEntry('18:00', 1, 'Unconferencing', ['unconference']),
   ScheduleEntry('18:45', 1, 'Social Time'),
   ScheduleEntry('20:45', 1, 'Doors Close'),
 ]
@@ -55,14 +55,11 @@ export const ScheduleEntries = [
 /* Sunday Entries
 export const ScheduleEntries = [
   ScheduleEntry('09:00', 2, 'Doors Open'),
-  // TODO: Are we doing this?
-  ScheduleEntry('09:15', 2, 'Intro / Housekeeping', ['theater']),
-  ScheduleEntry('09:30', 2, 'For the Squishies ⚡ Making Roguelikes Accessible to (Younger) Children and their Parents', ['theater']),
+  ScheduleEntry('09:15', 2, 'Kickoff', ['theater']),
+  ScheduleEntry('09:30', 2, 'Michael Langford: For the Squishies ⚡ Making Roguelikes Accessible to (Younger) Children and their Parents', ['theater']),
   ScheduleEntry('09:45', 2, 'Younès Rabii: Pokemon Glitch - Story of A Roguelike With No Author', ['theater']),
   ScheduleEntry('10:00', 2, 'Sraëka-Lillian: Procedural Phonology: Generating Name Generators', ['theater']),
-  ScheduleEntry('10:15', 2, 'Clarissa Littler: Mediating Music and Machine', ['theater']),
-  // TODO: Add the unconferencing room(s) when they're implemented
-  ScheduleEntry('10:30', 2, 'Unconferencing', ['theater']),
+  ScheduleEntry('10:15', 2, 'Unconferencing', ['unconference']),
   ScheduleEntry('11:30', 2, 'Alice Lai: All Together Now: Creating Multiplicative Power in Hades', ['theater']),
   ScheduleEntry('12:00', 2, 'Brian Cronin: Off The Rails - Lessons Learned from Monster Train Development', ['theater']),
   ScheduleEntry('12:30', 2, 'Social Time'),
