@@ -83,15 +83,12 @@ export const generate = () => {
       'Someone once said that what goes up < might come down >.',
       'The magic marker is mightier than the sword.',
       'There is no harm in praising a large dog.',
-      'They say that Vlad lives!!! ... in the Unconferencing Dungeon.',
       'They say that if you start at the bottom the only place to go is up.',
       'They say that you are what you eat.',
       'Two wrongs don\'t make a right, but three lefts do.',
       'Why do you suppose they call them MAGIC markers?',
       'You may discover a menagerie inside a potion bottle.',
       'The art of mimicry may be learned from the bartender, if you\'re clever.',
-      'You\'re going into the morgue at midnight???',
-      'What could be haunting the foyer?',
       'You might be a Proc Gen Wizard if you believe procedural generation is a set of rules to be studied and mastered.',
       'You might be a Proc Gen Sorcerer if you believe procedural generation is a medium to examine your intuitions.',
       'You might be a Proc Gen Bard if you believe in embracing the strangeness of procedurally generated content.',
@@ -109,15 +106,14 @@ export const generate = () => {
       'You found kitten! Good job, robot!',
       '<a href=https://archiveofourown.org/works/5458259 target="_blank">Just because it says READ ME doesn\'t mean you should.</a>',
       'They say the greatest conduct you can follow is <a href=https://roguelike.club/code.html target="_blank">the Code</a>.',
-      '<a href=https://youtu.be/tmrYfnMrifw?list=PLi7jNGNQhwdhKzh2I7NNJTxHjQEVejLxm target="_blank">Check out this year\'s preview event!</a>',
+      '<a href=https://www.youtube.com/playlist?list=PLi7jNGNQhwdhKzh2I7NNJTxHjQEVejLxm target="_blank">Check out the videos from 2020!</a>',
       '<a href=http://www.roguelikeradio.com/2020/09/episode-156-roguelike-celebration-event.html target="_blank">Listen to some of the organizers speak to Roguelike Radio!</a>',
       '<a href=https://www.youtube.com/playlist?list=PLi7jNGNQhwdg9M2K3s6W73E0BlWF0qrLY target="_blank">Check out the videos from 2019!</a>',
       '<a href=https://www.youtube.com/watch?v=jviNpRGuCIU&list=PLi7jNGNQhwdisqRtuvX8X8Q2F0TEUgQ5V target="_blank">Check out the videos from 2018!</a>',
       '<a href=https://www.youtube.com/watch?v=wwc7pZqs9UA&list=PLi7jNGNQhwdhiZcp2g4yU7xpXmOqS9VBl target="_blank">Check out the videos from 2017!</a>',
       '<a href=https://www.youtube.com/channel/UCsCqXksJuAkfZRtnW5Pq1mw/videos target="_blank">Check out the videos from 2016!</a>',
-      'Past dance mixes by <a href=https://soundcloud.com/funkip/tracks target="_blank">Funkip</a>!',
       'Thank you once again to <a href=https://whitecoatcaptioning.com/ target="_blank">White Coat Captioning</a>!',
-      'Buy a <a href=https://roguelike-celebration.myshopify.com/ target="_blank">t-shirt</a>, designed by <a href=http://www.fourbitfriday.com/ target="_blank">Tyriq Plummer</a>!',
+      'Buy a <a href=https://www.aatwebstore.com/rc2021/shop/home target="_blank">t-shirt</a>, designed by <a href=https://marlowedobbe.com/ target="_blank">Marlowe Dobbe</a>!',
       'The beautiful stream overlays are made by <a href=https://christen.carrd.co/ target="_blank">Christen Alqueza</a>!',
       'Crush monsters, THEN get loots',
       'Spike pits are best avoided and bad for your health',
@@ -140,8 +136,7 @@ export const generate = () => {
       'Every monster you date is a monster you don\'t have to slay.',
       'You are lucky! Full moon tonight.',
       'Lucky you! You have a cookie to eat.',
-      'Your luck is glorious, and so use your luck for good!',
-      'Jessie won\'t like if you go through that door in the foyer, but what if you went anyway?'
+      'Your luck is glorious, and so use your luck for good!'
     ],
     bad: [
       '#ugh#, #gross#!',
@@ -152,17 +147,19 @@ export const generate = () => {
       'Ugh',
       'Eww',
       'Blergh',
-      'Blah'
+      'Blah',
+      'Oh no'
     ],
     aGross: [
-      "A #gross#",
-      "An #awful#"
+      'A #gross#',
+      'An #awful#'
     ],
     gross: [
       'gross',
       'bizarre',
       'nasty',
-      'vile'
+      'vile',
+      'miserable'
     ],
     awful: [
       'awful',
@@ -215,7 +212,6 @@ export const generate = () => {
       'Be careful when eating bananas. Monsters might slip on the peels.',
       'Does your boss know what you\'re doing right now?',
       'Don\'t tell a soul you found a secret door, otherwise it isn\'t a secret anymore.',
-      'Help!  I\'m being held prisoner in a fortune cookie factory!',
       'If you thought the Wizard was bad, just wait till you meet the Warlord!',
       'Never play leapfrog with a unicorn.',
       'Never trust a random generator in magic fields.',
@@ -229,7 +225,6 @@ export const generate = () => {
       'They say that a fortune only has 1 line and you can\'t read between it.',
       'They say that a hot dog and a taco are the same thing.',
       'They say your vanilla soy latte is a three bean soup.',
-      'Solitaire is a roguelike.',
       '#game# is a roguelike.',
       'ASCII, dungeons - by certain interpretations, you\'re playing a roguelike right now!',
       'Is *this* a roguelike?',
@@ -255,7 +250,10 @@ export const generate = () => {
       'Fortnite',
       'Calvinball',
       'Real life',
-      'Thriving in 2020'
+      'Thriving in a pandemic',
+      'Genshin Impact',
+      'Kittens Game',
+      'Solitaire'
     ]
   })
 

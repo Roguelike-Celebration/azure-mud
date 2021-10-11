@@ -6,6 +6,9 @@ import usePublications from './usePublications'
 
 interface ParticipantTracksProps {
   participant: Participant;
+  // These handle whether the video/audio is run on the client-side only - they don't change the underlying tracks
+  displayVideo: boolean;
+  displayAudio: boolean;
   videoOnly?: boolean;
   enableScreenShare?: boolean;
   videoPriority?: Track.Priority | null;
@@ -24,6 +27,8 @@ interface ParticipantTracksProps {
 
 export default function ParticipantTracks ({
   participant,
+  displayVideo,
+  displayAudio,
   videoOnly,
   videoPriority,
   isLocalParticipant
@@ -32,16 +37,22 @@ export default function ParticipantTracks ({
 
   return (
     <>
-      {publications.map(publication => (
-        <Publication
-          key={publication.kind}
-          publication={publication}
-          participant={participant}
-          isLocalParticipant={isLocalParticipant}
-          videoOnly={videoOnly}
-          videoPriority={videoPriority}
-        />
-      ))}
+      {
+        publications.map(publication => {
+          if ((publication.kind === 'video' && displayVideo) || (publication.kind === 'audio' && displayAudio)) {
+            return <Publication
+              key={publication.kind}
+              publication={publication}
+              isLocalParticipant={isLocalParticipant}
+              videoOnly={videoOnly}
+              videoPriority={videoPriority}
+            />
+          } else {
+            return null
+          }
+        }
+        )
+      }
     </>
   )
 }

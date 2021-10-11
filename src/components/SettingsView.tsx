@@ -1,10 +1,16 @@
 import React, { useContext, useEffect } from 'react'
 
 import '../../style/profileEditView.css'
+import { SetKeepCameraWhenMovingAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { currentTheme, setTheme } from '../storage'
+import VideoAudioSettingsView from './VideoAudioSettingsView'
 
-export default function SettingsView () {
+interface Props {
+  keepCameraWhenMoving: boolean;
+}
+
+export default function SettingsView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
   // Set the selection of the radio group upon opening the modal
@@ -25,6 +31,11 @@ export default function SettingsView () {
     document.body.classList.replace(selectedTheme, event.target.value)
     setSelectedTheme(event.target.value)
     setTheme(event.target.value)
+  }
+
+  const handleKeepCameraWhenMovingSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value === 'true'
+    dispatch(SetKeepCameraWhenMovingAction(newValue))
   }
 
   return (
@@ -65,6 +76,7 @@ export default function SettingsView () {
           </label>
         </div>
       </div>
+      <VideoAudioSettingsView keepCameraWhenMoving={props.keepCameraWhenMoving} />
     </div>
   )
 }

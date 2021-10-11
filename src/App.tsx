@@ -3,7 +3,7 @@ import React, { useEffect, createContext } from 'react'
 import RoomView from './components/RoomView'
 import ChatView from './components/ChatView'
 import InputView from './components/InputView'
-import { connect, getLoginInfo, checkIsRegistered, getServerSettings } from './networking'
+import { connect, checkIsRegistered, getServerSettings } from './networking'
 import reducer, { State, defaultState } from './reducer'
 import {
   AuthenticateAction,
@@ -13,7 +13,8 @@ import {
   ShowSideMenuAction,
   SendMessageAction,
   SpaceIsClosedAction,
-  PlayerBannedAction
+  PlayerBannedAction,
+  SetKeepCameraWhenMovingAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -41,8 +42,13 @@ import ServerSettingsView from './components/ServerSettingsView'
 import ClientDeployedModal from './components/ClientDeployedModal'
 import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import HappeningNowView from './components/HappeningNowView'
+import VerifyEmailView from './components/VerifyEmailView'
+import EmailVerifiedView from './components/EmailVerifiedView'
 import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
+import { shouldVerifyEmail } from './firebaseUtils'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -56,20 +62,25 @@ const App = () => {
 
   useEffect(() => {
     // TODO: This logic is gnarly enough I'd love to abstract it somewhere
-    const login = getLoginInfo().then((login) => {
-      if (!login) {
-        // This should really be its own action distinct from logging in
-        dispatch(AuthenticateAction(undefined, undefined, undefined))
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (!user) {
+        dispatch(AuthenticateAction(undefined, undefined, undefined, undefined))
+      } else if (shouldVerifyEmail(user)) {
+        const userId = firebase.auth().currentUser.uid
+        const providerId = firebase.auth().currentUser.providerId
+        dispatch(AuthenticateAction(userId, user.email, providerId, true))
       } else {
-        console.log(login)
-        const userId = login.user_claims.find(c => c.typ === 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier').val
+        const userId = firebase.auth().currentUser.uid
+        const providerId = firebase.auth().currentUser.providerId
 
         checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
-            dispatch(AuthenticateAction(userId, login.user_id, login.provider_name))
+            // Use email if we have it, otherwise use service's default display name (for Twitter, their handle)
+            const defaultDisplayName = user.email ? user.email : user.displayName
+            dispatch(AuthenticateAction(userId, defaultDisplayName, providerId, false))
             return
           }
-          dispatch(AuthenticateAction(userId, registeredUsername, login.provider_name))
+          dispatch(AuthenticateAction(userId, registeredUsername, providerId, false))
 
           if (isBanned) {
             dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
@@ -81,7 +92,7 @@ const App = () => {
             dispatch(SpaceIsClosedAction())
 
             if (!isMod) {
-              // non-mods shouldn't subscribe to SignalR if the space is closed
+            // non-mods shouldn't subscribe to SignalR if the space is closed
               dispatch(IsRegisteredAction())
               return
             }
@@ -91,6 +102,9 @@ const App = () => {
           if (messageArchive) {
             dispatch(LoadMessageArchiveAction(messageArchive.messages, messageArchive.whispers))
           }
+
+          const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
+          dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
@@ -110,8 +124,20 @@ const App = () => {
     ''
   )
 
+  // This is kind of janky!
+  if (firebase.auth().currentUser && firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    return <EmailVerifiedView />
+  }
+
   if (!state.checkedAuthentication) {
     return <div />
+  }
+
+  if (state.checkedAuthentication && state.mustVerifyEmail) {
+    return <VerifyEmailView
+      userEmail={firebase.auth().currentUser.email}
+      dispatch={dispatch}
+    />
   }
 
   if (state.checkedAuthentication && !state.authenticated) {
@@ -140,8 +166,7 @@ const App = () => {
   if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
       <MediaChatView
-        peerIds={state.roomData[state.roomId].videoUsers}
-        speakingPeerIds={state.speakingPeerIds}
+        dominantSpeakerData={state.dominantSpeakerData}
       />
     )
   }
@@ -170,19 +195,19 @@ const App = () => {
       break
     }
     case Modal.Settings: {
-      innerModalView = <SettingsView />
+      innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} />
       break
     }
     case Modal.MediaSelector: {
       console.log('Opening media selector')
+      // TODO: Fix this userIsSpeaking (it was...broken in the first place but if we're bordering we should do it here)
       innerModalView = (
         <MediaSelectorView
-          initialAudioDeviceId={state.currentAudioDeviceId}
-          initialVideoDeviceId={state.currentVideoDeviceId}
           showJoinButton={!state.inMediaChat || state.activeModalOptions.showJoinButton}
           hideVideo={state.activeModalOptions.hideVideo}
-          userIsSpeaking={state.speakingPeerIds.includes('self')}
+          userIsSpeaking={false}
           roomId={state.roomId}
+          keepCameraWhenMoving={state.keepCameraWhenMoving}
         />
       )
       break
@@ -250,6 +275,7 @@ const App = () => {
 
   const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
+  // TODO: Inject into TwilioChatContextProvider?
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
@@ -291,6 +317,8 @@ const App = () => {
                       room={state.roomData[state.roomId]}
                       userId={state.userId}
                       roomData={state.roomData}
+                      inMediaChat={state.inMediaChat}
+                      keepCameraWhenMoving={state.keepCameraWhenMoving}
                     />
                   ) : null}
                   <InputView

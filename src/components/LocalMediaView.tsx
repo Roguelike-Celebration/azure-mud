@@ -33,7 +33,7 @@ export default function LocalMediaView (props: Props) {
 
   return (
     <div className="my-video">
-      You:
+      You
       {localStreamView}
       {props.hideUI ? '' : (
         <div>
@@ -48,7 +48,6 @@ export default function LocalMediaView (props: Props) {
           </button>
         </div>
       )}
-
     </div>
   )
 }

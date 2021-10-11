@@ -23,24 +23,26 @@ import { Room } from './room'
 import {
   sendChatMessage,
   toggleUserBan,
-  setNetworkMediaChatStatus,
   toggleUserMod,
   updateProfileColor,
   fetchProfile,
   sendCaption
 } from './networking'
 import { PublicUser, MinimalUser } from '../server/src/user'
-import { disconnectAllPeers, stopAudioAnalyserLoop, stopAllDeviceUsage } from './webRTC'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../server/src/config'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
+import firebase from 'firebase/app'
+import Config from './config'
 export interface State {
+  firebaseApp: firebase.app.App;
   authenticated: boolean;
   checkedAuthentication: boolean;
   authenticationProvider?: string;
+  mustVerifyEmail?: boolean;
 
   hasRegistered: boolean;
 
@@ -56,13 +58,9 @@ export interface State {
 
   prepopulatedInput?: string;
 
-  localMediaStreamId?: string;
-  otherMediaStreamPeerIds?: string[];
-
   inMediaChat: boolean;
-  currentVideoDeviceId?: string;
-  currentAudioDeviceId?: string;
-  speakingPeerIds?: string[];
+  dominantSpeakerData?: DominantSpeakerData;
+  keepCameraWhenMoving?: boolean;
 
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
@@ -84,7 +82,9 @@ export interface State {
   serverSettings: ServerSettings
 }
 
+console.log(Config.FIREBASE_CONFIG)
 export const defaultState: State = {
+  firebaseApp: firebase.initializeApp(Config.FIREBASE_CONFIG),
   authenticated: false,
   checkedAuthentication: false,
   hasRegistered: false,
@@ -94,7 +94,7 @@ export const defaultState: State = {
   userMap: {},
   roomData: {},
   inMediaChat: false,
-  speakingPeerIds: [],
+  dominantSpeakerData: { dominantSpeakerId: null },
   activeModal: Modal.None,
   activeModalOptions: {},
   isBanned: false,
@@ -166,13 +166,6 @@ export default (oldState: State, action: Action): State => {
         state.roomData[roomId].users = action.value[roomId]
       }
     })
-  }
-
-  if (action.type === ActionType.UpdatedVideoPresence) {
-    const { roomId, users } = action.value
-    if (state.roomData[roomId]) {
-      state.roomData[roomId].videoUsers = users
-    }
   }
 
   if (action.type === ActionType.PlayerConnected) {
@@ -300,57 +293,17 @@ export default (oldState: State, action: Action): State => {
     addMessage(state, createErrorMessage(action.value))
   }
 
-  // WebRTC
-  if (action.type === ActionType.LocalMediaStreamOpened) {
-    state.localMediaStreamId = action.value.streamId
-    state.currentAudioDeviceId = action.value.audioDeviceId
-    state.currentVideoDeviceId = action.value.videoDeviceId
+  // see audioAnalysis.ts for context
+  if (action.type === ActionType.MediaReceivedSpeakingData) {
+    state.dominantSpeakerData.dominantSpeakerId = action.value
   }
 
-  if (action.type === ActionType.P2PStreamReceived) {
-    if (!state.otherMediaStreamPeerIds) {
-      state.otherMediaStreamPeerIds = []
-    }
-
-    if (!state.otherMediaStreamPeerIds.includes(action.value)) {
-      state.otherMediaStreamPeerIds.push(action.value)
-    }
-  }
-
-  if (action.type === ActionType.P2PDataReceived) {
-    console.log('Received P2P data!', action.value.peerId, action.value.data)
-  }
-
-  if (action.type === ActionType.P2PConnectionClosed) {
-    state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds || []
-    state.otherMediaStreamPeerIds = state.otherMediaStreamPeerIds.filter(
-      (p) => p !== action.value
-    )
-  }
-
-  if (action.type === ActionType.P2PWaitingForConnections) {
+  if (action.type === ActionType.StartVideoChat) {
     state.inMediaChat = true
   }
 
-  if (action.type === ActionType.LocalMediaSelectedCamera) {
-    state.currentVideoDeviceId = action.value
-  }
-
-  if (action.type === ActionType.LocalMediaSelectedMicrophone) {
-    state.currentAudioDeviceId = action.value
-  }
-
-  if (action.type === ActionType.MediaReceivedSpeakingData) {
-    state.speakingPeerIds = action.value
-  }
-
   if (action.type === ActionType.StopVideoChat) {
-    setNetworkMediaChatStatus(false)
-    stopAudioAnalyserLoop()
-    // disconnectAllPeers()
-    // stopAllDeviceUsage()
-    delete state.localMediaStreamId
-    delete state.otherMediaStreamPeerIds
+    // stopAudioAnalyserLoop()
     state.inMediaChat = false
   }
 
@@ -451,10 +404,16 @@ export default (oldState: State, action: Action): State => {
     state.autoscrollChat = true
   }
 
+  if (action.type === ActionType.SetKeepCameraWhenMoving) {
+    state.keepCameraWhenMoving = action.value
+    Storage.setKeepCameraWhenMoving(action.value)
+  }
+
   if (action.type === ActionType.Authenticate) {
     state.checkedAuthentication = true
 
     state.authenticationProvider = action.value.provider
+    state.mustVerifyEmail = action.value.mustVerifyEmail
 
     if (action.value.userId && action.value.name) {
       state.authenticated = true
@@ -465,6 +424,9 @@ export default (oldState: State, action: Action): State => {
         id: action.value.userId,
         username: action.value.name
       }
+    } else {
+      state.authenticated = undefined
+      state.userId = undefined
     }
   }
 
@@ -574,4 +536,8 @@ async function addMessage (state: State, message: Message) {
 export interface ModalOptions {
     hideVideo?: boolean,
     showJoinButton?: boolean
+}
+
+export interface DominantSpeakerData {
+  dominantSpeakerId: string;
 }

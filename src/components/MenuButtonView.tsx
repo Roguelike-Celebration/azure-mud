@@ -6,7 +6,9 @@ import config from '../config'
 import { ShowModalAction } from '../Actions'
 import { DispatchContext, UserMapContext } from '../App'
 import { Modal } from '../modals'
-import { fetchProfile, openOrCloseSpace } from '../networking'
+import { fetchProfile, openOrCloseSpace, disconnect } from '../networking'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 export default function MenuButtonView (props: { username: string, spaceIsClosed: boolean }) {
   const dispatch = useContext(DispatchContext)
@@ -17,12 +19,17 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
 
   const logOut = () => {
     const prompt = confirm('Are you sure you want to log out?')
+    // TODO: When a user disconnects via the /disconnect endpoint, it still shows that user as in the room. I suspect
+    // the same is true for banned users. Check on that.
     if (prompt) {
-      window.location.href = `${
-        config.SERVER_HOSTNAME
-      }/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(
-        window.location.href
-      )}`
+      disconnect(myId).then(() => {
+        firebase.auth().signOut().then(() => {
+          window.location.reload()
+        })
+      }).catch((error) => {
+        console.log('error signing out', error)
+        window.location.reload()
+      })
     }
   }
 

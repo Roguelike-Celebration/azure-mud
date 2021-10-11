@@ -94,3 +94,6 @@ bin
 obj
 appsettings.json
 local.settings.json
+
+# Firebase
+firebase-admin.json

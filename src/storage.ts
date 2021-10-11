@@ -61,6 +61,16 @@ export async function currentTheme (): Promise<string> {
   return await localforage.getItem(themeKey) || 'default'
 }
 
+// Video chat settings
+export async function setKeepCameraWhenMoving (keepCameraWhenMoving: boolean) {
+  await localforage.setItem(keepCameraWhenMovingKey, keepCameraWhenMoving)
+}
+
+export async function getKeepCameraWhenMoving (): Promise<boolean> {
+  const keepCameraWhenMoving: boolean = await localforage.getItem(keepCameraWhenMovingKey)
+  return keepCameraWhenMoving === null ? true : keepCameraWhenMoving
+}
+
 // Keys
 
 const messagesKey = 'messages'
@@ -69,3 +79,4 @@ const whisperKey = 'whispers'
 const rainbowGateKey = 'FeatureRainbowGateVisited'
 const wasColoredEnteringKey = 'WasColoredEntering'
 const themeKey = 'UserSelectedTheme'
+const keepCameraWhenMovingKey = 'KeepCameraWhenMoving'

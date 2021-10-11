@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React, { useContext, useEffect } from 'react'
 import { DispatchContext } from '../App'
-import { P2PWaitingForConnectionsAction, HideModalAction } from '../Actions'
-import { startVideoChat } from '../networking'
+import { HideModalAction, StartVideoChatAction } from '../Actions'
 import LocalMediaView from './LocalMediaView'
 import { DeviceInfo, useMediaChatContext } from '../videochat/mediaChatContext'
+import VideoAudioSettingsView from './VideoAudioSettingsView'
 
 interface Props {
   initialVideoDeviceId?: string;
@@ -16,6 +16,7 @@ interface Props {
 
   showJoinButton?: boolean
   hideVideo?: boolean
+  keepCameraWhenMoving: boolean
 }
 
 export default function MediaSelectorView (props: Props) {
@@ -65,12 +66,11 @@ export default function MediaSelectorView (props: Props) {
 
   const clickJoin = () => {
     dispatch(HideModalAction())
-    dispatch(P2PWaitingForConnectionsAction())
 
     if (props.hideVideo) {
       publishAudio()
     } else {
-      startVideoChat()
+      dispatch(StartVideoChatAction())
       publishMedia()
     }
   }
@@ -89,20 +89,32 @@ export default function MediaSelectorView (props: Props) {
     )
   }
 
+  // HACK ALERT: Here because I couldn't figure out the CSS. Somebody who knows css please help, my code is dying. I
+  // think it's in videoChat.css that this should be put.
+  const mediaSelectorStyle = {
+    display: 'flex',
+    'flex-direction': 'column'
+  }
+
   return (
-    <div id='media-selector'>
-      {props.hideVideo ? '' : <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>}
-      <div className='selects'>
-        {video}
-        <label htmlFor="#audio-select">Audio</label>
-        <select
-          name="Audio"
-          id="audio-select"
-          onChange={onAudioChange}
-          defaultValue={currentMic && currentMic.id}
-        >
-          {(mics || []).map(deviceToOption)}
-        </select>
+    <div id='media-selector' style={mediaSelectorStyle}>
+      <div>
+        {props.hideVideo ? '' : <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>}
+        <div className='selects'>
+          {video}
+          <label htmlFor="#audio-select">Audio</label>
+          <select
+            name="Audio"
+            id="audio-select"
+            onChange={onAudioChange}
+            defaultValue={currentMic && currentMic.id}
+          >
+            {(mics || []).map(deviceToOption)}
+          </select>
+        </div>
+      </div>
+      <div>
+        <VideoAudioSettingsView keepCameraWhenMoving={props.keepCameraWhenMoving} />
       </div>
       {props.showJoinButton
         ? <button id="join" onClick={clickJoin}>Join</button>

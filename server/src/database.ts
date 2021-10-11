@@ -6,6 +6,14 @@ import Redis from './redis'
 
 interface Database {
   // -----------------------------------------------------------------
+  // FIREBASE TOKEN CACHE
+  // -----------------------------------------------------------------
+  // If the token is in the cache, but not current, this will return false and evict it
+  userIdForFirebaseToken(token: string): Promise<string | undefined>
+
+  addFirebaseTokenToCache(token: string, userId: string, expiry: number)
+
+  // -----------------------------------------------------------------
   // WORLD PRESENCE
   // -----------------------------------------------------------------
 

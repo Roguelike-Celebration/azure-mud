@@ -1,4 +1,6 @@
-import { SpecialFeature } from ".";
+import { SpecialFeature } from '.'
+
+// Right now none of this should be used.
 
 export const loungeDungeonRoomData = {
   loungeDungeonDrawingRoom: {
@@ -6,7 +8,7 @@ export const loungeDungeonRoomData = {
     displayName: 'Drawing Room',
     shortName: 'the drawing room',
     description: `A smaller, private room with a vintage wooden table in the center and eight antique chairs arranged around it. The floor is covered in thick, intricate carpets, and the walls feature ancient oak wainscoting. Sunlight pours in through four large windows, and through them you can grass over rolling green hills.<br/><br/>
-    You can return to the [[lounge]], or you can continue on into the [[bedroom->loungeDungeonBedroom]].`,
+    You can return to the [[hall]], or you can continue on into the [[bedroom->loungeDungeonBedroom]].`,
     hidden: true
   },
   loungeDungeonBedroom: {
@@ -88,7 +90,7 @@ export const loungeDungeonRoomData = {
     shortName: 'somewhere in the unreasonably large walk-in closet',
     description: `The bowties set up a cry, hundreds at once, and then rush you! You slap them from the sky, grabbing and ripping, leaving a path of silk guts and cotton wings strewn all around the glade. Eventually, the swarm flees, silently flowing back into the forest. You stand, trumphant, amid dozens of torn bowties.<br/><br/>
       Then something kicks your legs out from under you, and you fall to the ground. Before you can react, everything goes black.<br/><br/>
-      [[Wake up.->lounge]].`,
+      [[Wake up.->hall]].`,
     hidden: true
   },
   loungeDungeonClosetTowerOfShoesDoor: {

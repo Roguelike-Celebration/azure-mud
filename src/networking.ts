@@ -28,7 +28,6 @@ import {
   NoteUpdateRoomAction,
   NoteUpdateLikesAction,
   HideModalAction,
-  UpdatedVideoPresenceAction,
   SpaceOpenedOrClosedAction,
   PlayerBannedAction,
   PlayerUnbannedAction,
@@ -40,13 +39,14 @@ import { convertServerRoomData } from './room'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
 import Config from './config'
-import { receiveSignalData, startSignaling } from './webRTC'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 const axios = require('axios').default
 
 let myUserId: string
 let myDispatch: Dispatch<Action>
 
-let inMediaChat: boolean = false
+const inMediaChat: boolean = false
 
 export async function connect (userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId
@@ -73,6 +73,10 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   dispatch(UpdatedPresenceAction(result.presenceData))
 
   connectSignalR(userId, dispatch)
+}
+
+export async function disconnect (userId: string) {
+  const result = await callAzureFunction('disconnect')
 }
 
 export async function getServerSettings (dispatch: Dispatch<Action>) {
@@ -123,8 +127,12 @@ export async function dropItem () {
   await callAzureFunction('pickUpItem', { drop: true })
 }
 
-export async function fetchAcsToken () {
-  return await callAzureFunction('acsToken')
+export async function displayMessage (message: string) {
+  await callAzureFunction('displayMessage', { message: message })
+}
+
+export async function displayMessageFromList (listName: string) {
+  await callAzureFunction('displayMessage', { list: listName })
 }
 
 export async function fetchTwilioToken () {
@@ -255,37 +263,24 @@ export async function deleteMessage (messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
 }
 
-// WebRTC
-// A note: the WebRTC handshake process generally avoids the Flux store / reducer
-// The app store is only aware of actual video streams it has to present.
-
-// This kicks off the whole peering process.
-// Any connected WebRTC clients will start signaling, which happens over SignalR.
-export async function startVideoChat () {
-  inMediaChat = true
-}
-
-export async function sendSignalData (peerId: string, data: string) {
-  return await callAzureFunction('sendSignalData', { peerId, data })
-}
-
-export async function setNetworkMediaChatStatus (isInMediaChat: boolean) {
-  inMediaChat = isInMediaChat
-
-  if (!isInMediaChat) {
-    return await callAzureFunction('leaveVideoChat')
-  }
-}
-
-export function getNetworkMediaChatStatus (): boolean {
-  return inMediaChat
-}
-
 // Setup
 
 async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
+  class CustomHttpClient extends SignalR.DefaultHttpClient {
+    public async send (request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
+      const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
+      request.headers = {
+        ...request.headers,
+        userid: firebase.auth().currentUser.uid
+      }
+      return super.send(request)
+    }
+  }
+
   const connection = new SignalR.HubConnectionBuilder()
-    .withUrl(`${Config.SERVER_HOSTNAME}/api`)
+    .withUrl(`${Config.SERVER_HOSTNAME}/api`, {
+      httpClient: new CustomHttpClient(console)
+    })
     .configureLogging(SignalR.LogLevel.Debug)
     .build()
 
@@ -376,11 +371,6 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     dispatch(ShowModalAction(Modal.ClientDeployed))
   })
 
-  connection.on('videoPresence', (roomId: string, users: string[]) => {
-    console.log('Changed video presence')
-    dispatch(UpdatedVideoPresenceAction(roomId, users))
-  })
-
   connection.on('shout', (messageId, name, message) => {
     // We don't gate on your own userId here.
     // Because shouting can fail at the server level, we don't show it preemptively.
@@ -393,20 +383,6 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.on('dance', (messageId, name, message) => {
     dispatch(DanceAction(messageId, name, message))
-  })
-
-  // WebRTC
-
-  connection.on('webrtcSignalData', (peerId, data) => {
-    console.log('Received signaling data from', peerId)
-    receiveSignalData(peerId, data, dispatch)
-  })
-
-  connection.on('webrtcPeerId', (peerId) => {
-    if (peerId === userId) return
-    if (!inMediaChat) return
-    console.log('Starting signaling with', peerId)
-    startSignaling(peerId, dispatch)
   })
 
   // Post-It Note Wall
@@ -451,9 +427,15 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
 async function callAzureFunctionGet (endpoint: string): Promise<any> {
   try {
+    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
     const r = await axios.get(
       `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${firebaseToken}`
+        }
+      }
     )
     console.log(r)
     return r.data
@@ -465,29 +447,21 @@ async function callAzureFunctionGet (endpoint: string): Promise<any> {
 
 async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
   try {
+    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
     const r = await axios.post(
       `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
       body,
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${firebaseToken}`
+        }
+      }
     )
     console.log(r)
     return r.data
   } catch (e) {
     console.log('Error', e)
-    return undefined
-  }
-}
-
-export async function getLoginInfo () {
-  try {
-    console.log('Fetching')
-    const r = await axios.post(`${Config.SERVER_HOSTNAME}/.auth/me`, null, {
-      withCredentials: true
-    })
-    console.log(r)
-    return r.data[0]
-  } catch (e) {
-    console.log(e)
     return undefined
   }
 }
