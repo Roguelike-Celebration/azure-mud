@@ -26,7 +26,6 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
 // Saturday entries
 export const ScheduleEntries = [
   ScheduleEntry('09:00', 1, 'Doors Open'),
-  // TODO: Are we doing this?
   ScheduleEntry('09:15', 1, 'Kickoff', ['theater']),
   ScheduleEntry('09:30', 1, 'Michael Brough: Possibility of Roguelike Elements', ['theater']),
   ScheduleEntry('10:00', 1, 'Jeremiah Reid: Juice Your Turns', ['theater']),
