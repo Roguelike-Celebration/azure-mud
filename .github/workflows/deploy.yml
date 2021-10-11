@@ -16,6 +16,7 @@ jobs:
       - name: Build Frontend
         run: npm run build
         env:
+          SERVER_HOSTNAME: ${{ secrets.SERVER_HOSTNAME }}
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
@@ -34,7 +35,6 @@ jobs:
         env:
           APP_NAME: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
           TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}
-
 
       - name: Create Firebase JSON file
         working-directory: server
