@@ -1,13 +1,17 @@
 import React from 'react'
 import { RoomNote } from '../../server/src/roomNote'
-import { addNoteToWall, deleteRoomNote } from '../networking'
+import { ServerSettings, toServerSettings } from '../../server/src/types'
+import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networking'
 import { NoteView } from './NoteView'
 
 import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
 
-export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWallData, user: PublicUser}) {
+// TODO: insanely silly to hardcode these here
+const UNCONFERENCING_ROOM_IDS = ['cockatrice', 'dragon', 'naga', 'skeleton', 'tengu', 'yak']
+
+export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWallData, user: PublicUser, serverSettings: ServerSettings}) {
   const addNote = () => {
     const promptText = props.noteWallData ? props.noteWallData.addNotePrompt : 'What do you type on the note wall?'
     const message = prompt(promptText)
@@ -18,6 +22,21 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     const confirmation = confirm('Are you sure you want to delete all notes?')
     if (confirmation) {
       props.notes.map((note) => deleteRoomNote(note.id))
+    }
+  }
+
+  const setAsUnconferencingTopics = () => {
+    const confirmation = confirm('This will assign the top 6 rooms to the unconferencing rooms, are you sure?')
+    if (confirmation && props.notes.length > 0) {
+      const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
+      const sortedByUpvotes = props.notes.sort((a, b) => (a.likes || 0) < (b.likes || 0) ? 1 : -1)
+      for (var i = 0; i < Math.min(sortedByUpvotes.length, UNCONFERENCING_ROOM_IDS.length); i++) {
+        settingsCopy.happeningNowEntries.push({
+          text: sortedByUpvotes[i].message,
+          roomId: UNCONFERENCING_ROOM_IDS[i]
+        })
+      }
+      updateServerSettings(settingsCopy)
     }
   }
 
@@ -39,9 +58,17 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     ''
   )
 
+  // const setAsUnconferencingTopicsButton = props.user.isMod ? (
+  const setAsUnconferencingTopicsButton = true ? (
+    <button onClick={setAsUnconferencingTopics}>Mod: Set as unconferencing topics</button>
+  ) : (
+    ''
+  )
+
   return (
     <div>
       {massDeleteButton}
+      {setAsUnconferencingTopicsButton}
       <div className='note-wall-description'>
         {description}
         <br/><br/>
