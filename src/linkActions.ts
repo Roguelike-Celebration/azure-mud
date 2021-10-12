@@ -22,5 +22,8 @@ export const linkActions = {
   },
   readClosedSign: () => {
     displayMessageFromList('closedSigns')
+  },
+  getGameRec: () => {
+    displayMessageFromList('gameRecommendations')
   }
 }

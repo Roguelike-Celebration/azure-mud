@@ -3,6 +3,7 @@ import * as fortuneCookies from './fortuneCookies'
 import * as polymorph from './polymorph'
 import * as motivationPosters from './motivationPosters'
 import * as closedSigns from './closedSigns'
+import * as gameRecommendations from './gameRecs'
 
 interface Generator {
     generate(): string
@@ -14,7 +15,8 @@ const generators: {[name: string]: Generator} = {
   fortuneCookies,
   polymorph,
   motivationPosters,
-  closedSigns
+  closedSigns,
+  gameRecommendations
 }
 
 export default generators

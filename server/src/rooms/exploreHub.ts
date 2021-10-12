@@ -27,7 +27,7 @@ export const steam = {
   id: 'steam',
   displayName: 'Office of Steam',
   shortName: 'Steam',
-  description: 'A hulking steam engine is under glass, powering an ancient computer. It\'s hooked to a typewriter, akin to teletext, and regularly printing out game recommendations. If you\'d like, you can investigate its <a href="https://store.steampowered.com/sale/roguelikecelebration2021" target="_blank">source</a>, or go back to the [[guild hall->exploreHub]].'
+  description: 'A hulking steam engine is under glass, powering an ancient computer. It\'s hooked to a typewriter, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. If you\'d like, you can investigate its <a href="https://store.steampowered.com/sale/roguelikecelebration2021" target="_blank">source</a>, or go back to the [[guild hall->exploreHub]].'
 }
 
 export const transmute = {
