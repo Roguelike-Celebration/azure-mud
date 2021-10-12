@@ -56,6 +56,7 @@ export type Action =
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
   | SetKeepCameraWhenMovingAction
+  | SetNumberOfFacesAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
@@ -103,6 +104,7 @@ export enum ActionType {
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
   SetKeepCameraWhenMoving = 'SET_KEEP_CAMERA_WHEN_MOVING',
+  SetNumberOfFaces = 'SET_NUMBER_OF_FACES',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -652,6 +654,18 @@ export const SetKeepCameraWhenMovingAction = (
   keepCameraWhenMoving: boolean
 ): SetKeepCameraWhenMovingAction => {
   return { type: ActionType.SetKeepCameraWhenMoving, value: keepCameraWhenMoving }
+}
+
+interface SetNumberOfFacesAction {
+  type: ActionType.SetNumberOfFaces;
+  value: number;
+}
+
+export const SetNumberOfFacesAction = (num: number): SetNumberOfFacesAction => {
+  return {
+    type: ActionType.SetNumberOfFaces,
+    value: num
+  }
 }
 
 export const AuthenticateAction = (
