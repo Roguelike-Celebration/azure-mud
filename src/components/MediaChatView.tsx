@@ -4,7 +4,6 @@ import LocalMediaView from './LocalMediaView'
 
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
-import ParticipantTracks from '../videochat/twilio/ParticipantTracks'
 import ParticipantChatView from './ParticipantChatView'
 
 interface MediaProps {
@@ -15,7 +14,6 @@ interface MediaProps {
 
 export default function MediaChatView (props: MediaProps) {
   const { publishingCamera, callParticipants } = useMediaChatContext()
-  console.log(props)
 
   // TODO: props.visibleSpeakers should never be undefined, but it is?!
   const visibleSpeakers = (props.visibleSpeakers || []).map(x => x[0])
@@ -28,7 +26,6 @@ export default function MediaChatView (props: MediaProps) {
 
   let playerVideo
   if (publishingCamera) {
-    console.log('Publishing camera?')
     playerVideo = <LocalMediaView speaking={false} />
   }
 

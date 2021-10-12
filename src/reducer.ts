@@ -106,7 +106,7 @@ export const defaultState: State = {
   isBanned: false,
   serverSettings: DEFAULT_SERVER_SETTINGS,
   numberOfFaces: 5
-};
+}
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
 export default (oldState: State, action: Action): State => {
