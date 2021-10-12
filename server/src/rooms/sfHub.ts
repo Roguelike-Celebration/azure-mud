@@ -22,14 +22,15 @@ export const robots = {
 
 export const timeMachine = {
   id: 'timeMachine',
-  displayName: 'strange item',
+  displayName: 'Space Hanger - Strange Device',
   shortName: 'strange item',
-  description: 'make a minigame that eventually leads to the [[old school hub->oldHub]]. Go back to the [[Spacehanger->sfHub]].'
+  hidden: true,
+  description: 'You can\'t get the machine to turn on, no matter what you do, plug in or unplug. However, there is an inscription on it.</br></br>A grid of glyphs in rows arrayed,</br>Is how I\'ll tell your tale;</br>From decades past to present day,</br>My codepage has prevailed;</br>Tiles are fine if you have have time,</br> But I shall never stale;</br>Now speak my name as if you\'d /go,</br>And I shall fill your sail.</br></br>Go back to the [[Spacehanger->sfHub]].'
 }
 
 export const vendingMachine = {
   id: 'vendingMachine',
-  displayName: 'vending machine',
+  displayName: 'Space Hanger - Vending Machine',
   shortName: 'vending machine',
   description: 'Set into the wall is a curious-looking vending machine labelled "Munxip\'s Magnifient Munchies". A touch screen flashes "[[Get Random Food!->generateFood]]" in cycling colours.</br></br>Go back to the [[Space Hanger->sfHub]].'
 }

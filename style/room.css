@@ -44,3 +44,15 @@ a.room-link:visited {
   margin-left: 0.8em;
   color: white;
 }
+
+#full-room-description {
+  display: block;
+  background-color:var(--main-background);
+  border: 2px solid var(--highlight-line);
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+#full-room-description.collapsed {
+  display: none;
+}

@@ -4,7 +4,7 @@ import { User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
 import { DB } from './database'
 import Redis from '../src/redis'
-import { Result } from './endpoint'
+import { Result, Message } from './endpoint'
 
 export async function moveToRoom (
   user: User,
@@ -44,7 +44,16 @@ export async function moveToRoom (
   }
 
   if (!to) {
+    const messages: Message[] = [
+      {
+        userId: user.id,
+        target: 'privateCommand',
+        arguments: [`Hmm... ${newRoomId} isn't a match to any rooms.`]
+      }
+    ]
+
     return {
+      messages,
       httpResponse: {
         status: 404,
         body: { error: 'Invalid room ID' }

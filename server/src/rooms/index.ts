@@ -3,8 +3,8 @@ import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak } from './
 import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
-import { oldHub, Oracle, jelly, vault } from './oldHub'
-import { exploreHub, temple, lights, libations, quest } from './exploreHub'
+import { ASCII, Oracle, jelly, vault } from './oldHub'
+import { exploreHub, transmute, lights, victuals, quest, steam } from './exploreHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -33,7 +33,7 @@ export interface Room {
 
   description: string
 
-  // If false, webRTC audio/video chat is blocked
+  // If true, webRTC audio/video chat is blocked
   noMediaChat?: boolean
 
   // Indicates whether the room should let users place post-it notes
@@ -55,31 +55,6 @@ export interface Room {
 }
 
 const indexRoomData: { [name: string]: Room } = {
-  theater,
-  warrior,
-  mage,
-  rogue,
-  tourist,
-  unconference,
-  cockatrice,
-  dragon,
-  naga,
-  skeleton,
-  tengu,
-  yak,
-  sfHub,
-  robots,
-  timeMachine,
-  vendingMachine,
-  oldHub,
-  Oracle,
-  jelly,
-  vault,
-  exploreHub,
-  temple,
-  lights,
-  libations,
-  quest,
   entryway: {
     id: 'entryway',
     displayName: 'Registration Desk',
@@ -91,9 +66,9 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'hall',
     displayName: 'Central Hall',
     shortName: 'the hall',
-    description: `A magnificently hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmer of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
+    description: `A magnificent hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmur of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
     <br/><br/>
-    In the center of the hall you see a circular booth overflowing with bits and bobs, labelled the [[Swag Table->swag]]. Further on, an ornate staircase leads up to the [[Bar->bar]], and blinking lights above a door advertise the [[Theater->theater]] entrance. 
+    In the center of the hall you see a circular booth overflowing with bits and bobs, labelled the [[Swag Table->swag]]. Further on, an ornate staircase leads up to the [[Bar->bar]], a carpeted hallway leads up to the [[library]], and blinking lights above a door advertise the [[Theater->theater]] entrance. 
     <br/><br/>
     To your right, a short hallway leads to the [[unconferencing rooms->unconference]]. To your left, a much longer hallway labelled [[Destinations->destinations]].`,
     hasNoteWall: true,
@@ -130,7 +105,7 @@ const indexRoomData: { [name: string]: Room } = {
     description: `The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight's specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).
     <br/>A self-serve table nearby has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]
     <br/><br/>
-    Three booths provide opportunities to sit and enjoy conversation in smaller groups - by the [[railing->barBoothA]], seated [[along the bar->barBoothB]], and tucked away [[at the back->barBoothC]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->hall]].`,
+    Three booths provide opportunities to sit and enjoy conversation in smaller groups - by the [[railing->railing]], seated [[along the bar->stools]], and tucked away [[at the back->back]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->hall]].`,
     hasNoteWall: true,
     noteWallData: {
       roomWallDescription: 'By the bathrooms there\'s a pile of pens and markers - it seems the bar decided if they can\'t stop graffitti, they might as well encourage patrons to use glitter pens instead of boring ballpoint.',
@@ -140,26 +115,59 @@ const indexRoomData: { [name: string]: Room } = {
       noteWallDescription: 'Someone has scratched ‘Rodney was here’ on an absurdly large unisex bathroom stall wall.'
     }
   },
-  barBoothA: {
-    id: 'barBoothA',
+  railing: {
+    id: 'railing',
     displayName: 'Booth Along the Railing',
     shortName: 'the booth by the railing',
     description: `A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.</br></br>
-      From here, you can see [[the seats at the bar->barBoothB]] or [[at the back of the room->barBoothC]], and the [[rest of the bar->bar]].`
+      From here, you can see [[the seats at the bar->stools]] or [[at the back of the room->back]], and the [[rest of the bar->bar]].`
   },
-  barBoothB: {
-    id: 'barBoothB',
+  stools: {
+    id: 'stools',
     displayName: 'Seats Along the Bar',
-    shortName: 'the booth by the bar',
+    shortName: 'the stools by the bar',
     description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel. Whee!</br></br>
-      From here, you can see tables [[by the railing->barBoothA]] or [[at the back->barBoothC]], and the [[rest of the bar->bar]].`
+      From here, you can see tables [[by the railing->railing]] or [[at the back->back]], and the [[rest of the bar->bar]].`
   },
-  barBoothC: {
-    id: 'barBoothC',
+  back: {
+    id: 'back',
     displayName: 'Booth at the Back',
     shortName: 'the booth at the back',
     description: `A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>
-      From here, you can see tables [[at the railing->barBoothA]] or [[along the bar->barBoothB]], and the [[rest of the bar->bar]]`
+      From here, you can see tables [[at the railing->railing]] or [[along the bar->stools]], and the [[rest of the bar->bar]]`
+  },
+  theater,
+  warrior,
+  mage,
+  rogue,
+  tourist,
+  unconference,
+  cockatrice,
+  dragon,
+  naga,
+  skeleton,
+  tengu,
+  yak,
+  sfHub,
+  robots,
+  timeMachine,
+  vendingMachine,
+  ASCII,
+  Oracle,
+  jelly,
+  vault,
+  exploreHub,
+  transmute,
+  lights,
+  victuals,
+  quest,
+  steam,
+  library: {
+    id: 'library',
+    displayName: 'The Library of Procedural Studies',
+    shortName: 'the library',
+    noMediaChat: true,
+    description: 'A hush falls over you. Every possible space is filled with books and tomes - all the books in the entire space must be loans from here. A large sign over the circulation desk says "NO AUDIO - TEXT ONLY! ~ Management"<br/><br/>From here you can return to the [[hall]].'
   },
 
   /*  Not deleting this yet because I want to figure out what to do with the doorways / color minigame, but it *shouldn't* link anywhere.
