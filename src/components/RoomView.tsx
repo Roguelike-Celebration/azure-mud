@@ -229,6 +229,7 @@ export default function RoomView (props: Props) {
         ) : (
           ''
         )}
+      {noteWallView}
       {room ? (
         <PresenceView
           users={room.users}
@@ -239,7 +240,6 @@ export default function RoomView (props: Props) {
       ) : (
         ''
       )}
-      {noteWallView}
     </div>
   )
 }
