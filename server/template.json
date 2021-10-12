@@ -102,6 +102,10 @@
 						{
 							"name": "RedisPort",
 							"value": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2018-03-01').sslPort]"
+						},
+						{
+							"name": "GOOGLE_APPLICATION_CREDENTIALS",
+							"value": "./firebase-admin.json"
 						}
 					]
 				}

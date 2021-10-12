@@ -7,7 +7,6 @@ import {
   AudioTrack as IAudioTrack,
   LocalTrackPublication,
   LocalVideoTrack,
-  Participant,
   RemoteTrackPublication,
   RemoteVideoTrack,
   Track
@@ -15,7 +14,6 @@ import {
 
 interface PublicationProps {
   publication: LocalTrackPublication | RemoteTrackPublication;
-  participant: Participant;
   isLocalParticipant?: boolean;
   videoOnly?: boolean;
   videoPriority?: Track.Priority | null;

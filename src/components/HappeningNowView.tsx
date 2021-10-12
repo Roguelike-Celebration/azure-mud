@@ -46,7 +46,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
       {currentlyScheduled.roomIds ? buildScheduledRoomList(currentlyScheduled.roomIds) : ''}
     </div>
   } else {
-    currentlyScheduledElement = <strong>You're in early! Check the schedule for when the doors officially open.</strong>
+    currentlyScheduledElement = <strong>You&apos;re in early! Check the schedule for when the doors officially open.</strong>
   }
 
   return (

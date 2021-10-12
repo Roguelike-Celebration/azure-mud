@@ -17,7 +17,7 @@
       "type": "signalRConnectionInfo",
       "name": "connectionInfo",
       "hubName": "chat",
-      "userId": "{headers.x-ms-client-principal-id}",
+      "userId": "{headers.userid}",
       "connectionStringSetting": "AzureSignalRConnectionString",
       "direction": "in"
     }

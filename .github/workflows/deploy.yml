@@ -15,13 +15,33 @@ jobs:
 
       - name: Build Frontend
         run: npm run build
+        env:
+          SERVER_HOSTNAME: ${{ secrets.SERVER_HOSTNAME }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
       - name: Deploy Frontend
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-      
+
+      - name: Notify connected clients
+        run: node deployWebhook.js
+        env:
+          APP_NAME: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
+          TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}
+
+      - name: Create Firebase JSON file
+        working-directory: server
+        run: echo $FIREBASE_SERVER_JSON > firebase-admin.json
+        env:
+          FIREBASE_SERVER_JSON: ${{ secrets.FIREBASE_SERVER_JSON }}
+
       - name: Build Backend
         working-directory: server
         run: npm install && npm run build
@@ -34,9 +54,3 @@ jobs:
           package: server
           scm-do-build-during-deployment: true
           enable-oryx-build: true
-
-      - name: Notify connected clients
-        run: node deployWebhook.js
-        env:
-          APP_NAME: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
-          TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}

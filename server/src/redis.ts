@@ -17,6 +17,7 @@ const cache = redis.createClient(
 
 const getCache = promisify(cache.get).bind(cache)
 const setCache = promisify(cache.set).bind(cache)
+const expireAt = promisify(cache.expireat).bind(cache)
 
 const addToSet = promisify(cache.sadd).bind(cache)
 const removeFromSet = promisify(cache.srem).bind(cache)
@@ -31,6 +32,17 @@ interface RedisInternal extends Database {
 }
 
 const Redis: RedisInternal = {
+  async userIdForFirebaseToken (token: string): Promise<string | undefined> {
+    return await getCache(keyForFirebaseToken(token))
+  },
+
+  async addFirebaseTokenToCache (token: string, userId: string, expiry: number) {
+    // Expiry is set independently instead of using the 4-parameter setCache sig because I tried it and it seemed to
+    // silently fail without setting anything.
+    await setCache(keyForFirebaseToken(token), userId)
+    await expireAt(keyForFirebaseToken(token), expiry)
+  },
+
   async getActiveUsers (): Promise<string[]> {
     return getSet(activeUsersKey) || []
   },
@@ -92,7 +104,7 @@ const Redis: RedisInternal = {
   },
 
   async addOccupantToRoom (roomId: string, userId: string) {
-    await Redis.setPartialUserProfile(userId, {roomId})
+    await Redis.setPartialUserProfile(userId, { roomId })
 
     const presenceKey = roomPresenceKey(roomId)
     return await addToSet(presenceKey, userId)
@@ -112,7 +124,7 @@ const Redis: RedisInternal = {
 
   async setCurrentRoomForUser (user: User, roomId: string) {
     if (user.roomId !== roomId) {
-      console.log("Removing from last room")
+      console.log('Removing from last room')
       await Redis.removeOccupantFromRoom(user.roomId, user.id)
     }
 
@@ -152,7 +164,7 @@ const Redis: RedisInternal = {
 
   async setPartialUserProfile (userId: string, user: Partial<User>): Promise<User> {
     const existingUser = await Redis.getUser(userId)
-    const data = {...existingUser, ...user}
+    const data = { ...existingUser, ...user }
     return await Redis.setUserProfile(userId, data)
   },
 
@@ -334,6 +346,10 @@ function profileKeyForUser (userId: string): string {
 
 function userIdKeyForUsername (username: string): string {
   return `${username}Username`
+}
+
+function keyForFirebaseToken (token: string): string {
+  return `${token}FirebaseToken`
 }
 
 function heartbeatKeyForUser (user: string): string {

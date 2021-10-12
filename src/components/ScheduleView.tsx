@@ -50,9 +50,9 @@ export default function ScheduleView () {
 
   const rows = ScheduleEntries.flatMap(r => {
     if (r.text === 'Break') {
-      return [(<tr><th className='break' colSpan={2}><hr /></th></tr>),
-        (<tr><td className='time'>{formatter.format(r.time)}</td><td className='segment'>**** BREAK ****</td></tr>),
-        (<tr><th className='break' colSpan={2}><hr /></th></tr>)]
+      return [(<tr key={formatter.format(r.time) + 'hr1'}><th className='break' colSpan={2}><hr /></th></tr>),
+        (<tr key={formatter.format(r.time) + 'text'}><td className='time'>{formatter.format(r.time)}</td><td className='segment'>**** BREAK ****</td></tr>),
+        (<tr key={formatter.format(r.time) + 'hr2'}><th className='break' colSpan={2}><hr /></th></tr>)]
     } else {
       return [(
         <tr key={formatter.format(r.time)}>

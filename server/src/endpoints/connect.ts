@@ -6,7 +6,6 @@ import { RoomResponse } from '../types'
 import { User, isMod, minimizeUser } from '../user'
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
 import DB from '../redis'
-import Redis from '../redis'
 
 const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   log('We have a user!', user.id)
@@ -36,11 +35,10 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     profile: user
   }
 
-
   if (roomData[user.roomId].hasNoteWall) {
-    response.roomNotes = await Redis.getRoomNotes(user.roomId)
+    response.roomNotes = await DB.getRoomNotes(user.roomId)
   }
-  
+
   result.httpResponse = {
     status: 200,
     body: response
