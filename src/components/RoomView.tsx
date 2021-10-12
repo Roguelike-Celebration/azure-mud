@@ -75,9 +75,9 @@ export default function RoomView (props: Props) {
   }
 
   const toggleClick = (e) => {
-    var fullRoomDesc = document.getElementById("full-room-description")
+    var fullRoomDesc = document.getElementById('full-room-description')
     if (fullRoomDesc) {
-      fullRoomDesc.classList.toggle("collapsed")
+      fullRoomDesc.classList.toggle('collapsed')
     }
   }
 
