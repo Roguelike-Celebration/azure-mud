@@ -42,8 +42,8 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
 
   let currentlyScheduledElement
   if (currentlyScheduled) {
-    if (currentlyScheduled.text == 'Social Time') {
-      var i = currentlyScheduledIdx + 1;
+    if (currentlyScheduled.text === 'Social Time') {
+      var i = currentlyScheduledIdx + 1
       const socialTimeOptions = []
       while (ReversedScheduleEntries[i] && ReversedScheduleEntries[i].breakoutRoomId) {
         const breakoutEntry = ReversedScheduleEntries[i]
@@ -56,7 +56,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
               {props.roomData[breakoutRoomId] ? props.roomData[breakoutRoomId].name : 'unknown room'}
             </button>
           </li>
-          )
+        )
         i++
       }
       socialTimeOptions.push(<li key={'option-chat'}>Chat!</li>)

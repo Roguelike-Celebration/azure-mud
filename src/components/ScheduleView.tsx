@@ -52,7 +52,7 @@ export const ScheduleEntries = [
   ScheduleEntry('18:00', 1, SOCIAL_TIME),
   ScheduleEntry('18:15', 1, 'Unconferencing', ['unconference']),
   ScheduleEntry('19:00', 1, SOCIAL_TIME),
-  ScheduleEntry('20:45', 1, 'Doors Close'),
+  ScheduleEntry('20:45', 1, 'Doors Close')
 ]
 
 /* Sunday Entries
