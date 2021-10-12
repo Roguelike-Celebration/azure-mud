@@ -21,7 +21,7 @@ export default function MediaChatView (props: MediaProps) {
   console.log('Re-rendering media chat view?')
 
   if (!callParticipants) {
-    return <div />
+    return <div id="media-view" />
   }
 
   let playerVideo
