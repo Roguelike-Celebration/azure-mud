@@ -2,7 +2,7 @@
 
 export const ASCII = {
   id: 'ASCII',
-  displayName: 'the Hash Mark Dungeon',
+  displayName: 'The Hash Mark Dungeon',
   shortName: '# dungeon',
   description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here. You can visit the [[Oracle]], the [[Gelatinous Throne->jelly]], or the [[Treasure Vault->vault]]. Or head back to [[Spacehanger->sfHub]].',
   hasNoteWall: true,
@@ -39,7 +39,7 @@ export const jelly = {
 // To do: swap these (these are the 2020 special items); make it harder to get here (more riddles, probably)
 export const vault = {
   id: 'vault',
-  displayName: 'Treasure vault',
+  displayName: 'Treasure Vault',
   shortName: 'the treasure vault',
   hidden: true,
   noMediaChat: false,

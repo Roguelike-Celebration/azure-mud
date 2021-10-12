@@ -74,6 +74,13 @@ export default function RoomView (props: Props) {
     }
   }
 
+  const toggleClick = (e) => {
+    var fullRoomDesc = document.getElementById('full-room-description')
+    if (fullRoomDesc) {
+      fullRoomDesc.classList.toggle('collapsed')
+    }
+  }
+
   React.useEffect(() => {
     if (room && !room.noMediaChat) {
       // HACK ALERT: This call is necessary to properly set the state variables related to leaving video chat, since
@@ -198,48 +205,51 @@ export default function RoomView (props: Props) {
         {room ? room.name : 'Loading...'}
         {chatButtons}
       </h1>
-      <div
-        id="static-room-description"
-        onClick={descriptionClick}
-        dangerouslySetInnerHTML={{
-          __html: room
-            ? parseDescription(room.description, props.roomData)
-            : 'Loading current room...'
-        }}
-      />
-      {room && room.id === 'theater' ? <StreamEmbed /> : null}
-      {room &&
-      room.specialFeatures &&
-      room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? (
-          <RainbowGateRoomView />
-        ) : (
-          ''
-        )}
-      {room &&
-      room.specialFeatures &&
-      room.specialFeatures.includes(SpecialFeature.DullDoor) ? (
-          <DullDoorRoomView />
-        ) : (
-          ''
-        )}
-      {room &&
-      room.specialFeatures &&
-      room.specialFeatures.includes(SpecialFeature.FullRoomIndex) ? (
-          <FullRoomIndexRoomView />
-        ) : (
-          ''
-        )}
-      {noteWallView}
-      {room ? (
-        <PresenceView
-          users={room.users}
-          userId={props.userId}
-          videoUsers={room.videoUsers}
-          roomId={room.id}
+      <button type="button" id="room-collapse-button" onClick={toggleClick}>Toggle Room Details...</button>
+      <div id="full-room-description">
+        <div
+          id="static-room-description"
+          onClick={descriptionClick}
+          dangerouslySetInnerHTML={{
+            __html: room
+              ? parseDescription(room.description, props.roomData)
+              : 'Loading current room...'
+          }}
         />
-      ) : (
-        ''
-      )}
+        {room && room.id === 'theater' ? <StreamEmbed /> : null}
+        {room &&
+        room.specialFeatures &&
+        room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? (
+            <RainbowGateRoomView />
+          ) : (
+            ''
+          )}
+        {room &&
+        room.specialFeatures &&
+        room.specialFeatures.includes(SpecialFeature.DullDoor) ? (
+            <DullDoorRoomView />
+          ) : (
+            ''
+          )}
+        {room &&
+        room.specialFeatures &&
+        room.specialFeatures.includes(SpecialFeature.FullRoomIndex) ? (
+            <FullRoomIndexRoomView />
+          ) : (
+            ''
+          )}
+        {noteWallView}
+        {room ? (
+          <PresenceView
+            users={room.users}
+            userId={props.userId}
+            videoUsers={room.videoUsers}
+            roomId={room.id}
+          />
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   )
 }
