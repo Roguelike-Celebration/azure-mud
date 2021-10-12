@@ -8,7 +8,9 @@ import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
 
-// TODO: insanely silly to hardcode these here
+// TODO: insanely silly to hardcode these here, since they can easily fall out of sync
+// If you're reading this, these are the specific room ids for Roguelike Celebration 2021
+// and you should rip them out, probably?
 const UNCONFERENCING_ROOM_IDS = ['cockatrice', 'dragon', 'naga', 'skeleton', 'tengu', 'yak']
 
 export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWallData, user: PublicUser, serverSettings: ServerSettings}) {
@@ -30,12 +32,14 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     if (confirmation && props.notes.length > 0) {
       const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
       const sortedByUpvotes = props.notes.sort((a, b) => (a.likes || 0) < (b.likes || 0) ? 1 : -1)
+      const newEntries = []
       for (var i = 0; i < Math.min(sortedByUpvotes.length, UNCONFERENCING_ROOM_IDS.length); i++) {
-        settingsCopy.happeningNowEntries.push({
-          text: sortedByUpvotes[i].message,
+        newEntries.push({
+          text: `Unconference: ${sortedByUpvotes[i].message} in the ${UNCONFERENCING_ROOM_IDS[i]} room.`,
           roomId: UNCONFERENCING_ROOM_IDS[i]
         })
       }
+      settingsCopy.happeningNowEntries = newEntries.concat(settingsCopy.happeningNowEntries)
       updateServerSettings(settingsCopy)
     }
   }
