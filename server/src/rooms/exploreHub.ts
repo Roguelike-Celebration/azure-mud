@@ -20,7 +20,7 @@ export const exploreHub = {
   }
 }
 
-// To do: generate game recommendations based off the games on the Steam list: 
+// To do: generate game recommendations based off the games on the Steam list:
 // https://docs.google.com/spreadsheets/d/1MWdYIkc0iyrC3LeMp_FPXC45UrenzZc_h07LStxK56c/edit#gid=841820447
 // Thanks to honu @ SIBR, I have this ready to go
 export const steam = {
