@@ -13,6 +13,10 @@ import { PublicUser } from '../../server/src/user'
 // and you should rip them out, probably?
 const UNCONFERENCING_ROOM_IDS = ['cockatrice', 'dragon', 'naga', 'skeleton', 'tengu', 'yak']
 
+function numLikes (roomNote: RoomNote) {
+  return !roomNote.likes ? 0 : roomNote.likes.length
+}
+
 export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWallData, user: PublicUser, serverSettings: ServerSettings}) {
   const addNote = () => {
     const promptText = props.noteWallData ? props.noteWallData.addNotePrompt : 'What do you type on the note wall?'
@@ -31,11 +35,11 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     const confirmation = confirm('This will assign the top 6 rooms to the unconferencing rooms, are you sure?')
     if (confirmation && props.notes.length > 0) {
       const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
-      const sortedByUpvotes = props.notes.sort((a, b) => (a.likes || 0) < (b.likes || 0) ? 1 : -1)
+      const sortedDescending = props.notes.sort((a, b) => numLikes(a) < numLikes(b) ? 1 : -1)
       const newEntries = []
-      for (var i = 0; i < Math.min(sortedByUpvotes.length, UNCONFERENCING_ROOM_IDS.length); i++) {
+      for (var i = 0; i < Math.min(sortedDescending.length, UNCONFERENCING_ROOM_IDS.length); i++) {
         newEntries.push({
-          text: `Unconference: ${sortedByUpvotes[i].message} in the ${UNCONFERENCING_ROOM_IDS[i]} room.`,
+          text: `Unconference: ${sortedDescending[i].message} in the ${UNCONFERENCING_ROOM_IDS[i]} room.`,
           roomId: UNCONFERENCING_ROOM_IDS[i]
         })
       }
@@ -62,8 +66,7 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     ''
   )
 
-  // const setAsUnconferencingTopicsButton = props.user.isMod ? (
-  const setAsUnconferencingTopicsButton = true ? (
+  const setAsUnconferencingTopicsButton = props.user.isMod ? (
     <button onClick={setAsUnconferencingTopics}>Mod: Set as unconferencing topics</button>
   ) : (
     ''
