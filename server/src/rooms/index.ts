@@ -92,7 +92,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'hall',
     displayName: 'Central Hall',
     shortName: 'the hall',
-    description: `A magnificently hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmer of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
+    description: `A magnificent hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmer of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
     <br/><br/>
     In the center of the hall you see a circular booth overflowing with bits and bobs, labelled the [[Swag Table->swag]]. Further on, an ornate staircase leads up to the [[Bar->bar]], a carpeted hallway leads up to the [[library]], and blinking lights above a door advertise the [[Theater->theater]] entrance. 
     <br/><br/>
