@@ -93,7 +93,7 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the hall',
     description: `A magnificently hall stretches ahead of you, reminiscent of the grand terminal of a metropolis. Conversations echo on stone hewn walls, surrounding you in a warming background murmer of humanity. The vaulted ceiling feels impossibly high and depicts constellations of ASCII that look random at first but reveal hidden meaning the longer you stare.
     <br/><br/>
-    In the center of the hall you see a circular booth overflowing with bits and bobs, labelled the [[Swag Table->swag]]. Further on, an ornate staircase leads up to the [[Bar->bar]], and blinking lights above a door advertise the [[Theater->theater]] entrance. 
+    In the center of the hall you see a circular booth overflowing with bits and bobs, labelled the [[Swag Table->swag]]. Further on, an ornate staircase leads up to the [[Bar->bar]], a carpeted hallway leads up to the [[library]], and blinking lights above a door advertise the [[Theater->theater]] entrance. 
     <br/><br/>
     To your right, a short hallway leads to the [[unconferencing rooms->unconference]]. To your left, a much longer hallway labelled [[Destinations->destinations]].`,
     hasNoteWall: true,
@@ -160,6 +160,14 @@ const indexRoomData: { [name: string]: Room } = {
     shortName: 'the booth at the back',
     description: `A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>
       From here, you can see tables [[at the railing->railing]] or [[along the bar->stools]], and the [[rest of the bar->bar]]`
+  },
+
+  library: {
+    id: 'library',
+    displayName: 'the Library of Procedural Studies',
+    shortName: 'the library',
+    noMediaChat: false,
+    description: 'A hush falls over you. Every possible space is filled with books and tomes - all the books in the entire space must be loans from here. A large sign over the circulation desk says "NO AUDIO - TEXT ONLY! ~ Management"<br/><br/>From here you can return to the [[hall]].'
   },
 
   /*  Not deleting this yet because I want to figure out what to do with the doorways / color minigame, but it *shouldn't* link anywhere.

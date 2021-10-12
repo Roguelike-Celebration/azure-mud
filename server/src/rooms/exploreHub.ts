@@ -34,7 +34,7 @@ export const transmute = {
   id: 'transmute',
   displayName: 'Office of Transmutations',
   shortName: 'Transmutations',
-  description: 'Most of the workers are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the [[bar]]. There are three areas available though: [[Light->lights]], [[Victual Studies->libations]], and [[Quest->quest]].'
+  description: 'Most of the workers are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the [[bar]]. There are three areas available though: [[Light->lights]], [[Victual Studies->victuals]], and [[Quest->quest]].'
 }
 // Right now I am *fairly* sure this leads into *exactly* the modals of 2020's 'rainbow door' and 'dull door', the text of which is way over in /src/components/feature. TO DO: update that text.
 
@@ -52,8 +52,8 @@ export const lights = {
 
 // the idea here is that giving up food (Munxip's, in the Hub) or drinks (in the bar) will give you partial control of your emoji.
 
-export const libations = {
-  id: 'libations',
+export const victuals = {
+  id: 'victuals',
   displayName: 'Victual Studies',
   shortName: 'victuals',
   description: 'Scientists are examining the properties of food and drinks. If you\'re willing, you can drop some off here to help them, and they\'ll reward you accordingly. Or return to [[the office->transmute]].'

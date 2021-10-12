@@ -7,6 +7,7 @@ export const ASCII = {
   description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here. You can visit the [[Oracle]], the [[Gelatinous Throne->jelly]], or the [[Treasure Vault->vault]]. Or head back to [[Spacehanger->sfHub]].',
   hasNoteWall: true,
   hidden: true,
+  noMediaChat: false,
   noteWallData: {
     roomWallDescription: 'Do you want your possessions identified?',
     noteWallButton: 'y/n/q',
@@ -22,6 +23,7 @@ export const Oracle = {
   displayName: 'Oracle',
   shortName: 'oracle',
   hidden: true,
+  noMediaChat: false,
   description: 'This peaceful space is decorated with burbling fountains, stately marble columns, and finely carved statues of centaurs in various poses. A small temple is the focal point. There is a bowl of fortune cookies labeled [["minor consultations"->getFortune]], or head back to the [[dungeon you came from->ASCII]].'
 }
 
@@ -30,6 +32,7 @@ export const jelly = {
   displayName: 'Gelatinous Throne',
   shortName: 'jelly throne room',
   description: 'Get yourself a slime friend here! Or go [[back->ASCII]].',
+  noMediaChat: false,
   hidden: true
 }
 
@@ -39,5 +42,6 @@ export const vault = {
   displayName: 'Treasure vault',
   shortName: 'the treasure vault',
   hidden: true,
+  noMediaChat: false,
   description: 'On various altars you can see [[a wand of digging->item]], [[a Proof of Stremf->item]], [[a pair of seven league boots->item]], and [[Planepacked->item]], the legendary limestone statue. Or you can go [[back->ASCII]].'
 }
