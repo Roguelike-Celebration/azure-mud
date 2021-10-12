@@ -4,7 +4,7 @@ import MenuButtonView from './MenuButtonView'
 
 import '../../style/nav.css'
 import { IsMobileContext, DispatchContext } from '../App'
-import { HideSideMenuAction, ShowModalAction, ShowModalWithOptionsAction } from '../Actions'
+import { HideSideMenuAction, ShowModalAction } from '../Actions'
 import { Modal } from '../modals'
 import MiniMapView from './MiniMapView'
 
@@ -31,10 +31,6 @@ export default function SideNavView (props: Props) {
     dispatch(ShowModalAction(Modal.HappeningNow))
   }
 
-  const showUnconferencingTopics = () => {
-    dispatch(ShowModalWithOptionsAction(Modal.NoteWall, { noteWallRoomId: 'unconference' }))
-  }
-
   return (
     <nav id="side-menu" role="navigation" aria-label="List of rooms you can navigate to">
       {isMobile ? <button
@@ -45,7 +41,6 @@ export default function SideNavView (props: Props) {
       <MenuButtonView username={props.username} spaceIsClosed={props.spaceIsClosed} />
       <button id='happening-now-button' onClick={showHappeningNow}>Happening Now</button>
       <button id='nav-map-button' onClick={showMap}>Map</button>
-      <button id='nav-map-button' onClick={showUnconferencingTopics}>Unconferencing Topics</button>
       <ul>
         <MenuItem title="Schedule" modal={Modal.Schedule} />
         <MenuItem title="Room List" modal={Modal.RoomList} />

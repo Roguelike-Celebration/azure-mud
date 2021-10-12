@@ -188,9 +188,7 @@ const App = () => {
       break
     }
     case Modal.NoteWall: {
-      const noteWallRoomId = state.activeModalOptions.noteWallRoomId
-      const roomId = noteWallRoomId ? noteWallRoomId : state.roomId
-      const room = state.roomData[roomId]
+      const room = state.roomData[state.roomId]
       innerModalView = (
         <NoteWallView notes={room.notes} noteWallData={room.noteWallData} user={state.profileData} />
       )

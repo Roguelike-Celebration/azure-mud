@@ -535,8 +535,7 @@ async function addMessage (state: State, message: Message) {
 // but seems better than alternatives
 export interface ModalOptions {
     hideVideo?: boolean,
-    showJoinButton?: boolean,
-    noteWallRoomId?: string
+    showJoinButton?: boolean
 }
 
 export interface DominantSpeakerData {
