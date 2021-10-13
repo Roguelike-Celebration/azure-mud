@@ -72,7 +72,7 @@ export const generate = () => {
       'Jokerman',
       'Wingdings',
       'Curlz',
-      '22 Pt. Bold Impact'  
+      '22 Pt. Bold Impact'
     ],
     cramped: [
       'hard to make out',
