@@ -82,7 +82,8 @@ export default function RoomView (props: Props) {
   }
 
   React.useEffect(() => {
-    if (room && !room.noMediaChat) {
+    var textOnlyMode = true
+    if (room && !room.noMediaChat && !textOnlyMode) {
       // HACK ALERT: This call is necessary to properly set the state variables related to leaving video chat, since
       // our Twilio state isn't quite synchronized with our react state. We never publish if we don't want to (due to
       // passing keepCameraWhenMoving into joinCall) so we aren't publishing and unpublishing. We still need to sync.
@@ -110,6 +111,10 @@ export default function RoomView (props: Props) {
         ShowModalWithOptionsAction(Modal.MediaSelector, { hideVideo: true })
       )
     }
+  }
+
+  const toggleTextOnlyMode = () => {
+    console.log('!!!!!!!!!!!!!!!!!!!!!')
   }
 
   const leaveVideoChat = () => {
@@ -181,6 +186,9 @@ export default function RoomView (props: Props) {
         </button>,
         <button key="join-audio" onClick={joinAudioChat} id="join-video-chat">
           Join Audio
+        </button>,
+        <button key="text-only-mode" onClick={toggleTextOnlyMode} id="toggle-text-only-mode">
+          Text Only Mode
         </button>,
         <button
           key="show-media-selector"

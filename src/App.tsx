@@ -314,11 +314,11 @@ const App = () => {
 
   const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
-  // TODO: Inject into TwilioChatContextProvider?
+  // TODO: active=false should be a real value
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <TwilioChatContextProvider>
+        <TwilioChatContextProvider active={false}>
           <IsMobileContext.Provider value={isMobile}>
             <UserMapContext.Provider
               value={{ userMap: state.userMap, myId: state.userId }}

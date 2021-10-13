@@ -28,6 +28,11 @@ a.room-link:visited {
   vertical-align: top;
 }
 
+#toggle-text-only-mode {
+  margin-left: 2em;
+  vertical-align: top;
+}
+
 #iframes {
   border: solid;
   border-color: var(--highlight-line);
