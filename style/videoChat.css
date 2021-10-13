@@ -41,6 +41,12 @@ video.speaking {
   color: var(--pink);
 }
 
+.my-video video {
+  /** Horizontally mirror your own webcam */
+  /** WARNING: If we ever add screen-sharing, we'll need to be subtler */
+  transform: scale(-1, 1);
+}
+
 /** Selector modal */
 
 #media-selector .my-video, #media-selector .selects {
