@@ -12,16 +12,9 @@ input#send-audio {
 #media-view {
   display: flex;
   flex-flow: row wrap;
-  height: 210px;
+  height: 195px;
   overflow: hidden;
-  border-style: solid;
-  border-color: white;
-  border-width: 1px;
 }
-
-#media-view label {
-  display: block;
-} 
 
 .participant-track-square {
   max-height: 195px;
