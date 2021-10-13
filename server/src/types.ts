@@ -33,7 +33,7 @@ export const DEFAULT_SERVER_SETTINGS: ServerSettings = {
 export function toServerSettings (obj: Partial<ServerSettings>): ServerSettings | null {
   try {
     if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined ||
-        (obj.happeningNowEntries && !obj.happeningNowEntries.every((e) => { isHappeningNowEntry(e) }))) {
+        (obj.happeningNowEntries && !obj.happeningNowEntries.every(isHappeningNowEntry))) {
       console.log('Returning null in toServerSettings')
       return null
     } else {
