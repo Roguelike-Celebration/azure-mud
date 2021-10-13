@@ -16,7 +16,7 @@ export const generate = () => {
       'Sorry',
       'Our most humble apologies',
       'Whoopsie',
-      "The needs of the one do not outweigh the needs of the many (That is, we're sorry, and that clerk has been sacked...)",
+      'The needs of the one do not outweigh the needs of the many (That is, we\'re sorry, and that clerk has been sacked...)',
       'In these trying times sometimes errors are made...',
       'We screwed up',
       'Expressing regret',
@@ -30,7 +30,7 @@ export const generate = () => {
       'Oops',
       'We apologize for any inconvenience',
       'To err is human; we are unfortunately human',
-      'In an effort by the universe to keep us humble, it has come to our attention that we have been less than perfect',
+      'In an effort by the universe to keep us humble, it has come to our attention that we have been less than perfect'
     ],
     closedReason: [
       'overrun with #crustaceans#',
@@ -41,8 +41,7 @@ export const generate = () => {
       'we require #n# #runes#',
       'a cat is sitting on me and won\'t leave',
       'extraplanar event in progress',
-      "an entire alphabets worth of both capital and lowercase letters has settled in and declared independence",
-      '
+      'an entire alphabet\'s worth of both capital and lowercase letters has settled in and declared independence',
       'Xom finds this hilarious!',
       'robot can\'t find kitten'
     ],
@@ -53,7 +52,7 @@ export const generate = () => {
       'rabid prawn',
       'angry shrimp',
       'annoyed cocktail shrimp',
-      'a legion of krill, for they are many,
+      'a legion of krill, for they are many',
       'an uncountable sum of barnacles',
       'an assortment of selfish shellfish'
     ],
@@ -68,13 +67,12 @@ export const generate = () => {
     badfontname: [
       'Comic Sans',
       'Papyrus',
-      'Lobster',
       'Times Old Roman',
       'Heckvetica',
       'Jokerman',
       'Wingdings',
       'Curlz',
-      '22 Pt. Bold Impact',      
+      '22 Pt. Bold Impact'      
     ],
     cramped: [
       'hard to make out',
@@ -93,16 +91,19 @@ export const generate = () => {
       'salmon',
       'spikes',
       'totally aribitrary collectable objects (TACOs)',
-      'collectable gundam minitaures',
+      'collectable robots',
       'plump helmets',
       'ornithopters',
       'report cards',
       'common enemy pellets',
-      "cc's of #slimecolor# slime #slimejuice#',
+      'cc\'s of #slimecolor# slime #slimejuice#',
       'bars of #preciouselement#-pressed #cheapmetal#',
       'sharks',
       'excuses',
-      'orbs'
+      'orbs',
+      'JIRA tickets',
+      'lutefisk',
+      'meters of wire'
     ],
     preciouselement: [
       'gold',
@@ -110,7 +111,8 @@ export const generate = () => {
       'platinum',
       'mythril',
       'orchalchium',
-      "'Sunny-D'",
+      'eternium',
+      '\'Sunny-D\'',
     ],
     cheapmetal: [
       'latinum',
@@ -138,10 +140,13 @@ export const generate = () => {
       'metal',
       'orange',
       'yellow',
+      'violet',
+      'hot pink',
       'heliotrope',
-      'irridescent',
+      'iridescent',
       'glow-in-the-dark',
-      'invisible'
+      'invisible',
+      'octarine'
     ],
     slimejuice: [
       'effluvia',
