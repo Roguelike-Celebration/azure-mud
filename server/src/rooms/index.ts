@@ -33,7 +33,7 @@ export interface Room {
 
   description: string
 
-  // If false, webRTC audio/video chat is blocked
+  // If true, webRTC audio/video chat is blocked
   noMediaChat?: boolean
 
   // Indicates whether the room should let users place post-it notes
@@ -166,7 +166,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'library',
     displayName: 'The Library of Procedural Studies',
     shortName: 'the library',
-    noMediaChat: false,
+    noMediaChat: true,
     description: 'A hush falls over you. Every possible space is filled with books and tomes - all the books in the entire space must be loans from here. A large sign over the circulation desk says "NO AUDIO - TEXT ONLY! ~ Management"<br/><br/>From here you can return to the [[hall]].'
   },
 

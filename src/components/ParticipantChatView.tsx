@@ -6,7 +6,6 @@ import React, {
 import { FaCog, FaVolumeUp, FaVolumeMute, FaVideo, FaVideoSlash } from 'react-icons/fa'
 import NameView from './NameView'
 import LocalMediaView from './LocalMediaView'
-import { DominantSpeakerData } from '../reducer'
 
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
@@ -16,11 +15,11 @@ import * as Twilio from 'twilio-video'
 interface Props {
   participant: Twilio.Participant
   isDominant: boolean
+  renderAsFace: boolean
 }
 
 export default function ParticipantChatView (props: Props) {
-  // TODO: Make these do something!
-  const [playVideo, setPlayVideo] = React.useState<boolean>(true)
+  const [playVideo, setPlayVideo] = React.useState<boolean>(props.renderAsFace)
   const [playAudio, setPlayAudio] = React.useState<boolean>(true)
 
   const onChangeVideo = (e) => {
@@ -33,6 +32,21 @@ export default function ParticipantChatView (props: Props) {
 
   const customStyle = {
     border: props.isDominant ? 'solid' : undefined
+  }
+
+  if (!props.renderAsFace) {
+    return (
+      <ParticipantTracks
+        participant={props.participant}
+        displayVideo={false}
+        displayAudio={playAudio}
+      />
+    )
+  }
+
+  const hasAnyTracks = props.participant.audioTracks.size + props.participant.videoTracks.size > 0
+  if (!hasAnyTracks) {
+    return <div key={`stream-wrapper-${props.participant.identity}`} />
   }
 
   return (

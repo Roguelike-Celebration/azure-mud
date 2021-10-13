@@ -14,7 +14,8 @@ import {
   SendMessageAction,
   SpaceIsClosedAction,
   PlayerBannedAction,
-  SetKeepCameraWhenMovingAction
+  SetKeepCameraWhenMovingAction,
+  SetNumberOfFacesAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -49,6 +50,7 @@ import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import { shouldVerifyEmail } from './firebaseUtils'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import _ from 'lodash'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -76,14 +78,26 @@ const App = () => {
         checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
             // Use email if we have it, otherwise use service's default display name (for Twitter, their handle)
-            const defaultDisplayName = user.email ? user.email : user.displayName
-            dispatch(AuthenticateAction(userId, defaultDisplayName, providerId, false))
+            const defaultDisplayName = user.email
+              ? user.email
+              : user.displayName
+            dispatch(
+              AuthenticateAction(userId, defaultDisplayName, providerId, false)
+            )
             return
           }
-          dispatch(AuthenticateAction(userId, registeredUsername, providerId, false))
+          dispatch(
+            AuthenticateAction(userId, registeredUsername, providerId, false)
+          )
 
           if (isBanned) {
-            dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
+            dispatch(
+              PlayerBannedAction({
+                id: userId,
+                username: registeredUsername,
+                isBanned: isBanned
+              })
+            )
             dispatch(IsRegisteredAction())
             return
           }
@@ -92,7 +106,7 @@ const App = () => {
             dispatch(SpaceIsClosedAction())
 
             if (!isMod) {
-            // non-mods shouldn't subscribe to SignalR if the space is closed
+              // non-mods shouldn't subscribe to SignalR if the space is closed
               dispatch(IsRegisteredAction())
               return
             }
@@ -100,7 +114,12 @@ const App = () => {
 
           const messageArchive = await Storage.getMessages()
           if (messageArchive) {
-            dispatch(LoadMessageArchiveAction(messageArchive.messages, messageArchive.whispers))
+            dispatch(
+              LoadMessageArchiveAction(
+                messageArchive.messages,
+                messageArchive.whispers
+              )
+            )
           }
 
           const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
@@ -110,7 +129,25 @@ const App = () => {
           connect(userId, dispatch)
           getServerSettings(dispatch)
 
+          // WARNING: Prior to the "calculate number of faces for videochat" code,
+          // there was a no-op resize handler here.
+          // window.addEventListener('resize', () => {})
+          // I frankly have no idea what this was doing,
+          // and worry my changes will cause unexpected errors
+          // -Em, 10/12/2021
           window.addEventListener('resize', () => {})
+          function onResize () {
+            // It seems like a smell to do this in here and have to grab into #main,
+            // but I think it's fine?
+            const VideoWidth = 180
+            const $main = document.getElementById('main')
+
+            const numberOfFaces = Math.floor($main.clientWidth / VideoWidth)
+            dispatch(SetNumberOfFacesAction(numberOfFaces))
+          }
+
+          onResize()
+          window.addEventListener('resize', _.throttle(onResize, 100, { trailing: true }))
         })
       }
     })
@@ -166,7 +203,9 @@ const App = () => {
   if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
       <MediaChatView
-        dominantSpeakerData={state.dominantSpeakerData}
+        visibleSpeakers={state.visibleSpeakers}
+        currentSpeaker={state.currentSpeaker}
+        numberOfFaces={state.numberOfFaces}
       />
     )
   }
@@ -190,7 +229,7 @@ const App = () => {
     case Modal.NoteWall: {
       const room = state.roomData[state.roomId]
       innerModalView = (
-        <NoteWallView notes={room.notes} noteWallData={room.noteWallData} user={state.profileData} />
+        <NoteWallView notes={room.notes} noteWallData={room.noteWallData} user={state.profileData} serverSettings={state.serverSettings} />
       )
       break
     }

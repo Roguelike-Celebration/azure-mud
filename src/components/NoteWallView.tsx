@@ -1,13 +1,23 @@
 import React from 'react'
 import { RoomNote } from '../../server/src/roomNote'
-import { addNoteToWall, deleteRoomNote } from '../networking'
+import { ServerSettings, toServerSettings } from '../../server/src/types'
+import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networking'
 import { NoteView } from './NoteView'
 
 import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
 
-export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWallData, user: PublicUser}) {
+// TODO: insanely silly to hardcode these here, since they can easily fall out of sync
+// If you're reading this, these are the specific room ids for Roguelike Celebration 2021
+// and you should rip them out, probably?
+const UNCONFERENCING_ROOM_IDS = ['cockatrice', 'dragon', 'naga', 'skeleton', 'tengu', 'yak']
+
+function numLikes (roomNote: RoomNote) {
+  return !roomNote.likes ? 0 : roomNote.likes.length
+}
+
+export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWallData, user: PublicUser, serverSettings: ServerSettings}) {
   const addNote = () => {
     const promptText = props.noteWallData ? props.noteWallData.addNotePrompt : 'What do you type on the note wall?'
     const message = prompt(promptText)
@@ -18,6 +28,23 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     const confirmation = confirm('Are you sure you want to delete all notes?')
     if (confirmation) {
       props.notes.map((note) => deleteRoomNote(note.id))
+    }
+  }
+
+  const setAsUnconferencingTopics = () => {
+    const confirmation = confirm('This will assign the top 6 rooms to the unconferencing rooms, are you sure?')
+    if (confirmation && props.notes.length > 0) {
+      const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
+      const sortedDescending = props.notes.sort((a, b) => numLikes(a) < numLikes(b) ? 1 : -1)
+      const newEntries = []
+      for (var i = 0; i < Math.min(sortedDescending.length, UNCONFERENCING_ROOM_IDS.length); i++) {
+        newEntries.push({
+          text: `Unconference: ${sortedDescending[i].message} in the ${UNCONFERENCING_ROOM_IDS[i]} room.`,
+          roomId: UNCONFERENCING_ROOM_IDS[i]
+        })
+      }
+      settingsCopy.happeningNowEntries = newEntries.concat(settingsCopy.happeningNowEntries)
+      updateServerSettings(settingsCopy)
     }
   }
 
@@ -39,9 +66,16 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     ''
   )
 
+  const setAsUnconferencingTopicsButton = props.user.isMod ? (
+    <button onClick={setAsUnconferencingTopics}>Mod: Set as unconferencing topics</button>
+  ) : (
+    ''
+  )
+
   return (
     <div>
       {massDeleteButton}
+      {setAsUnconferencingTopicsButton}
       <div className='note-wall-description'>
         {description}
         <br/><br/>

@@ -68,7 +68,7 @@ export async function setKeepCameraWhenMoving (keepCameraWhenMoving: boolean) {
 
 export async function getKeepCameraWhenMoving (): Promise<boolean> {
   const keepCameraWhenMoving: boolean = await localforage.getItem(keepCameraWhenMovingKey)
-  return keepCameraWhenMoving === null ? true : keepCameraWhenMoving
+  return keepCameraWhenMoving === null ? false : keepCameraWhenMoving
 }
 
 // Keys
