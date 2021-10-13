@@ -60,6 +60,7 @@ export interface State {
 
   inMediaChat: boolean;
   keepCameraWhenMoving?: boolean;
+  textOnlyMode?: boolean;
 
   /** Tuples of userId and when they were last the visible speaker */
   visibleSpeakers: [string, Date][]
@@ -435,6 +436,15 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.SetKeepCameraWhenMoving) {
     state.keepCameraWhenMoving = action.value
     Storage.setKeepCameraWhenMoving(action.value)
+  }
+
+  if (action.type === ActionType.SetTextOnlyMode) {
+    state.textOnlyMode = action.textOnlyMode
+    if (!action.refresh) {
+      Storage.setTextOnlyMode(action.textOnlyMode)
+    } else {
+      Storage.setTextOnlyMode(action.textOnlyMode).then(() => window.location.reload())
+    }
   }
 
   if (action.type === ActionType.Authenticate) {

@@ -15,6 +15,7 @@ import {
   SpaceIsClosedAction,
   PlayerBannedAction,
   SetKeepCameraWhenMovingAction,
+  SetTextOnlyModeAction,
   SetNumberOfFacesAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
@@ -124,6 +125,8 @@ const App = () => {
 
           const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
           dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
+          const textOnlyMode = await Storage.getTextOnlyMode()
+          dispatch(SetTextOnlyModeAction(textOnlyMode, false))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
@@ -200,7 +203,7 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
+  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat && !state.textOnlyMode) {
     videoChatView = (
       <MediaChatView
         visibleSpeakers={state.visibleSpeakers}
@@ -314,11 +317,11 @@ const App = () => {
 
   const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
-  // TODO: Inject into TwilioChatContextProvider?
+  // TODO: active=false should be a real value
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <TwilioChatContextProvider>
+        <TwilioChatContextProvider active={!state.textOnlyMode}>
           <IsMobileContext.Provider value={isMobile}>
             <UserMapContext.Provider
               value={{ userMap: state.userMap, myId: state.userId }}
@@ -358,6 +361,7 @@ const App = () => {
                       roomData={state.roomData}
                       inMediaChat={state.inMediaChat}
                       keepCameraWhenMoving={state.keepCameraWhenMoving}
+                      textOnlyMode={state.textOnlyMode}
                     />
                   ) : null}
                   <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />

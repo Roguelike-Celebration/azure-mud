@@ -12,6 +12,7 @@ import ParticipantTracks from './twilio/ParticipantTracks'
 import VideoTrack from './twilio/VideoTrack'
 
 export const TwilioChatContextProvider = (props: {
+  active: boolean;
   children: React.ReactNode;
 }) => {
   const dispatch = useContext(DispatchContext)
@@ -148,6 +149,7 @@ export const TwilioChatContextProvider = (props: {
   }
 
   useEffect(() => {
+    if (!props.active) return
     console.log('[TWILIO] In useeffect for camera')
     if (!currentCamera) return
     console.log('[TWILIO] Has camera')
@@ -155,6 +157,7 @@ export const TwilioChatContextProvider = (props: {
   }, [currentCamera])
 
   useEffect(() => {
+    if (!props.active) return
     if (!currentMic) return
     fetchLocalAudioTrack()
 
@@ -166,6 +169,7 @@ export const TwilioChatContextProvider = (props: {
   }, [currentMic])
 
   useEffect(() => {
+    if (!props.active) return
     if (micEnabled) {
       startTranscription()
     } else {
@@ -174,6 +178,7 @@ export const TwilioChatContextProvider = (props: {
   }, [micEnabled])
 
   useEffect(() => {
+    if (!props.active) return
     console.log('[TWILIO] In token roomId useEffect')
     // The initial token might get set after calling joinCall
     // This calls joinCall when we're ready after that initial setup
@@ -227,6 +232,10 @@ export const TwilioChatContextProvider = (props: {
   }
 
   async function joinCall (roomId: string, shouldPublishTracks: boolean) {
+    if (!props.active) {
+      console.warn('joinCall was called while text-only mode was on')
+      return
+    }
     // A useEffect hook will re-call this once the token exists
     if (!token) {
       setRoomId(roomId)
