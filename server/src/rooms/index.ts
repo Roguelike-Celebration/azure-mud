@@ -4,7 +4,7 @@ import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
 import { ASCII, Oracle, jelly, vault } from './oldHub'
-import { exploreHub, transmute, lights, victuals, quest, steam } from './exploreHub'
+import { exploreHub, transmute, dyes, doctorPaint, shower, victuals, quest, steam } from './exploreHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -158,7 +158,9 @@ const indexRoomData: { [name: string]: Room } = {
   vault,
   exploreHub,
   transmute,
-  lights,
+  dyes,
+  doctorPaint,
+  shower,
   victuals,
   quest,
   steam,
