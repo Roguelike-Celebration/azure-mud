@@ -15,6 +15,7 @@ import {
   SpaceIsClosedAction,
   PlayerBannedAction,
   SetKeepCameraWhenMovingAction,
+  SetTextOnlyModeAction,
   SetNumberOfFacesAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
@@ -124,6 +125,8 @@ const App = () => {
 
           const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
           dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
+          const textOnlyMode = await Storage.getTextOnlyMode()
+          dispatch(SetTextOnlyModeAction(textOnlyMode))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
@@ -358,6 +361,7 @@ const App = () => {
                       roomData={state.roomData}
                       inMediaChat={state.inMediaChat}
                       keepCameraWhenMoving={state.keepCameraWhenMoving}
+                      textOnlyMode={state.textOnlyMode}
                     />
                   ) : null}
                   <InputView

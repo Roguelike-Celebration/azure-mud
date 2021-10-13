@@ -10,7 +10,8 @@ import { DispatchContext, UserMapContext } from '../App'
 import {
   StopVideoChatAction,
   ShowModalAction,
-  ShowModalWithOptionsAction
+  ShowModalWithOptionsAction,
+  SetTextOnlyModeAction
 } from '../Actions'
 import { FaCog, FaVideo } from 'react-icons/fa'
 
@@ -32,6 +33,7 @@ interface Props {
   roomData: { [roomId: string]: Room };
   inMediaChat: boolean;
   keepCameraWhenMoving: boolean;
+  textOnlyMode: boolean;
 }
 
 export default function RoomView (props: Props) {
@@ -82,8 +84,7 @@ export default function RoomView (props: Props) {
   }
 
   React.useEffect(() => {
-    var textOnlyMode = true
-    if (room && !room.noMediaChat && !textOnlyMode) {
+    if (room && !room.noMediaChat && !props.textOnlyMode) {
       // HACK ALERT: This call is necessary to properly set the state variables related to leaving video chat, since
       // our Twilio state isn't quite synchronized with our react state. We never publish if we don't want to (due to
       // passing keepCameraWhenMoving into joinCall) so we aren't publishing and unpublishing. We still need to sync.
@@ -114,7 +115,7 @@ export default function RoomView (props: Props) {
   }
 
   const toggleTextOnlyMode = () => {
-    console.log('!!!!!!!!!!!!!!!!!!!!!')
+    dispatch(SetTextOnlyModeAction(!props.textOnlyMode))
   }
 
   const leaveVideoChat = () => {
@@ -188,7 +189,7 @@ export default function RoomView (props: Props) {
           Join Audio
         </button>,
         <button key="text-only-mode" onClick={toggleTextOnlyMode} id="toggle-text-only-mode">
-          Text Only Mode
+          { props.textOnlyMode ? 'Audio/Video Mode' : 'Text Only Mode'}
         </button>,
         <button
           key="show-media-selector"
