@@ -3,7 +3,7 @@ import { isMod, minimizeUser, updateModStatus, User } from '../user'
 import { DB } from '../database'
 
 const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  const userId = inputs.userId
+  const userId: string = inputs.userId
   if (!userId) {
     return {
       httpResponse: {

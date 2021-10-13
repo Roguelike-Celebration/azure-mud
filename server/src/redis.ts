@@ -201,11 +201,11 @@ const Redis: RedisInternal = {
     return await getSet(modListKey) || []
   },
 
-  async setModStatus (user: User, isMod: boolean) {
+  async setModStatus (userId: string, isMod: boolean) {
     if (isMod) {
-      return await Redis.addMod(user.id)
+      return await Redis.addMod(userId)
     } else {
-      return await Redis.removeMod(user.id)
+      return await Redis.removeMod(userId)
     }
   },
 
