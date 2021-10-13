@@ -30,7 +30,7 @@ export const generate = () => {
     ],
     aTasty: [
       'a #tasty#',
-      'an #incredible#
+      'an #incredible#'
     ],
     tasty: [ // consonant-tasty
       'tasty',
