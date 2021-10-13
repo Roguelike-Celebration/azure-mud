@@ -660,16 +660,16 @@ export const SetKeepCameraWhenMovingAction = (
 
 interface SetTextOnlyModeAction {
   type: ActionType.SetTextOnlyMode;
-  value: boolean;
+  textOnlyMode: boolean;
+  refresh: boolean;
 }
 
 export const SetTextOnlyModeAction = (
-  textOnlyMode: boolean
+  textOnlyMode: boolean,
+  refresh: boolean
 ): SetTextOnlyModeAction => {
-  return { type: ActionType.SetTextOnlyMode, value: textOnlyMode }
+  return { type: ActionType.SetTextOnlyMode, textOnlyMode: textOnlyMode, refresh: refresh }
 }
-
-
 
 interface SetNumberOfFacesAction {
   type: ActionType.SetNumberOfFaces;

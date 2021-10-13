@@ -126,7 +126,7 @@ const App = () => {
           const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
           dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
           const textOnlyMode = await Storage.getTextOnlyMode()
-          dispatch(SetTextOnlyModeAction(textOnlyMode))
+          dispatch(SetTextOnlyModeAction(textOnlyMode, false))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
@@ -203,7 +203,7 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
+  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat && !state.textOnlyMode) {
     videoChatView = (
       <MediaChatView
         visibleSpeakers={state.visibleSpeakers}
@@ -321,7 +321,7 @@ const App = () => {
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <TwilioChatContextProvider active={false}>
+        <TwilioChatContextProvider active={!state.textOnlyMode}>
           <IsMobileContext.Provider value={isMobile}>
             <UserMapContext.Provider
               value={{ userMap: state.userMap, myId: state.userId }}

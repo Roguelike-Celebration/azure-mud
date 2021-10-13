@@ -439,8 +439,12 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.SetTextOnlyMode) {
-    state.textOnlyMode = action.value
-    Storage.setTextOnlyMode(action.value)
+    state.textOnlyMode = action.textOnlyMode
+    if (!action.refresh) {
+      Storage.setTextOnlyMode(action.textOnlyMode)
+    } else {
+      Storage.setTextOnlyMode(action.textOnlyMode).then(() => window.location.reload())
+    }
   }
 
   if (action.type === ActionType.Authenticate) {
