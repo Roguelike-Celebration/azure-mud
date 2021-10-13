@@ -210,7 +210,7 @@ export const generate = () => {
       'vile',
       'horribly #awful#'
     ],
-    awful: [ //vowel-gross
+    awful: [ // vowel-gross
       'abominable',
       'awful',
       'egregious',
@@ -219,9 +219,9 @@ export const generate = () => {
       'unwashed',
       'unpleasant'
     ],
-    badFlavor: [ // I alphabetized this one specifically to add more stuff.  But maybe lint everything later? - bengrue 
+    badFlavor: [ // I alphabetized this one specifically to add more stuff.  But maybe lint everything later? - bengrue
       'a Bauhaus design',
-      'a cash grab',   
+      'a cash grab',
       'an unwashed, rusted 1983 Dodge Omni',
       'Axe Body Spray(tm) of indeterminate flavor',
       'beige',
@@ -230,7 +230,7 @@ export const generate = () => {
       'brutalism',
       'capitalism',
       'cheap catfood (not even the good stuff)',
-      'dadaism', //ha, I was going to add this -bengrue
+      'dadaism', // ha, I was going to add this -bengrue
       'deadlines',
       'Dijkstra maps',
       'discourse',
@@ -250,7 +250,7 @@ export const generate = () => {
       'natto',
       'neo-modernism',
       'No-More-Tears baby shampoo',
-      'octarine', //nice -bengrue
+      'octarine', // nice -bengrue
       'orange',
       'plaid',
       'prequel films',
@@ -279,7 +279,7 @@ export const generate = () => {
       'unnecessary sequels',
       'violet',
       'wave function collapse',
-      'yellow',
+      'yellow'
     ],
     weirdly: [
       '',
@@ -294,7 +294,7 @@ export const generate = () => {
       'Don\'t tell a soul you found a secret door, otherwise it isn\'t a secret anymore.',
       'If you thought the Wizard was bad, just wait till you meet the Warlord!',
       'If you thought the Warlord was bad, just wait till you meet the Warlady!',
-      'Never play leapfrog with a unicorn.', //wow, kudos to whomever wrote this. -BenGrue // it's an original Nethack rumors.fal! -kawa
+      'Never play leapfrog with a unicorn.', // wow, kudos to whomever wrote this. -BenGrue // it's an original Nethack rumors.fal! -kawa
       'Never trust a random generator in magic fields.',
       'Never trust a random generator when DEATH is on the line!',
       'Ouch. I hate when that happens.',
@@ -333,7 +333,7 @@ export const generate = () => {
       'PLUGH',
       'F\'tagn',
       'Avada-Kedavra',
-      'UMACTUALLY',
+      'UMACTUALLY'
     ],
     game: [
       'Hearts',
@@ -383,7 +383,7 @@ export const generate = () => {
       'Darts',
       'Capitalism',
       'Genshin Impact',
-      'Chex Quest', //https://en.wikipedia.org/wiki/Chex_Quest
+      'Chex Quest', // https://en.wikipedia.org/wiki/Chex_Quest
       'Kittens Game',
       'Solitaire'
     ],
@@ -391,7 +391,7 @@ export const generate = () => {
       'what goes up < might come down >',
       'the world was gonna roll me',
       'you\'re not the sharpest tool in the shed',
-      'you were looking kinda dumb with your finger and your thumb in the shape of an "L" on your forehead. Stop doing that.',
+      'you were looking kinda dumb with your finger and your thumb in the shape of an "L" on your forehead. Stop doing that.'
     ]
   })
 
