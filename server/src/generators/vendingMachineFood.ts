@@ -46,7 +46,7 @@ export const generate = () => {
       'spätzle',
       'Slim Jim(tm)',
       'generic dehydrated meat tube',
-      'bowl of froot loops',
+      'bowl of #cereal#',
       'meal ration',
       'apple',
       'orange',
@@ -92,7 +92,8 @@ export const generate = () => {
       'brown',
       'heliotrope',
       'iridescent',
-      'eldritch'
+      'eldritch',
+      'octarine'
     ],
     postAdjective: [
       ', still in the wrapper',
@@ -102,6 +103,16 @@ export const generate = () => {
       ', still frozen',
       ', with a sauce packet attached',
       ', with an @ on the packaging'
+    ],
+    cereal: [
+      'froot loops',
+      'golden Os',
+      'cinnamon squares',
+      'rice crispies',
+      'fruit pebbles',
+      'Monster Mash',
+      'honey crisp',
+      'Choco Chow'
     ]
   })
 
