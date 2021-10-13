@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import * as Twilio from 'twilio-video'
-import { MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
+import { HideModalAction, MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
 
 import { DispatchContext } from '../App'
 
@@ -228,6 +228,8 @@ export const TwilioChatContextProvider = (props: {
         })
     } catch (e) {
       console.log('[TWILIO] Error fetching media devices', e)
+      alert("We couldn't fetch your audio and video devices. This usually means another application is using your primary webcam or mic. Close anything that might be accessing them and try again. If that fails, confirm you haven't denied webcam/mic permission to this website in your browser.")
+      dispatch(HideModalAction())
     }
   }
 
