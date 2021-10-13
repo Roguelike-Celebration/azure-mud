@@ -12,7 +12,7 @@ import { User } from '../../server/src/user'
 import '../../style/nameView.css'
 import { fetchProfile } from '../networking'
 
-export default function NameView (props: { userId: string; id?: string }) {
+export default function NameView (props: { userId: string; id?: string; nowrap?: boolean }) {
   const dispatch = useContext(DispatchContext)
   const { userMap, myId } = useContext(UserMapContext)
 
@@ -83,8 +83,13 @@ export default function NameView (props: { userId: string; id?: string }) {
   if (user && user.nameColor) {
     className = className + ' ' + user.nameColor
   }
+  // TODO: should be best handled via css
+  const customStyle = {}
+  if (props.nowrap) {
+    customStyle['whiteSpace'] = 'nowrap'
+  }
   return (
-    <span className={className} data-tip={user && user.pronouns}>
+    <span className={className} data-tip={user && user.pronouns} style={customStyle} >
       <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
         <strong className={isMod ? 'mod' : ''}>
           {isMod ? '[Mod] ' : ''}
