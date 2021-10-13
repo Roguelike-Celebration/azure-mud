@@ -34,7 +34,7 @@ export function toServerSettings (obj: Partial<ServerSettings>): ServerSettings 
   try {
     if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined ||
         (obj.happeningNowEntries && !obj.happeningNowEntries.every((e) => { isHappeningNowEntry(e) }))) {
-          console.log("Returning null in toServerSettings")
+      console.log('Returning null in toServerSettings')
       return null
     } else {
       return {
@@ -45,7 +45,7 @@ export function toServerSettings (obj: Partial<ServerSettings>): ServerSettings 
       }
     }
   } catch (e) {
-    console.log("Error in toServerSettings", e)
+    console.log('Error in toServerSettings', e)
     return null
   }
 }
