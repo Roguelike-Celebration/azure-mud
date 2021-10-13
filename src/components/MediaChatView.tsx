@@ -15,6 +15,8 @@ interface MediaProps {
 export default function MediaChatView (props: MediaProps) {
   const { publishingCamera, callParticipants } = useMediaChatContext()
 
+  // TODO: The show/hide video bar is implemented without changing what's rendered - all it does right now is sets the
+  // size of the container to height=0. Ideally we'd actually not render the video tracks as video.
   const [showVideoBar, setShowVideoBar] = useState(true)
 
   const toggleVideoBar = () => {
@@ -83,7 +85,7 @@ export default function MediaChatView (props: MediaProps) {
         {showVideoBar ? audioParticipants.length : 'all'} offscreen).{' '}
       </label>
       <button id={'button-toggle-video-bar'} onClick={() => toggleVideoBar()} className='link-styled-button'>
-          {showVideoBar ? 'Hide Video Bar' : 'Show Video Bar'}
+        {showVideoBar ? 'Hide Video Bar' : 'Show Video Bar'}
       </button>
       <div id="media-view" style={customStyle}>
         {playerVideo} {videoParticipants} {audioParticipants}
