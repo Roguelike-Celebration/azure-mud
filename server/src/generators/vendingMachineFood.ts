@@ -28,6 +28,25 @@ export const generate = () => {
     ],
     food: [
       'slime mold',
+      'pudding',
+      'snak pak',
+      'taco',
+      'piece of lutefisk',
+      'single #mnmcolors# m & m(tm)',
+      'chipotle salad bowl',
+      'off-brand hard seltzer',
+      'turkish delight',
+      'bunch of snozzberries',
+      "six-pack of 'mystery' nuggets",
+      'natto',
+      'pickles',
+      'kimchi',
+      'scrapple',
+      'spiedie',
+      'spätzle',
+      'Slim Jim(tm)',
+      'generic dehydrated meat tube',
+      'bowl of #cereal#',
       'meal ration',
       'apple',
       'orange',
@@ -52,6 +71,30 @@ export const generate = () => {
       'pancake',
       'pomegranate'
     ],
+    mnmcolors: [
+      'red',
+      'red',
+      'red',
+      'green',
+      'green',
+      'green',
+      'orange',
+      'orange',
+      'orange',
+      'yellow',
+      'yellow',
+      'yellow',
+      'blue',
+      'blue',
+      'blue',
+      'brown',
+      'brown',
+      'brown',
+      'heliotrope',
+      'iridescent',
+      'eldritch',
+      'octarine'
+    ],
     postAdjective: [
       ', still in the wrapper',
       ' with a bite taken out of it',
@@ -60,6 +103,16 @@ export const generate = () => {
       ', still frozen',
       ', with a sauce packet attached',
       ', with an @ on the packaging'
+    ],
+    cereal: [
+      'froot loops',
+      'golden Os',
+      'cinnamon squares',
+      'rice crispies',
+      'fruit pebbles',
+      'Monster Mash',
+      'honey crisp',
+      'Choco Chow'
     ]
   })
 
