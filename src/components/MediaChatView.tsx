@@ -70,13 +70,13 @@ export default function MediaChatView (props: MediaProps) {
     <div id="media-wrapper">
       <label>
         {participants ? participants.length : 0} other chatters (
-        {audioParticipants.length} offscreen).{" "}
+        {audioParticipants.length} offscreen).{' '}
       </label>
       <div id="media-view">
         {playerVideo} {videoParticipants} {audioParticipants}
       </div>
     </div>
-  );
+  )
 }
 
 // via https://github.com/facebook/react/issues/11163

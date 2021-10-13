@@ -97,7 +97,7 @@ export const TwilioChatContextProvider = (props: {
     publishVideo()
   }
 
-  const publishAudio = async() => {
+  const publishAudio = async () => {
     if (room) {
       dispatch(StartVideoChatAction())
       setPublishingMic(true)
