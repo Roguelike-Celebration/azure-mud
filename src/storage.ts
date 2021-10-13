@@ -68,7 +68,16 @@ export async function setKeepCameraWhenMoving (keepCameraWhenMoving: boolean) {
 
 export async function getKeepCameraWhenMoving (): Promise<boolean> {
   const keepCameraWhenMoving: boolean = await localforage.getItem(keepCameraWhenMovingKey)
-  return keepCameraWhenMoving === null ? true : keepCameraWhenMoving
+  return keepCameraWhenMoving === null ? false : keepCameraWhenMoving
+}
+
+export async function setTextOnlyMode (textOnlyMode: boolean) {
+  await localforage.setItem(textOnlyModeKey, textOnlyMode)
+}
+
+export async function getTextOnlyMode (): Promise<boolean> {
+  const textOnlyMode: boolean = await localforage.getItem(textOnlyModeKey)
+  return textOnlyMode == null ? false : textOnlyMode
 }
 
 // Keys
@@ -80,3 +89,4 @@ const rainbowGateKey = 'FeatureRainbowGateVisited'
 const wasColoredEnteringKey = 'WasColoredEntering'
 const themeKey = 'UserSelectedTheme'
 const keepCameraWhenMovingKey = 'KeepCameraWhenMoving'
+const textOnlyModeKey = 'TextOnlyMode'

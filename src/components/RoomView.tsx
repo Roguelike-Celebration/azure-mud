@@ -10,7 +10,8 @@ import { DispatchContext, UserMapContext } from '../App'
 import {
   StopVideoChatAction,
   ShowModalAction,
-  ShowModalWithOptionsAction
+  ShowModalWithOptionsAction,
+  SetTextOnlyModeAction
 } from '../Actions'
 import { FaCog, FaVideo } from 'react-icons/fa'
 
@@ -32,6 +33,7 @@ interface Props {
   roomData: { [roomId: string]: Room };
   inMediaChat: boolean;
   keepCameraWhenMoving: boolean;
+  textOnlyMode: boolean;
 }
 
 export default function RoomView (props: Props) {
@@ -82,7 +84,7 @@ export default function RoomView (props: Props) {
   }
 
   React.useEffect(() => {
-    if (room && !room.noMediaChat) {
+    if (room && !room.noMediaChat && !props.textOnlyMode) {
       // HACK ALERT: This call is necessary to properly set the state variables related to leaving video chat, since
       // our Twilio state isn't quite synchronized with our react state. We never publish if we don't want to (due to
       // passing keepCameraWhenMoving into joinCall) so we aren't publishing and unpublishing. We still need to sync.
@@ -109,6 +111,26 @@ export default function RoomView (props: Props) {
       dispatch(
         ShowModalWithOptionsAction(Modal.MediaSelector, { hideVideo: true })
       )
+    }
+  }
+
+  const enableTextOnlyMode = () => {
+    const prompt = confirm('Entering text-only mode will disable all audio/video aspects of this space other than the ' +
+      'stream in the theater. You will no longer be able to see or hear other participants, but you can still ' +
+      'interact via text chat. Switching modes will refresh your page - please be patient while it reloads.'
+    )
+    if (prompt) {
+      dispatch(SetTextOnlyModeAction(true, true))
+    }
+  }
+
+  const disableTextOnlyMode = () => {
+    const prompt = confirm('Entering video/audio mode means that you will be able to see and hear video and audio from ' +
+      'other participants. Your camera and microphone will default to off when you switch modes. Switching modes will ' +
+      'refresh your page - please be patient while it reloads.'
+    )
+    if (prompt) {
+      dispatch(SetTextOnlyModeAction(false, true))
     }
   }
 
@@ -174,6 +196,12 @@ export default function RoomView (props: Props) {
           </button>
         </>
       )
+    } else if (props.textOnlyMode) {
+      chatButtons = [
+        <button key="text-only-mode" onClick={disableTextOnlyMode} id="toggle-text-only-mode">
+          Enable Audio/Video Mode
+        </button>
+      ]
     } else {
       chatButtons = [
         <button key="join-video" onClick={joinVideoChat} id="join-video-chat">
@@ -181,6 +209,9 @@ export default function RoomView (props: Props) {
         </button>,
         <button key="join-audio" onClick={joinAudioChat} id="join-video-chat">
           Join Audio
+        </button>,
+        <button key="text-only-mode" onClick={enableTextOnlyMode} id="toggle-text-only-mode">
+          Enable Text Only Mode
         </button>,
         <button
           key="show-media-selector"

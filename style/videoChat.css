@@ -12,11 +12,8 @@ input#send-audio {
 #media-view {
   display: flex;
   flex-flow: row wrap;
-  max-height: 195px;
+  height: 195px;
   overflow: hidden;
-  border-style: solid;
-  border-color: white;
-  border-width: 1px;
 }
 
 .participant-track-square {
@@ -36,12 +33,28 @@ video.speaking {
   padding: 10px;
 }
 
+#media-view .other-participant .video-button {
+  color:var(--main-font);
+  padding: 10px;
+  float: right;
+}
+
 #media-view .video-button.enabled {
   color: var(--green);
 }
 
+#media-view .other-participant .video-button.enabled {
+  color: var(--main-font);
+}
+
 #media-view .video-button.disabled {
   color: var(--pink);
+}
+
+.my-video video {
+  /** Horizontally mirror your own webcam */
+  /** WARNING: If we ever add screen-sharing, we'll need to be subtler */
+  transform: scale(-1, 1);
 }
 
 /** Selector modal */

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import * as Twilio from 'twilio-video'
-import { MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
+import { HideModalAction, MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
 
 import { DispatchContext } from '../App'
 
@@ -12,6 +12,7 @@ import ParticipantTracks from './twilio/ParticipantTracks'
 import VideoTrack from './twilio/VideoTrack'
 
 export const TwilioChatContextProvider = (props: {
+  active: boolean;
   children: React.ReactNode;
 }) => {
   const dispatch = useContext(DispatchContext)
@@ -97,13 +98,13 @@ export const TwilioChatContextProvider = (props: {
     publishVideo()
   }
 
-  const publishAudio = () => {
+  const publishAudio = async () => {
     if (room) {
       dispatch(StartVideoChatAction())
       setPublishingMic(true)
       if (localAudioTrack) {
         room.localParticipant.publishTrack(localAudioTrack)
-        localAudioTrack.restart()
+        await localAudioTrack.restart()
         startTranscription()
       }
     }
@@ -148,6 +149,7 @@ export const TwilioChatContextProvider = (props: {
   }
 
   useEffect(() => {
+    if (!props.active) return
     console.log('[TWILIO] In useeffect for camera')
     if (!currentCamera) return
     console.log('[TWILIO] Has camera')
@@ -155,6 +157,7 @@ export const TwilioChatContextProvider = (props: {
   }, [currentCamera])
 
   useEffect(() => {
+    if (!props.active) return
     if (!currentMic) return
     fetchLocalAudioTrack()
 
@@ -166,6 +169,7 @@ export const TwilioChatContextProvider = (props: {
   }, [currentMic])
 
   useEffect(() => {
+    if (!props.active) return
     if (micEnabled) {
       startTranscription()
     } else {
@@ -174,6 +178,7 @@ export const TwilioChatContextProvider = (props: {
   }, [micEnabled])
 
   useEffect(() => {
+    if (!props.active) return
     console.log('[TWILIO] In token roomId useEffect')
     // The initial token might get set after calling joinCall
     // This calls joinCall when we're ready after that initial setup
@@ -223,10 +228,16 @@ export const TwilioChatContextProvider = (props: {
         })
     } catch (e) {
       console.log('[TWILIO] Error fetching media devices', e)
+      alert("We couldn't fetch your audio and video devices. This usually means another application is using your primary webcam or mic. Close anything that might be accessing them and try again. If that fails, confirm you haven't denied webcam/mic permission to this website in your browser.")
+      dispatch(HideModalAction())
     }
   }
 
   async function joinCall (roomId: string, shouldPublishTracks: boolean) {
+    if (!props.active) {
+      console.warn('joinCall was called while text-only mode was on')
+      return
+    }
     // A useEffect hook will re-call this once the token exists
     if (!token) {
       setRoomId(roomId)

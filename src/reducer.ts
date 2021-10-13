@@ -59,8 +59,15 @@ export interface State {
   prepopulatedInput?: string;
 
   inMediaChat: boolean;
-  dominantSpeakerData?: DominantSpeakerData;
   keepCameraWhenMoving?: boolean;
+  textOnlyMode?: boolean;
+
+  /** Tuples of userId and when they were last the visible speaker */
+  visibleSpeakers: [string, Date][]
+  currentSpeaker?: string
+
+  // How many people (other than you) to show in media chat
+  numberOfFaces: number
 
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
@@ -90,15 +97,16 @@ export const defaultState: State = {
   hasRegistered: false,
   messages: [],
   whispers: [],
+  visibleSpeakers: [],
   autoscrollChat: true,
   userMap: {},
   roomData: {},
   inMediaChat: false,
-  dominantSpeakerData: { dominantSpeakerId: null },
   activeModal: Modal.None,
   activeModalOptions: {},
   isBanned: false,
-  serverSettings: DEFAULT_SERVER_SETTINGS
+  serverSettings: DEFAULT_SERVER_SETTINGS,
+  numberOfFaces: 5
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -293,9 +301,30 @@ export default (oldState: State, action: Action): State => {
     addMessage(state, createErrorMessage(action.value))
   }
 
-  // see audioAnalysis.ts for context
   if (action.type === ActionType.MediaReceivedSpeakingData) {
-    state.dominantSpeakerData.dominantSpeakerId = action.value
+    state.currentSpeaker = action.value
+    if (action.value !== null && action.value !== state.userId) {
+      if (!state.visibleSpeakers.find(([userId, _]) => userId === action.value)) {
+        if (state.visibleSpeakers.length < state.numberOfFaces) {
+          state.visibleSpeakers.push([action.value, new Date()])
+        } else {
+          // Find the oldest speaker and replace them
+          let oldestIndex = -1
+          let oldestTime = new Date()
+          for (let i = 0; i < state.visibleSpeakers.length; i++) {
+            if (state.visibleSpeakers[i][1] < oldestTime) {
+              oldestTime = state.visibleSpeakers[i][1]
+              oldestIndex = i
+            }
+          }
+          state.visibleSpeakers[oldestIndex] = [action.value, new Date()]
+        }
+      }
+    }
+  }
+
+  if (action.type === ActionType.SetNumberOfFaces) {
+    state.numberOfFaces = action.value
   }
 
   if (action.type === ActionType.StartVideoChat) {
@@ -407,6 +436,15 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.SetKeepCameraWhenMoving) {
     state.keepCameraWhenMoving = action.value
     Storage.setKeepCameraWhenMoving(action.value)
+  }
+
+  if (action.type === ActionType.SetTextOnlyMode) {
+    state.textOnlyMode = action.textOnlyMode
+    if (!action.refresh) {
+      Storage.setTextOnlyMode(action.textOnlyMode)
+    } else {
+      Storage.setTextOnlyMode(action.textOnlyMode).then(() => window.location.reload())
+    }
   }
 
   if (action.type === ActionType.Authenticate) {
@@ -536,8 +574,4 @@ async function addMessage (state: State, message: Message) {
 export interface ModalOptions {
     hideVideo?: boolean,
     showJoinButton?: boolean
-}
-
-export interface DominantSpeakerData {
-  dominantSpeakerId: string;
 }

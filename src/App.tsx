@@ -14,7 +14,9 @@ import {
   SendMessageAction,
   SpaceIsClosedAction,
   PlayerBannedAction,
-  SetKeepCameraWhenMovingAction
+  SetKeepCameraWhenMovingAction,
+  SetTextOnlyModeAction,
+  SetNumberOfFacesAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -49,6 +51,7 @@ import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import { shouldVerifyEmail } from './firebaseUtils'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import _ from 'lodash'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -76,14 +79,26 @@ const App = () => {
         checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
             // Use email if we have it, otherwise use service's default display name (for Twitter, their handle)
-            const defaultDisplayName = user.email ? user.email : user.displayName
-            dispatch(AuthenticateAction(userId, defaultDisplayName, providerId, false))
+            const defaultDisplayName = user.email
+              ? user.email
+              : user.displayName
+            dispatch(
+              AuthenticateAction(userId, defaultDisplayName, providerId, false)
+            )
             return
           }
-          dispatch(AuthenticateAction(userId, registeredUsername, providerId, false))
+          dispatch(
+            AuthenticateAction(userId, registeredUsername, providerId, false)
+          )
 
           if (isBanned) {
-            dispatch(PlayerBannedAction({ id: userId, username: registeredUsername, isBanned: isBanned }))
+            dispatch(
+              PlayerBannedAction({
+                id: userId,
+                username: registeredUsername,
+                isBanned: isBanned
+              })
+            )
             dispatch(IsRegisteredAction())
             return
           }
@@ -92,7 +107,7 @@ const App = () => {
             dispatch(SpaceIsClosedAction())
 
             if (!isMod) {
-            // non-mods shouldn't subscribe to SignalR if the space is closed
+              // non-mods shouldn't subscribe to SignalR if the space is closed
               dispatch(IsRegisteredAction())
               return
             }
@@ -100,17 +115,42 @@ const App = () => {
 
           const messageArchive = await Storage.getMessages()
           if (messageArchive) {
-            dispatch(LoadMessageArchiveAction(messageArchive.messages, messageArchive.whispers))
+            dispatch(
+              LoadMessageArchiveAction(
+                messageArchive.messages,
+                messageArchive.whispers
+              )
+            )
           }
 
           const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
           dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
+          const textOnlyMode = await Storage.getTextOnlyMode()
+          dispatch(SetTextOnlyModeAction(textOnlyMode, false))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
           getServerSettings(dispatch)
 
+          // WARNING: Prior to the "calculate number of faces for videochat" code,
+          // there was a no-op resize handler here.
+          // window.addEventListener('resize', () => {})
+          // I frankly have no idea what this was doing,
+          // and worry my changes will cause unexpected errors
+          // -Em, 10/12/2021
           window.addEventListener('resize', () => {})
+          function onResize () {
+            // It seems like a smell to do this in here and have to grab into #main,
+            // but I think it's fine?
+            const VideoWidth = 180
+            const $main = document.getElementById('main')
+
+            const numberOfFaces = Math.floor($main.clientWidth / VideoWidth)
+            dispatch(SetNumberOfFacesAction(numberOfFaces))
+          }
+
+          onResize()
+          window.addEventListener('resize', _.throttle(onResize, 100, { trailing: true }))
         })
       }
     })
@@ -163,10 +203,12 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
+  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat && !state.textOnlyMode) {
     videoChatView = (
       <MediaChatView
-        dominantSpeakerData={state.dominantSpeakerData}
+        visibleSpeakers={state.visibleSpeakers}
+        currentSpeaker={state.currentSpeaker}
+        numberOfFaces={state.numberOfFaces}
       />
     )
   }
@@ -190,7 +232,7 @@ const App = () => {
     case Modal.NoteWall: {
       const room = state.roomData[state.roomId]
       innerModalView = (
-        <NoteWallView notes={room.notes} noteWallData={room.noteWallData} user={state.profileData} />
+        <NoteWallView notes={room.notes} noteWallData={room.noteWallData} user={state.profileData} serverSettings={state.serverSettings} />
       )
       break
     }
@@ -275,11 +317,11 @@ const App = () => {
 
   const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
-  // TODO: Inject into TwilioChatContextProvider?
+  // TODO: active=false should be a real value
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <TwilioChatContextProvider>
+        <TwilioChatContextProvider active={!state.textOnlyMode}>
           <IsMobileContext.Provider value={isMobile}>
             <UserMapContext.Provider
               value={{ userMap: state.userMap, myId: state.userId }}
@@ -319,15 +361,16 @@ const App = () => {
                       roomData={state.roomData}
                       inMediaChat={state.inMediaChat}
                       keepCameraWhenMoving={state.keepCameraWhenMoving}
+                      textOnlyMode={state.textOnlyMode}
                     />
                   ) : null}
+                  <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
                   <InputView
                     prepopulated={state.prepopulatedInput}
                     sendMessage={(message) =>
                       dispatch(SendMessageAction(message))
                     }
                   />
-                  <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
                 </div>
                 {profile}
               </div>
