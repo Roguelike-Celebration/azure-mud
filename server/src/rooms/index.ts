@@ -134,7 +134,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Booth at the Back',
     shortName: 'the booth at the back',
     description: `A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>
-      From here, you can see tables [[at the railing->railing]] or [[along the bar->stools]], and the [[rest of the bar->bar]]`
+      From here, you can see tables [[at the railing->railing]] or [[along the bar->stools]], and the [[rest of the bar->bar]].`
   },
   theater,
   warrior,
