@@ -13,6 +13,7 @@ export interface Room {
   noteWallData: Server.NoteWallData
   notes?: RoomNote[]
   specialFeatures?: Server.SpecialFeature[]
+  riddles?: string[]
 }
 
 export function convertServerRoomData (roomData: {
@@ -31,7 +32,8 @@ export function convertServerRoomData (roomData: {
       hasNoteWall: room.hasNoteWall,
       noteWallData: room.noteWallData,
       hidden: room.hidden,
-      specialFeatures: room.specialFeatures
+      specialFeatures: room.specialFeatures,
+      riddles: room.riddles
     }
   })
 

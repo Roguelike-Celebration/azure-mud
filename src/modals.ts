@@ -16,5 +16,6 @@ export enum Modal {
     ServerSettings,
     ClientDeployed,
     FeatureFullRoomIndex,
-    HappeningNow
+    HappeningNow,
+    Riddles
 }
