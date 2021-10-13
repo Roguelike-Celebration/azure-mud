@@ -1,7 +1,7 @@
 var tracery = require('tracery-grammar')
 
 export const actionString = (poster: string) => {
-  return `You look more closely at one of the many posters - ${poster}.`
+  return `You look more closely at one of the many posters - ${poster}`
 }
 
 export const generate = () => {
@@ -26,12 +26,12 @@ export const generate = () => {
       'A #friendly#',
       'An #appealing#'
     ],
-    friendly: [
+    friendly: [ // consonant-friendly
       'friendly',
       'delightful',
       'boisterous'
     ],
-    appealing: [
+    appealing: [ // vowel-friendly
       'appealing',
       'excited',
       'oddly attractive'
