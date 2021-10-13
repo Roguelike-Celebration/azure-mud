@@ -67,12 +67,14 @@ export default function MediaChatView (props: MediaProps) {
     })
 
   return (
-    <div id="media-view">
+    <div id="media-wrapper">
       <label>
         {participants ? participants.length : 0} other chatters (
         {audioParticipants.length} offscreen).{' '}
       </label>
-      {playerVideo} {videoParticipants} {audioParticipants}
+      <div id="media-view">
+        {playerVideo} {videoParticipants} {audioParticipants}
+      </div>
     </div>
   )
 }

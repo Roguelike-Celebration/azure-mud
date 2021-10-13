@@ -97,13 +97,13 @@ export const TwilioChatContextProvider = (props: {
     publishVideo()
   }
 
-  const publishAudio = () => {
+  const publishAudio = async () => {
     if (room) {
       dispatch(StartVideoChatAction())
       setPublishingMic(true)
       if (localAudioTrack) {
         room.localParticipant.publishTrack(localAudioTrack)
-        localAudioTrack.restart()
+        await localAudioTrack.restart()
         startTranscription()
       }
     }
