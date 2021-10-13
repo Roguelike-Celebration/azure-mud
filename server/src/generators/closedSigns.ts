@@ -72,13 +72,13 @@ export const generate = () => {
       'Jokerman',
       'Wingdings',
       'Curlz',
-      '22 Pt. Bold Impact'      
+      '22 Pt. Bold Impact'  
     ],
     cramped: [
       'hard to make out',
       'barely legible',
       'covered in suspicious brown splotches',
-      'nearly illegible', 
+      'nearly illegible',
       'in an obscure dialect you happen to know a little',
       'full of legalese',
       'scribbled over in crayon',
@@ -112,14 +112,14 @@ export const generate = () => {
       'mythril',
       'orchalchium',
       'eternium',
-      '\'Sunny-D\'',
+      '\'Sunny-D\''
     ],
     cheapmetal: [
       'latinum',
       'lithium',
       'magnesium',
       'beryllium',
-      'potassium', 
+      'potassium',
       'calcium',
       'aluminum',
       'aluminium',
@@ -131,7 +131,7 @@ export const generate = () => {
       'zinc',
       'selenium',
       'rubidium'
-    ],   
+    ],
     slimecolor: [
       'red',
       'green',
