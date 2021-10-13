@@ -5,6 +5,7 @@ import { RoomNote } from './roomNote'
 import { roomData } from './rooms'
 import Database from './database'
 import redis = require('redis')
+import { getServerSettings } from './endpoints/serverSettings'
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -227,7 +228,8 @@ const Redis: RedisInternal = {
   },
 
   async setServerSettings (serverSettings: ServerSettings): Promise<ServerSettings> {
-    await setCache(serverSettingsKey, JSON.stringify(serverSettings))
+    const oldServerSettings = await Redis.getServerSettings()
+    await setCache(serverSettingsKey, JSON.stringify({...oldServerSettings, ...serverSettings}))
 
     return serverSettings
   },
