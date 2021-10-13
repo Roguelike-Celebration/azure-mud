@@ -30,20 +30,22 @@ export const DEFAULT_SERVER_SETTINGS: ServerSettings = {
 }
 
 // There's 100% a more elegant way to do this, but I think this works and want to actually get this feature finally done.
-export function toServerSettings (obj: any): ServerSettings | null {
+export function toServerSettings (obj: Partial<ServerSettings>): ServerSettings | null {
   try {
     if (obj.movementMessagesHideThreshold === undefined || obj.movementMessagesHideRoomIds === undefined ||
-        (obj.happeningNowEntries && obj.happeningNowEntries.every((e) => { isHappeningNowEntry(e) }))) {
+        (obj.happeningNowEntries && !obj.happeningNowEntries.every((e) => { isHappeningNowEntry(e) }))) {
+      console.log('Returning null in toServerSettings')
       return null
     } else {
       return {
         movementMessagesHideThreshold: obj.movementMessagesHideThreshold,
         movementMessagesHideRoomIds: obj.movementMessagesHideRoomIds,
-        happeningNowEntries: obj.happeningNowEntries ? obj.happeningNowEntries : [],
-        spaceIsClosed: obj.spaceIsClosed ? obj.spaceIsOpen : false
+        happeningNowEntries: obj.happeningNowEntries || [],
+        spaceIsClosed: !!obj.spaceIsClosed
       }
     }
   } catch (e) {
+    console.log('Error in toServerSettings', e)
     return null
   }
 }
