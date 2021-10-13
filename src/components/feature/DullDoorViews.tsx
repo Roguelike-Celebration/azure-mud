@@ -22,7 +22,7 @@ export const DullDoorRoomView = () => {
   }
 
   return <div id="dull-door-div" className="feature-room-view">
-    <p>Inside the glass tube there\'s nothing in particular, though you note that there\'s a grate on the floor. A damp sign next to the tube\'s opening says "Secondarily-Hydrogenated Oxygen Weighted Emulsion Remover". A smaller sign below that reads "For Dirts, Dyes, and Distress!" <button id="dull-door-button" className='link-styled-button' onClick={walkThroughDoor}>Step on the grate.</button>.</p>
+    <p>Inside the glass tube there&apos;s nothing in particular, though you note that there&apos;s a grate on the floor. A damp sign next to the tube&apos;s opening says &quot;Secondarily-Hydrogenated Oxygen Weighted Emulsion Remover&quot;. A smaller sign below that reads &quot;For Dirts, Dyes, and Distress!&quot; <button id="dull-door-button" className='link-styled-button' onClick={walkThroughDoor}>Step on the grate.</button>.</p>
   </div>
 }
 
