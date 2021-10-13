@@ -14,8 +14,9 @@ export const generate = () => {
     ],
     good: [
       '#ooh#, #tasty#!',
+      '#ooh#, #incredible#!',
       '#ooh#, tastes like #goodFlavor#!',
-      'A #tasty# cookie #thatsLike# #goodFlavor#.'
+      '#aTasty# cookie #thatsLike# #goodFlavor#.'
     ],
     ooh: [
       'Ooh',
@@ -27,11 +28,25 @@ export const generate = () => {
       'Wonderful',
       'Delightful'
     ],
-    tasty: [
+    aTasty: [
+      'a #tasty#',
+      'an #incredible#
+    ],
+    tasty: [ // consonant-tasty
       'tasty',
       'delicious',
       'delightful',
-      'scrumptious'
+      'scrumptious',
+      'decadent',
+      'ridiculously #incredible#' // learning from you! -kawa
+    ],
+    incredible: [ // vowel-tasty
+      'incredible',
+      'amazing',
+      'awesome',
+      'excellent',
+      'outstanding',
+      'unimaginably #tasty#'
     ],
     thatsLike: [
       'that tastes like',
@@ -130,8 +145,8 @@ export const generate = () => {
       'Metaprogression isn\'t permadeath',
       'Always wear the golden dragon armor on D:1',
       'Kick the dust from the stairs - what could go wrong?',
-      'You don\'t <u>ever</u> drink unidentified potions... unless you have to.',
-      'All-bards may not be the most powerful party composition, but it <u>is</u> the most fun!',
+      'You don\'t <em>ever</em> drink unidentified potions... unless you have to.',
+      'All-bards may not be the most powerful party composition, but it <em>is</em> the most fun!',
       'Death is just a new beginning!',
       'Metaprogression is FUN!',
       'Metaprogression is FUN! (Restart?)',
@@ -146,12 +161,13 @@ export const generate = () => {
       'You\'ll be happier if you finish making it!',
       'Every monster you date is a monster you don\'t have to slay.',
       'You are lucky! Full moon tonight.',
-      "You are lucky! It's a Full Moon on Friday the 43rd! Please submit a bug report!",
+      'You are lucky! It\'s a Full Moon on Friday the 43rd! Please submit a bug report!',
       'Lucky you! You have a cookie to eat.',
       'Your luck is glorious, and so use your luck for good!'
     ],
     bad: [
       '#ugh#, #gross#!',
+      '#ugh#, #awful#!',
       '#ugh#, tastes like #badFlavor#.',
       '#aGross# cookie #thatsLike# #badFlavor##weirdly#.'
     ],
@@ -166,21 +182,16 @@ export const generate = () => {
       'A #gross#',
       'An #awful#'
     ],
-    gross: [
-      'gross',
-      'bizarre',
-      'nasty',
-      'vile',
-      'miserable'
-    ],
-    awful: [ //okay I alphabetized this too - bengrue
-      'abominable',
-      'awful',
+    gross: [ // consonant-gross
       'bilious',
       'crusty',
       'detestable',
       'disgusting',
-      'egregious',
+      'gross',
+      'bizarre',
+      'nasty',
+      'vile',
+      'miserable',
       'foul',
       'grody',
       'gross',
@@ -188,36 +199,38 @@ export const generate = () => {
       'gruesome',
       'heinous',
       'horrific',
-      'icky',
       'lousy',
       'nauseating',
       'nasty',
-      'odious',
       'poo-poo',
       'repellent',
       'revolting',
       'smelly',
       'stinky',
-      'unwashed',
       'vile',
+      'horribly #awful#'
     ],
-    badFlavor: [ // I alphabetized this one specifically to add more stuff.  But maybe lint everything later? - bengrue
+    awful: [ //vowel-gross
+      'abominable',
+      'awful',
+      'egregious',
+      'icky',
+      'odious',
+      'unwashed',
+      'unpleasant'
+    ],
+    badFlavor: [ // I alphabetized this one specifically to add more stuff.  But maybe lint everything later? - bengrue 
       'a Bauhaus design',
       'a cash grab',   
       'an unwashed, rusted 1983 Dodge Omni',
       'Axe Body Spray(tm) of indeterminate flavor',
-      'Baja Blast Mountain Dew(tm)',
       'beige',
-      'black jellybeans',
-      'black liquorice',
       'blue',
       'body odor',
       'brutalism',
       'capitalism',
       'cheap catfood (not even the good stuff)',
-      'cilantro',
       'dadaism', //ha, I was going to add this -bengrue
-      'warm, day-old sprite',
       'deadlines',
       'Dijkstra maps',
       'discourse',
@@ -254,7 +267,6 @@ export const generate = () => {
       'spikes',
       'spit',
       'spite',
-      'spoiled vermouth',
       'stale cigarettes',
       'static',
       'teen spirit',
@@ -282,13 +294,13 @@ export const generate = () => {
       'Don\'t tell a soul you found a secret door, otherwise it isn\'t a secret anymore.',
       'If you thought the Wizard was bad, just wait till you meet the Warlord!',
       'If you thought the Warlord was bad, just wait till you meet the Warlady!',
-      'Never play leapfrog with a unicorn.', //wow, kudos to whomever wrote this. -BenGrue
+      'Never play leapfrog with a unicorn.', //wow, kudos to whomever wrote this. -BenGrue // it's an original Nethack rumors.fal! -kawa
       'Never trust a random generator in magic fields.',
       'Never trust a random generator when DEATH is on the line!',
       'Ouch. I hate when that happens.',
       'PLEASE ignore the previous rumor.',
       'PLEASE ignore the next rumor.',
-      "PLEASE ignore this rumor. I'm sure its not as bad as it looks.",
+      'PLEASE ignore this rumor. I\'m sure its not as bad as it looks.',
       'At least your mother likes you?',
       'Sorry, no fortune this time.  Better luck next cookie!',
       'Suddenly, the dungeon will collapse…',
@@ -319,13 +331,14 @@ export const generate = () => {
     badmagicword: [
       'XYZZY',
       'PLUGH',
-      "F'tagn",
+      'F\'tagn',
       'Avada-Kedavra',
       'UMACTUALLY',
     ],
     game: [
       'Hearts',
       'Gin Rummy',
+      'Cribbage',
       'Chess',
       'Rugby',
       'Go Fish',
@@ -342,28 +355,31 @@ export const generate = () => {
       'Calvinball',
       'Real life',
       'Second Life',
-      'Secret Hitler',
       'Parcheesi',
       'Marbles',
       'Final Fantasy VII',
       'Thriving in a pandemic',
       'Splatoon',
       'Quarters',
-      "King's Cup",
+      'King\'s Cup',
       '"Never Have I Ever"',
       'H.O.R.S.E.',
       'League of Legends',
       'Truth Or Dare',
       'Shuffleboard',
       'Backgammon',
-      "Everything Steve Jackson has ever published',
+      'Everything Steve Jackson has ever published',
       'Magic: the Gathering',
       'Spelunky 2, but not Spelunky 1',
       'Dungeons & Dragons',
       'Dungeon World',
+      'Apocalypse World',
+      'Lady Blackbird',
+      'Sushi Go! Party',
+      'Fiasco',
       'GURPs',
       'Yahtzee',
-      "Liar's Dice",
+      'Liar\'s Dice',
       'Darts',
       'Capitalism',
       'Genshin Impact',
@@ -371,10 +387,10 @@ export const generate = () => {
       'Kittens Game',
       'Solitaire'
     ],
-    somebodyoncetold: [
+    somebodyoncetold: [ // thanks, I hate it -kawa
       'what goes up < might come down >',
       'the world was gonna roll me',
-      "you're not the sharpest tool in the shed",
+      'you\'re not the sharpest tool in the shed',
       'you were looking kinda dumb with your finger and your thumb in the shape of an "L" on your forehead. Stop doing that.',
     ]
   })
