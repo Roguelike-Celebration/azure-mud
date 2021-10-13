@@ -33,8 +33,18 @@ video.speaking {
   padding: 10px;
 }
 
+#media-view .other-participant .video-button {
+  color:var(--main-font);
+  padding: 10px;
+  float: right;
+}
+
 #media-view .video-button.enabled {
   color: var(--green);
+}
+
+#media-view .other-participant .video-button.enabled {
+  color: var(--main-font);
 }
 
 #media-view .video-button.disabled {
