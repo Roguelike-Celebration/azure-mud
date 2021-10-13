@@ -84,7 +84,7 @@ export default function NameView (props: { userId: string; id?: string; nowrap?:
     className = className + ' ' + user.nameColor
   }
   // TODO: should be best handled via css
-  const customStyle = { [ 'whiteSpace' as any ]: props.nowrap ? 'nowrap' : undefined }
+  const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
   return (
     <span className={className} data-tip={user && user.pronouns} style={customStyle} >
       <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
