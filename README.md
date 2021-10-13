@@ -165,7 +165,20 @@ Links between rooms are purely visual. If an attendee is moving rooms using the 
 Right now, because room descriptions are part of the server codebase, changing room data requires redeploying the entire server backend. Changing that is a high development priority.
 
 ## Editing the map
-The ASCII map was created with [MonoDraw](https://monodraw.helftone.com), a Mac-only ASCII art tool. You'll want to open the `map.monopic` file in that, export your changes, paste the ASCII string into `src/components/MapView.tsx`, and then update any changes to the two datasets of persistence identifiers and clickable areas. Note that the coordinates listed in the MonoDraw view are 1-indexed, whereas the app itself expects 0-indexed coordinates.
+TODO: These instructions are slightly out-of-date. The map used for Roguelike Celebration 2021 was drawn using Playscii, but the thing that really needs to be documented is the supplemental data you need to add to inject active room counts and set up click/scroll targets. Check out `src/components/MapView.tsx` for more info until this is properly documented.
+
+Outdated info: The ASCII map was created with [MonoDraw](https://monodraw.helftone.com), a Mac-only ASCII art tool. You'll want to open the `map.monopic` file in that, export your changes, paste the ASCII string into `src/components/MapView.tsx`, and then update any changes to the two datasets of persistence identifiers and clickable areas. 
+
+## Adding a Mod
+A moderator has the ability to make any other user a mod by clicking their username and choosing the appropriate option, but you'll need to manually add the first mod.
+
+1. Find the user ID of the user you want to make a mod. In the space, if you open your browser's development tools and go to the network inspector, and then click their name (including your own name in the top-left corner if you want to mod your own user) and "view profile", you will see a HTTP request to `/fetchProfile` that contains the userId in JSON as the request payload.
+
+2. Go to your Redis instance in the Azure Portal. Click the "Console" button at the top-left of the main pane.
+
+3. In the Redis terminal, type `sadd mods [userId]` (swapping in the user ID you fetched earlier, without square brackets).
+
+If that user reloads the space, they will now be a mod and have the ability to add other mods.
 
 ## Contributions
 
