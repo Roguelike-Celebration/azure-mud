@@ -57,6 +57,7 @@ export type Action =
   | ActivateAutoscrollAction
   | SetKeepCameraWhenMovingAction
   | SetTextOnlyModeAction
+  | SetAudioOnlyModeAction
   | SetNumberOfFacesAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
@@ -108,6 +109,7 @@ export enum ActionType {
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
   SetKeepCameraWhenMoving = 'SET_KEEP_CAMERA_WHEN_MOVING',
   SetTextOnlyMode = 'SET_TEXT_ONLY_MODE',
+  SetAudioOnlyMode = 'SET_AUDIO_ONLY_MODE',
   SetNumberOfFaces = 'SET_NUMBER_OF_FACES',
   //
   Authenticate = 'AUTHENTICATE',
@@ -683,6 +685,20 @@ export const SetTextOnlyModeAction = (
   refresh: boolean
 ): SetTextOnlyModeAction => {
   return { type: ActionType.SetTextOnlyMode, textOnlyMode: textOnlyMode, refresh: refresh }
+}
+
+interface SetAudioOnlyModeAction {
+  type: ActionType.SetAudioOnlyMode;
+  value: boolean;
+}
+
+export const SetAudioOnlyModeAction = (
+  enable: boolean
+): SetAudioOnlyModeAction => {
+  return {
+    type: ActionType.SetAudioOnlyMode,
+    value: enable
+  }
 }
 
 interface SetNumberOfFacesAction {
