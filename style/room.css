@@ -76,3 +76,8 @@ a.room-link:visited {
 #room-name {
   margin-bottom: 0;
 }
+
+#dynamic-room-description .has-audio, #dynamic-room-description .has-video {
+  padding-left: 0.5em;
+  cursor: pointer;
+}
