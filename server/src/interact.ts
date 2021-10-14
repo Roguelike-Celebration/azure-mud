@@ -4,7 +4,7 @@ import { polymorph, cancellation } from '../src/polymorph'
 import { Result } from './endpoint'
 
 export async function interact (user: User, messageId: string, inspectedObject: string): Promise<Result> {
-  if (user.roomId === 'kitchenTableC' && (inspectedObject.includes('cookie') || inspectedObject.includes('fortune'))) {
+  if (user.roomId === 'Oracle' && (inspectedObject.includes('cookie') || inspectedObject.includes('fortune'))) {
     return cookie(user, messageId)
   }
   if (user.roomId === 'bar') {
