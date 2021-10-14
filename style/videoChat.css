@@ -97,6 +97,10 @@ video.speaking {
   margin-left: 2em;
 }
 
+#media-wrapper {
+  margin-bottom: 1em;
+}
+
 #media-chat-buttons {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }

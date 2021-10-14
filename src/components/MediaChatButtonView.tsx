@@ -12,13 +12,11 @@ interface Props {
 }
 const MediaChatButtonView = (props: Props) => {
   const {
-    prepareForMediaChat,
     currentMic,
     currentCamera,
     publishingCamera,
     publishingMic,
     inCall,
-    joinCall,
     publishMedia,
     publishAudio,
     unpublishMedia

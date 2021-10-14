@@ -204,13 +204,14 @@ const App = () => {
   }
 
   let videoChatView
-  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat && !state.textOnlyMode) {
+  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
       <MediaChatView
         visibleSpeakers={state.visibleSpeakers}
         currentSpeaker={state.currentSpeaker}
         numberOfFaces={state.numberOfFaces}
         inMediaChat={state.inMediaChat}
+        textOnlyMode={state.textOnlyMode}
       />
     )
   }

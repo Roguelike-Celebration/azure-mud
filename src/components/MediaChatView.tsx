@@ -6,17 +6,21 @@ import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import ParticipantChatView from './ParticipantChatView'
 import MediaChatButtonView from './MediaChatButtonView'
-import { StatsReport } from 'twilio-video'
+import { PromiseState } from 'microsoft-cognitiveservices-speech-sdk/distrib/lib/src/common/Promise'
+import { SetTextOnlyModeAction } from '../Actions'
+import { DispatchContext } from '../App'
 
 interface MediaProps {
   visibleSpeakers: [string, Date][]
   currentSpeaker: string
   numberOfFaces: number
   inMediaChat: boolean
+  textOnlyMode: boolean
 }
 
 export default function MediaChatView (props: MediaProps) {
   const { publishingCamera, callParticipants, inCall, joinCallFailed } = useMediaChatContext()
+  const dispatch = React.useContext(DispatchContext)
 
   // TODO: props.visibleSpeakers should never be undefined, but it is?!
   const visibleSpeakers = (props.visibleSpeakers || []).map(x => x[0])
@@ -24,11 +28,43 @@ export default function MediaChatView (props: MediaProps) {
   console.log('Re-rendering media chat view?')
 
   if (!inCall) {
-    return <div id="media-wrapper">
-      { joinCallFailed ? <strong>Could not connect to audio/video! Rooms are max 50 chatters - if you want to use audio/video, try moving to another room. Otherwise, it may be a network issue.</strong> : <strong>Attempting to connect to room.</strong> }
-      <div id="media-view" />
-    </div>
+    if (joinCallFailed) {
+      return (
+        <div id="media-wrapper">
+          <strong>
+            Could not connect to audio/video! Rooms are max 50 chatters - if you
+            want to use audio/video, try moving to another room. Otherwise, it
+            may be a network issue.
+          </strong>
+        </div>
+      )
+    } else if (props.textOnlyMode) {
+      const disableTextMode = () => {
+        const prompt = confirm('Entering video/audio mode means that you will be able to see and hear video and audio from ' +
+          'other participants. Your camera and microphone will default to off when you switch modes. Switching modes will ' +
+          'refresh your page - please be patient while it reloads.'
+        )
+        if (prompt) {
+          dispatch(SetTextOnlyModeAction(false, true))
+        }
+      }
+
+      return (
+        <div id="media-wrapper">
+          There may be a voice/video call happening here that you can&apos;t see.
+          <button className="link-styled-button" onClick={disableTextMode} style={{ marginLeft: '1em' }}>Disable Text-Only Mode</button>.
+        </div>
+      )
+    } else {
+      return (
+        <div id="media-wrapper">
+          <strong>Attempting to connect to room.</strong>
+        </div>
+      )
+    }
   }
+
+  // TODO: Is this a meaningful fail state? What causes this? s
   if (!callParticipants) {
     return <div id="media-view" />
   }
@@ -85,7 +121,7 @@ export default function MediaChatView (props: MediaProps) {
         {playerVideo} {videoParticipants} {audioParticipants}
       </div>
       <MediaChatButtonView
-        textOnlyMode={false}
+        textOnlyMode={props.textOnlyMode}
         inMediaChat={props.inMediaChat}
         offscreenCount={audioParticipants.length}
       />

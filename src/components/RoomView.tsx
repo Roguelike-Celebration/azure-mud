@@ -7,9 +7,7 @@ import {
 import { DispatchContext } from '../App'
 import {
   StopVideoChatAction,
-  ShowModalAction,
-  ShowModalWithOptionsAction,
-  SetTextOnlyModeAction
+  ShowModalAction
 } from '../Actions'
 import { FaChevronDown, FaChevronUp, FaCog } from 'react-icons/fa'
 
