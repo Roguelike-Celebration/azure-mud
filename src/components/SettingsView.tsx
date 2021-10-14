@@ -3,11 +3,13 @@ import React, { useContext, useEffect } from 'react'
 import '../../style/profileEditView.css'
 import { SetUseSimpleNamesAction } from '../Actions'
 import { DispatchContext, SettingsContext } from '../App'
+import { SetCaptionsEnabledAction } from '../Actions'
 import { currentTheme, setTheme } from '../storage'
 import VideoAudioSettingsView from './VideoAudioSettingsView'
 
 interface Props {
   keepCameraWhenMoving: boolean;
+  captionsEnabled: boolean;
 }
 
 export default function SettingsView (props: Props) {
@@ -35,12 +37,21 @@ export default function SettingsView (props: Props) {
 
   const handleSimpleNamesSelection = (simple: boolean) => {
     dispatch(SetUseSimpleNamesAction(simple))
+
+  const handleCaptionChoice = (e) => {
+    if (e.target.value === 'captions-enabled') {
+      dispatch(SetCaptionsEnabledAction(true))
+    } else if (e.target.value === 'captions-disabled') {
+      dispatch(SetCaptionsEnabledAction(false))
+    }
   }
 
   return (
     <div className="settingsContainer">
       <div className="form" id="themeSelectionForm">
-        <label htmlFor="themeSelectionForm" className='form-header'>Select Theme:</label>
+        <label htmlFor="themeSelectionForm" className="form-header">
+          Select Theme:
+        </label>
         <div className="radio">
           <input
             type="radio"
@@ -72,5 +83,43 @@ export default function SettingsView (props: Props) {
           <label htmlFor="solarized-light">Solarized Light</label>
         </div>
       </div>
+      <VideoAudioSettingsView
+        keepCameraWhenMoving={props.keepCameraWhenMoving}
+      />
+      <div className="form" id="captionsEnabled">
+        <label
+          htmlFor="captionsEnabled"
+          className="form-header"
+          style={{ marginBottom: 0 }}
+        >
+          Enable Captions (Experimental):
+        </label>
+        <span style={{ marginBottom: '1em' }}>
+          This will automatically transcribe spoken audio as messages in the
+          text chat.
+        </span>
+        <div className="radio">
+          <input
+            type="radio"
+            id="captions-enabled"
+            value="captions-enabled"
+            checked={props.captionsEnabled}
+            onChange={handleCaptionChoice}
+          />
+          <label htmlFor="captions-enabled">Enabled</label>
+        </div>
+        <div className="radio">
+          <input
+            type="radio"
+            id="captions-disabled"
+            value="captions-disabled"
+            checked={!props.captionsEnabled}
+            onChange={handleCaptionChoice}
+          />
+          <label htmlFor="captions-disabled">Disabled</label>
+        </div>
+      </div>
+    </div>
+>>>>>>> Ad settings toggle for captions
   )
 }

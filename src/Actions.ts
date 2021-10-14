@@ -60,6 +60,7 @@ export type Action =
   | SetTextOnlyModeAction
   | SetAudioOnlyModeAction
   | SetNumberOfFacesAction
+  | SetCaptionsEnabledAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
@@ -113,6 +114,7 @@ export enum ActionType {
   SetTextOnlyMode = 'SET_TEXT_ONLY_MODE',
   SetAudioOnlyMode = 'SET_AUDIO_ONLY_MODE',
   SetNumberOfFaces = 'SET_NUMBER_OF_FACES',
+  SetCaptionsEnabled = 'SET_CAPTIONS_ENABLED',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -710,6 +712,19 @@ export const SetAudioOnlyModeAction = (
 ): SetAudioOnlyModeAction => {
   return {
     type: ActionType.SetAudioOnlyMode,
+    value: enable
+  }
+}
+interface SetCaptionsEnabledAction {
+  type: ActionType.SetCaptionsEnabled;
+  value: boolean;
+}
+
+export const SetCaptionsEnabledAction = (
+  enable: boolean
+): SetCaptionsEnabledAction => {
+  return {
+    type: ActionType.SetCaptionsEnabled,
     value: enable
   }
 }

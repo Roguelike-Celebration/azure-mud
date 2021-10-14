@@ -17,7 +17,11 @@ import {
   SetKeepCameraWhenMovingAction,
   SetTextOnlyModeAction,
   SetNumberOfFacesAction,
+<<<<<<< HEAD
   SetUseSimpleNamesAction
+=======
+  SetCaptionsEnabledAction
+>>>>>>> Add settings toggle for captions
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -132,6 +136,8 @@ const App = () => {
           dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
           const textOnlyMode = await Storage.getTextOnlyMode()
           dispatch(SetTextOnlyModeAction(textOnlyMode, false))
+          const captionsEnabled = await Storage.getCaptionsEnabled()
+          dispatch(SetCaptionsEnabledAction(captionsEnabled))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
@@ -391,8 +397,24 @@ const App = () => {
                         dispatch(SendMessageAction(message))
                       }
                     />
+<<<<<<< HEAD
                   </div>
                   {profile}
+=======
+                  ) : null}
+                  <ChatView
+                    messages={state.messages}
+                    autoscrollChat={state.autoscrollChat}
+                    serverSettings={state.serverSettings}
+                    captionsEnabled={state.captionsEnabled}
+                  />
+                  <InputView
+                    prepopulated={state.prepopulatedInput}
+                    sendMessage={(message) =>
+                      dispatch(SendMessageAction(message))
+                    }
+                  />
+>>>>>>> Add settings toggle for captions
                 </div>
               </UserMapContext.Provider>
             </SettingsContext.Provider>
