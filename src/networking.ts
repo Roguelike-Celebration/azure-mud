@@ -110,6 +110,10 @@ export async function updateProfileColor (userId: string, color: string) {
   const result = await callAzureFunction('updateProfileColor', { userId: userId, color: color })
 }
 
+export async function updateFontReward (userId: string, font: string) {
+  const result = await callAzureFunction('updateFontReward', { userId: userId, font: font })
+}
+
 export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {
   const result = await callAzureFunction('isRegistered')
   return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod, isBanned: result.isBanned }

@@ -3,8 +3,8 @@ import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak } from './
 import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
-import { ASCII, Oracle, jelly, vault } from './oldHub'
-import { exploreHub, transmute, dyes, doctorPaint, shower, victuals, quest, steam } from './exploreHub'
+import { oldHubRoomData } from './oldHub'
+import { exploreHub, transmute, dyes, doctorPaint, shower, steam } from './exploreHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -86,7 +86,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'destinations',
     displayName: 'Destinations',
     shortName: 'destinations',
-    description: 'Lining both sides of this hall, huge doorways promise journeys to thrilling destinations. The majority of them are shut, with taped up [[paper signs->readClosedSign]] providing increasingly ludicrous reasons for their closure.<br/><br/>Only two halls are open, and while it\'s hard from here to tell where they\'ll go, one door shines with [[glass and chrome->sfHub]], and the other is [[crumbling and overgrown with plant life->exploreHub]].<br/><br/>You can also return to the [[Central Hall->hall]]'
+    description: 'Lining both sides of this hall, huge doorways promise journeys to thrilling destinations. The majority of them are shut, with taped up [[paper signs->readClosedSign]] providing increasingly ludicrous reasons for their closure.<br/><br/>Only two halls are open, and while it\'s hard from here to tell where they\'ll go, one door shines with [[glass and chrome->sfHub]], and the other is [[covered in brass gears and pipes->exploreHub]].<br/><br/>You can also return to the [[Central Hall->hall]]'
   },
   swag: {
     id: 'swag',
@@ -128,7 +128,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'stools',
     displayName: 'Seats Along the Bar',
     shortName: 'the stools by the bar',
-    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel. Whee!</br></br>
+    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel. Whee! There's a bard at the bar issuing terrible pickup lines to anyone who sits next to them.</br></br>
       From here, you can see tables [[by the railing->railing]] or [[at the back->back]], and the [[rest of the bar->bar]].`
   },
   back: {
@@ -154,17 +154,11 @@ const indexRoomData: { [name: string]: Room } = {
   robots,
   timeMachine,
   vendingMachine,
-  ASCII,
-  Oracle,
-  jelly,
-  vault,
   exploreHub,
   transmute,
   dyes,
   doctorPaint,
   shower,
-  victuals,
-  quest,
   steam,
   library: {
     id: 'library',
@@ -198,5 +192,6 @@ const indexRoomData: { [name: string]: Room } = {
 
 export const roomData: { [name: string]: Room } = {
   ...indexRoomData,
-  ...loungeDungeonRoomData
+  ...loungeDungeonRoomData,
+  ...oldHubRoomData
 }

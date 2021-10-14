@@ -77,3 +77,9 @@ export enum ValidColors {
   Violet = 'Violet',
   Yellow = 'Yellow'
 }
+
+export enum ValidFontRewards {
+  Comic = 'Comic',
+  Classic = 'Classic',
+  Impactful = 'Impactful'
+}

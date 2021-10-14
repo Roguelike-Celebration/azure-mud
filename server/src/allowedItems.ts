@@ -11,5 +11,8 @@ export default [
   'Planepacked',
   'Divine Nectar',
   'the Fizzbuzz',
-  'Yet Another Silly Drink'
+  'Yet Another Silly Drink',
+  'Orb of Zot',
+  'Amulet of Yendor',
+  'box of crayons'
 ]

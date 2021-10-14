@@ -25,3 +25,17 @@
   font-weight: bold;
   font-style: italic;
 }
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-VariableFont_wght.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TerminalFont";
+  src: url("/fonts/Web437_IBM_VGA_8x16.woff") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
