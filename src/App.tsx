@@ -338,7 +338,7 @@ const App = () => {
       <DispatchContext.Provider value={dispatch}>
         <TwilioChatContextProvider active={!state.textOnlyMode}>
           <IsMobileContext.Provider value={isMobile}>
-            <SettingsContext.Provider value={{useSimpleNames: state.useSimpleNames}}>
+            <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
               <UserMapContext.Provider
                 value={{ userMap: state.userMap, myId: state.userId }}
               >

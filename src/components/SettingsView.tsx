@@ -80,7 +80,7 @@ export default function SettingsView (props: Props) {
         <div className='radio'>
           <label>
             <input type = "radio"
-            name = "simpleNameSelection"
+              name = "simpleNameSelection"
               id = "useDefaultName"
               checked = {!useSimpleNames}
               onChange = {() => handleSimpleNamesSelection(false)}
