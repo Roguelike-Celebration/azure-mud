@@ -69,7 +69,7 @@ interface Database {
 
   lastShoutedForUser (userId: string)
 
-  setModStatus(user: User, isMod: boolean)
+  setModStatus(userId: string, isMod: boolean)
 
   banUser(user: User, isBanned: boolean)
 
