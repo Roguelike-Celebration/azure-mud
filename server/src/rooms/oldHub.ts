@@ -4,7 +4,7 @@ export const ASCII = {
   id: 'ASCII',
   displayName: 'The Hash Mark Dungeon',
   shortName: '# dungeon',
-  description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand three statues - a hobbit, a tree, and a crocodile. Each has a riddle engraved in its base.<\br><\br>A door behind you leads through the twisty passages, back to the [[Space Hanger->sfHub]].',
+  description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand three statues - a hobbit, a tree, and a crocodile. Each has a riddle engraved in its base.</br></br>A door behind you leads through the twisty passages, back to the [[Space Hanger->sfHub]].',
   hasNoteWall: true,
   hidden: true,
   noMediaChat: true,
