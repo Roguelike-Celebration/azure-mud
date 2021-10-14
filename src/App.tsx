@@ -17,11 +17,8 @@ import {
   SetKeepCameraWhenMovingAction,
   SetTextOnlyModeAction,
   SetNumberOfFacesAction,
-<<<<<<< HEAD
-  SetUseSimpleNamesAction
-=======
+  SetUseSimpleNamesAction,
   SetCaptionsEnabledAction
->>>>>>> Add settings toggle for captions
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -397,24 +394,8 @@ const App = () => {
                         dispatch(SendMessageAction(message))
                       }
                     />
-<<<<<<< HEAD
                   </div>
                   {profile}
-=======
-                  ) : null}
-                  <ChatView
-                    messages={state.messages}
-                    autoscrollChat={state.autoscrollChat}
-                    serverSettings={state.serverSettings}
-                    captionsEnabled={state.captionsEnabled}
-                  />
-                  <InputView
-                    prepopulated={state.prepopulatedInput}
-                    sendMessage={(message) =>
-                      dispatch(SendMessageAction(message))
-                    }
-                  />
->>>>>>> Add settings toggle for captions
                 </div>
               </UserMapContext.Provider>
             </SettingsContext.Provider>

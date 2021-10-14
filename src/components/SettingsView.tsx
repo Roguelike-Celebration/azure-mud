@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react'
 
 import '../../style/profileEditView.css'
-import { SetUseSimpleNamesAction } from '../Actions'
+import { SetUseSimpleNamesAction, SetCaptionsEnabledAction } from '../Actions'
 import { DispatchContext, SettingsContext } from '../App'
-import { SetCaptionsEnabledAction } from '../Actions'
+
 import { currentTheme, setTheme } from '../storage'
 import VideoAudioSettingsView from './VideoAudioSettingsView'
 
@@ -37,6 +37,7 @@ export default function SettingsView (props: Props) {
 
   const handleSimpleNamesSelection = (simple: boolean) => {
     dispatch(SetUseSimpleNamesAction(simple))
+  }
 
   const handleCaptionChoice = (e) => {
     if (e.target.value === 'captions-enabled') {
@@ -83,9 +84,33 @@ export default function SettingsView (props: Props) {
           <label htmlFor="solarized-light">Solarized Light</label>
         </div>
       </div>
-      <VideoAudioSettingsView
-        keepCameraWhenMoving={props.keepCameraWhenMoving}
-      />
+      <div className="form" id="simpleNamesSelectionForm">
+        <label htmlFor="simpleNamesSelectionForm" className='form-header'>Username Display Mode:</label>
+        <div className="radio">
+          <label>
+            <input
+              type="radio"
+              name="simpleNameSelection"
+              id="useDefaultName"
+              checked={!useSimpleNames}
+              onChange={() => handleSimpleNamesSelection(false)}
+            />
+            Use Default Names (shows colors, fonts, and polymorph potion emojis)
+          </label>
+        </div>
+        <div className="radio">
+          <label>
+            <input
+              type="radio"
+              name="simpleNameSelection"
+              id="useSimpleName"
+              checked={useSimpleNames}
+              onChange={() => handleSimpleNamesSelection(true)}
+            />
+            Use Simple Names (text only)
+          </label>
+        </div>
+      </div>
       <div className="form" id="captionsEnabled">
         <label
           htmlFor="captionsEnabled"
@@ -119,7 +144,9 @@ export default function SettingsView (props: Props) {
           <label htmlFor="captions-disabled">Disabled</label>
         </div>
       </div>
+      <VideoAudioSettingsView
+        keepCameraWhenMoving={props.keepCameraWhenMoving}
+      />
     </div>
->>>>>>> Ad settings toggle for captions
   )
 }
