@@ -39,7 +39,7 @@ export const oldHubRoomData = {
     hidden: true,
     noMediaChat: true,
     description: 'The Oracle of Delphi - a truly beautiful @ in shimmering blue - perks up at your presence.<br/><br/>"Oh, hi there! Sorry about all the mess, the fountain liquids all shifting, the map being all out of true - some ridiculous chaos demons have been messing with the fabric of space around here. They\'ve scattered a dozen riddles around - some even within the useful spaces, those poor dogs - which apparently build some kind of code phrase that\'s important to them.<br/><br/>If you figure a riddle out, I think you can use that "go" invocation you used to get here to see what visions it brings you. I suspect things might be finicky when it comes to translocation magic - again, chaos - but I *believe* my centaurs got things to a point where all lowercase components work.<br/><br/>Hopefully if you figure that code phrase out and go to them, maybe you\'ll get some kind of explaination, or at least a neat bauble...? I dunno, I\'m kinda stuck here. But good luck!"<br/><br/>You can return to the [[fountains->oracle]].'
-  }, 
+  },
   jelly: {
     id: 'jelly',
     displayName: 'Gelatinous Throne',
