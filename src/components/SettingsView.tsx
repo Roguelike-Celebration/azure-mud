@@ -38,69 +38,39 @@ export default function SettingsView (props: Props) {
   }
 
   return (
-    <div className='settingsContainer'>
-      <div className='form' id="themeSelectionForm">
-        <label htmlFor="themeSelectionForm">Select Theme:</label>
-        <div className='radio'>
-          <label>
-            <input type = "radio"
-              id = "theme"
-              value = "default"
-              checked = {selectedTheme === 'default'}
-              onChange = {handleThemeSelection}
-            />
-            Default (Dark)
-          </label>
+    <div className="settingsContainer">
+      <div className="form" id="themeSelectionForm">
+        <label htmlFor="themeSelectionForm" className='form-header'>Select Theme:</label>
+        <div className="radio">
+          <input
+            type="radio"
+            id="default-theme"
+            value="default"
+            checked={selectedTheme === 'default'}
+            onChange={handleThemeSelection}
+          />
+          <label htmlFor="default-theme">Default (Dark)</label>
         </div>
-        <div className = "radio">
-          <label>
-            <input type = "radio"
-              id = "theme"
-              value = "solarized-dark"
-              checked = {selectedTheme === 'solarized-dark'}
-              onChange = {handleThemeSelection}
-            />
-            Solarized Dark
-          </label>
+        <div className="radio">
+          <input
+            type="radio"
+            id="solarized-dark"
+            value="solarized-dark"
+            checked={selectedTheme === 'solarized-dark'}
+            onChange={handleThemeSelection}
+          />
+          <label htmlFor="solarized-dark">Solarized Dark</label>
         </div>
-        <div className = "radio">
-          <label>
-            <input type = "radio"
-              id = "theme"
-              value = "solarized-light"
-              checked = {selectedTheme === 'solarized-light'}
-              onChange = {handleThemeSelection}
-            />
-            Solarized Light
-          </label>
+        <div className="radio">
+          <input
+            type="radio"
+            id="solarized-light"
+            value="solarized-light"
+            checked={selectedTheme === 'solarized-light'}
+            onChange={handleThemeSelection}
+          />
+          <label htmlFor="solarized-light">Solarized Light</label>
         </div>
       </div>
-      <div className='form' id="simpleNamesSelectionForm">
-        <label htmlFor="simpleNamesSelectionForm">Username Display Mode</label>
-        <div className='radio'>
-          <label>
-            <input type = "radio"
-              name = "simpleNameSelection"
-              id = "useDefaultName"
-              checked = {!useSimpleNames}
-              onChange = {() => handleSimpleNamesSelection(false)}
-            />
-            Use Default Names (shows colors, fonts, emojis)
-          </label>
-        </div>
-        <div className = "radio">
-          <label>
-            <input type = "radio"
-              name = "simpleNameSelection"
-              id = "useSimpleName"
-              checked = {useSimpleNames}
-              onChange = {() => handleSimpleNamesSelection(true)}
-            />
-            Use Simple Names (text only)
-          </label>
-        </div>
-      </div>
-      <VideoAudioSettingsView keepCameraWhenMoving={props.keepCameraWhenMoving} />
-    </div>
   )
 }

@@ -60,6 +60,10 @@ video.speaking {
 
 /** Selector modal */
 
+#media-selector .videoAudioSettingsContainer  {
+  margin-top: 2em;
+}
+
 #media-selector .my-video, #media-selector .selects {
   float: left;
 }
