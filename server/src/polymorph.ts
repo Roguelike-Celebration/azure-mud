@@ -27,7 +27,7 @@ export async function polymorph (user: User, messageId: string): Promise<Result>
         arguments: [messageId, user.id, 'drinks a colourful potion and changes form!']
       },
       {
-        groupId: user.id,
+        userId: user.id,
         target: 'privateCommand',
         arguments: [actionText]
       },
@@ -51,7 +51,7 @@ export async function cancellation (user: User, messageId: string): Promise<Resu
         arguments: [messageId, user.id, 'drinks a clear potion and returns to normal.']
       },
       {
-        groupId: user.id,
+        userId: user.id,
         target: 'privateCommand',
         arguments: ['You quaff the clear potion and return to your usual self.']
       },
