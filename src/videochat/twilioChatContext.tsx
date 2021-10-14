@@ -7,7 +7,7 @@ import { DispatchContext } from '../App'
 
 import { fetchTwilioToken } from '../networking'
 import { setUpSpeechRecognizer, stopSpeechRecognizer } from '../speechRecognizer'
-import { DeviceInfo, MediaChatContext, Participant } from './mediaChatContext'
+import { DeviceInfo, MediaChatContext } from './mediaChatContext'
 import ParticipantTracks from './twilio/ParticipantTracks'
 import VideoTrack from './twilio/VideoTrack'
 
@@ -27,8 +27,8 @@ export const TwilioChatContextProvider = (props: {
   const [cameras, setCameras] = useState<DeviceInfo[]>([])
   const [mics, setMics] = useState<DeviceInfo[]>([])
 
-  const [currentMic, setCurrentMic] = useState<DeviceInfo>()
-  const [currentCamera, setCurrentCamera] = useState<DeviceInfo>()
+  const [currentMic, setCurrentMicInternal] = useState<DeviceInfo>()
+  const [currentCamera, setCurrentCameraInternal] = useState<DeviceInfo>()
 
   // These are separate from current to handle the case of the media selector
   // where we need both mic and camera enabled, but may not want to show
@@ -59,9 +59,6 @@ export const TwilioChatContextProvider = (props: {
 
   const fetchLocalVideoTrack = async () => {
     console.log('[TWILIO] Fetching local video track')
-    if (localVideoTrack) {
-      return localVideoTrack
-    }
 
     const options: Twilio.CreateLocalTrackOptions = { // TODO: Shrink size if mobile
       height: 720,
@@ -223,8 +220,8 @@ export const TwilioChatContextProvider = (props: {
           setMics(mics)
 
           console.log('[TWILIO] Setting current camera', cameras[0])
-          setCurrentCamera(cameras[0])
-          setCurrentMic(mics[0])
+          setCurrentCameraInternal(cameras[0])
+          setCurrentMicInternal(mics[0])
         })
     } catch (e) {
       console.log('[TWILIO] Error fetching media devices', e)
@@ -390,9 +387,9 @@ export const TwilioChatContextProvider = (props: {
         // TODO: Should this function be moved elsewhere?
         // Should this logic live in a useEffect hook?
         setCurrentCamera: (id: string) => {
-          console.log('Setting current camera', id, currentCamera, currentCamera.id)
+          console.log(`[TWILIO] Setting current camera from ${currentCamera.id} (${currentCamera.name}) to ${id}`)
           if (currentCamera && currentCamera.id !== id) {
-            console.log('Removing old camera', room)
+            console.log('[TWILIO] Removing old camera', room)
             if (room) {
               // TODO: room.unpublishTrack(localVideoTrack) wasn't working for some reason
               // This blunt approach works for now, but will need changing if we
@@ -402,7 +399,7 @@ export const TwilioChatContextProvider = (props: {
               })
             }
           }
-          setCurrentCamera(cameras.find(c => c.id === id))
+          setCurrentCameraInternal(cameras.find((c) => c.id === id))
         },
         setCurrentMic: (id: string) => {
           if (currentMic && currentMic.id !== id) {
@@ -412,7 +409,7 @@ export const TwilioChatContextProvider = (props: {
               })
             }
           }
-          setCurrentMic(mics.find(c => c.id === id))
+          setCurrentMicInternal(mics.find(c => c.id === id))
         },
 
         localStreamView,
