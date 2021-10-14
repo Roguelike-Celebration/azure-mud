@@ -34,16 +34,33 @@ export const transmute = {
   id: 'transmute',
   displayName: 'Office of Transmutations',
   shortName: 'Transmutations',
-  description: 'Most of the workers are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the [[bar]]. There are three areas available though: [[Light->lights]], [[Victual Studies->victuals]], and [[Quest->quest]].'
+  description: 'Most of the workers are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the [[bar]]. There are three areas available though: [[Dyes->dyes]], [[Victual Studies->victuals]], and [[Quest->quest]].'
 }
 // Right now I am *fairly* sure this leads into *exactly* the modals of 2020's 'rainbow door' and 'dull door', the text of which is way over in /src/components/feature. TO DO: update that text.
 
-export const lights = {
-  id: 'lights',
-  displayName: 'Hall of Lights',
-  shortName: 'the lights',
-  description: 'Two platforms, one with a column of ever-shifting sparkles, one seemingly perpetually in shadow. Or return to [[the office->transmute]].',
-  specialFeatures: [SpecialFeature.RainbowDoor, SpecialFeature.DullDoor]
+export const dyes = {
+  id: 'dyes',
+  displayName: 'Dye Machines',
+  shortName: 'the dye machines',
+  description: 'There are two doors at the end of this room. One is covered in [[gears and paint splatters->doctorPaint]]; the other is dominated by delicate [[glass tubes->shower]]. Or you can turn around and return to [[the office->transmute]].'
+}
+
+export const doctorPaint = {
+  id: 'doctorPaint',
+  displayName: 'An incredibly complicated machine',
+  shortName: 'the paint machine',
+  hidden: true,
+  description: 'You find yourself in a space dominate by an incredibly complicated machine. Arcs of aetheric energy jump between leyden jars, and what appears to be an enormous water clock is driving an incomprehensible mass of gearwork. At the center of it all, like a tiny egg in rather large nest, is a simple chair. A frenetic individual in a white coat, their features obscured by thick googles and safety gear is tightening a bolt on the machine when you walk up.<br/><br/>Or maybe you should just [[leave->dyes]].',
+  specialFeatures: [SpecialFeature.RainbowDoor]
+}
+
+export const shower = {
+  id: 'shower',
+  displayName: 'The Secondarily-Hydrogenated Oxygen Weighted Emulsion Remover',
+  shortName: 'the S.H.O.W.E.R.',
+  hidden: true,
+  description: 'There\'s a large glass object here, embedded in a cage of tubes and wires. It\'s almost like a giant vacuum tube or a huge beaker closed off at the top, except that there\'s an opening in the side large enough to step through.<br/><br/>Or simply [[return->dyes]].',
+  specialFeatures: [SpecialFeature.DullDoor]
 }
 
 // all of the below is blocked by being able to tag the source of the item you're holding, and read that, and do different things based on what it is.
