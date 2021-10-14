@@ -241,7 +241,9 @@ export default function RoomView (props: Props) {
         {room ? room.name : 'Loading...'}
         {chatButtons}
       </h1>
-      <button type="button" id="room-collapse-button" onClick={toggleClick}>Toggle Room Details...</button>
+      <button type="button" id="room-collapse-button" onClick={toggleClick}>
+        Toggle Room Details...
+      </button>
       <div id="full-room-description">
         <div
           id="static-room-description"
@@ -274,24 +276,27 @@ export default function RoomView (props: Props) {
           ) : (
             ''
           )}
-        {room &&
-        room.riddles ? (
-            <button id='riddle-button' onClick={showRiddles}>{room.riddles.length > 1 ? 'Examine the Riddles' : 'Examine the Riddle'}</button>
-          ) : (
-            ''
-          )}
-        {noteWallView}
-        {room ? (
-          <PresenceView
-            users={room.users}
-            userId={props.userId}
-            videoUsers={room.videoUsers}
-            roomId={room.id}
-          />
+        {room && room.riddles ? (
+          <button id="riddle-button" onClick={showRiddles}>
+            {room.riddles.length > 1
+              ? 'Examine the Riddles'
+              : 'Examine the Riddle'}
+          </button>
         ) : (
           ''
         )}
+        {noteWallView}
       </div>
+      {room ? (
+        <PresenceView
+          users={room.users}
+          userId={props.userId}
+          videoUsers={room.videoUsers}
+          roomId={room.id}
+        />
+      ) : (
+        ''
+      )}
     </div>
   )
 }
