@@ -22,14 +22,14 @@ export const steam = {
   id: 'steam',
   displayName: 'Office of Steam',
   shortName: 'Steam',
-  description: 'A hulking steam engine is under glass, powering an ancient computer. It\'s hooked to a typewriter, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. If you\'d like, you can investigate the<a href="https://store.steampowered.com/sale/roguelikecelebration2021" target="_blank">source of its steam power</a>, or go back to the [[Guild Hall->exploreHub]].'
+  description: 'A hulking steam engine is under glass, powering an ancient computer. It\'s hooked to a typewriter, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. If you\'d like, you can investigate the <a href="https://store.steampowered.com/sale/roguelikecelebration2021" target="_blank">source of its steam power</a>, or go back to the [[Guild Hall->exploreHub]].'
 }
 
 export const transmute = {
   id: 'transmute',
   displayName: 'Office of Transmutations',
   shortName: 'Transmutations',
-  description: 'Most of the workers are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the [[bar]]. While most of the hallways are blocked off by swathes of alchemical gear, you can just squeeze through to one, with an orante sign for [[Dye Machines->dyes]]. Or you can return to the [[Guild Hall->exploreHub]].'
+  description: 'Most of the workers are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the [[bar]]. While most of the hallways are blocked off by swathes of alchemical gear, you can just squeeze through to one, with an ornate sign for [[Dye Machines->dyes]]. Or you can return to the [[Guild Hall->exploreHub]].'
 }
 // Right now I am *fairly* sure this leads into *exactly* the modals of 2020's 'rainbow door' and 'dull door', the text of which is way over in /src/components/feature. TO DO: update that text.
 
