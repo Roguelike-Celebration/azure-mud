@@ -387,6 +387,7 @@ const App = () => {
                       messages={state.messages}
                       autoscrollChat={state.autoscrollChat}
                       serverSettings={state.serverSettings}
+                      captionsEnabled={state.captionsEnabled}
                     />
                     <InputView
                       prepopulated={state.prepopulatedInput}
