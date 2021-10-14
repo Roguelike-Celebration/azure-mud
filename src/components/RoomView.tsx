@@ -244,7 +244,7 @@ export default function RoomView (props: Props) {
           )}
         {room &&
         room.riddles ? (
-            <button id='riddle-button' onClick={showRiddles}>{room.riddles.length > 1 ? 'Examine the Riddles' : 'Examine the Riddle'}</button>  
+            <button id='riddle-button' onClick={showRiddles}>{room.riddles.length > 1 ? 'Examine the Riddles' : 'Examine the Riddle'}</button>
           ) : (
             ''
           )}
