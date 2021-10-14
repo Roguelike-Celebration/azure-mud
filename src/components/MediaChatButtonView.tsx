@@ -73,12 +73,18 @@ const MediaChatButtonView = (props: Props) => {
   }
 
   const toggleAudioOnlyMode = () => {
-    const prompt = confirm(
-      'Entering audio-only mode will hide all video feeds from other attendees. ' +
+    let text
+    if (props.audioOnlyMode) {
+      text =
+        'Disabling audio-only mode will show you others&apos; webcam feeds. ' +
+        'This will not affect whether or not you are sending your own webcam feed to others.'
+    } else {
+      text = 'Entering audio-only mode will hide all video feeds from other attendees. ' +
         "You will still be able to hear them, but you won't see them. This may improve performance if things are slow.\n\n" +
         'Note that you will still broadcast your webcam feed to others if you enable it, and you will ' +
         'still be able to see the talks broadcast in the Theater.'
-    )
+    }
+    const prompt = confirm(text)
     if (prompt) {
       dispatch(SetAudioOnlyModeAction(!props.audioOnlyMode))
     }
