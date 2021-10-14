@@ -20,6 +20,7 @@ export const TwilioChatContextProvider = (props: {
   const [token, setToken] = useState<string>()
   const [roomId, setRoomId] = useState<string>()
   const [room, setRoom] = useState<Twilio.Room>()
+  const [joinCallFailed, setJoinCallFailed] = useState<boolean>(false)
 
   const [micEnabled, setMicEnabled] = useState<boolean>(true)
   const [cameraEnabled, setCameraEnabled] = useState<boolean>(true)
@@ -285,7 +286,10 @@ export const TwilioChatContextProvider = (props: {
       // joining the *previous* room before the Twilio.connect resolved and booted them with non-functioning tracks
       // into the new room.
       setRoom(undefined)
+      // TODO: We should have error handling for various Twilio error codes, probably.
+      // throw 'Uncomment this to simulate a Twilio failure.'
       const newRoom = await Twilio.connect(token, opts)
+      setJoinCallFailed(false)
 
       // Note that dominantSpeaker can be set to null
       newRoom.on('dominantSpeakerChanged', (participant: Twilio.Participant) => {
@@ -358,6 +362,8 @@ export const TwilioChatContextProvider = (props: {
       setRoom(newRoom)
     } catch (e) {
       console.log('[TWILIO] Could not connect to room', e)
+      setLocalStreamView(null)
+      setJoinCallFailed(true)
     }
   }
 
@@ -418,6 +424,8 @@ export const TwilioChatContextProvider = (props: {
         unpublishMedia,
         publishAudio,
 
+        inCall: !!room,
+        joinCallFailed: joinCallFailed,
         joinCall,
         leaveCall,
 

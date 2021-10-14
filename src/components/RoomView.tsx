@@ -44,6 +44,7 @@ export default function RoomView (props: Props) {
     currentCamera,
     publishingCamera,
     publishingMic,
+    inCall,
     joinCall,
     publishMedia,
     publishAudio,
@@ -205,10 +206,10 @@ export default function RoomView (props: Props) {
     } else {
       chatButtons = [
         <button key="join-video" onClick={joinVideoChat} id="join-video-chat">
-          Join Video + Audio
+          { inCall ? 'Join Video + Audio' : <s>Join Video + Audio</s> }
         </button>,
         <button key="join-audio" onClick={joinAudioChat} id="join-video-chat">
-          Join Audio
+          { inCall ? 'Join Audio' : <s>Join Audio</s> }
         </button>,
         <button key="text-only-mode" onClick={enableTextOnlyMode} id="toggle-text-only-mode">
           Enable Text Only Mode

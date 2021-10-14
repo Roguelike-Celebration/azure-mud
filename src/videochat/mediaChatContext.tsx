@@ -24,6 +24,8 @@ export const MediaChatContext = React.createContext<MediaChatContextProps>({
 
   localStreamView: React.createElement('div'),
 
+  inCall: false,
+  joinCallFailed: false,
   joinCall: nie,
   leaveCall: () => console.log('Not implemented'),
 
@@ -55,6 +57,8 @@ type MediaChatContextProps = {
 
     localStreamView: React.ReactNode
 
+    inCall: boolean
+    joinCallFailed: boolean // true if joinCall has thrown an exception
     joinCall: (room: string, keepCameraWhenMoving: boolean) => void
     leaveCall: () => void
     // The Twilio implementation has an object referencing the active call.
