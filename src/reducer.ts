@@ -59,6 +59,9 @@ export interface State {
 
   prepopulatedInput?: string;
 
+  // Settings data
+  useSimpleNames?: boolean;
+
   /** This is poorly named, but being "in media chat" means "is publishing audio and/or video" */
   inMediaChat: boolean;
   keepCameraWhenMoving?: boolean;
@@ -449,6 +452,11 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.ActivateAutoscroll) {
     state.autoscrollChat = true
+  }
+
+  if (action.type === ActionType.SetUseSimpleNames) {
+    state.useSimpleNames = action.value
+    Storage.setUseSimpleNames(action.value)
   }
 
   if (action.type === ActionType.SetKeepCameraWhenMoving) {

@@ -16,7 +16,8 @@ import {
   PlayerBannedAction,
   SetKeepCameraWhenMovingAction,
   SetTextOnlyModeAction,
-  SetNumberOfFacesAction
+  SetNumberOfFacesAction,
+  SetUseSimpleNamesAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -56,6 +57,7 @@ import _ from 'lodash'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
+export const SettingsContext = createContext(null)
 export const IsMobileContext = createContext(null)
 
 const App = () => {
@@ -124,6 +126,8 @@ const App = () => {
             )
           }
 
+          const useSimpleNames = await Storage.getUseSimpleNames()
+          dispatch(SetUseSimpleNamesAction(useSimpleNames))
           const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
           dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
           const textOnlyMode = await Storage.getTextOnlyMode()
@@ -328,68 +332,70 @@ const App = () => {
 
   const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
-  // TODO: active=false should be a real value
+  // TODO: userMapContext should actually do the thing
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
         <TwilioChatContextProvider active={!state.textOnlyMode}>
           <IsMobileContext.Provider value={isMobile}>
-            <UserMapContext.Provider
-              value={{ userMap: state.userMap, myId: state.userId }}
-            >
-              <div
-                id={
-                  state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
-                }
+            <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
+              <UserMapContext.Provider
+                value={{ userMap: state.userMap, myId: state.userId }}
               >
-                {shouldShowMenu ? (
-                  <span>
-                    <SideNavView
-                      roomData={state.roomData}
-                      currentRoomId={state.roomId}
-                      username={state.userMap[state.userId].username}
-                      spaceIsClosed={state.isClosed}
-                    />
-                    {/* Once we moved the sidebar to be position:fixed, we still
-                  needed something to take up its space in the CSS grid.
-                  This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                    <div id="side-nav-placeholder" />
-                  </span>
-                ) : (
-                  <button id="show-menu" onClick={showMenu}>
-                    <span role="img" aria-label="menu">
-                      🍔
+                <div
+                  id={
+                    state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
+                  }
+                >
+                  {shouldShowMenu ? (
+                    <span>
+                      <SideNavView
+                        roomData={state.roomData}
+                        currentRoomId={state.roomId}
+                        username={state.userMap[state.userId].username}
+                        spaceIsClosed={state.isClosed}
+                      />
+                      {/* Once we moved the sidebar to be position:fixed, we still
+                    needed something to take up its space in the CSS grid.
+                    This should be fixable via CSS, but sigh, it's 3 days before the event */}
+                      <div id="side-nav-placeholder" />
                     </span>
-                  </button>
-                )}
-                {modalView}
-                <div id="main" role="main">
-                  {state.roomData[state.roomId] ? (
-                    <RoomView
-                      room={state.roomData[state.roomId]}
-                      userId={state.userId}
-                      roomData={state.roomData}
-                      inMediaChat={state.inMediaChat}
-                      keepCameraWhenMoving={state.keepCameraWhenMoving}
-                      textOnlyMode={state.textOnlyMode}
-                      mediaChatView={videoChatView}
+                  ) : (
+                    <button id="show-menu" onClick={showMenu}>
+                      <span role="img" aria-label="menu">
+                        🍔
+                      </span>
+                    </button>
+                  )}
+                  {modalView}
+                  <div id="main" role="main">
+                    {state.roomData[state.roomId] ? (
+                      <RoomView
+                        room={state.roomData[state.roomId]}
+                        userId={state.userId}
+                        roomData={state.roomData}
+                        inMediaChat={state.inMediaChat}
+                        keepCameraWhenMoving={state.keepCameraWhenMoving}
+                        textOnlyMode={state.textOnlyMode}
+                        mediaChatView={videoChatView}
+                      />
+                    ) : null}
+                    <ChatView
+                      messages={state.messages}
+                      autoscrollChat={state.autoscrollChat}
+                      serverSettings={state.serverSettings}
                     />
-                  ) : null}
-                  <ChatView
-                    messages={state.messages}
-                    autoscrollChat={state.autoscrollChat}
-                    serverSettings={state.serverSettings}
-                  />
-                  <InputView
-                    prepopulated={state.prepopulatedInput}
-                    sendMessage={(message) =>
-                      dispatch(SendMessageAction(message))
-                    }
-                  />
+                    <InputView
+                      prepopulated={state.prepopulatedInput}
+                      sendMessage={(message) =>
+                        dispatch(SendMessageAction(message))
+                      }
+                    />
+                  </div>
+                  {profile}
                 </div>
-                {profile}
-              </div>
-            </UserMapContext.Provider>
+              </UserMapContext.Provider>
+            </SettingsContext.Provider>
           </IsMobileContext.Provider>
         </TwilioChatContextProvider>
       </DispatchContext.Provider>
