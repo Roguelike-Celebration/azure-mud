@@ -3,7 +3,7 @@ import { unconference, cockatrice, dragon, naga, skeleton, tengu, yak } from './
 import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
-import { ASCII, Oracle, jelly, vault } from './oldHub'
+import { oldHubRoomData } from './oldHub'
 import { exploreHub, transmute, dyes, doctorPaint, shower, victuals, quest, steam } from './exploreHub'
 
 export interface NoteWallData {
@@ -154,10 +154,6 @@ const indexRoomData: { [name: string]: Room } = {
   robots,
   timeMachine,
   vendingMachine,
-  ASCII,
-  Oracle,
-  jelly,
-  vault,
   exploreHub,
   transmute,
   dyes,
@@ -198,5 +194,6 @@ const indexRoomData: { [name: string]: Room } = {
 
 export const roomData: { [name: string]: Room } = {
   ...indexRoomData,
-  ...loungeDungeonRoomData
+  ...loungeDungeonRoomData,
+  ...oldHubRoomData
 }

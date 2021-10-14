@@ -13,7 +13,7 @@ interface MediaProps {
 }
 
 export default function MediaChatView (props: MediaProps) {
-  const { publishingCamera, callParticipants } = useMediaChatContext()
+  const { publishingCamera, callParticipants, inCall, joinCallFailed } = useMediaChatContext()
 
   // TODO: The show/hide video bar is implemented without changing what's rendered - all it does right now is sets the
   // size of the container to height=0. Ideally we'd actually not render the video tracks as video.
@@ -28,6 +28,12 @@ export default function MediaChatView (props: MediaProps) {
 
   console.log('Re-rendering media chat view?')
 
+  if (!inCall) {
+    return <div id="media-wrapper">
+      { joinCallFailed ? <strong>Could not connect to audio/video! Rooms are max 50 chatters - if you want to use audio/video, try moving to another room. Otherwise, it may be a network issue.</strong> : <strong>Attempting to connect to room.</strong> }
+      { showVideoBar ? <div id="media-view" /> : '' }
+    </div>
+  }
   if (!callParticipants) {
     return <div id="media-view" />
   }

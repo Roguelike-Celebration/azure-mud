@@ -17,15 +17,12 @@ export const RainbowGateRoomView = () => {
 
   const jumpThroughGate = async () => {
     const newVisits = await incrementGateVisits()
-    if (newVisits > 3) {
-      dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
-    }
-
+    dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
     dispatch(ShowModalAction(Modal.FeatureRainbowGate))
   }
 
   return <div id="rainbow-gate-div" className="feature-room-view">
-    <p>Do you, in fact, approach the chair?<button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Approach the chair.</button></p>
+    <p>Do you, in fact, approach the chair? <button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Approach the chair.</button></p>
   </div>
 }
 
