@@ -25,7 +25,8 @@ export const timeMachine = {
   displayName: 'Space Hanger - Strange Device',
   shortName: 'strange item',
   hidden: true,
-  description: 'You can\'t get the machine to turn on, no matter what you do, plug in or unplug. However, there is an inscription on it.</br></br>A grid of glyphs in rows arrayed,</br>Is how I\'ll tell your tale;</br>From decades past to present day,</br>My codepage has prevailed;</br>Tiles are fine if you have have time,</br> But I shall never stale;</br>Now speak my name as if you\'d /go,</br>And I shall fill your sail.</br></br>Go back to the [[Spacehanger->sfHub]].'
+  riddles: ['A grid of glyphs in rows arrayed,\nIs how I\'ll tell your tale;\nFrom decades past to present day,\nMy codepage has prevailed;\nTiles are fine if you have have time,\nBut I shall never stale;\nNow speak my name as if you\'d /go,\nAnd I shall fill your sail.'],
+  description: 'You can\'t get the machine to turn on, no matter what you do, plug in or unplug. However, there is an inscription on it, that examined closely appears to be a riddle...</br></br>Go back to the [[Spacehanger->sfHub]].'
 }
 
 export const vendingMachine = {

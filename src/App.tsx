@@ -46,6 +46,7 @@ import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import HappeningNowView from './components/HappeningNowView'
 import VerifyEmailView from './components/VerifyEmailView'
 import EmailVerifiedView from './components/EmailVerifiedView'
+import RiddleModalView from './components/RiddleModal'
 import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import { shouldVerifyEmail } from './firebaseUtils'
@@ -303,6 +304,11 @@ const App = () => {
     }
     case Modal.FeatureFullRoomIndex: {
       innerModalView = <FullRoomIndexModalView rooms={Object.values(state.roomData)}/>
+      break
+    }
+    case Modal.Riddles: {
+      const room = state.roomData[state.roomId]
+      innerModalView = <RiddleModalView riddles={room.riddles}/>
       break
     }
   }

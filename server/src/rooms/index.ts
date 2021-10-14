@@ -4,7 +4,7 @@ import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
 import { ASCII, Oracle, jelly, vault } from './oldHub'
-import { exploreHub, transmute, lights, victuals, quest, steam } from './exploreHub'
+import { exploreHub, transmute, dyes, doctorPaint, shower, victuals, quest, steam } from './exploreHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -52,6 +52,8 @@ export interface Room {
   // This should hopefully eventually be auto-generated and mandatory
   // but hand-coding for testing purposes now
   chatGuid?: string
+
+  riddles?: string[]
 }
 
 const indexRoomData: { [name: string]: Room } = {
@@ -134,7 +136,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Booth at the Back',
     shortName: 'the booth at the back',
     description: `A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>
-      From here, you can see tables [[at the railing->railing]] or [[along the bar->stools]], and the [[rest of the bar->bar]]`
+      From here, you can see tables [[at the railing->railing]] or [[along the bar->stools]], and the [[rest of the bar->bar]].`
   },
   theater,
   warrior,
@@ -158,7 +160,9 @@ const indexRoomData: { [name: string]: Room } = {
   vault,
   exploreHub,
   transmute,
-  lights,
+  dyes,
+  doctorPaint,
+  shower,
   victuals,
   quest,
   steam,

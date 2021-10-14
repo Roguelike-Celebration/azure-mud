@@ -4,7 +4,8 @@ import { UpdateProfileColorAction, ShowModalAction, HideModalAction } from '../.
 import { Modal } from '../../modals'
 import * as Storage from '../../storage'
 
-// When you pass through the ranbow door enough times, you get a randomly colored username
+// When you pass through the rainbow door enough times, you get a randomly colored username.
+// This undoes that.
 export const DullDoorRoomView = () => {
   const dispatch = React.useContext(DispatchContext)
   const { userMap, myId } = useContext(UserMapContext)
@@ -21,7 +22,7 @@ export const DullDoorRoomView = () => {
   }
 
   return <div id="dull-door-div" className="feature-room-view">
-    <p>There is the boringest door imaginable standing in front of you. <button id="dull-door-button" className='link-styled-button' onClick={walkThroughDoor}>Walk through the door</button>.</p>
+    <p>Inside the glass tube there&apos;s nothing in particular, though you note that there&apos;s a grate on the floor. A damp sign next to the tube&apos;s opening says &quot;Secondarily-Hydrogenated Oxygen Weighted Emulsion Remover&quot;. A smaller sign below that reads &quot;For Dirts, Dyes, and Distress!&quot; <button id="dull-door-button" className='link-styled-button' onClick={walkThroughDoor}>Step on the grate</button>.</p>
   </div>
 }
 
@@ -47,33 +48,17 @@ export default function DullDoorModalView () {
   if (!wasColoredEntering) {
     return (
       <div>
-        <h1>You see a very, very bored Octopode sitting in a cubicle.</h1>
-        <p>It&apos;s poking unenthusiastically at his computer with four of his tentacles and eating his lunch with the rest. It
-          looks very tired. You wave to catch its attention, and it glances over at you. You can see it trying to muster some
-          effort for a greeting, but then it sighs and sinks into its seat. &quot;I&apos;m sorry,&quot; it says, &quot;these reports were due two
-          days ago. I don&apos;t have the time or energy to chat.&quot;
-        </p>
-        <p>You leave it to its reports.</p>
+        <h1>Refreshing!</h1>
+        <p>As you step into the tube, the grating beneath you depresses and clicks. Suddenly the machine gurgles and from openings the top of the tube, warm Secondarily-Hydrogenated Oxygen (miracle of the modern age!) streams down on you and rinses any Dirts, Dyes, or Distress you may have accrued away. It&apos;s soothing, in its own odd way, but you aren&apos;t sure this so-called S.H.O.W.E.R. will catch on with the masses.</p>
       </div>
     )
   } else {
     return (
       <div>
-        <h1>You see a very, very bored octopode sitting in a cubicle.</h1>
-        <p>It&apos;s poking unenthusiastically at his computer with four tentacles and eating lunch with the rest. As it spots you, its eyes go wide. A coffee mug in one tentacle drops to its desk with a loud thump, and a fork in another clatters to the ground.
-        </p>
-        <p>&quot;Oh!&quot; it shouts, &quot;Stay right where you are!&quot;. Before you can even turn to the door, the octopode jets in front of you
-          in a cloud of dark gray smoke.</p>
-        <p>&quot;Look,&quot; says the octopode, &quot;I&apos;m begging you! You don&apos;t know how dull this place is, and I&apos;ve been
-          stuck here for the last four nights doing these reports! They&apos;re overdue two days and they won&apos;t let me leave
-          until they&apos;re done!&quot;</p>
-
-        <p>&quot;That color you have in your name, that&apos;ll do the trick! I don&apos;t have time to explain, but suffice it to say I&apos;m in a very tight spot and that color will fix things.&quot;</p>
-        <p>&quot;You&apos;re free to go either way, but I&apos;d be really grateful if you could leave me your
-          color.&quot;</p>
-
-        <p><strong>Leave your name color behind?</strong></p>
-        <button id='dull-door-agree' onClick={giveColor}>Agree</button>
+        <h1>Could be refreshing?</h1>
+        <p>You tentatively press a toe onto the grate. Suddenly the machine gurgles and from openings the top of the tube, warm Secondarily-Hydrogenated Oxygen (miracle of the modern age!) streams down! It certainly seems like any Dirts, Dyes, or Distress you may have accrued will be washed away if you step in fully. It&apos;ll probably be refreshing, but it will <em>definitely</em> take the paint from the doctor(?) with it.</p>
+        <p><strong>Fully enter the S.H.O.W.E.R.?</strong></p>
+        <button id='dull-door-agree' onClick={giveColor}>Enter</button>
         <button id='dull-door-agree' onClick={leave}>Leave</button>
       </div>
     )

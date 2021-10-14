@@ -17,16 +17,12 @@ export const RainbowGateRoomView = () => {
 
   const jumpThroughGate = async () => {
     const newVisits = await incrementGateVisits()
-    if (newVisits > 3) {
-      dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
-    }
-
+    dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
     dispatch(ShowModalAction(Modal.FeatureRainbowGate))
   }
 
   return <div id="rainbow-gate-div" className="feature-room-view">
-    <p>There&apos;s an ornate stone gate, through which you see a many-colored maelstrom. In front of the gate is a
-      sloppily-written wooden sign. It reads &quot;Please do not jump through the gate.&quot; <button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Jump through the gate!</button></p>
+    <p>Do you, in fact, approach the chair? <button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Approach the chair.</button></p>
   </div>
 }
 
@@ -44,41 +40,19 @@ export default function RainbowGateModalView () {
   if (visits === 1) {
     return (
       <div>
-        <h1>You experience something truly wonderful.</h1>
-        <p>You leap through the gate, and immediately your senses are overwhelmed with the colors and, uh. The, uh, colors of
-          the...unimaginable! It is a truly mindbending experience. You can feel indigo and smell purple, which, okay, yes, I&apos;ve
-          heard of synesthesia before, yes, no, no, I&apos;m aware.</p>
-        <p>Look, Jessie, I told you, I&apos;m a doctor, not a writer.</p>
-        <p>Okay there&apos;s a reason why I put that sign up, we&apos;ll just have to deal with these fine folk coming through here until
-          the portal repair guy comes Monday and then -
-        </p>
-        <p>Yes, yes, okay, look, thanks for visiting, sorry we&apos;re a little bit busy, would you mind just closing the window and
-          being on your way? Yes, thank you. We appreciate it.</p>
-      </div>
-    )
-  } else if (visits === 2) {
-    return (
-      <div>
-        <h1>Oh, it&apos;s you again.</h1>
-        <p>Oh, hey, not to be, uh, not to be touchy or anything but we&apos;d appreciate it if you stopped portaling through our
-          living room. You might not notice but uh, you&apos;re kind of leaving an ectoplasmic wake as you pass through which is
-          going to be really annoying to clean up, so...we would really appreciate if you stopped.
-        </p>
-      </div>
-    )
-  } else if (visits === 3) {
-    return (
-      <div>
-        <h1>Please stop it.</h1>
-        <p>No, seriously. I&apos;ve asked you politely and Jessie is getting very cross. If you come back through there will be Consequences.</p>
+        <h1>It&apos;s a miracle of modern science!</h1>
+        <p>&quot;Oho! Why, you&apos;ve arrived just in time for the most amazing experience you&apos;ll ever... experience! Just sit in this chair, pull that lever, and you&apos;ll in for a truly eye-opening journey. Why, it&apos;s a miracle of modern science!&quot;</p>
+        <p>You sit in the chair (it&apos;s not especially comfortable and it&apos;s... slightly wet?) and pull the lever. There&apos;s a shudder as the machine rumbles to life and things start happening. Gears spin, lightning arcs up two metal trusses you hadn&apos;t noticed. Your hair begins to stand on end. The doctor (you didn&apos;t see any diplomas, so who&apos;s to say?) starts to cackle wildly, yelling, &quot;It works! It WORKS!&quot; to no one in particular. The machine&apos;s hum hits a crescendo when suddenly everything comes to a stop. All is silence. You wait for a moment when you hear a buzz above you.</p>
+        <p>Looking up, you see a mechanical arm holding a bucket extend out and rotate, spilling a bucket of paint all over you. &quot;Yes!&quot; yells the doctor (?) &quot;They said it couldn&apos;t be done! Now... if you&apos;ll excuse me, I need to clean the paint off the chair.&quot; They hold up a sponge and bucket of water and gesture at you to make yourself scarce.</p>
+        <p><em>Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></em>.</p>
       </div>
     )
   } else {
     return (
       <div>
-        <h1>Okay, that&apos;s enough.</h1>
-        <p>You won&apos;t listen. You&apos;ve been asked repeatedly not to, and you won&apos;t listen. I&apos;m breaking out the curses now and
-          you&apos;ve nobody to blame but yourself.</p>
+        <h1>Back for more?</h1>
+        <p>The ambiguously credentialed operator gives you a nod. &quot;Back for more, huh? Er, wait, no. I mean... *ahem* So! You&apos;ve returned for another glimpse at the uncanny realities beyond human perception! Well sit right down and pull yon lever, my friend.&quot; They floridly gesture to the chair at the center of the paint-dumping apparatus.</p>
+        <p>You pull the lever and nothing appears to happen. Then the machine operator runs up with a bucket of paint and spills it all over you. &quot;So sorry, we only have the aetheric budget to do the big show once per person. Grant writing, am I right?&quot; They look you over. &quot;You know, you don&apos;t look that different to me, but what do I know?&quot; They tap the multi-lensed googles obscuring most of their face. &quot;With these things on it&apos;s a wonder I can see at all. Everything is coming through like an original Game Boy screen.&quot;</p>
         <p><em>Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></em>.</p>
       </div>
     )
