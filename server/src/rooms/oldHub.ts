@@ -6,7 +6,7 @@ export const oldHubRoomData = {
     id: 'ASCII',
     displayName: 'The Hash Mark Dungeon',
     shortName: '# dungeon',
-    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand three statues - a hobbit, a tree, and a crocodile. Each has a riddle engraved in its base.</br></br>A door behind you leads through the twisty passages, back to the [[Space Hanger->sfHub]].',
+    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a salmon, and a crocodile. Each has a riddle engraved in its base.</br></br>A door behind you leads through the twisty passages, back to the [[Space Hanger->sfHub]].',
     hasNoteWall: true,
     hidden: true,
     noMediaChat: true,
@@ -20,7 +20,8 @@ export const oldHubRoomData = {
     riddles: [
       'There once was a roguelike programmer,\nWhose game worked procedurally;\nThe output was same-y:\nThe play of the game-y,\nWas ten thousand bowls of me.',
       'Before I went a-questing,\nI was but a simple tree;\n\'Til once an artificer came,\nAnd cut myself from me;\nThe energies in me infused,\nI cannot understand;\nBut take my firmly in thy grip,\nAnd lightning you\'ll command.',
-      'I don\'t quite belong here,\nThat much is clear;\nThe brochure understated,\nThe peril and fear;\nBut I set to make the best of it,\nAnd site-see what I can;\nI took lots of photos,\nOf the things from which I ran.'
+      'I don\'t quite belong here,\nThat much is clear;\nThe brochure understated,\nThe peril and fear;\nBut I set to make the best of it,\nAnd site-see what I can;\nI took lots of photos,\nOf the things from which I ran.',
+      '"You\'ll go down, then up again;\nOr you\'ll go there and back.\nYou\'ll find me on the overmap,\nBut off of the beaten track.\nI\'m monster, loot, and cunning trap;\nI\'m corridor and room.\nI\'m big bad, orb, and re-ascent,\nAnd of course, I am your doom."'
     ]
   },
   Oracle: {
