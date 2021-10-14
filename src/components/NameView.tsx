@@ -83,6 +83,9 @@ export default function NameView (props: { userId: string; id?: string; nowrap?:
   if (user && user.nameColor) {
     className = className + ' ' + user.nameColor
   }
+  if (user && user.fontReward) {
+    className = className + ' font-' + user.fontReward
+  }
   // TODO: should be best handled via css
   const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
   return (

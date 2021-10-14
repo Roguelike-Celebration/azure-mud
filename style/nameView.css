@@ -69,3 +69,13 @@ span.name {
 .name.Yellow {
   color: var(--yellow)
 }
+
+.name.font-Comic {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+}
+.name.font-Classic {
+  font-family: 'TerminalFont';
+}
+.name.font-Impactful {
+  font-family: 'Oswald';
+}

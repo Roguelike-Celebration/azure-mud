@@ -61,6 +61,7 @@ export type Action =
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
+  | UpdateFontRewardAction
 
 export enum ActionType {
   // Server-driven action
@@ -86,6 +87,7 @@ export enum ActionType {
   PlayerBanned = 'PLAYER_BANNED',
   PlayerUnbanned = 'PLAYER_UNBANNED',
   UpdateProfileColor = 'UPDATE_PROFILE_COLOR',
+  UpdateFontReward = 'UPDATE_FONT_REWARD',
   // WebRTC
   StopVideoChat = 'STOP_VIDEO_CHAT',
   StartVideoChat = 'START_VIDEO_CHAT',
@@ -450,6 +452,18 @@ export const UpdateProfileColorAction = (color: string): UpdateProfileColorActio
   return {
     type: ActionType.UpdateProfileColor,
     color: color
+  }
+}
+
+interface UpdateFontRewardAction {
+  type: ActionType.UpdateFontReward,
+  font: string
+}
+
+export const UpdateFontRewardAction = (font: string): UpdateFontRewardAction => {
+  return {
+    type: ActionType.UpdateFontReward,
+    font: font
   }
 }
 

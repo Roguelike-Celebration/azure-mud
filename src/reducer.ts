@@ -25,10 +25,11 @@ import {
   toggleUserBan,
   toggleUserMod,
   updateProfileColor,
+  updateFontReward,
   fetchProfile,
   sendCaption
 } from './networking'
-import { PublicUser, MinimalUser } from '../server/src/user'
+import { PublicUser, MinimalUser, updateUserFontReward } from '../server/src/user'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
@@ -295,6 +296,19 @@ export default (oldState: State, action: Action): State => {
     }
 
     updateProfileColor(state.userId, action.color)
+  }
+
+  if (action.type === ActionType.UpdateFontReward) {
+    state.userMap[state.userId].fontReward = action.font
+
+    // I'm following the pattern of the set colour but... I don't think the user sees these message, and they aren't errors, why do we do this?
+    if (action.font) {
+      addMessage(state, createErrorMessage('You feel invigorated, and like you\'ve become more... ' + action.font))
+    } else {
+      addMessage(state, createErrorMessage('You feel yourself return to your normal state, like you never went riddling to begin with.'))
+    }
+
+    updateFontReward(state.userId, action.font)
   }
 
   if (action.type === ActionType.Error) {

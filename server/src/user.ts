@@ -20,6 +20,7 @@ export interface MinimalUser {
   nameColor?: string;
   item?: string
   polymorph?: string;
+  fontReward?: string;
 }
 
 // A user profile. Users may fetch this about other users.
@@ -123,6 +124,14 @@ export async function updateUserProfileColor (userId: string, color: string): Pr
   return minimizeUser(profile)
 }
 
+export async function updateUserFontReward (userId: string, font: string): Promise<MinimalUser> {
+  const profile: User = await DB.getUser(userId)
+  profile.fontReward = font
+  await DB.setUserProfile(userId, profile)
+
+  return minimizeUser(profile)
+}
+
 export async function getFullUser (userId: string): Promise<User | undefined> {
   const profile = await DB.getUser(userId)
   if (!profile) return
@@ -146,7 +155,8 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     nameColor: user.nameColor,
     item: user.item,
     polymorph: user.polymorph,
-    isMod: user.isMod
+    isMod: user.isMod,
+    fontReward: user.fontReward
   }
 
   return minimalUser
