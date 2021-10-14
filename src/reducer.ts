@@ -58,6 +58,7 @@ export interface State {
 
   prepopulatedInput?: string;
 
+  /** This is poorly named, but being "in media chat" means "is publishing audio and/or video" */
   inMediaChat: boolean;
   keepCameraWhenMoving?: boolean;
   textOnlyMode?: boolean;

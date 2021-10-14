@@ -5,23 +5,18 @@ import LocalMediaView from './LocalMediaView'
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import ParticipantChatView from './ParticipantChatView'
+import MediaChatButtonView from './MediaChatButtonView'
+import { StatsReport } from 'twilio-video'
 
 interface MediaProps {
   visibleSpeakers: [string, Date][]
   currentSpeaker: string
   numberOfFaces: number
+  inMediaChat: boolean
 }
 
 export default function MediaChatView (props: MediaProps) {
   const { publishingCamera, callParticipants, inCall, joinCallFailed } = useMediaChatContext()
-
-  // TODO: The show/hide video bar is implemented without changing what's rendered - all it does right now is sets the
-  // size of the container to height=0. Ideally we'd actually not render the video tracks as video.
-  const [showVideoBar, setShowVideoBar] = useState(true)
-
-  const toggleVideoBar = () => {
-    setShowVideoBar(!showVideoBar)
-  }
 
   // TODO: props.visibleSpeakers should never be undefined, but it is?!
   const visibleSpeakers = (props.visibleSpeakers || []).map(x => x[0])
@@ -31,7 +26,7 @@ export default function MediaChatView (props: MediaProps) {
   if (!inCall) {
     return <div id="media-wrapper">
       { joinCallFailed ? <strong>Could not connect to audio/video! Rooms are max 50 chatters - if you want to use audio/video, try moving to another room. Otherwise, it may be a network issue.</strong> : <strong>Attempting to connect to room.</strong> }
-      { showVideoBar ? <div id="media-view" /> : '' }
+      <div id="media-view" />
     </div>
   }
   if (!callParticipants) {
@@ -83,19 +78,17 @@ export default function MediaChatView (props: MediaProps) {
   // If we're showing the bar, we don't override the height; if we're hiding we force it to 0.
   // We still want it to render the audioParticipants, so that's why we still paint it.
   // TODO: this is jank
-  const customStyle = { height: showVideoBar ? undefined : '0px' }
+  const customStyle = { height: videoParticipants.length > 0 || playerVideo ? undefined : '0px' }
   return (
     <div id="media-wrapper">
-      <label>
-        {participants ? participants.length : 0} other chatters (
-        {showVideoBar ? audioParticipants.length : 'all'} offscreen).{' '}
-      </label>
-      <button id={'button-toggle-video-bar'} onClick={() => toggleVideoBar()} className='link-styled-button'>
-        {showVideoBar ? 'Hide Video Bar' : 'Show Video Bar'}
-      </button>
       <div id="media-view" style={customStyle}>
         {playerVideo} {videoParticipants} {audioParticipants}
       </div>
+      <MediaChatButtonView
+        textOnlyMode={false}
+        inMediaChat={props.inMediaChat}
+        offscreenCount={audioParticipants.length}
+      />
     </div>
   )
 }

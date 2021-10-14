@@ -210,6 +210,7 @@ const App = () => {
         visibleSpeakers={state.visibleSpeakers}
         currentSpeaker={state.currentSpeaker}
         numberOfFaces={state.numberOfFaces}
+        inMediaChat={state.inMediaChat}
       />
     )
   }
@@ -348,18 +349,17 @@ const App = () => {
                     {/* Once we moved the sidebar to be position:fixed, we still
                   needed something to take up its space in the CSS grid.
                   This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                    <div id='side-nav-placeholder' />
+                    <div id="side-nav-placeholder" />
                   </span>
                 ) : (
                   <button id="show-menu" onClick={showMenu}>
                     <span role="img" aria-label="menu">
-                    🍔
+                      🍔
                     </span>
                   </button>
                 )}
                 {modalView}
                 <div id="main" role="main">
-                  {videoChatView}
                   {state.roomData[state.roomId] ? (
                     <RoomView
                       room={state.roomData[state.roomId]}
@@ -368,9 +368,14 @@ const App = () => {
                       inMediaChat={state.inMediaChat}
                       keepCameraWhenMoving={state.keepCameraWhenMoving}
                       textOnlyMode={state.textOnlyMode}
+                      mediaChatView={videoChatView}
                     />
                   ) : null}
-                  <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
+                  <ChatView
+                    messages={state.messages}
+                    autoscrollChat={state.autoscrollChat}
+                    serverSettings={state.serverSettings}
+                  />
                   <InputView
                     prepopulated={state.prepopulatedInput}
                     sendMessage={(message) =>
