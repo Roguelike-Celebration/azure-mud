@@ -24,8 +24,8 @@ export const oldHubRoomData = {
       '"You\'ll go down, then up again;\nOr you\'ll go there and back.\nYou\'ll find me on the overmap,\nBut off of the beaten track.\nI\'m monster, loot, and cunning trap;\nI\'m corridor and room.\nI\'m big bad, orb, and re-ascent,\nAnd of course, I am your doom."'
     ]
   },
-  Oracle: {
-    id: 'Oracle',
+  oracle: {
+    id: 'oracle',
     displayName: 'Oracle',
     shortName: 'oracle',
     hidden: true,
