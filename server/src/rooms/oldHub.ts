@@ -47,8 +47,23 @@ export const oldHubRoomData = {
     noMediaChat: true,
     description: `You invoke the spell you've discovered and the world melts around you. You had been standing in the conference hall; now you're floating in an endless abyss. No, that's not right: you're *falling through* it, from the material plane to a realm of pure, elemental chaos. Wild, fantastical shapes emerge from swirling mists as you descend, nightmares made real that advance upon you only to be torn apart and dissolve back into mist. Eventually your hellish journey ends and you land, with essentially no fanfare, at the very center of the Wild Chaos Pit.
     </br></br>You're in a small room with off-white walls and no exits. There's a desk with some kind of demon in a poorly fitted suit, typing away on a computer terminal. It spares you a glance as you enter and greets you in a droning monotone. ""Oh, hello. Welcome to the Wild Chaos Pit. Cower in fear at our terrifying splendor."" The demon gestures to an inspiration poster of a skeleton hanging from a telephone wire as evidence of this. ""We would like to take this opportunity to thank you for your assistance in our mission. The forces of Chaos have had a great quarter, and we could not have succeeded in meeting our operational goals without the dedication and support of you, the player. Please avail yourself of our fabulous facilities before returning to your realm."" The demon, their speech finished, turns their attention back to the computer. Without looking up, they drone: ""Oh, my apologies. Before returning to your realm, *mortal*.""
-    </br></br>Apart from the desk and skeleton poster, the room is minimally furnished. Beneath a banner that says ""Division Leaders 3Q21! Grab your Swag!"" there's a large pile of what appear to be Orbs of Zot. Another, even bigger pile contains what must be thousands of Amulets of Yendor, and the third ""pile"" is a single, already-opened box of 8 crayons.</br></br>""Exit through the gift shop,"" says the demon. ""Emphasis on exit."" They nod at the other end of the room, where four pentagrams are etched into the floor.
-    </br></br>One pentagram looks very [[high tech->pentagramHighTech]]. Another is more [[minimalist and austere->pentagramMinimalist]]. A third is [[wavey and almost comical->pentagramComical]]. The last pentagram seems somehow [[extremely normal->pentagramNormal]].`
+    </br></br>Apart from the desk and skeleton poster, the room is minimally furnished. There's some sort of [[swag table->pitSwag]] you can investigate. ""Exit through the gift shop,"" says the demon. ""Emphasis on exit."" They nod at the other end of the room, where [[four pentagrams->pitPentagrams]] are etched into the floor.`
+  },
+  pitSwag: {
+    id: 'pitSwag',
+    displayName: 'Division Leaders 3Q21 - Grab Your Swag!',
+    shortName: 'the chaos pit swag grab',
+    hidden: true,
+    noMediaChat: true,
+    description: `A banner is strung above a cheap plastic foldable table. Heaped on the table are what appear to be Orbs of Zot. Another, even bigger pile contains what must be thousands of Amulets of Yendor, and the third ""pile"" is a single, already-opened box of 8 crayons. The demon is totally ignoring you; you can very easily get an [[Orb of Zot->item]] or [[Amulet of Yendor->item]], or even that [[box of crayons->item]] if that's your fancy.<br/><br/>You can also head [[back there->wildchaospit]] before you go, or go straight to the [[pentagrams->pitPentagrams]] they were gesturing at.`
+  },
+  pitPentagrams: {
+    id: 'pitPentagrams',
+    displayName: 'Four Pentagrams',
+    shortName: 'the pentagrams',
+    hidden: true,
+    noMediaChat: true,
+    description: `One pentagram looks very [[high tech->pentagramHighTech]]. Another is more [[minimalist and austere->pentagramMinimalist]]. A third is [[wavey and almost comical->pentagramComical]]. The last pentagram seems somehow [[extremely normal->pentagramNormal]].<br/><br/>As the demon said, these are the exits. Now that you know the phrase, you could get back here when you wanted. But maybe you want to check out that [[swag table->pitSwag]] before you go.`
   },
   wand: {
     id: 'wand',
