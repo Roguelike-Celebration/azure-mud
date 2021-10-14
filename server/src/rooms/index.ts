@@ -52,6 +52,8 @@ export interface Room {
   // This should hopefully eventually be auto-generated and mandatory
   // but hand-coding for testing purposes now
   chatGuid?: string
+
+  riddles?: string[]
 }
 
 const indexRoomData: { [name: string]: Room } = {

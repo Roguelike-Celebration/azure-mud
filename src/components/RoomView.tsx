@@ -147,6 +147,10 @@ export default function RoomView (props: Props) {
     dispatch(ShowModalAction(Modal.MediaSelector))
   }
 
+  const showRiddles = () => {
+    dispatch(ShowModalAction(Modal.Riddles))
+  }
+
   let noteWallView
   if (room && room.hasNoteWall) {
     if (room.noteWallData) {
@@ -266,6 +270,12 @@ export default function RoomView (props: Props) {
         room.specialFeatures &&
         room.specialFeatures.includes(SpecialFeature.FullRoomIndex) ? (
             <FullRoomIndexRoomView />
+          ) : (
+            ''
+          )}
+        {room &&
+        room.riddles ? (
+            <button id='riddle-button' onClick={showRiddles}>{room.riddles.length > 1 ? 'Examine the Riddles' : 'Examine the Riddle'}</button>
           ) : (
             ''
           )}

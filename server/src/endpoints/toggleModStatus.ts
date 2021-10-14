@@ -3,8 +3,8 @@ import { isMod, minimizeUser, updateModStatus, User } from '../user'
 import { DB } from '../database'
 
 const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  const userId = inputs.userId
-  if (!userId) {
+  const userIdToToggle: string = inputs.userId
+  if (!userIdToToggle) {
     return {
       httpResponse: {
         status: 400,
@@ -13,17 +13,20 @@ const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs
     }
   }
 
-  if (await isMod(userId)) {
-    await DB.setModStatus(userId, false)
+  if (await isMod(userIdToToggle)) {
+    log(`[MOD] Setting user ${userIdToToggle} to mod=false`)
+    await DB.setModStatus(userIdToToggle, false)
   } else {
-    await DB.setModStatus(userId, true)
+    log(`[MOD] Setting user ${userIdToToggle} to mod=true`)
+    await DB.setModStatus(userIdToToggle, true)
   }
 
   // Update mod status for everyone else
+  const toggledUser: User = await DB.getUser(userIdToToggle)
   return {
     messages: [{
       target: 'usernameMap',
-      arguments: [{ [userId]: minimizeUser(user) }]
+      arguments: [{ [userIdToToggle]: minimizeUser(toggledUser) }]
     }]
   }
 }

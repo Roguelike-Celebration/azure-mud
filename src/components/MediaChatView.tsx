@@ -1,4 +1,4 @@
-import React, { useEffect, VideoHTMLAttributes, useRef } from 'react'
+import React, { useEffect, VideoHTMLAttributes, useRef, useState } from 'react'
 import NameView from './NameView'
 import LocalMediaView from './LocalMediaView'
 
@@ -14,6 +14,14 @@ interface MediaProps {
 
 export default function MediaChatView (props: MediaProps) {
   const { publishingCamera, callParticipants } = useMediaChatContext()
+
+  // TODO: The show/hide video bar is implemented without changing what's rendered - all it does right now is sets the
+  // size of the container to height=0. Ideally we'd actually not render the video tracks as video.
+  const [showVideoBar, setShowVideoBar] = useState(true)
+
+  const toggleVideoBar = () => {
+    setShowVideoBar(!showVideoBar)
+  }
 
   // TODO: props.visibleSpeakers should never be undefined, but it is?!
   const visibleSpeakers = (props.visibleSpeakers || []).map(x => x[0])
@@ -66,13 +74,20 @@ export default function MediaChatView (props: MediaProps) {
       />
     })
 
+  // If we're showing the bar, we don't override the height; if we're hiding we force it to 0.
+  // We still want it to render the audioParticipants, so that's why we still paint it.
+  // TODO: this is jank
+  const customStyle = { height: showVideoBar ? undefined : '0px' }
   return (
     <div id="media-wrapper">
       <label>
         {participants ? participants.length : 0} other chatters (
-        {audioParticipants.length} offscreen).{' '}
+        {showVideoBar ? audioParticipants.length : 'all'} offscreen).{' '}
       </label>
-      <div id="media-view">
+      <button id={'button-toggle-video-bar'} onClick={() => toggleVideoBar()} className='link-styled-button'>
+        {showVideoBar ? 'Hide Video Bar' : 'Show Video Bar'}
+      </button>
+      <div id="media-view" style={customStyle}>
         {playerVideo} {videoParticipants} {audioParticipants}
       </div>
     </div>
