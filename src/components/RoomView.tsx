@@ -201,7 +201,6 @@ export default function RoomView (props: Props) {
         <PresenceView
           users={room.users}
           userId={props.userId}
-          videoUsers={room.videoUsers}
           roomId={room.id}
         />
       ) : (
