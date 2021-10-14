@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function RiddleModalView (props: {riddles: string[]}) {
-  const riddleViews = props.riddles.map(function (val, index) { <p className='riddle'>{val}</p> })
+  const riddleViews = props.riddles.map(function (val, index) { return <p className='riddle' key={index}>{val}</p> })
   const riddleTitle = (props.riddles.length > 1 ? 'The engraved riddles read...' : 'The engraved riddle reads...')
 
   return (
