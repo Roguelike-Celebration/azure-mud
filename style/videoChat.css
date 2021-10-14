@@ -12,7 +12,7 @@ input#send-audio {
 #media-view {
   display: flex;
   flex-flow: row wrap;
-  height: 195px;
+  height: 200px;
   overflow: hidden;
   margin-left: 1rem;
 }
@@ -90,7 +90,8 @@ video.speaking {
 }
 
 .offscreen-count {
-  margin-left: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 #join-audio-chat {
@@ -102,5 +103,6 @@ video.speaking {
 }
 
 #media-chat-buttons {
-  margin-bottom: 1em;
+  margin-bottom: 1em; 
+  margin-top: 1em;
 }

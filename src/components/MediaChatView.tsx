@@ -1,12 +1,10 @@
 import React, { useEffect, VideoHTMLAttributes, useRef, useState } from 'react'
-import NameView from './NameView'
 import LocalMediaView from './LocalMediaView'
 
 import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import ParticipantChatView from './ParticipantChatView'
 import MediaChatButtonView from './MediaChatButtonView'
-import { PromiseState } from 'microsoft-cognitiveservices-speech-sdk/distrib/lib/src/common/Promise'
 import { SetTextOnlyModeAction } from '../Actions'
 import { DispatchContext } from '../App'
 
@@ -16,6 +14,7 @@ interface MediaProps {
   numberOfFaces: number
   inMediaChat: boolean
   textOnlyMode: boolean
+  audioOnlyMode: boolean
 }
 
 export default function MediaChatView (props: MediaProps) {
@@ -97,7 +96,7 @@ export default function MediaChatView (props: MediaProps) {
         key={`participant-chat-view-${p.identity}`}
         participant={p}
         isDominant={props.currentSpeaker === p.identity}
-        renderAsFace={true}
+        renderAsFace={!props.audioOnlyMode}
       />
     )
   })
@@ -114,7 +113,7 @@ export default function MediaChatView (props: MediaProps) {
   // If we're showing the bar, we don't override the height; if we're hiding we force it to 0.
   // We still want it to render the audioParticipants, so that's why we still paint it.
   // TODO: this is jank
-  const customStyle = { height: videoParticipants.length > 0 || playerVideo ? undefined : '0px' }
+  const customStyle = { height: playerVideo || (!props.audioOnlyMode && videoParticipants.length > 0) ? undefined : '0px' }
   return (
     <div id="media-wrapper">
       <div id="media-view" style={customStyle}>
@@ -123,7 +122,8 @@ export default function MediaChatView (props: MediaProps) {
       <MediaChatButtonView
         textOnlyMode={props.textOnlyMode}
         inMediaChat={props.inMediaChat}
-        offscreenCount={audioParticipants.length}
+        offscreenCount={props.audioOnlyMode ? callParticipants.size : audioParticipants.length}
+        audioOnlyMode={props.audioOnlyMode}
       />
     </div>
   )

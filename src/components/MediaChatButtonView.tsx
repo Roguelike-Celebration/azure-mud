@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaCog } from 'react-icons/fa'
-import { SetTextOnlyModeAction, ShowModalAction, ShowModalWithOptionsAction, StopVideoChatAction } from '../Actions'
+import { SetAudioOnlyModeAction, SetTextOnlyModeAction, ShowModalAction, ShowModalWithOptionsAction, StopVideoChatAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { Modal } from '../modals'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
@@ -9,6 +9,7 @@ interface Props {
   inMediaChat: boolean
   textOnlyMode: boolean
   offscreenCount: number
+  audioOnlyMode: boolean
 }
 const MediaChatButtonView = (props: Props) => {
   const {
@@ -54,7 +55,7 @@ const MediaChatButtonView = (props: Props) => {
   const enableTextOnlyMode = () => {
     const prompt = confirm('Entering text-only mode will disable all audio/video aspects of this space other than the ' +
       'stream in the theater. You will no longer be able to see or hear other participants, but you can still ' +
-      'interact via text chat. Switching modes will refresh your page - please be patient while it reloads.'
+      'interact via text chat.\n\nSwitching modes will refresh your page - please be patient while it reloads.'
     )
     if (prompt) {
       dispatch(SetTextOnlyModeAction(true, true))
@@ -63,11 +64,23 @@ const MediaChatButtonView = (props: Props) => {
 
   const disableTextOnlyMode = () => {
     const prompt = confirm('Entering video/audio mode means that you will be able to see and hear video and audio from ' +
-      'other participants. Your camera and microphone will default to off when you switch modes. Switching modes will ' +
+      'other participants. Your camera and microphone will default to off when you switch modes.\b\n\nSwitching modes will ' +
       'refresh your page - please be patient while it reloads.'
     )
     if (prompt) {
       dispatch(SetTextOnlyModeAction(false, true))
+    }
+  }
+
+  const toggleAudioOnlyMode = () => {
+    const prompt = confirm(
+      'Entering audio-only mode will hide all video feeds from other attendees. ' +
+        "You will still be able to hear them, but you won't see them. This may improve performance if things are slow.\n\n" +
+        'Note that you will still broadcast your webcam feed to others if you enable it, and you will ' +
+        'still be able to see the talks broadcast in the Theater.'
+    )
+    if (prompt) {
+      dispatch(SetAudioOnlyModeAction(!props.audioOnlyMode))
     }
   }
 
@@ -127,23 +140,24 @@ const MediaChatButtonView = (props: Props) => {
   var offscreenLabel
   if (props.offscreenCount > 0) {
     offscreenLabel = (
-      <span className="offscreen-count">
+      <div className="offscreen-count">
         {props.offscreenCount} {props.offscreenCount === 1 ? 'person is' : 'people are'} in the call but not visible.
-      </span>
+      </div>
     )
   }
 
   return (
-    <div id='media-chat-buttons'>
+    <div id="media-chat-buttons">
+      {offscreenLabel}
       {chatButtons}
       <div>
         <button
-          key="disable-video"
-          onClick={enableTextOnlyMode}
-          id="toggle-disable-video"
+          key="audio-only-mode"
+          onClick={toggleAudioOnlyMode}
+          id="toggle-audio-only-mode"
           className="link-styled-button"
         >
-          Hide All Video
+          {props.audioOnlyMode ? 'Disable' : 'Enable'} Audio-Only Mode
         </button>
         <button
           key="text-only-mode"
@@ -151,9 +165,8 @@ const MediaChatButtonView = (props: Props) => {
           id="toggle-text-only-mode"
           className="link-styled-button"
         >
-          Enable Text Only Mode
+          Enable Text-Only Mode
         </button>
-        {offscreenLabel}
       </div>
     </div>
   )

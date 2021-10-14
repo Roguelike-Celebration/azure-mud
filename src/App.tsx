@@ -203,6 +203,8 @@ const App = () => {
     return <YouAreBannedView />
   }
 
+  // It's slightly weird we now construct this here and pass it as a prop to RoomView instead of constructing it there.
+  // Shrug, the conf is in 2 days.
   let videoChatView
   if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
@@ -212,6 +214,7 @@ const App = () => {
         numberOfFaces={state.numberOfFaces}
         inMediaChat={state.inMediaChat}
         textOnlyMode={state.textOnlyMode}
+        audioOnlyMode={state.audioOnlyMode}
       />
     )
   }
