@@ -203,13 +203,18 @@ const App = () => {
     return <YouAreBannedView />
   }
 
+  // It's slightly weird we now construct this here and pass it as a prop to RoomView instead of constructing it there.
+  // Shrug, the conf is in 2 days.
   let videoChatView
-  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat && !state.textOnlyMode) {
+  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
       <MediaChatView
         visibleSpeakers={state.visibleSpeakers}
         currentSpeaker={state.currentSpeaker}
         numberOfFaces={state.numberOfFaces}
+        inMediaChat={state.inMediaChat}
+        textOnlyMode={state.textOnlyMode}
+        audioOnlyMode={state.audioOnlyMode}
       />
     )
   }
@@ -348,18 +353,17 @@ const App = () => {
                     {/* Once we moved the sidebar to be position:fixed, we still
                   needed something to take up its space in the CSS grid.
                   This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                    <div id='side-nav-placeholder' />
+                    <div id="side-nav-placeholder" />
                   </span>
                 ) : (
                   <button id="show-menu" onClick={showMenu}>
                     <span role="img" aria-label="menu">
-                    🍔
+                      🍔
                     </span>
                   </button>
                 )}
                 {modalView}
                 <div id="main" role="main">
-                  {videoChatView}
                   {state.roomData[state.roomId] ? (
                     <RoomView
                       room={state.roomData[state.roomId]}
@@ -368,9 +372,14 @@ const App = () => {
                       inMediaChat={state.inMediaChat}
                       keepCameraWhenMoving={state.keepCameraWhenMoving}
                       textOnlyMode={state.textOnlyMode}
+                      mediaChatView={videoChatView}
                     />
                   ) : null}
-                  <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
+                  <ChatView
+                    messages={state.messages}
+                    autoscrollChat={state.autoscrollChat}
+                    serverSettings={state.serverSettings}
+                  />
                   <InputView
                     prepopulated={state.prepopulatedInput}
                     sendMessage={(message) =>

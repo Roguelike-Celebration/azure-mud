@@ -2,18 +2,14 @@ import * as React from 'react'
 import { Room } from '../room'
 import {
   moveToRoom,
-  pickUpItem,
-  dropItem
+  pickUpItem
 } from '../networking'
-import NameView from './NameView'
-import { DispatchContext, UserMapContext } from '../App'
+import { DispatchContext } from '../App'
 import {
   StopVideoChatAction,
-  ShowModalAction,
-  ShowModalWithOptionsAction,
-  SetTextOnlyModeAction
+  ShowModalAction
 } from '../Actions'
-import { FaCog, FaVideo } from 'react-icons/fa'
+import { FaChevronDown, FaChevronUp, FaCog } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
@@ -22,8 +18,9 @@ import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
 import { linkActions } from '../linkActions'
-import { useContext } from 'react'
+import { useState } from 'react'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
+import PresenceView from './PresenceView'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
@@ -34,6 +31,7 @@ interface Props {
   inMediaChat: boolean;
   keepCameraWhenMoving: boolean;
   textOnlyMode: boolean;
+  mediaChatView?: React.ReactElement
 }
 
 export default function RoomView (props: Props) {
@@ -42,16 +40,15 @@ export default function RoomView (props: Props) {
     prepareForMediaChat,
     currentMic,
     currentCamera,
-    publishingCamera,
-    publishingMic,
-    inCall,
     joinCall,
     publishMedia,
     publishAudio,
     unpublishMedia
   } = useMediaChatContext()
-
   const { room } = props
+
+  const [fullDescriptionVisible, setFullDescriptionVisible] =
+      useState<boolean>(true)
 
   // This is very silly.
   // Since we're manually setting raw HTML, we can't get refs to add proper click handlers
@@ -77,11 +74,8 @@ export default function RoomView (props: Props) {
     }
   }
 
-  const toggleClick = (e) => {
-    var fullRoomDesc = document.getElementById('full-room-description')
-    if (fullRoomDesc) {
-      fullRoomDesc.classList.toggle('collapsed')
-    }
+  const toggleRoomDescriptionClick = (e) => {
+    setFullDescriptionVisible(!fullDescriptionVisible)
   }
 
   React.useEffect(() => {
@@ -97,44 +91,6 @@ export default function RoomView (props: Props) {
     }
   }, [props.room.id])
 
-  const joinVideoChat = async () => {
-    if (currentMic || currentCamera) {
-      publishMedia()
-    } else {
-      dispatch(ShowModalAction(Modal.MediaSelector))
-    }
-  }
-
-  const joinAudioChat = async () => {
-    if (currentMic) {
-      publishAudio()
-    } else {
-      dispatch(
-        ShowModalWithOptionsAction(Modal.MediaSelector, { hideVideo: true })
-      )
-    }
-  }
-
-  const enableTextOnlyMode = () => {
-    const prompt = confirm('Entering text-only mode will disable all audio/video aspects of this space other than the ' +
-      'stream in the theater. You will no longer be able to see or hear other participants, but you can still ' +
-      'interact via text chat. Switching modes will refresh your page - please be patient while it reloads.'
-    )
-    if (prompt) {
-      dispatch(SetTextOnlyModeAction(true, true))
-    }
-  }
-
-  const disableTextOnlyMode = () => {
-    const prompt = confirm('Entering video/audio mode means that you will be able to see and hear video and audio from ' +
-      'other participants. Your camera and microphone will default to off when you switch modes. Switching modes will ' +
-      'refresh your page - please be patient while it reloads.'
-    )
-    if (prompt) {
-      dispatch(SetTextOnlyModeAction(false, true))
-    }
-  }
-
   const leaveVideoChat = () => {
     dispatch(StopVideoChatAction())
     unpublishMedia()
@@ -142,10 +98,6 @@ export default function RoomView (props: Props) {
 
   const showNoteWall = () => {
     dispatch(ShowModalAction(Modal.NoteWall))
-  }
-
-  const showMediaSelector = () => {
-    dispatch(ShowModalAction(Modal.MediaSelector))
   }
 
   const showRiddles = () => {
@@ -173,64 +125,6 @@ export default function RoomView (props: Props) {
     }
   }
 
-  let chatButtons
-  if (room && !room.noMediaChat) {
-    if (props.inMediaChat) {
-      let leaveButtonLabel = ''
-      if (publishingCamera && publishingMic) {
-        leaveButtonLabel = 'Turn off Camera and Mic'
-      } else if (publishingCamera) {
-        // This case shouldn't ever exist with the current UI
-        leaveButtonLabel = 'Turn off Camera'
-      } else if (publishingMic) {
-        leaveButtonLabel = 'Turn off Mic'
-      }
-      chatButtons = (
-        <>
-          <button onClick={leaveVideoChat} id="join-video-chat">
-            {leaveButtonLabel}
-          </button>
-          <button
-            key="show-media-selector"
-            id="big-reconfigure-media-selector"
-            onClick={showMediaSelector}
-            className="link-styled-button video-button"
-            aria-label="Show Media Selector"
-          >
-            <FaCog />
-          </button>
-        </>
-      )
-    } else if (props.textOnlyMode) {
-      chatButtons = [
-        <button key="text-only-mode" onClick={disableTextOnlyMode} id="toggle-text-only-mode">
-          Enable Audio/Video Mode
-        </button>
-      ]
-    } else {
-      chatButtons = [
-        <button key="join-video" onClick={joinVideoChat} id="join-video-chat">
-          { inCall ? 'Join Video + Audio' : <s>Join Video + Audio</s> }
-        </button>,
-        <button key="join-audio" onClick={joinAudioChat} id="join-video-chat">
-          { inCall ? 'Join Audio' : <s>Join Audio</s> }
-        </button>,
-        <button key="text-only-mode" onClick={enableTextOnlyMode} id="toggle-text-only-mode">
-          Enable Text Only Mode
-        </button>,
-        <button
-          key="show-media-selector"
-          id="big-reconfigure-media-selector"
-          onClick={showMediaSelector}
-          className="link-styled-button video-button"
-          aria-label="Show Media Selector"
-        >
-          <FaCog />
-        </button>
-      ]
-    }
-  }
-
   // TODO: Don't hard-code order of features
   /* eslint-disable jsx-a11y/click-events-have-key-events */
   /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
@@ -239,10 +133,28 @@ export default function RoomView (props: Props) {
     <div id="room">
       <h1 id="room-name">
         {room ? room.name : 'Loading...'}
-        {chatButtons}
+        <button
+          type="button"
+          id="room-collapse-button"
+          className="link-styled-button"
+          onClick={toggleRoomDescriptionClick}
+        >
+          {fullDescriptionVisible ? (
+            <span>
+              Hide Description <FaChevronUp />
+            </span>
+          ) : (
+            <span>
+              Show Description <FaChevronDown />
+            </span>
+          )}
+        </button>
       </h1>
-      <button type="button" id="room-collapse-button" onClick={toggleClick}>Toggle Room Details...</button>
-      <div id="full-room-description">
+
+      <div
+        id="full-room-description"
+        className={fullDescriptionVisible ? '' : 'collapsed'}
+      >
         <div
           id="static-room-description"
           onClick={descriptionClick}
@@ -274,144 +186,29 @@ export default function RoomView (props: Props) {
           ) : (
             ''
           )}
-        {room &&
-        room.riddles ? (
-            <button id='riddle-button' onClick={showRiddles}>{room.riddles.length > 1 ? 'Examine the Riddles' : 'Examine the Riddle'}</button>
-          ) : (
-            ''
-          )}
-        {noteWallView}
-        {room ? (
-          <PresenceView
-            users={room.users}
-            userId={props.userId}
-            videoUsers={room.videoUsers}
-            roomId={room.id}
-          />
+        {room && room.riddles ? (
+          <button id="riddle-button" onClick={showRiddles}>
+            {room.riddles.length > 1
+              ? 'Examine the Riddles'
+              : 'Examine the Riddle'}
+          </button>
         ) : (
           ''
         )}
+        {noteWallView}
       </div>
+      {room ? (
+        <PresenceView
+          users={room.users}
+          userId={props.userId}
+          videoUsers={room.videoUsers}
+          roomId={room.id}
+        />
+      ) : (
+        ''
+      )}
+      {props.mediaChatView || ''}
     </div>
-  )
-}
-
-const HeldItemView = () => {
-  const { userMap, myId } = useContext(UserMapContext)
-  const user = userMap[myId]
-
-  const dropHeldItem = () => {
-    dropItem()
-  }
-
-  if (user.item) {
-    return (
-      <span>
-        You are holding {user.item}.{' '}
-        <button className="link-styled-button" onClick={dropHeldItem}>
-          Drop it
-        </button>
-        .
-      </span>
-    )
-  } else {
-    return null
-  }
-}
-
-const PresenceView = (props: {
-  users?: string[];
-  userId?: string;
-  videoUsers: string[];
-  roomId: string;
-}) => {
-  const { userMap, myId } = React.useContext(UserMapContext)
-  let { users, userId, videoUsers } = props
-
-  // Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
-  if (users && userId) {
-    users = users.filter((u) => u !== userId)
-  }
-
-  if (users) {
-    // TODO: This should happen in the reducer
-    let names
-
-    if (users.length === 0) {
-      return (
-        <div id="dynamic-room-description">
-          You are all alone here. <HeldItemView />
-        </div>
-      )
-    }
-
-    if (props.roomId === 'theater') {
-      return (
-        <div id="dynamic-room-description">
-          There are {users.length} other people sitting in here.
-        </div>
-      )
-    }
-
-    const userViews = users.map((u, idx) => {
-      const user = userMap[u]
-      if (!user) {
-        return <span />
-      }
-      const id = `presence-${idx}`
-      return (
-        <span key={`room-presence-${id}`}>
-          <NameView userId={u} id={id} key={id} />
-          {videoUsers && videoUsers.includes(u) ? <FaVideo /> : null}
-          {user.item ? ` (holding ${user.item})` : null}
-        </span>
-      )
-    })
-
-    if (users.length === 1) {
-      names = userViews[0]
-    } else if (users.length === 2) {
-      names = (
-        <span>
-          {userViews[0]} and {userViews[1]}
-        </span>
-      )
-    } else {
-      names = (
-        <span>
-          {intersperse(userViews.slice(0, users.length - 1), ', ')}, and{' '}
-          {userViews[userViews.length - 1]}
-        </span>
-      )
-    }
-
-    return (
-      <div id="dynamic-room-description">
-        Also here {users.length === 1 ? 'is' : 'are'} {names}. <HeldItemView />
-      </div>
-    )
-  } else {
-    return <div id="dynamic-room-description" />
-  }
-}
-
-// https://stackoverflow.com/questions/23618744/rendering-comma-separated-list-of-links
-/* intersperse: Return an array with the separator interspersed between
- * each element of the input array.
- *
- * > _([1,2,3]).intersperse(0)
- * [1,0,2,0,3]
- */
-function intersperse (arr, sep) {
-  if (arr.length === 0) {
-    return []
-  }
-
-  return arr.slice(1).reduce(
-    function (xs, x, i) {
-      return xs.concat([sep, x])
-    },
-    [arr[0]]
   )
 }
 

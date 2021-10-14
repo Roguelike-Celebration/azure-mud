@@ -12,8 +12,9 @@ input#send-audio {
 #media-view {
   display: flex;
   flex-flow: row wrap;
-  height: 195px;
+  height: 200px;
   overflow: hidden;
+  margin-left: 1rem;
 }
 
 .participant-track-square {
@@ -86,4 +87,22 @@ video.speaking {
   padding: 0.5rem 1rem;
   position: absolute;
   right: 30px;
+}
+
+.offscreen-count {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#join-audio-chat {
+  margin-left: 2em;
+}
+
+#media-wrapper {
+  margin-bottom: 1em;
+}
+
+#media-chat-buttons {
+  margin-bottom: 1em; 
+  margin-top: 1em;
 }

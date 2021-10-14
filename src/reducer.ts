@@ -58,9 +58,13 @@ export interface State {
 
   prepopulatedInput?: string;
 
+  /** This is poorly named, but being "in media chat" means "is publishing audio and/or video" */
   inMediaChat: boolean;
   keepCameraWhenMoving?: boolean;
+
+  /** text-only mode functionally overrides audio-only mode, since we don't even connect to Twilio */
   textOnlyMode?: boolean;
+  audioOnlyMode?: boolean;
 
   /** Tuples of userId and when they were last the visible speaker */
   visibleSpeakers: [string, Date][]
@@ -445,6 +449,10 @@ export default (oldState: State, action: Action): State => {
     } else {
       Storage.setTextOnlyMode(action.textOnlyMode).then(() => window.location.reload())
     }
+  }
+
+  if (action.type === ActionType.SetAudioOnlyMode) {
+    state.audioOnlyMode = action.value
   }
 
   if (action.type === ActionType.Authenticate) {
