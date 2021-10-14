@@ -24,6 +24,7 @@ import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
 import { linkActions } from '../linkActions'
 import { useContext } from 'react'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
+import PresenceView from './PresenceView'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
@@ -298,125 +299,6 @@ export default function RoomView (props: Props) {
         ''
       )}
     </div>
-  )
-}
-
-const HeldItemView = () => {
-  const { userMap, myId } = useContext(UserMapContext)
-  const user = userMap[myId]
-
-  const dropHeldItem = () => {
-    dropItem()
-  }
-
-  if (user.item) {
-    return (
-      <span>
-        You are holding {user.item}.{' '}
-        <button className="link-styled-button" onClick={dropHeldItem}>
-          Drop it
-        </button>
-        .
-      </span>
-    )
-  } else {
-    return null
-  }
-}
-
-const PresenceView = (props: {
-  users?: string[];
-  userId?: string;
-  videoUsers: string[];
-  roomId: string;
-}) => {
-  const { userMap, myId } = React.useContext(UserMapContext)
-  let { users, userId, videoUsers } = props
-
-  // Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
-  if (users && userId) {
-    users = users.filter((u) => u !== userId)
-  }
-
-  if (users) {
-    // TODO: This should happen in the reducer
-    let names
-
-    if (users.length === 0) {
-      return (
-        <div id="dynamic-room-description">
-          You are all alone here. <HeldItemView />
-        </div>
-      )
-    }
-
-    if (props.roomId === 'theater') {
-      return (
-        <div id="dynamic-room-description">
-          There are {users.length} other people sitting in here.
-        </div>
-      )
-    }
-
-    const userViews = users.map((u, idx) => {
-      const user = userMap[u]
-      if (!user) {
-        return <span />
-      }
-      const id = `presence-${idx}`
-      return (
-        <span key={`room-presence-${id}`}>
-          <NameView userId={u} id={id} key={id} />
-          {videoUsers && videoUsers.includes(u) ? <FaVideo /> : null}
-          {user.item ? ` (holding ${user.item})` : null}
-        </span>
-      )
-    })
-
-    if (users.length === 1) {
-      names = userViews[0]
-    } else if (users.length === 2) {
-      names = (
-        <span>
-          {userViews[0]} and {userViews[1]}
-        </span>
-      )
-    } else {
-      names = (
-        <span>
-          {intersperse(userViews.slice(0, users.length - 1), ', ')}, and{' '}
-          {userViews[userViews.length - 1]}
-        </span>
-      )
-    }
-
-    return (
-      <div id="dynamic-room-description">
-        Also here {users.length === 1 ? 'is' : 'are'} {names}. <HeldItemView />
-      </div>
-    )
-  } else {
-    return <div id="dynamic-room-description" />
-  }
-}
-
-// https://stackoverflow.com/questions/23618744/rendering-comma-separated-list-of-links
-/* intersperse: Return an array with the separator interspersed between
- * each element of the input array.
- *
- * > _([1,2,3]).intersperse(0)
- * [1,0,2,0,3]
- */
-function intersperse (arr, sep) {
-  if (arr.length === 0) {
-    return []
-  }
-
-  return arr.slice(1).reduce(
-    function (xs, x, i) {
-      return xs.concat([sep, x])
-    },
-    [arr[0]]
   )
 }
 
