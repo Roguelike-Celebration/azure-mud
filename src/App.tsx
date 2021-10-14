@@ -17,7 +17,8 @@ import {
   SetKeepCameraWhenMovingAction,
   SetTextOnlyModeAction,
   SetNumberOfFacesAction,
-  SetUseSimpleNamesAction
+  SetUseSimpleNamesAction,
+  SetCaptionsEnabledAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -132,6 +133,8 @@ const App = () => {
           dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
           const textOnlyMode = await Storage.getTextOnlyMode()
           dispatch(SetTextOnlyModeAction(textOnlyMode, false))
+          const captionsEnabled = await Storage.getCaptionsEnabled()
+          dispatch(SetCaptionsEnabledAction(captionsEnabled))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
@@ -247,7 +250,7 @@ const App = () => {
       break
     }
     case Modal.Settings: {
-      innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} />
+      innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} captionsEnabled={state.captionsEnabled} />
       break
     }
     case Modal.MediaSelector: {
@@ -384,6 +387,7 @@ const App = () => {
                       messages={state.messages}
                       autoscrollChat={state.autoscrollChat}
                       serverSettings={state.serverSettings}
+                      captionsEnabled={state.captionsEnabled}
                     />
                     <InputView
                       prepopulated={state.prepopulatedInput}

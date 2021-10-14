@@ -65,6 +65,7 @@ export interface State {
   /** This is poorly named, but being "in media chat" means "is publishing audio and/or video" */
   inMediaChat: boolean;
   keepCameraWhenMoving?: boolean;
+  captionsEnabled: boolean,
 
   /** text-only mode functionally overrides audio-only mode, since we don't even connect to Twilio */
   textOnlyMode?: boolean;
@@ -114,7 +115,8 @@ export const defaultState: State = {
   activeModalOptions: {},
   isBanned: false,
   serverSettings: DEFAULT_SERVER_SETTINGS,
-  numberOfFaces: 5
+  numberOfFaces: 5,
+  captionsEnabled: false
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -462,6 +464,11 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.SetKeepCameraWhenMoving) {
     state.keepCameraWhenMoving = action.value
     Storage.setKeepCameraWhenMoving(action.value)
+  }
+
+  if (action.type === ActionType.SetCaptionsEnabled) {
+    state.captionsEnabled = action.value
+    Storage.setCaptionsEnabled(action.value)
   }
 
   if (action.type === ActionType.SetTextOnlyMode) {

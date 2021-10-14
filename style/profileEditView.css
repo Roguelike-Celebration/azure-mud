@@ -1,4 +1,4 @@
-input[type=text] {
+  input[type=text] {
   border-radius: 5px;
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
   font-size: 14px;
@@ -29,7 +29,7 @@ input[type=text] {
   margin-bottom: 3rem;
 }
 
-.form {
+#profile-edit .form {
   width: 100%;
   width: 780px;
 }
@@ -38,7 +38,7 @@ input[type=text] {
   margin-top: 8rem;
 }
 
-.form label {
+#profile-edit .form label {
   width: 600px;
   font-size: 1.4em;
 }

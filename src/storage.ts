@@ -88,6 +88,15 @@ export async function getTextOnlyMode (): Promise<boolean> {
   return textOnlyMode == null ? false : textOnlyMode
 }
 
+export async function setCaptionsEnabled (enabled: boolean) {
+  await localforage.setItem(captionsEnabledKey, enabled)
+}
+
+export async function getCaptionsEnabled (): Promise<boolean> {
+  const captionsEnabled: boolean = await localforage.getItem(captionsEnabledKey)
+  return captionsEnabled == null ? false : captionsEnabled
+}
+
 // Keys
 
 const messagesKey = 'messages'
@@ -99,3 +108,4 @@ const themeKey = 'UserSelectedTheme'
 const useSimpleNamesKey = 'UseSimpleNames'
 const keepCameraWhenMovingKey = 'KeepCameraWhenMoving'
 const textOnlyModeKey = 'TextOnlyMode'
+const captionsEnabledKey = 'CaptionsEnabled'
