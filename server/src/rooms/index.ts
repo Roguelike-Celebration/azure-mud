@@ -4,7 +4,7 @@ import { warrior, mage, rogue, tourist, theater } from './theater'
 import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
 import { oldHubRoomData } from './oldHub'
-import { exploreHub, transmute, dyes, doctorPaint, shower, victuals, quest, steam } from './exploreHub'
+import { exploreHub, transmute, dyes, doctorPaint, shower, steam } from './exploreHub'
 
 export interface NoteWallData {
   roomWallDescription: string
@@ -128,7 +128,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'stools',
     displayName: 'Seats Along the Bar',
     shortName: 'the stools by the bar',
-    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel. Whee!</br></br>
+    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel. Whee! There's a bard at the bar issuing terrible pickup lines to anyone who sits next to them.</br></br>
       From here, you can see tables [[by the railing->railing]] or [[at the back->back]], and the [[rest of the bar->bar]].`
   },
   back: {
@@ -159,8 +159,6 @@ const indexRoomData: { [name: string]: Room } = {
   dyes,
   doctorPaint,
   shower,
-  victuals,
-  quest,
   steam,
   library: {
     id: 'library',
