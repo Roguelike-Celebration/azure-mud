@@ -50,8 +50,8 @@ export default function ParticipantChatView (props: Props) {
   }
 
   return (
-    <div key={`stream-wrapper-${props.participant.identity}`} className='participant-track-square' style={customStyle}>
-      <NameView userId={props.participant.identity} id={`stream-nameview-${props.participant.identity}`} />
+    <div key={`stream-wrapper-${props.participant.identity}`} className='participant-track-square other-participant' style={customStyle}>
+      <NameView userId={props.participant.identity} id={`stream-nameview-${props.participant.identity}`} nowrap={true} />
       <ParticipantTracks participant={props.participant} displayVideo={playVideo} displayAudio={playAudio} />
       <button id='play-video'
         onClick={onChangeVideo}

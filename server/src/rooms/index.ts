@@ -105,7 +105,7 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Bar',
     shortName: 'the bar',
     description: `The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight's specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).
-    <br/>A self-serve table nearby has two coolers packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]]
+    <br/>A self-serve table nearby has two crates packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]].
     <br/><br/>
     Three booths provide opportunities to sit and enjoy conversation in smaller groups - by the [[railing->railing]], seated [[along the bar->stools]], and tucked away [[at the back->back]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->hall]].`,
     hasNoteWall: true,

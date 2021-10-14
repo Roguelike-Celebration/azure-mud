@@ -4,6 +4,7 @@ import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './typ
 import { RoomNote } from './roomNote'
 import { roomData } from './rooms'
 import Database from './database'
+import { getServerSettings } from './endpoints/serverSettings'
 import redis = require('redis')
 
 const cache = redis.createClient(
@@ -200,12 +201,15 @@ const Redis: RedisInternal = {
     return await getSet(modListKey) || []
   },
 
-  async setModStatus (user: User, isMod: boolean) {
+  async setModStatus (userId: string, isMod: boolean) {
     if (isMod) {
-      return await Redis.addMod(user.id)
+      await Redis.addMod(userId)
     } else {
-      return await Redis.removeMod(user.id)
+      await Redis.removeMod(userId)
     }
+    const profile = await Redis.getUser(userId)
+    profile.isMod = isMod
+    await Redis.setUserProfile(userId, profile)
   },
 
   async addMod (userId: string) {
@@ -227,7 +231,8 @@ const Redis: RedisInternal = {
   },
 
   async setServerSettings (serverSettings: ServerSettings): Promise<ServerSettings> {
-    await setCache(serverSettingsKey, JSON.stringify(serverSettings))
+    const oldServerSettings = await Redis.getServerSettings()
+    await setCache(serverSettingsKey, JSON.stringify({ ...oldServerSettings, ...serverSettings }))
 
     return serverSettings
   },
