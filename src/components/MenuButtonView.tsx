@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FaChevronDown } from 'react-icons/fa'
+import { FaCog } from 'react-icons/fa'
 
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import config from '../config'
@@ -63,7 +63,7 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
   return (
     <div id="menu-button">
       <ContextMenuTrigger id="topMenu" holdToDisplay={0}>
-        <strong>{props.username}</strong> <FaChevronDown />
+        <strong>{props.username}</strong> <FaCog />
       </ContextMenuTrigger>
       <ContextMenu id={'topMenu'}>
         <MenuItem onClick={showProfile}>View Profile</MenuItem>
