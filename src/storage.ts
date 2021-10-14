@@ -52,13 +52,21 @@ export async function setWasColoredEntering (value: boolean) {
   await localforage.setItem(wasColoredEnteringKey, value)
 }
 
-// User theme
+// Settings page
 export async function setTheme (theme: string) {
   await localforage.setItem(themeKey, theme)
 }
 
 export async function currentTheme (): Promise<string> {
   return await localforage.getItem(themeKey) || 'default'
+}
+
+export async function setUseSimpleNames (useSimpleNames: boolean) {
+  await localforage.setItem(useSimpleNamesKey, useSimpleNames)
+}
+
+export async function getUseSimpleNames (): Promise<boolean> {
+  return await localforage.getItem(useSimpleNamesKey) || false
 }
 
 // Video chat settings
@@ -88,5 +96,6 @@ const whisperKey = 'whispers'
 const rainbowGateKey = 'FeatureRainbowGateVisited'
 const wasColoredEnteringKey = 'WasColoredEntering'
 const themeKey = 'UserSelectedTheme'
+const useSimpleNamesKey = 'UseSimpleNames'
 const keepCameraWhenMovingKey = 'KeepCameraWhenMoving'
 const textOnlyModeKey = 'TextOnlyMode'

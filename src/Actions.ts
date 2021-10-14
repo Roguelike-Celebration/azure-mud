@@ -55,6 +55,7 @@ export type Action =
   | HideSideMenuAction
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
+  | SetUseSimpleNamesAction
   | SetKeepCameraWhenMovingAction
   | SetTextOnlyModeAction
   | SetAudioOnlyModeAction
@@ -107,6 +108,7 @@ export enum ActionType {
   HideSideMenu = 'HIDE_SIDE_MENU',
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
+  SetUseSimpleNames = 'SET_USE_SIMPLE_NAMES',
   SetKeepCameraWhenMoving = 'SET_KEEP_CAMERA_WHEN_MOVING',
   SetTextOnlyMode = 'SET_TEXT_ONLY_MODE',
   SetAudioOnlyMode = 'SET_AUDIO_ONLY_MODE',
@@ -661,6 +663,17 @@ interface ActivateAutoscrollAction {
 
 export const ActivateAutoscrollAction = (): ActivateAutoscrollAction => {
   return { type: ActionType.ActivateAutoscroll }
+}
+
+interface SetUseSimpleNamesAction {
+  type: ActionType.SetUseSimpleNames;
+  value: boolean;
+}
+
+export const SetUseSimpleNamesAction = (
+  useSimpleNames: boolean
+): SetUseSimpleNamesAction => {
+  return { type: ActionType.SetUseSimpleNames, value: useSimpleNames }
 }
 
 interface SetKeepCameraWhenMovingAction {
