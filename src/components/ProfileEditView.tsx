@@ -93,7 +93,7 @@ export default function ProfileEditView (props: Props) {
           </div>
           <div className="field">
             <label htmlFor="realname">Name</label>
-            <em>Optional: What people should call you</em>
+            <em>Optional: Your "IRL" name.</em>
             <input
               type="text"
               id="real-name"
@@ -103,7 +103,7 @@ export default function ProfileEditView (props: Props) {
           </div>
           <div className="field">
             <label htmlFor="description">Character Description</label>
-            <em>Optional: Describe your virtual avatar!</em>
+            <em>Optional: Describe your avatar!</em>
             <input
               type="text"
               id="description"
@@ -123,7 +123,7 @@ export default function ProfileEditView (props: Props) {
           </div>
           <div className="field">
             <label htmlFor="website">Website</label>
-            <em>Your personal site or something else</em>
+            <em>Optional: Your personal site!</em>
             <input
               type="text"
               id="website"
@@ -133,7 +133,7 @@ export default function ProfileEditView (props: Props) {
           </div>
           <div className="field">
             <label htmlFor="twitter">Twitter Handle</label>
-            <em>Optional: You don't need to include the @</em>
+            <em>Optional: Don't include the @</em>
             <input
               type="text"
               id="twitter"

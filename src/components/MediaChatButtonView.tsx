@@ -126,10 +126,10 @@ const MediaChatButtonView = (props: Props) => {
   } else {
     chatButtons = [
       <button key="join-video" onClick={joinVideoChat} id="join-video-chat">
-        {inCall ? "Turn on Webcam + Mic" : <s>Turn on Webcam + Mic</s>}
+        {inCall ? 'Turn on Webcam + Mic' : <s>Turn on Webcam + Mic</s>}
       </button>,
       <button key="join-audio" onClick={joinAudioChat} id="join-audio-chat">
-        {inCall ? "Turn on Mic" : <s>Turn on Mic</s>}
+        {inCall ? 'Turn on Mic' : <s>Turn on Mic</s>}
       </button>,
       <button
         key="show-media-selector"
@@ -139,8 +139,8 @@ const MediaChatButtonView = (props: Props) => {
         aria-label="Show Media Selector"
       >
         <FaCog />
-      </button>,
-    ];
+      </button>
+    ]
   }
 
   var offscreenLabel
