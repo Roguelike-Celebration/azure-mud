@@ -20,7 +20,7 @@ export const cockatrice = {
   id: 'cockatrice',
   displayName: 'Unconferencing: Cockatrice Containment',
   shortName: 'cockatrice',
-  description: 'This is an unconferencing room. A table labelled "NECESSARY PRECAUTIONS" in huge block letters has buckets for gloves, earplugs, and lizards... but troublingly all are empty. It\'s probably fine.<br/><br/>The other unconferencing rooms are [[dragon]], [[naga]], [[skeleton]], [[tengu]], and [[yak]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
+  description: 'This is an unconferencing room. A table labelled "NECESSARY PRECAUTIONS" in huge block letters has buckets for gloves, earplugs, and lizards... but troublingly all are empty. It\'s probably fine. There\'s a statue of a hapless adventurer, cunningly carved in granite that captures their likeness midway through an apparent tumble down a flight of steps. The statue is labeled "Newb Descending a Staircase #5."<br/><br/>The other unconferencing rooms are [[dragon]], [[naga]], [[skeleton]], [[tengu]], and [[yak]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
 }
 
