@@ -18,7 +18,7 @@ export const robots = {
   displayName: 'Robot Fabrication Lab',
   shortName: 'the robot lab',
   noMediaChat: true,
-  description: 'This room is dominated by the quiet hum of machinery doing what it was designed to with minimal fuss and expertly crafted efficiency. Sprockets are being socketed in in one device. A robot arm picks up the socketed sprocket and passes it to a CNC spot welder, which welds it closed. The locked socketed sprockets are conveyed into an opening on the biggest machine, just one of many components for the robots produced at this fab lab. The entire dance is carried out with a ballet-like elegance, not a movement wasted. It\'s aggressively, profoundly satisfying. When you feel ready, you can go back to the [[Spacehanger->sfHub]].'
+  description: 'This room is dominated by the quiet hum of machinery doing what it was designed to with minimal fuss and expertly crafted efficiency. Sprockets are being socketed in in one device. A robot arm picks up the socketed sprocket and passes it to a CNC spot welder, which welds it closed. The locked socketed sprockets are conveyed into an opening on the biggest machine, just one of many components for the robots produced at this fab lab. The entire dance is carried out with a ballet-like elegance, not a movement wasted. It\'s aggressively, profoundly satisfying. When you feel ready, you can go back to the [[Space Hanger->sfHub]].'
 }
 
 export const timeMachine = {
