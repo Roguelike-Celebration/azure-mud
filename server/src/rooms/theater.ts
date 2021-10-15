@@ -44,6 +44,6 @@ export const rogue = {
 export const tourist = {
   id: 'tourist',
   displayName: 'Breakout room: Tourist\'s Gate',
-  shortName: 'Tourist Breakout',
-  description: 'Shockingly modern - the gate to an airport. Two very good dogs are manning the desk. One dog wants to give you a [[Platinum Yendorian Express Card->item]]. The other has a dog tag labeled "GNU Terry Pratchett" and wants you to tell it about the clacks. A nearby kiosk is staffed by an argyle terrier; the kiosk is selling aloha shirts. Despite there being tons of travelers milling about the airport, you can only see a dozen shirts at the terrier\'s shack, and sadly none of them are your size. Or you can head back to the [[theater]].'
+  shortName: 'Tourist',
+  description: 'Shockingly modern - the gate to an airport. Two very good dogs are manning the desk. One dog wants to give you a [[Platinum Yendorian Express Card->item]]. The other has a dog tag labeled "GNU Terry Pratchett" and wants you to tell it about the clacks. A nearby kiosk is selling aloha shirts, staffed by an argyle terrier. Despite there being tons of travelers milling about the airport, you can only see a dozen shirts at the terrier\'s shack, and sadly none of them are your size. Or you can head back to the [[theater]].'
 }

@@ -85,7 +85,7 @@ const indexRoomData: { [name: string]: Room } = {
   destinations: {
     id: 'destinations',
     displayName: 'Destinations',
-    shortName: 'destinations',
+    shortName: 'the destinations hallway',
     description: 'Lining both sides of this hall, huge doorways promise journeys to thrilling destinations. The majority of them are shut, with taped up [[paper signs->readClosedSign]] providing increasingly ludicrous reasons for their closure.<br/><br/>Only two halls are open, and while it\'s hard from here to tell where they\'ll go, one door shines with [[glass and chrome->sfHub]], and the other is [[covered in brass gears and pipes->exploreHub]].<br/><br/>You can also return to the [[Central Hall->hall]]'
   },
   swag: {
@@ -135,7 +135,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'barStage',
     displayName: 'Stage Near the Bar',
     shortName: 'the bar stage',
-    description: 'You can /dance if you want to. And indeed, maybe you should, to upstage that terrible bard.</br></br>From here you can see tables at the [[railing]], [[along the bar->stools]], the [[back]], and the [[rest of the bar->bar]].'
+    description: 'You can /dance if you want to. And indeed, maybe you should, to upstage that terrible bard who thinks cheesy pick up lines are the height of comedy.</br></br>From here you can see tables at the [[railing]], [[along the bar->stools]], the [[back]], and the [[rest of the bar->bar]].'
   },
   back: {
     id: 'back',
