@@ -37,6 +37,12 @@ export const linkActions = {
   },
   pentagramNormal: () => {
     pentagramAction('')
+  },
+  hearPickupLine: () => {
+    displayMessageFromList('pickupLines')
+  },
+  watchRobot: () => {
+    displayMessageFromList('robots')
   }
 }
 
