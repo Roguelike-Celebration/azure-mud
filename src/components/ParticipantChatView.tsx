@@ -53,12 +53,14 @@ export default function ParticipantChatView (props: Props) {
     <div key={`stream-wrapper-${props.participant.identity}`} className='participant-track-square other-participant' style={customStyle}>
       <NameView userId={props.participant.identity} id={`stream-nameview-${props.participant.identity}`} nowrap={true} />
       <ParticipantTracks participant={props.participant} displayVideo={playVideo} displayAudio={playAudio} />
-      <button id='play-video'
-        onClick={onChangeVideo}
-        className={`link-styled-button video-button ${playVideo ? 'enabled' : 'disabled'}`}
-        aria-label={`Toggle Video ${props.participant.identity}`}>
-        {playVideo ? <FaVideo /> : <FaVideoSlash />}
-      </button>
+      {playVideo
+        ? <button id='play-video'
+          onClick={onChangeVideo}
+          className={`link-styled-button video-button ${playVideo ? 'enabled' : 'disabled'}`}
+          aria-label={`Toggle Video ${props.participant.identity}`}>
+          {playVideo ? <FaVideo /> : <FaVideoSlash />}
+        </button>
+        : null}
       <button id='play-audio'
         onClick={onChangeAudio}
         className={`link-styled-button video-button ${playAudio ? 'enabled' : 'disabled'}`}
