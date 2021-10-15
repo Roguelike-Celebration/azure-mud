@@ -21,14 +21,14 @@ export const exploreHub = {
 export const steam = {
   id: 'steam',
   displayName: 'Office of Steam',
-  shortName: 'Steam',
+  shortName: 'the Office of Steam',
   description: 'A hulking steam engine is under glass, powering an ancient computer. It\'s hooked to a typewriter, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. If you\'d like, you can investigate the <a href="https://store.steampowered.com/sale/roguelikecelebration2021" target="_blank">source of its steam power</a>, or go back to the [[Guild Hall->exploreHub]].'
 }
 
 export const transmute = {
   id: 'transmute',
   displayName: 'Office of Transmutations',
-  shortName: 'Transmutations',
+  shortName: 'the Office of Transmutations',
   description: 'Most of the workers are busy crafting potions - you recognize the crates they\'re filling as matching the ones from the [[bar]]. While most of the hallways are blocked off by swathes of alchemical gear, you can just squeeze through to one, with an ornate sign for [[Dye Machines->dyes]]. Or you can return to the [[Guild Hall->exploreHub]].'
 }
 // Right now I am *fairly* sure this leads into *exactly* the modals of 2020's 'rainbow door' and 'dull door', the text of which is way over in /src/components/feature. TO DO: update that text.
@@ -43,7 +43,7 @@ export const dyes = {
 export const doctorPaint = {
   id: 'doctorPaint',
   displayName: 'An incredibly complicated machine',
-  shortName: 'the paint machine',
+  shortName: 'an incredibly complicated machine',
   description: 'You find yourself in a space dominate by an incredibly complicated machine. Arcs of aetheric energy jump between leyden jars, and what appears to be an enormous water clock is driving an incomprehensible mass of gearwork. At the center of it all, like a tiny egg in rather large nest, is a simple chair. A frenetic individual in a white coat, their features obscured by thick googles and safety gear is tightening a bolt on the machine when you walk up.<br/><br/>Or maybe you should just [[leave->dyes]].',
   specialFeatures: [SpecialFeature.RainbowDoor]
 }
