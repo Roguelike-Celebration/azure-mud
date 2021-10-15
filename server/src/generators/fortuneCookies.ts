@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+
 var tracery = require('tracery-grammar')
 
 export const actionString = (fortune: string) => {
@@ -16,7 +18,8 @@ export const generate = () => {
       '#ooh#, #tasty#!',
       '#ooh#, #incredible#!',
       '#ooh#, tastes like #goodFlavor#!',
-      '#aTasty# cookie #thatsLike# #goodFlavor#.'
+      '#tasty.a.capitalize# cookie #thatsLike# #goodFlavor#.',
+      '#incredible.a.capitalize# cookies #thatsLike# #goodFlavor#.'
     ],
     ooh: [
       'Ooh',
@@ -27,10 +30,6 @@ export const generate = () => {
       'Nice',
       'Wonderful',
       'Delightful'
-    ],
-    aTasty: [
-      'a #tasty#',
-      'an #incredible#'
     ],
     tasty: [ // consonant-tasty
       'tasty',
@@ -169,7 +168,8 @@ export const generate = () => {
       '#ugh#, #gross#!',
       '#ugh#, #awful#!',
       '#ugh#, tastes like #badFlavor#.',
-      '#aGross# cookie #thatsLike# #badFlavor##weirdly#.'
+      '#gross.a.capitalize# cookie #thatsLike# #badFlavor##weirdly#.',
+      '#awful.a.capitalize# cookies #thatsLike# #badFlavor##weirdly#.'
     ],
     ugh: [
       'Ugh',
@@ -177,10 +177,6 @@ export const generate = () => {
       'Blergh',
       'Blah',
       'Oh no'
-    ],
-    aGross: [
-      'A #gross#',
-      'An #awful#'
     ],
     gross: [ // consonant-gross
       'bilious',
@@ -398,3 +394,5 @@ export const generate = () => {
   grammar.addModifiers(tracery.baseEngModifiers)
   return grammar.flatten('#origin#')
 }
+
+/* eslint-enable quotes */
