@@ -21,6 +21,10 @@
   opacity: 1
 }
 
+.message-wrapper.even-message {
+  background-color: var(--alternate-background)
+}
+
 .message {
   overflow-wrap: break-word;
 }

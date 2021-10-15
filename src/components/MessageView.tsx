@@ -32,7 +32,7 @@ import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
-export default function MessageView (props: { message: Message; id: string, hideTimestamp: boolean }) {
+export default function MessageView (props: { message: Message; id: string, hideTimestamp: boolean, msgIndex: number }) {
   const { message } = props
   if (!message) { return <div/> }
 
@@ -61,9 +61,13 @@ export default function MessageView (props: { message: Message; id: string, hide
   }
 
   const date = (typeof message.timestamp === 'string' ? new Date(message.timestamp) : message.timestamp)
+  let className = 'message-wrapper'
+  if (props.msgIndex % 2 == 0) {
+    className += ' even-message'
+  }
 
   return (
-    <div className='message-wrapper'>
+    <div className={className}>
       <div className={`time ${props.hideTimestamp ? 'show-on-hover' : null}`}>{formatter.format(date)}</div>
       {React.createElement(component, { ...message, id: props.id })}
     </div>

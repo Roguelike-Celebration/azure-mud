@@ -96,6 +96,7 @@ export default function ChatView (props: Props) {
             key={id}
             id={id}
             hideTimestamp={hideTimestamp}
+            msgIndex={idx}
           />
         )
       })}
