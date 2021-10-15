@@ -24,3 +24,7 @@
 .message {
   overflow-wrap: break-word;
 }
+
+.movement-message {
+  opacity: 0.5
+}

@@ -138,8 +138,8 @@ const EnteredView = (props: EnteredMessage & { id: string }) => {
   if (roomData[props.fromId]) {
     const fromButton: JSX.Element = roomData[props.fromId].hidden ? <text>somewhere...</text> : <button onClick={onClick} className='link-styled-button'>{props.fromName}.</button>
     return (
-      <div className="message">
-        <NameView userId={props.userId} id={props.id} /> has entered from{' '}{fromButton}
+      <div className="message movement-message">
+        <NameView userId={props.userId} id={props.id}/> has entered from{' '}{fromButton}
       </div>
     )
   }
@@ -154,7 +154,7 @@ const LeftView = (props: LeftMessage & { id: string }) => {
   if (roomData[props.toId]) {
     const toButton: JSX.Element = roomData[props.toId].hidden ? <text>somewhere...</text> : <button onClick={onClick} className='link-styled-button'>{props.toName}.</button>
     return (
-      <div className="message">
+      <div className="message movement-message">
         <NameView id={props.id} userId={props.userId} /> has wandered off to{' '}{toButton}
       </div>
     )
