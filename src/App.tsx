@@ -55,11 +55,13 @@ import { shouldVerifyEmail } from './firebaseUtils'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import _ from 'lodash'
+import { roomData } from '../server/src/rooms'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
 export const SettingsContext = createContext(null)
 export const IsMobileContext = createContext(null)
+export const RoomDataContext = createContext(null)
 
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(
@@ -345,59 +347,61 @@ const App = () => {
               <UserMapContext.Provider
                 value={{ userMap: state.userMap, myId: state.userId }}
               >
-                <div
-                  id={
-                    state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
-                  }
-                >
-                  {shouldShowMenu ? (
-                    <span>
-                      <SideNavView
-                        roomData={state.roomData}
-                        currentRoomId={state.roomId}
-                        username={state.userMap[state.userId].username}
-                        spaceIsClosed={state.isClosed}
-                      />
-                      {/* Once we moved the sidebar to be position:fixed, we still
-                    needed something to take up its space in the CSS grid.
-                    This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                      <div id="side-nav-placeholder" />
-                    </span>
-                  ) : (
-                    <button id="show-menu" onClick={showMenu}>
-                      <span role="img" aria-label="menu">
-                        🍔
+                <RoomDataContext.Provider value={roomData}>
+                  <div
+                    id={
+                      state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
+                    }
+                  >
+                    {shouldShowMenu ? (
+                      <span>
+                        <SideNavView
+                          roomData={state.roomData}
+                          currentRoomId={state.roomId}
+                          username={state.userMap[state.userId].username}
+                          spaceIsClosed={state.isClosed}
+                        />
+                        {/* Once we moved the sidebar to be position:fixed, we still
+                      needed something to take up its space in the CSS grid.
+                      This should be fixable via CSS, but sigh, it's 3 days before the event */}
+                        <div id="side-nav-placeholder" />
                       </span>
-                    </button>
-                  )}
-                  {modalView}
-                  <div id="main" role="main">
-                    {state.roomData[state.roomId] ? (
-                      <RoomView
-                        room={state.roomData[state.roomId]}
-                        userId={state.userId}
-                        roomData={state.roomData}
-                        inMediaChat={state.inMediaChat}
-                        keepCameraWhenMoving={state.keepCameraWhenMoving}
-                        textOnlyMode={state.textOnlyMode}
-                        mediaChatView={videoChatView}
+                    ) : (
+                      <button id="show-menu" onClick={showMenu}>
+                        <span role="img" aria-label="menu">
+                          🍔
+                        </span>
+                      </button>
+                    )}
+                    {modalView}
+                    <div id="main" role="main">
+                      {state.roomData[state.roomId] ? (
+                        <RoomView
+                          room={state.roomData[state.roomId]}
+                          userId={state.userId}
+                          roomData={state.roomData}
+                          inMediaChat={state.inMediaChat}
+                          keepCameraWhenMoving={state.keepCameraWhenMoving}
+                          textOnlyMode={state.textOnlyMode}
+                          mediaChatView={videoChatView}
+                        />
+                      ) : null}
+                      <ChatView
+                        messages={state.messages}
+                        autoscrollChat={state.autoscrollChat}
+                        serverSettings={state.serverSettings}
+                        captionsEnabled={state.captionsEnabled}
                       />
-                    ) : null}
-                    <ChatView
-                      messages={state.messages}
-                      autoscrollChat={state.autoscrollChat}
-                      serverSettings={state.serverSettings}
-                      captionsEnabled={state.captionsEnabled}
-                    />
-                    <InputView
-                      prepopulated={state.prepopulatedInput}
-                      sendMessage={(message) =>
-                        dispatch(SendMessageAction(message))
-                      }
-                    />
+                      <InputView
+                        prepopulated={state.prepopulatedInput}
+                        sendMessage={(message) =>
+                          dispatch(SendMessageAction(message))
+                        }
+                      />
+                    </div>
+                    {profile}
                   </div>
-                  {profile}
-                </div>
+                </RoomDataContext.Provider>
               </UserMapContext.Provider>
             </SettingsContext.Provider>
           </IsMobileContext.Provider>
