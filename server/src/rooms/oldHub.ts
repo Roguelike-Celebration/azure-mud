@@ -185,7 +185,7 @@ export const oldHubRoomData = {
     shortName: 'inventory',
     hidden: true,
     noMediaChat: false,
-    description: ''
+    description: '"This is the most crowded space you\'ve ever been in. It\'s some sort of warehouse, but there are no shelves or cabinets or even really boxes, just... piles of stuff. When you appeared here you slipped and fell into a giant pile of stopped up beakers, each filled with Cloudy Potion. The glass must be pretty sturdy since none of them broke, and you slid down the pile to the ground, thankfully coming to stop before you rolled into a haphazard stack of daggers, dirks, knives, and shivs. You look around: there stacks of scrolls, spelunking equipment, weaponry, armor, and two truly enormous heaps of coins (all sorts) and food (seems to be mostly iron rations). Most of it the items you see have some utility, none of them seems especially, specifically mission-critical, and *all* of them take up space.<br/><br/>It dawns on you that this must be the Space Inventory, a dangerous realm never meant to be opened: the mythical elemental plane of Stuff. It\'s awe-inspiring in its own way, but most terrifying things are.<br/><br/>You idly putter about for a bit looking for anything worth taking (that\'s how the rogues do) but this is an inventory of inventories: all these things belong to other players somewhere in the multiverse and you aren\'t able to grab them. Eventually you reach an outer wall and find a sign: Inventory #11."'
   }
 }
 /* eslint-enable quotes */

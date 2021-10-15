@@ -19,7 +19,7 @@ export const unconference = {
 export const cockatrice = {
   id: 'cockatrice',
   displayName: 'Unconferencing: Cockatrice Containment',
-  shortName: 'cockatrice',
+  shortName: 'Cockatrice',
   description: 'This is an unconferencing room. A table labelled "NECESSARY PRECAUTIONS" in huge block letters has buckets for gloves, earplugs, and lizards... but troublingly all are empty. It\'s probably fine. There\'s a statue of a hapless adventurer, cunningly carved in granite that captures their likeness midway through an apparent tumble down a flight of steps. The statue is labeled "Newb Descending a Staircase #5."<br/><br/>The other unconferencing rooms are [[dragon]], [[naga]], [[skeleton]], [[tengu]], and [[yak]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
 }
@@ -27,7 +27,7 @@ export const cockatrice = {
 export const dragon = {
   id: 'dragon',
   displayName: 'Unconferencing: Dragon\'s Lair',
-  shortName: 'dragon\'s lair',
+  shortName: 'Dragon\'s lair',
   description: 'This is an unconferencing room. It\'s a bit difficult to move around as the floor is stacked with piles of coins, gems, and scales. Passive aggressive post-its outline an outstanding series of arguments about which colour is superior and therefore deserves the most floor space. Best not to get involved.<br/><br/>The other unconferencing rooms are [[cockatrice]], [[naga]], [[skeleton]], [[tengu]], and [[yak]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
 }
@@ -35,7 +35,7 @@ export const dragon = {
 export const naga = {
   id: 'naga',
   displayName: 'Unconferencing: Naga Den',
-  shortName: 'naga',
+  shortName: 'Naga Den',
   description: 'This is an unconferencing room. The door swings open with a push, not requiring you to use your hands. The floor is sandy and warm to the touch. Piled in a corner are Roguelike Celebration socks from various years, looking entirely unused for some reason.<br/><br/>The other unconferencing rooms are [[cockatrice]], [[dragon]], [[skeleton]], [[tengu]], and [[yak]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
 }
@@ -43,7 +43,7 @@ export const naga = {
 export const skeleton = {
   id: 'skeleton',
   displayName: 'Unconferencing: Skeleton Clubhouse',
-  shortName: 'skeleton',
+  shortName: 'Skeleton Clubhouse',
   description: 'This is an unconferencing room. The walls are plastered with unconventional [[motivational posters->readPoster]]. A mini-fridge hums in the corner, but when you pop it open is stocked only with jugs of milk.<br/><br/>The other unconferencing rooms are [[cockatrice]], [[dragon]], [[naga]], [[tengu]], and [[yak]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
 }
@@ -51,7 +51,7 @@ export const skeleton = {
 export const tengu = {
   id: 'tengu',
   displayName: 'Unconferencing: Tengu Workshop',
-  shortName: 'tengu',
+  shortName: 'Tengu Workshop',
   description: 'This is an unconferencing room. Feathers of all sizes and hues are scattered through the room, and the seating options include traditional chairs as well as perches. Do take care sitting down - woopie cushions, wet paint, and similar mischief is to be expected here.<br/><br/>The other unconferencing rooms are [[cockatrice]], [[dragon]], [[naga]], [[skeleton]], and [[yak]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
 }
@@ -59,7 +59,7 @@ export const tengu = {
 export const yak = {
   id: 'yak',
   displayName: 'Unconferencing: Yak Pen',
-  shortName: 'yak',
+  shortName: 'Yak Pen',
   description: 'This is an unconferencing room. The smell in here is... a lot. A sign at the entrance pleads "Please, no shaving!" A table is set up as if to offer refreshments but atop it are just blocks of solid salt, carved into abstract shapes by the licking of very large tongues.<br/><br/>The other unconferencing rooms are [[cockatrice]], [[dragon]], [[naga]], [[skeleton]], and [[tengu]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
 }

@@ -1,7 +1,7 @@
 var tracery = require('tracery-grammar')
 
 export const actionString = (item: string) => {
-  return `The ancient vending machine whirrs and sputters for a few seconds before spitting out ${item}.`
+  return `The vending machine whirrs and sputters for a few seconds before spitting out ${item}.`
 }
 
 export const generate = () => {
