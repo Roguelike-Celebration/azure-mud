@@ -53,7 +53,7 @@ const MediaChatButtonView = (props: Props) => {
   }
 
   const enableTextOnlyMode = () => {
-    const prompt = confirm('Entering text-only mode will disable all audio/video aspects of this space other than the ' +
+    const prompt = confirm('This will disable all audio/video aspects of this space other than the ' +
       'stream in the theater. You will no longer be able to see or hear other participants, but you can still ' +
       'interact via text chat.\n\nSwitching modes will refresh your page - please be patient while it reloads.'
     )
@@ -63,7 +63,7 @@ const MediaChatButtonView = (props: Props) => {
   }
 
   const disableTextOnlyMode = () => {
-    const prompt = confirm('Entering video/audio mode means that you will be able to see and hear video and audio from ' +
+    const prompt = confirm('Re-enabling video and audio mode means that you will be able to see and hear video and audio from ' +
       'other participants. Your camera and microphone will default to off when you switch modes.\b\n\nSwitching modes will ' +
       'refresh your page - please be patient while it reloads.'
     )
@@ -76,10 +76,10 @@ const MediaChatButtonView = (props: Props) => {
     let text
     if (props.audioOnlyMode) {
       text =
-        'Disabling audio-only mode will show you others&apos; webcam feeds. ' +
+        'This will show you others&apos; webcam feeds. ' +
         'This will not affect whether or not you are sending your own webcam feed to others.'
     } else {
-      text = 'Entering audio-only mode will hide all video feeds from other attendees. ' +
+      text = 'This will hide all video feeds from other attendees. ' +
         "You will still be able to hear them, but you won't see them. This may improve performance if things are slow.\n\n" +
         'Note that you will still broadcast your webcam feed to others if you enable it, and you will ' +
         'still be able to see the talks broadcast in the Theater.'
@@ -94,10 +94,10 @@ const MediaChatButtonView = (props: Props) => {
   if (props.inMediaChat) {
     let leaveButtonLabel = ''
     if (publishingCamera && publishingMic) {
-      leaveButtonLabel = 'Turn off Camera and Mic'
+      leaveButtonLabel = 'Turn off Webcam and Mic'
     } else if (publishingCamera) {
       // This case shouldn't ever exist with the current UI
-      leaveButtonLabel = 'Turn off Camera'
+      leaveButtonLabel = 'Turn off Webcam'
     } else if (publishingMic) {
       leaveButtonLabel = 'Turn off Mic'
     }
@@ -120,16 +120,16 @@ const MediaChatButtonView = (props: Props) => {
   } else if (props.textOnlyMode) {
     chatButtons = [
       <button key="text-only-mode" onClick={disableTextOnlyMode} id="toggle-text-only-mode">
-          Enable Audio/Video Mode
+          Re-Enable Audio/Video
       </button>
     ]
   } else {
     chatButtons = [
       <button key="join-video" onClick={joinVideoChat} id="join-video-chat">
-        { inCall ? 'Join Video + Audio' : <s>Join Video + Audio</s> }
+        {inCall ? 'Turn on Webcam + Mic' : <s>Turn on Webcam + Mic</s>}
       </button>,
       <button key="join-audio" onClick={joinAudioChat} id="join-audio-chat">
-        { inCall ? 'Join Audio' : <s>Join Audio</s> }
+        {inCall ? 'Turn on Mic' : <s>Turn on Mic</s>}
       </button>,
       <button
         key="show-media-selector"
@@ -163,7 +163,7 @@ const MediaChatButtonView = (props: Props) => {
           id="toggle-audio-only-mode"
           className="link-styled-button"
         >
-          {props.audioOnlyMode ? 'Disable' : 'Enable'} Audio-Only Mode
+          {props.audioOnlyMode ? 'Hide' : 'Show'} all video feeds
         </button>
         <button
           key="text-only-mode"
@@ -171,7 +171,7 @@ const MediaChatButtonView = (props: Props) => {
           id="toggle-text-only-mode"
           className="link-styled-button"
         >
-          Enable Text-Only Mode
+          Mute all audio and video
         </button>
       </div>
     </div>
