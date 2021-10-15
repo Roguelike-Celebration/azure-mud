@@ -2,7 +2,7 @@
 import React from 'react'
 import { Participant, Track } from 'twilio-video'
 import Publication from './Publication'
-import usePublications from './usePublications'
+import usePublications, { TrackPublication } from './usePublications'
 
 interface ParticipantTracksProps {
   participant: Participant;
@@ -34,24 +34,31 @@ export default function ParticipantTracks ({
   isLocalParticipant
 }: ParticipantTracksProps) {
   const publications = usePublications(participant)
+  const videoPublications = publications.filter(p => p.kind === 'video')
+  const audioPublications = publications.filter(p => p.kind === 'audio')
+
+  let finalPublications: TrackPublication[] = []
+
+  if (displayVideo && videoPublications.length > 0) {
+    finalPublications.push(videoPublications[0])
+  }
+
+  if (displayAudio) {
+    finalPublications = finalPublications.concat(audioPublications)
+  }
 
   return (
     <>
       {
-        publications.map(publication => {
-          if ((publication.kind === 'video' && displayVideo) || (publication.kind === 'audio' && displayAudio)) {
-            return <Publication
-              key={publication.kind}
-              publication={publication}
-              isLocalParticipant={isLocalParticipant}
-              videoOnly={videoOnly}
-              videoPriority={videoPriority}
-            />
-          } else {
-            return null
-          }
-        }
-        )
+        finalPublications.map(publication => {
+          return <Publication
+            key={publication.kind}
+            publication={publication}
+            isLocalParticipant={isLocalParticipant}
+            videoOnly={videoOnly}
+            videoPriority={videoPriority}
+          />
+        })
       }
     </>
   )
