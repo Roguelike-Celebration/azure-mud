@@ -142,7 +142,7 @@ const EnteredView = (props: EnteredMessage & { id: string }) => {
         <NameView userId={props.userId} id={props.id} /> has entered from{' '}{fromButton}
       </div>
     )
-  }  
+  }
 }
 
 const LeftView = (props: LeftMessage & { id: string }) => {
@@ -157,7 +157,7 @@ const LeftView = (props: LeftMessage & { id: string }) => {
         <NameView id={props.id} userId={props.userId} /> has wandered off to{' '}{toButton}
       </div>
     )
-  } 
+  }
 }
 
 const MovedView = (props: MovedRoomMessage & { id: string }) => (
