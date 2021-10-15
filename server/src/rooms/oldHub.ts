@@ -55,7 +55,15 @@ export const oldHubRoomData = {
     noMediaChat: true,
     description: `You invoke the spell you've discovered and the world melts around you. You had been standing in the conference hall; now you're floating in an endless abyss. No, that's not right: you're *falling through* it, from the material plane to a realm of pure, elemental chaos. Wild, fantastical shapes emerge from swirling mists as you descend, nightmares made real that advance upon you only to be torn apart and dissolve back into mist. Eventually your hellish journey ends and you land, with essentially no fanfare, at the very center of the Wild Chaos Pit.
     </br></br>You're in a small room with off-white walls and no exits. There's a desk with some kind of demon in a poorly fitted suit, typing away on a computer terminal. It spares you a glance as you enter and greets you in a droning monotone. ""Oh, hello. Welcome to the Wild Chaos Pit. Cower in fear at our terrifying splendor."" The demon gestures to an inspiration poster of a skeleton hanging from a telephone wire as evidence of this. ""We would like to take this opportunity to thank you for your assistance in our mission. The forces of Chaos have had a great quarter, and we could not have succeeded in meeting our operational goals without the dedication and support of you, the player. Please avail yourself of our fabulous facilities before returning to your realm."" The demon, their speech finished, turns their attention back to the computer. Without looking up, they drone: ""Oh, my apologies. Before returning to your realm, *mortal*.""
-    </br></br>Apart from the desk and skeleton poster, the room is minimally furnished. There's some sort of [[swag table->pitSwag]] you can investigate. ""Exit through the gift shop,"" says the demon. ""Emphasis on exit."" They nod at the other end of the room, where [[four pentagrams->pitPentagrams]] are etched into the floor.`
+    </br></br>Apart from the desk and skeleton poster, the room is minimally furnished. There's some sort of [[swag table->pitSwag]] you can investigate. ""Exit through the gift shop,"" says the demon. ""Emphasis on exit."" They nod at the other end of the room, where [[four pentagrams->pitPentagrams]] are etched into the floor.`,
+    hasNoteWall: true,
+    noteWallData: {
+      roomWallDescription: 'There\'s a ring-bound logbook hovering in a corner for non-Chaos visitors to note their comings and goings; a ball point pen dangles from a thin chain tied to it. Do you want to sign the log book to prove you made it here?',
+      noteWallButton: 'Sign the logbook',
+      addNoteLinkText: 'sign the logbook',
+      addNotePrompt: 'How do you want to sign it?',
+      noteWallDescription: 'A list of recent visitors to the Wild Chaos Pit.'
+    }
   },
   pitSwag: {
     id: 'pitSwag',
