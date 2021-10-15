@@ -27,9 +27,8 @@ import {
   CaptionMessage
 } from '../message'
 import NameView from './NameView'
-import { DispatchContext, UserMapContext } from '../App'
+import { DispatchContext, UserMapContext, RoomDataContext } from '../App'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
-import { roomData } from '../../server/src/rooms'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
@@ -134,6 +133,7 @@ const EnteredView = (props: EnteredMessage & { id: string }) => {
   const onClick = () => {
     moveToRoom(props.fromId)
   }
+  const roomData = useContext(RoomDataContext)
 
   if (roomData[props.fromId]) {
     const fromButton: JSX.Element = roomData[props.fromId].hidden ? <text>somewhere...</text> : <button onClick={onClick} className='link-styled-button'>{props.fromName}.</button>
