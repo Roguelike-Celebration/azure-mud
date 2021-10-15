@@ -25,8 +25,12 @@ export default function MediaSelectorView (props: Props) {
 
   useEffect(() => {
     const run = async () => {
-      await prepareMediaDevices()
-      console.log('Prepared for media chat')
+      // This should maybe some "hasSetUpDevices" flag in the context or whatever,
+      // but checking for the existence of a device seems valid for now.
+      if (!currentMic) {
+        await prepareMediaDevices()
+        console.log('Prepared for media chat')
+      }
     }
     run()
 
