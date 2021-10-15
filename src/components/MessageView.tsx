@@ -29,6 +29,7 @@ import {
 import NameView from './NameView'
 import { DispatchContext, UserMapContext } from '../App'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
+import { roomData } from '../../server/src/rooms'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
@@ -134,24 +135,29 @@ const EnteredView = (props: EnteredMessage & { id: string }) => {
     moveToRoom(props.fromId)
   }
 
-  return (
-    <div className="message">
-      <NameView userId={props.userId} id={props.id} /> has entered from{' '}
-      <button onClick={onClick} className='link-styled-button'>{props.fromName}.</button>
-    </div>
-  )
+  if (roomData[props.fromId]) {
+    const fromButton: JSX.Element = roomData[props.fromId].hidden ? <text>somewhere...</text> : <button onClick={onClick} className='link-styled-button'>{props.fromName}.</button>
+    return (
+      <div className="message">
+        <NameView userId={props.userId} id={props.id} /> has entered from{' '}{fromButton}
+      </div>
+    )
+  }  
 }
 
 const LeftView = (props: LeftMessage & { id: string }) => {
   const onClick = () => {
     moveToRoom(props.toId)
   }
-  return (
-    <div className="message">
-      <NameView id={props.id} userId={props.userId} /> has wandered off to{' '}
-      <button onClick={onClick} className='link-styled-button'>{props.toName}.</button>
-    </div>
-  )
+
+  if (roomData[props.toId]) {
+    const toButton: JSX.Element = roomData[props.toId].hidden ? <text>somewhere...</text> : <button onClick={onClick} className='link-styled-button'>{props.toName}.</button>
+    return (
+      <div className="message">
+        <NameView id={props.id} userId={props.userId} /> has wandered off to{' '}{toButton}
+      </div>
+    )
+  } 
 }
 
 const MovedView = (props: MovedRoomMessage & { id: string }) => (
