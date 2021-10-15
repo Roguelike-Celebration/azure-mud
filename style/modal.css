@@ -51,5 +51,5 @@ th.break {
     padding: 10px;
     border-style: solid;
     border-width: 2px;
-    border-color: (--main-font);
+    border-color: var(--main-font);
 }

@@ -1,7 +1,7 @@
 export const sfHub = {
   id: 'sfHub',
   displayName: 'Space Hanger Observation Lounge',
-  shortName: 'Space Lounge',
+  shortName: 'the Space Lounge',
   description: 'An impossibly fast elevator whisks you up to a bright lounge of steel, chrome, and futuristic plastics. Spacecraft of all shapes and sizes constantly come and go in view of the giant observation window. Constrasting the vast depths of space, the lounge itself is strangely cozy. Floor-to-ceiling hexagonal bookshelves provide all the reading material you could ask for, with oddly shaped but fluffy ottoman-like chairs to settle into. A [[vending machine->vendingMachine]] offers refreshment, along with an extensive bar serving Cosmic Cryo-Brewed Coffee, Terrific Techno-Tea, and apple juice.</br></br>A little robot, sensing you might need a place to relax quietly, beckons you to the [[Robot Fabrication Lab->robots]]. In the corner, a [[dusty machine->timeMachine]] blinks invitingly. You can also go back to the central [[hall]].',
   hasNoteWall: true,
   noteWallData: {
@@ -18,7 +18,7 @@ export const robots = {
   displayName: 'Robot Fabrication Lab',
   shortName: 'the robot lab',
   noMediaChat: true,
-  description: 'This room is dominated by the quiet hum of machinery doing what it was designed to with minimal fuss and expertly crafted efficiency. Sprockets are being socketed in in one device. A robot arm picks up the socketed sprocket and passes it to a CNC spot welder, which welds it closed. The locked socketed sprockets are conveyed into an opening on the biggest machine, just one of many components for the robots produced at this fab lab. The entire dance is carried out with a ballet-like elegance, not a movement wasted. It\'s aggressively, profoundly satisfying. When you feel ready, you can go back to the [[Spacehanger->sfHub]].'
+  description: 'This room is dominated by the quiet hum of machinery doing what it was designed to with minimal fuss and expertly crafted efficiency. Sprockets are being socketed in in one device. A robot arm picks up the socketed sprocket and passes it to a CNC spot welder, which welds it closed. The locked socketed sprockets are conveyed into an opening on the biggest machine, just one of many components for the robots produced at this fab lab. The entire dance is carried out with a ballet-like elegance, not a movement wasted. It\'s aggressively, profoundly satisfying. When you feel ready, you can go back to the [[Space Hanger->sfHub]].'
 }
 
 export const timeMachine = {
@@ -27,7 +27,7 @@ export const timeMachine = {
   shortName: 'investigate a strange item',
   hidden: true,
   riddles: ['A grid of glyphs in rows arrayed,\nIs how I\'ll tell your tale;\nFrom decades past to present day,\nMy codepage has prevailed;\nTiles are fine if you have have time,\nBut I shall never stale;\nNow speak my name as if you\'d /go,\nAnd I shall fill your sail.'],
-  description: 'You can\'t get the machine to do anything but blink, no matter what you do, plug in or unplug. However, there is an inscription on it, that examined closely appears to be a riddle...</br></br>Go back to the [[Spacehanger->sfHub]].'
+  description: 'You can\'t get the machine to do anything but blink, no matter what you do, plug in or unplug. However, there is an inscription on it, that examined closely appears to be a riddle...</br></br>Go back to the [[Space Hanger->sfHub]].'
 }
 
 export const vendingMachine = {
