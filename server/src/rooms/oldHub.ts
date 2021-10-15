@@ -30,7 +30,7 @@ export const oldHubRoomData = {
     shortName: 'oracle',
     hidden: true,
     noMediaChat: true,
-    description: 'This usually peaceful space is decorated with burbling fountains, stately marble columns, and finely carved statues of centaurs in various poses. Strangely though, the fountains aren\'t uniformly flowing water - some are filled with strange gooey substances, at least one looks like it\'s full of cheese sauce. A hastily scrawled sign stuck to one of the fountains says "The Oracle Is In", with an arrow to a [[small temple->majorConsultation]]. On a pedestal rests a bowl of fortune cookies labeled [["minor consultations"->getFortune]]. Alternately, you can go back to the [[dungeon you came from->ASCII]].'
+    description: 'This usually peaceful space is decorated with burbling fountains, stately marble columns, and finely carved statues of centaurs in various poses. Strangely though, the fountains aren\'t uniformly flowing water - some are filled with strange gooey substances, at least one looks like it\'s full of cheese sauce. A hastily scrawled sign stuck to one of the fountains says "The Oracle Is In", with an arrow to a [[small temple->majorConsultation]]. On a pedestal rests a bowl of fortune cookies labeled [["minor consultations"->getFortune]]. Alternately, you can go back to the [[dungeon you came from->ascii]].'
   },
   majorConsultation: {
     id: 'majorConsultation',
@@ -45,7 +45,7 @@ export const oldHubRoomData = {
     displayName: 'Spoiler Containment Zone',
     shortName: 'the spoiler zone',
     hidden: true,
-    description: 'This is a space for talking through the riddles without worrying about spoiling people in other rooms. Or head back to [[the Oracle->majorConsutlation]].'
+    description: 'This is a space for talking through the riddles without worrying about spoiling people in other rooms. Or head back to [[the Oracle->majorConsultation]].'
   },
   wildchaospit: {
     id: 'wildchaospit',
