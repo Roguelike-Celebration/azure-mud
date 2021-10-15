@@ -2,11 +2,11 @@
 /* eslint-disable quotes */
 
 export const oldHubRoomData = {
-  ASCII: {
-    id: 'ASCII',
+  ascii: {
+    id: 'ascii',
     displayName: 'The Hash Mark Dungeon',
-    shortName: '# dungeon',
-    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a salmon, and a crocodile. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle->oracle]], another to the [[Royal Jelly->jelly]], and then a set heads back to the [[Space Hanger->sfHub]].',
+    shortName: 'ASCII',
+    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a crocodile, and a more abstract one of unhewn stone. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle->oracle]], and then a set heads back to the [[Space Hanger->sfHub]].',
     hasNoteWall: true,
     hidden: true,
     noMediaChat: true,
@@ -30,7 +30,7 @@ export const oldHubRoomData = {
     shortName: 'oracle',
     hidden: true,
     noMediaChat: true,
-    description: 'This usually peaceful space is decorated with burbling fountains, stately marble columns, and finely carved statues of centaurs in various poses. Strangely though, the fountains aren\'t uniformly flowing water - some are filled with strange gooey substances, at least one looks like it\'s full of cheese sauce. A hastily scrawled sign stuck to one of the fountains says "The Oracle Is In", with an arrow to a [[small temple->majorConsultation]]. On a pedestal rests a bowl of fortune cookies labeled [["minor consultations"->getFortune]]. Alternately, you can go back to the [[dungeon you came from->ASCII]].'
+    description: 'This usually peaceful space is decorated with burbling fountains, stately marble columns, and finely carved statues of centaurs in various poses. Strangely though, the fountains aren\'t uniformly flowing water - some are filled with strange gooey substances, at least one looks like it\'s full of cheese sauce. A hastily scrawled sign stuck to one of the fountains says "The Oracle Is In", with an arrow to a [[small temple->majorConsultation]]. On a pedestal rests a bowl of fortune cookies labeled [["minor consultations"->getFortune]]. Alternately, you can go back to the [[dungeon you came from->ascii]].'
   },
   majorConsultation: {
     id: 'majorConsultation',
@@ -38,15 +38,14 @@ export const oldHubRoomData = {
     shortName: 'Oracle temple',
     hidden: true,
     noMediaChat: true,
-    description: 'The Oracle of Delphi - a truly beautiful @ in shimmering blue - perks up at your presence.<br/><br/>"Oh, hi there! Sorry about all the mess, the fountain liquids all shifting, the map being all out of true - some ridiculous chaos demons have been messing with the fabric of space around here. They\'ve scattered a dozen riddles around - some even within the useful spaces, those poor dogs - which apparently build some kind of code phrase that\'s important to them.<br/><br/>If you figure a riddle out, I think you can use that "go" invocation you used to get here to see what visions it brings you. I suspect things might be finicky when it comes to translocation magic - again, chaos - but I *believe* my centaurs got things to a point where all lowercase components work.<br/><br/>Hopefully if you figure that code phrase out and go to them, maybe you\'ll get some kind of explaination, or at least a neat bauble...? I dunno, I\'m kinda stuck here. But good luck!"<br/><br/>You can return to the [[fountains->oracle]].'
+    description: 'The Oracle of Delphi - a truly beautiful @ in shimmering blue - perks up at your presence.<br/><br/>"Oh, hi there! Sorry about all the mess, the fountain liquids all shifting, the map being all out of true - some ridiculous chaos demons have been messing with the fabric of space around here. They\'ve scattered a dozen riddles around - some even within the useful spaces, those poor dogs - which apparently build some kind of code phrase that\'s important to them.<br/><br/>If you figure a riddle out, I think you can use that "/go" invocation you used to get here to see what visions it brings you. I suspect things might be finicky when it comes to translocation magic - again, chaos - but I *believe* my centaurs got things to a point where all lowercase components work.<br/><br/>Hopefully if you figure that code phrase out and /go to them, maybe you\'ll get some kind of explaination, or at least a neat bauble...? I dunno, I\'m kinda stuck here. But good luck!"<br/><br/> If you want a space where you can talk with others about the puzzles without spoiling them, feel free to chat [[nearby->spoil]]. You can return to the [[fountains->oracle]].'
   },
-  jelly: {
-    id: 'jelly',
-    displayName: 'Gelatinous Throne',
-    shortName: 'jelly throne room',
-    description: 'Get yourself a slime friend here! Or go [[back->ASCII]].',
-    noMediaChat: true,
-    hidden: true
+  spoil: {
+    id: 'spoil',
+    displayName: 'Spoiler Containment Zone',
+    shortName: 'the spoiler zone',
+    hidden: true,
+    description: 'This is a space for talking through the riddles without worrying about spoiling people in other rooms. Or head back to [[the Oracle->majorConsultation]].'
   },
   wildchaospit: {
     id: 'wildchaospit',
@@ -56,7 +55,15 @@ export const oldHubRoomData = {
     noMediaChat: true,
     description: `You invoke the spell you've discovered and the world melts around you. You had been standing in the conference hall; now you're floating in an endless abyss. No, that's not right: you're *falling through* it, from the material plane to a realm of pure, elemental chaos. Wild, fantastical shapes emerge from swirling mists as you descend, nightmares made real that advance upon you only to be torn apart and dissolve back into mist. Eventually your hellish journey ends and you land, with essentially no fanfare, at the very center of the Wild Chaos Pit.
     </br></br>You're in a small room with off-white walls and no exits. There's a desk with some kind of demon in a poorly fitted suit, typing away on a computer terminal. It spares you a glance as you enter and greets you in a droning monotone. ""Oh, hello. Welcome to the Wild Chaos Pit. Cower in fear at our terrifying splendor."" The demon gestures to an inspiration poster of a skeleton hanging from a telephone wire as evidence of this. ""We would like to take this opportunity to thank you for your assistance in our mission. The forces of Chaos have had a great quarter, and we could not have succeeded in meeting our operational goals without the dedication and support of you, the player. Please avail yourself of our fabulous facilities before returning to your realm."" The demon, their speech finished, turns their attention back to the computer. Without looking up, they drone: ""Oh, my apologies. Before returning to your realm, *mortal*.""
-    </br></br>Apart from the desk and skeleton poster, the room is minimally furnished. There's some sort of [[swag table->pitSwag]] you can investigate. ""Exit through the gift shop,"" says the demon. ""Emphasis on exit."" They nod at the other end of the room, where [[four pentagrams->pitPentagrams]] are etched into the floor.`
+    </br></br>Apart from the desk and skeleton poster, the room is minimally furnished. There's some sort of [[swag table->pitSwag]] you can investigate. ""Exit through the gift shop,"" says the demon. ""Emphasis on exit."" They nod at the other end of the room, where [[four pentagrams->pitPentagrams]] are etched into the floor.`,
+    hasNoteWall: true,
+    noteWallData: {
+      roomWallDescription: 'There\'s a ring-bound logbook hovering in a corner for non-Chaos visitors to note their comings and goings; a ball point pen dangles from a thin chain tied to it. Do you want to sign the log book to prove you made it here?',
+      noteWallButton: 'Sign the logbook',
+      addNoteLinkText: 'sign the logbook',
+      addNotePrompt: 'How do you want to sign it?',
+      noteWallDescription: 'A list of recent visitors to the Wild Chaos Pit.'
+    }
   },
   pitSwag: {
     id: 'pitSwag',
