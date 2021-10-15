@@ -6,7 +6,7 @@ export const oldHubRoomData = {
     id: 'ascii',
     displayName: 'The Hash Mark Dungeon',
     shortName: 'ASCII',
-    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a crocodile, and a more abstract one of unhewn stone. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle->oracle]], and then a set heads back to the [[Space Hanger->sfHub]].',
+    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a crocodile, and a more abstract one of unhewn stone. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle of Delphi->oracle]], and then a set heads back to the [[Space Hanger->sfHub]].',
     hasNoteWall: true,
     hidden: true,
     noMediaChat: true,
@@ -26,8 +26,8 @@ export const oldHubRoomData = {
   },
   oracle: {
     id: 'oracle',
-    displayName: 'Oracle',
-    shortName: 'oracle',
+    displayName: 'Outside the Oracle of Delphi',
+    shortName: 'the Oracle of Delphi',
     hidden: true,
     noMediaChat: true,
     description: 'This usually peaceful space is decorated with burbling fountains, stately marble columns, and finely carved statues of centaurs in various poses. Strangely though, the fountains aren\'t uniformly flowing water - some are filled with strange gooey substances, at least one looks like it\'s full of cheese sauce. A hastily scrawled sign stuck to one of the fountains says "The Oracle Is In", with an arrow to a [[small temple->majorConsultation]]. On a pedestal rests a bowl of fortune cookies labeled [["minor consultations"->getFortune]]. Alternately, you can go back to the [[dungeon you came from->ascii]].'
@@ -35,7 +35,7 @@ export const oldHubRoomData = {
   majorConsultation: {
     id: 'majorConsultation',
     displayName: 'A Major Consultation with the Oracle',
-    shortName: 'Oracle temple',
+    shortName: 'inside the Oracle Temple',
     hidden: true,
     noMediaChat: true,
     description: 'The Oracle of Delphi - a truly beautiful @ in shimmering blue - perks up at your presence.<br/><br/>"Oh, hi there! Sorry about all the mess, the fountain liquids all shifting, the map being all out of true - some ridiculous chaos demons have been messing with the fabric of space around here. They\'ve scattered a dozen riddles around - some even within the useful spaces, those poor dogs - which apparently build some kind of code phrase that\'s important to them.<br/><br/>If you figure a riddle out, I think you can use that "/go" invocation you used to get here to see what visions it brings you. I suspect things might be finicky when it comes to translocation magic - again, chaos - but I *believe* my centaurs got things to a point where all lowercase components work.<br/><br/>Hopefully if you figure that code phrase out and /go to them, maybe you\'ll get some kind of explaination, or at least a neat bauble...? I dunno, I\'m kinda stuck here. But good luck!"<br/><br/> If you want a space where you can talk with others about the puzzles without spoiling them, feel free to chat [[nearby->spoil]]. You can return to the [[fountains->oracle]].'
@@ -68,7 +68,7 @@ export const oldHubRoomData = {
   pitSwag: {
     id: 'pitSwag',
     displayName: 'Division Leaders 3Q21 - Grab Your Swag!',
-    shortName: 'the chaos pit swag grab',
+    shortName: 'the chaos pit swag tables',
     hidden: true,
     noMediaChat: true,
     description: `A banner is strung above a cheap plastic foldable table. Heaped on the table are what appear to be Orbs of Zot. Another, even bigger pile contains what must be thousands of Amulets of Yendor, and the third ""pile"" is a single, already-opened box of 8 crayons. The demon is totally ignoring you; you can very easily get an [[Orb of Zot->item]] or [[Amulet of Yendor->item]], or even that [[box of crayons->item]] if that's your fancy.<br/><br/>You can also head [[back there->wildchaospit]] before you go, or go straight to the [[pentagrams->pitPentagrams]] they were gesturing at.`
