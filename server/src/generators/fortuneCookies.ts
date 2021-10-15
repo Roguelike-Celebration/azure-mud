@@ -18,8 +18,8 @@ export const generate = () => {
       '#ooh#, #tasty#!',
       '#ooh#, #incredible#!',
       '#ooh#, tastes like #goodFlavor#!',
-      '#tasty.a.capitalize# cookie #thatsLike# #goodFlavor#.',
-      '#incredible.a.capitalize# cookies #thatsLike# #goodFlavor#.'
+      `It's #tasty.a# cookie #thatsLike# #goodFlavor#.`,
+      `It's #incredible.a# cookies #thatsLike# #goodFlavor#.`
     ],
     ooh: [
       'Ooh',
@@ -31,7 +31,7 @@ export const generate = () => {
       'Wonderful',
       'Delightful'
     ],
-    tasty: [ // consonant-tasty
+    tasty: [ // consonant-tasty; kept these separate so you can't get 'ridiculously ridiculously'
       'tasty',
       'delicious',
       'delightful',
