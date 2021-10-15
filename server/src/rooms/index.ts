@@ -107,7 +107,7 @@ const indexRoomData: { [name: string]: Room } = {
     description: `The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. A friendly bartender will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight's specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).
     <br/>A self-serve table nearby has two crates packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]].
     <br/><br/>
-    Three booths provide opportunities to sit and enjoy conversation in smaller groups - by the [[railing->railing]], seated [[along the bar->stools]], and tucked away [[at the back->back]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->hall]].`,
+    Four areas provide opportunities to sit and enjoy conversation in smaller groups - by the [[railing->railing]], seated [[along the bar->stools]], by a central [[stage->barStage]], and tucked away [[at the back->back]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->hall]].`,
     hasNoteWall: true,
     noteWallData: {
       roomWallDescription: 'By the bathrooms there\'s a pile of pens and markers - it seems the bar decided if they can\'t stop graffitti, they might as well encourage patrons to use glitter pens instead of boring ballpoint.',
@@ -122,21 +122,27 @@ const indexRoomData: { [name: string]: Room } = {
     displayName: 'Booth Along the Railing',
     shortName: 'the booth by the railing',
     description: `A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.</br></br>
-      From here, you can see [[the seats at the bar->stools]] or [[at the back of the room->back]], and the [[rest of the bar->bar]].`
+      From here, you can see [[the seats at the bar->stools]], the [[stage->barStage]], or [[at the back of the room->back]], and the [[rest of the bar->bar]].`
   },
   stools: {
     id: 'stools',
     displayName: 'Seats Along the Bar',
     shortName: 'the stools by the bar',
-    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel. Whee! There's a bard at the bar issuing terrible pickup lines to anyone who sits next to them.</br></br>
-      From here, you can see tables [[by the railing->railing]] or [[at the back->back]], and the [[rest of the bar->bar]].`
+    description: `Seats let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel. Whee!</br></br>
+      From here, you can see tables [[by the railing->railing]], the [[stage->barStage]], or [[at the back->back]], and the [[rest of the bar->bar]].`
+  },
+  barStage: {
+    id: 'barStage',
+    displayName: 'Stage Near the Bar',
+    shortName: 'the bar stage',
+    description: 'You can /dance if you want to. And indeed, maybe you should, to upstage that terrible bard.</br></br>From here you can see tables at the [[railing]], [[along the bar->stools]], the [[back]], and the [[rest of the bar->bar]].'
   },
   back: {
     id: 'back',
     displayName: 'Booth at the Back',
     shortName: 'the booth at the back',
     description: `A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>
-      From here, you can see tables [[at the railing->railing]] or [[along the bar->stools]], and the [[rest of the bar->bar]].`
+      From here, you can see tables [[at the railing->railing]], the [[stage->barStage]], or [[along the bar->stools]], and the [[rest of the bar->bar]].`
   },
   theater,
   warrior,
