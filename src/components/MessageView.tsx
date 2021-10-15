@@ -62,7 +62,7 @@ export default function MessageView (props: { message: Message; id: string, hide
 
   const date = (typeof message.timestamp === 'string' ? new Date(message.timestamp) : message.timestamp)
   let className = 'message-wrapper'
-  if (props.msgIndex % 2 == 0) {
+  if (props.msgIndex % 2 === 0) {
     className += ' even-message'
   }
 
