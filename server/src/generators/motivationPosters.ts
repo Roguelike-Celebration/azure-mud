@@ -80,7 +80,7 @@ export const generate = () => {
       'appealing',
       'excited',
       'oddly attractive'
-    ],
+    ]
   })
 
   grammar.addModifiers(tracery.baseEngModifiers)
