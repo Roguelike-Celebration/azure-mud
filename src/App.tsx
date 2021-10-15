@@ -16,7 +16,9 @@ import {
   PlayerBannedAction,
   SetKeepCameraWhenMovingAction,
   SetTextOnlyModeAction,
-  SetNumberOfFacesAction
+  SetNumberOfFacesAction,
+  SetUseSimpleNamesAction,
+  SetCaptionsEnabledAction
 } from './Actions'
 import ProfileView from './components/ProfileView'
 import { useReducerWithThunk } from './useReducerWithThunk'
@@ -56,6 +58,7 @@ import _ from 'lodash'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
+export const SettingsContext = createContext(null)
 export const IsMobileContext = createContext(null)
 
 const App = () => {
@@ -124,10 +127,14 @@ const App = () => {
             )
           }
 
+          const useSimpleNames = await Storage.getUseSimpleNames()
+          dispatch(SetUseSimpleNamesAction(useSimpleNames))
           const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
           dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
           const textOnlyMode = await Storage.getTextOnlyMode()
           dispatch(SetTextOnlyModeAction(textOnlyMode, false))
+          const captionsEnabled = await Storage.getCaptionsEnabled()
+          dispatch(SetCaptionsEnabledAction(captionsEnabled))
 
           dispatch(IsRegisteredAction())
           connect(userId, dispatch)
@@ -203,13 +210,18 @@ const App = () => {
     return <YouAreBannedView />
   }
 
+  // It's slightly weird we now construct this here and pass it as a prop to RoomView instead of constructing it there.
+  // Shrug, the conf is in 2 days.
   let videoChatView
-  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat && !state.textOnlyMode) {
+  if (state.roomData && state.roomId && state.roomData[state.roomId] && !state.roomData[state.roomId].noMediaChat) {
     videoChatView = (
       <MediaChatView
         visibleSpeakers={state.visibleSpeakers}
         currentSpeaker={state.currentSpeaker}
         numberOfFaces={state.numberOfFaces}
+        inMediaChat={state.inMediaChat}
+        textOnlyMode={state.textOnlyMode}
+        audioOnlyMode={state.audioOnlyMode}
       />
     )
   }
@@ -238,7 +250,7 @@ const App = () => {
       break
     }
     case Modal.Settings: {
-      innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} />
+      innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} captionsEnabled={state.captionsEnabled} />
       break
     }
     case Modal.MediaSelector: {
@@ -323,64 +335,71 @@ const App = () => {
 
   const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
-  // TODO: active=false should be a real value
+  // TODO: userMapContext should actually do the thing
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
         <TwilioChatContextProvider active={!state.textOnlyMode}>
           <IsMobileContext.Provider value={isMobile}>
-            <UserMapContext.Provider
-              value={{ userMap: state.userMap, myId: state.userId }}
-            >
-              <div
-                id={
-                  state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
-                }
+            <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
+              <UserMapContext.Provider
+                value={{ userMap: state.userMap, myId: state.userId }}
               >
-                {shouldShowMenu ? (
-                  <span>
-                    <SideNavView
-                      roomData={state.roomData}
-                      currentRoomId={state.roomId}
-                      username={state.userMap[state.userId].username}
-                      spaceIsClosed={state.isClosed}
-                    />
-                    {/* Once we moved the sidebar to be position:fixed, we still
-                  needed something to take up its space in the CSS grid.
-                  This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                    <div id='side-nav-placeholder' />
-                  </span>
-                ) : (
-                  <button id="show-menu" onClick={showMenu}>
-                    <span role="img" aria-label="menu">
-                    🍔
+                <div
+                  id={
+                    state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
+                  }
+                >
+                  {shouldShowMenu ? (
+                    <span>
+                      <SideNavView
+                        roomData={state.roomData}
+                        currentRoomId={state.roomId}
+                        username={state.userMap[state.userId].username}
+                        spaceIsClosed={state.isClosed}
+                      />
+                      {/* Once we moved the sidebar to be position:fixed, we still
+                    needed something to take up its space in the CSS grid.
+                    This should be fixable via CSS, but sigh, it's 3 days before the event */}
+                      <div id="side-nav-placeholder" />
                     </span>
-                  </button>
-                )}
-                {modalView}
-                <div id="main" role="main">
-                  {videoChatView}
-                  {state.roomData[state.roomId] ? (
-                    <RoomView
-                      room={state.roomData[state.roomId]}
-                      userId={state.userId}
-                      roomData={state.roomData}
-                      inMediaChat={state.inMediaChat}
-                      keepCameraWhenMoving={state.keepCameraWhenMoving}
-                      textOnlyMode={state.textOnlyMode}
+                  ) : (
+                    <button id="show-menu" onClick={showMenu}>
+                      <span role="img" aria-label="menu">
+                        🍔
+                      </span>
+                    </button>
+                  )}
+                  {modalView}
+                  <div id="main" role="main">
+                    {state.roomData[state.roomId] ? (
+                      <RoomView
+                        room={state.roomData[state.roomId]}
+                        userId={state.userId}
+                        roomData={state.roomData}
+                        inMediaChat={state.inMediaChat}
+                        keepCameraWhenMoving={state.keepCameraWhenMoving}
+                        textOnlyMode={state.textOnlyMode}
+                        mediaChatView={videoChatView}
+                      />
+                    ) : null}
+                    <ChatView
+                      messages={state.messages}
+                      autoscrollChat={state.autoscrollChat}
+                      serverSettings={state.serverSettings}
+                      captionsEnabled={state.captionsEnabled}
                     />
-                  ) : null}
-                  <ChatView messages={state.messages} autoscrollChat={state.autoscrollChat} serverSettings={state.serverSettings} />
-                  <InputView
-                    prepopulated={state.prepopulatedInput}
-                    sendMessage={(message) =>
-                      dispatch(SendMessageAction(message))
-                    }
-                  />
+                    <InputView
+                      prepopulated={state.prepopulatedInput}
+                      sendMessage={(message) =>
+                        dispatch(SendMessageAction(message))
+                      }
+                    />
+                  </div>
+                  {profile}
                 </div>
-                {profile}
-              </div>
-            </UserMapContext.Provider>
+              </UserMapContext.Provider>
+            </SettingsContext.Provider>
           </IsMobileContext.Provider>
         </TwilioChatContextProvider>
       </DispatchContext.Provider>

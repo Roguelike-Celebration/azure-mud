@@ -55,9 +55,12 @@ export type Action =
   | HideSideMenuAction
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
+  | SetUseSimpleNamesAction
   | SetKeepCameraWhenMovingAction
   | SetTextOnlyModeAction
+  | SetAudioOnlyModeAction
   | SetNumberOfFacesAction
+  | SetCaptionsEnabledAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
@@ -106,9 +109,12 @@ export enum ActionType {
   HideSideMenu = 'HIDE_SIDE_MENU',
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
+  SetUseSimpleNames = 'SET_USE_SIMPLE_NAMES',
   SetKeepCameraWhenMoving = 'SET_KEEP_CAMERA_WHEN_MOVING',
   SetTextOnlyMode = 'SET_TEXT_ONLY_MODE',
+  SetAudioOnlyMode = 'SET_AUDIO_ONLY_MODE',
   SetNumberOfFaces = 'SET_NUMBER_OF_FACES',
+  SetCaptionsEnabled = 'SET_CAPTIONS_ENABLED',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -661,6 +667,17 @@ export const ActivateAutoscrollAction = (): ActivateAutoscrollAction => {
   return { type: ActionType.ActivateAutoscroll }
 }
 
+interface SetUseSimpleNamesAction {
+  type: ActionType.SetUseSimpleNames;
+  value: boolean;
+}
+
+export const SetUseSimpleNamesAction = (
+  useSimpleNames: boolean
+): SetUseSimpleNamesAction => {
+  return { type: ActionType.SetUseSimpleNames, value: useSimpleNames }
+}
+
 interface SetKeepCameraWhenMovingAction {
   type: ActionType.SetKeepCameraWhenMoving;
   value: boolean;
@@ -683,6 +700,33 @@ export const SetTextOnlyModeAction = (
   refresh: boolean
 ): SetTextOnlyModeAction => {
   return { type: ActionType.SetTextOnlyMode, textOnlyMode: textOnlyMode, refresh: refresh }
+}
+
+interface SetAudioOnlyModeAction {
+  type: ActionType.SetAudioOnlyMode;
+  value: boolean;
+}
+
+export const SetAudioOnlyModeAction = (
+  enable: boolean
+): SetAudioOnlyModeAction => {
+  return {
+    type: ActionType.SetAudioOnlyMode,
+    value: enable
+  }
+}
+interface SetCaptionsEnabledAction {
+  type: ActionType.SetCaptionsEnabled;
+  value: boolean;
+}
+
+export const SetCaptionsEnabledAction = (
+  enable: boolean
+): SetCaptionsEnabledAction => {
+  return {
+    type: ActionType.SetCaptionsEnabled,
+    value: enable
+  }
 }
 
 interface SetNumberOfFacesAction {

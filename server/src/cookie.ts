@@ -25,7 +25,7 @@ export function cookie (user: User, messageId: string): Result {
         arguments: [messageId, user.id, 'cracks open a fortune cookie.']
       },
       {
-        groupId: user.id,
+        userId: user.id,
         target: 'privateCommand',
         arguments: [privateActionString]
       }
