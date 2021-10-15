@@ -21,7 +21,7 @@ interface Props {
 
 export default function MediaSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { prepareMediaDevices, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, publishMedia, publishAudio } = useMediaChatContext()
+  const { prepareMediaDevices, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, publishMedia, publishAudio, publishingCamera, publishingMic, unpublishMedia } = useMediaChatContext()
 
   useEffect(() => {
     const run = async () => {
@@ -34,20 +34,17 @@ export default function MediaSelectorView (props: Props) {
     }
     run()
 
-    /* Okay! So!
-    * This is intended to make it so that when you close out the modal,
-    * it turns off your webcam/mic (and webcam indicator light).
-    * It... doesn't work, and I don't know why.
-    * I also had a flag for whether the user explicitly clicked the 'join' button or not
-    * (to not run this logic in that case, since we want to stay in the call)
-    * and that didn't work either.
-    * For that, I'm not sure what I don't understand about the relationship between
-    * useState and these useEffect return blocks.
-    *
-    */
-    // return () => {
-    //   leaveCall()
-    // }
+    // This code contains an *extremely* cursed bug.
+    // For some reason, unpublishMedia nondeterministically sometimes gets
+    // called in a context where `localVideoTrack` isn't defined,
+    // and thus we can't turn off the user's camera.
+    // Rather than descend into madness, I'm hacking around that in other ways in some cases.
+    // But leaving this in to help when it does.
+    return () => {
+      if (!publishingCamera || !publishingMic) {
+        unpublishMedia()
+      }
+    }
   }, [])
 
   const deviceToOption = (d: DeviceInfo) => {
