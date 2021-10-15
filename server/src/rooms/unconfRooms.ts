@@ -59,7 +59,7 @@ export const tengu = {
 export const yak = {
   id: 'Unconferencing: Yak',
   displayName: 'Unconferencing: Yak Pen',
-  shortName: 'the Yak Pen',
+  shortName: 'Unconferencing: Yak',
   description: 'This is an unconferencing room. The smell in here is... a lot. A sign at the entrance pleads "Please, no shaving!" A table is set up as if to offer refreshments but atop it are just blocks of solid salt, carved into abstract shapes by the licking of very large tongues.<br/><br/>The other unconferencing rooms are [[cockatrice]], [[dragon]], [[naga]], [[skeleton]], and [[tengu]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
   hasNoteWall: true
 }
