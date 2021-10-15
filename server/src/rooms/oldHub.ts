@@ -2,11 +2,11 @@
 /* eslint-disable quotes */
 
 export const oldHubRoomData = {
-  ASCII: {
-    id: 'ASCII',
+  ascii: {
+    id: 'ascii',
     displayName: 'The Hash Mark Dungeon',
-    shortName: '# dungeon',
-    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a salmon, and a crocodile. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle->oracle]], another to the [[Royal Jelly->jelly]], and then a set heads back to the [[Space Hanger->sfHub]].',
+    shortName: 'ASCII',
+    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a crocodile, and a more abstract one of unhewn stone. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle->oracle]], and then a set heads back to the [[Space Hanger->sfHub]].',
     hasNoteWall: true,
     hidden: true,
     noMediaChat: true,
@@ -38,15 +38,14 @@ export const oldHubRoomData = {
     shortName: 'Oracle temple',
     hidden: true,
     noMediaChat: true,
-    description: 'The Oracle of Delphi - a truly beautiful @ in shimmering blue - perks up at your presence.<br/><br/>"Oh, hi there! Sorry about all the mess, the fountain liquids all shifting, the map being all out of true - some ridiculous chaos demons have been messing with the fabric of space around here. They\'ve scattered a dozen riddles around - some even within the useful spaces, those poor dogs - which apparently build some kind of code phrase that\'s important to them.<br/><br/>If you figure a riddle out, I think you can use that "go" invocation you used to get here to see what visions it brings you. I suspect things might be finicky when it comes to translocation magic - again, chaos - but I *believe* my centaurs got things to a point where all lowercase components work.<br/><br/>Hopefully if you figure that code phrase out and go to them, maybe you\'ll get some kind of explaination, or at least a neat bauble...? I dunno, I\'m kinda stuck here. But good luck!"<br/><br/>You can return to the [[fountains->oracle]].'
+    description: 'The Oracle of Delphi - a truly beautiful @ in shimmering blue - perks up at your presence.<br/><br/>"Oh, hi there! Sorry about all the mess, the fountain liquids all shifting, the map being all out of true - some ridiculous chaos demons have been messing with the fabric of space around here. They\'ve scattered a dozen riddles around - some even within the useful spaces, those poor dogs - which apparently build some kind of code phrase that\'s important to them.<br/><br/>If you figure a riddle out, I think you can use that "/go" invocation you used to get here to see what visions it brings you. I suspect things might be finicky when it comes to translocation magic - again, chaos - but I *believe* my centaurs got things to a point where all lowercase components work.<br/><br/>Hopefully if you figure that code phrase out and /go to them, maybe you\'ll get some kind of explaination, or at least a neat bauble...? I dunno, I\'m kinda stuck here. But good luck!"<br/><br/> If you want a space where you can talk with others about the puzzles without spoiling them, feel free to chat [[nearby->spoil]]. You can return to the [[fountains->oracle]].'
   },
-  jelly: {
-    id: 'jelly',
-    displayName: 'Gelatinous Throne',
-    shortName: 'jelly throne room',
-    description: 'Get yourself a slime friend here! Or go [[back->ASCII]].',
-    noMediaChat: true,
-    hidden: true
+  spoil: {
+    id: 'spoil',
+    displayName: 'Spoiler Containment Zone',
+    shortName: 'the spoiler zone',
+    hidden: true,
+    description: 'This is a space for talking through the riddles without worrying about spoiling people in other rooms. Or head back to [[the Oracle->majorConsutlation]].'
   },
   wildchaospit: {
     id: 'wildchaospit',
