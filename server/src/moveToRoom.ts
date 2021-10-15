@@ -21,7 +21,8 @@ export async function moveToRoom (
     const searchStr = newRoomId.replace(' ', '').toUpperCase()
     to = Object.values(roomData).find(
       (room) => room.shortName.replace(' ', '').toUpperCase() === searchStr ||
-        room.displayName.replace(' ', '').toUpperCase() === searchStr
+        room.displayName.replace(' ', '').toUpperCase() === searchStr ||
+          room.id.toUpperCase() === searchStr
     )
   }
 

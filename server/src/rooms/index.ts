@@ -135,7 +135,7 @@ const indexRoomData: { [name: string]: Room } = {
     id: 'barStage',
     displayName: 'Stage Near the Bar',
     shortName: 'the bar stage',
-    description: 'You can /dance if you want to. And indeed, maybe you should, to upstage that terrible bard who thinks cheesy pick up lines are the height of comedy.</br></br>From here you can see tables at the [[railing]], [[along the bar->stools]], the [[back]], and the [[rest of the bar->bar]].'
+    description: 'You can /dance if you want to. And indeed, maybe you should, to upstage that terrible bard who thinks [[cheesy pick up lines->hearPickupLine]] are the height of comedy.</br></br>From here you can see tables at the [[railing]], [[along the bar->stools]], the [[back]], and the [[rest of the bar->bar]].'
   },
   back: {
     id: 'back',
