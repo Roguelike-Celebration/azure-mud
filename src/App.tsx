@@ -76,16 +76,16 @@ const App = () => {
       } else if (shouldVerifyEmail(user)) {
         const userId = firebase.auth().currentUser.uid
         const providerId = firebase.auth().currentUser.providerId
-        dispatch(AuthenticateAction(userId, user.email, providerId, true))
+        dispatch(AuthenticateAction(userId, userId, providerId, true))
       } else {
         const userId = firebase.auth().currentUser.uid
         const providerId = firebase.auth().currentUser.providerId
 
         checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
-            // Use email if we have it, otherwise use service's default display name (for Twitter, their handle)
+            // If email, use ID to not leak, otherwise use service's default display name (for Twitter, their handle)
             const defaultDisplayName = user.email
-              ? user.email
+              ? userId
               : user.displayName
             dispatch(
               AuthenticateAction(userId, defaultDisplayName, providerId, false)
