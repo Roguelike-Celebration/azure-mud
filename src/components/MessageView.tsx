@@ -149,6 +149,7 @@ const LeftView = (props: LeftMessage & { id: string }) => {
   const onClick = () => {
     moveToRoom(props.toId)
   }
+  const roomData = useContext(RoomDataContext)
 
   if (roomData[props.toId]) {
     const toButton: JSX.Element = roomData[props.toId].hidden ? <text>somewhere...</text> : <button onClick={onClick} className='link-styled-button'>{props.toName}.</button>

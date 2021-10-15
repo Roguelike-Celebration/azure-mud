@@ -55,7 +55,6 @@ import { shouldVerifyEmail } from './firebaseUtils'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import _ from 'lodash'
-import { roomData } from '../server/src/rooms'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -347,7 +346,7 @@ const App = () => {
               <UserMapContext.Provider
                 value={{ userMap: state.userMap, myId: state.userId }}
               >
-                <RoomDataContext.Provider value={roomData}>
+                <RoomDataContext.Provider value={state.roomData}>
                   <div
                     id={
                       state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
