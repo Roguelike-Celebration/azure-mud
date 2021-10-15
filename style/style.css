@@ -155,10 +155,8 @@ input[type=radio] {
   display: block
 }
 
-#themeSelectionForm .radio {
-  margin: 1em;
-  display: flex;
-  flex-direction: row;
+.settingsContainer .radio {
+  margin-left: 1em;
 }
 
 #movementNotificationForm input[type=checkbox] {
@@ -183,4 +181,14 @@ td {
 #code-of-conduct ul {
   list-style-type: circle;
   padding-left: 2em;
+}
+
+.form-header {
+  font-size: 1.3em;
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.settingsContainer .form {
+  margin-bottom: 1em;
 }

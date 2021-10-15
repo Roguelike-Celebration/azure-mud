@@ -13,7 +13,14 @@ function isMovementMessage (message: Message): message is ConnectedMessage | Dis
     message.type === MessageType.Entered || message.type === MessageType.Left
 }
 
-export default function ChatView (props: { messages: Message[], autoscrollChat: Boolean, serverSettings: ServerSettings}) {
+interface Props {
+  messages: Message[],
+  autoscrollChat: boolean,
+  serverSettings: ServerSettings,
+  captionsEnabled: boolean
+}
+
+export default function ChatView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
   const handleScroll = () => {
@@ -49,19 +56,32 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
         m.numUsersInRoom > props.serverSettings.movementMessagesHideThreshold
       )
   }
-  const messagesAfterMovementFilter = props.messages.filter((msg) => {
-    return !shouldRemoveMessage(msg)
-  })
+  const messages = props.messages
+    .filter((msg) => {
+      // Hide movement messages if the room is busy enough
+      return !shouldRemoveMessage(msg)
+    })
+    .filter((msg) => {
+      // Don't show captions unless they're enabled
+      if (props.captionsEnabled) return true
+      return msg.type !== MessageType.Caption
+    })
 
   return (
     <div id="messages" onScroll={handleScroll}>
-      {messagesAfterMovementFilter.slice(-150).map((m, idx) => {
+      {messages.slice(-150).map((m, idx) => {
         let hideTimestamp = false
         const previousMessage = props.messages[idx - 1]
         if (previousMessage) {
           // TODO: Give all messages a userId for this to be meaningful
-          if ((previousMessage as any).userId && (m as any).userId && (previousMessage as any).userId === (m as any).userId) {
-            const diff = (new Date(m.timestamp).getTime() - new Date(previousMessage.timestamp).getTime())
+          if (
+            (previousMessage as any).userId &&
+            (m as any).userId &&
+            (previousMessage as any).userId === (m as any).userId
+          ) {
+            const diff =
+              new Date(m.timestamp).getTime() -
+              new Date(previousMessage.timestamp).getTime()
             // This is a bad way to calculate '3 minutes' and I should feel bad -em
             if (diff < 1000 * 60 * 3) {
               hideTimestamp = true
@@ -70,7 +90,14 @@ export default function ChatView (props: { messages: Message[], autoscrollChat: 
         }
 
         const id = `message-${idx}`
-        return <MessageView message={m} key={id} id={id} hideTimestamp={hideTimestamp} />
+        return (
+          <MessageView
+            message={m}
+            key={id}
+            id={id}
+            hideTimestamp={hideTimestamp}
+          />
+        )
       })}
     </div>
   )

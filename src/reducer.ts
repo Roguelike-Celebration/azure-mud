@@ -59,9 +59,17 @@ export interface State {
 
   prepopulatedInput?: string;
 
+  // Settings data
+  useSimpleNames?: boolean;
+
+  /** This is poorly named, but being "in media chat" means "is publishing audio and/or video" */
   inMediaChat: boolean;
   keepCameraWhenMoving?: boolean;
+  captionsEnabled: boolean,
+
+  /** text-only mode functionally overrides audio-only mode, since we don't even connect to Twilio */
   textOnlyMode?: boolean;
+  audioOnlyMode?: boolean;
 
   /** Tuples of userId and when they were last the visible speaker */
   visibleSpeakers: [string, Date][]
@@ -107,7 +115,8 @@ export const defaultState: State = {
   activeModalOptions: {},
   isBanned: false,
   serverSettings: DEFAULT_SERVER_SETTINGS,
-  numberOfFaces: 5
+  numberOfFaces: 5,
+  captionsEnabled: false
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -447,9 +456,19 @@ export default (oldState: State, action: Action): State => {
     state.autoscrollChat = true
   }
 
+  if (action.type === ActionType.SetUseSimpleNames) {
+    state.useSimpleNames = action.value
+    Storage.setUseSimpleNames(action.value)
+  }
+
   if (action.type === ActionType.SetKeepCameraWhenMoving) {
     state.keepCameraWhenMoving = action.value
     Storage.setKeepCameraWhenMoving(action.value)
+  }
+
+  if (action.type === ActionType.SetCaptionsEnabled) {
+    state.captionsEnabled = action.value
+    Storage.setCaptionsEnabled(action.value)
   }
 
   if (action.type === ActionType.SetTextOnlyMode) {
@@ -459,6 +478,10 @@ export default (oldState: State, action: Action): State => {
     } else {
       Storage.setTextOnlyMode(action.textOnlyMode).then(() => window.location.reload())
     }
+  }
+
+  if (action.type === ActionType.SetAudioOnlyMode) {
+    state.audioOnlyMode = action.value
   }
 
   if (action.type === ActionType.Authenticate) {
