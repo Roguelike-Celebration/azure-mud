@@ -123,8 +123,12 @@ export default function MediaChatView (props: MediaProps) {
       <MediaChatButtonView
         textOnlyMode={props.textOnlyMode}
         inMediaChat={props.inMediaChat}
-        totalCount={callParticipants.size}
-        offscreenCount={props.audioOnlyMode ? callParticipants.size : audioParticipants.length}
+        totalCount={videoParticipants.length + audioParticipants.length}
+        offscreenCount={
+          props.audioOnlyMode
+            ? videoParticipants.length + audioParticipants.length
+            : audioParticipants.length
+        }
         audioOnlyMode={props.audioOnlyMode}
       />
     </div>
