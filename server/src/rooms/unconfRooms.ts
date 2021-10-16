@@ -57,7 +57,7 @@ export const tengu = {
 }
 
 export const yak = {
-  id: 'Unconferencing: Yak',
+  id: 'yak',
   displayName: 'Unconferencing: Yak Pen',
   shortName: 'Unconferencing: Yak',
   description: 'This is an unconferencing room. The smell in here is... a lot. A sign at the entrance pleads "Please, no shaving!" A table is set up as if to offer refreshments but atop it are just blocks of solid salt, carved into abstract shapes by the licking of very large tongues.<br/><br/>We encourage you to use this space to talk "face-to-face" using <a href="https://us02web.zoom.us/j/82669162828?pwd=L3kxdkhHUjRqQWdFbU11Y0tocGlBdz09" target="_blank">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 379872)<br/><br/>The other unconferencing rooms are [[cockatrice]], [[dragon]], [[naga]], [[skeleton]], and [[tengu]]. Or you can climb the stairs back up to the [[unconferencing lobby->unconference]].',
