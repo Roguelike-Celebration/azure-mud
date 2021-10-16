@@ -41,8 +41,6 @@ export default function RoomView (props: Props) {
     currentMic,
     currentCamera,
     joinCall,
-    publishMedia,
-    publishAudio,
     unpublishMedia
   } = useMediaChatContext()
   const { room } = props
