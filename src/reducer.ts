@@ -45,6 +45,8 @@ export interface State {
   authenticationProvider?: string;
   mustVerifyEmail?: boolean;
 
+  hasDismissedAModal: boolean;
+
   hasRegistered: boolean;
 
   roomId?: string;
@@ -116,7 +118,8 @@ export const defaultState: State = {
   isBanned: false,
   serverSettings: DEFAULT_SERVER_SETTINGS,
   numberOfFaces: 5,
-  captionsEnabled: false
+  captionsEnabled: false,
+  hasDismissedAModal: false
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -139,7 +142,7 @@ export default (oldState: State, action: Action): State => {
     const oldRoomId = state.roomId
     state.roomId = action.value
 
-    if (state.roomId === 'entryway') {
+    if (state.roomId === 'entryway' || !state.hasDismissedAModal) {
       // This will show any time anyone reloads into the entryway, which
       // might be slightly annoying for e.g. greeters.
       // Given our time constraints, that seems an acceptable tradeoff
@@ -420,6 +423,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.HideModalAction) {
     state.activeModal = Modal.None
+    state.hasDismissedAModal = true
   }
 
   if (action.type === ActionType.ShowProfile) {
