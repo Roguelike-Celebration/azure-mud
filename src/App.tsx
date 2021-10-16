@@ -155,7 +155,7 @@ const App = () => {
             const $main = document.getElementById('main')
             // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
             if ($main) {
-              const numberOfFaces = Math.floor($main.clientWidth / VideoWidth)
+              const numberOfFaces = Math.floor($main.clientWidth / VideoWidth) - 1
               dispatch(SetNumberOfFacesAction(numberOfFaces))
             } else {
               console.warn('Attempted to call onResize when \'main\' element was null; will default to show no faces')
@@ -163,8 +163,8 @@ const App = () => {
           }
 
           // Our initial paint time is stupid slow
-          // but waiting 3 seconds seems to ensure that #main exists
-          setTimeout(onResize, 3000)
+          // but waiting a long time seems to ensure that #main exists
+          setTimeout(onResize, 2000)
           window.addEventListener('resize', _.throttle(onResize, 100, { trailing: true }))
         })
       }

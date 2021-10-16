@@ -82,11 +82,12 @@ export default function MediaChatView (props: MediaProps) {
   const audioParticipantIds = participants
     .filter((p) => !visibleSpeakers.includes(p.identity))
 
+  console.log('[NUM_FACES]: ', props.numberOfFaces)
   // We might have folks on video, but no "dominantSpeaker" notifications generated yet.
   // We should still flesh out the wall o' faces in that situation.
   // NOTE: This will result in video folks being added in whatever they appear in an Arrayified callParticipants
   // I don't know what that ordering is, or if it's deterministic.
-  while (videoParticipantIds.length < 1 && audioParticipantIds.length > props.numberOfFaces) {
+  while (videoParticipantIds.length < props.numberOfFaces && audioParticipantIds.length > 0) {
     videoParticipantIds.push(audioParticipantIds.shift())
   }
 
@@ -122,6 +123,7 @@ export default function MediaChatView (props: MediaProps) {
       <MediaChatButtonView
         textOnlyMode={props.textOnlyMode}
         inMediaChat={props.inMediaChat}
+        totalCount={callParticipants.size}
         offscreenCount={props.audioOnlyMode ? callParticipants.size : audioParticipants.length}
         audioOnlyMode={props.audioOnlyMode}
       />
