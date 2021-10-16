@@ -67,13 +67,6 @@ export default function MediaSelectorView (props: Props) {
 
   const clickJoin = () => {
     dispatch(HideModalAction())
-
-    if (props.hideVideo) {
-      publishAudio()
-    } else {
-      dispatch(StartVideoChatAction())
-      publishMedia()
-    }
   }
 
   let video
@@ -117,9 +110,7 @@ export default function MediaSelectorView (props: Props) {
       <div>
         <VideoAudioSettingsView keepCameraWhenMoving={props.keepCameraWhenMoving} />
       </div>
-      {props.showJoinButton
-        ? <button id="join" onClick={clickJoin}>Join</button>
-        : ''}
+      <button id="join" onClick={clickJoin}>Use These Devices</button>
     </div>
   )
 }
