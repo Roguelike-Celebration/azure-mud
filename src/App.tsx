@@ -389,6 +389,7 @@ const App = () => {
                           keepCameraWhenMoving={state.keepCameraWhenMoving}
                           textOnlyMode={state.textOnlyMode}
                           mediaChatView={videoChatView}
+                          hasDismissedAModal={state.hasDismissedAModal}
                         />
                       ) : null}
                       <ChatView
