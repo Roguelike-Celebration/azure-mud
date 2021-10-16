@@ -9,6 +9,7 @@ interface Props {
   inMediaChat: boolean
   textOnlyMode: boolean
   offscreenCount: number
+  totalCount: number
   audioOnlyMode: boolean
 }
 const MediaChatButtonView = (props: Props) => {
@@ -144,10 +145,10 @@ const MediaChatButtonView = (props: Props) => {
   }
 
   var offscreenLabel
-  if (props.offscreenCount > 0) {
+  if (props.totalCount > 0) {
     offscreenLabel = (
       <div className="offscreen-count">
-        {props.offscreenCount} {props.offscreenCount === 1 ? 'person is' : 'people are'} in the call but not visible.
+        {props.totalCount} {props.totalCount === 1 ? 'person is' : 'people are'} in the call{publishingCamera || publishingMic ? ', not including you' : ''}.
       </div>
     )
   }
