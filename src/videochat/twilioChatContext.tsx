@@ -156,7 +156,7 @@ export const TwilioChatContextProvider = (props: {
       }
     }
 
-    setLocalStreamView(undefined)
+    // setLocalStreamView(undefined)
   }
 
   useEffect(() => {
@@ -406,7 +406,7 @@ export const TwilioChatContextProvider = (props: {
 
         // TODO: Should this function be moved elsewhere?
         // Should this logic live in a useEffect hook?
-        setCurrentCamera: (id: string) => {
+        setCurrentCamera: async (id: string) => {
           console.log(`[TWILIO] Setting current camera from ${currentCamera.id} (${currentCamera.name}) to ${id}`)
           if (currentCamera && currentCamera.id !== id) {
             console.log('[TWILIO] Removing old camera', room)
@@ -415,23 +415,36 @@ export const TwilioChatContextProvider = (props: {
               // TODO: room.unpublishTrack(localVideoTrack) wasn't working for some reason
               // This blunt approach works for now, but will need changing if we
               // e.g. add in screen sharing
+              /*
               room.localParticipant.videoTracks.forEach(publication => {
                 publication.unpublish()
               })
+              */
+              // TODO: There were huge issues with inconsistency with async timing issues leading to different media
+              // being shown to others versus shown to you - that is, users thought they were using the wrong camera.
+              // Booting the user out whenever they fiddle with their camera is brutal, but fixes it.
+              dispatch(StopVideoChatAction())
+              unpublishMedia()
             }
           }
           setCurrentCameraInternal(cameras.find((c) => c.id === id))
+          localVideoTrack.restart()
+          return null
         },
         setCurrentMic: (id: string) => {
           if (currentMic && currentMic.id !== id) {
             localAudioTrack.stop()
             if (room) {
-              room.localParticipant.audioTracks.forEach(publication => {
+              /* room.localParticipant.audioTracks.forEach(publication => {
                 publication.unpublish()
-              })
+              }) */
+              dispatch(StopVideoChatAction())
+              unpublishMedia()
             }
           }
           setCurrentMicInternal(mics.find(c => c.id === id))
+          localAudioTrack.restart()
+          return null
         },
 
         localStreamView,
