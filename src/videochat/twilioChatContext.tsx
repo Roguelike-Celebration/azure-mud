@@ -116,8 +116,9 @@ export const TwilioChatContextProvider = (props: {
     setPublishingCamera(true)
 
     if (localVideoTrack) {
-      room.localParticipant.publishTrack(localVideoTrack)
       localVideoTrack.restart()
+      localVideoTrack.enable(true)
+      room.localParticipant.publishTrack(localVideoTrack)
 
       if (!localStreamView) {
         setLocalStreamView(<VideoTrack track={localVideoTrack} />)
