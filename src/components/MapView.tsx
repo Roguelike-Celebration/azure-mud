@@ -75,15 +75,16 @@ export default function MapView (props: Props) {
   let map = mapText
 
   presenceMapping.forEach((roomId, idx) => {
-    let replaceString = '(0)'
+    let replaceString = '[0]'
 
     if (roomData[roomId] && roomData[roomId].users && roomData[roomId].users.length > 0) {
-      replaceString = `(${roomData[roomId].users.length})`
+      replaceString = `[${roomData[roomId].users.length}]`
     }
-
     replaceString = replaceString.padEnd(4, '.')
     map = map.replace(`(${idx.toString().padStart(2, '0')})`, replaceString)
   })
+
+  map = map.replace(/\[([0-9]*)\]/g, '($1)')
 
   const handleClick = (e) => {
     const roomId =
