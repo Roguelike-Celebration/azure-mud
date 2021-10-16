@@ -60,13 +60,13 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     : 'You are looking at a wall with space for people to place sticky notes.'
   const buttonText = props.noteWallData ? props.noteWallData.addNoteLinkText : 'add a note'
 
-  const massDeleteButton = props.user.isMod ? (
+  const massDeleteButton = props.user && props.user.isMod ? (
     <button onClick={deleteAllNotes}>Mod: Delete all notes</button>
   ) : (
     ''
   )
 
-  const setAsUnconferencingTopicsButton = props.user.isMod ? (
+  const setAsUnconferencingTopicsButton = props.user && props.user.isMod ? (
     <button onClick={setAsUnconferencingTopics}>Mod: Set as unconferencing topics</button>
   ) : (
     ''
