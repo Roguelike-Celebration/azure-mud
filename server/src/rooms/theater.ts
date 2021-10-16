@@ -6,7 +6,7 @@ export const theater = {
   // kawa: fixed typo, changed src to Twitch per issue #89. Note 'parent' will need to be changed if we change domains, see issue #88. Twitch documentation about 'parent': https://discuss.dev.twitch.tv/t/twitch-embedded-player-updates-in-2020/23956
   description: `A stage, confusingly decorated with Halloween skulls and streamers. There are a few dozen flimsy metal chairs you can sit in, plus some comfy couches in the back. <br/><br/>You can return to the [[hall]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Warrior->warrior]], [[Mage->mage]], [[Rogue->rogue]], or [[Tourist->tourist]]. (Check the "Happening Now" button on the left for speaker room assignments!)
         <br/><br/>
-        <a href="stream.html" onClick="window.open(\'stream.html#\' + window.getComputedStyle(document.body).getPropertyValue(\'background-color\'), \'stream\', \'width=560,height=460\'); return false">Pop Out Stream</a><br/>
+        <a href="stream.html" onClick="window.open(\'stream.html#\' + window.getComputedStyle(document.body).getPropertyValue(\'background-color\'), \'stream\', \'width=560,height=460\'); return false">Pop Out Stream</a>. <a href="https://www.streamtext.net/player?event=RoguelikeCelebration" target="_blank">Pop Out Live Captions</a>.<br/>
         `,
   noMediaChat: true,
   hasNoteWall: true,
