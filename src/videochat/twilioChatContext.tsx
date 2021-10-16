@@ -126,20 +126,32 @@ export const TwilioChatContextProvider = (props: {
   }
 
   const unpublishMedia = () => {
+    console.log('In unpublish', localVideoTrack)
+
     dispatch(StopVideoChatAction())
     setPublishingCamera(false)
     setPublishingMic(false)
 
-    if (room) {
-      if (localAudioTrack) {
-        room.localParticipant.unpublishTrack(localAudioTrack)
-        localAudioTrack.stop()
-        stopSpeechRecognizer()
-      }
+    if (localAudioTrack) {
+      localAudioTrack.stop()
+      stopSpeechRecognizer()
 
-      if (localVideoTrack) {
+      if (room) {
+        room.localParticipant.unpublishTrack(localAudioTrack)
+      }
+    }
+
+    if (localVideoTrack) {
+      // We shouldn't need to be so aggressive,
+      // but track.stop() alone isn't doing it
+      // and I can't be bothered to test which exact combo works
+      localVideoTrack.stop()
+      localVideoTrack.detach()
+      localVideoTrack.disable()
+      localVideoTrack.mediaStreamTrack.stop()
+
+      if (room) {
         room.localParticipant.unpublishTrack(localVideoTrack)
-        localVideoTrack.stop()
       }
     }
 
@@ -203,7 +215,8 @@ export const TwilioChatContextProvider = (props: {
 
     try {
       // This is just to try to force the prompt early enough
-      await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      stream.getTracks().forEach(t => t.stop())
 
       await navigator.mediaDevices.enumerateDevices()
         .then((devices) => {
@@ -396,6 +409,7 @@ export const TwilioChatContextProvider = (props: {
           console.log(`[TWILIO] Setting current camera from ${currentCamera.id} (${currentCamera.name}) to ${id}`)
           if (currentCamera && currentCamera.id !== id) {
             console.log('[TWILIO] Removing old camera', room)
+            localVideoTrack.stop()
             if (room) {
               // TODO: room.unpublishTrack(localVideoTrack) wasn't working for some reason
               // This blunt approach works for now, but will need changing if we
@@ -409,6 +423,7 @@ export const TwilioChatContextProvider = (props: {
         },
         setCurrentMic: (id: string) => {
           if (currentMic && currentMic.id !== id) {
+            localAudioTrack.stop()
             if (room) {
               room.localParticipant.audioTracks.forEach(publication => {
                 publication.unpublish()

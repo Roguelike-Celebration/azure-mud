@@ -390,6 +390,7 @@ export default (oldState: State, action: Action): State => {
         if (userId) {
           const whisperMessage = createWhisperMessage(userId, message, true)
           addMessage(state, whisperMessage)
+          saveWhisper(state, whisperMessage)
         }
       }
     } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
@@ -519,7 +520,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.LoadMessageArchive) {
     state.messages = action.messages
-    state.whispers = action.whispers
+    state.whispers = action.whispers || []
   }
 
   // Notes
