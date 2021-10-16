@@ -73,13 +73,15 @@ export const generate = () => {
       'Skelington',
       'Skelly'
     ],
-    friendly: [ // consonant-friendly
+    friendly: [ 
       'friendly',
       'delightful',
       'boisterous',
       'appealing',
       'excited',
-      'oddly attractive'
+      'oddly attractive',
+      'spiffy',
+      'proud'
     ]
   })
 
