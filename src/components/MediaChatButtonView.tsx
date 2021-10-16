@@ -163,7 +163,7 @@ const MediaChatButtonView = (props: Props) => {
           id="toggle-audio-only-mode"
           className="link-styled-button"
         >
-          {props.audioOnlyMode ? 'Hide' : 'Show'} all video feeds
+          {props.audioOnlyMode ? 'Show' : 'Hide'} all video feeds
         </button>
         <button
           key="text-only-mode"
