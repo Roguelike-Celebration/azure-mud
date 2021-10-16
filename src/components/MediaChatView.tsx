@@ -82,7 +82,7 @@ export default function MediaChatView (props: MediaProps) {
   const audioParticipantIds = participants
     .filter((p) => !visibleSpeakers.includes(p.identity))
 
-  console.log("[NUM_FACES]: ", props.numberOfFaces)
+  console.log('[NUM_FACES]: ', props.numberOfFaces)
   // We might have folks on video, but no "dominantSpeaker" notifications generated yet.
   // We should still flesh out the wall o' faces in that situation.
   // NOTE: This will result in video folks being added in whatever they appear in an Arrayified callParticipants
