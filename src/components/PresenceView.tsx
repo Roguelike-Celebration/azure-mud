@@ -81,6 +81,7 @@ const PresenceView = (props: {
           {videoUsers && videoUsers.includes(user.id) ? (
             <FaVideo className="has-video" />
           ) : null}
+          {user.item ? ` (holding ${user.item})` : null}
         </span>
       )
     })
