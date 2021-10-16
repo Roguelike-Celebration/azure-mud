@@ -17,7 +17,14 @@ export const generate = () => {
     soundEffect: [
       'Clonk',
       'Boop',
-      'Cshhhhh'
+      'Cshhhhh',
+      'Fwoop',
+      'Ka-chunk',
+      'Zoop',
+      'Beep beep beep',
+      'Clang',
+      'Clink',
+      'Swoosh'
     ],
     robot: [
       'cute robot',

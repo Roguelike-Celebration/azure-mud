@@ -176,7 +176,8 @@ export const generate = () => {
       'Eww',
       'Blergh',
       'Blah',
-      'Oh no'
+      'Oh no',
+      'Aw beans'
     ],
     gross: [ // consonant-gross
       'bilious',
@@ -219,6 +220,7 @@ export const generate = () => {
       'a Bauhaus design',
       'a cash grab',
       'an unwashed, rusted 1983 Dodge Omni',
+      'arguments',
       'Axe Body Spray(tm) of indeterminate flavor',
       'beige',
       'blue',
@@ -227,6 +229,7 @@ export const generate = () => {
       'capitalism',
       'cheap catfood (not even the good stuff)',
       'dadaism', // ha, I was going to add this -bengrue
+      'data crimes',
       'deadlines',
       'Dijkstra maps',
       'discourse',

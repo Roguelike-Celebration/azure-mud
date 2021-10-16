@@ -10,7 +10,7 @@ export const generate = () => {
       'It says "#slogan#" in bold face type.',
       'Someone has scrawled "#slogan#" over it, large enough you cannot see the original text.',
       'It\'s filled with all sorts of text in small type, but you can make out "#slogan#"',
-      'It looks like #friendly.a# skeleton is saying "#slogan#'
+      'It looks like #friendly.a# skeleton is saying "#slogan#"'
     ],
     slogan: [
       'bones bones bones',
@@ -73,13 +73,15 @@ export const generate = () => {
       'Skelington',
       'Skelly'
     ],
-    friendly: [ // consonant-friendly
+    friendly: [
       'friendly',
       'delightful',
       'boisterous',
       'appealing',
       'excited',
-      'oddly attractive'
+      'oddly attractive',
+      'spiffy',
+      'proud'
     ]
   })
 

@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+
 var tracery = require('tracery-grammar')
 
 export const actionString = (poster: string) => {
@@ -9,8 +11,9 @@ export const generate = () => {
     origin: [
       'it reads "#apology# - #closedReason#" in a #writingMethod#',
       'but all it says is "#closedReason#"',
-      'but all it says is #apology#',
-      'it\'s #cramped#, but you can make out #closedReason#'
+      'but all it says is "#apology#".',
+      'it\'s #cramped#, but you can make out "#closedReason#".',
+      `it's #cramped#, so all you can see is "#apology#.`
     ],
     apology: [
       'Sorry',
@@ -199,3 +202,5 @@ export const generate = () => {
   grammar.addModifiers(tracery.baseEngModifiers)
   return grammar.flatten('#origin#')
 }
+
+/* eslint-disable quotes */
