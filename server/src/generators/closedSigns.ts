@@ -9,8 +9,8 @@ export const generate = () => {
     origin: [
       'it reads "#apology# - #closedReason#" in a #writingMethod#',
       'but all it says is "#closedReason#"',
-      'but all it says is #apology#',
-      'it\'s #cramped#, but you can make out #closedReason#'
+      'but all it says is "#apology#".',
+      'it\'s #cramped#, but you can make out "#closedReason#".'
     ],
     apology: [
       'Sorry',
