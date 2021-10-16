@@ -143,6 +143,7 @@ const EnteredView = (props: EnteredMessage & { id: string }) => {
       </div>
     )
   }
+  return null
 }
 
 const LeftView = (props: LeftMessage & { id: string }) => {
@@ -159,6 +160,7 @@ const LeftView = (props: LeftMessage & { id: string }) => {
       </div>
     )
   }
+  return null
 }
 
 const MovedView = (props: MovedRoomMessage & { id: string }) => (
