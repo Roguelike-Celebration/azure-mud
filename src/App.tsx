@@ -153,9 +153,14 @@ const App = () => {
             // but I think it's fine?
             const VideoWidth = 180
             const $main = document.getElementById('main')
-
-            const numberOfFaces = Math.floor($main.clientWidth / VideoWidth)
-            dispatch(SetNumberOfFacesAction(numberOfFaces))
+            // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
+            if ($main) {
+              const numberOfFaces = Math.floor($main.clientWidth / VideoWidth)
+              dispatch(SetNumberOfFacesAction(numberOfFaces))
+            } else {
+              console.error('Attempted to call onResize when \'main\' element was null; will default to show no faces')
+              dispatch(SetNumberOfFacesAction(0))
+            }
           }
 
           onResize()

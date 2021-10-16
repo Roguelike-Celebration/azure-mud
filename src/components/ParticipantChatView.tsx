@@ -1,14 +1,8 @@
-import React, {
-  useEffect,
-  VideoHTMLAttributes,
-  useRef
-} from 'react'
-import { FaCog, FaVolumeUp, FaVolumeMute, FaVideo, FaVideoSlash } from 'react-icons/fa'
+import React from 'react'
+import { FaVolumeUp, FaVolumeMute, FaVideo, FaVideoSlash, FaUser } from 'react-icons/fa'
 import NameView from './NameView'
-import LocalMediaView from './LocalMediaView'
 
 import '../../style/videoChat.css'
-import { useMediaChatContext } from '../videochat/mediaChatContext'
 import ParticipantTracks from '../videochat/twilio/ParticipantTracks'
 import * as Twilio from 'twilio-video'
 
@@ -44,21 +38,31 @@ export default function ParticipantChatView (props: Props) {
     )
   }
 
+  const hasVideoTracks = props.participant.videoTracks.size > 0
   const hasAnyTracks = props.participant.audioTracks.size + props.participant.videoTracks.size > 0
+
   if (!hasAnyTracks) {
     return <div key={`stream-wrapper-${props.participant.identity}`} />
+  }
+
+  let placeholderAvatar
+  if (!playVideo || !hasVideoTracks) {
+    placeholderAvatar = <FaUser size={90} style={{ textAlign: 'center' }} className='placeholder-avatar'/>
   }
 
   return (
     <div key={`stream-wrapper-${props.participant.identity}`} className='participant-track-square other-participant' style={customStyle}>
       <NameView userId={props.participant.identity} id={`stream-nameview-${props.participant.identity}`} nowrap={true} />
       <ParticipantTracks participant={props.participant} displayVideo={playVideo} displayAudio={playAudio} />
-      <button id='play-video'
-        onClick={onChangeVideo}
-        className={`link-styled-button video-button ${playVideo ? 'enabled' : 'disabled'}`}
-        aria-label={`Toggle Video ${props.participant.identity}`}>
-        {playVideo ? <FaVideo /> : <FaVideoSlash />}
-      </button>
+      {hasVideoTracks
+        ? <button id='play-video'
+          onClick={onChangeVideo}
+          className={`link-styled-button video-button ${playVideo ? 'enabled' : 'disabled'}`}
+          aria-label={`Toggle Video ${props.participant.identity}`}>
+          {playVideo ? <FaVideo /> : <FaVideoSlash />}
+        </button>
+        : null}
+      {placeholderAvatar}
       <button id='play-audio'
         onClick={onChangeAudio}
         className={`link-styled-button video-button ${playAudio ? 'enabled' : 'disabled'}`}

@@ -34,6 +34,11 @@ video.speaking {
   padding: 10px;
 }
 
+.other-participant {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
 #media-view .other-participant .video-button {
   color:var(--main-font);
   padding: 10px;
@@ -109,4 +114,40 @@ video.speaking {
 #media-chat-buttons {
   margin-bottom: 1em; 
   margin-top: 1em;
+}
+
+/** Placeholder avatar */
+.participant-track-square, .my-video {
+  position: relative;
+}
+
+.placeholder-avatar {
+  position: absolute;
+  top: 55px;
+  left: 45px;
+}
+
+#play-audio, #play-video, #send-video, #send-audio, #show-media-selector {
+  position: absolute;
+  bottom: 0px;
+}
+
+#play-audio {
+  right: 0px;
+}
+
+#play-video {
+  right: 30px;
+}
+
+#send-audio {
+  left: 30px;
+}
+
+#send-video {
+  left: 0px;
+}
+
+#show-media-selector {
+  left: 60px;
 }
