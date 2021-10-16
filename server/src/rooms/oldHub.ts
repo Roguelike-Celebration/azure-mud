@@ -6,7 +6,7 @@ export const oldHubRoomData = {
     id: 'ascii',
     displayName: 'The Hash Mark Dungeon',
     shortName: 'ASCII',
-    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a crocodile, and a more abstract one of unhewn stone. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle of Delphi->oracle]], and then a set heads back to the [[Space Hanger->sfHub]].',
+    description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a crocodile, and a more abstract one of unhewn stone. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle of Delphi->oracle]], and then a set heads back to the [[Space Hangar->sfHub]].',
     hasNoteWall: true,
     hidden: true,
     noMediaChat: true,
