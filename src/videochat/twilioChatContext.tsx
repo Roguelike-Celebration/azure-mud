@@ -171,12 +171,6 @@ export const TwilioChatContextProvider = (props: {
     if (!props.active) return
     if (!currentMic) return
     fetchLocalAudioTrack()
-
-    if (micEnabled) {
-      startTranscription()
-    } else {
-      stopTranscription()
-    }
   }, [currentMic])
 
   useEffect(() => {
