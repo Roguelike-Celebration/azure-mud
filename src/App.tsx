@@ -158,8 +158,7 @@ const App = () => {
               const numberOfFaces = Math.floor($main.clientWidth / VideoWidth)
               dispatch(SetNumberOfFacesAction(numberOfFaces))
             } else {
-              console.error('Attempted to call onResize when \'main\' element was null; will default to show no faces')
-              dispatch(SetNumberOfFacesAction(0))
+              console.warn('Attempted to call onResize when \'main\' element was null; will default to show no faces')
             }
           }
 
