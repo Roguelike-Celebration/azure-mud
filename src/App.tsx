@@ -162,7 +162,9 @@ const App = () => {
             }
           }
 
-          onResize()
+          // Our initial paint time is stupid slow
+          // but waiting 3 seconds seems to ensure that #main exists
+          setTimeout(onResize, 3000)
           window.addEventListener('resize', _.throttle(onResize, 100, { trailing: true }))
         })
       }
