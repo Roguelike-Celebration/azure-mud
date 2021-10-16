@@ -73,7 +73,7 @@ export const generate = () => {
       'Skelington',
       'Skelly'
     ],
-    friendly: [ 
+    friendly: [
       'friendly',
       'delightful',
       'boisterous',
