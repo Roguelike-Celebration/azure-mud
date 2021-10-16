@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { FaCog, FaVolumeUp, FaVolumeMute, FaVideo, FaVideoSlash } from 'react-icons/fa'
+import { FaCog, FaVolumeUp, FaVolumeMute, FaVideo, FaVideoSlash, FaUser } from 'react-icons/fa'
 
 import { DispatchContext } from '../App'
 import { ShowModalAction } from '../Actions'
@@ -34,16 +34,45 @@ export default function LocalMediaView (props: Props) {
   return (
     <div className="my-video">
       You
-      {localStreamView}
-      {props.hideUI ? '' : (
+      {cameraEnabled ? (
+        localStreamView
+      ) : (
+        <FaUser
+          size={90}
+          style={{ textAlign: 'center' }}
+          className="placeholder-avatar"
+        />
+      )}
+      {props.hideUI ? (
+        ''
+      ) : (
         <div>
-          <button id='send-video' onClick={onChangeVideo} className={`link-styled-button video-button ${cameraEnabled ? 'enabled' : 'disabled'}`} aria-label='Toggle Video'>
+          <button
+            id="send-video"
+            onClick={onChangeVideo}
+            className={`link-styled-button video-button ${
+              cameraEnabled ? 'enabled' : 'disabled'
+            }`}
+            aria-label="Toggle Video"
+          >
             {cameraEnabled ? <FaVideo /> : <FaVideoSlash />}
           </button>
-          <button id='send-audio' onClick={onChangeAudio} className={`link-styled-button video-button ${micEnabled ? 'enabled' : 'disabled'}`} aria-label='Toggle Audio'>
+          <button
+            id="send-audio"
+            onClick={onChangeAudio}
+            className={`link-styled-button video-button ${
+              micEnabled ? 'enabled' : 'disabled'
+            }`}
+            aria-label="Toggle Audio"
+          >
             {micEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
           </button>
-          <button id='show-media-selector' onClick={showMediaSelector} className='link-styled-button video-button' aria-label='Show Media Selector'>
+          <button
+            id="show-media-selector"
+            onClick={showMediaSelector}
+            className="link-styled-button video-button"
+            aria-label="Show Media Selector"
+          >
             <FaCog />
           </button>
         </div>
