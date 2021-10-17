@@ -24,7 +24,7 @@ export const robots = {
 export const timeMachine = {
   id: 'timeMachine',
   displayName: 'Space Hangar - Strange Device',
-  shortName: 'investigate a strange item',
+  shortName: 'a strange item at the Space Hangar',
   hidden: true,
   riddles: ['A grid of glyphs in rows arrayed,\nIs how I\'ll tell your tale;\nFrom decades past to present day,\nMy codepage has prevailed;\nTiles are fine if you have have time,\nBut I shall never stale;\nNow speak my name as if you\'d /go,\nAnd I shall fill your sail.'],
   description: 'You can\'t get the machine to do anything but blink, no matter what you do, plug in or unplug. However, there is an inscription on it, that examined closely appears to be a riddle...</br></br>Go back to the [[Space Hangar->sfHub]].'

@@ -5,7 +5,7 @@ export const oldHubRoomData = {
   ascii: {
     id: 'ascii',
     displayName: 'The Hash Mark Dungeon',
-    shortName: 'ASCII',
+    shortName: 'the # Dungeon',
     description: 'The entire square tile you are standing on vibrates, and the world around you changes - you have entered an older time. The walls are made out of #, you can easily see the . at your feet, and your old powers of audio and video do not work here.</br></br>A row of twelve headstones stand in a line. They are all blank, except for the seventh, which is engraved with \'7 - A\'. Behind them stand four statues - a hobbit, a tree, a crocodile, and a more abstract one of unhewn stone. Each has a riddle engraved in its base.</br></br>A door behind you leads through various twisty passages; despite them all looking alike, you know one heads to the [[Oracle of Delphi->oracle]], and then a set heads back to the [[Space Hangar->sfHub]].',
     hasNoteWall: true,
     hidden: true,
@@ -83,7 +83,7 @@ export const oldHubRoomData = {
   },
   wand: {
     id: 'wand',
-    displayName: 'Wand',
+    displayName: 'The Forest of Wands',
     shortName: 'The Wand',
     hidden: true,
     noMediaChat: false,
@@ -96,7 +96,7 @@ export const oldHubRoomData = {
   },
   identify: {
     id: 'identify',
-    displayName: 'Identify',
+    displayName: 'Tome of Identify: It Is What It Is',
     shortName: 'Identify',
     hidden: true,
     noMediaChat: false,
@@ -104,7 +104,7 @@ export const oldHubRoomData = {
   },
   losing: {
     id: 'losing',
-    displayName: 'Losing',
+    displayName: 'The Losing Fortress',
     shortName: 'losing',
     hidden: true,
     noMediaChat: false,
@@ -112,7 +112,7 @@ export const oldHubRoomData = {
   },
   dungeon: {
     id: 'dungeon',
-    displayName: 'Dungeon',
+    displayName: 'The Dungeon\'s Maze',
     shortName: 'The Dungeon',
     hidden: true,
     noMediaChat: false,
@@ -138,7 +138,7 @@ export const oldHubRoomData = {
   },
   hunger: {
     id: 'hunger',
-    displayName: 'Hunger',
+    displayName: 'The Village of Hunger',
     shortName: 'Hunger',
     hidden: true,
     noMediaChat: false,
@@ -146,7 +146,7 @@ export const oldHubRoomData = {
   },
   oatmeal: {
     id: 'oatmeal',
-    displayName: 'Oatmeal',
+    displayName: 'Endless Oatmeal',
     shortName: 'Oatmeal',
     hidden: true,
     noMediaChat: false,
@@ -172,15 +172,15 @@ export const oldHubRoomData = {
   },
   savescum: {
     id: 'savescum',
-    displayName: 'Savescum',
+    displayName: 'The Savescum Chessboard',
     shortName: 'savescum',
     hidden: true,
     noMediaChat: false,
-    description: ''
+    description: `You are in the corner of a giant chess board. The walls of the room containing it lavishly decorated in the style of a medieval court, with portraits of an imperious-looking king and queen and a bunch of minor nobility you can't place. In the center of the chessboard you see an Orb on a pedestal; your adventuring reflex immediate kicks in: an Orb is to collect, after all. Between you and the Orb, however, are dozens of chess pieces larger than yourself, scattered about the board as if midway through a game.<br/><br/>You take a few steps towards the Orb and nothing happens. Maybe this won't be too complicated? But on your next step, a Knight swoops in and knocks you down; you've been Captured. You eye the square you started at, yards back. Why walk all the way? You just return to the last safe square you were at and try a different path. It works! You've gone another few steps when your foot lands on a white square and a Bishop you hadn't noticed swoops in from the far side of the board and caroms into you. Ok, well, you're *definitely* not going to go back to the starting square now; you just slink back to where you were before the Bishop attack and try again.<br/><br/>Thus you make your way, in fits and starts, to the Orb, backing up to safe spaces when you encounter danger to feel out a new path. Eventually you arrive, but the Orb seems to be attached to the pedestal through a mechanism unknown to you. Gazing into it, you see that at its heart there's an elaborately carved crystal in the shape of spiral: it's a 9.`
   },
   permadeath: {
     id: 'permadeath',
-    displayName: 'Permadeath',
+    displayName: 'The Permadeath Dig',
     shortName: 'permadeath',
     hidden: true,
     noMediaChat: false,
@@ -188,7 +188,7 @@ export const oldHubRoomData = {
   },
   inventory: {
     id: 'inventory',
-    displayName: 'Inventory',
+    displayName: 'The Inventory Warehouse',
     shortName: 'inventory',
     hidden: true,
     noMediaChat: false,
