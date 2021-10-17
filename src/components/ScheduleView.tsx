@@ -27,6 +27,7 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
 }
 
 // Saturday entries
+/*
 export const ScheduleEntries = [
   ScheduleEntry('09:00', 1, 'Doors Open'),
   ScheduleEntry('09:15', 1, 'Kickoff', ['theater']),
@@ -54,8 +55,8 @@ export const ScheduleEntries = [
   ScheduleEntry('19:00', 1, SOCIAL_TIME),
   ScheduleEntry('20:45', 1, 'Doors Close')
 ]
+*/
 
-/* Sunday Entries
 export const ScheduleEntries = [
   ScheduleEntry('09:00', 2, 'Doors Open'),
   ScheduleEntry('09:15', 2, 'Kickoff', ['theater']),
@@ -81,7 +82,6 @@ export const ScheduleEntries = [
   ScheduleEntry('18:15', 2, SOCIAL_TIME),
   ScheduleEntry('19:00', 2, 'Doors Close')
 ]
-*/
 
 export default function ScheduleView () {
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
