@@ -69,14 +69,16 @@ There are still a few things you need to manually configure before the app will 
       2. Google is simple, just add the provider.
       3. For Twitter you have to get the API information from the Twitter dev portal (https://developer.twitter.com/en/portal/dashboard) and place it into the form.
 
-2. You'll need to modify the frontend to actually use your new backend! Add a new GitHub Repository Secret (Settigs -> Secrets -> New Repository Secret) named `SERVER_HOSTNAME` that contains the URL to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template). For local client development, you'll also need to add this to your local `.env` file. This should hopefully be set up from configuring Firebase, but if not you can rename `.env.sample` to `.env` and make that change.
+2. You'll need to modify the frontend to actually use your new backend! Add a new GitHub Repository Secret (Settings -> Secrets -> New Repository Secret) named `SERVER_HOSTNAME` that contains the URL to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template). For local client development, you'll also need to add this to your local `.env` file. This should hopefully be set up from configuring Firebase, but if not you can rename `.env.sample` to `.env` and make that change.
 
-3. If you want speech transcription to work, you'll need to create an Azure Cognitive Speech Services resource. Hopefully this will be automated as part of the ARM Template in the future.
+3. By default, GitHub Actions tooling will deploy the front-end to GitHub Pages. Because this repository is also the production repo we use for Roguelike Celebration, we have a `CNAME` file in the root of this repo that points to our production URL. If you want to use GitHub Pages, you'll want to either remove that CNAME file (if you just want to use default `github.io` hosting) or edit it to point to your own custom domain. If using your own custom domain, you will also need to configure that in the repo's GitHub Pages settings.
+
+4. If you want speech transcription to work, you'll need to create an Azure Cognitive Speech Services resource. Hopefully this will be automated as part of the ARM Template in the future.
   1. In the Azure Portal, search for "Speech Services", click through to the Speech Services page, and click "Create". Put it in the same region and resource group as your main backend, and choose the Standard (S0) paid tier. Name it whatever you want.
   2. After the resource has been created, click "Go to Resource", then "Manage keys". Write down Key 1 and the "region".
   3. Go to your backend's Function App. Under Configuration (in the "Settings" section of the left sidebar), add two App Secrets, `COGNITIVE_SERVICES_KEY` and `COGNITIVE_SERVICES_REGION`, containing the key and region from the previous step.
 
-4. For video chat, you'll need a Twilio Programmable Video account. As a warning, this is a work-in-progress, and these instructions may be underbaked.
+5. For video chat, you'll need a Twilio Programmable Video account. As a warning, this is a work-in-progress, and these instructions may be underbaked.
   1. Sign up for a Twilio account. You'll probably need to fund it.
   2. On the Twilio Console, your Account SID will be immediately visible. Add that as an App Secret to the Function App with the key `TWILIO_ACCOUNT_SID`.
   3. On the Twilio Console, select Account -> API Keys on the top-right. Create a new API key. Store the SID and secret as App Secrets with the keys `TWILIO_API_KEY` and `TWILIO_API_SECRET`.
