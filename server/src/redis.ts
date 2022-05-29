@@ -2,9 +2,8 @@ import { promisify } from 'util'
 import { User, isMod } from './user'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
 import { RoomNote } from './roomNote'
-import { roomData } from './rooms'
+import { staticRoomData } from './rooms'
 import Database from './database'
-import { getServerSettings } from './endpoints/serverSettings'
 import redis = require('redis')
 
 const cache = redis.createClient(
@@ -60,7 +59,8 @@ const Redis: RedisInternal = {
   },
 
   async allRoomOccupants (): Promise<{[roomId: string]: string[]}> {
-    const allRoomIds = Object.keys(roomData)
+    // TODO: Run "KEYS room_ to get all dynamic rooms"
+    const allRoomIds = Object.keys(staticRoomData)
     const data = {}
     await Promise.all(allRoomIds.map(async id => {
       const occupants = await Redis.roomOccupants(id)

@@ -1,6 +1,6 @@
 import { globalPresenceMessage } from '../globalPresenceMessage'
 import { userHeartbeatReceived } from '../heartbeat'
-import { roomData } from '../rooms'
+import { staticRoomData } from '../rooms'
 import setUpRoomsForUser from '../setUpRoomsForUser'
 import { RoomResponse } from '../types'
 import { User, isMod, minimizeUser } from '../user'
@@ -13,7 +13,7 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
 
   // WARNING: For now, checking the existence of a roomId in roomData is a good safeguard
   // But this may bite us when/if we ever have programmatic room creation
-  if (user.roomId === undefined || !roomData[user.roomId]) {
+  if (user.roomId === undefined || !staticRoomData[user.roomId]) {
     user.roomId = 'entryway'
   }
 
@@ -30,12 +30,15 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     roomId: user.roomId,
     presenceData: await DB.allRoomOccupants(),
     users: userMap,
-    roomData,
+    // TODO: This will only include the current room
+    roomData: staticRoomData,
     // TODO: Have a function to delete the keys we don't need
     profile: user
   }
 
-  if (roomData[user.roomId].hasNoteWall) {
+  // TODO: The thing that dynamically fetches room data should
+  // be smart enough to include roomNotes if necessary
+  if (staticRoomData[user.roomId].hasNoteWall) {
     response.roomNotes = await DB.getRoomNotes(user.roomId)
   }
 

@@ -1,9 +1,9 @@
-import { roomData } from './server/src/rooms'
+import { staticRoomData } from './server/src/rooms'
 import { linkActions } from './src/linkActions'
 import allowedItems from './server/src/allowedItems'
 
 const failures = []
-Object.values(roomData).forEach((room) => {
+Object.values(staticRoomData).forEach((room) => {
   let { description } = room
 
   // eslint-disable-next-line no-useless-escape
@@ -14,7 +14,7 @@ Object.values(roomData).forEach((room) => {
   // but shrug, copy/pasting from RoomView.tsx is fine.
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    if (roomData[roomId]) {
+    if (staticRoomData[roomId]) {
     } else if (roomId === 'item' && allowedItems.includes(text)) {
     } else if (linkActions[roomId]) {
     } else {
@@ -24,7 +24,7 @@ Object.values(roomData).forEach((room) => {
   })
 
   description = description.replace(simpleLinkRegex, (match, roomId, _) => {
-    if (!roomData[roomId]) {
+    if (!staticRoomData[roomId]) {
       failures.push([room.id, match])
     }
     return 'handled'

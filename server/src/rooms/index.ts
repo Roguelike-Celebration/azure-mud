@@ -196,7 +196,7 @@ const indexRoomData: { [name: string]: Room } = {
   }
 }
 
-export const roomData: { [name: string]: Room } = {
+export const staticRoomData: { [name: string]: Room } = {
   ...indexRoomData,
   ...loungeDungeonRoomData,
   ...oldHubRoomData
