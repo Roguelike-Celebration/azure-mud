@@ -5,7 +5,7 @@ import { loungeDungeonRoomData } from './loungeDungeon'
 import { sfHub, robots, timeMachine, vendingMachine } from './sfHub'
 import { oldHubRoomData } from './oldHub'
 import { exploreHub, transmute, dyes, doctorPaint, shower, steam } from './exploreHub'
-
+import entryway from './entryway.json'
 export interface NoteWallData {
   roomWallDescription: string
   noteWallButton: string
@@ -57,13 +57,6 @@ export interface Room {
 }
 
 const indexRoomData: { [name: string]: Room } = {
-  entryway: {
-    id: 'entryway',
-    displayName: 'Registration Desk',
-    shortName: 'the registration desk',
-    description: 'A big banner before you reads \'Welcome to Roguelike Celebration 2021!\' Beyond the doorway you hear welcoming chatter and merriment. Once you\'ve got your bearings about you, you can move through to the [[Central Hall->hall]].',
-    hidden: true
-  },
   hall: {
     id: 'hall',
     displayName: 'Central Hall',
@@ -144,6 +137,7 @@ const indexRoomData: { [name: string]: Room } = {
     description: `A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>
       From here, you can see tables [[at the railing->railing]], the [[stage->barStage]], or [[along the bar->stools]], and the [[rest of the bar->bar]].`
   },
+  entryway,
   theater,
   warrior,
   mage,

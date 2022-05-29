@@ -1,0 +1,7 @@
+{
+  "id": "entryway",
+  "displayName": "Registration Desk",
+  "description": "A big banner before you reads 'Welcome to Roguelike Celebration 2021!' Beyond the doorway you hear welcoming chatter and merriment. Once you've got your bearings about you, you can move through to the [[Central Hall->hall]].",
+  "shortName": "the registration desk",
+  "hidden": true
+}
