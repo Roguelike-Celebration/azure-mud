@@ -51,9 +51,7 @@ import EmailVerifiedView from './components/EmailVerifiedView'
 import RiddleModalView from './components/RiddleModal'
 import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
-import { shouldVerifyEmail } from './firebaseUtils'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { currentUser, onAuthenticationStateChange } from './authentication'
 import _ from 'lodash'
 
 export const DispatchContext = createContext(null)
@@ -69,17 +67,17 @@ const App = () => {
   )
 
   useEffect(() => {
-    // TODO: This logic is gnarly enough I'd love to abstract it somewhere
-    firebase.auth().onAuthStateChanged(function (user) {
+    onAuthenticationStateChange((user) => {
       if (!user) {
         dispatch(AuthenticateAction(undefined, undefined, undefined, undefined))
-      } else if (shouldVerifyEmail(user)) {
-        const userId = firebase.auth().currentUser.uid
-        const providerId = firebase.auth().currentUser.providerId
+      } else if (user.shouldVerifyEmail) {
+        const userId = user.id
+        const providerId = user.providerId
         dispatch(AuthenticateAction(userId, userId, providerId, true))
       } else {
-        const userId = firebase.auth().currentUser.uid
-        const providerId = firebase.auth().currentUser.providerId
+        const user = currentUser()
+        const userId = user.id
+        const providerId = user.providerId
 
         checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
           if (!registeredUsername) {
@@ -180,7 +178,7 @@ const App = () => {
   )
 
   // This is kind of janky!
-  if (firebase.auth().currentUser && firebase.auth().isSignInWithEmailLink(window.location.href)) {
+  if (currentUser() && currentUser().isSignInWithEmailLink(window.location.href)) {
     return <EmailVerifiedView />
   }
 
@@ -190,7 +188,7 @@ const App = () => {
 
   if (state.checkedAuthentication && state.mustVerifyEmail) {
     return <VerifyEmailView
-      userEmail={firebase.auth().currentUser.email}
+      userEmail={currentUser().email}
       dispatch={dispatch}
     />
   }
