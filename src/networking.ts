@@ -46,13 +46,20 @@ const axios = require('axios').default
 let myUserId: string
 let myDispatch: Dispatch<Action>
 
+// const callFn = callAzureFunction
+const callFn: (message: string, body?: any) => Promise<any> = sendWebsocketMessage
+
 const inMediaChat: boolean = false
+
+export async function sendWebsocketMessage (message: string, body?: any) {
+  console.log(message, body)
+}
 
 export async function connect (userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId
   myDispatch = dispatch
 
-  const result: RoomResponse = await callAzureFunction('connect')
+  const result: RoomResponse = await callFn('connect')
 
   console.log(result)
   dispatch(UpdatedCurrentRoomAction(result.roomId))
@@ -76,16 +83,16 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 }
 
 export async function disconnect (userId: string) {
-  const result = await callAzureFunction('disconnect')
+  const result = await callFn('disconnect')
 }
 
 export async function getServerSettings (dispatch: Dispatch<Action>) {
-  const result: ServerSettings = await callAzureFunctionGet('serverSettings')
+  const result: ServerSettings = await callFn('serverSettings', { method: 'get' })
   dispatch(ReceivedServerSettingsAction(result))
 }
 
 export async function updateServerSettings (serverSettings: ServerSettings) {
-  const result = await callAzureFunction('serverSettings', serverSettings)
+  const result = await callFn('serverSettings', serverSettings)
   if (result) {
     myDispatch(HideModalAction())
   }
@@ -93,7 +100,7 @@ export async function updateServerSettings (serverSettings: ServerSettings) {
 
 // If isNewUser is true, a successful update will refresh the entire page instead of dismissing a modal
 export async function updateProfile (user: Partial<User>, isNew: boolean) {
-  const result = await callAzureFunction('updateProfile', { user, isNew })
+  const result = await callFn('updateProfile', { user, isNew })
   if (result.valid) {
     if (isNew) {
       window.location.reload()
@@ -107,44 +114,44 @@ export async function updateProfile (user: Partial<User>, isNew: boolean) {
 }
 
 export async function updateProfileColor (userId: string, color: string) {
-  const result = await callAzureFunction('updateProfileColor', { userId: userId, color: color })
+  const result = await callFn('updateProfileColor', { userId: userId, color: color })
 }
 
 export async function updateFontReward (userId: string, font: string) {
-  const result = await callAzureFunction('updateFontReward', { userId: userId, font: font })
+  const result = await callFn('updateFontReward', { userId: userId, font: font })
 }
 
 export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {
-  const result = await callAzureFunction('isRegistered')
+  const result = await callFn('isRegistered')
   return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod, isBanned: result.isBanned }
 }
 
 export async function pickUpRandomItemFromList (listName: string) {
-  await callAzureFunction('pickUpItem', { list: listName })
+  await callFn('pickUpItem', { list: listName })
 }
 
 export async function pickUpItem (item: string) {
-  await callAzureFunction('pickUpItem', { item })
+  await callFn('pickUpItem', { item })
 }
 
 export async function dropItem () {
-  await callAzureFunction('pickUpItem', { drop: true })
+  await callFn('pickUpItem', { drop: true })
 }
 
 export async function displayMessage (message: string) {
-  await callAzureFunction('displayMessage', { message: message })
+  await callFn('displayMessage', { message: message })
 }
 
 export async function displayMessageFromList (listName: string) {
-  await callAzureFunction('displayMessage', { list: listName })
+  await callFn('displayMessage', { list: listName })
 }
 
 export async function fetchTwilioToken () {
-  return await callAzureFunction('twilioToken')
+  return await callFn('twilioToken')
 }
 
 export async function fetchCognitiveServicesKey () {
-  return await callAzureFunction('cognitiveServicesKey')
+  return await callFn('cognitiveServicesKey')
 }
 
 // Post-it notes
@@ -152,32 +159,32 @@ export async function fetchCognitiveServicesKey () {
 export async function addNoteToWall (message: string) {
   if (message !== null && message.length > 0) {
     const id = uuid()
-    await callAzureFunction('addRoomNote', { id, message })
+    await callFn('addRoomNote', { id, message })
   }
 }
 
 export async function deleteRoomNote (noteId: string) {
-  await callAzureFunction('deleteRoomNote', { noteId })
+  await callFn('deleteRoomNote', { noteId })
 }
 
 export async function likeRoomNote (noteId: string) {
-  await callAzureFunction('likeRoomNote', { noteId, like: true })
+  await callFn('likeRoomNote', { noteId, like: true })
 }
 
 export async function unlikeRoomNote (noteId: string) {
-  await callAzureFunction('likeRoomNote', { noteId, like: false })
+  await callFn('likeRoomNote', { noteId, like: false })
 }
 
 //
 
 export async function openOrCloseSpace (spaceIsClosed) {
-  await callAzureFunction('openOrCloseSpace', { spaceIsClosed })
+  await callFn('openOrCloseSpace', { spaceIsClosed })
 }
 
 //
 
 export async function moveToRoom (roomId: string) {
-  const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
+  const result: RoomResponse | ErrorResponse | any = await callFn(
     'moveRoom',
     {
       to: roomId
@@ -204,7 +211,7 @@ export async function sendChatMessage (id: string, text: string) {
     return
   }
 
-  const result: RoomResponse | Error | any = await callAzureFunction(
+  const result: RoomResponse | Error | any = await callFn(
     'sendChatMessage',
     {
       id: id,
@@ -231,7 +238,7 @@ export async function sendCaption (id: string, text: string) {
     return
   }
 
-  const result: RoomResponse | Error | any = await callAzureFunction(
+  const result: RoomResponse | Error | any = await callFn(
     'sendCaption',
     {
       id: id,
@@ -247,7 +254,7 @@ export async function sendCaption (id: string, text: string) {
 }
 
 export async function fetchProfile (userId: string) {
-  const result = await callAzureFunction('fetchProfile', { userId })
+  const result = await callFn('fetchProfile', { userId })
   if (result.error) {
     console.log('Could not fetch profile', result.erroc)
   } else {
@@ -256,15 +263,15 @@ export async function fetchProfile (userId: string) {
 }
 
 export async function toggleUserBan (userId: string) {
-  const result = await callAzureFunction('banUser', { userId })
+  const result = await callFn('banUser', { userId })
 }
 
 export async function toggleUserMod (userId: string) {
-  const result = await callAzureFunction('toggleModStatus', { userId })
+  const result = await callFn('toggleModStatus', { userId })
 }
 
 export async function deleteMessage (messageId: string) {
-  const result = await callAzureFunction('deleteMessage', { messageId })
+  const result = await callFn('deleteMessage', { messageId })
 }
 
 // Setup
@@ -408,16 +415,16 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.onclose(() => {
     console.log('disconnected')
-    callAzureFunction('disconnect')
+    callFn('disconnect')
   })
 
   connection.on('ping', () => {
     console.log('Received heartbeat ping')
-    callAzureFunction('pong')
+    callFn('pong')
   })
 
   window.addEventListener('beforeunload', (e) => {
-    callAzureFunction('disconnect')
+    callFn('disconnect')
   })
 
   console.log('connecting...')
@@ -429,30 +436,18 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     .catch(console.error)
 }
 
-async function callAzureFunctionGet (endpoint: string): Promise<any> {
-  try {
-    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
-    const r = await axios.get(
-      `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
-      {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${firebaseToken}`
-        }
-      }
-    )
-    console.log(r)
-    return r.data
-  } catch (e) {
-    console.log('Error', e)
-    return undefined
-  }
-}
-
 async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
   try {
+    // By default we want to POST.
+    // Someone can pass in { method: 'get'} into the body to force a GET request (or similar)
+    // TO NOTE: This will fail in funny ways if your body actually has a "method" param
+    const method = (body && body.method ? body.method : 'post')
+    if (body) {
+      delete body.method
+    }
+
     const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
-    const r = await axios.post(
+    const r = await axios[method](
       `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
       body,
       {

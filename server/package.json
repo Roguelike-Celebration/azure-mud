@@ -7,7 +7,7 @@
     "watch": "tsc -w",
     "deploy": "func azure functionapp publish roguelike-celebration-mud",
     "prestart": "npm run build",
-    "start": "func start",
+    "start": "node dist/localServer.js",
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
