@@ -1,9 +1,7 @@
 import React from 'react'
 import PageVisibility from 'react-page-visibility'
 import { AuthenticateAction } from '../Actions'
-import { sendSignInLinkToEmail } from '../firebaseUtils'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { currentUser, sendSignInLinkToEmail, signOut } from '../authentication'
 
 interface Props {
   userEmail: string;
@@ -17,14 +15,14 @@ export default function VerifyEmailView (props: Props) {
   const dispatch = props.dispatch
 
   const handleVisibilityChange = (visibility) => {
-    if (visibility && firebase.auth().currentUser && firebase.auth().currentUser.emailVerified) {
-      var user = firebase.auth().currentUser
-      dispatch(AuthenticateAction(user.uid, user.uid, user.providerId, false))
+    const user = currentUser()
+    if (visibility && user && !user.shouldVerifyEmail) {
+      dispatch(AuthenticateAction(user.id, user.id, user.providerId, false))
     }
   }
 
   const goToAuth = () => {
-    firebase.auth().signOut().then(() => {
+    signOut().then(() => {
       dispatch(AuthenticateAction(undefined, undefined, undefined, undefined))
     })
   }
