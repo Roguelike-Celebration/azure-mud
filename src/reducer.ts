@@ -140,7 +140,8 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
     const oldRoomId = state.roomId
-    state.roomId = action.value
+    state.roomId = action.value.roomId
+    state.roomData = { ...state.roomData, ...action.value.roomData }
 
     if (state.roomId === 'entryway' || !state.hasDismissedAModal) {
       // This will show any time anyone reloads into the entryway, which
@@ -152,8 +153,8 @@ export default (oldState: State, action: Action): State => {
 
     // Add a local "you have moved to X room" message
     // Don't display if we're in the same room (issue 162)
-    if (state.roomData && state.roomData[action.value]) {
-      const room = state.roomData[action.value]
+    if (state.roomData && state.roomData[action.value.roomId]) {
+      const room = state.roomData[action.value.roomId]
       if (state.roomId !== oldRoomId) {
         addMessage(state, createMovedRoomMessage(room.shortName))
       } else {

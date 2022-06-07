@@ -55,12 +55,8 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(result)
-  dispatch(UpdatedCurrentRoomAction(result.roomId))
+  dispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
   dispatch(UserMapAction(result.users))
-
-  if (result.roomData) {
-    dispatch(UpdatedRoomDataAction(convertServerRoomData(result.roomData)))
-  }
 
   if (result.profile) {
     dispatch(ReceivedMyProfileAction(result.profile))
@@ -196,7 +192,7 @@ export async function moveToRoom (roomId: string) {
   if (result.error) {
     myDispatch(ErrorAction(result.error))
   } else {
-    myDispatch(UpdatedCurrentRoomAction(result.roomId))
+    myDispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
 
     if (result.roomNotes) {
       myDispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
@@ -223,7 +219,7 @@ export async function sendChatMessage (id: string, text: string) {
 
   // If it's a /move command
   if (result && result.roomId) {
-    myDispatch(UpdatedCurrentRoomAction(result.roomId))
+    myDispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
   } else if (result && result.user) {
     myDispatch(ShowProfileAction(result.user))
   } else if (result && result.error) {

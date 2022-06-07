@@ -7,14 +7,20 @@ import { User, isMod, minimizeUser } from '../user'
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
 import DB from '../redis'
 
+// TODO: We are currently including all static room data in this initial request
+// That may not be eventually what we want
+
 const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   log('We have a user!', user.id)
   const result: Result = {}
 
+  let room = await DB.getRoomData(user.roomId)
+
   // WARNING: For now, checking the existence of a roomId in roomData is a good safeguard
   // But this may bite us when/if we ever have programmatic room creation
-  if (user.roomId === undefined || !staticRoomData[user.roomId]) {
+  if (user.roomId === undefined || !room) {
     user.roomId = 'entryway'
+    room = await DB.getRoomData(user.roomId)
   }
 
   await DB.setCurrentRoomForUser(user, user.roomId)
@@ -31,14 +37,14 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     presenceData: await DB.allRoomOccupants(),
     users: userMap,
     // TODO: This will only include the current room
-    roomData: staticRoomData,
+    roomData: { ...staticRoomData, [user.roomId]: room },
     // TODO: Have a function to delete the keys we don't need
     profile: user
   }
 
   // TODO: The thing that dynamically fetches room data should
   // be smart enough to include roomNotes if necessary
-  if (staticRoomData[user.roomId].hasNoteWall) {
+  if (room.hasNoteWall) {
     response.roomNotes = await DB.getRoomNotes(user.roomId)
   }
 
@@ -48,7 +54,7 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
   }
 
   result.groupManagementTasks = [
-    ...setUpRoomsForUser(user.id, user.roomId),
+    ...await setUpRoomsForUser(user.id, user.roomId),
     {
       userId: user.id,
       groupId: user.roomId,

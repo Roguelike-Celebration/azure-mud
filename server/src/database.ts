@@ -114,6 +114,7 @@ interface Database {
   // -----------------------------------------------------------------
   setRoomData(room: Room)
   getRoomData(roomId): Promise<Room>
+  getRoomIds(): Promise<string[]>
 }
 
 // eslint-disable-next-line no-undef

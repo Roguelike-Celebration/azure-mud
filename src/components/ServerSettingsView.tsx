@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { staticRoomData } from '../../server/src/rooms'
 import { HappeningNowEntry, ServerSettings, toServerSettings } from '../../server/src/types'
 import { resetRoomData, updateServerSettings } from '../networking'
 import { Room } from '../room'
@@ -44,7 +43,7 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
     } else if (addHappeningNowRoomId.length > 0 && addHappeningNowExternalLink.length > 0) {
       alert('You cannot have roomId and external link')
       return
-    } else if (addHappeningNowRoomId.length > 0 && !staticRoomData[addHappeningNowRoomId]) {
+    } else if (addHappeningNowRoomId.length > 0 && !props.roomData[addHappeningNowRoomId]) {
       alert('No such room as ' + addHappeningNowRoomId)
       return
     }

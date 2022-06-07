@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import { User, isMod } from './user'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
 import { RoomNote } from './roomNote'
-import { Room, staticRoomData } from './rooms'
+import { Room } from './rooms'
 import Database from './database'
 import redis = require('redis')
 
@@ -22,6 +22,8 @@ const expireAt = promisify(cache.expireat).bind(cache)
 const addToSet = promisify(cache.sadd).bind(cache)
 const removeFromSet = promisify(cache.srem).bind(cache)
 const getSet = promisify(cache.smembers).bind(cache)
+
+const redisKeys = promisify(cache.keys).bind(cache)
 
 interface RedisInternal extends Database {
   addOccupantToRoom (roomId: string, userId: string),
@@ -60,7 +62,7 @@ const Redis: RedisInternal = {
 
   async allRoomOccupants (): Promise<{[roomId: string]: string[]}> {
     // TODO: Run "KEYS room_ to get all dynamic rooms"
-    const allRoomIds = Object.keys(staticRoomData)
+    const allRoomIds = await Redis.getRoomIds()
     const data = {}
     await Promise.all(allRoomIds.map(async id => {
       const occupants = await Redis.roomOccupants(id)
@@ -340,7 +342,14 @@ const Redis: RedisInternal = {
   },
 
   async getRoomData (roomId: string): Promise<Room> {
+    // TODO: Also fetch note wall data
     return JSON.parse(await getCache(roomDataKey(roomId)))
+  },
+
+  async getRoomIds (): Promise<string[]> {
+    const keys = await redisKeys('room_')
+    console.log(keys)
+    return keys.map(k => k.substring(5))
   }
 }
 

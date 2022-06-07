@@ -10,9 +10,12 @@ export async function moveToRoom (
   user: User,
   newRoomId: string
 ): Promise<Result> {
-  let to = staticRoomData[newRoomId]
-  const currentRoom = staticRoomData[user.roomId]
+  let to = await Redis.getRoomData(newRoomId)
+  const currentRoom = await Redis.getRoomData(user.roomId)
 
+  // TODO: This code still assumes only static rooms exist,
+  // since optimizing our Redis flow for this hasn't happened yet.
+  // Future Em, yell at past Em if this causes you pain
   if (!to) {
     // If the user typed a command, rather than clicking a link,
     // they may have typed a friendly version of the room name rather than the ID
@@ -39,7 +42,7 @@ export async function moveToRoom (
     while ((result = complexLinkRegex.exec(currentRoom.description))) {
       // "a [[foo->bar]]"" yields a result of ["[[friendly description->roomId]]", "friendly description", "roomId"]
       if (result[1] === newRoomId) {
-        to = staticRoomData[result[2]]
+        to = await Redis.getRoomData(result[2])
       }
     }
   }
@@ -63,11 +66,12 @@ export async function moveToRoom (
   }
 
   const response: RoomResponse = {
-    roomId: to.id
+    roomId: to.id,
+    roomData: { [to.id]: to }
   }
 
-  // TODO: Whatever fetches rooms from Redis should get this
-  if (staticRoomData[to.id].hasNoteWall) {
+  // TODO: Redis.getRoomData should already include note wall data
+  if (to.hasNoteWall) {
     response.roomNotes = await Redis.getRoomNotes(to.id)
   }
 
