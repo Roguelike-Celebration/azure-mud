@@ -1,0 +1,7 @@
+{
+  "id": "loungeDungeonClosetEntryway",
+  "displayName": "Unreasonably Large Walk-In Closet",
+  "shortName": "the unreasonably large walk-in closet",
+  "description": "There are pith helmets strewn across dresses, piles of mismatched shoes, a dozen spotless white wedding dresses, ancient steel helmets and a pile of trousers six feet high. The massive piles of shoes, garments, accessories and other sundry items in front of you make it impossible to tell how large the room is.<br/><br/> You can return to the [[bedroom->loungeDungeonBedroom]] or you can start [[pushing forward->loungeDungeonClosetPath]].",
+  "hidden": true
+}

@@ -1,0 +1,7 @@
+{
+  "id": "loungeDungeonClosetShoePathEnd",
+  "displayName": "Somewhere In The Unreasonably Large Walk-In Closet",
+  "shortName": "somewhere in the unreasonably large walk-in closet",
+  "description": "You push blindly onwards. You can hear the shrieks of the bowties, now. They started about ten minutes ago, and their high-pitched calls have been growing in intensity. Your walking stick is sturdy, and you're a lot bigger than a bowtie, but you're on their home ground.<br/><br/> You can [[go back->loungeDungeonClosetShoePath]], [[prepare for the bowties->loungeDungeonClosetBowtiePrep]], or [[venture onwards->loungeDungeonClosetMannequinAmbush]].",
+  "hidden": true
+}

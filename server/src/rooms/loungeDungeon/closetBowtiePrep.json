@@ -1,0 +1,7 @@
+{
+  "id": "loungeDungeonClosetBowtiePrep",
+  "displayName": "Somewhere In The Unreasonably Large Walk-In Closet",
+  "shortName": "somewhere in the unreasonably large walk-in closet",
+  "description": "You've never fought bowties before. You didn't know they could make sounds, or move, or fly. You wonder if they'll really attack you. Maybe they're like mountain lions? Will looking very big deter them? Or will you need to find a weapon?<br/><br/> You can [[find a scary coat->loungeDungeonClosetBowtieCoat]], [[find a weapon->loungeDungeonClosetBowtieWeapon]], or [[venture onwards->loungeDungeonClosetMannequinAmbush]].",
+  "hidden": true
+}

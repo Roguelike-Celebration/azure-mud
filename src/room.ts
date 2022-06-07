@@ -12,7 +12,7 @@ export interface Room {
   hasNoteWall: boolean;
   noteWallData: Server.NoteWallData
   notes?: RoomNote[]
-  specialFeatures?: Server.SpecialFeature[]
+  specialFeatures?: string[]
   riddles?: string[]
 }
 

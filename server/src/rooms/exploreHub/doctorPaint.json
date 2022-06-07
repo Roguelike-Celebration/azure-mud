@@ -1,0 +1,7 @@
+{
+  "id": "doctorPaint",
+  "displayName": "An incredibly complicated machine",
+  "shortName": "an incredibly complicated machine",
+  "description": "You find yourself in a space dominate by an incredibly complicated machine. Arcs of aetheric energy jump between leyden jars, and what appears to be an enormous water clock is driving an incomprehensible mass of gearwork. At the center of it all, like a tiny egg in rather large nest, is a simple chair. A frenetic individual in a white coat, their features obscured by thick googles and safety gear is tightening a bolt on the machine when you walk up.<br/><br/>Or maybe you should just [[leave->dyes]].",
+  "specialFeatures": ["RAINBOW_DOOR"]
+}
