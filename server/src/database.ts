@@ -3,6 +3,7 @@ import { RoomNote } from './roomNote'
 import { ServerSettings } from './types'
 
 import Redis from './redis'
+import { Room } from './rooms'
 
 interface Database {
   // -----------------------------------------------------------------
@@ -107,6 +108,12 @@ interface Database {
   webhookDeployKey()
 
   setWebhookDeployKey(key: string)
+
+  // -----------------------------------------------------------------
+  // ROOM DATA
+  // -----------------------------------------------------------------
+  setRoomData(room: Room)
+  getRoomData(roomId): Promise<Room>
 }
 
 // eslint-disable-next-line no-undef

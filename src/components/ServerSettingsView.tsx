@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { staticRoomData } from '../../server/src/rooms'
 import { HappeningNowEntry, ServerSettings, toServerSettings } from '../../server/src/types'
-import { updateServerSettings } from '../networking'
+import { resetRoomData, updateServerSettings } from '../networking'
 import { Room } from '../room'
 
 export default function ServerSettingsView (props: { serverSettings: ServerSettings, roomData: { [roomId: string]: Room } }) {
@@ -58,8 +58,14 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
     updateServerSettings(settingsCopy)
   }
 
+  const clickedResetRoomData = () => {
+    if (!confirm("Are you sure you'd like to reset room data?")) return
+    resetRoomData()
+  }
+
   return (
     <div className='serverSettingsContainer'>
+      <button onClick={clickedResetRoomData}>Reset Room Data</button>
       <h1>Happening Now Controls</h1>
       <h2>Current Entries</h2>
       {

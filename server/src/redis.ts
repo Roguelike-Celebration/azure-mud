@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import { User, isMod } from './user'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
 import { RoomNote } from './roomNote'
-import { staticRoomData } from './rooms'
+import { Room, staticRoomData } from './rooms'
 import Database from './database'
 import redis = require('redis')
 
@@ -330,6 +330,17 @@ const Redis: RedisInternal = {
 
   async setWebhookDeployKey (key: string) {
     return await setCache('deployWebhookKey', key)
+  },
+
+  //
+
+  // TODO: We maybe shouldn't allow unfettered access to this?
+  async setRoomData (room: Room) {
+    return await setCache(roomDataKey(room.id), JSON.stringify(room))
+  },
+
+  async getRoomData (roomId: string): Promise<Room> {
+    return JSON.parse(await getCache(roomDataKey(roomId)))
   }
 }
 
@@ -340,6 +351,10 @@ const modListKey = 'mods'
 const serverSettingsKey = 'serverSettings'
 
 const allUserIdsKey = 'allUserIds'
+
+function roomDataKey (roomId: string): string {
+  return `room_${roomId}`
+}
 
 function shoutKeyForUser (user: string): string {
   return `${user}Shout`
