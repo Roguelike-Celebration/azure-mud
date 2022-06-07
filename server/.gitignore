@@ -1,6 +1,8 @@
 **/*.js
 !scripts/generateRoomJSON.js
 
+src/rooms/compiled.json
+
 # Logs
 logs
 *.log
