@@ -15,6 +15,13 @@ jobs:
       - uses: actions/setup-node@v2.1.0
       - run: npm install
       
+      # This produces compiled.json, which needs to exist for lint-rooms to work
+      - name: server build
+        run: |
+          cd server
+          npm install
+          npm run build
+
       - name: build
         run: npm run build
 
