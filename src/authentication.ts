@@ -30,8 +30,11 @@ export function signOut (): Promise<void> {
   return firebase.auth().signOut()
 }
 
-const firebaseUserToAuthenticatedUser = (fb: firebase.User): AuthenticatedUser => {
-  const shouldVerifyEmail = fb.providerData.length === 1 &&
+const firebaseUserToAuthenticatedUser = (fb: firebase.User): AuthenticatedUser | undefined => {
+  if (!fb) return undefined
+
+  const shouldVerifyEmail = fb.providerData &&
+    fb.providerData.length === 1 &&
     fb.providerData[0].providerId === 'password' &&
     !fb.emailVerified
 
