@@ -29,7 +29,7 @@ import {
   fetchProfile,
   sendCaption
 } from './networking'
-import { PublicUser, MinimalUser, updateUserFontReward } from '../server/src/user'
+import { PublicUser, MinimalUser } from '../server/src/user'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'

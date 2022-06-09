@@ -347,7 +347,7 @@ const Redis: RedisInternal = {
   },
 
   async getRoomIds (): Promise<string[]> {
-    const keys = await redisKeys('room_')
+    const keys = await redisKeys('room_*')
     console.log(keys)
     return keys.map(k => k.substring(5))
   }

@@ -1,10 +1,15 @@
+import firebase from 'firebase/app'
+import Config from '../config'
 import { Action, ActionType } from './actions'
 
 export interface State {
+  firebaseApp: firebase.app.App
   isLoggedIn: boolean
+  roomIds?: string[]
 }
 
 export const defaultState: State = {
+  firebaseApp: firebase.initializeApp(Config.FIREBASE_CONFIG),
   isLoggedIn: false
 }
 
@@ -12,12 +17,13 @@ export const defaultState: State = {
 export default (oldState: State, action: Action): State => {
   const state: State = JSON.parse(JSON.stringify(oldState))
 
-  console.log(action, action.type, ActionType.LoggedIn)
   if (action.type === ActionType.LoggedIn) {
     state.isLoggedIn = true
   }
 
-  console.log('Logged in!', state)
+  if (action.type === ActionType.UpdateRoomIds) {
+    state.roomIds = action.value
+  }
 
   return state
 }

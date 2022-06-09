@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react'
+import AceEditor from 'react-ace'
+
+import 'ace-builds/src-noconflict/mode-json'
+import 'ace-builds/src-noconflict/theme-solarized_dark'
+import 'ace-builds/src-noconflict/ext-language_tools'
+
 import { onAuthenticationStateChange, signOut } from '../../authentication'
-import { checkIsRegistered } from '../../networking'
+import { checkIsRegistered, getRoomIds } from '../../networking'
 import reducer, { defaultState, State } from '../reducer'
 import { useReducerWithThunk } from '../../useReducerWithThunk'
-import { Action, LoggedInAction } from '../actions'
-
+import { Action, LoggedInAction, UpdateRoomIds } from '../actions'
 import LoggedOutView from './LoggedOutView'
+import { Room } from 'twilio-video'
+import RoomList from './RoomList'
 
 const App = function () {
   const [state, dispatch] = useReducerWithThunk<Action, State>(
@@ -39,8 +46,29 @@ const App = function () {
     })
   }, [])
 
+  // This could probably previously run in the login useEffect block--
+  // this is gated on firebase.auth() being valid, not state.isLoggedIn
+  // Shrug.
+  useEffect(() => {
+    if (!state.isLoggedIn) return
+    (async () => {
+      const roomIds = await getRoomIds()
+      dispatch(UpdateRoomIds(roomIds))
+    })()
+  }, [state.isLoggedIn])
+
   if (state.isLoggedIn) {
-    return <div>Hello admin!</div>
+    return <div>
+      <h1>Room Editor</h1>
+      <RoomList roomIds={state.roomIds}/>
+      <AceEditor
+        mode="json"
+        theme="solarized_dark"
+        name="editor"
+        editorProps={{ $blockScrolling: true }}
+        width={'70vw'}
+      />
+    </div>
   } else {
     return <LoggedOutView />
   }

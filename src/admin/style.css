@@ -1,0 +1,12 @@
+ul {
+}
+
+li {
+  list-style: none;
+}
+
+#editor {
+  position: absolute;
+  top: 5em;
+  left: 25vw;
+}

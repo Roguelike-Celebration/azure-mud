@@ -270,6 +270,13 @@ export async function deleteMessage (messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
 }
 
+export async function getRoomIds (): Promise<string[]> {
+  const result = await callAzureFunction('getRoomIds')
+  if (result.roomIds) {
+    return result.roomIds
+  }
+}
+
 // Setup
 
 async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
