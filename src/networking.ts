@@ -35,7 +35,7 @@ import {
   ShowModalAction, CommandMessageAction, CaptionMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
-import { convertServerRoomData } from './room'
+import { convertServerRoomData, Room } from './room'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
 import Config from './config'
@@ -274,6 +274,20 @@ export async function getRoomIds (): Promise<string[]> {
   const result = await callAzureFunction('getRoomIds')
   if (result.roomIds) {
     return result.roomIds
+  }
+}
+
+export async function getRoom (roomId: string): Promise<Room> {
+  const result = await callAzureFunction('getRoom', { roomId })
+  if (result.room) {
+    return result.room
+  }
+}
+
+export async function getAllRooms (): Promise<{[roomId: string]: Room}> {
+  const result = await callAzureFunction('getAllRooms')
+  if (result.roomData) {
+    return result.roomData
   }
 }
 

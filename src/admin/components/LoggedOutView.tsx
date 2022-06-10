@@ -32,7 +32,7 @@ export default function LoggedOutView () {
       </header>
       <main role="main">
         <p>
-          If you're not a Roguelike Celebration admin, this isn't for you. If you should be an admin, but can't log in, ask in our other chat.
+          If you\'re not a Roguelike Celebration admin, this isn\'t for you. If you should be an admin, but can\'t log in, ask in our other chat.
         </p>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
       </main>

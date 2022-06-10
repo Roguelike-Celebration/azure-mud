@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, createContext } from 'react'
 import AceEditor from 'react-ace'
 
 import 'ace-builds/src-noconflict/mode-json'
@@ -11,8 +11,9 @@ import reducer, { defaultState, State } from '../reducer'
 import { useReducerWithThunk } from '../../useReducerWithThunk'
 import { Action, LoggedInAction, UpdateRoomIds } from '../actions'
 import LoggedOutView from './LoggedOutView'
-import { Room } from 'twilio-video'
 import RoomList from './RoomList'
+
+export const DispatchContext = createContext(null)
 
 const App = function () {
   const [state, dispatch] = useReducerWithThunk<Action, State>(
@@ -58,17 +59,23 @@ const App = function () {
   }, [state.isLoggedIn])
 
   if (state.isLoggedIn) {
-    return <div>
-      <h1>Room Editor</h1>
-      <RoomList roomIds={state.roomIds}/>
-      <AceEditor
-        mode="json"
-        theme="solarized_dark"
-        name="editor"
-        editorProps={{ $blockScrolling: true }}
-        width={'70vw'}
-      />
-    </div>
+    return (
+      <DispatchContext.Provider value={dispatch}>
+        <div>
+          <h1>Room Editor:  {state.displayedRoomId || 'no room selected'}</h1>
+          <RoomList roomIds={state.roomIds}/>
+          <AceEditor
+            mode="json"
+            theme="solarized_dark"
+            name="editor"
+            editorProps={{ $blockScrolling: true }}
+            wrapEnabled={true}
+            width={'70vw'}
+            value={JSON.stringify(state.roomData[state.displayedRoomId] || '', null, 2)}
+          />
+        </div>
+      </DispatchContext.Provider>
+    )
   } else {
     return <LoggedOutView />
   }
