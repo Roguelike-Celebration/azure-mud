@@ -1,4 +1,4 @@
-import React, { useEffect, createContext } from 'react'
+import React, { useEffect, createContext, useRef } from 'react'
 import AceEditor from 'react-ace'
 
 import 'ace-builds/src-noconflict/mode-json'
@@ -6,16 +6,19 @@ import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
 import { onAuthenticationStateChange, signOut } from '../../authentication'
-import { checkIsRegistered, getRoomIds } from '../../networking'
+import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking'
 import reducer, { defaultState, State } from '../reducer'
 import { useReducerWithThunk } from '../../useReducerWithThunk'
 import { Action, LoggedInAction, UpdateRoomIds } from '../actions'
 import LoggedOutView from './LoggedOutView'
 import RoomList from './RoomList'
+import RoomOptionsView from './RoomOptionsView'
 
 export const DispatchContext = createContext(null)
 
 const App = function () {
+  const aceRef = useRef(null)
+
   const [state, dispatch] = useReducerWithThunk<Action, State>(
     reducer,
     defaultState
@@ -58,20 +61,27 @@ const App = function () {
     })()
   }, [state.isLoggedIn])
 
+  const saveRoom = () => {
+    const code = aceRef.current.editor.getValue()
+    updateRoom(state.displayedRoomId, JSON.parse(code))
+  }
+
   if (state.isLoggedIn) {
     return (
       <DispatchContext.Provider value={dispatch}>
         <div>
           <h1>Room Editor:  {state.displayedRoomId || 'no room selected'}</h1>
+          <RoomOptionsView roomId={state.displayedRoomId} updateRoom={saveRoom}/>
           <RoomList roomIds={state.roomIds}/>
           <AceEditor
             mode="json"
             theme="solarized_dark"
             name="editor"
             editorProps={{ $blockScrolling: true }}
+            ref={aceRef}
+            value={JSON.stringify(state.roomData[state.displayedRoomId] || '', null, 2)}
             wrapEnabled={true}
             width={'70vw'}
-            value={JSON.stringify(state.roomData[state.displayedRoomId] || '', null, 2)}
           />
         </div>
       </DispatchContext.Provider>

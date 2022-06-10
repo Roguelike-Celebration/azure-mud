@@ -18,6 +18,7 @@ const cache = redis.createClient(
 const getCache = promisify(cache.get).bind(cache)
 const setCache = promisify(cache.set).bind(cache)
 const expireAt = promisify(cache.expireat).bind(cache)
+const del = promisify(cache.del).bind(cache)
 
 const addToSet = promisify(cache.sadd).bind(cache)
 const removeFromSet = promisify(cache.srem).bind(cache)
@@ -344,6 +345,10 @@ const Redis: RedisInternal = {
   async getRoomData (roomId: string): Promise<Room> {
     // TODO: Also fetch note wall data
     return JSON.parse(await getCache(roomDataKey(roomId)))
+  },
+
+  async deleteRoomData (roomId: string): Promise<void> {
+    return await del(roomDataKey(roomId))
   },
 
   async getRoomIds (): Promise<string[]> {

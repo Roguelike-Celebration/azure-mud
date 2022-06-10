@@ -291,6 +291,14 @@ export async function getAllRooms (): Promise<{[roomId: string]: Room}> {
   }
 }
 
+export async function deleteRoom (roomId: string): Promise<any> {
+  return await callAzureFunction('deleteRoom', { roomId })
+}
+
+export async function updateRoom (roomId: string, roomData: Room): Promise<any> {
+  return await callAzureFunction('updateRoom', { roomId, roomData })
+}
+
 // Setup
 
 async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
