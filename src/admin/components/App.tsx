@@ -78,6 +78,7 @@ const App = function () {
             theme="solarized_dark"
             name="editor"
             editorProps={{ $blockScrolling: true }}
+            height={'100%'}
             ref={aceRef}
             value={JSON.stringify(state.roomData[state.displayedRoomId] || '', null, 2)}
             wrapEnabled={true}

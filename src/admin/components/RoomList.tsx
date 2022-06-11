@@ -3,13 +3,19 @@ import _ from 'lodash'
 import React, { useContext } from 'react'
 
 import { DispatchContext } from './App'
-import { getRoom } from '../../networking'
+import { getAllRooms, getRoom, resetRoomData } from '../../networking'
 import { UpdateAndShowRoomAction } from '../actions'
 
 export default function (props: {roomIds: string[]}) {
   const dispatch = useContext(DispatchContext)
 
   const roomIds = _.sortBy(props.roomIds || [])
+
+  const clickedResetData = async () => {
+    if (!confirm("Are you sure you'd like to reset room data?")) return
+    await resetRoomData()
+    await getAllRooms()
+  }
 
   const onClick = async (e) => {
     const roomId = e.target && e.target.getAttribute && e.target.getAttribute('data-room')
@@ -23,7 +29,7 @@ export default function (props: {roomIds: string[]}) {
   }
 
   return (
-    <ul>
+    <ul id='room-list'>
       {roomIds.map(id => {
         return (
           <li key={`room-button-${id}`}>
@@ -36,6 +42,11 @@ export default function (props: {roomIds: string[]}) {
             </button>
           </li>)
       })}
+      <button
+        onClick={clickedResetData}
+        style={{ marginTop: '1em' }}>
+        Reset Room Data to Disk Copy
+      </button>
     </ul>
   )
 }

@@ -17,7 +17,7 @@ export default function (props: {roomId: string, updateRoom: () => void}) {
   }
 
   return (
-    <div>
+    <div id='room-options-view'>
       <button
         onClick={clickedDelete}>
         Delete
