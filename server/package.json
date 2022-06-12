@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "prebuild": "node scripts/generateRoomJSON.js",
     "build": "tsc",
     "watch": "tsc -w",
     "deploy": "func azure functionapp publish roguelike-celebration-mud",

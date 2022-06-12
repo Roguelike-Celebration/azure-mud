@@ -1,3 +1,8 @@
+// This script originally mashed together ALL JSOn files in server/src/rooms/data.
+// Now, we just dump in a single generated JSON file.
+// This can probably be safely deleted, but leaving in the codebase for now
+// (Em, June 11 2022)
+
 const fs = require('fs')
 const recursive = require('recursive-readdir')
 const { isArray } = require('lodash')

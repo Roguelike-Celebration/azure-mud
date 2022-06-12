@@ -1,4 +1,4 @@
-import json from './compiled.json'
+import json from './data/roomData.json'
 export const staticRoomData: {[name: string]: Room} = json
 
 export interface Room {
