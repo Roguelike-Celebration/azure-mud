@@ -1,7 +1,0 @@
-{
-  "id": "loungeDungeonClosetShoePath",
-  "displayName": "Somewhere In The Unreasonably Large Walk-In Closet",
-  "shortName": "somewhere in the unreasonably large walk-in closet",
-  "description": "You pass through a forest of bare mannequins that watch you as you pass. You pull a sturdy walking stick from a copse of parasols. You tunnel through a hill of belts and ties, fending off the shoelaces that swarm to impede your path. Soon after you realize that you can't see the tower of shoes you were heading towards.<br/><br/> You can [[go back->loungeDungeonClosetPath]] or [[venture onwards->loungeDungeonClosetShoePathEnd]].",
-  "hidden": true
-}

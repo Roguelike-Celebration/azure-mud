@@ -1,7 +1,0 @@
-{
-  "id": "loungeDungeonClosetBowtieWeapon",
-  "displayName": "Somewhere In The Unreasonably Large Walk-In Closet",
-  "shortName": "somewhere in the unreasonably large walk-in closet",
-  "description": "You have no idea where you'd find a weapon. You already have a walking stick, and you're not sure anything else you've seen so far would be better. On reflection, you're not even sure if hitting a bowtie with a walking stick would kill it. Or if the bowties are even alive.<br/><br/> You can [[fight the bowties->loungeDungeonClosetMannequinAmbush]] or [[venture onwards->loungeDungeonClosetMannequinAmbush]].",
-  "hidden": true
-}

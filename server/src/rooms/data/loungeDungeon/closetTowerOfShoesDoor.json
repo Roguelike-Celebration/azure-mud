@@ -1,7 +1,0 @@
-{
-  "id": "loungeDungeonClosetTowerOfShoesDoor",
-  "displayName": "Somewhere In The Unreasonably Large Walk-In Closet",
-  "shortName": "somewhere in the unreasonably large walk-in closet",
-  "description": "You reach the tower of shoes. It's gigantic, six hundred feet high at least, but only some thirty feet wide. There's a door set into its base.<br/><br/> You can [[escape the closet->loungeDungeonBedroom]] or enter the [[tower of shoes->hiddenPortalRoom]].",
-  "hidden": true
-}

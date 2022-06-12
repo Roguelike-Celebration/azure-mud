@@ -1,7 +1,0 @@
-{
-  "id": "loungeDungeonBedroom",
-  "displayName": "Bedroom",
-  "shortName": "the bedroom",
-  "description": "A cosy room featuring an unreasonably wide bed, sporting an ornate canopy. To its left is an oak drawer, with a perfectly polished mirror above it, and to its right is a door with a note on it. Written in a shaky hand, the note reads \"I am done organizing your closet, it is a futile, time-wasting endeavor!\"<br/><br/> You can return to the [[drawing room->loungeDungeonDrawingRoom]], or you can enter the [[closet->loungeDungeonClosetEntryway]].",
-  "hidden": true
-}

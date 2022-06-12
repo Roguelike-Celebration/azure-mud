@@ -1,7 +1,0 @@
-{
-  "id": "loungeDungeonClosetBowtieCoatFight",
-  "displayName": "Somewhere In The Unreasonably Large Walk-In Closet",
-  "shortName": "somewhere in the unreasonably large walk-in closet",
-  "description": "You quickly don your coat and turn away from the cliff. You can see the swarm of bowties circling. You stare at them as you open your coat and spread your arms, waving them slowly. You call out, firmly. The swarm circles another couple of times, but eventually the cries stop and it seems to move on.<br/><br/> You realize that you can see the path to the tower of shoes you were aiming for from here. You can [[escape the closet->loungeDungeonBedroom]] or continue to the [[tower of shoes->loungeDungeonClosetTowerOfShoesDoor]].",
-  "hidden": true
-}

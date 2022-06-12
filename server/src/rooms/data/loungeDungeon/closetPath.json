@@ -1,7 +1,0 @@
-{
-  "id": "loungeDungeonClosetPath",
-  "displayName": "Somewhere In The Unreasonably Large Walk-In Closet",
-  "shortName": "somewhere in the unreasonably large walk-in closet",
-  "description": "You pass a hundred umbrellas, standing upright in a gigantic bucket. You wade through a swamp of what look like napoleonic uniforms. You flee a collapsing tower of tall, fuzzy hats. A moat of very spiky armor bits threatens to stop your progress, but you shovel undershirts and chemises into it until you can cross.<br/><br/> You can [[go back->loungeDungeonClosetEntryway]], or head towards the distant [[tower of shoes->loungeDungeonClosetShoePath]].",
-  "hidden": true
-}
