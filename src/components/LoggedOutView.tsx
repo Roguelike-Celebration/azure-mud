@@ -1,17 +1,17 @@
 // Note - we're doing firebase 8 because the firebaseui stuff doesn't work with 9, big F
-import { shouldVerifyEmail, sendSignInLinkToEmail } from '../firebaseUtils'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { currentUser, sendSignInLinkToEmail } from '../authentication'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import React from 'react'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 const uiConfig = {
   callbacks: {
     // The documentation on the firebaseui README appears somewhat borked at time of writing; the structure of
     // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      const user = firebase.auth().currentUser
-      if (shouldVerifyEmail(user)) {
+      const user = currentUser()
+      if (user.shouldVerifyEmail) {
         sendSignInLinkToEmail(user.email)
       }
       return true

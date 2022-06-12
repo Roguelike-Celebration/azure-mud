@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { roomData } from '../../server/src/rooms'
 import { HappeningNowEntry } from '../../server/src/types'
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
@@ -20,7 +19,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
   const currentlyScheduled = ReversedScheduleEntries[currentlyScheduledIdx]
 
   const moveAndClose = (roomId: string) => {
-    if (!roomData[roomId]) {
+    if (!props.roomData[roomId]) {
       console.error('Can\'t go to room ' + roomId + ' from link in happening now view, no such room!')
     } else {
       moveToRoom(roomId)
@@ -33,7 +32,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
       {roomIds.map((id) => {
         return <li key={id}>
           <button id={`button-happening-now${id}`} onClick={() => moveAndClose(id)} className='link-styled-button'>
-            {props.roomData[id] ? props.roomData[id].name : 'unknown room'}
+            {props.roomData[id] ? props.roomData[id].displayName : 'unknown room'}
           </button>
         </li>
       })}
@@ -53,7 +52,7 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
           <li key={breakoutRoomId}>
             {discussString}
             <button id={`button-happening-now${breakoutRoomId}`} onClick={() => moveAndClose(breakoutRoomId)} className='link-styled-button'>
-              {props.roomData[breakoutRoomId] ? props.roomData[breakoutRoomId].name : 'unknown room'}
+              {props.roomData[breakoutRoomId] ? props.roomData[breakoutRoomId].displayName : 'unknown room'}
             </button>
           </li>
         )

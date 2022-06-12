@@ -51,9 +51,7 @@ import EmailVerifiedView from './components/EmailVerifiedView'
 import RiddleModalView from './components/RiddleModal'
 import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
-import { shouldVerifyEmail } from './firebaseUtils'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { currentUser, onAuthenticationStateChange } from './authentication'
 import _ from 'lodash'
 
 export const DispatchContext = createContext(null)
@@ -69,104 +67,107 @@ const App = () => {
   )
 
   useEffect(() => {
-    // TODO: This logic is gnarly enough I'd love to abstract it somewhere
-    firebase.auth().onAuthStateChanged(function (user) {
+    // TODO: This flow has a lot of confusing, potentially duplicated messages that I'm not sure are necessary
+    // I (Em) started a refactor at one point, but abandoned it since it became too irrelevant from my task
+    onAuthenticationStateChange(async (user) => {
       if (!user) {
         dispatch(AuthenticateAction(undefined, undefined, undefined, undefined))
-      } else if (shouldVerifyEmail(user)) {
-        const userId = firebase.auth().currentUser.uid
-        const providerId = firebase.auth().currentUser.providerId
+      } else if (user.shouldVerifyEmail) {
+        const userId = user.id
+        const providerId = user.providerId
         dispatch(AuthenticateAction(userId, userId, providerId, true))
       } else {
-        const userId = firebase.auth().currentUser.uid
-        const providerId = firebase.auth().currentUser.providerId
+        const user = currentUser()
+        const userId = user.id
+        const providerId = user.providerId
 
-        checkIsRegistered().then(async ({ registeredUsername, spaceIsClosed, isMod, isBanned }) => {
-          if (!registeredUsername) {
-            // If email, use ID to not leak, otherwise use service's default display name (for Twitter, their handle)
-            const defaultDisplayName = user.email
-              ? userId
-              : user.displayName
-            dispatch(
-              AuthenticateAction(userId, defaultDisplayName, providerId, false)
-            )
-            return
-          }
+        const { registeredUsername, spaceIsClosed, isMod, isBanned } = await checkIsRegistered()
+        if (!registeredUsername) {
+          // If email, use ID to not leak, otherwise use service's default display name (for Twitter, their handle)
+          const defaultDisplayName = user.email
+            ? userId
+            : user.displayName
           dispatch(
-            AuthenticateAction(userId, registeredUsername, providerId, false)
+            AuthenticateAction(userId, defaultDisplayName, providerId, false)
           )
+          return
+        }
 
-          if (isBanned) {
-            dispatch(
-              PlayerBannedAction({
-                id: userId,
-                username: registeredUsername,
-                isBanned: isBanned
-              })
-            )
+        // TODO: I thiiiink we want this to be in an 'else'
+        dispatch(
+          AuthenticateAction(userId, registeredUsername, providerId, false)
+        )
+
+        if (isBanned) {
+          dispatch(
+            PlayerBannedAction({
+              id: userId,
+              username: registeredUsername,
+              isBanned: isBanned
+            })
+          )
+          dispatch(IsRegisteredAction())
+          return
+        }
+
+        if (spaceIsClosed) {
+          dispatch(SpaceIsClosedAction())
+
+          if (!isMod) {
+            // non-mods shouldn't subscribe to SignalR if the space is closed
             dispatch(IsRegisteredAction())
             return
           }
+        }
 
-          if (spaceIsClosed) {
-            dispatch(SpaceIsClosedAction())
-
-            if (!isMod) {
-              // non-mods shouldn't subscribe to SignalR if the space is closed
-              dispatch(IsRegisteredAction())
-              return
-            }
-          }
-
-          const messageArchive = await Storage.getMessages()
-          if (messageArchive) {
-            dispatch(
-              LoadMessageArchiveAction(
-                messageArchive.messages,
-                messageArchive.whispers
-              )
+        const messageArchive = await Storage.getMessages()
+        if (messageArchive) {
+          dispatch(
+            LoadMessageArchiveAction(
+              messageArchive.messages,
+              messageArchive.whispers
             )
+          )
+        }
+
+        const useSimpleNames = await Storage.getUseSimpleNames()
+        dispatch(SetUseSimpleNamesAction(useSimpleNames))
+        const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
+        dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
+        const textOnlyMode = await Storage.getTextOnlyMode()
+        dispatch(SetTextOnlyModeAction(textOnlyMode, false))
+        const captionsEnabled = await Storage.getCaptionsEnabled()
+        dispatch(SetCaptionsEnabledAction(captionsEnabled))
+
+        dispatch(IsRegisteredAction())
+        connect(userId, dispatch)
+        getServerSettings(dispatch)
+
+        // WARNING: Prior to the "calculate number of faces for videochat" code,
+        // there was a no-op resize handler here.
+        // window.addEventListener('resize', () => {})
+        // I frankly have no idea what this was doing,
+        // and worry my changes will cause unexpected errors
+        // -Em, 10/12/2021
+        window.addEventListener('resize', () => {})
+        const onResize = () => {
+          // It seems like a smell to do this in here and have to grab into #main,
+          // but I think it's fine?
+          const VideoWidth = 180
+          const $main = document.getElementById('main')
+          // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
+          if ($main) {
+            const numberOfFaces = Math.floor($main.clientWidth / VideoWidth) - 1
+            dispatch(SetNumberOfFacesAction(numberOfFaces))
+          } else {
+            console.warn('Attempted to call onResize when \'main\' element was null; will default to show no faces')
           }
+        }
 
-          const useSimpleNames = await Storage.getUseSimpleNames()
-          dispatch(SetUseSimpleNamesAction(useSimpleNames))
-          const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
-          dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
-          const textOnlyMode = await Storage.getTextOnlyMode()
-          dispatch(SetTextOnlyModeAction(textOnlyMode, false))
-          const captionsEnabled = await Storage.getCaptionsEnabled()
-          dispatch(SetCaptionsEnabledAction(captionsEnabled))
-
-          dispatch(IsRegisteredAction())
-          connect(userId, dispatch)
-          getServerSettings(dispatch)
-
-          // WARNING: Prior to the "calculate number of faces for videochat" code,
-          // there was a no-op resize handler here.
-          // window.addEventListener('resize', () => {})
-          // I frankly have no idea what this was doing,
-          // and worry my changes will cause unexpected errors
-          // -Em, 10/12/2021
-          window.addEventListener('resize', () => {})
-          function onResize () {
-            // It seems like a smell to do this in here and have to grab into #main,
-            // but I think it's fine?
-            const VideoWidth = 180
-            const $main = document.getElementById('main')
-            // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
-            if ($main) {
-              const numberOfFaces = Math.floor($main.clientWidth / VideoWidth) - 1
-              dispatch(SetNumberOfFacesAction(numberOfFaces))
-            } else {
-              console.warn('Attempted to call onResize when \'main\' element was null; will default to show no faces')
-            }
-          }
-
-          // Our initial paint time is stupid slow
-          // but waiting a long time seems to ensure that #main exists
-          setTimeout(onResize, 2000)
-          window.addEventListener('resize', _.throttle(onResize, 100, { trailing: true }))
-        })
+        // Our initial paint time is stupid slow
+        // but waiting a long time seems to ensure that #main exists
+        setTimeout(onResize, 2000)
+        window.addEventListener('resize', _.throttle(onResize, 100, { trailing: true }))
       }
     })
   }, [])
@@ -180,7 +181,7 @@ const App = () => {
   )
 
   // This is kind of janky!
-  if (firebase.auth().currentUser && firebase.auth().isSignInWithEmailLink(window.location.href)) {
+  if (currentUser() && currentUser().isSignInWithEmailLink(window.location.href)) {
     return <EmailVerifiedView />
   }
 
@@ -190,7 +191,7 @@ const App = () => {
 
   if (state.checkedAuthentication && state.mustVerifyEmail) {
     return <VerifyEmailView
-      userEmail={firebase.auth().currentUser.email}
+      userEmail={currentUser().email}
       dispatch={dispatch}
     />
   }

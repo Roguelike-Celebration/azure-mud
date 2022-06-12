@@ -1,9 +1,11 @@
-import { roomData } from './server/src/rooms'
+import { staticRoomData } from './server/src/rooms'
 import { linkActions } from './src/linkActions'
 import allowedItems from './server/src/allowedItems'
+import Redis from './server/src/redis'
+import { includes } from 'lodash'
 
 const failures = []
-Object.values(roomData).forEach((room) => {
+Object.values(staticRoomData).forEach(async (room) => {
   let { description } = room
 
   // eslint-disable-next-line no-useless-escape
@@ -13,8 +15,10 @@ Object.values(roomData).forEach((room) => {
   // These should use regex matching functions instead of replacing
   // but shrug, copy/pasting from RoomView.tsx is fine.
 
+  const roomIds = await Redis.getRoomIds()
+
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    if (roomData[roomId]) {
+    if (includes(roomIds, roomId)) {
     } else if (roomId === 'item' && allowedItems.includes(text)) {
     } else if (linkActions[roomId]) {
     } else {
@@ -24,7 +28,7 @@ Object.values(roomData).forEach((room) => {
   })
 
   description = description.replace(simpleLinkRegex, (match, roomId, _) => {
-    if (!roomData[roomId]) {
+    if (!includes(roomIds, roomId)) {
       failures.push([room.id, match])
     }
     return 'handled'

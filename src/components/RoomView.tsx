@@ -13,7 +13,6 @@ import { FaChevronDown, FaChevronUp, FaCog } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
-import { SpecialFeature } from '../../server/src/rooms'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
@@ -124,6 +123,8 @@ export default function RoomView (props: Props) {
     }
   }
 
+  console.log('ROOM', JSON.stringify(room, null, 2))
+
   // TODO: Don't hard-code order of features
   /* eslint-disable jsx-a11y/click-events-have-key-events */
   /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
@@ -131,7 +132,7 @@ export default function RoomView (props: Props) {
   return (
     <div id="room">
       <h1 id="room-name">
-        {room ? room.name : 'Loading...'}
+        {room ? room.displayName : 'Loading...'}
         <button
           type="button"
           id="room-collapse-button"
@@ -166,21 +167,21 @@ export default function RoomView (props: Props) {
         {room && room.id === 'theater' ? <StreamEmbed /> : null}
         {room &&
         room.specialFeatures &&
-        room.specialFeatures.includes(SpecialFeature.RainbowDoor) ? (
+        room.specialFeatures.includes('RAINBOW_DOOR') ? (
             <RainbowGateRoomView />
           ) : (
             ''
           )}
         {room &&
         room.specialFeatures &&
-        room.specialFeatures.includes(SpecialFeature.DullDoor) ? (
+        room.specialFeatures.includes('DULL_DOOR') ? (
             <DullDoorRoomView />
           ) : (
             ''
           )}
         {room &&
         room.specialFeatures &&
-        room.specialFeatures.includes(SpecialFeature.FullRoomIndex) ? (
+        room.specialFeatures.includes('FULL_ROOM_INDEX') ? (
             <FullRoomIndexRoomView />
           ) : (
             ''
@@ -231,6 +232,7 @@ function parseDescription (
     } else if (linkActions[roomId]) {
       return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`
     } else {
+      // TODO: This warning is now expected, with room data being JIT
       console.log(
         `Dev warning: tried to link to room ${roomId}, which doesn't exist`
       )
@@ -240,6 +242,7 @@ function parseDescription (
   description = description.replace(simpleLinkRegex, (match, roomId) => {
     const room = roomData[roomId]
     if (!room) {
+      // TODO: This warning is now expected, with room data being JIT
       console.log(
         `Dev warning: tried to link to room ${roomId}, which doesn't exist`
       )

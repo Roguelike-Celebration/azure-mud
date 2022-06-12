@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { roomData } from '../../server/src/rooms'
 import { HappeningNowEntry, ServerSettings, toServerSettings } from '../../server/src/types'
-import { updateServerSettings } from '../networking'
+import { resetRoomData, updateServerSettings } from '../networking'
 import { Room } from '../room'
 
 export default function ServerSettingsView (props: { serverSettings: ServerSettings, roomData: { [roomId: string]: Room } }) {
@@ -44,7 +43,7 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
     } else if (addHappeningNowRoomId.length > 0 && addHappeningNowExternalLink.length > 0) {
       alert('You cannot have roomId and external link')
       return
-    } else if (addHappeningNowRoomId.length > 0 && !roomData[addHappeningNowRoomId]) {
+    } else if (addHappeningNowRoomId.length > 0 && !props.roomData[addHappeningNowRoomId]) {
       alert('No such room as ' + addHappeningNowRoomId)
       return
     }
@@ -58,8 +57,14 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
     updateServerSettings(settingsCopy)
   }
 
+  const clickedResetRoomData = async () => {
+    if (!confirm("Are you sure you'd like to reset room data?")) return
+    await resetRoomData()
+  }
+
   return (
     <div className='serverSettingsContainer'>
+      <button onClick={clickedResetRoomData}>Reset Room Data</button>
       <h1>Happening Now Controls</h1>
       <h2>Current Entries</h2>
       {

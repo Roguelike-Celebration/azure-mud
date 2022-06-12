@@ -1,4 +1,4 @@
-import { roomData } from './rooms'
+import { staticRoomData } from './rooms'
 import { RoomResponse } from './types'
 import { User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
@@ -10,16 +10,19 @@ export async function moveToRoom (
   user: User,
   newRoomId: string
 ): Promise<Result> {
-  let to = roomData[newRoomId]
-  const currentRoom = roomData[user.roomId]
+  let to = await Redis.getRoomData(newRoomId)
+  const currentRoom = await Redis.getRoomData(user.roomId)
 
+  // TODO: This code still assumes only static rooms exist,
+  // since optimizing our Redis flow for this hasn't happened yet.
+  // Future Em, yell at past Em if this causes you pain
   if (!to) {
     // If the user typed a command, rather than clicking a link,
     // they may have typed a friendly version of the room name rather than the ID
     // TODO: Rooms should have a generous list of accepted names
     // DOUBLE TODO: Can we fuzzily search all exits for the current room?
     const searchStr = newRoomId.replace(' ', '').toUpperCase()
-    to = Object.values(roomData).find(
+    to = Object.values(staticRoomData).find(
       (room) => room.shortName.replace(' ', '').toUpperCase() === searchStr ||
         room.displayName.replace(' ', '').toUpperCase() === searchStr ||
           room.id.toUpperCase() === searchStr
@@ -39,7 +42,7 @@ export async function moveToRoom (
     while ((result = complexLinkRegex.exec(currentRoom.description))) {
       // "a [[foo->bar]]"" yields a result of ["[[friendly description->roomId]]", "friendly description", "roomId"]
       if (result[1] === newRoomId) {
-        to = roomData[result[2]]
+        to = await Redis.getRoomData(result[2])
       }
     }
   }
@@ -63,10 +66,12 @@ export async function moveToRoom (
   }
 
   const response: RoomResponse = {
-    roomId: to.id
+    roomId: to.id,
+    roomData: { [to.id]: to }
   }
 
-  if (roomData[to.id].hasNoteWall) {
+  // TODO: Redis.getRoomData should already include note wall data
+  if (to.hasNoteWall) {
     response.roomNotes = await Redis.getRoomNotes(to.id)
   }
 

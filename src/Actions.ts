@@ -164,15 +164,19 @@ export const ReceivedServerSettingsAction = (
 
 interface UpdatedCurrentRoomAction {
   type: ActionType.UpdatedCurrentRoom;
-  value: string;
+  value: {
+    roomId: string,
+    roomData: {[roomId: string]: Room}
+  };
 }
 
 export const UpdatedCurrentRoomAction = (
-  roomId: string
+  roomId: string,
+  roomData: {[roomId: string]: Room}
 ): UpdatedCurrentRoomAction => {
   return {
     type: ActionType.UpdatedCurrentRoom,
-    value: roomId
+    value: { roomId, roomData }
   }
 }
 

@@ -35,7 +35,7 @@ import {
   ShowModalAction, CommandMessageAction, CaptionMessageAction
 } from './Actions'
 import { User } from '../server/src/user'
-import { convertServerRoomData } from './room'
+import { convertServerRoomData, Room } from './room'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { Modal } from './modals'
 import Config from './config'
@@ -55,12 +55,8 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(result)
-  dispatch(UpdatedCurrentRoomAction(result.roomId))
+  dispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
   dispatch(UserMapAction(result.users))
-
-  if (result.roomData) {
-    dispatch(UpdatedRoomDataAction(convertServerRoomData(result.roomData)))
-  }
 
   if (result.profile) {
     dispatch(ReceivedMyProfileAction(result.profile))
@@ -88,6 +84,13 @@ export async function updateServerSettings (serverSettings: ServerSettings) {
   const result = await callAzureFunction('serverSettings', serverSettings)
   if (result) {
     myDispatch(HideModalAction())
+  }
+}
+
+export async function resetRoomData () {
+  const response = await callAzureFunction('resetRoomData')
+  if (response.roomData) {
+    myDispatch(UpdatedRoomDataAction(convertServerRoomData(response.roomData)))
   }
 }
 
@@ -189,7 +192,7 @@ export async function moveToRoom (roomId: string) {
   if (result.error) {
     myDispatch(ErrorAction(result.error))
   } else {
-    myDispatch(UpdatedCurrentRoomAction(result.roomId))
+    myDispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
 
     if (result.roomNotes) {
       myDispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
@@ -216,7 +219,7 @@ export async function sendChatMessage (id: string, text: string) {
 
   // If it's a /move command
   if (result && result.roomId) {
-    myDispatch(UpdatedCurrentRoomAction(result.roomId))
+    myDispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
   } else if (result && result.user) {
     myDispatch(ShowProfileAction(result.user))
   } else if (result && result.error) {
@@ -265,6 +268,35 @@ export async function toggleUserMod (userId: string) {
 
 export async function deleteMessage (messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
+}
+
+export async function getRoomIds (): Promise<string[]> {
+  const result = await callAzureFunction('getRoomIds')
+  if (result.roomIds) {
+    return result.roomIds
+  }
+}
+
+export async function getRoom (roomId: string): Promise<Room> {
+  const result = await callAzureFunction('getRoom', { roomId })
+  if (result.room) {
+    return result.room
+  }
+}
+
+export async function getAllRooms (): Promise<{[roomId: string]: Room}> {
+  const result = await callAzureFunction('getAllRooms')
+  if (result.roomData) {
+    return result.roomData
+  }
+}
+
+export async function deleteRoom (roomId: string): Promise<any> {
+  return await callAzureFunction('deleteRoom', { roomId })
+}
+
+export async function updateRoom (roomId: string, roomData: Room): Promise<any> {
+  return await callAzureFunction('updateRoom', { roomId, roomData })
 }
 
 // Setup

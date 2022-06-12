@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { DispatchContext } from '../../App'
 import { ShowModalAction } from '../../Actions'
 import { Modal } from '../../modals'
@@ -41,7 +41,7 @@ export default function FullRoomIndexModalView (props: { rooms: Room[] }) {
           {
             props.rooms.map((e) => {
               return <tr key={e.id}>
-                <td key={`common-1-${e.id}`}>{e.name}</td>
+                <td key={`common-1-${e.id}`}>{e.displayName}</td>
                 <td key={`common-2-${e.id}`}>{e.shortName}</td>
                 <td key={`true-${e.id}`}>{e.id}</td>
               </tr>

@@ -14,14 +14,6 @@ const getServerSettings: EndpointFunction = async (inputs: any, log: LogFn) => {
 }
 
 const postServerSettings: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  if (!user.isMod) {
-    return {
-      httpResponse: {
-        status: 403,
-        body: { error: 'Must be a mod to edit server settings!' }
-      }
-    }
-  }
   if (!inputs) {
     return {
       httpResponse: {

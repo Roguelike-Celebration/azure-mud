@@ -23,6 +23,7 @@
   "devDependencies": {
     "@types/redis": "^2.8.24",
     "@azure/functions": "^1.0.2-beta2",
+    "recursive-readdir": "^2.2.2",
     "typescript": "^3.3.3"
   }
 }

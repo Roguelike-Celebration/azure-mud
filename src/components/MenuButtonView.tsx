@@ -2,13 +2,11 @@ import React, { useContext } from 'react'
 import { FaCog } from 'react-icons/fa'
 
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
-import config from '../config'
 import { ShowModalAction } from '../Actions'
 import { DispatchContext, UserMapContext } from '../App'
 import { Modal } from '../modals'
 import { fetchProfile, openOrCloseSpace, disconnect } from '../networking'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { signOut } from '../authentication'
 
 export default function MenuButtonView (props: { username: string, spaceIsClosed: boolean }) {
   const dispatch = useContext(DispatchContext)
@@ -23,7 +21,7 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
     // the same is true for banned users. Check on that.
     if (prompt) {
       disconnect(myId).then(() => {
-        firebase.auth().signOut().then(() => {
+        signOut().then(() => {
           window.location.reload()
         })
       }).catch((error) => {
