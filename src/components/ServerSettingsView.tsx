@@ -57,9 +57,9 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
     updateServerSettings(settingsCopy)
   }
 
-  const clickedResetRoomData = () => {
+  const clickedResetRoomData = async () => {
     if (!confirm("Are you sure you'd like to reset room data?")) return
-    resetRoomData()
+    await resetRoomData()
   }
 
   return (
