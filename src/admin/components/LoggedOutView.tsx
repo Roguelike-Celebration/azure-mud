@@ -14,7 +14,8 @@ const uiConfig = {
       if (user.shouldVerifyEmail) {
         sendSignInLinkToEmail(user.email)
       }
-      return true
+      window.location.reload()
+      return false
     }
   },
   signInOptions: [
