@@ -94,7 +94,7 @@ const MediaChatButtonView = (props: Props) => {
     }
   }
 
-  let chatButtons = []
+  let chatButtons
   if (props.inMediaChat) {
     let leaveButtonLabel = ''
     if (publishingCamera && publishingMic) {
