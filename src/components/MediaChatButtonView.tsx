@@ -11,6 +11,7 @@ interface Props {
   offscreenCount: number
   totalCount: number
   audioOnlyMode: boolean
+  canJoinVideoChat: boolean
 }
 const MediaChatButtonView = (props: Props) => {
   const {
@@ -32,6 +33,7 @@ const MediaChatButtonView = (props: Props) => {
   }
 
   const joinVideoChat = async () => {
+    if (!props.canJoinVideoChat) return
     if (currentMic || currentCamera) {
       publishMedia()
     } else {
@@ -44,6 +46,7 @@ const MediaChatButtonView = (props: Props) => {
   }
 
   const joinAudioChat = async () => {
+    if (!props.canJoinVideoChat) return
     if (currentMic) {
       publishAudio()
     } else {
@@ -91,7 +94,7 @@ const MediaChatButtonView = (props: Props) => {
     }
   }
 
-  let chatButtons
+  let chatButtons = []
   if (props.inMediaChat) {
     let leaveButtonLabel = ''
     if (publishingCamera && publishingMic) {
@@ -124,7 +127,7 @@ const MediaChatButtonView = (props: Props) => {
           Re-Enable Audio/Video
       </button>
     ]
-  } else {
+  } else if (props.canJoinVideoChat) {
     chatButtons = [
       <button key="join-video" onClick={joinVideoChat} id="join-video-chat">
         {inCall ? 'Turn on Webcam + Mic' : <s>Turn on Webcam + Mic</s>}

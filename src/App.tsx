@@ -230,6 +230,7 @@ const App = () => {
         inMediaChat={state.inMediaChat}
         textOnlyMode={state.textOnlyMode}
         audioOnlyMode={state.audioOnlyMode}
+        currentUser={state.userMap[state.userId]}
       />
     )
   }
