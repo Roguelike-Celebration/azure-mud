@@ -13,8 +13,8 @@ export interface Room {
 
   description: string
 
-  // If true, webRTC audio/video chat is blocked
-  noMediaChat?: boolean
+  // If true, webRTC audio/video chat is enabled
+  mediaChat?: boolean
 
   // Indicates whether the room should let users place post-it notes
   // As we add more pieces of one-off functionality,

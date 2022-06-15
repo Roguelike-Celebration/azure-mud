@@ -13,7 +13,7 @@ export interface Room {
   description: string;
   users?: string[];
   videoUsers?: string[];
-  noMediaChat: boolean;
+  mediaChat: boolean;
   hidden?: boolean;
   hasNoteWall: boolean;
   noteWallData: Server.NoteWallData
@@ -28,7 +28,7 @@ export function convertServerRoom (room: Server.Room): Room {
     id: room.id,
     shortName: room.shortName,
     description: room.description,
-    noMediaChat: room.noMediaChat,
+    mediaChat: room.mediaChat,
     hasNoteWall: room.hasNoteWall,
     noteWallData: room.noteWallData,
     hidden: room.hidden,
