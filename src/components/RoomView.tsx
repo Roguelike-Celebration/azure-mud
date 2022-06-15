@@ -38,8 +38,6 @@ export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
   const {
     prepareForMediaChat,
-    currentMic,
-    currentCamera,
     joinCall,
     unpublishMedia
   } = useMediaChatContext()
