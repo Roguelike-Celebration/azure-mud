@@ -7,6 +7,7 @@ import ParticipantChatView from './ParticipantChatView'
 import MediaChatButtonView from './MediaChatButtonView'
 import { SetTextOnlyModeAction } from '../Actions'
 import { DispatchContext } from '../App'
+import { MinimalUser } from '../../server/src/user'
 
 interface MediaProps {
   visibleSpeakers: [string, Date][]
@@ -15,6 +16,7 @@ interface MediaProps {
   inMediaChat: boolean
   textOnlyMode: boolean
   audioOnlyMode: boolean
+  currentUser: MinimalUser
 }
 
 export default function MediaChatView (props: MediaProps) {
@@ -111,6 +113,11 @@ export default function MediaChatView (props: MediaProps) {
       />
     })
 
+  // TODO: This will eventually need to check for speakers as well
+  // It's unclear to me if this logic should live here
+  // (vs inside MediaChatButtonView, or in the data model proper)
+  const canJoinVideoChat = props.currentUser.isMod
+
   // If we're showing the bar, we don't override the height; if we're hiding we force it to 0.
   // We still want it to render the audioParticipants, so that's why we still paint it.
   // TODO: this is jank
@@ -124,6 +131,7 @@ export default function MediaChatView (props: MediaProps) {
         textOnlyMode={props.textOnlyMode}
         inMediaChat={props.inMediaChat}
         totalCount={videoParticipants.length + audioParticipants.length}
+        canJoinVideoChat={canJoinVideoChat}
         offscreenCount={
           props.audioOnlyMode
             ? videoParticipants.length + audioParticipants.length

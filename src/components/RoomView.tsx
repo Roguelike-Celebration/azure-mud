@@ -38,8 +38,6 @@ export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
   const {
     prepareForMediaChat,
-    currentMic,
-    currentCamera,
     joinCall,
     unpublishMedia
   } = useMediaChatContext()
@@ -77,7 +75,7 @@ export default function RoomView (props: Props) {
   }
 
   React.useEffect(() => {
-    if (room && !room.noMediaChat && !props.textOnlyMode && props.hasDismissedAModal) {
+    if (room && room.mediaChat && !props.textOnlyMode && props.hasDismissedAModal) {
       // HACK ALERT: This call is necessary to properly set the state variables related to leaving video chat, since
       // our Twilio state isn't quite synchronized with our react state. We never publish if we don't want to (due to
       // passing keepCameraWhenMoving into joinCall) so we aren't publishing and unpublishing. We still need to sync.
