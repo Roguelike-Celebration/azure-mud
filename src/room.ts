@@ -13,10 +13,10 @@ export interface Room {
   description: string;
   users?: string[];
   videoUsers?: string[];
-  mediaChat: boolean;
+  mediaChat?: boolean;
   hidden?: boolean;
-  hasNoteWall: boolean;
-  noteWallData: Server.NoteWallData
+  hasNoteWall?: boolean;
+  noteWallData?: Server.NoteWallData
   notes?: RoomNote[]
   specialFeatures?: string[]
   riddles?: string[]

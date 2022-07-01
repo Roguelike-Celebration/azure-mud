@@ -9,7 +9,7 @@ import { onAuthenticationStateChange, signOut } from '../../authentication'
 import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking'
 import reducer, { defaultState, State } from '../reducer'
 import { useReducerWithThunk } from '../../useReducerWithThunk'
-import { Action, LoggedInAction, UpdateRoomIds } from '../actions'
+import { Action, LoggedInAction, UpdateRoomIds, UpdateAndShowRoomAction } from '../actions'
 import LoggedOutView from './LoggedOutView'
 import RoomList from './RoomList'
 import RoomOptionsView from './RoomOptionsView'
@@ -66,12 +66,16 @@ const App = function () {
     updateRoom(state.displayedRoomId, JSON.parse(code))
   }
 
+  const createRoom = (name: string) => {
+    dispatch(UpdateAndShowRoomAction(name, { displayName: name, shortName: name, id: name, description: '' }))
+  }
+
   if (state.isLoggedIn) {
     return (
       <DispatchContext.Provider value={dispatch}>
         <div>
           <h1>Room Editor:  {state.displayedRoomId || 'no room selected'}</h1>
-          <RoomOptionsView roomId={state.displayedRoomId} updateRoom={saveRoom}/>
+          <RoomOptionsView roomId={state.displayedRoomId} updateRoom={saveRoom} createRoom={createRoom}/>
           <RoomList roomIds={state.roomIds}/>
           <AceEditor
             mode="json"
