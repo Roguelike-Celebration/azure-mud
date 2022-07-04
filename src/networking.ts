@@ -448,6 +448,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
     callAzureFunction('pong')
   })
 
+  connection.on('rainwayPeerId', (peerId) => {
+    dispatch(/* new action here */)
+  })
+
   window.addEventListener('beforeunload', (e) => {
     callAzureFunction('disconnect')
   })
