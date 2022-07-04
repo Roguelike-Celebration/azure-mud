@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { RainwayChannelMode, RainwayPeer, RainwayPeerState, RainwayError, RainwayRuntime, RainwayStreamAnnouncement } from '@rainway/web'
 import { Widget } from './Widget'
+import Config from '../../config'
 
 interface DemoPeer {
   peerId: bigint;
@@ -12,8 +13,6 @@ interface DemoPeer {
 export default function RainwayStreamView (props: {}) {
   // TODO: The sample sets this via localStorage.
   // We probably want to wire it up to our infra
-  const [apiKey, setApiKey] = useState('api-key')
-
   const [connectingRuntime, setConnectingRuntime] = useState(false)
   const [runtime, setRuntime] = useState<RainwayRuntime | undefined>()
   const [peers, setPeers] = useState<DemoPeer[]>([])
@@ -52,7 +51,7 @@ export default function RainwayStreamView (props: {}) {
       setConnectingRuntime(true)
       try {
         rt = await RainwayRuntime.initialize({
-          apiKey: apiKey,
+          apiKey: Config.RAINWAY_API_KEY,
           externalId: 'web-demo-react',
           onRuntimeConnectionLost: (rt, error) => {
             // When the connection is fatally lost, drop all peers.
@@ -126,34 +125,23 @@ export default function RainwayStreamView (props: {}) {
   return (
     <div>
       <div className="m-b-8 flex">
-        <h2>
-          <label htmlFor="apiKey">API key</label>
-        </h2>
+        <br/>
         {runtime ? (
-          <div className="m-l-8 badge ok">Connected</div>
+          <div className="m-l-8 badge ok">Connected to Rainway</div>
         ) : connectingRuntime ? (
           <div className="m-l-8 badge">Connecting…</div>
         ) : (
-          <div className="m-l-8 badge">Disconnected</div>
+          <div>
+            <button
+              className="m-l-16"
+              disabled={runtime !== undefined || connectingRuntime}
+              onClick={connectToRainway}
+            >
+                    Connect to Rainway
+            </button>
+          </div>
         )}
       </div>
-      <input
-        id="apiKey"
-        type="text"
-        spellCheck={false}
-        size={36}
-        value={apiKey}
-        disabled={runtime !== undefined || connectingRuntime}
-        onChange={(e) => setApiKey(e.target.value)}
-        placeholder="pk_live_xxxxxxxxxxxxxxxxxxxxxxxx"
-      />
-      <button
-        className="m-l-16"
-        disabled={runtime !== undefined || connectingRuntime}
-        onClick={connectToRainway}
-      >
-        Connect to Rainway
-      </button>
       {peers.map((p) => (
         <Widget
           key={p.peerId.toString()}
