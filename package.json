@@ -37,6 +37,7 @@
     "react-linkify": "^1.0.0-alpha",
     "react-page-visibility": "^6.4.0",
     "react-tooltip": "^4.2.8",
+    "react-window": "^1.8.7",
     "request": "^2.88.2",
     "simple-peer": "^9.7.2",
     "ts-node": "^9.0.0",
