@@ -15,7 +15,7 @@ const httpTrigger: AzureFunction = async function (
   // We don't yet have an abstraction to do custom audit logs within our wrapped Azure functions
   // Adding a lil bit of business logic here is a quick fix for now.
   if (userId) {
-    const username = (await DB.getUser(userId)).username
+    const username = (await DB.getUser(userId) || {}).username
 
     // Special case audit log entry - see authenticate(...) for general case audit
     context.bindings.tableBinding = [{
