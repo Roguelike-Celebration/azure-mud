@@ -89,15 +89,20 @@ export default function ChatView (props: Props) {
           }
         }
 
+        const shouldShowInterstitial = m.type === MessageType.MovedRoom
         const id = `message-${idx}`
+
         return (
-          <MessageView
-            message={m}
-            key={id}
-            id={id}
-            hideTimestamp={hideTimestamp}
-            msgIndex={idx}
-          />
+          <>
+            {shouldShowInterstitial ? <hr key={id + '-interstitial'}/> : null}
+            <MessageView
+              message={m}
+              key={id}
+              id={id}
+              hideTimestamp={hideTimestamp}
+              msgIndex={idx}
+            />
+          </>
         )
       })}
     </div>
