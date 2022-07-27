@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { findLastIndex } from 'lodash'
 
 import MessageView from './MessageView'
 import { Message, MessageType, ConnectedMessage, DisconnectedMessage, EnteredMessage, LeftMessage } from '../message'
@@ -68,18 +69,6 @@ export default function ChatView (props: Props) {
       if (props.captionsEnabled) return true
       return msg.type !== MessageType.Caption
     })
-
-  function findLastIndex<T> (array: T[], evaluator: (T) => Boolean) {
-    let targetIndex = -1
-
-    array.forEach((item, index) => {
-      if (evaluator(item)) {
-        targetIndex = index
-      }
-    })
-
-    return targetIndex
-  }
 
   const lastIndexOfMovedMessage = findLastIndex(
     messages,
