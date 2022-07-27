@@ -49,7 +49,7 @@ export default function ChatView (props: Props) {
     }
   })
 
-  const [shouldShowOldMessages, setShouldShowOldMessages] = React.useState(false)
+  const [shouldShowOlderMessages, setShouldShowOlderMessages] = React.useState(false)
 
   // This message filtering logic is kinda ugly and hard to read
   function shouldRemoveMessage (m: Message) {
@@ -75,16 +75,15 @@ export default function ChatView (props: Props) {
     message => message.type === MessageType.MovedRoom
   )
   const currentRoomMessages = messages.slice(lastIndexOfMovedMessage)
-
-  const shownMessages = shouldShowOldMessages ? messages : currentRoomMessages
+  const shownMessages = shouldShowOlderMessages ? messages : currentRoomMessages
 
   return (
     <>
       <button
         className="link-styled-button"
-        onClick={() => setShouldShowOldMessages(!shouldShowOldMessages)}
+        onClick={() => setShouldShowOlderMessages(!shouldShowOlderMessages)}
       >
-        {shouldShowOldMessages ? 'Hide' : 'Show'} Older Messages
+        {shouldShowOlderMessages ? 'Hide' : 'Show'} Older Messages
       </button>
       <div id="messages" onScroll={handleScroll}>
         {shownMessages.slice(-150).map((m, idx) => {
