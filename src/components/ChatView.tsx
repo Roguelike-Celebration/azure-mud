@@ -1,5 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useCallback, useRef, useContext, FC } from 'react'
 import { findLastIndex } from 'lodash'
+import { FixedSizeList } from 'react-window'
+import AutoSizer from 'react-virtualized-auto-sizer'
 
 import MessageView from './MessageView'
 import { Message, MessageType, ConnectedMessage, DisconnectedMessage, EnteredMessage, LeftMessage } from '../message'
@@ -21,33 +23,59 @@ interface Props {
   captionsEnabled: boolean
 }
 
+interface RowProps {
+  data: Message,
+  index: number,
+  isScrolling: boolean,
+  style: any,
+}
+
+// eslint-disable-next-line react/prop-types
+const Row: FC<RowProps> = ({ data, index, style }) => (<MessageView
+  message={data[index]}
+  key={`message-${index}`}
+  id={`message-${index}`}
+  hideTimestamp={false}
+  msgIndex={index}
+  style={style}
+/>)
+
 export default function ChatView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
-  const handleScroll = () => {
-    const messageWindow = document.querySelector('#messages')
-    const isScrolledToBottom = messageWindow.scrollHeight === messageWindow.scrollTop + messageWindow.clientHeight
+  // const handleScroll = () => {
+  //   const messageWindow = document.querySelector('#messages')
+  //   const isScrolledToBottom = messageWindow.scrollHeight === messageWindow.scrollTop + messageWindow.clientHeight
 
+  //   if (isScrolledToBottom && !props.autoscrollChat) {
+  //     dispatch(ActivateAutoscrollAction())
+  //   } else if (!isScrolledToBottom && props.autoscrollChat) {
+  //     dispatch(DeactivateAutoscrollAction())
+  //   }
+  // }
+
+  const outerRef = useRef<HTMLDivElement | null>(null)
+  const listRef = useRef<FixedSizeList | null>(null)
+  const handleScroll = useCallback(({
+    scrollDirection,
+    scrollOffset,
+    scrollUpdateWasRequested
+  }: {
+    scrollDirection: 'forward' | 'backward',
+    scrollOffset: number,
+    scrollUpdateWasRequested: boolean
+  }) => {
+    if (outerRef.current === null) {
+      return
+    }
+
+    const isScrolledToBottom = outerRef.current.scrollHeight === outerRef.current.scrollTop + outerRef.current.clientHeight
     if (isScrolledToBottom && !props.autoscrollChat) {
       dispatch(ActivateAutoscrollAction())
     } else if (!isScrolledToBottom && props.autoscrollChat) {
       dispatch(DeactivateAutoscrollAction())
     }
-  }
-
-  React.useEffect(() => {
-    const lastMessage = document.querySelector(
-      '#messages .message-wrapper:last-of-type'
-    )
-    if (lastMessage && props.autoscrollChat) {
-      // I was using lastMessage.scrollIntoView()
-      // But I was seeing odd behavior when there was only one message on-screen.
-      // This very TS-unfriendly code fixes taht.
-      (lastMessage.parentNode as Element).scrollTop =
-        (lastMessage as any).offsetTop -
-        (lastMessage.parentNode as any).offsetTop
-    }
-  })
+  }, [props.autoscrollChat, outerRef.current])
 
   const [shouldShowOlderMessages, setShouldShowOlderMessages] = React.useState(false)
 
@@ -77,6 +105,28 @@ export default function ChatView (props: Props) {
   const currentRoomMessages = messages.slice(lastIndexOfMovedMessage)
   const shownMessages = shouldShowOlderMessages ? messages : currentRoomMessages
 
+  useEffect(() => {
+    // const lastMessage = document.querySelector(
+    //   '#messages .message-wrapper:last-of-type'
+    // )
+    // if (lastMessage && props.autoscrollChat) {
+    //   // I was using lastMessage.scrollIntoView()
+    //   // But I was seeing odd behavior when there was only one message on-screen.
+    //   // This very TS-unfriendly code fixes taht.
+    //   (lastMessage.parentNode as Element).scrollTop =
+    //     (lastMessage as any).offsetTop -
+    //     (lastMessage.parentNode as any).offsetTop
+    // }
+
+    if (listRef.current === null) {
+      return
+    }
+
+    if (props.autoscrollChat) {
+      listRef.current.scrollToItem(shownMessages.length - 1, 'end')
+    }
+  }, [shownMessages.length, props.autoscrollChat, listRef.current])
+
   return (
     <>
       <button
@@ -85,7 +135,25 @@ export default function ChatView (props: Props) {
       >
         {shouldShowOlderMessages ? 'Hide' : 'Show'} Older Messages
       </button>
-      <div id="messages" onScroll={handleScroll}>
+      <div id="messages">
+        <AutoSizer>
+          {({ width, height }) => (
+            <FixedSizeList
+              ref={listRef}
+              outerRef={outerRef}
+              onScroll={handleScroll}
+              width={width}
+              height={height}
+              initialScrollOffset={height}
+              itemData={shownMessages}
+              itemCount={shownMessages.length}
+              itemSize={24}
+            >
+              {Row}
+            </FixedSizeList>)}
+        </AutoSizer>
+      </div>
+      {/* <div id="messages" onScroll={handleScroll}>
         {shownMessages.slice(-150).map((m, idx) => {
           let hideTimestamp = false
           const previousMessage = props.messages[idx - 1]
@@ -122,7 +190,7 @@ export default function ChatView (props: Props) {
             </>
           )
         })}
-      </div>
+      </div> */}
     </>
   )
 }
