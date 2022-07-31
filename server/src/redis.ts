@@ -152,7 +152,6 @@ const Redis: RedisInternal = {
   // User
   async getUser (userId: string) {
     const userData = await getCache(profileKeyForUser(userId))
-    console.log('Got user data', userId, userData)
 
     if (!userData) {
       return undefined

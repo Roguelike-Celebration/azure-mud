@@ -47,7 +47,6 @@ export interface User extends PublicUser {
 
 export async function isMod (userId: string) {
   const modList = await DB.modList()
-  console.log('Modlist', modList)
   return modList.includes(userId)
 }
 
