@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { findLastIndex } from 'lodash'
 
 import MessageView from './MessageView'
 import { Message, MessageType, ConnectedMessage, DisconnectedMessage, EnteredMessage, LeftMessage } from '../message'
@@ -48,6 +49,8 @@ export default function ChatView (props: Props) {
     }
   })
 
+  const [shouldShowOlderMessages, setShouldShowOlderMessages] = React.useState(false)
+
   // This message filtering logic is kinda ugly and hard to read
   function shouldRemoveMessage (m: Message) {
     return isMovementMessage(m) &&
@@ -67,39 +70,59 @@ export default function ChatView (props: Props) {
       return msg.type !== MessageType.Caption
     })
 
+  const lastIndexOfMovedMessage = findLastIndex(
+    messages,
+    message => message.type === MessageType.MovedRoom
+  )
+  const currentRoomMessages = messages.slice(lastIndexOfMovedMessage)
+  const shownMessages = shouldShowOlderMessages ? messages : currentRoomMessages
+
   return (
-    <div id="messages" onScroll={handleScroll}>
-      {messages.slice(-150).map((m, idx) => {
-        let hideTimestamp = false
-        const previousMessage = props.messages[idx - 1]
-        if (previousMessage) {
-          // TODO: Give all messages a userId for this to be meaningful
-          if (
-            (previousMessage as any).userId &&
-            (m as any).userId &&
-            (previousMessage as any).userId === (m as any).userId
-          ) {
-            const diff =
-              new Date(m.timestamp).getTime() -
-              new Date(previousMessage.timestamp).getTime()
-            // This is a bad way to calculate '3 minutes' and I should feel bad -em
-            if (diff < 1000 * 60 * 3) {
-              hideTimestamp = true
+    <>
+      <button
+        className="link-styled-button"
+        onClick={() => setShouldShowOlderMessages(!shouldShowOlderMessages)}
+      >
+        {shouldShowOlderMessages ? 'Hide' : 'Show'} Older Messages
+      </button>
+      <div id="messages" onScroll={handleScroll}>
+        {shownMessages.slice(-150).map((m, idx) => {
+          let hideTimestamp = false
+          const previousMessage = props.messages[idx - 1]
+          if (previousMessage) {
+            // TODO: Give all messages a userId for this to be meaningful
+            if (
+              (previousMessage as any).userId &&
+          (m as any).userId &&
+          (previousMessage as any).userId === (m as any).userId
+            ) {
+              const diff =
+            new Date(m.timestamp).getTime() -
+            new Date(previousMessage.timestamp).getTime()
+              // This is a bad way to calculate '3 minutes' and I should feel bad -em
+              if (diff < 1000 * 60 * 3) {
+                hideTimestamp = true
+              }
             }
           }
-        }
 
-        const id = `message-${idx}`
-        return (
-          <MessageView
-            message={m}
-            key={id}
-            id={id}
-            hideTimestamp={hideTimestamp}
-            msgIndex={idx}
-          />
-        )
-      })}
-    </div>
+          const shouldShowInterstitial = m.type === MessageType.MovedRoom
+          const id = `message-${idx}`
+
+          return (
+            <>
+              {shouldShowInterstitial ? <hr key={id + '-interstitial'}/> : null}
+              <MessageView
+                message={m}
+                key={id}
+                id={id}
+                hideTimestamp={hideTimestamp}
+                msgIndex={idx}
+              />
+            </>
+          )
+        })}
+      </div>
+    </>
   )
 }
