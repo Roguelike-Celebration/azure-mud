@@ -29,7 +29,7 @@ import {
   fetchProfile,
   sendCaption
 } from './networking'
-import { PublicUser, MinimalUser } from '../server/src/user'
+import { PublicUser, MinimalUser, User } from '../server/src/user'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
@@ -53,7 +53,7 @@ export interface State {
   userId?: string;
   userMap: { [userId: string]: MinimalUser };
   roomData: { [roomId: string]: Room };
-  profileData?: PublicUser;
+  profileData?: User;
 
   messages: Message[];
   whispers: WhisperMessage[];
@@ -584,6 +584,13 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.CommandMessage) {
     const message = createCommandMessage(action.value)
     addMessage(state, message)
+  }
+
+  if (action.type === ActionType.EquipBadge) {
+    if (!state.profileData.equippedBadges) {
+      state.profileData.equippedBadges = []
+    }
+    state.profileData.equippedBadges[action.value.index] = action.value.badge
   }
 
   return state

@@ -1,5 +1,5 @@
 import { DB } from './database'
-
+import { Badge, FreeBadges } from './badges'
 // TODO: If we have tooltip popups showing profile info,
 // the distinction between a 'full' and 'minimal' user is no longer useful
 // We can just collapse the two
@@ -21,6 +21,8 @@ export interface MinimalUser {
   item?: string
   polymorph?: string;
   fontReward?: string;
+
+  equippedBadges: Badge[]
 }
 
 // A user profile. Users may fetch this about other users.
@@ -43,6 +45,9 @@ export interface User extends PublicUser {
   hostname: string;
 
   heartbeat: number;
+
+  // Does this need to be in PublicUser?
+  unlockedBadges: Badge[]
 }
 
 export async function isMod (userId: string) {
@@ -115,6 +120,21 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   return newProfile
 }
 
+export async function awardUserBadge (userId: string, badge: Badge) {
+  // TODO: This will need to notify the player
+  // And maybe has to happen at the caller instead of in here
+  const profile: User = await DB.getUser(userId)
+  profile.unlockedBadges = (profile.unlockedBadges || []).concat(badge)
+  return await DB.setUserProfile(userId, profile)
+}
+
+export async function equipBadge (userId: string, badge: Badge, index: number) {
+  const profile: User = await DB.getUser(userId)
+  profile.equippedBadges = (profile.equippedBadges || [])
+  profile.equippedBadges[index] = badge
+  return await DB.setUserProfile(userId, profile)
+}
+
 export async function updateUserProfileColor (userId: string, color: string): Promise<MinimalUser> {
   const profile: User = await DB.getUser(userId)
   profile.nameColor = color
@@ -140,6 +160,9 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
     await DB.setCurrentRoomForUser(profile, profile.roomId)
   }
 
+  profile.unlockedBadges = (profile.unlockedBadges || [])
+    .concat(FreeBadges)
+
   return {
     ...profile,
     id: userId
@@ -155,7 +178,8 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     item: user.item,
     polymorph: user.polymorph,
     isMod: user.isMod,
-    fontReward: user.fontReward
+    fontReward: user.fontReward,
+    equippedBadges: user.equippedBadges
   }
 
   return minimalUser

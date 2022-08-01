@@ -5,6 +5,7 @@ import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { ServerSettings } from '../server/src/types'
 import { ModalOptions } from './reducer'
+import { Badge } from '../server/src/badges'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -65,6 +66,7 @@ export type Action =
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
   | UpdateFontRewardAction
+  | EquipBadgeAction
 
 export enum ActionType {
   // Server-driven action
@@ -131,7 +133,9 @@ export enum ActionType {
   SpaceIsClosed = 'SPACE_IS_CLOSED',
   SpaceOpenedOrClosed = 'SPACE_OPENED_OR_CLOSED',
 
-  CommandMessage = 'COMMAND_MESSAGE'
+  CommandMessage = 'COMMAND_MESSAGE',
+
+  EquipBadge = 'EQUIP_BADGE'
 }
 
 interface ReceivedMyProfileAction {
@@ -852,5 +856,17 @@ export const CommandMessageAction = (message: string): CommandMessageAction => {
   return {
     type: ActionType.CommandMessage,
     value: message
+  }
+}
+
+interface EquipBadgeAction {
+  type: ActionType.EquipBadge;
+  value: {badge: Badge, index: number}
+}
+
+export const EquipBadgeAction = (badge: Badge, index: number): EquipBadgeAction => {
+  return {
+    type: ActionType.EquipBadge,
+    value: { badge, index }
   }
 }

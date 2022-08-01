@@ -32,7 +32,7 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  ShowModalAction, CommandMessageAction, CaptionMessageAction
+  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { convertServerRoomData, Room } from './room'
@@ -42,6 +42,7 @@ import Config from './config'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import axios from 'axios'
+import { Badge } from '../server/src/badges'
 
 let myUserId: string
 let myDispatch: Dispatch<Action>
@@ -115,6 +116,12 @@ export async function updateProfileColor (userId: string, color: string) {
 
 export async function updateFontReward (userId: string, font: string) {
   const result = await callAzureFunction('updateFontReward', { userId: userId, font: font })
+}
+export async function equipBadge (badge: Badge, index: number) {
+  const result = await callAzureFunction('equipBadge', { badge, index })
+  for (let i = 0; i < result.badges.length; i++) {
+    myDispatch(EquipBadgeAction(result.badges[i], i))
+  }
 }
 
 export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {

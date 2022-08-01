@@ -5,17 +5,22 @@ import ReactTooltip from 'react-tooltip'
 import {
   BanToggleAction,
   HideModalAction,
-  ModToggleAction
+  ModToggleAction,
+  ShowModalAction
 } from '../Actions'
 import { User } from '../../server/src/user'
 
 import '../../style/nameView.css'
 import { fetchProfile } from '../networking'
+import { Modal } from '../modals'
+import BadgeView from './BadgeView'
 
 export default function NameView (props: { userId: string; id?: string; nowrap?: boolean }) {
   const dispatch = useContext(DispatchContext)
   const { useSimpleNames } = useContext(SettingsContext)
   const { userMap, myId } = useContext(UserMapContext)
+
+  const isSelf = props.userId = myId
 
   const user: User = userMap[props.userId]
   const username = user && user.username
@@ -87,28 +92,69 @@ export default function NameView (props: { userId: string; id?: string; nowrap?:
   if (!useSimpleNames && user && user.fontReward) {
     className = className + ' font-' + user.fontReward
   }
+
+  const badges = (user.equippedBadges || [])
+    .map(b => <BadgeView key={b.emoji} badge={b} />)
+
   // TODO: should be best handled via css
   const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
-  return (
-    <span className={className} data-tip={user && user.pronouns} style={customStyle} >
-      <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
-        <strong className={isMod ? 'mod' : ''}>
-          {isMod ? '[Mod] ' : ''}
-          {(!useSimpleNames && user && user.polymorph) || ''}
-          {username || 'unknown'}
-        </strong>
-      </ContextMenuTrigger>
-      <ContextMenu id={props.id}>
-        <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
-          Profile
-        </MenuItem>
-        <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
-          Whisper
-        </MenuItem>
-        {banButton}
-        {modButton}
-      </ContextMenu>
-      <ReactTooltip />
-    </span>
-  )
+
+  if (isSelf) {
+    const showProfileEdit = () => {
+      dispatch(ShowModalAction(Modal.ProfileEdit))
+    }
+
+    const showBadges = () => {
+      dispatch(ShowModalAction(Modal.Badges))
+    }
+
+    return (
+      <span className={className} data-tip={user?.pronouns} style={customStyle} >
+        <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
+          <strong className={isMod ? 'mod' : ''}>
+            {isMod ? '[Mod] ' : ''}
+            {username || 'unknown'}
+            {useSimpleNames ? '' : badges}
+          </strong>
+        </ContextMenuTrigger>
+        <ContextMenu id={props.id}>
+          <MenuItem data={{ id: props.userId }}onClick={showBadges}>
+            Show Badges
+          </MenuItem>
+
+          <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
+            View Profile
+          </MenuItem>
+          <MenuItem onClick={showProfileEdit}>
+            Edit Profile
+          </MenuItem>
+
+        </ContextMenu>
+        <ReactTooltip />
+      </span>
+    )
+  } else {
+    return (
+      <span className={className} data-tip={user?.pronouns} style={customStyle} >
+        <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
+          <strong className={isMod ? 'mod' : ''}>
+            {isMod ? '[Mod] ' : ''}
+            {username || 'unknown'}
+            {useSimpleNames ? '' : badges}
+          </strong>
+        </ContextMenuTrigger>
+        <ContextMenu id={props.id}>
+          <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
+            Profile
+          </MenuItem>
+          <MenuItem data={{ id: props.userId }} onClick={handleProfile}>
+            Whisper
+          </MenuItem>
+          {banButton}
+          {modButton}
+        </ContextMenu>
+        <ReactTooltip />
+      </span>
+    )
+  }
 }

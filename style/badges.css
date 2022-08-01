@@ -1,0 +1,14 @@
+#badges .badge {
+  font-size: 25px;
+  margin-right: 5px;
+}
+
+#badges .selected-badge {
+  border: 2px solid var(--main-font);
+  border-radius: 2px;
+  display: inline-block;
+  font-size: 25px;
+  padding: 0 3px;
+  margin: 5px;
+  width: 1em;
+}
