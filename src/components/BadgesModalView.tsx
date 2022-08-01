@@ -61,7 +61,7 @@ export default function BadgesModalView (props: Props) {
           key={`selected-${i}`}
           onDrop={drop}
           onDragOver={dragOver}>
-          <BadgeView key={b.emoji} badge={b} />
+          <BadgeView key={`equipped-${i}`} badge={b} />
         </span>
       )
     } else {

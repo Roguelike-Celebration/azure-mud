@@ -94,7 +94,7 @@ export default function NameView (props: { userId: string; id?: string; nowrap?:
   }
 
   const badges = (user.equippedBadges || [])
-    .map(b => <BadgeView key={b.emoji} badge={b} />)
+    .map((b, i) => <BadgeView key={`badge-${i}`} badge={b} />)
 
   // TODO: should be best handled via css
   const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
