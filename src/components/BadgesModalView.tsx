@@ -25,6 +25,12 @@ export default function BadgesModalView (props: Props) {
     const badge = props.unlockedBadges[index]
     e.dataTransfer.setData('text/plain', JSON.stringify(badge))
     e.dataTransfer.dropEffect = 'copy'
+
+    // By default, the drag preview is the element being dragged
+    // In our case, the tooltip messes with the size and it looks weird.
+    // This gives us a drag preview element that is *just* the emoji
+    const emoji = document.querySelector(`#badges .badge-text-${badge.emoji}`)
+    e.dataTransfer.setDragImage(emoji, 0, 0)
   }
 
   // Without the dragover event being prevented, the drop event won't fire

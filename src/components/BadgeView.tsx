@@ -4,10 +4,15 @@ import { Badge } from '../../server/src/badges'
 
 export default function BadgeView (props: {badge: Badge}) {
   const b = props.badge
+
+  // The weird nested badge-text-[emoji] span is for drag preview shenanigans
+  // See the dragstart event handler in BadgesModalView.tsx for context
   return (
     <>
-      <span className='badge' data-tip={b.description}>{b.emoji}</span>
-      <ReactTooltip eventOff='mousedow' globalEventOff='mousedown' />
+      <span className='badge' data-tip={b.description}>
+        <span className={`badge-text-${b.emoji}`}>{b.emoji}</span>
+      </span>
+      <ReactTooltip />
     </>
   )
 }
