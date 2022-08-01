@@ -3,6 +3,9 @@
 
 src/rooms/compiled.json
 
+# This is a secret injected at build-time
+firebase-admin.json
+
 # Logs
 logs
 *.log
