@@ -1,10 +1,11 @@
+import { isNumber } from 'lodash'
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { equipBadge, minimizeUser, User } from '../user'
 
 const equipBadgeFunction: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const { badge, index } = inputs
 
-  if (!badge || !index) {
+  if (!badge || !isNumber(index)) {
     return {
       httpResponse: {
         status: 400,

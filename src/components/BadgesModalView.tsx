@@ -1,4 +1,4 @@
-import React, { DragEventHandler } from 'react'
+import React, { DragEventHandler, useState } from 'react'
 import { DispatchContext } from '../App'
 
 import '../../style/badges.css'
@@ -8,6 +8,7 @@ import BadgeView from './BadgeView'
 import { Badge } from '../../server/src/badges'
 import { EquipBadgeAction } from '../Actions'
 import { equipBadge } from '../networking'
+import { isNumber } from 'lodash'
 
 interface Props {
   unlockedBadges: Badge[]
@@ -15,12 +16,12 @@ interface Props {
 }
 
 export default function BadgesModalView (props: Props) {
+  const [selectedEquippedIndex, setSelectedEquippedIndex] = useState<number|undefined>(undefined)
+  const [selectedBadge, setSelectedBadge] = useState<Badge|undefined>(undefined)
+
   const dispatch = React.useContext(DispatchContext)
-  console.log(props.equippedBadges)
 
   const dragStart = (e) => {
-    // TODO: Dismiss tooltip / get preview correct
-
     const index = e.target.dataset.index
     const badge = props.unlockedBadges[index]
     e.dataTransfer.setData('text/plain', JSON.stringify(badge))
@@ -43,6 +44,57 @@ export default function BadgesModalView (props: Props) {
     const index = e.currentTarget.dataset.index
     dispatch(EquipBadgeAction(badge, index))
     equipBadge(badge, index)
+
+    setSelectedBadge(undefined)
+    setSelectedEquippedIndex(undefined)
+  }
+
+  const selectEquippedBadge = (e) => {
+    const index = parseInt(e.currentTarget.dataset.index)
+    if (selectedEquippedIndex === index) {
+      setSelectedEquippedIndex(undefined)
+      return
+    }
+
+    setSelectedEquippedIndex(index)
+
+    if (isNumber(index) && selectedBadge) {
+      dispatch(EquipBadgeAction(selectedBadge, index))
+      equipBadge(selectedBadge, index)
+      setSelectedBadge(undefined)
+      setSelectedEquippedIndex(undefined)
+    }
+  }
+
+  const selectUnlockedBadge = (e) => {
+    const index = parseInt(e.currentTarget.dataset.index)
+    const badge = props.unlockedBadges[index]
+
+    if (selectedBadge === badge) {
+      setSelectedBadge(undefined)
+      return
+    }
+
+    setSelectedBadge(badge)
+
+    if (isNumber(selectedEquippedIndex) && badge) {
+      dispatch(EquipBadgeAction(badge, selectedEquippedIndex))
+      equipBadge(badge, selectedEquippedIndex)
+      setSelectedBadge(undefined)
+      setSelectedEquippedIndex(undefined)
+    }
+  }
+
+  const keyDownOnEquipped = (e) => {
+    if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
+      selectEquippedBadge(e)
+    }
+  }
+
+  const keyDownOnUnlocked = (e) => {
+    if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
+      selectUnlockedBadge(e)
+    }
   }
 
   // If there's a badge in the right position but not the left, a[0] is undefined
@@ -52,26 +104,34 @@ export default function BadgesModalView (props: Props) {
   const equippedBadges = []
   for (let i = 0; i < Math.max(rawEquippedBadges.length, 2); i++) {
     const b = rawEquippedBadges[i]
-    console.log(i, b)
     if (b) {
       equippedBadges.push(
         <span
-          className='selected-badge'
+          aria-pressed={i === selectedEquippedIndex}
+          className={`selected-badge ${i === selectedEquippedIndex ? 'selected' : ''}`}
           data-index={i}
           key={`selected-${i}`}
+          onClick={selectEquippedBadge}
           onDrop={drop}
-          onDragOver={dragOver}>
+          onDragOver={dragOver}
+          onKeyDown={keyDownOnEquipped}
+          role='button'
+          tabIndex={0}>
           <BadgeView key={`equipped-${i}`} badge={b} />
         </span>
       )
     } else {
       equippedBadges.push(
         <span
-          className='selected-badge'
-          data-index={i}
+          aria-pressed={i === selectedEquippedIndex}
+          className={`selected-badge ${i === selectedEquippedIndex ? 'selected' : ''}`} data-index={i}
           key={`selected-${i}`}
+          onClick={selectEquippedBadge}
           onDrop={drop}
-          onDragOver={dragOver}>
+          onDragOver={dragOver}
+          onKeyDown={keyDownOnEquipped}
+          role='button'
+          tabIndex={0}>
             &nbsp;
         </span>
       )
@@ -81,11 +141,15 @@ export default function BadgesModalView (props: Props) {
   const unlockedBadges = (props.unlockedBadges || []).map((b, i) => {
     return (
       <span
-        className='unlocked-badge'
-        draggable={true}
+        aria-pressed={selectedBadge === b}
+        className={`unlocked-badge ${selectedBadge === b ? 'selected' : ''}`} draggable={true}
         key={b.emoji}
         data-index={i}
+        onClick={selectUnlockedBadge}
         onDragStart={dragStart}
+        onKeyDown={keyDownOnUnlocked}
+        role='button'
+        tabIndex={0}
       >
         <BadgeView badge={b} />
       </span>
