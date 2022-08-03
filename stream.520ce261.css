@@ -1,0 +1,78 @@
+#dynamic-room-description {
+  margin-bottom: 1em;
+}
+
+div.showcase-entry {
+  min-width: 650px;
+  max-height: 600px;
+  border-style: solid;
+  border-width: thin;
+  margin-block-end: 5px;
+  padding: 5px;
+  overflow: auto;
+}
+
+a.room-link, a.room-link:visited {
+  color: var(--green);
+}
+
+#join-video-chat {
+  vertical-align: top;
+  margin-bottom: .5em;
+}
+
+#toggle-text-only-mode {
+  vertical-align: top;
+  margin-left: 2em;
+}
+
+#iframes {
+  border: solid;
+  border-color: var(--highlight-line);
+  width: min-content;
+}
+
+#captions {
+  border-top: dashed;
+  border-color: var(--highlight-line);
+  padding-top: 5px;
+}
+
+#big-reconfigure-media-selector {
+  color: #fff;
+  margin-left: .8em;
+}
+
+#full-room-description {
+  background-color: var(--main-background);
+  max-height: 999px;
+  margin-top: .5rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  transition: max-height .15s ease-in;
+  display: block;
+}
+
+#full-room-description.collapsed {
+  max-height: 0;
+  margin: 1em 0 0;
+  transition: max-height .15s ease-in;
+  overflow-y: hidden;
+}
+
+#room-collapse-button {
+  font-size: .5em;
+  font-weight: strong;
+  margin-left: 2em;
+}
+
+#room-name {
+  margin-bottom: 0;
+}
+
+#dynamic-room-description .has-audio, #dynamic-room-description .has-video {
+  cursor: pointer;
+  padding-left: .5em;
+}
+
+/*# sourceMappingURL=stream.520ce261.css.map */
