@@ -23,6 +23,7 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
+    "@webscopeio/react-textarea-autocomplete": "^4.9.1",
     "ace-builds": "^1.5.3",
     "axios": "^0.21.2",
     "firebase": "8.10.0",
