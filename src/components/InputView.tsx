@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { MentionsInput, Mention } from 'react-mentions'
 import { DispatchContext } from '../App'
 import { SendMessageAction } from '../Actions'
 
@@ -13,7 +14,8 @@ export default function InputView (props: {
   const [input, setInput] = useState('')
 
   const handleInputChange = (e) => {
-    const result = emojifier.emojify(e.currentTarget.value)
+    // const result = emojifier.emojify(e.currentTarget.value)
+    const result = e.target.value
     setInput(result)
   }
 
@@ -37,15 +39,24 @@ export default function InputView (props: {
 
   return (
     <div id="input">
-      <input
-        type="text"
+      <MentionsInput
+        // type="text"
         id="chat-input"
+        className="ci"
         onChange={handleInputChange}
-        onKeyPress={checkEnter}
+        // onKeyPress={checkEnter}
         value={input}
         aria-label="Chat text input box"
         autoComplete="off"
-      />
+      >
+        <Mention
+          trigger="@"
+          data={[{id: 'b', display: "Bob"}, {id: 'a', display: "Alice"}]}
+          renderSuggestion={(suggestion, search, highlightedDisplay) => (
+            <div>{highlightedDisplay}</div>
+          )}
+        />
+      </MentionsInput>
       <button id="send" onClick={onClick}>
         Send
       </button>

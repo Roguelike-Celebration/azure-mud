@@ -8,3 +8,12 @@
   margin-top: 2em;
   width: 100%;
 }
+
+.ci {
+  width: 100%;
+  border-radius: 5px;
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 14px;
+  height: 2rem;
+  background-color: white;
+}
