@@ -419,6 +419,7 @@ const App = () => {
                         sendMessage={(message) =>
                           dispatch(SendMessageAction(message))
                         }
+                        usersInRoom={state.roomData[state.roomId]?.users}
                       />
                     </div>
                     {profile}
