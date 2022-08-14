@@ -41,7 +41,7 @@ import { Modal } from './modals'
 import Config from './config'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-const axios = require('axios').default
+import axios from 'axios'
 
 let myUserId: string
 let myDispatch: Dispatch<Action>

@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 
-var tracery = require('tracery-grammar')
+import tracery from 'tracery-grammar'
 
 export const actionString = (fortune: string) => {
   return `You crack open a fortune cookie! ${fortune}.`
