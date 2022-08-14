@@ -1,5 +1,4 @@
-var tracery = require('tracery-grammar')
-
+import tracery from 'tracery-grammar'
 export const actionString = (poster: string) => {
   return `You look more closely at one of the many posters - ${poster}`
 }

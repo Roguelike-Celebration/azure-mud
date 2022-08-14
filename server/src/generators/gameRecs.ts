@@ -1,4 +1,4 @@
-var tracery = require('tracery-grammar')
+import tracery from 'tracery-grammar'
 
 export const actionString = (game: string) => {
   return `Phwoop! A capsule shoots out of the tube! Unfurling the paper inside, it reads: ${game}.`
