@@ -7,6 +7,7 @@ import { DispatchContext, UserMapContext } from '../App'
 import { Modal } from '../modals'
 import { fetchProfile, openOrCloseSpace, disconnect } from '../networking'
 import { signOut } from '../authentication'
+import NameView from './NameView'
 
 export default function MenuButtonView (props: { username: string, spaceIsClosed: boolean }) {
   const dispatch = useContext(DispatchContext)
@@ -61,7 +62,8 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
   return (
     <div id="menu-button">
       <ContextMenuTrigger id="topMenu" holdToDisplay={0}>
-        <strong>{props.username}</strong> <FaCog />
+        <NameView userId={myId} skipMenu={true} />
+        <FaCog style={{ marginLeft: '5px' }}/>
       </ContextMenuTrigger>
       <ContextMenu id={'topMenu'}>
         <MenuItem onClick={showProfile}>View Profile</MenuItem>
