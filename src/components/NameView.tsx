@@ -129,7 +129,7 @@ export default function NameView (props: Props) {
       {nameEl}
     </ContextMenuTrigger>
     <ContextMenu id={props.id}>
-      <MenuItem data={{ id: props.userId }}onClick={showBadges}>
+      <MenuItem onClick={showBadges}>
             Show Badges
       </MenuItem>
 

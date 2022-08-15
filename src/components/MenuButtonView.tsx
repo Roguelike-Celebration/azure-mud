@@ -59,6 +59,10 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
     dispatch(ShowModalAction(Modal.ServerSettings))
   }
 
+  const showBadges = () => {
+    dispatch(ShowModalAction(Modal.Badges))
+  }
+
   return (
     <div id="menu-button">
       <ContextMenuTrigger id="topMenu" holdToDisplay={0}>
@@ -66,6 +70,7 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
         <FaCog style={{ marginLeft: '5px' }}/>
       </ContextMenuTrigger>
       <ContextMenu id={'topMenu'}>
+        <MenuItem onClick={showBadges}>Show Badges</MenuItem>
         <MenuItem onClick={showProfile}>View Profile</MenuItem>
         <MenuItem onClick={showProfileEdit}>Edit Profile</MenuItem>
         <MenuItem onClick={showSettings}>Settings & Theme</MenuItem>
