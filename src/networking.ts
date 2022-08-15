@@ -119,6 +119,10 @@ export async function updateFontReward (userId: string, font: string) {
 }
 export async function equipBadge (badge: Badge, index: number) {
   const result = await callAzureFunction('equipBadge', { badge, index })
+  if (!result || !result.badges) {
+    console.log('ERROR: Server did not return badges from an equipBadge call')
+    return
+  }
   for (let i = 0; i < result.badges.length; i++) {
     myDispatch(EquipBadgeAction(result.badges[i], i))
   }

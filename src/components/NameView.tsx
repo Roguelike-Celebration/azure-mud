@@ -20,7 +20,7 @@ export default function NameView (props: { userId: string; id?: string; nowrap?:
   const { useSimpleNames } = useContext(SettingsContext)
   const { userMap, myId } = useContext(UserMapContext)
 
-  const isSelf = props.userId = myId
+  const isSelf = props.userId === myId
 
   const user: User = userMap[props.userId]
   const username = user && user.username

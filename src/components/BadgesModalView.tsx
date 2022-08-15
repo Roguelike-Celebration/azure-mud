@@ -41,7 +41,7 @@ export default function BadgesModalView (props: Props) {
 
   const drop = (e) => {
     const badge = JSON.parse(e.dataTransfer.getData('text/plain'))
-    const index = e.currentTarget.dataset.index
+    const index = parseInt(e.currentTarget.dataset.index)
     dispatch(EquipBadgeAction(badge, index))
     equipBadge(badge, index)
 
