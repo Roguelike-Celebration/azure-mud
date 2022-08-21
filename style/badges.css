@@ -13,11 +13,16 @@
 
 }
 
-#badges .unlocked-badge {
+#badges .unlocked-badge, #badges .locked-badge {
   height: 28px;
   padding: 4px;
   padding-top: 8px;
   width: 30px;
+}
+
+#badges .locked-badge {
+  opacity: 0.5;
+  cursor: default;
 }
 
 #badges .unlocked-badge.selected {

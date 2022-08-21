@@ -8,11 +8,12 @@ import BadgeView from './BadgeView'
 import { Badge } from '../../server/src/badges'
 import { EquipBadgeAction } from '../Actions'
 import { equipBadge } from '../networking'
-import { isNumber } from 'lodash'
+import { isNumber, without } from 'lodash'
 
 interface Props {
   unlockedBadges: Badge[]
   equippedBadges: Badge[]
+  unlockableBadges?: Badge[]
 }
 
 export default function BadgesModalView (props: Props) {
@@ -138,6 +139,20 @@ export default function BadgesModalView (props: Props) {
     }
   }
 
+  // TODO: Can you see description with screen reader?
+  const lockedBadges = without(props.unlockableBadges || [], ...props.unlockedBadges)
+    .map((b) => {
+      return (
+        <span
+          aria-pressed={selectedBadge === b}
+          className='locked-badge' draggable={true}
+          key={b.emoji}
+        >
+          <BadgeView badge={b} />
+        </span>
+      )
+    })
+
   const unlockedBadges = (props.unlockedBadges || []).map((b, i) => {
     return (
       <span
@@ -164,8 +179,9 @@ export default function BadgesModalView (props: Props) {
         {equippedBadges}
       </div>
       <div>
-        <h2>Unlocked</h2>
+        <h2>All Badges</h2>
         {unlockedBadges}
+        {lockedBadges}
       </div>
     </div>
   )

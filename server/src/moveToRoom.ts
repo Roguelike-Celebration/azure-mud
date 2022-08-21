@@ -67,7 +67,7 @@ export async function moveToRoom (
     }
   }
 
-  awardBadges(user, to)
+  awardBadges(user, to.id)
 
   const response: RoomResponse = {
     roomId: to.id,

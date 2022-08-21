@@ -1,6 +1,7 @@
 import { Room } from './rooms'
 import { User, MinimalUser, PublicUser } from './user'
 import { RoomNote } from './roomNote'
+import { Badge } from './badges'
 
 export interface HappeningNowEntry {
   text: string,
@@ -57,6 +58,7 @@ export interface RoomResponse {
   roomData?: { [roomId: string]: Room };
   profile?: PublicUser;
   roomNotes?: RoomNote[]
+  unlockableBadges?: Badge[]
 }
 
 export interface ErrorResponse {

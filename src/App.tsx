@@ -281,6 +281,7 @@ const App = () => {
       innerModalView = <BadgesModalView
         equippedBadges={state.profileData?.equippedBadges}
         unlockedBadges={state.profileData?.unlockedBadges}
+        unlockableBadges={state.unlockableBadges}
       />
       break
     }

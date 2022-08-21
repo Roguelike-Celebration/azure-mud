@@ -32,7 +32,7 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction
+  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { convertServerRoomData, Room } from './room'
@@ -65,6 +65,10 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 
   if (result.roomNotes) {
     dispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
+  }
+
+  if (result.unlockableBadges) {
+    dispatch(UpdateUnlockableBadgesAction(result.unlockableBadges))
   }
 
   dispatch(UpdatedPresenceAction(result.presenceData))
