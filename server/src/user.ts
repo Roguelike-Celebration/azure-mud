@@ -1,5 +1,7 @@
 import { DB } from './database'
 import { Badge, FreeBadges } from './badges'
+import { uniqWith } from 'lodash'
+
 // TODO: If we have tooltip popups showing profile info,
 // the distinction between a 'full' and 'minimal' user is no longer useful
 // We can just collapse the two
@@ -124,7 +126,9 @@ export async function awardUserBadge (userId: string, badge: Badge) {
   // TODO: This will need to notify the player
   // And maybe has to happen at the caller instead of in here
   const profile: User = await DB.getUser(userId)
-  profile.unlockedBadges = (profile.unlockedBadges || []).concat(badge)
+  const newBadgeList = (profile.unlockedBadges || []).concat(badge)
+  profile.unlockedBadges = uniqWith(newBadgeList, (a, b) => a.emoji === b.emoji)
+
   return await DB.setUserProfile(userId, profile)
 }
 

@@ -67,7 +67,7 @@ export async function moveToRoom (
     }
   }
 
-  awardBadges(user, to.id)
+  const awardedBadges = awardBadges(user, to.id)
 
   const response: RoomResponse = {
     roomId: to.id,
@@ -108,6 +108,15 @@ export async function moveToRoom (
       },
       await globalPresenceMessage([user.roomId, to.id])
     ]
+
+    if (awardedBadges.length > 0) {
+      result.messages.push({
+        groupId: user.roomId,
+        target: 'unlockBadge',
+        arguments: [awardedBadges]
+      })
+    }
+
     result.groupManagementTasks = [
       {
         userId: user.id,
@@ -142,6 +151,7 @@ function awardBadges (user: User, roomId: string) {
   tuples.forEach(([room, emoji]) => {
     if (roomId === room &&
     !includes(user.unlockedBadges, UnlockableBadgeMap[emoji])) {
+      console.log('Awarding badge', emoji, UnlockableBadgeMap[emoji])
       awardUserBadge(user.id, UnlockableBadgeMap[emoji])
       unlockedEmoji.push(emoji)
     }
@@ -150,6 +160,11 @@ function awardBadges (user: User, roomId: string) {
   if (unlockedEmoji.length > 0) {
     if (every(tuples, ([_, emoji]) => {
       return includes(user.unlockedBadges, UnlockableBadgeMap[emoji])
-    })) { awardUserBadge(user.id, UnlockableBadgeMap['🌎']) }
+    })) {
+      awardUserBadge(user.id, UnlockableBadgeMap['🌎'])
+      unlockedEmoji.push(UnlockableBadgeMap['🌎'])
+    }
   }
+
+  return unlockedEmoji
 }

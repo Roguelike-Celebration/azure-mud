@@ -32,7 +32,7 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction
+  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { convertServerRoomData, Room } from './room'
@@ -461,6 +461,11 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   connection.on('ping', () => {
     console.log('Received heartbeat ping')
     callAzureFunction('pong')
+  })
+
+  connection.on('unlockBadge', (badge) => {
+    console.log('Unlock badge', badge)
+    dispatch(UnlockBadgeAction(badge))
   })
 
   window.addEventListener('beforeunload', (e) => {

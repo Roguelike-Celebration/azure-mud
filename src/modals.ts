@@ -18,5 +18,6 @@ export enum Modal {
     FeatureFullRoomIndex,
     HappeningNow,
     Riddles,
-    Badges
+    Badges,
+    BadgeUnlock
 }

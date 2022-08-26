@@ -8,7 +8,7 @@ import BadgeView from './BadgeView'
 import { Badge } from '../../server/src/badges'
 import { EquipBadgeAction } from '../Actions'
 import { equipBadge } from '../networking'
-import { isNumber, without } from 'lodash'
+import { find, isNumber } from 'lodash'
 
 interface Props {
   unlockedBadges: Badge[]
@@ -140,18 +140,20 @@ export default function BadgesModalView (props: Props) {
   }
 
   // TODO: Can you see description with screen reader?
-  const lockedBadges = without(props.unlockableBadges || [], ...props.unlockedBadges)
-    .map((b) => {
-      return (
-        <span
-          aria-pressed={selectedBadge === b}
-          className='locked-badge' draggable={true}
-          key={b.emoji}
-        >
-          <BadgeView badge={b} />
-        </span>
-      )
-    })
+  // If we have perf issues, we can map-ify unlockedBadges like on the server
+  const lockedBadges = (props.unlockableBadges || []).filter(b => {
+    return !find(props.unlockedBadges, (c) => c.emoji === b.emoji)
+  }).map((b) => {
+    return (
+      <span
+        aria-pressed={selectedBadge === b}
+        className='locked-badge' draggable={true}
+        key={b.emoji}
+      >
+        <BadgeView badge={b} />
+      </span>
+    )
+  })
 
   const unlockedBadges = (props.unlockedBadges || []).map((b, i) => {
     return (

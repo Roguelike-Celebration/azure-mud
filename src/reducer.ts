@@ -101,6 +101,7 @@ export interface State {
   serverSettings: ServerSettings
 
   unlockableBadges: Badge[]
+  justUnlockedBadge?: Badge
 }
 
 console.log(Config.FIREBASE_CONFIG)
@@ -598,8 +599,9 @@ export default (oldState: State, action: Action): State => {
   }
 
   if (action.type === ActionType.UnlockBadge) {
-    // TODO: We probably want to show a modal or something here
     state.profileData.unlockedBadges.push(action.value)
+    state.justUnlockedBadge = action.value
+    state.activeModal = Modal.BadgeUnlock
   }
 
   if (action.type === ActionType.UpdateUnlockableBadges) {
