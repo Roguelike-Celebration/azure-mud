@@ -6,7 +6,7 @@ import { DB } from './database'
 import Redis from '../src/redis'
 import { Result, Message } from './endpoint'
 import { every, includes } from 'lodash'
-import { UnlockableBadgeMap } from './badges'
+import { Badge, UnlockableBadgeMap } from './badges'
 
 export async function moveToRoom (
   user: User,
@@ -146,14 +146,14 @@ function awardBadges (user: User, roomId: string) {
     ['steam', '💾']
   ]
 
-  const unlockedEmoji = []
+  const unlockedEmoji: Badge[] = []
 
   tuples.forEach(([room, emoji]) => {
     if (roomId === room &&
     !includes(user.unlockedBadges, UnlockableBadgeMap[emoji])) {
       console.log('Awarding badge', emoji, UnlockableBadgeMap[emoji])
       awardUserBadge(user.id, UnlockableBadgeMap[emoji])
-      unlockedEmoji.push(emoji)
+      unlockedEmoji.push(UnlockableBadgeMap[emoji])
     }
   })
 

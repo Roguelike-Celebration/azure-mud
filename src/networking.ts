@@ -141,6 +141,7 @@ export async function equipBadge (badge: Badge, index: number) {
     console.log('ERROR: Server did not return badges from an equipBadge call')
     return
   }
+  console.log(result.badges)
   for (let i = 0; i < result.badges.length; i++) {
     myDispatch(EquipBadgeAction(result.badges[i], i))
   }
@@ -478,8 +479,10 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   })
 
   connection.on('unlockBadge', (badge) => {
-    console.log('Unlock badge', badge)
-    dispatch(UnlockBadgeAction(badge))
+    if (badge.length !== 1) {
+      console.log('ERROR: Expected one badge to unlock, got multiple:', badge)
+    }
+    dispatch(UnlockBadgeAction(badge[0]))
   })
 
   window.addEventListener('beforeunload', (e) => {
