@@ -1,4 +1,4 @@
-import { PublicUser, MinimalUser } from '../server/src/user'
+import { PublicUser, MinimalUser, User } from '../server/src/user'
 import { Room } from './room'
 import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
@@ -146,11 +146,11 @@ export enum ActionType {
 
 interface ReceivedMyProfileAction {
   type: ActionType.ReceivedMyProfile;
-  value: PublicUser;
+  value: User;
 }
 
 export const ReceivedMyProfileAction = (
-  user: PublicUser
+  user: User
 ): ReceivedMyProfileAction => {
   return {
     type: ActionType.ReceivedMyProfile,

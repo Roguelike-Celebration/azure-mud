@@ -24,7 +24,7 @@ export interface MinimalUser {
   polymorph?: string;
   fontReward?: string;
 
-  equippedBadges: Badge[]
+  equippedBadges?: Badge[]
 }
 
 // A user profile. Users may fetch this about other users.

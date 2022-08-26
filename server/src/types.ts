@@ -56,7 +56,7 @@ export interface RoomResponse {
   presenceData?: { [roomId: string]: string[] };
   users?: { [userId: string]: MinimalUser };
   roomData?: { [roomId: string]: Room };
-  profile?: PublicUser;
+  profile?: User;
   roomNotes?: RoomNote[]
   unlockableBadges?: Badge[]
 }
