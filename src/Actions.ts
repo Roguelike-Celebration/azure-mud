@@ -69,6 +69,7 @@ export type Action =
   | EquipBadgeAction
   | UpdateUnlockableBadgesAction
   | UnlockBadgeAction
+  | SetUnlockedBadgesAction
 
 export enum ActionType {
   // Server-driven action
@@ -139,7 +140,8 @@ export enum ActionType {
 
   EquipBadge = 'EQUIP_BADGE',
   UnlockBadge = 'UNLOCK_BADGE',
-  UpdateUnlockableBadges = 'UPDATE_UNLOCKABLE_BADGES'
+  UpdateUnlockableBadges = 'UPDATE_UNLOCKABLE_BADGES',
+  SetUnlockedBadges = 'SET_UNLOCKED_BADGES'
 }
 
 interface ReceivedMyProfileAction {
@@ -884,6 +886,18 @@ export const UnlockBadgeAction = (badge: Badge): UnlockBadgeAction => {
   return {
     type: ActionType.UnlockBadge,
     value: badge
+  }
+}
+
+interface SetUnlockedBadgesAction {
+  type: ActionType.SetUnlockedBadges;
+  value: Badge[]
+}
+
+export const SetUnlockedBadgesAction = (badges: Badge[]): SetUnlockedBadgesAction => {
+  return {
+    type: ActionType.SetUnlockedBadges,
+    value: badges
   }
 }
 

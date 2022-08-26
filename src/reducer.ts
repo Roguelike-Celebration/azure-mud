@@ -604,6 +604,10 @@ export default (oldState: State, action: Action): State => {
     state.activeModal = Modal.BadgeUnlock
   }
 
+  if (action.type === ActionType.SetUnlockedBadges) {
+    state.profileData.unlockedBadges = action.value
+  }
+
   if (action.type === ActionType.UpdateUnlockableBadges) {
     state.unlockableBadges = action.value
   }

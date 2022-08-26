@@ -32,7 +32,7 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction
+  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction, SetUnlockedBadgesAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { convertServerRoomData, Room } from './room'
@@ -96,6 +96,20 @@ export async function resetRoomData () {
   const response = await callAzureFunction('resetRoomData')
   if (response.roomData) {
     myDispatch(UpdatedRoomDataAction(convertServerRoomData(response.roomData)))
+  }
+}
+
+export async function resetBadgeData () {
+  const response = await callAzureFunction('resetBadgeData')
+
+  if (response.unlockedBadges) {
+    myDispatch(SetUnlockedBadgesAction(response.unlockedBadges))
+  }
+
+  // This is janky, but this is debug funcitonality, so shrug
+  if (response.equippedBadges && response.equippedBadges.length === 0) {
+    myDispatch(EquipBadgeAction(undefined, 0))
+    myDispatch(EquipBadgeAction(undefined, 1))
   }
 }
 
