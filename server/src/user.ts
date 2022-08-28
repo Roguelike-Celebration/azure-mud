@@ -58,6 +58,11 @@ export async function isMod (userId: string) {
   return modList.includes(userId)
 }
 
+export async function isSpeaker (userId: string) {
+  const speakerList = await DB.speakerList()
+  return speakerList.includes(userId)
+}
+
 export async function updateModStatus (userId: string) {
   const userIsMod = await isMod(userId)
 

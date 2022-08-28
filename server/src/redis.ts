@@ -35,6 +35,9 @@ interface RedisInternal extends Database {
 
   addMod (userId: string)
   removeMod (userId: string)
+
+  addSpeaker (userId: string)
+  removeSpeaker (userId: string)
 }
 
 const Redis: RedisInternal = {
@@ -206,6 +209,10 @@ const Redis: RedisInternal = {
     return await getSet(modListKey) || []
   },
 
+  async speakerList (): Promise<string[]> {
+    return await getSet(speakerListKey) || []
+  },
+
   async setModStatus (userId: string, isMod: boolean) {
     if (isMod) {
       await Redis.addMod(userId)
@@ -223,6 +230,25 @@ const Redis: RedisInternal = {
 
   async removeMod (userId: string) {
     await removeFromSet(modListKey, userId)
+  },
+
+  async setSpeakerStatus (userId: string, isSpeaker: boolean) {
+    if (isSpeaker) {
+      await Redis.addSpeaker(userId)
+    } else {
+      await Redis.removeSpeaker(userId)
+    }
+    const profile = await Redis.getUser(userId)
+    profile.isSpeaker = isSpeaker
+    await Redis.setUserProfile(userId, profile)
+  },
+
+  async addSpeaker (userId: string) {
+    await addToSet(speakerListKey, userId)
+  },
+
+  async removeSpeaker (userId: string) {
+    await removeFromSet(speakerListKey, userId)
   },
 
   // Server settings
@@ -372,6 +398,7 @@ const Redis: RedisInternal = {
 const activeUsersKey = 'activeUsersList'
 
 const modListKey = 'mods'
+const speakerListKey = 'mods'
 
 const serverSettingsKey = 'serverSettings'
 

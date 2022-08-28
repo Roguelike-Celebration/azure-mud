@@ -294,6 +294,10 @@ export async function toggleUserMod (userId: string) {
   const result = await callAzureFunction('toggleModStatus', { userId })
 }
 
+export async function toggleUserSpeaker (userId: string) {
+  const result = await callAzureFunction('toggleSpeakerStatus', { userId })
+}
+
 export async function deleteMessage (messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
 }

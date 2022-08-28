@@ -72,9 +72,12 @@ interface Database {
 
   setModStatus(userId: string, isMod: boolean)
 
+  setSpeakerStatus(userId: string, isSpeaker: boolean)
+
   banUser(user: User, isBanned: boolean)
 
   modList(): Promise<string[]>
+  speakerList(): Promise<string[]>
 
   // -----------------------------------------------------------------
   // SETTINGS DATA
