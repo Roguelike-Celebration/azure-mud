@@ -1,25 +1,25 @@
-import React, { useEffect, useCallback, useRef, useContext, FC } from 'react'
 import { findLastIndex } from 'lodash'
-import { FixedSizeList } from 'react-window'
+import React, { FC, useCallback, useContext, useEffect, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import { FixedSizeList } from 'react-window'
 
-import MessageView from './MessageView'
 import {
-  Message,
-  MessageType,
   ConnectedMessage,
   DisconnectedMessage,
   EnteredMessage,
-  LeftMessage
+  LeftMessage,
+  Message,
+  MessageType
 } from '../message'
+import MessageView from './MessageView'
 
+import { ServerSettings } from '../../server/src/types'
 import '../../style/chat.css'
-import { DispatchContext } from '../App'
 import {
   ActivateAutoscrollAction,
   DeactivateAutoscrollAction
 } from '../Actions'
-import { ServerSettings } from '../../server/src/types'
+import { DispatchContext } from '../App'
 
 function isMovementMessage (
   message: Message
