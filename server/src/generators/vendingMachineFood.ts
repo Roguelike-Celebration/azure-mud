@@ -1,4 +1,4 @@
-var tracery = require('tracery-grammar')
+import tracery from 'tracery-grammar'
 
 export const actionString = (item: string) => {
   return `The vending machine whirrs and sputters for a few seconds before spitting out ${item}.`

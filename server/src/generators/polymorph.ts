@@ -1,4 +1,4 @@
-var tracery = require('tracery-grammar')
+import tracery from 'tracery-grammar'
 
 export const actionString = (text: string) => {
   const start = text.indexOf('(')

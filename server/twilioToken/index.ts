@@ -1,8 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { getUserIdFromHeaders } from '../src/authenticate'
-const { jwt: { AccessToken } } = require('twilio')
+import Twilio from 'twilio'
 
-const VideoGrant = AccessToken.VideoGrant
+const VideoGrant = Twilio.jwt.AccessToken.VideoGrant
 const MAX_ALLOWED_SESSION_DURATION = 14400
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
@@ -15,15 +15,19 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     }
   }
 
-  const token = new AccessToken(
+  const token = new Twilio.jwt.AccessToken(
     process.env.TWILIO_ACCOUNT_SID,
     process.env.TWILIO_API_KEY,
     process.env.TWILIO_API_SECRET,
     { ttl: MAX_ALLOWED_SESSION_DURATION }
-  )
+  );
 
   // Assign the generated identity to the token.
-  token.identity = userId
+  // This code used to work, then we switched from require to import
+  // This production code seems to work (famous last words)
+  // so tentatively Just A TypeScript Thing?
+  // (Em, 8/14/22)
+  (token as any).identity = userId
 
   // Grant the access token Twilio Video capabilities.
   const grant = new VideoGrant()

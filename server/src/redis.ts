@@ -4,7 +4,10 @@ import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './typ
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import Database from './database'
-import redis = require('redis')
+console.log('HIII?')
+// eslint-disable-next-line import/first
+import redis from 'redis'
+console.log('redis', redis)
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),

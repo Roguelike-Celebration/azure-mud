@@ -1,10 +1,9 @@
-import { staticRoomData } from './server/src/rooms'
-import { linkActions } from './src/linkActions'
 import allowedItems from './server/src/allowedItems'
-import Redis from './server/src/redis'
 import { includes } from 'lodash'
+import { linkActions } from './src/linkActions'
+import { staticRoomData } from './server/src/rooms'
 
-const failures = []
+const failures: string[][] = []
 Object.values(staticRoomData).forEach(async (room) => {
   let { description } = room
 
@@ -12,11 +11,13 @@ Object.values(staticRoomData).forEach(async (room) => {
   const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
   const simpleLinkRegex = /\[\[(.+?)\]\]/g
 
+  // This used to be using Redis.getRoomIds()
+  // Some thinking is needed to figure out whether we should be using disk or redis
+  // (Em 8/14/22)
+  const roomIds = Object.keys(staticRoomData)
+
   // These should use regex matching functions instead of replacing
   // but shrug, copy/pasting from RoomView.tsx is fine.
-
-  const roomIds = await Redis.getRoomIds()
-
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     if (includes(roomIds, roomId)) {
     } else if (roomId === 'item' && allowedItems.includes(text)) {

@@ -20,7 +20,6 @@ import { linkActions } from '../linkActions'
 import { useState } from 'react'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import PresenceView from './PresenceView'
-import RainwayStreamView from './Rainway/RainwayStreamView'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
@@ -164,7 +163,6 @@ export default function RoomView (props: Props) {
           }}
         />
         {room && room.id === 'theater' ? <StreamEmbed /> : null}
-        {room && room.id === 'gamerCave' ? <RainwayStreamView /> : null}
         {room &&
         room.specialFeatures &&
         room.specialFeatures.includes('RAINBOW_DOOR') ? (

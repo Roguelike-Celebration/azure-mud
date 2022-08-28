@@ -8,7 +8,10 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "jsx": "react",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+  },
+  "ts-node": {
+    "esm": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
