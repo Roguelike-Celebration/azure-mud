@@ -167,7 +167,6 @@ export default function NameView (props: Props) {
 
     return (
       <span className={className} data-tip={user?.pronouns} style={customStyle} >
-        <NameView userId={myId} skipMenu={true} />
         {props.skipMenu ? nameEl : menu}
         <ReactTooltip />
       </span>
