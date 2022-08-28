@@ -148,11 +148,11 @@ export default (oldState: State, action: Action): State => {
     state.roomId = action.value.roomId
     state.roomData = { ...state.roomData, ...action.value.roomData }
 
-    if (state.roomId === 'entryway' || !state.hasDismissedAModal) {
-      // This will show any time anyone reloads into the entryway, which
-      // might be slightly annoying for e.g. greeters.
-      // Given our time constraints, that seems an acceptable tradeoff
-      // for not needing to QA more complex logic?
+    if (state.roomId === 'entryway' || (state.roomData[state.roomId].mediaChat && !state.hasDismissedAModal)) {
+      // 2020 behavior: Show every time someone loads into the entryway (the starting room)
+      // 2021 behavior: In order to fix videochat connection issues, forcing this on every reload
+      //  was a hacky way to make sure that players always interacted with the page before we loaded videochat
+      // 2022 behavior (for now): Just limit that to rooms with videochat, since we're making less of those.
       state.activeModal = Modal.Welcome
     }
 
