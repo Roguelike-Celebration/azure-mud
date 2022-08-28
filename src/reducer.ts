@@ -1,4 +1,4 @@
-import { Action, ActionType } from './Actions'
+import { Action, ActionType, UnlockBadgeAction } from './Actions'
 import {
   Message,
   createConnectedMessage,
@@ -29,7 +29,7 @@ import {
   fetchProfile,
   sendCaption
 } from './networking'
-import { PublicUser, MinimalUser } from '../server/src/user'
+import { PublicUser, MinimalUser, User } from '../server/src/user'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
@@ -38,6 +38,7 @@ import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
 import firebase from 'firebase/app'
 import Config from './config'
+import { Badge } from '../server/src/badges'
 export interface State {
   firebaseApp: firebase.app.App;
   authenticated: boolean;
@@ -53,7 +54,7 @@ export interface State {
   userId?: string;
   userMap: { [userId: string]: MinimalUser };
   roomData: { [roomId: string]: Room };
-  profileData?: PublicUser;
+  profileData?: User;
 
   messages: Message[];
   whispers: WhisperMessage[];
@@ -98,6 +99,9 @@ export interface State {
   isBanned: boolean
 
   serverSettings: ServerSettings
+
+  unlockableBadges: Badge[]
+  justUnlockedBadge?: Badge
 }
 
 console.log(Config.FIREBASE_CONFIG)
@@ -119,7 +123,8 @@ export const defaultState: State = {
   serverSettings: DEFAULT_SERVER_SETTINGS,
   numberOfFaces: 5,
   captionsEnabled: false,
-  hasDismissedAModal: false
+  hasDismissedAModal: false,
+  unlockableBadges: []
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -584,6 +589,27 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.CommandMessage) {
     const message = createCommandMessage(action.value)
     addMessage(state, message)
+  }
+
+  if (action.type === ActionType.EquipBadge) {
+    if (!state.profileData.equippedBadges) {
+      state.profileData.equippedBadges = []
+    }
+    state.profileData.equippedBadges[action.value.index] = action.value.badge
+  }
+
+  if (action.type === ActionType.UnlockBadge) {
+    state.profileData.unlockedBadges.push(action.value)
+    state.justUnlockedBadge = action.value
+    state.activeModal = Modal.BadgeUnlock
+  }
+
+  if (action.type === ActionType.SetUnlockedBadges) {
+    state.profileData.unlockedBadges = action.value
+  }
+
+  if (action.type === ActionType.UpdateUnlockableBadges) {
+    state.unlockableBadges = action.value
   }
 
   return state

@@ -1,10 +1,11 @@
-import { PublicUser, MinimalUser } from '../server/src/user'
+import { PublicUser, MinimalUser, User } from '../server/src/user'
 import { Room } from './room'
 import { Message, WhisperMessage } from './message'
 import { RoomNote } from '../server/src/roomNote'
 import { Modal } from './modals'
 import { ServerSettings } from '../server/src/types'
 import { ModalOptions } from './reducer'
+import { Badge } from '../server/src/badges'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -65,6 +66,10 @@ export type Action =
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
   | UpdateFontRewardAction
+  | EquipBadgeAction
+  | UpdateUnlockableBadgesAction
+  | UnlockBadgeAction
+  | SetUnlockedBadgesAction
 
 export enum ActionType {
   // Server-driven action
@@ -131,16 +136,21 @@ export enum ActionType {
   SpaceIsClosed = 'SPACE_IS_CLOSED',
   SpaceOpenedOrClosed = 'SPACE_OPENED_OR_CLOSED',
 
-  CommandMessage = 'COMMAND_MESSAGE'
+  CommandMessage = 'COMMAND_MESSAGE',
+
+  EquipBadge = 'EQUIP_BADGE',
+  UnlockBadge = 'UNLOCK_BADGE',
+  UpdateUnlockableBadges = 'UPDATE_UNLOCKABLE_BADGES',
+  SetUnlockedBadges = 'SET_UNLOCKED_BADGES'
 }
 
 interface ReceivedMyProfileAction {
   type: ActionType.ReceivedMyProfile;
-  value: PublicUser;
+  value: User;
 }
 
 export const ReceivedMyProfileAction = (
-  user: PublicUser
+  user: User
 ): ReceivedMyProfileAction => {
   return {
     type: ActionType.ReceivedMyProfile,
@@ -852,5 +862,53 @@ export const CommandMessageAction = (message: string): CommandMessageAction => {
   return {
     type: ActionType.CommandMessage,
     value: message
+  }
+}
+
+interface EquipBadgeAction {
+  type: ActionType.EquipBadge;
+  value: {badge: Badge, index: number}
+}
+
+export const EquipBadgeAction = (badge: Badge, index: number): EquipBadgeAction => {
+  return {
+    type: ActionType.EquipBadge,
+    value: { badge, index }
+  }
+}
+
+interface UnlockBadgeAction {
+  type: ActionType.UnlockBadge;
+  value: Badge
+}
+
+export const UnlockBadgeAction = (badge: Badge): UnlockBadgeAction => {
+  return {
+    type: ActionType.UnlockBadge,
+    value: badge
+  }
+}
+
+interface SetUnlockedBadgesAction {
+  type: ActionType.SetUnlockedBadges;
+  value: Badge[]
+}
+
+export const SetUnlockedBadgesAction = (badges: Badge[]): SetUnlockedBadgesAction => {
+  return {
+    type: ActionType.SetUnlockedBadges,
+    value: badges
+  }
+}
+
+interface UpdateUnlockableBadgesAction {
+  type: ActionType.UpdateUnlockableBadges;
+  value: Badge[]
+}
+
+export const UpdateUnlockableBadgesAction = (badges: Badge[]): UpdateUnlockableBadgesAction => {
+  return {
+    type: ActionType.UpdateUnlockableBadges,
+    value: badges
   }
 }

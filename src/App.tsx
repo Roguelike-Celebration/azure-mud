@@ -53,6 +53,8 @@ import * as Storage from './storage'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import { currentUser, onAuthenticationStateChange } from './authentication'
 import _ from 'lodash'
+import BadgesModalView from './components/BadgesModalView'
+import BadgeUnlockModal from './components/BadgeUnlockModal'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -274,6 +276,18 @@ const App = () => {
           keepCameraWhenMoving={state.keepCameraWhenMoving}
         />
       )
+      break
+    }
+    case Modal.Badges: {
+      innerModalView = <BadgesModalView
+        equippedBadges={state.profileData?.equippedBadges}
+        unlockedBadges={state.profileData?.unlockedBadges}
+        unlockableBadges={state.unlockableBadges}
+      />
+      break
+    }
+    case Modal.BadgeUnlock: {
+      innerModalView = <BadgeUnlockModal badge={state.justUnlockedBadge} />
       break
     }
     case Modal.CodeOfConduct: {

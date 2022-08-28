@@ -32,7 +32,7 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  ShowModalAction, CommandMessageAction, CaptionMessageAction
+  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction, SetUnlockedBadgesAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { convertServerRoomData, Room } from './room'
@@ -42,6 +42,7 @@ import Config from './config'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import axios from 'axios'
+import { Badge } from '../server/src/badges'
 
 let myUserId: string
 let myDispatch: Dispatch<Action>
@@ -64,6 +65,10 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 
   if (result.roomNotes) {
     dispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
+  }
+
+  if (result.unlockableBadges) {
+    dispatch(UpdateUnlockableBadgesAction(result.unlockableBadges))
   }
 
   dispatch(UpdatedPresenceAction(result.presenceData))
@@ -94,6 +99,20 @@ export async function resetRoomData () {
   }
 }
 
+export async function resetBadgeData () {
+  const response = await callAzureFunction('resetBadgeData')
+
+  if (response.unlockedBadges) {
+    myDispatch(SetUnlockedBadgesAction(response.unlockedBadges))
+  }
+
+  // This is janky, but this is debug funcitonality, so shrug
+  if (response.equippedBadges && response.equippedBadges.length === 0) {
+    myDispatch(EquipBadgeAction(undefined, 0))
+    myDispatch(EquipBadgeAction(undefined, 1))
+  }
+}
+
 // If isNewUser is true, a successful update will refresh the entire page instead of dismissing a modal
 export async function updateProfile (user: Partial<User>, isNew: boolean) {
   const result = await callAzureFunction('updateProfile', { user, isNew })
@@ -115,6 +134,17 @@ export async function updateProfileColor (userId: string, color: string) {
 
 export async function updateFontReward (userId: string, font: string) {
   const result = await callAzureFunction('updateFontReward', { userId: userId, font: font })
+}
+export async function equipBadge (badge: Badge, index: number) {
+  const result = await callAzureFunction('equipBadge', { badge, index })
+  if (!result || !result.badges) {
+    console.log('ERROR: Server did not return badges from an equipBadge call')
+    return
+  }
+  console.log(result.badges)
+  for (let i = 0; i < result.badges.length; i++) {
+    myDispatch(EquipBadgeAction(result.badges[i], i))
+  }
 }
 
 export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {
@@ -446,6 +476,13 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   connection.on('ping', () => {
     console.log('Received heartbeat ping')
     callAzureFunction('pong')
+  })
+
+  connection.on('unlockBadge', (badge) => {
+    if (badge.length !== 1) {
+      console.log('ERROR: Expected one badge to unlock, got multiple:', badge)
+    }
+    dispatch(UnlockBadgeAction(badge[0]))
   })
 
   window.addEventListener('beforeunload', (e) => {
