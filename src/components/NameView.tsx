@@ -105,6 +105,19 @@ export default function NameView (props: Props) {
   const badges = (user.equippedBadges || [])
     .map((b, i) => <BadgeView key={`badge-${i}`} badge={b} />)
 
+  // TODO: This is not yet being set anywhere
+  if (user.isSpeaker) {
+    badges.unshift(
+      <BadgeView key='badge-speaker' badge={{ emoji: '📢', description: 'Speaker' }} />
+    )
+  }
+
+  if (user.isMod) {
+    badges.unshift(
+      <BadgeView key='badge-mod' badge={{ emoji: '🆘', description: 'Moderator' }} />
+    )
+  }
+
   // TODO: should be best handled via css
   const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
 
@@ -167,7 +180,6 @@ export default function NameView (props: Props) {
 
     return (
       <span className={className} data-tip={user?.pronouns} style={customStyle} >
-        <NameView userId={myId} skipMenu={true} />
         {props.skipMenu ? nameEl : menu}
         <ReactTooltip />
       </span>

@@ -79,3 +79,8 @@ span.name {
 .name.font-Impactful {
   font-family: 'Oswald';
 }
+
+.name .badge {
+  margin-left: 3px;
+  margin-right: 1px;
+}

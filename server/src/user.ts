@@ -17,6 +17,7 @@ export interface MinimalUser {
   username: string;
   pronouns?: string;
   isMod?: boolean;
+  isSpeaker?: boolean // TODO: Currently never set
   isBanned?: boolean;
   // From https://www.w3schools.com/colors/colors_names.asp
   nameColor?: string;
