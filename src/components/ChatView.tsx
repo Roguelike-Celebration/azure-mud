@@ -168,44 +168,6 @@ export default function ChatView (props: Props) {
           )}
         </AutoSizer>
       </div>
-      {/* <div id="messages" onScroll={handleScroll}>
-        {shownMessages.slice(-150).map((m, idx) => {
-          let hideTimestamp = false
-          const previousMessage = props.messages[idx - 1]
-          if (previousMessage) {
-            // TODO: Give all messages a userId for this to be meaningful
-            if (
-              (previousMessage as any).userId &&
-          (m as any).userId &&
-          (previousMessage as any).userId === (m as any).userId
-            ) {
-              const diff =
-            new Date(m.timestamp).getTime() -
-            new Date(previousMessage.timestamp).getTime()
-              // This is a bad way to calculate '3 minutes' and I should feel bad -em
-              if (diff < 1000 * 60 * 3) {
-                hideTimestamp = true
-              }
-            }
-          }
-
-          const shouldShowInterstitial = m.type === MessageType.MovedRoom
-          const id = `message-${idx}`
-
-          return (
-            <>
-              {shouldShowInterstitial ? <hr key={id + '-interstitial'}/> : null}
-              <MessageView
-                message={m}
-                key={id}
-                id={id}
-                hideTimestamp={hideTimestamp}
-                msgIndex={idx}
-              />
-            </>
-          )
-        })}
-      </div> */}
     </>
   )
 }
