@@ -53,6 +53,7 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId
   myDispatch = dispatch
 
+  resetRoomData()
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(result)
