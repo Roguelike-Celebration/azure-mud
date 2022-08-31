@@ -43,6 +43,9 @@ export const linkActions = {
   },
   watchRobot: () => {
     displayMessageFromList('robots')
+  },
+  talkToUbizara: () => {
+	  displayMessageFromList('ubizaraTheBartender')
   }
 }
 
