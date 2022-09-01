@@ -45,7 +45,7 @@ export const linkActions = {
     displayMessageFromList('robots')
   },
   talkToUbizara: () => {
-	  displayMessageFromList('ubizaraTheBartender')
+    displayMessageFromList('ubizaraTheBartender')
   }
 }
 
