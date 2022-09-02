@@ -38,14 +38,20 @@ export const linkActions = {
   pentagramNormal: () => {
     pentagramAction('')
   },
-  hearPickupLine: () => {
-    displayMessageFromList('pickupLines')
+  hearTerribleJoke: () => {
+    displayMessageFromList('terribleJokes')
   },
   watchRobot: () => {
     displayMessageFromList('robots')
   },
   talkToUbizara: () => {
     displayMessageFromList('ubizaraTheBartender')
+  },
+  talkToDrHope: () => {
+    displayMessageFromList('doctorHope')
+  }
+  talkToChadSilverbow: () => {
+    displayMessageFromList('chadSilverbow')
   }
 }
 

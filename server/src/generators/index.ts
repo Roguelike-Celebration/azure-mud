@@ -22,7 +22,9 @@ const generators: {[name: string]: Generator} = {
   gameRecommendations,
   robots,
   pickupLines,
-  ubizaraTheBartender
+  ubizaraTheBartender,
+  doctorHope,
+  chadSilverbow
 }
 
 export default generators
