@@ -29,7 +29,8 @@
       "addNoteLinkText": "Contribute",
       "addNotePrompt": "Tell us of a time a procedural generator has surprised or delighted you!",
       "noteWallDescription": "Tales of strange, delightful emergent results from procedural generators."
-    }
+	}
+  },
   "experimentalBiology": {
     "id": "experimentalBiology",
     "displayName": "Experimental Biology Lab",
@@ -41,7 +42,7 @@
     "displayName": "Destinations",
     "shortName": "the destinations hallway",
     "description": "You stand beneath an imposing monolith made up of signs to every possible destination in every possible multiverse, and beneath them is an ever-shifting doorway. Your mind shrivels before the incomprehensibly shifting wooden panels, but as you reach out to touch infinite door knobs, you focus the possibilities into a single door which you can [[try to open->readClosedSign]].<br/><br/>Beneath the shifting monolith's infinite destination signs lie two more permanent ones. One is made of steel and imbedded LED lights spell out [[Oxygen Farm->oxygenFarm]]. The other is made of brass and features an ornate crest advertising the [[Adventurer's Guild->adventurersGuildHall]].</br></br>You can also return to the [[Central Hall->centralHall]]"
-  }
+  },
   "centralHall": {
     "id": "centralHall",
     "displayName": "Central Hall",
