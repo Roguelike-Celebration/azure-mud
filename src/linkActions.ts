@@ -49,7 +49,7 @@ export const linkActions = {
   },
   talkToDrHope: () => {
     displayMessageFromList('doctorHope')
-  }
+  },
   talkToChadSilverbow: () => {
     displayMessageFromList('chadSilverbow')
   }
