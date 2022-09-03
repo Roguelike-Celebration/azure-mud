@@ -22,7 +22,7 @@ export const generate = () => {
     expression: [
       'flashes you a smile',
       'grins at you',
-      'looks at you with a glint in her eye',
+      'looks at you impishly',
       'gives you a mischievous grin',
       'smiles at you warmly',
       'smiles at you',
