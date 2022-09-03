@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import { HideModalAction } from '../Actions'
@@ -44,16 +44,18 @@ import { DispatchContext } from '../App'
 
 export default function MapView (props: Props) {
   const dispatch = useContext(DispatchContext)
+  const [preWidth, setPreWidth] = useState(0)
+  const [preHeight, setPreHeight] = useState(0)
   const { roomData, currentRoomId } = props
 
   // Pixel size of one ASCII character
-  let w, h
+  let w; let h = 0
   if (props.isMiniMap) {
     w = 8
     h = 13
-  } else {
-    w = 10
-    h = 21
+  } else if (preWidth !== 0 && preHeight !== 0) {
+    w = preWidth / 110
+    h = preHeight / 41
   }
 
   // Scroll to make sure that the user's location is visible
@@ -67,6 +69,16 @@ export default function MapView (props: Props) {
       location.scrollIntoView({ block: 'center', inline: 'center' })
     } else {
       // console.log('NO LOCATION')
+    }
+
+    const pre = document.getElementById('map-pre')
+    if (pre) {
+      if (preWidth !== pre.clientWidth) {
+        setPreWidth(pre.clientWidth)
+      }
+      if (preHeight !== pre.clientHeight) {
+        setPreHeight(pre.clientHeight)
+      }
     }
   }, (props.isMiniMap ? null : []))
 
@@ -95,27 +107,33 @@ export default function MapView (props: Props) {
     }
   }
 
-  const clickableDivs = clickableAreas.map(a => {
-    return <div
-      style={{
-        position: 'absolute',
-        left: `${a.x * w}px`,
-        top: `${a.y * h}px`,
-        width: `${a.width * w}px`,
-        height: `${a.height * h}px`,
-        cursor: 'pointer'
-      }}
-      key={a.roomId}
-      onClick={handleClick}
-      data-room={a.roomId}
-      id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${a.roomId}`} />
-  })
+  let clickableDivs = []
+  if (w !== 0 && h !== 0) {
+    clickableDivs = clickableAreas.map(a => {
+      return <div
+        style={{
+          position: 'absolute',
+          left: `${a.x * w}px`,
+          top: `${a.y * h}px`,
+          width: `${a.width * w}px`,
+          height: `${a.height * h}px`,
+          cursor: 'pointer'
+        }}
+        key={a.roomId}
+        onClick={handleClick}
+        data-room={a.roomId}
+        id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${a.roomId}`} />
+    })
+  }
 
   return <div className='map' style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
-    <pre style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono' }}><code>
-      {map}
-    </code></pre>
+    <pre
+      id={`${props.isMiniMap ? 'minimap-' : ''}map-pre`}
+      style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono', margin: '0px', width: 'fit-content' }}
+    >
+      <code>{map}</code>
+    </pre>
   </div>
 }
 
