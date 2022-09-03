@@ -49,7 +49,7 @@ export default function MapView (props: Props) {
   const { roomData, currentRoomId } = props
 
   // Pixel size of one ASCII character
-  let w, h = 0
+  let w; let h = 0
   if (props.isMiniMap) {
     w = 8
     h = 13
@@ -80,7 +80,6 @@ export default function MapView (props: Props) {
         setPreHeight(pre.clientHeight)
       }
     }
-
   }, (props.isMiniMap ? null : []))
 
   if (!roomData) { return <div/> }
@@ -129,9 +128,12 @@ export default function MapView (props: Props) {
 
   return <div className='map' style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
-    <pre id={`${props.isMiniMap ? 'minimap-' : ''}map-pre`} style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono', margin: '0px', width: 'fit-content' }}><code>
-      {map}
-    </code></pre>
+    <pre
+      id={`${props.isMiniMap ? 'minimap-' : ''}map-pre`}
+      style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono', margin: '0px', width: 'fit-content' }}
+    >
+      <code>{map}</code>
+    </pre>
   </div>
 }
 
