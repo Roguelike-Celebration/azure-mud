@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import { HideModalAction } from '../Actions'
@@ -44,6 +44,8 @@ import { DispatchContext } from '../App'
 
 export default function MapView (props: Props) {
   const dispatch = useContext(DispatchContext)
+  const [preWidth, setPreWidth] = useState(0)
+  const [preHeight, setPreHeight] = useState(0)
   const { roomData, currentRoomId } = props
 
   // Pixel size of one ASCII character
@@ -51,9 +53,13 @@ export default function MapView (props: Props) {
   if (props.isMiniMap) {
     w = 8
     h = 13
+  } else if (preWidth !== 0 && preHeight !== 0) {
+    w = preWidth / 110
+    h = preHeight / 41
+    console.log(w, h)
   } else {
     w = 10
-    h = 21
+    h = 20
   }
 
   // Scroll to make sure that the user's location is visible
@@ -68,6 +74,16 @@ export default function MapView (props: Props) {
     } else {
       // console.log('NO LOCATION')
     }
+    const pre = document.getElementById('map-pre')
+    if (pre) {
+      if (preWidth !== pre.clientWidth) {
+        setPreWidth(pre.clientWidth)
+      }
+      if (preHeight !== pre.clientHeight) {
+        setPreHeight(pre.clientHeight)
+      }
+    }
+
   }, (props.isMiniMap ? null : []))
 
   if (!roomData) { return <div/> }
@@ -113,7 +129,7 @@ export default function MapView (props: Props) {
 
   return <div className='map' style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
-    <pre style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono' }}><code>
+    <pre id={`${props.isMiniMap ? 'minimap-' : ''}map-pre`} style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono', margin: '0px', width: 'fit-content' }}><code>
       {map}
     </code></pre>
   </div>
