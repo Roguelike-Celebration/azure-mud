@@ -17,5 +17,7 @@ export enum Modal {
     ClientDeployed,
     FeatureFullRoomIndex,
     HappeningNow,
-    Riddles
+    Riddles,
+    Badges,
+    BadgeUnlock
 }

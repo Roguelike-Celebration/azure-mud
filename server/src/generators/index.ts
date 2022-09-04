@@ -6,6 +6,9 @@ import * as closedSigns from './closedSigns'
 import * as gameRecommendations from './gameRecs'
 import * as robots from './robots'
 import * as pickupLines from './pickupLines'
+import * as ubizaraTheBartender from './ubizaraTheBartender'
+import * as doctorHope from './doctorHope'
+import * as chadSilverbow from './chadSilverbow'
 
 interface Generator {
     generate(): string
@@ -20,7 +23,10 @@ const generators: {[name: string]: Generator} = {
   closedSigns,
   gameRecommendations,
   robots,
-  pickupLines
+  pickupLines,
+  ubizaraTheBartender,
+  doctorHope,
+  chadSilverbow
 }
 
 export default generators

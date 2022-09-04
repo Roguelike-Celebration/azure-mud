@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import { HideModalAction } from '../Actions'
@@ -44,16 +44,18 @@ import { DispatchContext } from '../App'
 
 export default function MapView (props: Props) {
   const dispatch = useContext(DispatchContext)
+  const [preWidth, setPreWidth] = useState(0)
+  const [preHeight, setPreHeight] = useState(0)
   const { roomData, currentRoomId } = props
 
   // Pixel size of one ASCII character
-  let w, h
+  let w; let h = 0
   if (props.isMiniMap) {
     w = 8
     h = 13
-  } else {
-    w = 10
-    h = 21
+  } else if (preWidth !== 0 && preHeight !== 0) {
+    w = preWidth / 110
+    h = preHeight / 41
   }
 
   // Scroll to make sure that the user's location is visible
@@ -67,6 +69,16 @@ export default function MapView (props: Props) {
       location.scrollIntoView({ block: 'center', inline: 'center' })
     } else {
       // console.log('NO LOCATION')
+    }
+
+    const pre = document.getElementById('map-pre')
+    if (pre) {
+      if (preWidth !== pre.clientWidth) {
+        setPreWidth(pre.clientWidth)
+      }
+      if (preHeight !== pre.clientHeight) {
+        setPreHeight(pre.clientHeight)
+      }
     }
   }, (props.isMiniMap ? null : []))
 
@@ -95,137 +107,139 @@ export default function MapView (props: Props) {
     }
   }
 
-  const clickableDivs = clickableAreas.map(a => {
-    return <div
-      style={{
-        position: 'absolute',
-        left: `${a.x * w}px`,
-        top: `${a.y * h}px`,
-        width: `${a.width * w}px`,
-        height: `${a.height * h}px`,
-        cursor: 'pointer'
-      }}
-      key={a.roomId}
-      onClick={handleClick}
-      data-room={a.roomId}
-      id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${a.roomId}`} />
-  })
+  let clickableDivs = []
+  if (w !== 0 && h !== 0) {
+    clickableDivs = clickableAreas.map(a => {
+      return <div
+        style={{
+          position: 'absolute',
+          left: `${a.x * w}px`,
+          top: `${a.y * h}px`,
+          width: `${a.width * w}px`,
+          height: `${a.height * h}px`,
+          cursor: 'pointer'
+        }}
+        key={a.roomId}
+        onClick={handleClick}
+        data-room={a.roomId}
+        id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${a.roomId}`} />
+    })
+  }
 
   return <div className='map' style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
-    <pre style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono' }}><code>
-      {map}
-    </code></pre>
+    <pre
+      id={`${props.isMiniMap ? 'minimap-' : ''}map-pre`}
+      style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono', margin: '0px', width: 'fit-content' }}
+    >
+      <code>{map}</code>
+    </pre>
   </div>
 }
 
-const mapText = `                        ┌────────────────────────────────────────────┐                                        
-┌────────────────┐      │............................................│   ┌──────────┐     ┌──────────┐        
-│................│      │.................Theater....................│   │.Warrior..│     │.. Mage...│        
-│.Robot Labs.....│      │...................(05).....................│   │...(12)...│     │...(13)...│        
-│...(00).........│      │............................................│   └─────#────┘     └─────#────┘        
-│................│      │............................................│         #                #             
-│................│      │............................................############################             
-└──────────#─────┘      │............................................│         #                #             
-┌──────────#─────┐      │............................................│   ┌─────#────┐     ┌─────#────┐        
-│............... │      │............................................│   │..Rogue...│     │.Tourist..│        
-│.Space.Hangar...│      │............................................│   │...(14)...│     │...(15)...│        
-│.Lounge.........│      │............................................│   └──────────┘     └──────────┘        
-│...(01).........│      │............................................│                                        
-│................│      │............................................│                                        
-│┌────────────┐..│      │............................................│                                        
-││.Vending....│..###    │............................................│                                        
-││.Machine....│..│ ##   └────────────────────#───────────────────────┘                                        
-││...(02).....│..│  ###                      #           ┌──────────────────────────────────────────────────┐ 
-│└────────────┘..│     ###        ┌──────────#────────┐  │..................Unconferencing..................│ 
-└────────────────┘       ###      │...................####..................Lobby ..(16)....................│ 
-┌────────────┐         ┌────────────┐.................│  └──────────────#───────────────────#───────────────┘ 
-│.Office Of..│         │Destinations│..Central Hall...│  ┌──────────┐   #    ┌──────────┐   #   ┌──────────┐  
-│.Steam......│         │..(06)......│.....(10)........│  │Cockatrice│   #    │...Naga...│   #   │..Tengu...│  
-│...(27).....│         └────────────┘.................│  │...(17)...##########...(18)...│########...(19)...│  
-└───────#────┘         ###        │...................│  └──────────┘   #    └──────────┘   #   └──────────┘  
-┌───────#────────┐   ###          │...................│  ┌──────────┐   #    ┌──────────┐   #   ┌──────────┐  
-│................│ ###            │...................│  │..Dragon..│   #    │.Skeleton.│   #   │...Yak....│  
-│.Adventurers....│##              │..┌────────────┐...│  │...(20)...##########...(21)...#########...(22)...│  
-│.Guild..........##               │..│.Swag Table.│...│  └──────────┘        └──────────┘       └──────────┘  
-│...(03).........│   ┌──────────┐ │..│...(11).....│...│ ┌──────────────────────────────────────────────┐      
-│................│   │...Paint..│ │..└────────────┘...│ │....................................┌───────┐.│      
-│................│   │...(07)...│ │...................###.................Bar ..(23).........│Railing│.│      
-│................│   └────#─────┘ │...................│ │....................................│..(25).│.│      
-└───────#────────┘   ┌────#─────┐ └──────────#────────┘ │..┌───────┐.....┌────────────┐......└───────┘.│      
-┌───────#────────┐   │...Dyes...│            #          │..│Stools │.....│....Stage...│................│      
-│................│  ##...(08)...│            #          │..│..(24).│.....│....(29)....│................│      
-│.Office of......│###└────#─────┘ ┌──────────#────────┐ │..└───────┘.....└────────────┘................│      
-│.Transmutation..##  ┌────#─────┐ │.....Library.......│ │.....................┌────────────┐...........│      
-│...(04).........│   │..SHOWER..│ │.......(28)........│ │.....................│Back...(26).│...........│      
-│................│   │...(09)...│ │...................│ │.....................└────────────┘...........│      
-└────────────────┘   └──────────┘ └───────────────────┘ └──────────────────────────────────────────────┘      
+const mapText = `
+                        ┌───────────────────────────────────────────────────────────┐                         
+┌────────────────┐      │............................................│..............│                         
+│................│      │.................Theater....................#....Warrior...│                         
+│..Docking Bay...│      │...................(05).....................│.....(12).....│                         
+│.....(00).......###    │............................................│──────────────│                         
+│................│ #    │............................................│..............│                         
+│................│ #    │............................................#.....Mage.....│                         
+└──────────#─────┘ #    │............................................│.....(00).....│                         
+┌──────────#─────┐ #    │............................................│──────────────│                         
+│............... │ #    │............................................│..............│                         
+│................│ #    │............................................#....Rogue.....│                         
+│................│ #    │............................................│.....(14).....│                         
+│.....Oxygen.....│ #    │............................................│──────────────│                         
+│.....Farm.......│ #    │............................................│..............│        ┌─────────────┐  
+│.....(03).......│ #    │............................................#....Cleric....│        │..Dig Site...│  
+│................###    │............................................│.....(99).....│     ####.....(19)....│  
+│................│ #    └─────────────────#─────────────────────────────────────────┘     #  └─────────────┘  
+│................│ #                      #                                               #  ┌─────────────┐  
+└────────────────┘ #         ┌────────────#──────────┐                                    #  │..Starship...│  
+┌─────────────┐   ┌#───────────┐...................┌────────────┐ ┌─────────────────────┐ ####.....(19)....│  
+│.............│   │............│...................│............│ │....Unconferencing...│ #  └─────────────┘  
+│..Office Of..#####Destinations│...................│.Swag Table.###......Lobby ..(16)...###  ┌─────────────┐  
+│....Steam....│   │....(06)....│...................│....(06)....│ │.....................│ #  │..Rave Cave..│  
+│....(27).....│   └#───────────┘...................└────────────┘ └─────────────────────┘ ####....(19).....│  
+└───────#─────┘    #         │.......................│  ┌────────────────────────┐        #  └─────────────┘  
+┌───────#────────┐ #         │.......................│  │......Experimental......│        #  ┌─────────────┐  
+│................│ #         │.......................####.........Biology........│        #  │...Elysium...│  
+│...Adventurers..│ #         │.......................│  │..........(12)..........│        ####....(19).....│  
+│.....Guild......###         │.....Central Hall......│  └────────────────────────┘           └─────────────┘  
+│.....(03).......│ #         │.........(11)..........│  ┌──────────────────────────────────────────────────┐  
+│................│ #         │.......................│  │........................................┌───────┐.│  
+│................│ #         │.......................####...................Bar ..(23)...........│Balcony│.│  
+│................│ #         │.......................│  │..┌──────┐..............................│..(25).│.│  
+└───────#────────┘ #         │.......................│  │..│Stools│..............................└───────┘.│  
+┌───────#────────┐ #         │.......................│  │..│.(24).│........................................│  
+│................│ #         │.......................│  │..│......│........................................│  
+│................│ #         │.......................│  │..└──────┘..............................┌───────┐.│  
+│....VideoDome...#############.......................####..............┌────────────────┐........│.Back..│.│  
+│......(04)......│           │.......................│  │..............│...Stage...(26).│........│..(01).│.│  
+│................│           │.......................│  │..............└────────────────┘........└───────┘.│  
+└────────────────┘           └────────────#──────────┘  └──────────────────────────────────────────────────┘  
 `
 
 const presenceMapping = [
-  'robots',
-  'sfHub',
-  'vendingMachine',
-  'exploreHub',
-  'transmute',
+  'dockingBay',
+  'oxygenFarm',
+  'officeOfSteam',
+  'adventurersGuild',
+  'videoDome',
   'theater',
   'destinations',
-  'doctorPaint',
-  'dyes',
-  'shower',
-  'hall',
+  'centralHall',
   'swag',
-  'warrior',
-  'mage',
-  'rogue',
-  'tourist',
+  'theaterWarrior',
+  'theaterMage',
+  'theaterRogue',
+  'theaterCleric',
   'unconference',
-  'cockatrice',
-  'naga',
-  'tengu',
-  'dragon',
-  'skeleton',
-  'yak',
+  'unconferenceDigSite',
+  'unconferenceStarShip',
+  'unconferenceRaveCave',
+  'unconferenceElysium',
+  'experimentalBiology',
   'bar',
-  'stools',
-  'railing',
-  'back',
-  'steam',
-  'library',
-  'barStage'
+  'barStools',
+  'barBalcony',
+  'barBack',
+  'barStage',
+  'videoDome'
 ]
 
 const clickableAreas: ClickableArea[] = [
   {
-    roomId: 'robots',
+    roomId: 'dockingBay',
     x: 0,
     y: 1,
     width: 18,
     height: 7
   },
   {
-    roomId: 'sfHub',
+    roomId: 'oxygenFarm',
     x: 0,
     y: 8,
     width: 18,
-    height: 12
+    height: 10
   },
   {
-    roomId: 'vendingMachine',
-    x: 1,
-    y: 14,
-    width: 14,
-    height: 5
+    roomId: 'officeOfSteam',
+    x: 0,
+    y: 19,
+    width: 15,
+    height: 6
   },
   {
-    roomId: 'exploreHub',
+    roomId: 'adventurersGuild',
     x: 0,
     y: 25,
     width: 18,
     height: 9
   },
   {
-    roomId: 'transmute',
+    roomId: 'videoDome',
     x: 0,
     y: 34,
     width: 18,
@@ -235,175 +249,133 @@ const clickableAreas: ClickableArea[] = [
     roomId: 'theater',
     x: 24,
     y: 0,
-    width: 46,
+    width: 45,
     height: 17
   },
   {
     roomId: 'destinations',
-    x: 23,
-    y: 20,
+    x: 18,
+    y: 19,
     width: 14,
-    height: 4
+    height: 5
   },
   {
-    roomId: 'doctorPaint',
-    x: 21,
-    y: 29,
-    width: 12,
-    height: 4
-  },
-  {
-    roomId: 'dyes',
-    x: 21,
-    y: 33,
-    width: 12,
-    height: 4
-  },
-  {
-    roomId: 'shower',
-    x: 21,
-    y: 37,
-    width: 12,
-    height: 4
-  },
-  {
-    roomId: 'hall',
-    x: 34,
+    roomId: 'centralHall',
+    x: 29,
     y: 18,
-    width: 21,
-    height: 16
+    width: 25,
+    height: 23
   },
   {
     roomId: 'swag',
-    x: 37,
-    y: 27,
+    x: 51,
+    y: 19,
     width: 14,
     height: 4
   },
   {
     roomId: 'warrior',
-    x: 73,
+    x: 70,
     y: 1,
-    width: 12,
+    width: 16,
     height: 4
   },
   {
     roomId: 'mage',
-    x: 90,
-    y: 1,
-    width: 12,
+    x: 70,
+    y: 5,
+    width: 16,
     height: 4
   },
   {
     roomId: 'rogue',
-    x: 73,
-    y: 8,
-    width: 12,
+    x: 70,
+    y: 9,
+    width: 16,
     height: 4
   },
   {
-    roomId: 'tourist',
-    x: 90,
-    y: 8,
-    width: 12,
+    roomId: 'cleric',
+    x: 70,
+    y: 13,
+    width: 16,
     height: 4
   },
   {
     roomId: 'unconference',
-    x: 57,
-    y: 17,
-    width: 52,
+    x: 67,
+    y: 19,
+    width: 23,
     height: 4
   },
   {
-    roomId: 'cockatrice',
-    x: 57,
-    y: 21,
-    width: 12,
+    roomId: 'digSite',
+    x: 94,
+    y: 14,
+    width: 15,
     height: 4
   },
   {
-    roomId: 'naga',
-    x: 77,
-    y: 21,
-    width: 12,
+    roomId: 'starship',
+    x: 94,
+    y: 18,
+    width: 15,
     height: 4
   },
   {
-    roomId: 'tengu',
-    x: 96,
-    y: 21,
-    width: 12,
+    roomId: 'raveCave',
+    x: 94,
+    y: 23,
+    width: 15,
     height: 4
   },
   {
-    roomId: 'dragon',
+    roomId: 'elysium',
+    x: 94,
+    y: 27,
+    width: 15,
+    height: 4
+  },
+  {
+    roomId: 'experimentalBiology',
     x: 57,
     y: 25,
-    width: 12,
-    height: 4
-  },
-  {
-    roomId: 'skeleton',
-    x: 77,
-    y: 25,
-    width: 12,
-    height: 4
-  },
-  {
-    roomId: 'yak',
-    x: 96,
-    y: 25,
-    width: 12,
-    height: 4
+    width: 26,
+    height: 5
   },
   {
     roomId: 'bar',
-    x: 56,
-    y: 29,
-    width: 48,
+    x: 57,
+    y: 30,
+    width: 52,
     height: 12
   },
   {
     roomId: 'stools',
-    x: 59,
+    x: 60,
     y: 33,
-    width: 9,
-    height: 4
+    width: 8,
+    height: 5
   },
   {
-    roomId: 'railing',
-    x: 93,
-    y: 30,
+    roomId: 'balcony',
+    x: 98,
+    y: 31,
     width: 9,
     height: 4
   },
   {
     roomId: 'back',
-    x: 78,
+    x: 98,
     y: 37,
-    width: 14,
-    height: 3
-  },
-  {
-    roomId: 'steam',
-    x: 0,
-    y: 20,
-    width: 14,
-    height: 5
-  },
-  {
-    roomId: 'library',
-    x: 34,
-    y: 36,
-    width: 21,
-    height: 5
+    width: 9,
+    height: 4
   },
   {
     roomId: 'barStage',
-    x: 73,
-    y: 33,
-    width: 14,
-    height: 4
+    x: 72,
+    y: 38,
+    width: 18,
+    height: 3
   }
 ]

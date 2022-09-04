@@ -1,10 +1,12 @@
 import { staticRoomData } from './rooms'
 import { RoomResponse } from './types'
-import { User } from './user'
+import { awardUserBadge, User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
 import { DB } from './database'
 import Redis from '../src/redis'
 import { Result, Message } from './endpoint'
+import { every, includes } from 'lodash'
+import { Badge, UnlockableBadgeMap } from './badges'
 
 export async function moveToRoom (
   user: User,
@@ -65,6 +67,8 @@ export async function moveToRoom (
     }
   }
 
+  const awardedBadges = awardBadges(user, to.id)
+
   const response: RoomResponse = {
     roomId: to.id,
     roomData: { [to.id]: to }
@@ -104,6 +108,15 @@ export async function moveToRoom (
       },
       await globalPresenceMessage([user.roomId, to.id])
     ]
+
+    if (awardedBadges.length > 0) {
+      result.messages.push({
+        groupId: user.roomId,
+        target: 'unlockBadge',
+        arguments: [awardedBadges]
+      })
+    }
+
     result.groupManagementTasks = [
       {
         userId: user.id,
@@ -119,4 +132,39 @@ export async function moveToRoom (
   }
 
   return result
+}
+
+function awardBadges (user: User, roomId: string) {
+  // "If the user is in this room ID and
+  // doesn't have the matching badge,
+  // give them the badge with this emoji"
+  const tuples = [
+    ['robots', '🤖'],
+    ['sfHub', '👾'],
+    ['transmute', '🧙‍♀️'],
+    ['exploreHub', '⚔️'],
+    ['steam', '💾']
+  ]
+
+  const unlockedEmoji: Badge[] = []
+
+  tuples.forEach(([room, emoji]) => {
+    if (roomId === room &&
+    !includes(user.unlockedBadges, UnlockableBadgeMap[emoji])) {
+      console.log('Awarding badge', emoji, UnlockableBadgeMap[emoji])
+      awardUserBadge(user.id, UnlockableBadgeMap[emoji])
+      unlockedEmoji.push(UnlockableBadgeMap[emoji])
+    }
+  })
+
+  if (unlockedEmoji.length > 0) {
+    if (every(tuples, ([_, emoji]) => {
+      return includes(user.unlockedBadges, UnlockableBadgeMap[emoji])
+    })) {
+      awardUserBadge(user.id, UnlockableBadgeMap['🌎'])
+      unlockedEmoji.push(UnlockableBadgeMap['🌎'])
+    }
+  }
+
+  return unlockedEmoji
 }
