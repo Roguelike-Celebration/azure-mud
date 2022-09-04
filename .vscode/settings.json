@@ -7,5 +7,6 @@
   "azureFunctions.preDeployTask": "npm prune",
   "editor.codeActionsOnSave": {
     "source.fixAll": true
-  }
+  },
+  "editor.formatOnSave": false
 }

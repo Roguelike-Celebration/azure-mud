@@ -634,7 +634,7 @@ async function saveWhisper (state: State, message: WhisperMessage) {
 
 async function addMessage (state: State, message: Message) {
   state.messages.push(message)
-  state.messages = state.messages.slice(-500)
+  // state.messages = state.messages.slice(-500)
   Storage.setMessages(state.messages)
 }
 
