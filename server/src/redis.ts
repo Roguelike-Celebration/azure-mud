@@ -339,14 +339,23 @@ const Redis: RedisInternal = {
 
   //
 
-  // TODO: We maybe shouldn't allow unfettered access to this?
+  // This is currently only accessed when resetRoomData is called, and on admin CMS update
+  // If that changes, consider adding more security / tightening access to this
   async setRoomData (room: Room) {
+    await setCache(roomFuzzySearchKey(room.shortName.replace(' ', '').toUpperCase()), room.id)
+    await setCache(roomFuzzySearchKey(room.id.replace(' ', '').toUpperCase()), room.id)
+    await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
+
     return await setCache(roomDataKey(room.id), JSON.stringify(room))
   },
 
   async getRoomData (roomId: string): Promise<Room> {
     // TODO: Also fetch note wall data
     return JSON.parse(await getCache(roomDataKey(roomId)))
+  },
+
+  async getRoomIdFromFuzzySearch (search: string): Promise<string|undefined> {
+    return await getCache(roomFuzzySearchKey(search))
   },
 
   async deleteRoomData (roomId: string): Promise<void> {
@@ -394,6 +403,10 @@ function heartbeatKeyForUser (user: string): string {
 
 function roomPresenceKey (roomName: string): string {
   return `${roomName}Presence`
+}
+
+function roomFuzzySearchKey (search: string): string {
+  return `${search}RoomSearch`
 }
 
 function roomNotesKey (roomId: string): string {

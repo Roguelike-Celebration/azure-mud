@@ -1,6 +1,5 @@
 import { globalPresenceMessage } from '../globalPresenceMessage'
 import { userHeartbeatReceived } from '../heartbeat'
-import { staticRoomData } from '../rooms'
 import setUpRoomsForUser from '../setUpRoomsForUser'
 import { RoomResponse } from '../types'
 import { User, isMod, minimizeUser } from '../user'
