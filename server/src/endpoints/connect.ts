@@ -38,7 +38,7 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     presenceData: await DB.allRoomOccupants(),
     users: userMap,
     // TODO: This will only include the current room
-    roomData: { ...staticRoomData, [user.roomId]: room },
+    roomData: { [user.roomId]: room },
     // TODO: Have a function to delete the keys we don't need
     profile: user,
     unlockableBadges: UnlockableBadges

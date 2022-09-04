@@ -54,6 +54,11 @@ export interface State {
   userId?: string;
   userMap: { [userId: string]: MinimalUser };
   roomData: { [roomId: string]: Room };
+
+  // A count of the current number of users in there
+  // Each specific roomData entry maintains a `users` array with usernames
+  presenceData: { [roomId: string]: number };
+
   profileData?: User;
 
   messages: Message[];
@@ -116,6 +121,7 @@ export const defaultState: State = {
   autoscrollChat: true,
   userMap: {},
   roomData: {},
+  presenceData: {},
   inMediaChat: false,
   activeModal: Modal.None,
   activeModalOptions: {},
@@ -192,6 +198,7 @@ export default (oldState: State, action: Action): State => {
       if (state.roomData[roomId]) {
         state.roomData[roomId].users = action.value[roomId]
       }
+      state.presenceData[roomId] = action.value[roomId].length
     })
   }
 
