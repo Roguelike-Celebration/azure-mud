@@ -61,7 +61,7 @@ export async function moveToRoom (
     return {
       messages,
       httpResponse: {
-        status: 404,
+        status: 400,
         body: { error: 'Invalid room ID' }
       }
     }
