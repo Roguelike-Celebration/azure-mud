@@ -5,6 +5,7 @@ import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
+import { isUndefined } from 'lodash'
 
 /**
  * This renders a clickable ASCII map!
@@ -29,7 +30,7 @@ import { DispatchContext } from '../App'
  */
 
  interface Props {
-  roomData: { [roomId: string]: Room };
+  presenceData: { [roomId: string]: number };
   currentRoomId: string
   isMiniMap?: boolean
  }
@@ -46,7 +47,7 @@ export default function MapView (props: Props) {
   const dispatch = useContext(DispatchContext)
   const [preWidth, setPreWidth] = useState(0)
   const [preHeight, setPreHeight] = useState(0)
-  const { roomData, currentRoomId } = props
+  const { presenceData, currentRoomId } = props
 
   // Pixel size of one ASCII character
   let w; let h = 0
@@ -82,15 +83,16 @@ export default function MapView (props: Props) {
     }
   }, (props.isMiniMap ? null : []))
 
-  if (!roomData) { return <div/> }
+  if (!presenceData) { return <div/> }
 
   let map = mapText
 
   presenceMapping.forEach((roomId, idx) => {
     let replaceString = '[0]'
 
-    if (roomData[roomId] && roomData[roomId].users && roomData[roomId].users.length > 0) {
-      replaceString = `[${roomData[roomId].users.length}]`
+    // Because 0 is falsy, we need to explicitly use isUndefined
+    if (presenceData[roomId] && !isUndefined(presenceData[roomId])) {
+      replaceString = `[${presenceData[roomId]}]`
     }
     replaceString = replaceString.padEnd(4, '.')
     map = map.replace(`(${idx.toString().padStart(2, '0')})`, replaceString)

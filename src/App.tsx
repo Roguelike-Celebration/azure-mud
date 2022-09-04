@@ -301,7 +301,7 @@ const App = () => {
     case Modal.Map: {
       modalIsFullScreen = true
       innerModalView = (
-        <MapModalView roomData={state.roomData} currentRoomId={state.roomId} />
+        <MapModalView presenceData={state.presenceData} currentRoomId={state.roomId} />
       )
       break
     }
@@ -377,7 +377,7 @@ const App = () => {
                     {shouldShowMenu ? (
                       <span>
                         <SideNavView
-                          roomData={state.roomData}
+                          presenceData={state.presenceData}
                           currentRoomId={state.roomId}
                           username={state.userMap[state.userId].username}
                           spaceIsClosed={state.isClosed}

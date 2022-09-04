@@ -2,7 +2,7 @@ import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import DB from '../redis'
 import { User } from '../user'
 
-const getRoomIds: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
+const updateRoom: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const roomId = inputs.roomId
   const data = inputs.roomData
   if (!roomId) {
@@ -34,4 +34,4 @@ const getRoomIds: AuthenticatedEndpointFunction = async (user: User, inputs: any
   }
 }
 
-export default getRoomIds
+export default updateRoom

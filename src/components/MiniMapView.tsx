@@ -7,7 +7,7 @@ import { Room } from '../room'
 import MapView from './MapView'
 
  interface Props {
-  roomData: { [roomId: string]: Room };
+  presenceData: { [roomId: string]: number };
   currentRoomId: string
  }
 
@@ -21,7 +21,7 @@ export default function MiniMapView (props: Props) {
 
   return (
     <div id='mini-map' onClickCapture={handleClickCapture} style={{ cursor: 'pointer' }}>
-      <MapView roomData={props.roomData} currentRoomId={props.currentRoomId} isMiniMap={true} />
+      <MapView presenceData={props.presenceData} currentRoomId={props.currentRoomId} isMiniMap={true} />
     </div>
   )
 }

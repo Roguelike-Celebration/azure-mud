@@ -1,4 +1,3 @@
-import { staticRoomData } from './rooms'
 import { RoomResponse } from './types'
 import { awardUserBadge, User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
@@ -24,11 +23,14 @@ export async function moveToRoom (
     // TODO: Rooms should have a generous list of accepted names
     // DOUBLE TODO: Can we fuzzily search all exits for the current room?
     const searchStr = newRoomId.replace(' ', '').toUpperCase()
-    to = Object.values(staticRoomData).find(
-      (room) => room.shortName.replace(' ', '').toUpperCase() === searchStr ||
-        room.displayName.replace(' ', '').toUpperCase() === searchStr ||
-          room.id.toUpperCase() === searchStr
-    )
+    to = await Redis.getRoomData(searchStr)
+
+    if (!to) {
+      const toId = await Redis.getRoomIdFromFuzzySearch(searchStr)
+      if (toId) {
+        to = await Redis.getRoomData(toId)
+      }
+    }
   }
 
   if (!to) {
@@ -61,7 +63,7 @@ export async function moveToRoom (
     return {
       messages,
       httpResponse: {
-        status: 404,
+        status: 400,
         body: { error: 'Invalid room ID' }
       }
     }

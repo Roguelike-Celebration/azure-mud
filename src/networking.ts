@@ -219,9 +219,7 @@ export async function moveToRoom (roomId: string) {
 
   console.log(result)
 
-  if (result.error) {
-    myDispatch(ErrorAction(result.error))
-  } else {
+  if (result) {
     myDispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
 
     if (result.roomNotes) {

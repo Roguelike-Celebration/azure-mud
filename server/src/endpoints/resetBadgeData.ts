@@ -3,7 +3,7 @@ import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import DB from '../redis'
 import { minimizeUser, User } from '../user'
 
-const resetRoomData: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
+const resetBadgeData: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   user.unlockedBadges = []
   user.equippedBadges = []
   await DB.setUserProfile(user.id, user)
@@ -20,4 +20,4 @@ const resetRoomData: AuthenticatedEndpointFunction = async (user: User, inputs: 
   }
 }
 
-export default resetRoomData
+export default resetBadgeData
