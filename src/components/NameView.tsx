@@ -102,7 +102,7 @@ export default function NameView (props: Props) {
     className = className + ' font-' + user.fontReward
   }
 
-  const badges = (user.equippedBadges || [])
+  const badges = ((user && user.equippedBadges) || [])
     .map((b, i) => <BadgeView key={`badge-${i}`} badge={b} />)
 
   // TODO: This is not yet being set anywhere
