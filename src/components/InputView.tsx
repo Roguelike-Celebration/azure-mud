@@ -81,7 +81,7 @@ export default function InputView (props: {
         <Mention
           trigger="@"
           className="mentions__mentions"
-          markup="@@[[__display__]]``__id__``@@"
+          markup="@@``__id__``@@"
           data={usersInRoom}
           renderSuggestion={(suggestion, search, highlightedDisplay) => {
             return (
