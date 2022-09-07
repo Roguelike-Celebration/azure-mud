@@ -4,6 +4,7 @@ import { DispatchContext, UserMapContext } from '../App'
 
 import '../../style/input.css'
 import { PublicUser } from '../../server/src/user'
+import { emojiMentionsData } from '../emoji'
 const emojifier = require('node-emoji')
 
 export default function InputView (props: {
@@ -80,6 +81,18 @@ export default function InputView (props: {
           className="mentions__mentions"
           markup="@@[[__display__]]``__id__``@@"
           data={usersInRoom}
+          renderSuggestion={(suggestion, search, highlightedDisplay) => {
+            return (
+              <div>{highlightedDisplay}</div>
+            )
+          }}
+        />
+        <Mention
+          trigger=":"
+          className="mentions__custom_emoji"
+          markup=":__id__:"
+          data={emojiMentionsData}
+          displayTransform={(id, display) => `:${id}:`}
           renderSuggestion={(suggestion, search, highlightedDisplay) => {
             return (
               <div>{highlightedDisplay}</div>

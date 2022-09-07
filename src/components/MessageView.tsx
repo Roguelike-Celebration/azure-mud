@@ -30,6 +30,7 @@ import NameView from './NameView'
 import { DispatchContext, UserMapContext, RoomDataContext } from '../App'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
 import { join, split } from 'lodash'
+import { renderCustomEmojiString } from '../emoji'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
@@ -178,6 +179,11 @@ const SameView = (props: SameRoomMessage & { id: string }) => (
 
 const parseUserIdOrDisplay = (messageFragment): string => {
   const userId = messageFragment.match(/``(.*?)``/)
+
+  if (!userId) {
+    return 'Malformed Mention'
+  }
+
   if (userId.length === 2) {
     return userId[1]
   }
@@ -202,9 +208,12 @@ const ChatMessageView = (props: ChatMessage & { id: string }) => {
         return <>{acc} {userIdOrDisplay}</>
       }
     } else {
-      return <>{acc} {fragment}</>
+      const customEmojified = renderCustomEmojiString(fragment)
+
+      return <>{acc} {customEmojified}</>
     }
   }, <></>)
+
   return (
     <div className="message">
       <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.messageId}>{joinedMessage}</DeletableMessageView>
