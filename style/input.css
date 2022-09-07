@@ -25,6 +25,7 @@
 
 .mentions--singleLine .mentions__control {
   display: inline-block;
+  width: 0px;
 }
 .mentions--singleLine .mentions__highlighter {
   padding: 1px;
