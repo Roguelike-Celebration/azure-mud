@@ -36,8 +36,13 @@ export default function NameView (props: Props) {
   const isMod = user && user.isMod
   const isBanned = user && user.isBanned
 
-  const player = userMap[myId]
-  const playerIsMod = player && player.isMod
+  const userIsMod = user && user.isMod
+
+  // This sometimes gets called before `connect` returns any users
+  // That itself is a bug to fix, but this can at least guard against it.
+  if (Object.keys(userMap).length === 1) {
+    return <div />
+  }
 
   const handleProfile = (e, data) => {
     dispatch(HideModalAction())
@@ -66,7 +71,7 @@ export default function NameView (props: Props) {
     }
   }
 
-  const banButton = playerIsMod ? (
+  const banButton = userIsMod ? (
     <MenuItem
       data={{ id: props.userId, username: username }}
       onClick={handleBan}
@@ -77,7 +82,7 @@ export default function NameView (props: Props) {
     ''
   )
 
-  const modButton = playerIsMod ? (
+  const modButton = userIsMod ? (
     <MenuItem
       data={{ id: props.userId, username: username }}
       onClick={handleMod}
@@ -102,7 +107,7 @@ export default function NameView (props: Props) {
     className = className + ' font-' + user.fontReward
   }
 
-  const badges = ((user && user.equippedBadges) || [])
+  const badges = (user.equippedBadges || [])
     .map((b, i) => <BadgeView key={`badge-${i}`} badge={b} />)
 
   // TODO: This is not yet being set anywhere

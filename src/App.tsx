@@ -401,6 +401,7 @@ const App = () => {
                           room={state.roomData[state.roomId]}
                           userId={state.userId}
                           roomData={state.roomData}
+                          presenceData={state.presenceData}
                           inMediaChat={state.inMediaChat}
                           keepCameraWhenMoving={state.keepCameraWhenMoving}
                           textOnlyMode={state.textOnlyMode}

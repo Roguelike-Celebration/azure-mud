@@ -27,6 +27,7 @@ interface Props {
   room: Room;
   userId: string;
   roomData: { [roomId: string]: Room };
+  presenceData: { [roomId: string]: number };
   inMediaChat: boolean;
   keepCameraWhenMoving: boolean;
   textOnlyMode: boolean;
@@ -156,7 +157,7 @@ export default function RoomView (props: Props) {
           onClick={descriptionClick}
           dangerouslySetInnerHTML={{
             __html: room
-              ? parseDescription(room.description, props.roomData)
+              ? parseDescription(room.description, props.roomData, props.presenceData)
               : 'Loading current room...'
           }}
         />
@@ -209,7 +210,8 @@ export default function RoomView (props: Props) {
 
 function parseDescription (
   description: string,
-  roomData: { [roomId: string]: Room }
+  roomData: { [roomId: string]: Room },
+  presenceData: { [roomId: string]: number }
 ): string {
   // eslint-disable-next-line no-useless-escape
   const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
@@ -217,14 +219,12 @@ function parseDescription (
 
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     const room = roomData[roomId]
+    const userCount = presenceData[roomId]
     if (roomId === 'item') {
       return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
     } else if (room) {
-      const userCount =
-        room && room.users && room.users.length > 0
-          ? ` (${room.users.length})`
-          : ''
-      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCount}</a>`
+      const userCountString = userCount > 0 ? ` (${userCount})` : ''
+      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCountString}</a>`
     } else if (linkActions[roomId]) {
       return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`
     } else {
@@ -243,11 +243,9 @@ function parseDescription (
         `Dev warning: tried to link to room ${roomId}, which doesn't exist`
       )
     }
-    const userCount =
-      room && room.users && room.users.length > 0
-        ? ` (${room.users.length})`
-        : ''
-    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCount}</a>`
+    const userCount = presenceData[roomId]
+    const userCountString = userCount > 0 ? ` (${userCount})` : ''
+    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCountString}</a>`
   })
   return description
 }

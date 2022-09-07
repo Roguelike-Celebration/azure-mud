@@ -1,4 +1,7 @@
 import json from './data/roomData.json'
+import DB from '../redis'
+import { minimizeUser } from '../user'
+
 export const staticRoomData: {[name: string]: Room} = json
 
 export interface Room {
@@ -44,4 +47,30 @@ export interface NoteWallData {
   addNoteLinkText: string
   addNotePrompt: string
   noteWallDescription: string
+}
+
+export interface MinimalRoom {
+  id: string;
+  displayName: string;
+  shortName: string;
+ }
+
+function minimizeRoom (room: Room): MinimalRoom {
+  return {
+    id: room.id,
+    displayName: room.displayName,
+    shortName: room.shortName
+  }
+}
+
+export async function minimalRoomData (): Promise<{[roomId: string]: MinimalRoom}> {
+  const roomIds = await DB.getRoomIds()
+  const roomData = {};
+  (await Promise.all(roomIds.map(DB.getRoomData)))
+    .map(minimizeRoom)
+    .forEach((r) => {
+      roomData[r.id] = r
+    })
+
+  return roomData
 }
