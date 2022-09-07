@@ -223,7 +223,7 @@ function parseDescription (
     if (roomId === 'item') {
       return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
     } else if (room) {
-      const userCountString = userCount > 0 ? ` (${room.users.length})` : ''
+      const userCountString = userCount > 0 ? ` (${userCount})` : ''
       return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCountString}</a>`
     } else if (linkActions[roomId]) {
       return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`
@@ -244,7 +244,7 @@ function parseDescription (
       )
     }
     const userCount = presenceData[roomId]
-    const userCountString = userCount > 0 ? ` (${room.users.length})` : ''
+    const userCountString = userCount > 0 ? ` (${userCount})` : ''
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCountString}</a>`
   })
   return description

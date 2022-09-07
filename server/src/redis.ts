@@ -346,6 +346,7 @@ const Redis: RedisInternal = {
     await setCache(roomFuzzySearchKey(room.id.replace(' ', '').toUpperCase()), room.id)
     await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
 
+    await addToSet(room.id)
     return await setCache(roomDataKey(room.id), JSON.stringify(room))
   },
 
@@ -359,13 +360,12 @@ const Redis: RedisInternal = {
   },
 
   async deleteRoomData (roomId: string): Promise<void> {
+    await removeFromSet(roomId)
     return await del(roomDataKey(roomId))
   },
 
   async getRoomIds (): Promise<string[]> {
-    const keys = await redisKeys('room_*')
-    console.log(keys)
-    return keys.map(k => k.substring(5))
+    return (await getSet(roomIdsKey)) || []
   }
 }
 
@@ -376,6 +376,8 @@ const modListKey = 'mods'
 const serverSettingsKey = 'serverSettings'
 
 const allUserIdsKey = 'allUserIds'
+
+const roomIdsKey = 'roomIds'
 
 function roomDataKey (roomId: string): string {
   return `room_${roomId}`
