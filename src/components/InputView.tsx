@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { MentionsInput, Mention } from 'react-mentions'
-import { DispatchContext } from '../App'
-import { UserMapContext } from '../App'
-import { SendMessageAction } from '../Actions'
+import { DispatchContext, UserMapContext } from '../App'
 
 import '../../style/input.css'
 import { PublicUser } from '../../server/src/user'
@@ -13,11 +11,10 @@ export default function InputView (props: {
   prepopulated?: string,
   usersInRoom?: string[]
 }) {
-  const dispatch = useContext(DispatchContext)
   const { userMap } = useContext(UserMapContext)
   const [input, setInput] = useState('')
 
-  const SUGGESTIONS_LIMIT = 10;
+  const SUGGESTIONS_LIMIT = 10
 
   const handleInputChange = (e) => {
     if (e.target.value === '\n') {
@@ -48,16 +45,16 @@ export default function InputView (props: {
   }, [props.prepopulated])
 
   const usersInRoom = (search: string) => {
-    if (!props.usersInRoom) { return []}
+    if (!props.usersInRoom) { return [] }
 
     const upperCaseSearch = search.toUpperCase()
     const suggestionIds = []
     for (const userId of props.usersInRoom) {
       const user: PublicUser = userMap[userId]
       if (user && (!search || user.username.toUpperCase().startsWith(upperCaseSearch))) {
-        suggestionIds.push({id: user.id, display: user.username})
+        suggestionIds.push({ id: user.id, display: user.username })
       }
-      if (suggestionIds.length == SUGGESTIONS_LIMIT) {
+      if (suggestionIds.length === SUGGESTIONS_LIMIT) {
         break
       }
     }

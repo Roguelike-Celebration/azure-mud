@@ -185,7 +185,7 @@ const parseUserIdOrDisplay = (messageFragment): string => {
   if (display.length === 2) {
     return display[1]
   }
-  return "Malformed Mention"
+  return 'Malformed Mention'
 }
 
 const ChatMessageView = (props: ChatMessage & { id: string }) => {
