@@ -6,6 +6,7 @@ import { User, isMod, minimizeUser } from '../user'
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
 import DB from '../redis'
 import { UnlockableBadges } from '../badges'
+import { minimalRoomData } from '../rooms'
 
 // TODO: We are currently including all static room data in this initial request
 // That may not be eventually what we want
@@ -36,9 +37,10 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     roomId: user.roomId,
     presenceData: await DB.allRoomOccupants(),
     users: userMap,
-    // TODO: This will only include the current room
-    roomData: { [user.roomId]: room },
-    // TODO: Have a function to delete the keys we don't need
+
+    // WARNING: How we're fetching minimalRoomData may be inefficient
+    roomData: { ...await minimalRoomData(), [user.roomId]: room },
+
     profile: user,
     unlockableBadges: UnlockableBadges
   }

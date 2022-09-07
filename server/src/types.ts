@@ -1,4 +1,4 @@
-import { Room } from './rooms'
+import { MinimalRoom, Room } from './rooms'
 import { User, MinimalUser, PublicUser } from './user'
 import { RoomNote } from './roomNote'
 import { Badge } from './badges'
@@ -55,7 +55,7 @@ export interface RoomResponse {
   roomId: string;
   presenceData?: { [roomId: string]: string[] };
   users?: { [userId: string]: MinimalUser };
-  roomData?: { [roomId: string]: Room };
+  roomData?: { [roomId: string]: Room|MinimalRoom };
   profile?: User;
   roomNotes?: RoomNote[]
   unlockableBadges?: Badge[]

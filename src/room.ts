@@ -22,6 +22,11 @@ export interface Room {
   riddles?: string[]
 }
 
+export interface MinimalRoom {
+  displayName: string;
+  id: string;
+}
+
 export function convertServerRoom (room: Server.Room): Room {
   return {
     displayName: room.displayName,
