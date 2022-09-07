@@ -179,6 +179,11 @@ const SameView = (props: SameRoomMessage & { id: string }) => (
 
 const parseUserIdOrDisplay = (messageFragment): string => {
   const userId = messageFragment.match(/``(.*?)``/)
+
+  if (!userId) {
+    return 'Malformed Mention'
+  }
+
   if (userId.length === 2) {
     return userId[1]
   }
