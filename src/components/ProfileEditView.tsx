@@ -15,7 +15,7 @@ interface Props {
   user?: PublicUser;
 }
 
-function sanitizeString(s: string, maxLength: number): string {
+function sanitizeString (s: string, maxLength: number): string {
   // Strip RTL/LTR characters
   s = s.replace(/[‮‏]/g, '')
   s = s.length > maxLength ? s.substring(0, maxLength) : s

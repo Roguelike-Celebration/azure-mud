@@ -83,7 +83,7 @@ export async function getUserIdForUsername (username: string) {
 }
 
 // Copy/pasted from ProfileEditView.tsx in the client
-function sanitizeString(s: string, maxLength: number): string {
+function sanitizeString (s: string, maxLength: number): string {
   // Strip RTL/LTR characters
   s = s.replace(/[‮‏]/g, '')
   s = s.length > maxLength ? s.substring(0, maxLength) : s
