@@ -357,7 +357,7 @@ const clickableAreas: ClickableArea[] = [
     height: 5
   },
   {
-    roomId: 'balcony',
+    roomId: 'barBalcony',
     x: 97,
     y: 30,
     width: 9,
