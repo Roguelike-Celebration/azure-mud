@@ -308,28 +308,28 @@ const clickableAreas: ClickableArea[] = [
     height: 5
   },
   {
-    roomId: 'digSite',
+    roomId: 'unconferenceDigSite',
     x: 93,
     y: 13,
     width: 15,
     height: 4
   },
   {
-    roomId: 'starship',
+    roomId: 'unconferenceStarship',
     x: 93,
     y: 17,
     width: 15,
     height: 4
   },
   {
-    roomId: 'raveCave',
+    roomId: 'unconferenceRaveCave',
     x: 93,
     y: 21,
     width: 15,
     height: 4
   },
   {
-    roomId: 'elysium',
+    roomId: 'unconferenceElysium',
     x: 93,
     y: 25,
     width: 15,
