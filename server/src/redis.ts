@@ -346,7 +346,7 @@ const Redis: RedisInternal = {
     await setCache(roomFuzzySearchKey(room.id.replace(' ', '').toUpperCase()), room.id)
     await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
 
-    await addToSet(room.id)
+    await addToSet(roomIdsKey, room.id)
     return await setCache(roomDataKey(room.id), JSON.stringify(room))
   },
 
