@@ -33,7 +33,7 @@ import { PublicUser, MinimalUser, User } from '../server/src/user'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
-import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../server/src/config'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
 import firebase from 'firebase/app'
@@ -384,8 +384,6 @@ export default (oldState: State, action: Action): State => {
 
     if (trimmedMessage.length > MESSAGE_MAX_LENGTH) {
       addMessage(state, createErrorMessage('Your message is too long! Please try to keep it under ~600 characters!'))
-    } else if (trimmedMessage.split(' ').find((s) => s.length > MESSAGE_MAX_WORD_LENGTH)) {
-      addMessage(state, createErrorMessage('Your message has a word that is too long! Please keep it under 60 characters!'))
     } else if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
