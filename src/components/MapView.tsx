@@ -185,7 +185,7 @@ const presenceMapping = [
   'dockingBay',
   'oxygenFarm',
   'officeOfSteam',
-  'adventurersGuild',
+  'adventurersGuildHall',
   'videoDome',
   'theater',
   'theaterWarrior',
@@ -231,7 +231,7 @@ const clickableAreas: ClickableArea[] = [
     height: 6
   },
   {
-    roomId: 'adventurersGuild',
+    roomId: 'adventurersGuildHall',
     x: 0,
     y: 25,
     width: 18,
@@ -350,7 +350,7 @@ const clickableAreas: ClickableArea[] = [
     height: 12
   },
   {
-    roomId: 'stools',
+    roomId: 'barStools',
     x: 59,
     y: 32,
     width: 8,
