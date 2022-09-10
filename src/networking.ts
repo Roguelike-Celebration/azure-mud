@@ -172,7 +172,7 @@ export async function displayMessageFromList (listName: string) {
   await callAzureFunction('displayMessage', { list: listName })
 }
 
-export async function orderNewDrink(item: string) {
+export async function orderNewDrink () {
     await callAzureFunction('orderNewDrink')
 }
 

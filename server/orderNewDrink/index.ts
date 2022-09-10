@@ -1,6 +1,6 @@
 ﻿import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { authenticatedAzureWrap } from '../src/azureWrap'
-import equipBadgeFunction from '../src/endpoints/orderNewDrink'
+import orderNewDrink from '../src/endpoints/orderNewDrink'
 
 const httpTrigger: AzureFunction = async function (
     context: Context,
