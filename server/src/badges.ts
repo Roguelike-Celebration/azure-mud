@@ -31,12 +31,12 @@ export const FreeBadges: Badge[] = [
 
 export const UnlockableBadges: Badge[] = [
   {
-    emoji: '🤖',
-    description: 'Beep boop this robot was fabricated in a lab'
+    emoji: '🌱',
+    description: 'The tiniest little plant can survive anywhere'
   },
   {
-    emoji: '👾',
-    description: 'Beep boop this robot was fabricated in a lab'
+    emoji: '🚀',
+    description: 'To infinity and beyond!'
   },
   {
     emoji: '⚔️',
@@ -53,6 +53,10 @@ export const UnlockableBadges: Badge[] = [
   {
     emoji: '🌎',
     description: 'A worldly traveler of our event space!'
+  },
+  {
+    emoji: '🐣',
+    description: 'Attended the 2022 preview event!'
   }
 ]
 

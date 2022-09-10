@@ -148,10 +148,10 @@ function awardBadges (user: User, roomId: string) {
   // doesn't have the matching badge,
   // give them the badge with this emoji"
   const tuples = [
-    ['robots', '🤖'],
-    ['sfHub', '👾'],
+    ['dockingBay', '🚀'],
+    ['oxygenFarm', '🌱'],
     ['transmute', '🧙‍♀️'],
-    ['exploreHub', '⚔️'],
+    ['adventurersGuildHall', '⚔️'],
     ['steam', '💾']
   ]
 
