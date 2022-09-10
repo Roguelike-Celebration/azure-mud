@@ -185,7 +185,7 @@ const presenceMapping = [
   'dockingBay',
   'oxygenFarm',
   'officeOfSteam',
-  'adventurersGuild',
+  'adventurersGuildHall',
   'videoDome',
   'theater',
   'theaterWarrior',
@@ -231,7 +231,7 @@ const clickableAreas: ClickableArea[] = [
     height: 6
   },
   {
-    roomId: 'adventurersGuild',
+    roomId: 'adventurersGuildHall',
     x: 0,
     y: 25,
     width: 18,
@@ -273,28 +273,28 @@ const clickableAreas: ClickableArea[] = [
     height: 5
   },
   {
-    roomId: 'warrior',
+    roomId: 'theaterWarrior',
     x: 69,
     y: 0,
     width: 16,
     height: 5
   },
   {
-    roomId: 'mage',
+    roomId: 'theaterMage',
     x: 69,
     y: 5,
     width: 16,
     height: 4
   },
   {
-    roomId: 'rogue',
+    roomId: 'theaterRogue',
     x: 69,
     y: 9,
     width: 16,
     height: 4
   },
   {
-    roomId: 'cleric',
+    roomId: 'theatorCleric',
     x: 69,
     y: 13,
     width: 16,
@@ -308,28 +308,28 @@ const clickableAreas: ClickableArea[] = [
     height: 5
   },
   {
-    roomId: 'digSite',
+    roomId: 'unconferenceDigSite',
     x: 93,
     y: 13,
     width: 15,
     height: 4
   },
   {
-    roomId: 'starship',
+    roomId: 'unconferenceStarship',
     x: 93,
     y: 17,
     width: 15,
     height: 4
   },
   {
-    roomId: 'raveCave',
+    roomId: 'unconferenceRaveCave',
     x: 93,
     y: 21,
     width: 15,
     height: 4
   },
   {
-    roomId: 'elysium',
+    roomId: 'unconferenceElysium',
     x: 93,
     y: 25,
     width: 15,
@@ -350,7 +350,7 @@ const clickableAreas: ClickableArea[] = [
     height: 12
   },
   {
-    roomId: 'stools',
+    roomId: 'barStools',
     x: 59,
     y: 32,
     width: 8,
