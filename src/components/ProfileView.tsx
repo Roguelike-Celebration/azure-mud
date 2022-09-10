@@ -106,7 +106,7 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
 
   return (
     <Linkify componentDecorator={linkDecorator}>
-      <div id="profile">
+      <div id="profile" style={{ overflowWrap: 'anywhere' }}>
         <div className='fixed'>
           <div id="header">
             <h2 className={user.isMod ? 'mod' : ''}><NameView userId={user.id} id={`profile-nameview-${user.id}`} /></h2>

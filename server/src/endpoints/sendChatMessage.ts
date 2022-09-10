@@ -5,7 +5,7 @@ import { whisper } from '../whisper'
 import { shout } from '../shout'
 import { look } from '../look'
 import { getUserIdForUsername, User } from '../user'
-import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../config'
+import { MESSAGE_MAX_LENGTH } from '../config'
 import { dance } from '../dance'
 import { interact } from '../interact'
 
@@ -23,13 +23,6 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
       httpResponse: {
         status: 400,
         body: 'Message length too long!'
-      }
-    }
-  } else if (message.split(' ').find((e: string) => e.length > MESSAGE_MAX_WORD_LENGTH)) {
-    return {
-      httpResponse: {
-        status: 400,
-        body: 'Message contains a word that is too long!'
       }
     }
   }

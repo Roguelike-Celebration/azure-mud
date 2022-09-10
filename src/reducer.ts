@@ -33,7 +33,7 @@ import { PublicUser, MinimalUser, User } from '../server/src/user'
 import { v4 as uuidv4 } from 'uuid'
 import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
-import { MESSAGE_MAX_LENGTH, MESSAGE_MAX_WORD_LENGTH } from '../server/src/config'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
 import firebase from 'firebase/app'
@@ -54,6 +54,11 @@ export interface State {
   userId?: string;
   userMap: { [userId: string]: MinimalUser };
   roomData: { [roomId: string]: Room };
+
+  // A count of the current number of users in there
+  // Each specific roomData entry maintains a `users` array with usernames
+  presenceData: { [roomId: string]: number };
+
   profileData?: User;
 
   messages: Message[];
@@ -116,6 +121,7 @@ export const defaultState: State = {
   autoscrollChat: true,
   userMap: {},
   roomData: {},
+  presenceData: {},
   inMediaChat: false,
   activeModal: Modal.None,
   activeModalOptions: {},
@@ -192,13 +198,14 @@ export default (oldState: State, action: Action): State => {
       if (state.roomData[roomId]) {
         state.roomData[roomId].users = action.value[roomId]
       }
+      state.presenceData[roomId] = action.value[roomId].length
     })
   }
 
   if (action.type === ActionType.PlayerConnected) {
     const user = action.value
     const roomData = state.roomData[state.roomId]
-    if (!roomData.users.includes(user.id)) {
+    if (roomData && roomData.users && !roomData?.users.includes(user.id)) {
       roomData.users.push(user.id)
       addMessage(state, createConnectedMessage(user.id, state.roomId, roomData.users.length))
     }
@@ -213,7 +220,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.PlayerEntered) {
     const roomData = state.roomData[state.roomId]
-    if (!roomData.users.includes(action.value.name)) {
+    if (roomData.users && !roomData.users.includes(action.value.name)) {
       roomData.users.push(action.value.name)
       addMessage(state,
         createEnteredMessage(action.value.name, action.value.fromId, action.value.fromName, state.roomId, roomData.users.length)
@@ -377,8 +384,6 @@ export default (oldState: State, action: Action): State => {
 
     if (trimmedMessage.length > MESSAGE_MAX_LENGTH) {
       addMessage(state, createErrorMessage('Your message is too long! Please try to keep it under ~600 characters!'))
-    } else if (trimmedMessage.split(' ').find((s) => s.length > MESSAGE_MAX_WORD_LENGTH)) {
-      addMessage(state, createErrorMessage('Your message has a word that is too long! Please keep it under 60 characters!'))
     } else if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       addMessage(state, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))

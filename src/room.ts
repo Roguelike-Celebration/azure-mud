@@ -22,6 +22,11 @@ export interface Room {
   riddles?: string[]
 }
 
+export interface MinimalRoom {
+  displayName: string;
+  id: string;
+}
+
 export function convertServerRoom (room: Server.Room): Room {
   return {
     displayName: room.displayName,
@@ -33,7 +38,8 @@ export function convertServerRoom (room: Server.Room): Room {
     noteWallData: room.noteWallData,
     hidden: room.hidden,
     specialFeatures: room.specialFeatures,
-    riddles: room.riddles
+    riddles: room.riddles,
+    users: room.users
   }
 }
 

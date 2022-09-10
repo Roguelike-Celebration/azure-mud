@@ -29,6 +29,8 @@ import {
 import NameView from './NameView'
 import { DispatchContext, UserMapContext, RoomDataContext } from '../App'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
+import { join, split } from 'lodash'
+import { renderCustomEmojiString } from '../emoji'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
@@ -175,11 +177,49 @@ const SameView = (props: SameRoomMessage & { id: string }) => (
   <div className="message">You are already in {props.roomId}.</div>
 )
 
-const ChatMessageView = (props: ChatMessage & { id: string }) => (
-  <div className="message">
-    <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView>
-  </div>
-)
+const parseUserIdOrDisplay = (messageFragment): string => {
+  const userId = messageFragment.match(/``(.*?)``/)
+
+  if (!userId) {
+    return 'Malformed Mention'
+  }
+
+  if (userId.length === 2) {
+    return userId[1]
+  }
+  const display = messageFragment.match(/\[\[(.*?)\]\]/)
+  if (display.length === 2) {
+    return display[1]
+  }
+  return 'Malformed Mention'
+}
+
+const ChatMessageView = (props: ChatMessage & { id: string }) => {
+  const { userMap } = useContext(UserMapContext)
+
+  const splitMessage = props.message.split(/(@@.*?@@)/)
+  const joinedMessage = splitMessage.reduce<JSX.Element>((acc, fragment, idx) => {
+    if (fragment.startsWith('@@') && fragment.endsWith('@@')) {
+      const userIdOrDisplay = parseUserIdOrDisplay(fragment)
+      const user = userMap[userIdOrDisplay]
+      if (user) {
+        return <>{acc} <NameView userId={user.id} id={`${props.id}-mention-${idx}`}/></>
+      } else {
+        return <>{acc} {userIdOrDisplay}</>
+      }
+    } else {
+      const customEmojified = renderCustomEmojiString(fragment)
+
+      return <>{acc} {customEmojified}</>
+    }
+  }, <></>)
+
+  return (
+    <div className="message">
+      <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.messageId}>{joinedMessage}</DeletableMessageView>
+    </div>
+  )
+}
 
 const CaptionView = (props: CaptionMessage & { id: string }) => (
   <div className="message">

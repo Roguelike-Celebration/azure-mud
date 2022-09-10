@@ -1,19 +1,27 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { DispatchContext } from '../App'
-import { SendMessageAction } from '../Actions'
+import { MentionsInput, Mention } from 'react-mentions'
+import { DispatchContext, UserMapContext } from '../App'
 
 import '../../style/input.css'
+import { PublicUser } from '../../server/src/user'
+import { emojiMentionsData } from '../emoji'
 const emojifier = require('node-emoji')
 
 export default function InputView (props: {
   sendMessage: (message: string) => void,
-  prepopulated?: string
+  prepopulated?: string,
+  usersInRoom?: string[]
 }) {
-  const dispatch = useContext(DispatchContext)
+  const { userMap } = useContext(UserMapContext)
   const [input, setInput] = useState('')
 
+  const SUGGESTIONS_LIMIT = 10
+
   const handleInputChange = (e) => {
-    const result = emojifier.emojify(e.currentTarget.value)
+    if (e.target.value === '\n') {
+      return
+    }
+    const result = emojifier.emojify(e.target.value)
     setInput(result)
   }
 
@@ -24,7 +32,9 @@ export default function InputView (props: {
   }
 
   const onClick = () => {
-    props.sendMessage(input)
+    if (input.trim() !== '') {
+      props.sendMessage(input)
+    }
     setInput('')
   }
 
@@ -35,17 +45,61 @@ export default function InputView (props: {
     }
   }, [props.prepopulated])
 
+  const usersInRoom = (search: string) => {
+    if (!props.usersInRoom) { return [] }
+
+    const upperCaseSearch = search.toUpperCase()
+    const suggestionIds = []
+    for (const userId of props.usersInRoom) {
+      const user: PublicUser = userMap[userId]
+      if (user && (!search || user.username.toUpperCase().startsWith(upperCaseSearch))) {
+        suggestionIds.push({ id: user.id, display: user.username })
+      }
+      if (suggestionIds.length === SUGGESTIONS_LIMIT) {
+        break
+      }
+    }
+
+    return suggestionIds
+  }
+
   return (
     <div id="input">
-      <input
-        type="text"
+      <MentionsInput
         id="chat-input"
+        className="mentions main-input"
         onChange={handleInputChange}
         onKeyPress={checkEnter}
         value={input}
         aria-label="Chat text input box"
         autoComplete="off"
-      />
+        forceSuggestionsAboveCursor={true}
+        singleLine={true}
+      >
+        <Mention
+          trigger="@"
+          className="mentions__mentions"
+          markup="@@[[__display__]]``__id__``@@"
+          data={usersInRoom}
+          renderSuggestion={(suggestion, search, highlightedDisplay) => {
+            return (
+              <div>{highlightedDisplay}</div>
+            )
+          }}
+        />
+        <Mention
+          trigger=":"
+          className="mentions__custom_emoji"
+          markup=":__id__:"
+          data={emojiMentionsData}
+          displayTransform={(id, display) => `:${id}:`}
+          renderSuggestion={(suggestion, search, highlightedDisplay) => {
+            return (
+              <div>{highlightedDisplay}</div>
+            )
+          }}
+        />
+      </MentionsInput>
       <button id="send" onClick={onClick}>
         Send
       </button>

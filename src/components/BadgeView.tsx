@@ -5,6 +5,10 @@ import { Badge } from '../../server/src/badges'
 export default function BadgeView (props: {badge: Badge}) {
   const b = props.badge
 
+  if (!(b && b.description && b.emoji)) {
+    return <div/>
+  }
+
   // The weird nested badge-text-[emoji] span is for drag preview shenanigans
   // See the dragstart event handler in BadgesModalView.tsx for context
   return (

@@ -1,12 +1,12 @@
 import { globalPresenceMessage } from '../globalPresenceMessage'
 import { userHeartbeatReceived } from '../heartbeat'
-import { staticRoomData } from '../rooms'
 import setUpRoomsForUser from '../setUpRoomsForUser'
 import { RoomResponse } from '../types'
 import { User, isMod, minimizeUser } from '../user'
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
 import DB from '../redis'
 import { UnlockableBadges } from '../badges'
+import { minimalRoomData, Room } from '../rooms'
 
 // TODO: We are currently including all static room data in this initial request
 // That may not be eventually what we want
@@ -37,9 +37,14 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     roomId: user.roomId,
     presenceData: await DB.allRoomOccupants(),
     users: userMap,
-    // TODO: This will only include the current room
-    roomData: { ...staticRoomData, [user.roomId]: room },
-    // TODO: Have a function to delete the keys we don't need
+
+    // WARNING: How we're fetching minimalRoomData may be inefficient
+    // DOUBLE WARNING: The way we're currently storing both MinimalRoom and Room data
+    // in the same object is extremely un-TypeScript-y. Refactoring things to be correct
+    // would be a lot of work, so for the sake of "the event is in a few days" we're just
+    // hand-waving the definitions and pretending MinimalRoom data doesn't exist
+    roomData: { ...(await minimalRoomData() as {[id: string]: Room}), [user.roomId]: room },
+
     profile: user,
     unlockableBadges: UnlockableBadges
   }

@@ -8,8 +8,6 @@ export interface Badge {
   description?: string
 }
 
-// TODO: These 4 descriptions (trans, crab, peach, canada) are placeholders!
-// If they make it to production, please tease Em mercilessly
 export const FreeBadges: Badge[] = [
   {
     emoji: '🏳️‍⚧️',
@@ -21,22 +19,34 @@ export const FreeBadges: Badge[] = [
   },
   {
     emoji: '🍑',
-    description: 'This emoji looks like a butt.'
+    description: 'A juicy piece of fruit with no innuendo.'
   },
   {
     emoji: '🇨🇦',
     description: 'Nice country, eh?'
+  },
+  {
+    emoji: '🦷',
+    description: 'Teeth! Teeth! Teeth!'
+  },
+  {
+    emoji: '🏳️‍🌈',
+    description: '🌈🌈🌈'
+  },
+  {
+    emoji: '👋',
+    description: 'Say hi to me!'
   }
 ]
 
 export const UnlockableBadges: Badge[] = [
   {
-    emoji: '🤖',
-    description: 'Beep boop this robot was fabricated in a lab'
+    emoji: '🌱',
+    description: 'The tiniest little plant can survive anywhere'
   },
   {
-    emoji: '👾',
-    description: 'Beep boop this robot was fabricated in a lab'
+    emoji: '🚀',
+    description: 'To infinity and beyond!'
   },
   {
     emoji: '⚔️',
@@ -53,6 +63,10 @@ export const UnlockableBadges: Badge[] = [
   {
     emoji: '🌎',
     description: 'A worldly traveler of our event space!'
+  },
+  {
+    emoji: '🐣',
+    description: 'Attended the 2022 preview event!'
   }
 ]
 

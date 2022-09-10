@@ -9,6 +9,10 @@ import * as pickupLines from './pickupLines'
 import * as ubizaraTheBartender from './ubizaraTheBartender'
 import * as doctorHope from './doctorHope'
 import * as chadSilverbow from './chadSilverbow'
+import * as drinkSkeletons from './drinkSkeletons'
+import * as drinkVessels from './drinkVessels'
+import * as drinkContents from './drinkContents'
+import * as drinkNames from './drinkNames'
 
 interface Generator {
     generate(): string
@@ -26,7 +30,11 @@ const generators: {[name: string]: Generator} = {
   pickupLines,
   ubizaraTheBartender,
   doctorHope,
-  chadSilverbow
+  chadSilverbow,
+  drinkSkeletons,
+  drinkVessels,
+  drinkContents,
+  drinkNames
 }
 
 export default generators

@@ -72,9 +72,12 @@ interface Database {
 
   setModStatus(userId: string, isMod: boolean)
 
+  setSpeakerStatus(userId: string, isSpeaker: boolean)
+
   banUser(user: User, isBanned: boolean)
 
   modList(): Promise<string[]>
+  speakerList(): Promise<string[]>
 
   // -----------------------------------------------------------------
   // SETTINGS DATA
@@ -116,6 +119,10 @@ interface Database {
   deleteRoomData(roomId: string): Promise<void>
   getRoomData(roomId: string): Promise<Room>
   getRoomIds(): Promise<string[]>
+
+  // When someone types /move [room], we generously try to interpret that
+  // however we can. This uses a special cache for possible terms.
+  getRoomIdFromFuzzySearch (search: string): Promise<string|undefined>
 }
 
 // eslint-disable-next-line no-undef

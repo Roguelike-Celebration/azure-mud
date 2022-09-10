@@ -1,0 +1,29 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": ["get", "post"]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "signalR",
+      "name": "signalRMessages",
+      "hubName": "chat",
+      "direction": "out"
+    },
+    {
+      "type": "signalR",
+      "name": "signalRGroupActions",
+      "hubName": "chat",
+      "direction": "out"
+    }
+  ],
+  "scriptFile": "../dist/toggleSpeakerStatus/index.js"
+}

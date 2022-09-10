@@ -6,9 +6,9 @@ import { User } from '../user'
 
 const resetRoomData: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   // TODO: Allow this to just wipe a specific room
-  Object.values(roomData).forEach(room => {
-    Redis.setRoomData(room as Room)
-  })
+  await Promise.all(Object.values(roomData).map(room => {
+    return Redis.setRoomData(room as Room)
+  }))
 
   return {
     httpResponse: {
