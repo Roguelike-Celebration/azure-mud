@@ -67,6 +67,19 @@ export default function BadgesModalView (props: Props) {
     }
   }
 
+  const rightClickUnequipBadge = (e) => {
+    e.preventDefault()
+    const index = parseInt(e.currentTarget.dataset.index)
+    setSelectedEquippedIndex(undefined)
+
+    if (isNumber(index)) {
+      dispatch(EquipBadgeAction(undefined, index))
+      equipBadge(undefined, index)
+      setSelectedBadge(undefined)
+      setSelectedEquippedIndex(undefined)
+    }
+  }
+
   const selectUnlockedBadge = (e) => {
     const index = parseInt(e.currentTarget.dataset.index)
     const badge = props.unlockedBadges[index]
@@ -89,6 +102,9 @@ export default function BadgesModalView (props: Props) {
   const keyDownOnEquipped = (e) => {
     if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
       selectEquippedBadge(e)
+    } else if ((e.key === 'Backspace' || e.key === 'Delete') && isNumber(selectedEquippedIndex)) {
+      dispatch(EquipBadgeAction(undefined, selectedEquippedIndex))
+      equipBadge(undefined, selectedEquippedIndex)
     }
   }
 
@@ -113,6 +129,7 @@ export default function BadgesModalView (props: Props) {
           data-index={i}
           key={`selected-${i}`}
           onClick={selectEquippedBadge}
+          onContextMenu={rightClickUnequipBadge}
           onDrop={drop}
           onDragOver={dragOver}
           onKeyDown={keyDownOnEquipped}
@@ -128,6 +145,7 @@ export default function BadgesModalView (props: Props) {
           className={`selected-badge ${i === selectedEquippedIndex ? 'selected' : ''}`} data-index={i}
           key={`selected-${i}`}
           onClick={selectEquippedBadge}
+          onContextMenu={rightClickUnequipBadge}
           onDrop={drop}
           onDragOver={dragOver}
           onKeyDown={keyDownOnEquipped}
@@ -178,7 +196,7 @@ export default function BadgesModalView (props: Props) {
       <h1>Your Badges</h1>
       <div>
         <h2>Equipped</h2>
-        {equippedBadges}
+        {equippedBadges} (right-click or highlight & press delete to unequip)
       </div>
       <div>
         <h2>All Badges</h2>

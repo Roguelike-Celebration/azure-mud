@@ -5,11 +5,18 @@ import { equipBadge, minimizeUser, User } from '../user'
 const equipBadgeFunction: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const { badge, index } = inputs
 
-  if (!badge || !isNumber(index)) {
+  if (!isNumber(index)) {
     return {
       httpResponse: {
         status: 400,
-        body: { error: "You didn't pass in a badge and index!" }
+        body: { error: "You didn't pass in an index!" }
+      }
+    }
+  } else if (index < 0 || index > 1) {
+    return {
+      httpResponse: {
+        status: 400,
+        body: { error: 'Index must be 0 or 1!' }
       }
     }
   }
