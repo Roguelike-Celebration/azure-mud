@@ -54,7 +54,7 @@ export const linkActions = {
     displayMessageFromList('chadSilverbow')
   },
   orderNewDrink: () => {
-      orderNewDrink()
+    orderNewDrink()
   }
 }
 

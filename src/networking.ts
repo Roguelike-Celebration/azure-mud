@@ -173,7 +173,7 @@ export async function displayMessageFromList (listName: string) {
 }
 
 export async function orderNewDrink () {
-    await callAzureFunction('orderNewDrink')
+  await callAzureFunction('orderNewDrink')
 }
 
 export async function fetchTwilioToken () {
