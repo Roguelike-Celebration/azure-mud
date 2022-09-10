@@ -205,7 +205,7 @@ export default (oldState: State, action: Action): State => {
   if (action.type === ActionType.PlayerConnected) {
     const user = action.value
     const roomData = state.roomData[state.roomId]
-    if (!roomData?.users.includes(user.id)) {
+    if (roomData && roomData.users && !roomData?.users.includes(user.id)) {
       roomData.users.push(user.id)
       addMessage(state, createConnectedMessage(user.id, state.roomId, roomData.users.length))
     }
