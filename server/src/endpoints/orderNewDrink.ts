@@ -6,8 +6,6 @@ import { v4 as uuid } from 'uuid'
 const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   let thisDrinkSkeleton: string
 
-  let privateActionString: string
-
   const oldItem = user.item
 
   const drinkVessels = generators.drinkVessels
@@ -28,7 +26,7 @@ const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: 
 
   const item = thisDrinkName
 
-    const actionString = (`picks up ${item}.`)
+  const actionString = (item ? `picks up ${item}.` : `drops ${oldItem}.`)
 
   const newProfile = await updateUserProfile(user.id, { item })
 
