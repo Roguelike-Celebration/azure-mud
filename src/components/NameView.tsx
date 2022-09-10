@@ -11,7 +11,7 @@ import {
 import { User } from '../../server/src/user'
 
 import '../../style/nameView.css'
-import { fetchProfile } from '../networking'
+import { fetchProfile, toggleUserSpeaker } from '../networking'
 import { Modal } from '../modals'
 import BadgeView from './BadgeView'
 
@@ -34,6 +34,7 @@ export default function NameView (props: Props) {
   const user: User = userMap[props.userId]
   const username = user && user.username
   const isMod = user && user.isMod
+  const isSpeaker = user && user.isSpeaker
   const isBanned = user && user.isBanned
 
   const userIsMod = user && user.isMod
@@ -71,6 +72,17 @@ export default function NameView (props: Props) {
     }
   }
 
+  const handleSpeaker = (e, data) => {
+    const doSpeaker = confirm(
+      `Are you sure you would like to ${isSpeaker ? 'remove' : 'add'} the user '${
+        data.username
+      }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
+    )
+    if (doSpeaker) {
+      toggleUserSpeaker(data.id)
+    }
+  }
+
   const banButton = userIsMod ? (
     <MenuItem
       data={{ id: props.userId, username: username }}
@@ -82,13 +94,21 @@ export default function NameView (props: Props) {
     ''
   )
 
-  const modButton = userIsMod ? (
-    <MenuItem
-      data={{ id: props.userId, username: username }}
-      onClick={handleMod}
-    >
-      {isMod ? 'Remove Mod' : 'Make Mod'}
-    </MenuItem>
+  const modButtons = userIsMod ? (
+    <>
+      <MenuItem
+        data={{ id: props.userId, username: username }}
+        onClick={handleMod}
+      >
+        {isMod ? 'Remove Mod' : 'Make Mod'}
+      </MenuItem>
+      <MenuItem
+        data={{ id: props.userId, username: username }}
+        onClick={handleSpeaker}
+      >
+        {isSpeaker ? 'Remove Speaker' : 'Make Speaker'}
+      </MenuItem>
+    </>
   ) : (
     ''
   )
@@ -179,7 +199,7 @@ export default function NameView (props: Props) {
       Whisper
         </MenuItem>
         {banButton}
-        {modButton}
+        {modButtons}
       </ContextMenu>
     </>
 
