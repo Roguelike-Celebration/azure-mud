@@ -28,7 +28,7 @@ const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: 
 
   const item = thisDrinkName
 
-  const actionString = (item ? `picks up ${item}.` : `drops ${oldItem}.`)
+  const actionString = (`picks up ${item}.')
 
   const newProfile = await updateUserProfile(user.id, { item })
 
@@ -39,7 +39,7 @@ const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: 
       arguments: [user.id, thisDrinkSkeleton]
     },
     {
-      userId: user.id,
+      userId: user.roomId,
       target: 'emote',
       arguments: [uuid(), user.id, actionString]
     },
