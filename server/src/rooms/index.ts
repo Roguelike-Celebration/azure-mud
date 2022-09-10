@@ -55,13 +55,15 @@ export interface MinimalRoom {
   id: string;
   displayName: string;
   shortName: string;
+  hidden: boolean;
  }
 
 function minimizeRoom (room: Room): MinimalRoom {
   return {
     id: room.id,
     displayName: room.displayName,
-    shortName: room.shortName
+    shortName: room.shortName,
+    hidden: room.hidden
   }
 }
 

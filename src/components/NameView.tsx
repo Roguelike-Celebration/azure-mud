@@ -37,7 +37,9 @@ export default function NameView (props: Props) {
   const isSpeaker = user && user.isSpeaker
   const isBanned = user && user.isBanned
 
-  const userIsMod = user && user.isMod
+  // isMod = the user whose name being rendered is a mod
+  // userIsMod = the user who is logged in is a mod
+  const userIsMod = userMap[myId].isMod
 
   // This sometimes gets called before `connect` returns any users
   // That itself is a bug to fix, but this can at least guard against it.
