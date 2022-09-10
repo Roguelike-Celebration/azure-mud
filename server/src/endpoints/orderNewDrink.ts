@@ -1,6 +1,7 @@
 import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 import { minimizeUser, updateUserProfile, User } from '../user'
 import generators from '../generators'
+import { v4 as uuid } from 'uuid'
 
 const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   let thisDrinkSkeleton: string
@@ -39,8 +40,8 @@ const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: 
     },
     {
       userId: user.id,
-      target: 'privateCommand',
-      arguments: [actionString]
+      target: 'emote',
+      arguments: [uuid(), user.id, actionString]
     },
     {
       target: 'usernameMap',
