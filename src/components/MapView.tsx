@@ -273,28 +273,28 @@ const clickableAreas: ClickableArea[] = [
     height: 5
   },
   {
-    roomId: 'warrior',
+    roomId: 'theaterWarrior',
     x: 69,
     y: 0,
     width: 16,
     height: 5
   },
   {
-    roomId: 'mage',
+    roomId: 'theaterMage',
     x: 69,
     y: 5,
     width: 16,
     height: 4
   },
   {
-    roomId: 'rogue',
+    roomId: 'theaterRogue',
     x: 69,
     y: 9,
     width: 16,
     height: 4
   },
   {
-    roomId: 'cleric',
+    roomId: 'theatorCleric',
     x: 69,
     y: 13,
     width: 16,
