@@ -8,7 +8,7 @@ import BadgeView from './BadgeView'
 import { Badge } from '../../server/src/badges'
 import { EquipBadgeAction } from '../Actions'
 import { equipBadge } from '../networking'
-import { find, isNumber } from 'lodash'
+import { find, isNumber, uniq } from 'lodash'
 
 interface Props {
   unlockedBadges: Badge[]
@@ -101,7 +101,7 @@ export default function BadgesModalView (props: Props) {
   // If there's a badge in the right position but not the left, a[0] is undefined
   // Running array.map on an array with undefined values skips the undefineds
   // This means we need a for loop instead of a map.
-  const rawEquippedBadges = props.equippedBadges || []
+  const rawEquippedBadges = uniq(props.equippedBadges || [])
   const equippedBadges = []
   for (let i = 0; i < Math.max(rawEquippedBadges.length, 2); i++) {
     const b = rawEquippedBadges[i]
@@ -141,7 +141,7 @@ export default function BadgesModalView (props: Props) {
 
   // TODO: Can you see description with screen reader?
   // If we have perf issues, we can map-ify unlockedBadges like on the server
-  const lockedBadges = (props.unlockableBadges || []).filter(b => {
+  const lockedBadges = uniq(props.unlockableBadges || []).filter(b => {
     return !find(props.unlockedBadges, (c) => c.emoji === b.emoji)
   }).map((b) => {
     return (
