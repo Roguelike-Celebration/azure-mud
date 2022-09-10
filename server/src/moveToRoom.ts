@@ -69,6 +69,13 @@ export async function moveToRoom (
     }
   }
 
+  // We send presence data as a SignalR message as part of this HTTP call
+  // HOWEVER! Our client isn't smart enough to merge things correctly
+  // if it gets that presence message BEFORE the HTTP request returns, which is likely
+  // There are potentially better ways to solve this, but making sure the HTTP response
+  // contains presence data is ~fine~
+  to.users = await DB.roomOccupants(to.id)
+
   const awardedBadges = awardBadges(user, to.id)
 
   const response: RoomResponse = {
