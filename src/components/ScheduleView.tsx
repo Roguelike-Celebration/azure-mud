@@ -18,8 +18,7 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
     return {
       time: dayPreview(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId
     }
-  }
-  else if (day === 1) {
+  } else if (day === 1) {
     return {
       time: dayOneDate(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId
     }
