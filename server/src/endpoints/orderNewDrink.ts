@@ -28,7 +28,7 @@ const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: 
 
   const item = thisDrinkName
 
-  const actionString = ("picks up ${item}.")
+    const actionString = (`picks up ${item}.`)
 
   const newProfile = await updateUserProfile(user.id, { item })
 
