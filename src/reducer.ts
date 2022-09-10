@@ -220,7 +220,7 @@ export default (oldState: State, action: Action): State => {
 
   if (action.type === ActionType.PlayerEntered) {
     const roomData = state.roomData[state.roomId]
-    if (!roomData.users.includes(action.value.name)) {
+    if (roomData.users && !roomData.users.includes(action.value.name)) {
       roomData.users.push(action.value.name)
       addMessage(state,
         createEnteredMessage(action.value.name, action.value.fromId, action.value.fromName, state.roomId, roomData.users.length)
