@@ -3,9 +3,9 @@ import { minimizeUser, updateUserProfile, User } from '../user'
 import generators from '../generators'
 
 const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
- let thisDrinkSkeleton: string
+  let thisDrinkSkeleton: string
 
- let privateActionString: string
+  let privateActionString: string
 
   const oldItem = user.item
 
