@@ -34,11 +34,11 @@ const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: 
   const messages: Message[] = [
     {
       userId: user.roomId,
-      target: 'privateCommand',
-      arguments: [thisDrinkSkeleton]
+      target: 'chatMessage',
+      arguments: [user.id, thisDrinkSkeleton]
     },
     {
-      userId: user.roomId,
+      userId: user.id,
       target: 'privateCommand',
       arguments: [actionString]
     },
