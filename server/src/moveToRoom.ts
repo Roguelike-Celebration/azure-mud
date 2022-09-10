@@ -157,6 +157,15 @@ function awardBadges (user: User, roomId: string) {
 
   const unlockedEmoji: Badge[] = []
 
+  if (!includes(user.unlockedBadges, UnlockableBadgeMap['🐣']) &&
+    (new Date()).getMonth() === 8) {
+    awardUserBadge(user.id, UnlockableBadgeMap['🐣'])
+    // Not adding to unlockedEmoji because we don't want a modal dialog,
+    // We just want it to be quietly added.
+    // Note that this does mean someone will have to refresh the page after first pageload to apply it.
+    // That's fine. Maybe eventually we can add a "silent" flag to the client unlock emoji action
+  }
+
   tuples.forEach(([room, emoji]) => {
     if (roomId === room &&
     !includes(user.unlockedBadges, UnlockableBadgeMap[emoji])) {
