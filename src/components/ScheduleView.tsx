@@ -35,7 +35,7 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
 
 export const ScheduleEntries = [
   ScheduleEntry('16:00', 0, 'Doors Open'),
-  ScheduleEntry('16:15', 0, 'Kickoff', ['theater']),
+  ScheduleEntry('16:25', 0, 'Kickoff - Stream Begins', ['theater']),
   ScheduleEntry('16:30', 0, 'Casey Yano, Mega Crit', ['theater'], 'mage'),
   ScheduleEntry('17:00', 0, 'Justin Ma and Matthew Davis, Subset Games', ['theater'], 'rogue'),
   ScheduleEntry('17:30', 0, SOCIAL_TIME)
