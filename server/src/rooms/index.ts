@@ -1,6 +1,5 @@
 import json from './data/roomData.json'
 import DB from '../redis'
-import { minimizeUser } from '../user'
 
 export const staticRoomData: {[name: string]: Room} = json
 
@@ -39,6 +38,9 @@ export interface Room {
   chatGuid?: string
 
   riddles?: string[]
+
+  // Array of users currently in this room
+  users?: string[]
 }
 
 export interface NoteWallData {
