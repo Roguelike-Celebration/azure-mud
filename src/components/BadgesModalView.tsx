@@ -102,7 +102,7 @@ export default function BadgesModalView (props: Props) {
   const keyDownOnEquipped = (e) => {
     if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
       selectEquippedBadge(e)
-    } else if (e.key === 'Backspace' || e.key === 'Delete' && isNumber(selectedEquippedIndex)) {
+    } else if ((e.key === 'Backspace' || e.key === 'Delete') && isNumber(selectedEquippedIndex)) {
       dispatch(EquipBadgeAction(undefined, selectedEquippedIndex))
       equipBadge(undefined, selectedEquippedIndex)
     }

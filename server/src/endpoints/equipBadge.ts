@@ -16,7 +16,7 @@ const equipBadgeFunction: AuthenticatedEndpointFunction = async (user: User, inp
     return {
       httpResponse: {
         status: 400,
-        body: { error: "Index must be 0 or 1!" }
+        body: { error: 'Index must be 0 or 1!' }
       }
     }
   }
