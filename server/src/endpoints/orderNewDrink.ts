@@ -3,10 +3,10 @@ import { minimizeUser, updateUserProfile, User } from '../user'
 import generators from '../generators'
 
 const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-    let thisDrinkVessel: string
-    let thisDrinkContent: string
-    let thisDrinkName: string
-    let thisDrinkSkeleton: string
+   let thisDrinkVessel: string
+   let thisDrinkContent: string
+   let thisDrinkName: string
+   let thisDrinkSkeleton: string
 
     let item: string
     let privateActionString: string

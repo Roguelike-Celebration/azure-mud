@@ -3,10 +3,10 @@ import { authenticatedAzureWrap } from '../src/azureWrap'
 import orderNewDrink from '../src/endpoints/orderNewDrink'
 
 const httpTrigger: AzureFunction = async function (
-    context: Context,
-    req: HttpRequest
+   context: Context,
+   req: HttpRequest
 ): Promise<void> {
-    await authenticatedAzureWrap(context, req, orderNewDrink, { audit: true })
+   await authenticatedAzureWrap(context, req, orderNewDrink, { audit: true })
 }
 
 export default httpTrigger
