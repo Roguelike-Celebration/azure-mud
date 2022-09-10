@@ -151,6 +151,7 @@ export default function NameView (props: Props) {
   const nameEl = (
     <strong className={isMod ? 'mod' : ''}>
       {isMod ? '[Mod] ' : ''}
+      {(!useSimpleNames && user && user.polymorph) || ''}
       {username || 'unknown'}
       {useSimpleNames ? '' : badges}
     </strong>
