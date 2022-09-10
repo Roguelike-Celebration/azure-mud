@@ -38,7 +38,8 @@ export function convertServerRoom (room: Server.Room): Room {
     noteWallData: room.noteWallData,
     hidden: room.hidden,
     specialFeatures: room.specialFeatures,
-    riddles: room.riddles
+    riddles: room.riddles,
+    users: room.users
   }
 }
 
