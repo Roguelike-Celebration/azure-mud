@@ -196,7 +196,7 @@ export default function BadgesModalView (props: Props) {
       <h1>Your Badges</h1>
       <div>
         <h2>Equipped</h2>
-        {equippedBadges}
+        {equippedBadges} (right-click or highlight & press delete to unequip)
       </div>
       <div>
         <h2>All Badges</h2>
