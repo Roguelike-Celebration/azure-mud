@@ -36,6 +36,7 @@
     "displayName": "Experimental Biology Lab",
     "shortName": "experimental biology",
     "description": "Endless bottles and mismatched jars line the walls, casting disorienting lights in every direction. At the center of the visual cacophony stands a mechanical contraption that looks like the exact midpoint between an examination table, a lounge chair, and a torture device. Standing beside that is [[Doctor Hope->talkToDrHope]], a tall, gangly scientist who looks like the result of plugging a child into an electrical socket at a formative age.<br/> To her left is a table covered in baked goods. There appears to be bread and muffins of every kind you can imagine. A sign labelled \"Free Snacks!\" informs you that it would be fine to [[try one->drinkPolymorph]].<br/><br/>Mysteriously, beside the baked goods table is a table covered in bottles of [[unmarked clear liquid-> drinkCancellation]]. Maybe it's water!",
+    "specialFeatures": ["RAINBOW_DOOR", "DULL_DOOR"]
   },
   "destinations": {
     "id": "destinations",
