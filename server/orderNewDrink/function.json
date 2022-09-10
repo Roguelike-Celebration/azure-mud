@@ -1,0 +1,31 @@
+{
+  {
+    "bindings": [
+      {
+        "authLevel": "anonymous",
+        "type": "httpTrigger",
+        "direction": "in",
+        "name": "req",
+        "methods": [ "get", "post" ]
+      },
+      {
+        "type": "http",
+        "direction": "out",
+        "name": "res"
+      },
+      {
+        "type": "signalR",
+        "name": "signalRMessages",
+        "hubName": "chat",
+        "direction": "out"
+      },
+      {
+        "tableName": "auditLog",
+        "name": "tableBinding",
+        "type": "table",
+        "direction": "out"
+      }
+    ],
+    "scriptFile": "../dist/orderNewDrink/index.js"
+  }
+}

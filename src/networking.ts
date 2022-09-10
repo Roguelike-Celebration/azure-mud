@@ -172,6 +172,10 @@ export async function displayMessageFromList (listName: string) {
   await callAzureFunction('displayMessage', { list: listName })
 }
 
+export async function orderNewDrink () {
+  await callAzureFunction('orderNewDrink')
+}
+
 export async function fetchTwilioToken () {
   return await callAzureFunction('twilioToken')
 }
