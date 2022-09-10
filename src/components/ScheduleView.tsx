@@ -14,7 +14,6 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
   const dayOneDate = (time) => new Date(`2021-10-16T${time}:00.000-07:00`)
   const dayTwoDate = (time) => new Date(`2021-10-17T${time}:00.000-07:00`)
 
-  
   if (day === 0) {
     return {
       time: dayPreview(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId
