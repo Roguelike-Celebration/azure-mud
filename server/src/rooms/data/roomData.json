@@ -61,7 +61,7 @@
     "id": "oxygenFarm",
     "displayName": "Oxygen Farm",
     "shortName": "the oxygen farm",
-    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as it it were trying to get your attention. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]]."
+    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as it it were trying to get your attention. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]], or you can return to [[the hallway->destinations]]."
   },
   "unconferenceStarShip": {
     "id": "unconferenceStarShip",
@@ -142,14 +142,7 @@
     "id": "dockingBay",
     "displayName": "Docking Bay 4",
     "shortName": "the docking bay",
-    "description": "Enormous stacks of metal cargo boxes line one side of this massive room, with various starships occupying the remaining space. The ships are small, short-range vessels used to transport between larger ships or station, and each of them is as unique as the mothership, and species, it must have come from. Among the stacks of cargo boxes you catch a glimmer from time to time, as if angling your head in just the right way is bringing something into view, but you can't make it out without moving closer. You can also go back to the central [[hall->centralHall]]."
-  },
-  "majorConsultation": {
-    "id": "majorConsultation",
-    "displayName": "A Major Consultation with the Oracle",
-    "shortName": "the inside of the Oracle Temple",
-    "hidden": true,
-    "description": "The Oracle of Delphi - a truly beautiful @ in shimmering blue - perks up at your presence.<br/><br/>\"Oh, hi there! Sorry about all the mess, the fountain liquids all shifting, the map being all out of true - some ridiculous chaos demons have been messing with the fabric of space around here. They've scattered a dozen riddles around - some even within the useful spaces, those poor dogs - which apparently build some kind of code phrase that's important to them.<br/><br/>If you figure a riddle out, I think you can use that \"/go\" invocation you used to get here to see what visions it brings you. I suspect things might be finicky when it comes to translocation magic - again, chaos - but I *believe* my centaurs got things to a point where all lowercase components work.<br/><br/>Hopefully if you figure that code phrase out and /go to them, maybe you'll get some kind of explaination, or at least a neat bauble...? I dunno, I'm kinda stuck here. But good luck!\"<br/><br/> If you want a space where you can talk with others about the puzzles without spoiling them, feel free to chat [[nearby->spoil]]. You can return to the [[fountains->oracle]]."
+    "description": "Enormous stacks of metal cargo boxes line one side of this massive room, with various starships occupying the remaining space. The ships are small, short-range vessels used to transport between larger ships or station, and each of them is as unique as the mothership, and species, it must have come from. Among the stacks of cargo boxes you catch a glimmer from time to time, as if angling your head in just the right way is bringing something into view, but you can't make it out without moving closer. You can also go back to the central [[hall->centralHall]] or the [[Oxygen Farm->oxygenFarm]]."
   },
   "videoDome": {
     "id": "videoDome",
@@ -190,7 +183,7 @@
     "id": "experimentalBiology",
     "displayName": "Experimental Biology Lab",
     "shortName": "experimental biology",
-    "description": "Endless bottles and mismatched jars line the walls, casting disorienting lights in every direction. At the center of the visual cacophony stands a mechanical contraption that looks like the exact midpoint between an examination table, a lounge chair, and a torture device. Standing beside that is [[Doctor Hope->talkToDrHope]], a tall, gangly scientist who looks like the result of plugging a child into an electrical socket at a formative age.<br/> To her left is a table covered in baked goods. There appears to be bread and muffins of every kind you can imagine. A sign labelled \"Free Snacks!\" informs you that it would be fine to [[try one->drinkPolymorph]].<br/><br/>Mysteriously, beside the baked goods table is a table covered in bottles of [[unmarked clear liquid-> drinkCancellation]]. Maybe it's water!",
+    "description": "Endless bottles and mismatched jars line the walls, casting disorienting lights in every direction. At the center of the visual cacophony stands a mechanical contraption that looks like the exact midpoint between an examination table, a lounge chair, and a torture device. Standing beside that is [[Doctor Hope->talkToDrHope]], a tall, gangly scientist who looks like the result of plugging a child into an electrical socket at a formative age.<br/> To her left is a table covered in baked goods. There appears to be bread and muffins of every kind you can imagine. A sign labelled \"Free Snacks!\" informs you that it would be fine to [[try one->drinkPolymorph]].<br/><br/>Mysteriously, beside the baked goods table is a table covered in bottles of [[unmarked clear liquid->drinkCancellation]]. Maybe it's water!<br/><br/>From here you can return to the [[hall->centralHall]].",
     "specialFeatures": [
       "RAINBOW_DOOR",
       "DULL_DOOR"
