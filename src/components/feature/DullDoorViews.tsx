@@ -22,7 +22,7 @@ export const DullDoorRoomView = () => {
   }
 
   return <div id="dull-door-div" className="feature-room-view">
-    <p><button id="dull-door-button" className='link-styled-button' onClick={walkThroughDoor}>Pull the clean rope.</button>.</p>
+    <p><button id="dull-door-button" className='link-styled-button' onClick={walkThroughDoor}>Pull the clean rope</button>.</p>
   </div>
 }
 

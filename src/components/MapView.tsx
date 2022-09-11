@@ -294,7 +294,7 @@ const clickableAreas: ClickableArea[] = [
     height: 4
   },
   {
-    roomId: 'theatorCleric',
+    roomId: 'theaterCleric',
     x: 69,
     y: 13,
     width: 16,
