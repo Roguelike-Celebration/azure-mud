@@ -36,7 +36,12 @@ export default function VerifyEmailView (props: Props) {
         <main role="main">
           <p>
             You&apos;re currently attempting to log in as <strong>{props.userEmail}</strong>, but your email is not yet
-            verified. Please follow the link in your email to complete the registration process.
+            verified. Please follow the link in your email from noreply@roguelike-celebration-prod.firebaseapp.com to
+            complete the registration process. If you don&apos;t see an email, please check your spam, since
+            they&apos;ve been getting flagged by gmail.
+
+            If you&apos;re having other difficulties logging in or entering the space, please email us at
+            contact@roguelike.club. Thanks!
           </p>
           <p>
             <strong>If you have verified your email and this page has not automatically logged you in, please refresh
