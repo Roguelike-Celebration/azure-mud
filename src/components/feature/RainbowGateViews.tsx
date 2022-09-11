@@ -48,7 +48,7 @@ export default function RainbowGateModalView () {
   } else {
     return (
       <div>
-        <p>The ambiguously credentialed operator gives you a nod. &quot;Back for more, huh? I appreciate a fellow lover of science!&quot;</p>
+        <p>The ambiguously credentialed doctor gives you a nod. &quot;Back for more? <br/> I appreciate a fellow lover of science!&quot;</p>
         <p>You sit in the damp, uncomfortable chair, and pull the rope. You have just enough time to notice that the rope was attached directly to the bucket this time around. It lands on you with a loud squelching noise.</p>
         <p><em>Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></em>.</p>
       </div>
