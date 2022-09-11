@@ -1,4 +1,3 @@
-import { staticRoomData } from './rooms'
 import { RoomResponse } from './types'
 import { awardUserBadge, User } from './user'
 import { globalPresenceMessage } from './globalPresenceMessage'
@@ -24,11 +23,14 @@ export async function moveToRoom (
     // TODO: Rooms should have a generous list of accepted names
     // DOUBLE TODO: Can we fuzzily search all exits for the current room?
     const searchStr = newRoomId.replace(' ', '').toUpperCase()
-    to = Object.values(staticRoomData).find(
-      (room) => room.shortName.replace(' ', '').toUpperCase() === searchStr ||
-        room.displayName.replace(' ', '').toUpperCase() === searchStr ||
-          room.id.toUpperCase() === searchStr
-    )
+    to = await Redis.getRoomData(searchStr)
+
+    if (!to) {
+      const toId = await Redis.getRoomIdFromFuzzySearch(searchStr)
+      if (toId) {
+        to = await Redis.getRoomData(toId)
+      }
+    }
   }
 
   if (!to) {
@@ -61,11 +63,18 @@ export async function moveToRoom (
     return {
       messages,
       httpResponse: {
-        status: 404,
+        status: 400,
         body: { error: 'Invalid room ID' }
       }
     }
   }
+
+  // We send presence data as a SignalR message as part of this HTTP call
+  // HOWEVER! Our client isn't smart enough to merge things correctly
+  // if it gets that presence message BEFORE the HTTP request returns, which is likely
+  // There are potentially better ways to solve this, but making sure the HTTP response
+  // contains presence data is ~fine~
+  to.users = await DB.roomOccupants(to.id)
 
   const awardedBadges = awardBadges(user, to.id)
 
@@ -111,7 +120,7 @@ export async function moveToRoom (
 
     if (awardedBadges.length > 0) {
       result.messages.push({
-        groupId: user.roomId,
+        groupId: user.id,
         target: 'unlockBadge',
         arguments: [awardedBadges]
       })
@@ -139,14 +148,23 @@ function awardBadges (user: User, roomId: string) {
   // doesn't have the matching badge,
   // give them the badge with this emoji"
   const tuples = [
-    ['robots', '🤖'],
-    ['sfHub', '👾'],
+    ['dockingBay', '🚀'],
+    ['oxygenFarm', '🌱'],
     ['transmute', '🧙‍♀️'],
-    ['exploreHub', '⚔️'],
+    ['adventurersGuildHall', '⚔️'],
     ['steam', '💾']
   ]
 
   const unlockedEmoji: Badge[] = []
+
+  if (!includes(user.unlockedBadges, UnlockableBadgeMap['🐣']) &&
+    (new Date()).getMonth() === 8) {
+    awardUserBadge(user.id, UnlockableBadgeMap['🐣'])
+    // Not adding to unlockedEmoji because we don't want a modal dialog,
+    // We just want it to be quietly added.
+    // Note that this does mean someone will have to refresh the page after first pageload to apply it.
+    // That's fine. Maybe eventually we can add a "silent" flag to the client unlock emoji action
+  }
 
   tuples.forEach(([room, emoji]) => {
     if (roomId === room &&

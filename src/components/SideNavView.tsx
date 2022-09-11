@@ -9,7 +9,7 @@ import { Modal } from '../modals'
 import MiniMapView from './MiniMapView'
 
 interface Props {
-  roomData: { [roomId: string]: Room };
+  presenceData: { [roomId: string]: number };
   currentRoomId: string
   username: string;
   spaceIsClosed?: boolean;
@@ -47,8 +47,8 @@ export default function SideNavView (props: Props) {
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
         <MenuItem title="Help" modal={Modal.Help} />
       </ul>
-      {props.roomData && props.currentRoomId
-        ? <MiniMapView roomData={props.roomData} currentRoomId={props.currentRoomId}/>
+      {props.presenceData && props.currentRoomId
+        ? <MiniMapView presenceData={props.presenceData} currentRoomId={props.currentRoomId}/>
         : null
       }
     </nav>

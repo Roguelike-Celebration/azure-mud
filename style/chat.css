@@ -26,9 +26,15 @@
 }
 
 .message {
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .movement-message {
   opacity: 0.5
+}
+
+.inline-custom-emoji {
+  height: 1.3rem;
+  position: relative;
+  bottom: -0.2rem;
 }

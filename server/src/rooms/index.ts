@@ -1,4 +1,6 @@
 import json from './data/roomData.json'
+import DB from '../redis'
+
 export const staticRoomData: {[name: string]: Room} = json
 
 export interface Room {
@@ -36,6 +38,9 @@ export interface Room {
   chatGuid?: string
 
   riddles?: string[]
+
+  // Array of users currently in this room
+  users?: string[]
 }
 
 export interface NoteWallData {
@@ -44,4 +49,32 @@ export interface NoteWallData {
   addNoteLinkText: string
   addNotePrompt: string
   noteWallDescription: string
+}
+
+export interface MinimalRoom {
+  id: string;
+  displayName: string;
+  shortName: string;
+  hidden: boolean;
+ }
+
+function minimizeRoom (room: Room): MinimalRoom {
+  return {
+    id: room.id,
+    displayName: room.displayName,
+    shortName: room.shortName,
+    hidden: room.hidden
+  }
+}
+
+export async function minimalRoomData (): Promise<{[roomId: string]: MinimalRoom}> {
+  const roomIds = await DB.getRoomIds()
+  const roomData = {};
+  (await Promise.all(roomIds.map(DB.getRoomData)))
+    .map(minimizeRoom)
+    .forEach((r) => {
+      roomData[r.id] = r
+    })
+
+  return roomData
 }

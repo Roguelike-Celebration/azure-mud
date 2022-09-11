@@ -15,16 +15,15 @@ interface Props {
   user?: PublicUser;
 }
 
-// shep: issue #45. Turns ' ' into '-'
-function crushSpaces (s: string) : string {
-  if (s.includes(' ')) {
-    console.log('spaces detected ' + s)
-    while (s.includes(' ')) {
-      s = s.replace(' ', '-')
-    }
-    console.log('spaces crushed: ' + s)
-  }
+function sanitizeString (s: string, maxLength: number): string {
+  // Strip RTL/LTR characters
+  s = s.replace(/[‮‏]/g, '')
+  s = s.length > maxLength ? s.substring(0, maxLength) : s
   return s
+}
+
+function sanitizeUsername (s: string) : string {
+  return sanitizeString(s.replace(' ', '-'), 40)
 }
 
 export default function ProfileEditView (props: Props) {
@@ -82,11 +81,7 @@ export default function ProfileEditView (props: Props) {
               id="username"
               value={handle}
               onChange={(e) => {
-                // shep: issue #45, prevent spaces in usernames
-                const s = crushSpaces(e.currentTarget.value)
-                if (s.localeCompare(e.currentTarget.value) !== 0) {
-                  e.currentTarget.value = s
-                }
+                e.currentTarget.value = sanitizeUsername(e.currentTarget.value)
                 setHandle(e.currentTarget.value)
               }}
             />
@@ -98,7 +93,7 @@ export default function ProfileEditView (props: Props) {
               type="text"
               id="real-name"
               value={realName}
-              onChange={(e) => setRealName(e.currentTarget.value)}
+              onChange={(e) => setRealName(sanitizeString(e.currentTarget.value, 200))}
             />
           </div>
           <div className="field">
@@ -108,7 +103,7 @@ export default function ProfileEditView (props: Props) {
               type="text"
               id="description"
               value={description}
-              onChange={(e) => setDescription(e.currentTarget.value)}
+              onChange={(e) => setDescription(sanitizeString(e.currentTarget.value, 200))}
             />
           </div>
           <div className="field">
@@ -118,7 +113,7 @@ export default function ProfileEditView (props: Props) {
               type="text"
               id="pronouns"
               value={pronouns}
-              onChange={(e) => setPronouns(e.currentTarget.value)}
+              onChange={(e) => setPronouns(sanitizeString(e.currentTarget.value, 40))}
             />
           </div>
           <div className="field">
@@ -128,7 +123,7 @@ export default function ProfileEditView (props: Props) {
               type="text"
               id="website"
               value={url}
-              onChange={(e) => setUrl(e.currentTarget.value)}
+              onChange={(e) => setUrl(sanitizeString(e.currentTarget.value, 200))}
             />
           </div>
           <div className="field">
@@ -138,7 +133,7 @@ export default function ProfileEditView (props: Props) {
               type="text"
               id="twitter"
               value={twitter}
-              onChange={(e) => setTwitter(e.currentTarget.value)}
+              onChange={(e) => setTwitter(sanitizeString(e.currentTarget.value, 20))}
             />
           </div>
           <div className="field">
@@ -148,14 +143,14 @@ export default function ProfileEditView (props: Props) {
               type="text"
               id="ask-me-about"
               value={askMeAbout}
-              onChange={(e) => setAskMeAbout(e.currentTarget.value)}
+              onChange={(e) => setAskMeAbout(sanitizeString(e.currentTarget.value, 200))}
             />
           </div>
         </div>
         <button
           // shep: issue #45, double checking that spaces didn't sneak into handle.
           onClick={(e) => {
-            setHandle(crushSpaces(handle))
+            setHandle(sanitizeUsername(handle))
             submit()
           }}
           className="submit">

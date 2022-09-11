@@ -35,6 +35,9 @@ interface RedisInternal extends Database {
 
   addMod (userId: string)
   removeMod (userId: string)
+
+  addSpeaker (userId: string)
+  removeSpeaker (userId: string)
 }
 
 const Redis: RedisInternal = {
@@ -206,6 +209,10 @@ const Redis: RedisInternal = {
     return await getSet(modListKey) || []
   },
 
+  async speakerList (): Promise<string[]> {
+    return await getSet(speakerListKey) || []
+  },
+
   async setModStatus (userId: string, isMod: boolean) {
     if (isMod) {
       await Redis.addMod(userId)
@@ -223,6 +230,25 @@ const Redis: RedisInternal = {
 
   async removeMod (userId: string) {
     await removeFromSet(modListKey, userId)
+  },
+
+  async setSpeakerStatus (userId: string, isSpeaker: boolean) {
+    if (isSpeaker) {
+      await Redis.addSpeaker(userId)
+    } else {
+      await Redis.removeSpeaker(userId)
+    }
+    const profile = await Redis.getUser(userId)
+    profile.isSpeaker = isSpeaker
+    await Redis.setUserProfile(userId, profile)
+  },
+
+  async addSpeaker (userId: string) {
+    await addToSet(speakerListKey, userId)
+  },
+
+  async removeSpeaker (userId: string) {
+    await removeFromSet(speakerListKey, userId)
   },
 
   // Server settings
@@ -339,8 +365,14 @@ const Redis: RedisInternal = {
 
   //
 
-  // TODO: We maybe shouldn't allow unfettered access to this?
+  // This is currently only accessed when resetRoomData is called, and on admin CMS update
+  // If that changes, consider adding more security / tightening access to this
   async setRoomData (room: Room) {
+    await setCache(roomFuzzySearchKey(room.shortName.replace(' ', '').toUpperCase()), room.id)
+    await setCache(roomFuzzySearchKey(room.id.replace(' ', '').toUpperCase()), room.id)
+    await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
+
+    await addToSet(roomIdsKey, room.id)
     return await setCache(roomDataKey(room.id), JSON.stringify(room))
   },
 
@@ -349,24 +381,30 @@ const Redis: RedisInternal = {
     return JSON.parse(await getCache(roomDataKey(roomId)))
   },
 
+  async getRoomIdFromFuzzySearch (search: string): Promise<string|undefined> {
+    return await getCache(roomFuzzySearchKey(search))
+  },
+
   async deleteRoomData (roomId: string): Promise<void> {
+    await removeFromSet(roomId)
     return await del(roomDataKey(roomId))
   },
 
   async getRoomIds (): Promise<string[]> {
-    const keys = await redisKeys('room_*')
-    console.log(keys)
-    return keys.map(k => k.substring(5))
+    return (await getSet(roomIdsKey)) || []
   }
 }
 
 const activeUsersKey = 'activeUsersList'
 
 const modListKey = 'mods'
+const speakerListKey = 'mods'
 
 const serverSettingsKey = 'serverSettings'
 
 const allUserIdsKey = 'allUserIds'
+
+const roomIdsKey = 'roomIds'
 
 function roomDataKey (roomId: string): string {
   return `room_${roomId}`
@@ -394,6 +432,10 @@ function heartbeatKeyForUser (user: string): string {
 
 function roomPresenceKey (roomName: string): string {
   return `${roomName}Presence`
+}
+
+function roomFuzzySearchKey (search: string): string {
+  return `${search}RoomSearch`
 }
 
 function roomNotesKey (roomId: string): string {

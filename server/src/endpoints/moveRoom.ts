@@ -7,7 +7,7 @@ const moveRoom: AuthenticatedEndpointFunction = async (user: User, inputs: any, 
   if (!toId) {
     return {
       httpResponse: {
-        status: 500,
+        status: 400,
         body: 'Include a room ID!'
       }
     }

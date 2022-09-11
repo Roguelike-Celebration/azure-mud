@@ -1,4 +1,4 @@
-import { Room } from './rooms'
+import { MinimalRoom, Room } from './rooms'
 import { User, MinimalUser, PublicUser } from './user'
 import { RoomNote } from './roomNote'
 import { Badge } from './badges'

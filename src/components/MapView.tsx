@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
+import { isUndefined } from 'lodash'
 
 /**
  * This renders a clickable ASCII map!
@@ -29,7 +30,7 @@ import { DispatchContext } from '../App'
  */
 
  interface Props {
-  roomData: { [roomId: string]: Room };
+  presenceData: { [roomId: string]: number };
   currentRoomId: string
   isMiniMap?: boolean
  }
@@ -44,16 +45,18 @@ import { DispatchContext } from '../App'
 
 export default function MapView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { roomData, currentRoomId } = props
+  const [preWidth, setPreWidth] = useState(0)
+  const [preHeight, setPreHeight] = useState(0)
+  const { presenceData, currentRoomId } = props
 
   // Pixel size of one ASCII character
-  let w, h
+  let w; let h = 0
   if (props.isMiniMap) {
     w = 8
     h = 13
-  } else {
-    w = 10
-    h = 21
+  } else if (preWidth !== 0 && preHeight !== 0) {
+    w = preWidth / 110
+    h = preHeight / 41
   }
 
   // Scroll to make sure that the user's location is visible
@@ -68,17 +71,28 @@ export default function MapView (props: Props) {
     } else {
       // console.log('NO LOCATION')
     }
+
+    const pre = document.getElementById('map-pre')
+    if (pre) {
+      if (preWidth !== pre.clientWidth) {
+        setPreWidth(pre.clientWidth)
+      }
+      if (preHeight !== pre.clientHeight) {
+        setPreHeight(pre.clientHeight)
+      }
+    }
   }, (props.isMiniMap ? null : []))
 
-  if (!roomData) { return <div/> }
+  if (!presenceData) { return <div/> }
 
   let map = mapText
 
   presenceMapping.forEach((roomId, idx) => {
     let replaceString = '[0]'
 
-    if (roomData[roomId] && roomData[roomId].users && roomData[roomId].users.length > 0) {
-      replaceString = `[${roomData[roomId].users.length}]`
+    // Because 0 is falsy, we need to explicitly use isUndefined
+    if (presenceData[roomId] && !isUndefined(presenceData[roomId])) {
+      replaceString = `[${presenceData[roomId]}]`
     }
     replaceString = replaceString.padEnd(4, '.')
     map = map.replace(`(${idx.toString().padStart(2, '0')})`, replaceString)
@@ -95,32 +109,37 @@ export default function MapView (props: Props) {
     }
   }
 
-  const clickableDivs = clickableAreas.map(a => {
-    return <div
-      style={{
-        position: 'absolute',
-        left: `${a.x * w}px`,
-        top: `${a.y * h}px`,
-        width: `${a.width * w}px`,
-        height: `${a.height * h}px`,
-        cursor: 'pointer'
-      }}
-      key={a.roomId}
-      onClick={handleClick}
-      data-room={a.roomId}
-      id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${a.roomId}`} />
-  })
+  let clickableDivs = []
+  if (w !== 0 && h !== 0) {
+    clickableDivs = clickableAreas.map(a => {
+      return <div
+        style={{
+          position: 'absolute',
+          left: `${a.x * w}px`,
+          top: `${a.y * h}px`,
+          width: `${a.width * w}px`,
+          height: `${a.height * h}px`,
+          cursor: 'pointer'
+        }}
+        key={a.roomId}
+        onClick={handleClick}
+        data-room={a.roomId}
+        id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${a.roomId}`} />
+    })
+  }
 
   return <div className='map' style={{ position: 'relative', margin: '15px' }}>
     {clickableDivs}
-    <pre style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono' }}><code>
-      {map}
-    </code></pre>
+    <pre
+      id={`${props.isMiniMap ? 'minimap-' : ''}map-pre`}
+      style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono', margin: '0px', width: 'fit-content' }}
+    >
+      <code>{map}</code>
+    </pre>
   </div>
 }
 
-const mapText = `
-                        ┌───────────────────────────────────────────────────────────┐                         
+const mapText = `                        ┌───────────────────────────────────────────────────────────┐                         
 ┌────────────────┐      │............................................│..............│                         
 │................│      │.................Theater....................#....Warrior...│                         
 │..Docking Bay...│      │...................(05).....................│.....(06).....│                         
@@ -142,14 +161,14 @@ const mapText = `
 ┌─────────────┐   ┌#───────────┐...................┌────────────┐ ┌─────────────────────┐ ####.....(15)....│  
 │.............│   │............│...................│............│ │....Unconferencing...│ #  └─────────────┘  
 │..Office Of..#####Destinations│...................│.Swag Table.###......Lobby ..(13)...###  ┌─────────────┐  
-│....Steam....│   │....(10)....│...................│....(12)....│ │.....................│ #  │..Rave Cave..│  
+│....Steam....│   │....(11)....│...................│....(12)....│ │.....................│ #  │..Rave Cave..│  
 │....(02).....│   └#───────────┘...................└────────────┘ └─────────────────────┘ ####....(16).....│  
 └───────#─────┘    #         │.......................│  ┌────────────────────────┐        #  └─────────────┘  
 ┌───────#────────┐ #         │.......................│  │......Experimental......│        #  ┌─────────────┐  
 │................│ #         │.......................####.........Biology........│        #  │...Elysium...│  
 │...Adventurers..│ #         │.......................│  │..........(18)..........│        ####....(17).....│  
 │.....Guild......###         │.....Central Hall......│  └────────────────────────┘           └─────────────┘  
-│.....(03).......│ #         │.........(11)..........│  ┌──────────────────────────────────────────────────┐  
+│.....(03).......│ #         │.........(10)..........│  ┌──────────────────────────────────────────────────┐  
 │................│ #         │.......................│  │........................................┌───────┐.│  
 │................│ #         │.......................####...................Bar ..(19)...........│Balcony│.│  
 │................│ #         │.......................│  │..┌──────┐..............................│..(22).│.│  
@@ -160,22 +179,21 @@ const mapText = `
 │....VideoDome...#############.......................####..............┌────────────────┐........│.Back..│.│  
 │......(04)......│           │.......................│  │..............│...Stage...(21).│........│..(23).│.│  
 │................│           │.......................│  │..............└────────────────┘........└───────┘.│  
-└────────────────┘           └────────────#──────────┘  └──────────────────────────────────────────────────┘  
-`
+└────────────────┘           └────────────#──────────┘  └──────────────────────────────────────────────────┘  `
 
 const presenceMapping = [
   'dockingBay',
   'oxygenFarm',
   'officeOfSteam',
-  'adventurersGuild',
+  'adventurersGuildHall',
   'videoDome',
   'theater',
   'theaterWarrior',
   'theaterMage',
   'theaterRogue',
   'theaterCleric',
-  'destinations',
   'centralHall',
+  'destinations',
   'swag',
   'unconference',
   'unconferenceDigSite',
@@ -203,7 +221,7 @@ const clickableAreas: ClickableArea[] = [
     x: 0,
     y: 8,
     width: 18,
-    height: 10
+    height: 11
   },
   {
     roomId: 'officeOfSteam',
@@ -213,7 +231,7 @@ const clickableAreas: ClickableArea[] = [
     height: 6
   },
   {
-    roomId: 'adventurersGuild',
+    roomId: 'adventurersGuildHall',
     x: 0,
     y: 25,
     width: 18,
@@ -234,13 +252,6 @@ const clickableAreas: ClickableArea[] = [
     height: 17
   },
   {
-    roomId: 'destinations',
-    x: 18,
-    y: 19,
-    width: 14,
-    height: 5
-  },
-  {
     roomId: 'centralHall',
     x: 29,
     y: 18,
@@ -248,114 +259,121 @@ const clickableAreas: ClickableArea[] = [
     height: 23
   },
   {
+    roomId: 'destinations',
+    x: 18,
+    y: 19,
+    width: 14,
+    height: 5
+  },
+  {
     roomId: 'swag',
     x: 51,
     y: 19,
     width: 14,
-    height: 4
+    height: 5
   },
   {
-    roomId: 'warrior',
-    x: 70,
-    y: 1,
+    roomId: 'theaterWarrior',
+    x: 69,
+    y: 0,
     width: 16,
-    height: 4
+    height: 5
   },
   {
-    roomId: 'mage',
-    x: 70,
+    roomId: 'theaterMage',
+    x: 69,
     y: 5,
     width: 16,
     height: 4
   },
   {
-    roomId: 'rogue',
-    x: 70,
+    roomId: 'theaterRogue',
+    x: 69,
     y: 9,
     width: 16,
     height: 4
   },
   {
-    roomId: 'cleric',
-    x: 70,
+    roomId: 'theatorCleric',
+    x: 69,
     y: 13,
     width: 16,
     height: 4
   },
   {
     roomId: 'unconference',
-    x: 67,
+    x: 66,
     y: 19,
     width: 23,
-    height: 4
+    height: 5
   },
   {
-    roomId: 'digSite',
-    x: 94,
-    y: 14,
+    roomId: 'unconferenceDigSite',
+    x: 93,
+    y: 13,
     width: 15,
     height: 4
   },
   {
-    roomId: 'starship',
-    x: 94,
-    y: 18,
+    roomId: 'unconferenceStarship',
+    x: 93,
+    y: 17,
     width: 15,
     height: 4
   },
   {
-    roomId: 'raveCave',
-    x: 94,
-    y: 23,
+    roomId: 'unconferenceRaveCave',
+    x: 93,
+    y: 21,
     width: 15,
     height: 4
   },
   {
-    roomId: 'elysium',
-    x: 94,
-    y: 27,
+    roomId: 'unconferenceElysium',
+    x: 93,
+    y: 25,
     width: 15,
     height: 4
   },
   {
     roomId: 'experimentalBiology',
-    x: 57,
-    y: 25,
+    x: 56,
+    y: 24,
     width: 26,
     height: 5
   },
   {
     roomId: 'bar',
-    x: 57,
-    y: 30,
+    x: 56,
+    y: 29,
     width: 52,
     height: 12
   },
   {
-    roomId: 'stools',
-    x: 60,
-    y: 33,
+    roomId: 'barStools',
+    x: 59,
+    y: 32,
     width: 8,
     height: 5
   },
   {
-    roomId: 'balcony',
-    x: 98,
-    y: 31,
+    roomId: 'barBalcony',
+    x: 97,
+    y: 30,
     width: 9,
     height: 4
   },
   {
     roomId: 'barStage',
-    x: 72,
-    y: 38,
+    x: 71,
+    y: 37,
     width: 18,
     height: 3
   },
   {
-    roomId: 'back',
-    x: 98,
-    y: 37,
+    roomId: 'barBack',
+    x: 97,
+    y: 36,
     width: 9,
     height: 4
   }

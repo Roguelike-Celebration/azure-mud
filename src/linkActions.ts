@@ -1,4 +1,4 @@
-import { pickUpRandomItemFromList, pickUpItem, sendChatMessage, displayMessageFromList, updateFontReward, displayMessage } from './networking'
+import { pickUpRandomItemFromList, pickUpItem, sendChatMessage, displayMessageFromList, updateFontReward, displayMessage, orderNewDrink } from './networking'
 import { v4 as uuidv4 } from 'uuid'
 
 export const linkActions = {
@@ -52,6 +52,9 @@ export const linkActions = {
   },
   talkToChadSilverbow: () => {
     displayMessageFromList('chadSilverbow')
+  },
+  orderNewDrink: () => {
+    orderNewDrink()
   }
 }
 

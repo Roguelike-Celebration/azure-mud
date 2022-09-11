@@ -58,6 +58,11 @@ export async function isMod (userId: string) {
   return modList.includes(userId)
 }
 
+export async function isSpeaker (userId: string) {
+  const speakerList = await DB.speakerList()
+  return speakerList.includes(userId)
+}
+
 export async function updateModStatus (userId: string) {
   const userIsMod = await isMod(userId)
 
@@ -82,23 +87,25 @@ export async function getUserIdForUsername (username: string) {
   return DB.getUserIdForUsername(username, false)
 }
 
+// Copy/pasted from ProfileEditView.tsx in the client
+function sanitizeString (s: string, maxLength: number): string {
+  // Strip RTL/LTR characters
+  s = s.replace(/[‮‏]/g, '')
+  s = s.length > maxLength ? s.substring(0, maxLength) : s
+  return s
+}
+
+// Copy/pasted from ProfileEditView.tsx in the client
+function sanitizeUsername (s: string) : string {
+  return sanitizeString(s.replace(' ', '-'), 40)
+}
+
 export async function updateUserProfile (userId: string, data: Partial<User>, isNew: boolean = false) {
   console.log('In updateUserProfile', data, isNew)
-  // Copy/pasted from ProfileEditView.tsx in the client
-  function crushSpaces (s: string): string {
-    if (s.includes(' ')) {
-      console.log('spaces detected ' + s)
-      while (s.includes(' ')) {
-        s = s.replace(' ', '-')
-      }
-      console.log('spaces crushed: ' + s)
-    }
-    return s
-  }
 
   const profile: Partial<User> = (await DB.getUser(userId)) || {}
   let username = profile.username
-  if (data.username) { username = crushSpaces(data.username) }
+  if (data.username) { username = sanitizeUsername(data.username) }
   // If someone's trying to set a new username, validate it
   if (data.username && profile.username !== username) {
     console.log('Validating username', username)
@@ -109,6 +116,15 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
     }
   }
   console.log('Past existing username check')
+
+  // Limit other field lengths
+  if (data.realName) { data.realName = sanitizeString(data.realName, 200) }
+  if (data.description) { data.description = sanitizeString(data.description, 200) }
+  if (data.pronouns) { data.pronouns = sanitizeString(data.realName, 40) }
+  if (data.url) { data.url = sanitizeString(data.url, 200) }
+  if (data.twitterHandle) { data.twitterHandle = sanitizeString(data.twitterHandle, 20) }
+  if (data.askMeAbout) { data.askMeAbout = sanitizeString(data.askMeAbout, 200) }
+
   const newProfile: User = {
     ...profile,
     ...data,
