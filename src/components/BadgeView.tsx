@@ -6,7 +6,7 @@ export default function BadgeView (props: {badge: Badge}) {
   const b = props.badge
 
   if (!(b && b.description && b.emoji)) {
-    return <div/>
+    return <span />
   }
 
   // The weird nested badge-text-[emoji] span is for drag preview shenanigans
