@@ -66,11 +66,14 @@ export const isMovementMessage = (
  */
 
 // intentionally not exported, more of an "internal consistency" utility
-const createBaseMessage = <T extends MessageType>(type: T): BaseMessage<T> => ({
-  type,
-  id: uuid(),
-  timestamp: new Date().toISOString()
-})
+const createBaseMessage = <T extends MessageType>(
+  type: T,
+  id = uuid()
+): BaseMessage<T> => ({
+    type,
+    id,
+    timestamp: new Date().toISOString()
+  })
 
 export const createConnectedMessage = (
   userId: string,
@@ -129,29 +132,27 @@ export const createMovedRoomMessage = (to: string): MovedRoomMessage => ({
   to
 })
 
-export const createSameRoomMessage = (to: string): SameRoomMessage => ({
+export const createSameRoomMessage = (roomId: string): SameRoomMessage => ({
   ...createBaseMessage(MessageType.SameRoom),
-  roomId: to
+  roomId
 })
 
 export const createChatMessage = (
-  messageId: string,
+  id: string,
   userId: string,
   message: string
 ): ChatMessage => ({
-  ...createBaseMessage(MessageType.Chat),
-  messageId,
+  ...createBaseMessage(MessageType.Chat, id),
   userId,
   message
 })
 
 export const createCaptionMessage = (
-  messageId: string,
+  id: string,
   userId: string,
   message: string
 ): CaptionMessage => ({
-  ...createBaseMessage(MessageType.Caption),
-  messageId,
+  ...createBaseMessage(MessageType.Caption, id),
   userId,
   message
 })
@@ -183,8 +184,7 @@ export const createShoutMessage = (
   userId: string,
   message: string
 ): ShoutMessage => ({
-  ...createBaseMessage(MessageType.Shout),
-  messageId: id,
+  ...createBaseMessage(MessageType.Shout, id),
   userId,
   message
 })
@@ -194,8 +194,7 @@ export const createEmoteMessage = (
   userId: string,
   message: string
 ): EmoteMessage => ({
-  ...createBaseMessage(MessageType.Emote),
-  messageId: id,
+  ...createBaseMessage(MessageType.Emote, id),
   userId,
   message
 })
@@ -205,8 +204,7 @@ export const createDanceMessage = (
   userId: string,
   message: string
 ): DanceMessage => ({
-  ...createBaseMessage(MessageType.Dance),
-  messageId: id,
+  ...createBaseMessage(MessageType.Dance, id),
   userId,
   message
 })

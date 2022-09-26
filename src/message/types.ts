@@ -67,13 +67,11 @@ export interface SameRoomMessage extends BaseMessage<MessageType.SameRoom> {
 }
 
 export interface ChatMessage extends BaseMessage<MessageType.Chat> {
-  messageId: string;
   userId: string;
   message: string;
 }
 
 export interface CaptionMessage extends BaseMessage<MessageType.Caption> {
-  messageId: string;
   userId: string;
   message: string;
 }
@@ -91,19 +89,16 @@ export interface ModMessage extends BaseMessage<MessageType.Mod> {
 }
 
 export interface ShoutMessage extends BaseMessage<MessageType.Shout> {
-  messageId: string;
   userId: string;
   message: string;
 }
 
 export interface EmoteMessage extends BaseMessage<MessageType.Emote> {
-  messageId: string;
   userId: string;
   message: string;
 }
 
 export interface DanceMessage extends BaseMessage<MessageType.Dance> {
-  messageId: string;
   userId: string;
   message: string;
 }
