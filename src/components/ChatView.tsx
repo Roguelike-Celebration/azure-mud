@@ -1,5 +1,5 @@
 import { findLastIndex } from 'lodash'
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 
 import { isMovementMessage, Message, MessageType } from '../message'
 import MessageView from './MessageView'
@@ -110,21 +110,18 @@ export default function ChatView (props: Props) {
           }
 
           const shouldShowInterstitial = m.type === MessageType.MovedRoom
-          const id = `message-${idx}`
 
           return (
-            <>
+            <Fragment key={m.id}>
               {shouldShowInterstitial ? (
-                <hr key={id + '-interstitial'} />
+                <hr />
               ) : null}
               <MessageView
                 message={m}
-                key={id}
-                id={id}
                 hideTimestamp={hideTimestamp}
                 msgIndex={idx}
               />
-            </>
+            </Fragment>
           )
         })}
       </div>
