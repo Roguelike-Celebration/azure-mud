@@ -18,22 +18,41 @@ import {
   WhisperMessage
 } from './types'
 
-export function isDeletableMessage (
-  message: Message
-): message is ChatMessage | EmoteMessage | ShoutMessage | DanceMessage {
-  return [
-    MessageType.Chat,
-    MessageType.Emote,
-    MessageType.Shout,
-    MessageType.Dance,
-    MessageType.Caption
-  ].includes(message.type)
-}
+type AnyDeletableMessage =
+  | ChatMessage
+  | EmoteMessage
+  | ShoutMessage
+  | DanceMessage;
 
-export function isMovementMessage (message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
-  return message.type === MessageType.Connected || message.type === MessageType.Disconnected ||
-    message.type === MessageType.Entered || message.type === MessageType.Left
-}
+const deletableMessageTypes = [
+  MessageType.Chat,
+  MessageType.Emote,
+  MessageType.Shout,
+  MessageType.Dance,
+  MessageType.Caption
+]
+
+export const isDeletableMessage = (
+  message: Message
+): message is AnyDeletableMessage =>
+  deletableMessageTypes.includes(message.type)
+
+type AnyMovementMessage =
+  | ConnectedMessage
+  | DisconnectedMessage
+  | EnteredMessage
+  | LeftMessage;
+
+const movementMessageTypes = [
+  MessageType.Connected,
+  MessageType.Disconnected,
+  MessageType.Entered,
+  MessageType.Left
+]
+
+export const isMovementMessage = (
+  message: Message
+): message is AnyMovementMessage => movementMessageTypes.includes(message.type)
 
 export const createConnectedMessage = (
   userId: string,
