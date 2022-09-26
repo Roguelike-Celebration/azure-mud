@@ -66,7 +66,7 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
   return (
     <div id="menu-button">
       <ContextMenuTrigger id="topMenu" holdToDisplay={0}>
-        <NameView userId={myId} skipMenu={true} />
+        <NameView userId={myId} skipMenu={true} id={`topMenu-${myId}`} />
         <FaCog style={{ marginLeft: '5px' }}/>
       </ContextMenuTrigger>
       <ContextMenu id={'topMenu'}>
