@@ -18,7 +18,7 @@ import {
   WhisperMessage
 } from './types'
 
-export function isDeletable (
+export function isDeletableMessage (
   message: Message
 ): message is ChatMessage | EmoteMessage | ShoutMessage | DanceMessage {
   return [
@@ -28,6 +28,11 @@ export function isDeletable (
     MessageType.Dance,
     MessageType.Caption
   ].includes(message.type)
+}
+
+export function isMovementMessage (message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
+  return message.type === MessageType.Connected || message.type === MessageType.Disconnected ||
+    message.type === MessageType.Entered || message.type === MessageType.Left
 }
 
 export const createConnectedMessage = (

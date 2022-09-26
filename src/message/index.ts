@@ -33,5 +33,6 @@ export {
   createSameRoomMessage,
   createShoutMessage,
   createWhisperMessage,
-  isDeletable
+  isDeletableMessage,
+  isMovementMessage
 } from './utils'

@@ -14,7 +14,7 @@ import {
   createModMessage,
   createMovedRoomMessage,
   createSameRoomMessage,
-  isDeletable,
+  isDeletableMessage,
   createCommandMessage,
   WhisperMessage,
   createCaptionMessage
@@ -621,9 +621,9 @@ export default produce((draft: State, action: Action) => {
 // If you're seeing weird race conditions with the message store, that's probably the issue.
 
 function deleteMessage (state: State, messageId: String) {
-  const target = state.messages.find(m => isDeletable(m) && m.messageId === messageId)
+  const target = state.messages.find(m => isDeletableMessage(m) && m.messageId === messageId)
   // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
-  if (isDeletable(target)) {
+  if (isDeletableMessage(target)) {
     target.message = 'message was removed by moderator'
     Storage.setMessages(state.messages)
   }

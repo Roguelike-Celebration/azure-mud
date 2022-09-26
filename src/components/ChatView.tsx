@@ -1,24 +1,22 @@
-import React, { useContext } from 'react'
 import { findLastIndex } from 'lodash'
+import React, { useContext } from 'react'
 
+import { isMovementMessage, Message, MessageType } from '../message'
 import MessageView from './MessageView'
-import { Message, MessageType, ConnectedMessage, DisconnectedMessage, EnteredMessage, LeftMessage } from '../message'
 
-import '../../style/chat.css'
-import { DispatchContext } from '../App'
-import { ActivateAutoscrollAction, DeactivateAutoscrollAction } from '../Actions'
 import { ServerSettings } from '../../server/src/types'
-
-function isMovementMessage (message: Message): message is ConnectedMessage | DisconnectedMessage | EnteredMessage | LeftMessage {
-  return message.type === MessageType.Connected || message.type === MessageType.Disconnected ||
-    message.type === MessageType.Entered || message.type === MessageType.Left
-}
+import '../../style/chat.css'
+import {
+  ActivateAutoscrollAction,
+  DeactivateAutoscrollAction
+} from '../Actions'
+import { DispatchContext } from '../App'
 
 interface Props {
-  messages: Message[],
-  autoscrollChat: boolean,
-  serverSettings: ServerSettings,
-  captionsEnabled: boolean
+  messages: Message[];
+  autoscrollChat: boolean;
+  serverSettings: ServerSettings;
+  captionsEnabled: boolean;
 }
 
 export default function ChatView (props: Props) {
@@ -26,7 +24,9 @@ export default function ChatView (props: Props) {
 
   const handleScroll = () => {
     const messageWindow = document.querySelector('#messages')
-    const isScrolledToBottom = messageWindow.scrollHeight === messageWindow.scrollTop + messageWindow.clientHeight
+    const isScrolledToBottom =
+      messageWindow.scrollHeight ===
+      messageWindow.scrollTop + messageWindow.clientHeight
 
     if (isScrolledToBottom && !props.autoscrollChat) {
       dispatch(ActivateAutoscrollAction())
@@ -49,15 +49,16 @@ export default function ChatView (props: Props) {
     }
   })
 
-  const [shouldShowOlderMessages, setShouldShowOlderMessages] = React.useState(false)
+  const [shouldShowOlderMessages, setShouldShowOlderMessages] =
+    React.useState(false)
 
   // This message filtering logic is kinda ugly and hard to read
   function shouldRemoveMessage (m: Message) {
-    return isMovementMessage(m) &&
-      (
-        props.serverSettings.movementMessagesHideRoomIds.includes(m.roomId) ||
-        m.numUsersInRoom > props.serverSettings.movementMessagesHideThreshold
-      )
+    return (
+      isMovementMessage(m) &&
+      (props.serverSettings.movementMessagesHideRoomIds.includes(m.roomId) ||
+        m.numUsersInRoom > props.serverSettings.movementMessagesHideThreshold)
+    )
   }
   const messages = props.messages
     .filter((msg) => {
@@ -72,10 +73,12 @@ export default function ChatView (props: Props) {
 
   const lastIndexOfMovedMessage = findLastIndex(
     messages,
-    message => message.type === MessageType.MovedRoom
+    (message) => message.type === MessageType.MovedRoom
   )
   const currentRoomMessages = messages.slice(lastIndexOfMovedMessage)
-  const shownMessages = shouldShowOlderMessages ? messages : currentRoomMessages
+  const shownMessages = shouldShowOlderMessages
+    ? messages
+    : currentRoomMessages
 
   return (
     <>
@@ -93,12 +96,12 @@ export default function ChatView (props: Props) {
             // TODO: Give all messages a userId for this to be meaningful
             if (
               (previousMessage as any).userId &&
-          (m as any).userId &&
-          (previousMessage as any).userId === (m as any).userId
+              (m as any).userId &&
+              (previousMessage as any).userId === (m as any).userId
             ) {
               const diff =
-            new Date(m.timestamp).getTime() -
-            new Date(previousMessage.timestamp).getTime()
+                new Date(m.timestamp).getTime() -
+                new Date(previousMessage.timestamp).getTime()
               // This is a bad way to calculate '3 minutes' and I should feel bad -em
               if (diff < 1000 * 60 * 3) {
                 hideTimestamp = true
@@ -111,7 +114,9 @@ export default function ChatView (props: Props) {
 
           return (
             <>
-              {shouldShowInterstitial ? <hr key={id + '-interstitial'}/> : null}
+              {shouldShowInterstitial ? (
+                <hr key={id + '-interstitial'} />
+              ) : null}
               <MessageView
                 message={m}
                 key={id}
