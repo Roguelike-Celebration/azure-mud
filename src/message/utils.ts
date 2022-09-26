@@ -1,5 +1,8 @@
+import { v4 as uuid } from 'uuid'
+
 import { MessageType } from './enums'
 import {
+  BaseMessage,
   CaptionMessage,
   ChatMessage,
   CommandMessage,
@@ -17,6 +20,10 @@ import {
   ShoutMessage,
   WhisperMessage
 } from './types'
+
+/**
+ * type predicates (e.g. "is message x one of type y")
+ */
 
 type AnyDeletableMessage =
   | ChatMessage
@@ -54,33 +61,38 @@ export const isMovementMessage = (
   message: Message
 ): message is AnyMovementMessage => movementMessageTypes.includes(message.type)
 
+/**
+ * message creators
+ */
+
+// intentionally not exported, more of an "internal consistency" utility
+const createBaseMessage = <T extends MessageType>(type: T): BaseMessage<T> => ({
+  type,
+  id: uuid(),
+  timestamp: new Date().toISOString()
+})
+
 export const createConnectedMessage = (
   userId: string,
   roomId: string,
   numUsersInRoom: number
-): ConnectedMessage => {
-  return {
-    type: MessageType.Connected,
-    userId,
-    roomId,
-    numUsersInRoom,
-    timestamp: new Date()
-  }
-}
+): ConnectedMessage => ({
+  ...createBaseMessage(MessageType.Connected),
+  userId,
+  roomId,
+  numUsersInRoom
+})
 
 export const createDisconnectedMessage = (
   userId: string,
   roomId: string,
   numUsersInRoom: number
-): DisconnectedMessage => {
-  return {
-    type: MessageType.Disconnected,
-    userId,
-    roomId,
-    numUsersInRoom,
-    timestamp: new Date()
-  }
-}
+): DisconnectedMessage => ({
+  ...createBaseMessage(MessageType.Disconnected),
+  userId,
+  roomId,
+  numUsersInRoom
+})
 
 export const createEnteredMessage = (
   userId: string,
@@ -88,17 +100,14 @@ export const createEnteredMessage = (
   fromName: string,
   roomId: string,
   numUsersInRoom: number
-): EnteredMessage => {
-  return {
-    type: MessageType.Entered,
-    userId,
-    fromId,
-    fromName,
-    roomId,
-    numUsersInRoom,
-    timestamp: new Date()
-  }
-}
+): EnteredMessage => ({
+  ...createBaseMessage(MessageType.Entered),
+  userId,
+  fromId,
+  fromName,
+  roomId,
+  numUsersInRoom
+})
 
 export const createLeftMessage = (
   userId: string,
@@ -106,128 +115,108 @@ export const createLeftMessage = (
   toName: string,
   roomId: string,
   numUsersInRoom: number
-): LeftMessage => {
-  return {
-    type: MessageType.Left,
-    userId,
-    toId,
-    toName,
-    roomId,
-    numUsersInRoom,
-    timestamp: new Date()
-  }
-}
+): LeftMessage => ({
+  ...createBaseMessage(MessageType.Left),
+  userId,
+  toId,
+  toName,
+  roomId,
+  numUsersInRoom
+})
 
-export const createMovedRoomMessage = (to: string): MovedRoomMessage => {
-  return { type: MessageType.MovedRoom, to, timestamp: new Date() }
-}
+export const createMovedRoomMessage = (to: string): MovedRoomMessage => ({
+  ...createBaseMessage(MessageType.MovedRoom),
+  to
+})
 
-export const createSameRoomMessage = (to: string): SameRoomMessage => {
-  return { type: MessageType.SameRoom, roomId: to, timestamp: new Date() }
-}
+export const createSameRoomMessage = (to: string): SameRoomMessage => ({
+  ...createBaseMessage(MessageType.SameRoom),
+  roomId: to
+})
 
 export const createChatMessage = (
   messageId: string,
   userId: string,
   message: string
-): ChatMessage => {
-  return {
-    type: MessageType.Chat,
-    messageId,
-    userId,
-    message,
-    timestamp: new Date()
-  }
-}
+): ChatMessage => ({
+  ...createBaseMessage(MessageType.Chat),
+  messageId,
+  userId,
+  message
+})
 
 export const createCaptionMessage = (
   messageId: string,
   userId: string,
   message: string
-): CaptionMessage => {
-  return {
-    type: MessageType.Caption,
-    messageId,
-    userId,
-    message,
-    timestamp: new Date()
-  }
-}
+): CaptionMessage => ({
+  ...createBaseMessage(MessageType.Caption),
+  messageId,
+  userId,
+  message
+})
 
 export const createWhisperMessage = (
   userId: string,
   message: string,
   senderIsSelf = false
-): WhisperMessage => {
-  return {
-    type: MessageType.Whisper,
-    userId,
-    message,
-    senderIsSelf,
-    timestamp: new Date()
-  }
-}
+): WhisperMessage => ({
+  ...createBaseMessage(MessageType.Whisper),
+  userId,
+  message,
+  senderIsSelf
+})
 
 export const createModMessage = (
   userId: string,
   message: string,
   senderIsSelf = false
-): ModMessage => {
-  return {
-    type: MessageType.Mod,
-    userId,
-    message,
-    senderIsSelf,
-    timestamp: new Date()
-  }
-}
+): ModMessage => ({
+  ...createBaseMessage(MessageType.Mod),
+  userId,
+  message,
+  senderIsSelf
+})
 
 export const createShoutMessage = (
   id: string,
   userId: string,
   message: string
-): ShoutMessage => {
-  return {
-    type: MessageType.Shout,
-    messageId: id,
-    userId,
-    message,
-    timestamp: new Date()
-  }
-}
+): ShoutMessage => ({
+  ...createBaseMessage(MessageType.Shout),
+  messageId: id,
+  userId,
+  message
+})
 
 export const createEmoteMessage = (
   id: string,
   userId: string,
   message: string
-): EmoteMessage => {
-  return {
-    type: MessageType.Emote,
-    messageId: id,
-    userId,
-    message,
-    timestamp: new Date()
-  }
-}
+): EmoteMessage => ({
+  ...createBaseMessage(MessageType.Emote),
+  messageId: id,
+  userId,
+  message
+})
 
 export const createDanceMessage = (
   id: string,
   userId: string,
   message: string
-): DanceMessage => {
-  return {
-    type: MessageType.Dance,
-    messageId: id,
-    userId,
-    message,
-    timestamp: new Date()
-  }
-}
+): DanceMessage => ({
+  ...createBaseMessage(MessageType.Dance),
+  messageId: id,
+  userId,
+  message
+})
 
-export const createErrorMessage = (error: string): ErrorMessage => {
-  return { type: MessageType.Error, error, timestamp: new Date() }
-}
+export const createErrorMessage = (error: string): ErrorMessage => ({
+  ...createBaseMessage(MessageType.Error),
+  error
+})
 
-export const createCommandMessage = (command: string): CommandMessage => {
-  return { type: MessageType.Command, command, timestamp: new Date() }
-}
+export const createCommandMessage = (command: string): CommandMessage => ({
+  ...createBaseMessage(MessageType.Command),
+  command
+})

@@ -15,120 +15,103 @@ export type Message =
   | ModMessage
   | ErrorMessage
   | CommandMessage
-  | CaptionMessage
+  | CaptionMessage;
 
-export interface ConnectedMessage {
-  type: MessageType.Connected;
+export interface BaseMessage<T extends MessageType> {
+  type: T;
+  id: string;
+  /**
+   * should be an ISO string `YYYY-MM-DDTHH:mm:ss.sssZ`
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+   */
+  timestamp: string;
+}
+
+export interface ConnectedMessage extends BaseMessage<MessageType.Connected> {
   userId: string;
   roomId: string;
   numUsersInRoom: number;
-  timestamp: Date;
 }
 
-export interface DisconnectedMessage {
-  type: MessageType.Disconnected;
+export interface DisconnectedMessage
+  extends BaseMessage<MessageType.Disconnected> {
   userId: string;
   roomId: string;
   numUsersInRoom: number;
-  timestamp: Date;
 }
 
-export interface EnteredMessage {
-  type: MessageType.Entered;
+export interface EnteredMessage extends BaseMessage<MessageType.Entered> {
   userId: string;
   fromId: string;
   fromName: string;
   roomId: string;
   numUsersInRoom: number;
-  timestamp: Date;
 }
 
-export interface LeftMessage {
-  type: MessageType.Left;
+export interface LeftMessage extends BaseMessage<MessageType.Left> {
   userId: string;
   toId: string;
   toName: string;
   roomId: string;
   numUsersInRoom: number;
-  timestamp: Date;
 }
 
-export interface MovedRoomMessage {
-  type: MessageType.MovedRoom;
+export interface MovedRoomMessage extends BaseMessage<MessageType.MovedRoom> {
   to: string;
-  timestamp: Date;
 }
 
-export interface SameRoomMessage {
-  type: MessageType.SameRoom;
+export interface SameRoomMessage extends BaseMessage<MessageType.SameRoom> {
   roomId: string;
-  timestamp: Date;
 }
 
-export interface ChatMessage {
-  type: MessageType.Chat;
+export interface ChatMessage extends BaseMessage<MessageType.Chat> {
   messageId: string;
   userId: string;
   message: string;
-  timestamp: Date;
 }
 
-export interface CaptionMessage {
-  type: MessageType.Caption;
+export interface CaptionMessage extends BaseMessage<MessageType.Caption> {
   messageId: string;
   userId: string;
   message: string;
-  timestamp: Date;
 }
 
-export interface WhisperMessage {
-  type: MessageType.Whisper;
+export interface WhisperMessage extends BaseMessage<MessageType.Whisper> {
   userId: string;
   message: string;
   senderIsSelf: boolean;
-  timestamp: Date;
 }
 
-export interface ModMessage {
-  type: MessageType.Mod;
+export interface ModMessage extends BaseMessage<MessageType.Mod> {
   userId: string;
   message: string;
   senderIsSelf: boolean;
-  timestamp: Date;
 }
 
-export interface ShoutMessage {
-  type: MessageType.Shout;
+export interface ShoutMessage extends BaseMessage<MessageType.Shout> {
   messageId: string;
   userId: string;
   message: string;
-  timestamp: Date;
 }
 
-export interface EmoteMessage {
-  type: MessageType.Emote;
+export interface EmoteMessage extends BaseMessage<MessageType.Emote> {
   messageId: string;
   userId: string;
   message: string;
-  timestamp: Date;
 }
 
-export interface DanceMessage {
-  type: MessageType.Dance;
+export interface DanceMessage extends BaseMessage<MessageType.Dance> {
   messageId: string;
   userId: string;
   message: string;
-  timestamp: Date;
 }
 
-export interface ErrorMessage {
-  type: MessageType.Error;
+export interface ErrorMessage extends BaseMessage<MessageType.Error> {
   error: string;
-  timestamp: Date;
 }
 
-export interface CommandMessage {
-  type: MessageType.Command;
+export interface CommandMessage extends BaseMessage<MessageType.Command> {
   command: string;
-  timestamp: Date;
 }
