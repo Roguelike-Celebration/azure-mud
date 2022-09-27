@@ -13,16 +13,16 @@ const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, in
     }
   }
 
+  let toggledUser: User
+
   if (await isSpeaker(userIdToToggle)) {
     log(`[MOD] Setting user ${userIdToToggle} to speaker=false`)
-    await DB.setSpeakerStatus(userIdToToggle, false)
+    toggledUser = await DB.setSpeakerStatus(userIdToToggle, false)
   } else {
     log(`[MOD] Setting user ${userIdToToggle} to speaker=true`)
-    await DB.setSpeakerStatus(userIdToToggle, true)
+    toggledUser = await DB.setSpeakerStatus(userIdToToggle, true)
   }
 
-  // Update speaker status for everyone else
-  const toggledUser: User = await DB.getUser(userIdToToggle)
   return {
     messages: [{
       target: 'usernameMap',
