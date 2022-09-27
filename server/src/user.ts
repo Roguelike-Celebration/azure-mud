@@ -190,6 +190,7 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
   }
 }
 
+// TODO: We could make this slightly more network-efficient by removing optional undefined fields
 export function minimizeUser (user: User | PublicUser): MinimalUser {
   const minimalUser: MinimalUser = {
     id: user.id,
@@ -199,6 +200,7 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     item: user.item,
     polymorph: user.polymorph,
     isMod: user.isMod,
+    isSpeaker: user.isSpeaker,
     fontReward: user.fontReward,
     equippedBadges: user.equippedBadges
   }
