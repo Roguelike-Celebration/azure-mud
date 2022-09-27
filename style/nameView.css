@@ -84,3 +84,8 @@ span.name {
   margin-left: 3px;
   margin-right: 1px;
 }
+
+.custom-badge {
+  margin-bottom: -4px;
+  max-height: 20px;
+}
