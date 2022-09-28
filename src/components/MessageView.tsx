@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React, { useContext, FunctionComponent } from 'react'
+import React, { useContext, FunctionComponent, memo } from 'react'
 import ReactTooltip from 'react-tooltip'
 import Linkify from 'react-linkify'
 
@@ -34,7 +34,7 @@ import { renderCustomEmojiString } from '../emoji'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
-export default function MessageView (props: { message: Message; id: string, hideTimestamp: boolean, msgIndex: number }) {
+export default memo(function MessageView (props: { message: Message; id: string, hideTimestamp: boolean, msgIndex: number }) {
   const { message } = props
   if (!message) { return <div/> }
 
@@ -74,7 +74,7 @@ export default function MessageView (props: { message: Message; id: string, hide
       {React.createElement(component, { ...message, id: props.id })}
     </div>
   )
-}
+})
 
 const handleDeleteMessage = (e, data) => {
   const doDelete = confirm(`Are you sure you would like to delete the message '${data.message}'?`)

@@ -27,6 +27,7 @@
     "axios": "^0.21.2",
     "firebase": "8.10.0",
     "firebaseui": "^5.0.0",
+    "immer": "^9.0.15",
     "localforage": "^1.9.0",
     "lodash": "^4.17.21",
     "microsoft-cognitiveservices-speech-sdk": "^1.15.0",
