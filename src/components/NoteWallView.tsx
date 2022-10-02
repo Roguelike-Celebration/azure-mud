@@ -8,10 +8,10 @@ import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
 
-// TODO: insanely silly to hardcode these here, since they can easily fall out of sync
-// If you're reading this, these are the specific room ids for Roguelike Celebration 2021
-// and you should rip them out, probably?
-const UNCONFERENCING_ROOM_IDS = ['cockatrice', 'dragon', 'naga', 'skeleton', 'tengu', 'yak']
+// TODO: We hardcode room names for the 'auto-assign topics to unconference rooms' feature
+// This is silly, and we almost missed this in 2022.
+// Take a note to update this for 2023, and consider refactoring (to e.g. an 'unconference' flag in the room data?)
+const UNCONFERENCING_ROOM_IDS = ['unconferenceDigSite', 'unconferenceElysium', 'unconferenceRaveCave', 'unconferenceStarShip']
 
 function numLikes (roomNote: RoomNote) {
   return !roomNote.likes ? 0 : roomNote.likes.length
