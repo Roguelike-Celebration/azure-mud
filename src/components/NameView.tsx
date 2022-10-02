@@ -20,7 +20,7 @@ interface Props {
   nowrap?: boolean
 
   /* A contextMenu ID */
-  id?: string
+  id: string
   /* If true, don't render a clickable menu */
   skipMenu?: boolean
 }
