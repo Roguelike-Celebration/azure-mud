@@ -135,13 +135,13 @@ export default function NameView (props: Props) {
   // TODO: This is not yet being set anywhere
   if (user.isSpeaker) {
     badges.unshift(
-      <BadgeView key='badge-speaker' badge={{ emoji: '📢', description: 'Speaker' }} />
+      <BadgeView key='badge-speaker' isCustom={true} badge={{ emoji: 'speaker', description: 'Speaker' }} />
     )
   }
 
   if (user.isMod) {
     badges.unshift(
-      <BadgeView key='badge-mod' badge={{ emoji: '🆘', description: 'Moderator' }} />
+      <BadgeView key='badge-mod' isCustom={true} badge={{ emoji: 'mod', description: 'Moderator' }} />
     )
   }
 

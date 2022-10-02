@@ -1,4 +1,4 @@
-import React, { DragEventHandler, useState } from 'react'
+import React, { DragEventHandler, useLayoutEffect, useState } from 'react'
 import { DispatchContext } from '../App'
 
 import '../../style/badges.css'
@@ -8,7 +8,7 @@ import BadgeView from './BadgeView'
 import { Badge } from '../../server/src/badges'
 import { EquipBadgeAction } from '../Actions'
 import { equipBadge } from '../networking'
-import { find, isNumber, uniq } from 'lodash'
+import { find, first, isNumber, uniq } from 'lodash'
 
 interface Props {
   unlockedBadges: Badge[]
@@ -41,13 +41,22 @@ export default function BadgesModalView (props: Props) {
   }
 
   const drop = (e) => {
-    const badge = JSON.parse(e.dataTransfer.getData('text/plain'))
-    const index = parseInt(e.currentTarget.dataset.index)
-    dispatch(EquipBadgeAction(badge, index))
-    equipBadge(badge, index)
+    let data: string
+    try {
+      data = e.dataTransfer.getData('text/plain')
+      const badge = JSON.parse(data)
+      const index = parseInt(e.currentTarget.dataset.index)
+      dispatch(EquipBadgeAction(badge, index))
+      equipBadge(badge, index)
 
-    setSelectedBadge(undefined)
-    setSelectedEquippedIndex(undefined)
+      setSelectedBadge(undefined)
+      setSelectedEquippedIndex(undefined)
+    } catch (err) {
+      // I wasn't able to repro the error, but it sounded like for some reason the getData was coming back empty.
+      // This will at least help us debug if it pops up again
+      console.log(err)
+      console.log('tried to parse: ' + data)
+    }
   }
 
   const selectEquippedBadge = (e) => {
@@ -121,40 +130,23 @@ export default function BadgesModalView (props: Props) {
   const equippedBadges = []
   for (let i = 0; i < Math.max(rawEquippedBadges.length, 2); i++) {
     const b = rawEquippedBadges[i]
-    if (b) {
-      equippedBadges.push(
-        <span
-          aria-pressed={i === selectedEquippedIndex}
-          className={`selected-badge ${i === selectedEquippedIndex ? 'selected' : ''}`}
-          data-index={i}
-          key={`selected-${i}`}
-          onClick={selectEquippedBadge}
-          onContextMenu={rightClickUnequipBadge}
-          onDrop={drop}
-          onDragOver={dragOver}
-          onKeyDown={keyDownOnEquipped}
-          role='button'
-          tabIndex={0}>
-          <BadgeView key={`equipped-${i}`} badge={b} />
-        </span>
-      )
-    } else {
-      equippedBadges.push(
-        <span
-          aria-pressed={i === selectedEquippedIndex}
-          className={`selected-badge ${i === selectedEquippedIndex ? 'selected' : ''}`} data-index={i}
-          key={`selected-${i}`}
-          onClick={selectEquippedBadge}
-          onContextMenu={rightClickUnequipBadge}
-          onDrop={drop}
-          onDragOver={dragOver}
-          onKeyDown={keyDownOnEquipped}
-          role='button'
-          tabIndex={0}>
-            &nbsp;
-        </span>
-      )
-    }
+
+    equippedBadges.push(
+      <div
+        aria-pressed={i === selectedEquippedIndex}
+        className={`selected-badge ${i === selectedEquippedIndex ? 'selected' : ''}`}
+        data-index={i}
+        key={`selected-${i}`}
+        onClick={selectEquippedBadge}
+        onContextMenu={rightClickUnequipBadge}
+        onDrop={drop}
+        onDragOver={dragOver}
+        onKeyDown={keyDownOnEquipped}
+        role='button'
+        tabIndex={0}>
+        {rawEquippedBadges[i] && <BadgeView key={`equipped-${i}`} badge={b} />}
+      </div>
+    )
   }
 
   // TODO: Can you see description with screen reader?
@@ -168,7 +160,7 @@ export default function BadgesModalView (props: Props) {
         className='locked-badge' draggable={true}
         key={b.emoji}
       >
-        <BadgeView badge={b} />
+        <BadgeView badge={{ ...b, emoji: '🔒' }} />
       </span>
     )
   })
@@ -177,7 +169,7 @@ export default function BadgesModalView (props: Props) {
     return (
       <span
         aria-pressed={selectedBadge === b}
-        className={`unlocked-badge ${selectedBadge === b ? 'selected' : ''}`} draggable={true}
+        className={`unlocked-badge${selectedBadge === b ? ' selected' : ''}`} draggable={true}
         key={b.emoji}
         data-index={i}
         onClick={selectUnlockedBadge}
@@ -191,17 +183,28 @@ export default function BadgesModalView (props: Props) {
     )
   })
 
+  // keyboard navigation: move the focus to the first unlocked badge after mount
+  useLayoutEffect(() => {
+    const firstUnlockedBadge: HTMLElement = document.querySelectorAll('.all span.unlocked-badge')[0] as HTMLElement
+    firstUnlockedBadge.contentEditable = 'true' // hack to force the focus ring to be visible
+    firstUnlockedBadge.focus()
+    firstUnlockedBadge.contentEditable = 'false' // hack to force the focus ring to be visible
+  }, [])
+
   return (
     <div id='badges'>
       <h1>Your Badges</h1>
-      <div>
-        <h2>Equipped</h2>
-        {equippedBadges} (right-click or highlight & press delete to unequip)
-      </div>
-      <div>
-        <h2>All Badges</h2>
-        {unlockedBadges}
-        {lockedBadges}
+      <div className="badge-sections">
+        <section className="equipped">
+          <h2>Equipped</h2>
+          {equippedBadges}
+          <div>(right-click or highlight & press delete to unequip)</div>
+        </section>
+        <section className="all">
+          <h2>All</h2>
+          {lockedBadges}
+          {unlockedBadges}
+        </section>
       </div>
     </div>
   )

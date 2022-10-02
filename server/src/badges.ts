@@ -36,6 +36,30 @@ export const FreeBadges: Badge[] = [
   {
     emoji: '👋',
     description: 'Say hi to me!'
+  },
+  {
+    emoji: '📸',
+    description: 'Tourist'
+  },
+  {
+    emoji: '🐀',
+    description: 'Killed by a rat on level 1'
+  },
+  {
+    emoji: '🕴️',
+    description: 'Caves of Qud, probably'
+  },
+  {
+    emoji: '🥣',
+    description: 'Reformed oatmeal maker'
+  },
+  {
+    emoji: '🖼️',
+    description: 'Does this dungeon have a tileset?'
+  },
+  {
+    emoji: '🧦',
+    description: 'Equipped: Roguelike Celebration socks'
   }
 ]
 
