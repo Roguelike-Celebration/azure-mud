@@ -7,6 +7,7 @@ import { NoteView } from './NoteView'
 import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
+import { sortBy } from 'lodash'
 
 // TODO: We hardcode room names for the 'auto-assign topics to unconference rooms' feature
 // This is silly, and we almost missed this in 2022.
@@ -48,10 +49,9 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     }
   }
 
-  const sortedNotes = (props.notes || []).sort((a, b) => {
-    const aLikes = a.likes ? a.likes.length : 0
-    const bLikes = b.likes ? b.likes.length : 0
-    return bLikes - aLikes
+  const sortedNotes = sortBy(props.notes || [], (note) => {
+    // Lodash sortBy is always ascending, so we negative it out to get descending
+    return note.likes ? -note.likes.length : 0
   })
 
   const noteViews = sortedNotes.map(n => <NoteView key={n.id} note={n} />)
