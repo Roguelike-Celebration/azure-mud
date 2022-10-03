@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import produce from 'immer'
+import produce, { current } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
@@ -41,6 +41,11 @@ import { Room } from './room'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import * as Storage from './storage'
 
+interface EntityState<T> {
+  entities: Record<string, T>;
+  ids: string[];
+}
+
 export interface State {
   firebaseApp: firebase.app.App;
   authenticated: boolean;
@@ -63,7 +68,7 @@ export interface State {
 
   profileData?: User;
 
-  messages: Message[];
+  messages: EntityState<Message>;
   whispers: WhisperMessage[];
   autoscrollChat: boolean;
 
@@ -117,7 +122,10 @@ export const defaultState: State = {
   authenticated: false,
   checkedAuthentication: false,
   hasRegistered: false,
-  messages: [],
+  messages: {
+    entities: {},
+    ids: []
+  },
   whispers: [],
   visibleSpeakers: [],
   autoscrollChat: true,
@@ -652,7 +660,12 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
-    draft.messages = action.messages
+    draft.messages = action.messages.reduce((acc, message) => {
+      acc.entities[message.id] = message
+      acc.ids.push(message.id)
+
+      return acc
+    }, { entities: {}, ids: [] })
     draft.whispers = action.whispers || []
   }
 
@@ -744,15 +757,20 @@ export default produce((draft: State, action: Action) => {
 // WARNING: These three functions modify the message state without awaiting on the result.
 // If you're seeing weird race conditions with the message store, that's probably the issue.
 
-function deleteMessage (state: State, messageId: String) {
-  const target = state.messages.find(
-    (m) => isDeletableMessage(m) && m.id === messageId
-  )
+function deleteMessage (state: State, messageId: string) {
+  const target = state.messages.entities[messageId]
 
-  // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
   if (isDeletableMessage(target)) {
     target.message = 'message was removed by moderator'
-    Storage.setMessages(state.messages)
+
+    /**
+     * need to use `current` here because `deleteMessage` is called by the
+     * reducer which means its state is a proxied draft, which won't serialize
+     * to localForage correctly
+     *
+     * @see https://immerjs.github.io/immer/current
+     */
+    Storage.setMessages(Object.values(current(state).messages.entities))
   }
 }
 
@@ -762,9 +780,17 @@ async function saveWhisper (state: State, message: WhisperMessage) {
 }
 
 async function addMessage (state: State, message: Message) {
-  state.messages.push(message)
-  state.messages = state.messages.slice(-500)
-  Storage.setMessages(state.messages)
+  state.messages.entities[message.id] = message
+  state.messages.ids.push(message.id)
+
+  /**
+   * need to use `current` here because `addMessage` is called by the reducer
+   * which means its state is a proxied draft, which won't serialize to
+   * localForage correctly
+   *
+   * @see https://immerjs.github.io/immer/current
+   */
+  Storage.setMessages(Object.values(current(state).messages.entities))
 }
 
 // This is intended to be a big old unreadable grab bag,

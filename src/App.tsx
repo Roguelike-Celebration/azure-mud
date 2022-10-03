@@ -410,7 +410,7 @@ const App = () => {
                         />
                       ) : null}
                       <ChatView
-                        messages={state.messages}
+                        messages={Object.values(state.messages.entities)}
                         autoscrollChat={state.autoscrollChat}
                         serverSettings={state.serverSettings}
                         captionsEnabled={state.captionsEnabled}
