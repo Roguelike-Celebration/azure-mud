@@ -776,7 +776,7 @@ function deleteMessage (state: State, messageId: string) {
 
 async function saveWhisper (state: State, message: WhisperMessage) {
   state.whispers.push(message)
-  Storage.setWhispers(state.whispers)
+  Storage.setWhispers(current(state).whispers)
 }
 
 async function addMessage (state: State, message: Message) {
