@@ -120,7 +120,7 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   // Limit other field lengths
   if (data.realName) { data.realName = sanitizeString(data.realName, 200) }
   if (data.description) { data.description = sanitizeString(data.description, 200) }
-  if (data.pronouns) { data.pronouns = sanitizeString(data.realName, 40) }
+  if (data.pronouns) { data.pronouns = sanitizeString(data.pronouns, 40) }
   if (data.url) { data.url = sanitizeString(data.url, 200) }
   if (data.twitterHandle) { data.twitterHandle = sanitizeString(data.twitterHandle, 20) }
   if (data.askMeAbout) { data.askMeAbout = sanitizeString(data.askMeAbout, 200) }
