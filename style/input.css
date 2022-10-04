@@ -9,6 +9,10 @@
   width: 100%;
 }
 
+#input .mentions {
+  margin-right: 1rem;
+}
+
 .main-input {
   width: 100%;
   border-radius: 5px;
