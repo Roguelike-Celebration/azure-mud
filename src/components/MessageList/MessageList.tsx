@@ -3,6 +3,7 @@ import { MessagesContext } from '../../App'
 import { Message } from '../../message'
 import { MessageItem } from '../MessageItem'
 import './MessageList.css'
+import '../../../style/chat.css'
 
 const THREE_MINUTES = 1_000 * 60 * 3
 const shouldHideTimestamp = (
