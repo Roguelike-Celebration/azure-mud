@@ -40,9 +40,9 @@ const deletableMessageTypes = [
 ]
 
 export const isDeletableMessage = (
-  message: Message
+  message: Message | undefined
 ): message is AnyDeletableMessage =>
-  deletableMessageTypes.includes(message.type)
+  message !== undefined && deletableMessageTypes.includes(message.type)
 
 type AnyMovementMessage =
   | ConnectedMessage
