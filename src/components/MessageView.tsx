@@ -118,7 +118,6 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
   props
 ) => {
   const { userMap, myId } = useContext(UserMapContext)
-  const { entities } = useContext(MessagesContext)
 
   const playerIsMod = userMap[myId] && userMap[myId].isMod
 
