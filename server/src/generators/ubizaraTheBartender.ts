@@ -19,7 +19,8 @@ export const generate = () => {
       'She #expression#',
       'Ubizara #expression#',
       'You watch her taste test a cocktail, mixing in new and exciting ingredients until it meets her exacting standards.',
-      'You watch her untap a huge keg of dwarven ale. Did she just roll her eyes?'
+      'You watch her untap a huge keg of dwarven ale. Did she just roll her eyes?',
+      'She presses an entire case of wine bottles above her head to put them gently on an overhead shelf.'
     ],
     expression: [
       'flashes you a smile',
