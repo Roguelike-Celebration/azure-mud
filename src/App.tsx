@@ -57,6 +57,7 @@ import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
 
 export const DispatchContext = createContext(null)
+export const MessagesContext = createContext<State['messages']>(null)
 export const UserMapContext = createContext(null)
 export const SettingsContext = createContext(null)
 export const IsMobileContext = createContext(null)
@@ -362,74 +363,76 @@ const App = () => {
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <TwilioChatContextProvider active={!state.textOnlyMode}>
-          <IsMobileContext.Provider value={isMobile}>
-            <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
-              <UserMapContext.Provider
-                value={{ userMap: state.userMap, myId: state.userId }}
-              >
-                <RoomDataContext.Provider value={state.roomData}>
-                  <div
-                    id={
-                      state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
-                    }
-                  >
-                    {shouldShowMenu ? (
-                      <span>
-                        <SideNavView
-                          presenceData={state.presenceData}
-                          currentRoomId={state.roomId}
-                          username={state.userMap[state.userId].username}
-                          spaceIsClosed={state.isClosed}
-                        />
-                        {/* Once we moved the sidebar to be position:fixed, we still
+        <MessagesContext.Provider value={state.messages}>
+          <TwilioChatContextProvider active={!state.textOnlyMode}>
+            <IsMobileContext.Provider value={isMobile}>
+              <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
+                <UserMapContext.Provider
+                  value={{ userMap: state.userMap, myId: state.userId }}
+                >
+                  <RoomDataContext.Provider value={state.roomData}>
+                    <div
+                      id={
+                        state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
+                      }
+                    >
+                      {shouldShowMenu ? (
+                        <span>
+                          <SideNavView
+                            presenceData={state.presenceData}
+                            currentRoomId={state.roomId}
+                            username={state.userMap[state.userId].username}
+                            spaceIsClosed={state.isClosed}
+                          />
+                          {/* Once we moved the sidebar to be position:fixed, we still
                       needed something to take up its space in the CSS grid.
                       This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                        <div id="side-nav-placeholder" />
-                      </span>
-                    ) : (
-                      <button id="show-menu" onClick={showMenu}>
-                        <span role="img" aria-label="menu">
-                          🍔
+                          <div id="side-nav-placeholder" />
                         </span>
-                      </button>
-                    )}
-                    {modalView}
-                    <div id="main" role="main">
-                      {state.roomData[state.roomId] ? (
-                        <RoomView
-                          room={state.roomData[state.roomId]}
-                          userId={state.userId}
-                          roomData={state.roomData}
-                          presenceData={state.presenceData}
-                          inMediaChat={state.inMediaChat}
-                          keepCameraWhenMoving={state.keepCameraWhenMoving}
-                          textOnlyMode={state.textOnlyMode}
-                          mediaChatView={videoChatView}
-                          hasDismissedAModal={state.hasDismissedAModal}
+                      ) : (
+                        <button id="show-menu" onClick={showMenu}>
+                          <span role="img" aria-label="menu">
+                          🍔
+                          </span>
+                        </button>
+                      )}
+                      {modalView}
+                      <div id="main" role="main">
+                        {state.roomData[state.roomId] ? (
+                          <RoomView
+                            room={state.roomData[state.roomId]}
+                            userId={state.userId}
+                            roomData={state.roomData}
+                            presenceData={state.presenceData}
+                            inMediaChat={state.inMediaChat}
+                            keepCameraWhenMoving={state.keepCameraWhenMoving}
+                            textOnlyMode={state.textOnlyMode}
+                            mediaChatView={videoChatView}
+                            hasDismissedAModal={state.hasDismissedAModal}
+                          />
+                        ) : null}
+                        <ChatView
+                          messages={Object.values(state.messages.entities)}
+                          autoscrollChat={state.autoscrollChat}
+                          serverSettings={state.serverSettings}
+                          captionsEnabled={state.captionsEnabled}
                         />
-                      ) : null}
-                      <ChatView
-                        messages={Object.values(state.messages.entities)}
-                        autoscrollChat={state.autoscrollChat}
-                        serverSettings={state.serverSettings}
-                        captionsEnabled={state.captionsEnabled}
-                      />
-                      <InputView
-                        prepopulated={state.prepopulatedInput}
-                        sendMessage={(message) =>
-                          dispatch(SendMessageAction(message))
-                        }
-                        usersInRoom={state.roomData[state.roomId]?.users}
-                      />
+                        <InputView
+                          prepopulated={state.prepopulatedInput}
+                          sendMessage={(message) =>
+                            dispatch(SendMessageAction(message))
+                          }
+                          usersInRoom={state.roomData[state.roomId]?.users}
+                        />
+                      </div>
+                      {profile}
                     </div>
-                    {profile}
-                  </div>
-                </RoomDataContext.Provider>
-              </UserMapContext.Provider>
-            </SettingsContext.Provider>
-          </IsMobileContext.Provider>
-        </TwilioChatContextProvider>
+                  </RoomDataContext.Provider>
+                </UserMapContext.Provider>
+              </SettingsContext.Provider>
+            </IsMobileContext.Provider>
+          </TwilioChatContextProvider>
+        </MessagesContext.Provider>
       </DispatchContext.Provider>
     </IconContext.Provider>
   )

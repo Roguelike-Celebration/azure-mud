@@ -27,7 +27,7 @@ import {
   CaptionMessage
 } from '../message'
 import NameView from './NameView'
-import { DispatchContext, UserMapContext, RoomDataContext } from '../App'
+import { DispatchContext, UserMapContext, RoomDataContext, MessagesContext } from '../App'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
 import { join, split } from 'lodash'
 import { renderCustomEmojiString } from '../emoji'
@@ -95,6 +95,9 @@ const linkDecorator = (href, text, key) => (
 
 const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (props) => {
   const { userMap, myId } = useContext(UserMapContext)
+  const { entities } = useContext(MessagesContext)
+  console.log('DeletableMessageView', { entities })
+
   const playerIsMod = userMap[myId] && userMap[myId].isMod
 
   if (!playerIsMod) {
@@ -108,7 +111,7 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (prop
           </ContextMenuTrigger>
           <ContextMenu id={props.messageId}>
             <MenuItem
-              data={{ messageId: props.messageId, message: props.children }}
+              data={{ messageId: props.messageId, message: entities[props.messageId].message }}
               onClick={handleDeleteMessage}
             >
               { 'Delete Message?' }
