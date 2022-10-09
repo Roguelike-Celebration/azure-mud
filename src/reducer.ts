@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import produce, { current } from 'immer'
+import { current, produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
@@ -660,15 +660,10 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
-    draft.messages = action.messages.reduce(
-      (acc, message) => {
-        acc.entities[message.id] = message
-        acc.ids.push(message.id)
-
-        return acc
-      },
-      current(draft.messages)
-    )
+    action.messages.forEach((message) => {
+      draft.messages.entities[message.id] = message
+      draft.messages.ids.push(message.id)
+    })
     draft.whispers = action.whispers || []
   }
 
