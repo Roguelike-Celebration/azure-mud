@@ -660,12 +660,15 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
-    draft.messages = action.messages.reduce((acc, message) => {
-      acc.entities[message.id] = message
-      acc.ids.push(message.id)
+    draft.messages = action.messages.reduce(
+      (acc, message) => {
+        acc.entities[message.id] = message
+        acc.ids.push(message.id)
 
-      return acc
-    }, { entities: {}, ids: [] })
+        return acc
+      },
+      { entities: {}, ids: [] }
+    )
     draft.whispers = action.whispers || []
   }
 
