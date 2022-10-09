@@ -662,9 +662,9 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.LoadMessageArchive) {
     const nextEntities = {
       ...current(draft).messages.entities,
-      ...action.messages.reduce((entities, message) => {
-        entities[message.id] = message
-        return entities
+      ...action.messages.reduce((acc, message) => {
+        acc[message.id] = message
+        return acc
       }, {})
     }
 
