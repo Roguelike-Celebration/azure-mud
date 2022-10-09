@@ -667,7 +667,7 @@ export default produce((draft: State, action: Action) => {
 
         return acc
       },
-      { entities: {}, ids: [] }
+      current(draft.messages)
     )
     draft.whispers = action.whispers || []
   }
