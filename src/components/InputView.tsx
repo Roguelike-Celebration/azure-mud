@@ -77,6 +77,7 @@ export default function InputView (props: {
         singleLine={true}
       >
         <Mention
+          appendSpaceOnAdd={true}
           trigger="@"
           className="mentions__mentions"
           markup="@@[[__display__]]``__id__``@@"
@@ -88,6 +89,7 @@ export default function InputView (props: {
           }}
         />
         <Mention
+          appendSpaceOnAdd={true}
           trigger=":"
           className="mentions__custom_emoji"
           markup=":__id__:"

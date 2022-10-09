@@ -15,7 +15,7 @@
   "entryway": {
     "id": "entryway",
     "displayName": "Registration Desk",
-    "description": "A big banner before you reads 'Welcome to Roguelike Celebration 2021!' Beyond the doorway you hear welcoming chatter and merriment. Once you've got your bearings about you, you can move through to the [[Central Hall->hall]].",
+    "description": "A big banner before you reads 'Welcome to Roguelike Celebration 2022!' Beyond the doorway you hear welcoming chatter and merriment. Once you've got your bearings about you, you can move through to the [[Central Hall->hall]].",
     "shortName": "the registration desk",
     "hidden": true
   },
@@ -23,7 +23,7 @@
     "id": "officeOfSteam",
     "displayName": "Office of Steam",
     "shortName": "the Office of Steam",
-    "description": "This sparsely-furnished room has little more in it than a typewriter standing on a pillar at its center. As you look down, however, you see a glass floor suspending you above an enormous sprawling mass of pipes and brass machinery. Chutes and tubes create fire and move steam in intricate patterns all ultimately funelling back into the typewriter stand you noticed before. Dwarves are scurrying to and fro, tinkering with the machines. Hooked to the typewriter is a small screen, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. Anachronistically, a cute Post-It Note shaped like a quokka is on the side of the screen, with the note \"Coming Soon: 2022 Steam Sale\" in loopy handwriting. If you'd like, you can investigate the <a href=\"https://store.steampowered.com/sale/roguelikecelebration2021 \" target=\"_blank\">source of its steam power</a>, or go back to the [[Guild Hall->adventurersGuildHall]].",
+    "description": "This sparsely-furnished room has little more in it than a typewriter standing on a pillar at its center. As you look down, however, you see a glass floor suspending you above an enormous sprawling mass of pipes and brass machinery. Chutes and tubes create fire and move steam in intricate patterns all ultimately funelling back into the typewriter stand you noticed before. Dwarves are scurrying to and fro, tinkering with the machines. Hooked to the typewriter is a small screen, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. Anachronistically, a cute Post-It Note shaped like a quokka is on the side of the screen, with the note \"Coming Soon: 2022 Steam Sale\" in loopy handwriting. If you'd like, you can investigate the <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">source of its steam power</a>, or go back to the [[Guild Hall->adventurersGuildHall]].",
     "roomId": "officeOfSteam"
   },
   "unconferenceDigSite": {

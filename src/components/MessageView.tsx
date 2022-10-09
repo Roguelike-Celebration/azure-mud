@@ -95,17 +95,16 @@ export default memo(function MessageView (props: {
 })
 
 const handleDeleteMessage = (e, data) => {
-  const doDelete = confirm(
-    `Are you sure you would like to delete the message '${data.message}'?`
-  )
+  const doDelete = confirm(`Are you sure you would like to delete the message '${data.messageText}'?`)
   if (doDelete) {
     deleteMessage(data.messageId)
   }
 }
 
 type DeletableMessageViewProps = {
-  messageId: string;
-};
+  messageId: string,
+  messageText: string
+}
 
 const linkDecorator = (href, text, key) => (
   <a href={href} key={key} target="_blank" rel="noopener noreferrer">
@@ -126,22 +125,17 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
       <Linkify componentDecorator={linkDecorator}>{props.children}</Linkify>
     )
   } else {
+    const key: string = `${props.messageId}-name`
+
     return (
       <Linkify componentDecorator={linkDecorator}>
         <span className="deleteMenu">
-          <ContextMenuTrigger
-            id={props.messageId}
-            mouseButton={2}
-            renderTag="span"
-          >
+          <ContextMenuTrigger id={key} mouseButton={2} renderTag="span">
             {props.children}
           </ContextMenuTrigger>
-          <ContextMenu id={props.messageId}>
+          <ContextMenu id={key}>
             <MenuItem
-              data={{
-                messageId: props.messageId,
-                message: entities[props.messageId].message
-              }}
+              data={{ messageId: props.messageId, message: props.children, messageText: props.messageText }}
               onClick={handleDeleteMessage}
             >
               {'Delete Message?'}
@@ -277,20 +271,14 @@ const ChatMessageView = (props: ChatMessage) => {
 
   return (
     <div className="message">
-      <NameView userId={props.userId} id={props.id} />:{' '}
-      <DeletableMessageView messageId={props.id}>
-        {joinedMessage}
-      </DeletableMessageView>
+      <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.id} messageText={props.message}>{joinedMessage}</DeletableMessageView>
     </div>
   )
 }
 
 const CaptionView = (props: CaptionMessage) => (
   <div className="message">
-    <NameView userId={props.userId} id={props.id} /> (spoken):{' '}
-    <DeletableMessageView messageId={props.id}>
-      {props.message}
-    </DeletableMessageView>
+    <NameView userId={props.userId} id={props.id} /> (spoken): <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView>
   </div>
 )
 
@@ -350,10 +338,7 @@ const ModMessageView = (props: ModMessage) => {
 const ShoutView = (props: ShoutMessage) => {
   return (
     <div className="message">
-      <NameView userId={props.userId} id={props.id} /> shouts:{' '}
-      <DeletableMessageView messageId={props.id}>
-        {props.message}
-      </DeletableMessageView>
+      <NameView userId={props.userId} id={props.id} /> shouts: <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView>
     </div>
   )
 }
@@ -361,12 +346,7 @@ const ShoutView = (props: ShoutMessage) => {
 const EmoteView = (props: EmoteMessage) => {
   return (
     <div className="message">
-      <em>
-        <NameView userId={props.userId} id={props.id} />{' '}
-        <DeletableMessageView messageId={props.id}>
-          {props.message}
-        </DeletableMessageView>
-      </em>
+      <em><NameView userId={props.userId} id={props.id} /> <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView></em>
     </div>
   )
 }
