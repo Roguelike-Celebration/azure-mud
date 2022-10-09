@@ -660,10 +660,17 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
-    action.messages.forEach((message) => {
-      draft.messages.entities[message.id] = message
-      draft.messages.ids.push(message.id)
-    })
+    const nextEntities = {
+      ...current(draft).messages.entities,
+      ...action.messages.reduce((entities, message) => {
+        entities[message.id] = message
+        return entities
+      }, {})
+    }
+
+    draft.messages.entities = nextEntities
+    draft.messages.ids = Object.keys(nextEntities)
+
     draft.whispers = action.whispers || []
   }
 
