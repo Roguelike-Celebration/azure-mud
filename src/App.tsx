@@ -1,7 +1,6 @@
 import React, { useEffect, createContext } from 'react'
 
 import RoomView from './components/RoomView'
-import ChatView from './components/ChatView'
 import InputView from './components/InputView'
 import { connect, checkIsRegistered, getServerSettings } from './networking'
 import reducer, { State, defaultState } from './reducer'
@@ -55,6 +54,7 @@ import { currentUser, onAuthenticationStateChange } from './authentication'
 import _ from 'lodash'
 import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
+import { MessageList } from './components/MessageList'
 
 export const DispatchContext = createContext(null)
 export const MessagesContext = createContext<State['messages']>(null)
@@ -411,12 +411,7 @@ const App = () => {
                             hasDismissedAModal={state.hasDismissedAModal}
                           />
                         ) : null}
-                        <ChatView
-                          messages={Object.values(state.messages.entities)}
-                          autoscrollChat={state.autoscrollChat}
-                          serverSettings={state.serverSettings}
-                          captionsEnabled={state.captionsEnabled}
-                        />
+                        <MessageList />
                         <InputView
                           prepopulated={state.prepopulatedInput}
                           sendMessage={(message) =>
