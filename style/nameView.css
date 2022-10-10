@@ -15,6 +15,7 @@ nav.react-contextmenu {
   background-color: var(--alternate-background);
   border: 1px solid var(--main-font);
   cursor: pointer;
+  z-index: 1;
 }
 
 @media only screen and (max-device-width: 500px) {
@@ -83,4 +84,9 @@ span.name {
 .name .badge {
   margin-left: 3px;
   margin-right: 1px;
+}
+
+.custom-badge {
+  margin-bottom: -4px;
+  max-height: 20px;
 }

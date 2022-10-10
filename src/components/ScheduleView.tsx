@@ -10,10 +10,15 @@ export interface ScheduleEntry {
 }
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string) {
+  const dayPreview = (time) => new Date(`2022-09-11T${time}:00.000-07:00`)
   const dayOneDate = (time) => new Date(`2021-10-16T${time}:00.000-07:00`)
   const dayTwoDate = (time) => new Date(`2021-10-17T${time}:00.000-07:00`)
 
-  if (day === 1) {
+  if (day === 0) {
+    return {
+      time: dayPreview(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId
+    }
+  } else if (day === 1) {
     return {
       time: dayOneDate(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId
     }
@@ -25,6 +30,19 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
     console.error('Your static data is messed up, somehow.')
   }
 }
+
+// 2022 Preview
+
+export const ScheduleEntries = [
+  ScheduleEntry('16:00', 0, 'Doors Open'),
+  ScheduleEntry('16:25', 0, 'Kickoff - Stream Begins', ['theater']),
+  ScheduleEntry('16:30', 0, 'Casey Yano, Mega Crit', ['theater'], 'mage'),
+  ScheduleEntry('17:00', 0, 'Justin Ma and Matthew Davis, Subset Games', ['theater'], 'rogue'),
+  ScheduleEntry('17:30', 0, SOCIAL_TIME),
+  ScheduleEntry('19:00', 0, 'Doors Close')
+]
+
+// 2021 entries, kept for formatting reminders for later
 
 // Saturday entries
 /*
@@ -57,7 +75,7 @@ export const ScheduleEntries = [
 ]
 */
 
-export const ScheduleEntries = [
+/* export const ScheduleEntries = [
   ScheduleEntry('09:00', 2, 'Doors Open'),
   ScheduleEntry('09:15', 2, 'Kickoff', ['theater']),
   ScheduleEntry('09:30', 2, 'Michael Langford: For the Squishies ⚡ Making Roguelikes Accessible to (Younger) Children and their Parents', ['theater'], 'warrior'),
@@ -81,7 +99,7 @@ export const ScheduleEntries = [
   ScheduleEntry('18:00', 2, 'Noah Swartz: The Tombs of Atuan: The Original Roguelike?', ['theater'], 'mage'),
   ScheduleEntry('18:15', 2, SOCIAL_TIME),
   ScheduleEntry('19:00', 2, 'Doors Close')
-]
+] */
 
 export default function ScheduleView () {
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })

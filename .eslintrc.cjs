@@ -22,7 +22,8 @@ module.exports = {
     'jsx-a11y'
   ],
   rules: {
-    'no-unused-vars': 0
+    'no-unused-vars': 0,
+    'react/prop-types': 0
   },
   settings: {
     react: {

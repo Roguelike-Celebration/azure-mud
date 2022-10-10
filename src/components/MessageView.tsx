@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React, { useContext, FunctionComponent } from 'react'
+import React, { useContext, FunctionComponent, memo } from 'react'
 import ReactTooltip from 'react-tooltip'
 import Linkify from 'react-linkify'
 
@@ -34,7 +34,7 @@ import { renderCustomEmojiString } from '../emoji'
 
 const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
 
-export default function MessageView (props: { message: Message; id: string, hideTimestamp: boolean, msgIndex: number }) {
+export default memo(function MessageView (props: { message: Message, hideTimestamp: boolean, msgIndex: number }) {
   const { message } = props
   if (!message) { return <div/> }
 
@@ -71,20 +71,21 @@ export default function MessageView (props: { message: Message; id: string, hide
   return (
     <div className={className}>
       <div className={`time ${props.hideTimestamp ? 'show-on-hover' : null}`}>{formatter.format(date)}</div>
-      {React.createElement(component, { ...message, id: props.id })}
+      {React.createElement(component, { ...message })}
     </div>
   )
-}
+})
 
 const handleDeleteMessage = (e, data) => {
-  const doDelete = confirm(`Are you sure you would like to delete the message '${data.message}'?`)
+  const doDelete = confirm(`Are you sure you would like to delete the message '${data.messageText}'?`)
   if (doDelete) {
     deleteMessage(data.messageId)
   }
 }
 
 type DeletableMessageViewProps = {
-  messageId: string
+  messageId: string,
+  messageText: string
 }
 
 const linkDecorator = (href, text, key) => (
@@ -100,15 +101,17 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (prop
   if (!playerIsMod) {
     return <Linkify componentDecorator={linkDecorator}>{props.children}</Linkify>
   } else {
+    const key: string = `${props.messageId}-name`
+
     return (
       <Linkify componentDecorator={linkDecorator}>
         <span className="deleteMenu">
-          <ContextMenuTrigger id={props.messageId} mouseButton={2} renderTag="span">
+          <ContextMenuTrigger id={key} mouseButton={2} renderTag="span">
             {props.children}
           </ContextMenuTrigger>
-          <ContextMenu id={props.messageId}>
+          <ContextMenu id={key}>
             <MenuItem
-              data={{ messageId: props.messageId, message: props.children }}
+              data={{ messageId: props.messageId, message: props.children, messageText: props.messageText }}
               onClick={handleDeleteMessage}
             >
               { 'Delete Message?' }
@@ -121,21 +124,21 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (prop
   }
 }
 
-const ConnectedMessageView = (props: ConnectedMessage & { id: string }) => (
+const ConnectedMessageView = (props: ConnectedMessage) => (
   <div className="message">
     <NameView userId={props.userId} id={props.id} /> has connected.
   </div>
 )
 
 const DisconnectedMessageView = (
-  props: DisconnectedMessage & { id: string }
+  props: DisconnectedMessage
 ) => (
   <div className="message">
     <NameView userId={props.userId} id={props.id} /> has disconnected.
   </div>
 )
 
-const EnteredView = (props: EnteredMessage & { id: string }) => {
+const EnteredView = (props: EnteredMessage) => {
   const onClick = () => {
     moveToRoom(props.fromId)
   }
@@ -152,7 +155,7 @@ const EnteredView = (props: EnteredMessage & { id: string }) => {
   return null
 }
 
-const LeftView = (props: LeftMessage & { id: string }) => {
+const LeftView = (props: LeftMessage) => {
   const onClick = () => {
     moveToRoom(props.toId)
   }
@@ -169,11 +172,11 @@ const LeftView = (props: LeftMessage & { id: string }) => {
   return null
 }
 
-const MovedView = (props: MovedRoomMessage & { id: string }) => (
+const MovedView = (props: MovedRoomMessage) => (
   <div className="message">You have moved to {props.to}.</div>
 )
 
-const SameView = (props: SameRoomMessage & { id: string }) => (
+const SameView = (props: SameRoomMessage) => (
   <div className="message">You are already in {props.roomId}.</div>
 )
 
@@ -194,7 +197,7 @@ const parseUserIdOrDisplay = (messageFragment): string => {
   return 'Malformed Mention'
 }
 
-const ChatMessageView = (props: ChatMessage & { id: string }) => {
+const ChatMessageView = (props: ChatMessage) => {
   const { userMap } = useContext(UserMapContext)
 
   const splitMessage = props.message.split(/(@@.*?@@)/)
@@ -216,18 +219,18 @@ const ChatMessageView = (props: ChatMessage & { id: string }) => {
 
   return (
     <div className="message">
-      <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.messageId}>{joinedMessage}</DeletableMessageView>
+      <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.id} messageText={props.message}>{joinedMessage}</DeletableMessageView>
     </div>
   )
 }
 
-const CaptionView = (props: CaptionMessage & { id: string }) => (
+const CaptionView = (props: CaptionMessage) => (
   <div className="message">
-    <NameView userId={props.userId} id={props.id} /> (spoken): <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView>
+    <NameView userId={props.userId} id={props.id} /> (spoken): <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView>
   </div>
 )
 
-const WhisperView = (props: WhisperMessage & { id: string }) => {
+const WhisperView = (props: WhisperMessage) => {
   const dispatch = useContext(DispatchContext)
   const openProfile = () => {
     fetchProfile(props.userId)
@@ -250,7 +253,7 @@ const WhisperView = (props: WhisperMessage & { id: string }) => {
   }
 }
 
-const ModMessageView = (props: ModMessage & { id: string }) => {
+const ModMessageView = (props: ModMessage) => {
   if (props.senderIsSelf) {
     return (
       <div className="message">
@@ -274,23 +277,23 @@ const ModMessageView = (props: ModMessage & { id: string }) => {
   }
 }
 
-const ShoutView = (props: ShoutMessage & { id: string }) => {
+const ShoutView = (props: ShoutMessage) => {
   return (
     <div className="message">
-      <NameView userId={props.userId} id={props.id} /> shouts: <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView>
+      <NameView userId={props.userId} id={props.id} /> shouts: <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView>
     </div>
   )
 }
 
-const EmoteView = (props: EmoteMessage & { id: string }) => {
+const EmoteView = (props: EmoteMessage) => {
   return (
     <div className="message">
-      <em><NameView userId={props.userId} id={props.id} /> <DeletableMessageView messageId={props.messageId}>{props.message}</DeletableMessageView></em>
+      <em><NameView userId={props.userId} id={props.id} /> <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView></em>
     </div>
   )
 }
 
-const DanceView = (props: DanceMessage & { id: string }) => {
+const DanceView = (props: DanceMessage) => {
   return (
     <div className="message">
       <em><NameView userId={props.userId} id={props.id} /> <span dangerouslySetInnerHTML={ { __html: props.message } }></span></em>
@@ -298,10 +301,10 @@ const DanceView = (props: DanceMessage & { id: string }) => {
   )
 }
 
-const ErrorView = (props: ErrorMessage & { id: string }) => {
+const ErrorView = (props: ErrorMessage) => {
   return <div className="error">{props.error}</div>
 }
 
-const CommandView = (props: CommandMessage & { id: string }) => {
+const CommandView = (props: CommandMessage) => {
   return <div className="message"><em><span dangerouslySetInnerHTML={ { __html: props.command } }></span></em></div>
 }

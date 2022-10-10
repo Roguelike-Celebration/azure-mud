@@ -32,7 +32,7 @@ const updateProfile: EndpointFunction = async (inputs: any, log: LogFn) => {
       }],
       httpResponse: {
         status: 200,
-        body: { valid: true }
+        body: { valid: true, user: minimalUser }
       }
     }
   } catch (e) {

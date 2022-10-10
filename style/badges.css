@@ -3,14 +3,18 @@
 }
 
 #badges .selected-badge {
+  background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid var(--main-font);
   border-radius: 2px;
   display: inline-block;
   font-size: 25px;
+  line-height: 32px;
+  min-height: 32px;
   padding: 0 3px;
   margin: 5px;
-  width: 1em;
-
+  min-width: 1em;
+  text-align: center;
+  vertical-align: middle;
 }
 
 #badges .unlocked-badge, #badges .locked-badge {
@@ -32,4 +36,17 @@
 #badges .selected {
   background: var(--alternate-background);
   border: 2px solid var(--green);
+  border-radius: 2px;
+}
+
+
+#badges .badge-sections {
+  display: inline-flex;
+  width: 100%;
+}
+
+#badges .badge-sections .equipped {
+  flex-shrink: 1;
+  padding-right: 4rem;
+  width: 33%;
 }

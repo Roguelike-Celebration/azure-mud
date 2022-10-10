@@ -1,30 +1,81 @@
 {
+  "theaterCleric": {
+    "id": "theaterCleric",
+    "displayName": "Breakout room: Cleric's Hall",
+    "shortName": "Cleric Breakout",
+    "description": "A quiet church hall shines in beams of radiant light reflecting off the myriad colors of an entire wall made of stained glass. An entire fountain of holy water sits at the center of several priests blessing it in the name of their various deities.. Or you can head back to the [[theater]]."
+  },
+  "unconferenceElysium": {
+    "id": "unconferenceElysium",
+    "displayName": "Unconferencing: Elysium Fields",
+    "shortName": "Unconferencing: Elysium",
+    "description": "This is an unconferencing room. The souls of the dead glow in the eerie light which seems to suffuse this place from every direction. Some kind of bioluminescent moss is growing on every surface here and bright red pottery has been placed along every wall by an overenthusiastic interior designer. Enormous golden pottery breaks up the space with massive shrubbery large enough to devour you whole, and you can't help but wonder how it was delivered here. You see unmanned chariots driving around the space on their own, but they don't seem to be interested in you.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/87320810860?pwd=WmhISXBza1hPZ1k3MFhDdDZwVEtPQT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 799782)<br/><br/>The other unconferencing rooms are [[Star Ship->unconferencingStarShip]], [[Dig Site->unconferencingDigSite]], and [[Rave Cave->unconferencingRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true
+  },
+  "entryway": {
+    "id": "entryway",
+    "displayName": "Registration Desk",
+    "description": "A big banner before you reads 'Welcome to Roguelike Celebration 2022!' Beyond the doorway you hear welcoming chatter and merriment. Once you've got your bearings about you, you can move through to the [[Central Hall->hall]].",
+    "shortName": "the registration desk",
+    "hidden": true
+  },
+  "officeOfSteam": {
+    "id": "officeOfSteam",
+    "displayName": "Office of Steam",
+    "shortName": "the Office of Steam",
+    "description": "This sparsely-furnished room has little more in it than a typewriter standing on a pillar at its center. As you look down, however, you see a glass floor suspending you above an enormous sprawling mass of pipes and brass machinery. Chutes and tubes create fire and move steam in intricate patterns all ultimately funelling back into the typewriter stand you noticed before. Dwarves are scurrying to and fro, tinkering with the machines. Hooked to the typewriter is a small screen, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. Anachronistically, a cute Post-It Note shaped like a quokka is on the side of the screen, with the note \"Coming Soon: 2022 Steam Sale\" in loopy handwriting. If you'd like, you can investigate the <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">source of its steam power</a>, or go back to the [[Guild Hall->adventurersGuildHall]].",
+    "roomId": "officeOfSteam"
+  },
+  "unconferenceDigSite": {
+    "id": "unconferenceDigSite",
+    "displayName": "Unconferencing: Dig Site",
+    "shortName": "Unconferencing: Dig Site",
+    "description": "This is an unconferencing room. You step into a winding cave with glittering jewels and gold embedded in every wall. Basic scaffolding has been placed here, indicating that perhaps this is some kind of archaeological site. You see in the distance an altar to some dark goddess and next to that, incongruously, what appears to be a shop manned by an angry-looking gentleman with a shotgun.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/87385558857?pwd=UHREZEgyRjQ1L2dta1N1amdWMmF6dz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 270805)<br/><br/>The other unconferencing rooms are [[Elysium->unconferencingElysium]], [[Star Ship->unconferencingStarShip]], and [[Rave Cave->unconferencingRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true
+  },
+  "destinations": {
+    "id": "destinations",
+    "displayName": "Destinations",
+    "shortName": "the destinations hallway",
+    "description": "You stand beneath an imposing monolith made up of signs to every possible destination in every possible multiverse, and beneath them is an ever-shifting doorway. Your mind shrivels before the incomprehensibly shifting wooden panels, but as you reach out to touch infinite door knobs, you focus the possibilities into a single door which you can [[try to open->readClosedSign]].<br/><br/>Beneath the shifting monolith's infinite destination signs lie two more permanent ones. One is made of steel and imbedded LED lights spell out [[Oxygen Farm->oxygenFarm]]. The other is made of brass and features an ornate crest advertising the [[Adventurer's Guild->adventurersGuildHall]].</br></br>You can also return to the [[Central Hall->centralHall]]"
+  },
+  "theaterRogue": {
+    "id": "theaterRogue",
+    "displayName": "Breakout room: Rogue's Hideaway",
+    "shortName": "Rogue Breakout",
+    "description": "A dimly-lit room with more dark corners than flat spaces. You don't see anyone else in the space, but you have a distinct feeling that you are being watched by dozens of shifting eyes. Or you can head back to the [[theater]]."
+  },
+  "barBack": {
+    "id": "barBack",
+    "displayName": "Booth at the Back",
+    "shortName": "the booth at the back",
+    "description": "A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>From here, you can see tables [[on the balcony->barBalcony]], the [[stage->barStage]], or [[along the bar->barStools]], and the [[rest of the bar->bar]]."
+  },
+  "barBalcony": {
+    "id": "barBalcony",
+    "displayName": "Balcony Booth",
+    "shortName": "the balcony booth",
+    "description": "A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.</br></br>From here, you can see [[the seats at the bar->barStools]], the [[stage->barStage]], or [[at the back of the room->barBack]], and the [[rest of the bar->bar]]."
+  },
+  "oxygenFarm": {
+    "id": "oxygenFarm",
+    "displayName": "Oxygen Farm",
+    "shortName": "the oxygen farm",
+    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as it it were trying to get your attention. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]], or you can return to [[the hallway->destinations]]."
+  },
   "unconferenceStarShip": {
     "id": "unconferenceStarShip",
     "displayName": "Unconferencing: Starship Bridge",
     "shortName": "Unconferencing: Starship",
-    "description": "This is an unconferencing room. The vacuum seal around the door hisses as you enter the flat-white-panelled interior of a starship. Computer screens glow softly from every direction, feeding you statistics about the ship's systems. You see engineers running from station to station to put out fires as a glowing red triangle warns of a nearby solar flare. The ship rocks every few moments from the force of impact caused by what seems to be the weapons of a nearby enemy vessel, and you can see a radar screen that indicates a fleet approaching. You're sure it's fine.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/84946016673?pwd=OTNRWjZKdmx0RGthWVVueHlqUm84Zz09 target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 046256)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceStarShip"
+    "description": "This is an unconferencing room. The vacuum seal around the door hisses as you enter the flat-white-panelled interior of a starship. Computer screens glow softly from every direction, feeding you statistics about the ship's systems. You see engineers running from station to station to put out fires as a glowing red triangle warns of a nearby solar flare. The ship rocks every few moments from the force of impact caused by what seems to be the weapons of a nearby enemy vessel, and you can see a radar screen that indicates a fleet approaching. You're sure it's fine.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/84946016673?pwd=OTNRWjZKdmx0RGthWVVueHlqUm84Zz09 target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 046256)<br/><br/>The other unconferencing rooms are [[Elysium->unconferencingElysium]], [[Dig Site->unconferencingDigSite]], and [[Rave Cave->unconferencingRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true
   },
   "unconferenceRaveCave": {
     "id": "unconferenceRaveCave",
     "displayName": "Unconferencing: Rave Cave",
     "shortName": "Unconferencing: Rave Cave",
-    "description": "This is an unconferencing room. You step into what you can only describe as a Rave Disco, and are immediately assaulted with the thumping of an otherwordly bass. Floor panels glow in time with the music, alternating between the normal stone floors of a cave, to suddenly being alight with some energetic magic. Skeletons, slimes, and even a dragon appear to be bopping to the fierce beats, and you can see in the distance a menacing conga line protecting an oversized gorilla.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/82669162828?pwd=L3kxdkhHUjRqQWdFbU11Y0tocGlBdz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 379872)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Dig Site->unconferenceDigSite]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceRaveCave"
-  },
-  "timeMachine": {
-    "id": "timeMachine",
-    "displayName": "Space Hangar - Strange Device",
-    "shortName": "a strange item at the Space Hangar",
-    "hidden": true,
-    "riddles": [
-      "A grid of glyphs in rows arrayed,\nIs how I'll tell your tale;\nFrom decades past to present day,\nMy codepage has prevailed;\nTiles are fine if you have have time,\nBut I shall never stale;\nNow speak my name as if you'd /go,\nAnd I shall fill your sail."
-    ],
-    "description": "You can't get the machine to do anything but blink, no matter what you do, plug in or unplug. However, there is an inscription on it, that examined closely appears to be a riddle...</br></br>Go back to the [[Space Hangar->sfHub]].",
-    "roomId": "timeMachine"
+    "description": "This is an unconferencing room. You step into what you can only describe as a Rave Disco, and are immediately assaulted with the thumping of an otherwordly bass. Floor panels glow in time with the music, alternating between the normal stone floors of a cave, to suddenly being alight with some energetic magic. Skeletons, slimes, and even a dragon appear to be bopping to the fierce beats, and you can see in the distance a menacing conga line protecting an oversized gorilla.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/82669162828?pwd=L3kxdkhHUjRqQWdFbU11Y0tocGlBdz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 379872)<br/><br/>The other unconferencing rooms are [[Elysium->unconferencingElysium]], [[Star Ship->unconferencingStarShip]], and [[Dig Site->unconferencingDigSite]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true
   },
   "rift3": {
     "displayName": "The Rift - 3",
@@ -38,7 +89,7 @@
     "id": "adventurersGuildHall",
     "displayName": "Adventurer's Guild Hall",
     "shortName": "the Guild",
-    "description": "A shockingly fast steam engine whisks you to a grand lounge of bronze, dark woods, and ivy trellises. Every once in a while you hear the pneumatic \"whoosh\" as items are carried through tubing. There's plenty of sturdy tufted couches and velvet lounge chairs, and a variety of elegantly carved coffee tables covered in books and journals.</br></br>You can go back to the central [[hall->centralHall]], or visit the [[Office of Steam->officeOfSteam]].",
+    "description": "A shockingly fast steam engine whisks you to a grand lounge of bronze, dark woods, and ivy trellises. Every once in a while you hear the pneumatic \"whoosh\" as items are carried through tubing. There's plenty of sturdy tufted couches and velvet lounge chairs, and a variety of elegantly carved coffee tables covered in books and journals.</br></br>You can go back to the central [[hall->centralHall]], or check in at the [[Office of Steam->steam]] or the [[Video Dome->videoDome]].",
     "hasNoteWall": true,
     "noteWallData": {
       "roomWallDescription": "One journal is open, a black tome decorated with silvery and bronze swirls - \"Procedural Generation Surprises\" on the cover. Quill pens are nearby.",
@@ -46,8 +97,6 @@
       "addNoteLinkText": "Contribute",
       "addNotePrompt": "Tell us of a time a procedural generator has surprised or delighted you!",
       "noteWallDescription": "Tales of strange, delightful emergent results from procedural generators."
-    },
-    "roomId": "adventurersGuildHall"
   },
   "centralHall": {
     "id": "centralHall",
@@ -96,13 +145,6 @@
     "displayName": "Stools By the Bar",
     "shortName": "the stools by the bar",
     "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! Whee!</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]]."
-  },
-  "loungeDungeonClosetBowtieWeapon": {
-    "id": "loungeDungeonClosetBowtieWeapon",
-    "displayName": "Somewhere In The Unreasonably Large Walk-In Closet",
-    "shortName": "somewhere in the unreasonably large walk-in closet",
-    "description": "You have no idea where you'd find a weapon. You already have a walking stick, and you're not sure anything else you've seen so far would be better. On reflection, you're not even sure if hitting a bowtie with a walking stick would kill it. Or if the bowties are even alive.<br/><br/> You can [[fight the bowties->loungeDungeonClosetMannequinAmbush]] or [[venture onwards->loungeDungeonClosetMannequinAmbush]].",
-    "hidden": true
   },
   "theater": {
     "id": "theater",

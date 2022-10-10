@@ -241,6 +241,7 @@ const Redis: RedisInternal = {
     const profile = await Redis.getUser(userId)
     profile.isSpeaker = isSpeaker
     await Redis.setUserProfile(userId, profile)
+    return profile
   },
 
   async addSpeaker (userId: string) {
