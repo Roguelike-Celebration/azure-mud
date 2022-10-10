@@ -411,7 +411,7 @@ const App = () => {
                             hasDismissedAModal={state.hasDismissedAModal}
                           />
                         ) : null}
-                        <MessageList />
+                        <MessageList autoscrollChat={state.autoscrollChat} />
                         <InputView
                           prepopulated={state.prepopulatedInput}
                           sendMessage={(message) =>

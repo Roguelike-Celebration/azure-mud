@@ -1,28 +1,26 @@
 import React, { FC, useContext } from 'react'
-import { MessagesContext } from '../../App'
-import { Message } from '../../message'
-import { MessageItem } from '../MessageItem'
-import './MessageList.css'
 import '../../../style/chat.css'
+import { MessagesContext } from '../../App'
+import { MessageItem } from '../MessageItem'
+import { useAutoscroll, useShouldHideTimestamp } from './hooks'
+import './MessageList.css'
 
-const THREE_MINUTES = 1_000 * 60 * 3
-const shouldHideTimestamp = (
-  message: Message,
-  previousMessage: Message | undefined
-): boolean =>
-  previousMessage &&
-  'userId' in previousMessage &&
-  'userId' in message &&
-  previousMessage.userId === message.userId &&
-  new Date(message.timestamp).getTime() -
-    new Date(previousMessage.timestamp).getTime() <
-    THREE_MINUTES
+interface MessageListProps {
+  autoscrollChat: boolean;
+}
 
-export const MessageList: FC = () => {
+export const MessageList: FC<MessageListProps> = ({ autoscrollChat }) => {
   const { ids, entities } = useContext(MessagesContext)
 
+  const [scrollContainerRef, toggleAutoscroll] = useAutoscroll(autoscrollChat)
+  const shouldHideTimestamp = useShouldHideTimestamp()
+
   return (
-    <ol className="message-list">
+    <ol
+      className="message-list"
+      ref={scrollContainerRef}
+      onScroll={toggleAutoscroll}
+    >
       {ids.map((id, i) => (
         <MessageItem
           key={id}
