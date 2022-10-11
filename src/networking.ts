@@ -1,4 +1,4 @@
-import * as SignalR from '@aspnet/signalr'
+import * as SignalR from '@microsoft/signalr'
 import { v4 as uuid } from 'uuid'
 
 import { RoomResponse, ErrorResponse, ServerSettings } from '../server/src/types'
