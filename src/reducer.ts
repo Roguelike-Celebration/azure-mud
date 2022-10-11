@@ -157,6 +157,15 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.ReceivedServerSettings) {
     draft.serverSettings = action.value
+
+    if (
+      original(draft).serverSettings.movementMessagesHideRoomIds !==
+        current(draft).serverSettings.movementMessagesHideRoomIds ||
+      original(draft).serverSettings.movementMessagesHideThreshold !==
+        current(draft).serverSettings.movementMessagesHideThreshold
+    ) {
+      draft.messages.ids = filteredMessageIds(draft)
+    }
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
