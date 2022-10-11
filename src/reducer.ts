@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { current, produce } from 'immer'
+import { current, original, produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
@@ -610,6 +610,11 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.SetCaptionsEnabled) {
     draft.captionsEnabled = action.value
+
+    if (original(draft).captionsEnabled !== current(draft).captionsEnabled) {
+      draft.messages.ids = filteredMessageIds(draft)
+    }
+
     Storage.setCaptionsEnabled(action.value)
   }
 
