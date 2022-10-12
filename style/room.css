@@ -15,11 +15,11 @@ div.showcase-entry {
 }
 
 a.room-link {
-  color: var(--green);
+  color: var(--link);
 }
 
 a.room-link:visited {
-  color: var(--green);
+  color: var(--link);
 }
 
 #join-video-chat {
