@@ -55,6 +55,7 @@ import { currentUser, onAuthenticationStateChange } from './authentication'
 import _ from 'lodash'
 import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
+import DisconnectModalView from './components/DisconnectModalView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -323,6 +324,10 @@ const App = () => {
     }
     case Modal.ClientDeployed: {
       innerModalView = <ClientDeployedModal />
+      break
+    }
+    case Modal.Disconnected: {
+      innerModalView = <DisconnectModalView userId={state.userId} />
       break
     }
     case Modal.HappeningNow: {
