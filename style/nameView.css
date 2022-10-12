@@ -30,6 +30,7 @@ nav.react-contextmenu {
 
 .react-contextmenu-item--selected {
   background-color: var(--highlight-line) !important;
+  color: var(--highlighted-line-font, --main-font);
 }
 
 span.name {
