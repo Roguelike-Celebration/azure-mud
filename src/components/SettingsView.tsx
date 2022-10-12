@@ -83,6 +83,26 @@ export default function SettingsView (props: Props) {
           />
           <label htmlFor="solarized-light">Solarized Light</label>
         </div>
+        <div className="radio">
+          <input
+            type="radio"
+            id="monochrome-amber"
+            value="monochrome-amber"
+            checked={selectedTheme === 'monochrome-amber'}
+            onChange={handleThemeSelection}
+          />
+          <label htmlFor="monochrome-amber">Amber CRT</label>
+        </div>
+        <div className="radio">
+          <input
+            type="radio"
+            id="monochrome-green"
+            value="monochrome-green"
+            checked={selectedTheme === 'monochrome-green'}
+            onChange={handleThemeSelection}
+          />
+          <label htmlFor="monochrome-green">Green CRT</label>
+        </div>
       </div>
       <div className="form" id="simpleNamesSelectionForm">
         <label htmlFor="simpleNamesSelectionForm" className='form-header'>Username Display Mode:</label>

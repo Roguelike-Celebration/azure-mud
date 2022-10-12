@@ -35,7 +35,7 @@
 
 #badges .selected {
   background: var(--alternate-background);
-  border: 2px solid var(--green);
+  border: 2px solid var(--active);
   border-radius: 2px;
 }
 

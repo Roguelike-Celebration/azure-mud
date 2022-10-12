@@ -9,6 +9,8 @@ import * as pickupLines from './pickupLines'
 import * as ubizaraTheBartender from './ubizaraTheBartender'
 import * as doctorHope from './doctorHope'
 import * as chadSilverbow from './chadSilverbow'
+import * as zeroCrash from './zeroCrash'
+import * as randorTheTwisted from './randorTheTwisted'
 import * as drinkSkeletons from './drinkSkeletons'
 import * as drinkVessels from './drinkVessels'
 import * as drinkContents from './drinkContents'
@@ -31,6 +33,8 @@ const generators: {[name: string]: Generator} = {
   ubizaraTheBartender,
   doctorHope,
   chadSilverbow,
+  zeroCrash,
+  randorTheTwisted,
   drinkSkeletons,
   drinkVessels,
   drinkContents,
