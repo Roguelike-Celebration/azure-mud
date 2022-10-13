@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { current, produce } from 'immer'
+import { current, original, produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
@@ -23,7 +23,9 @@ import {
   createSameRoomMessage,
   createShoutMessage,
   createWhisperMessage,
+  isCaptionMessage,
   isDeletableMessage,
+  isMovementMessage,
   Message,
   WhisperMessage
 } from './message'
@@ -156,6 +158,15 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.ReceivedServerSettings) {
     draft.serverSettings = action.value
+
+    if (
+      original(draft).serverSettings.movementMessagesHideRoomIds !==
+        current(draft).serverSettings.movementMessagesHideRoomIds ||
+      original(draft).serverSettings.movementMessagesHideThreshold !==
+        current(draft).serverSettings.movementMessagesHideThreshold
+    ) {
+      draft.messages.ids = filteredMessageIds(draft)
+    }
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
@@ -613,6 +624,11 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.SetCaptionsEnabled) {
     draft.captionsEnabled = action.value
+
+    if (original(draft).captionsEnabled !== current(draft).captionsEnabled) {
+      draft.messages.ids = filteredMessageIds(draft)
+    }
+
     Storage.setCaptionsEnabled(action.value)
   }
 
@@ -674,7 +690,7 @@ export default produce((draft: State, action: Action) => {
     }
 
     draft.messages.entities = nextEntities
-    draft.messages.ids = Object.keys(nextEntities)
+    draft.messages.ids = filteredMessageIds(current(draft))
 
     draft.whispers = action.whispers || []
   }
@@ -791,7 +807,9 @@ async function saveWhisper (state: State, message: WhisperMessage) {
 
 async function addMessage (state: State, message: Message) {
   state.messages.entities[message.id] = message
-  state.messages.ids.push(message.id)
+  if (shouldShowMessage(state, message)) {
+    state.messages.ids.push(message.id)
+  }
 
   /**
    * need to use `current` here because `addMessage` is called by the reducer
@@ -802,6 +820,43 @@ async function addMessage (state: State, message: Message) {
    */
   Storage.setMessages(Object.values(current(state).messages.entities))
 }
+
+const isHiddenRoom = (movementMessagesHideRoomIds: string[], roomId: string) =>
+  movementMessagesHideRoomIds.includes(roomId)
+const isBusyRoom = (
+  movementMessagesHideThreshold: number,
+  numUsersInRoom: number
+) => numUsersInRoom > movementMessagesHideThreshold
+
+const shouldShowMessage = (
+  {
+    serverSettings: {
+      movementMessagesHideRoomIds,
+      movementMessagesHideThreshold
+    },
+    captionsEnabled
+  }: State,
+  message: Message
+): boolean =>
+  // always show message *unless*
+  !(
+    // it's a movement message and the room is hidden or busy
+    (
+      isMovementMessage(message) &&
+      (isHiddenRoom(movementMessagesHideRoomIds, message.roomId) ||
+        isBusyRoom(movementMessagesHideThreshold, message.numUsersInRoom))
+    )
+  ) || // or it's a caption message and captions are not enabled
+  (isCaptionMessage(message) && !captionsEnabled)
+
+const filteredMessageIds = (state: State) =>
+  Object.entries(state.messages.entities).reduce((acc, [id, message]) => {
+    if (shouldShowMessage(state, message)) {
+      acc.push(id)
+    }
+
+    return acc
+  }, [])
 
 // This is intended to be a big old unreadable grab bag,
 // but seems better than alternatives

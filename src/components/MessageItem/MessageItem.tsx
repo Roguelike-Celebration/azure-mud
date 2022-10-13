@@ -15,7 +15,7 @@ export const MessageItem: FC<MessageItemProps> = memo(
     const { entities } = useContext(MessagesContext)
     const message = entities[messageId]
 
-    return message && (
+    return message ? (
       <li className="message-item">
         {message.type === MessageType.MovedRoom && <hr />}
         <MessageView
@@ -24,7 +24,7 @@ export const MessageItem: FC<MessageItemProps> = memo(
           msgIndex={msgIndex}
         />
       </li>
-    )
+    ) : null
   }
 )
 
