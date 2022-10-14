@@ -13,11 +13,6 @@ interface MessageItemProps {
 
 const { getComputedStyle: getStyle } = window
 
-const outerTop: (el: HTMLElement) => number = (el) => {
-  const { marginTop } = getStyle(el)
-  return el.offsetTop - parseInt(marginTop, 10)
-}
-
 const outerHeight: (el: HTMLElement) => number = (el) => {
   const { marginTop, height, marginBottom } = getStyle(el)
   return [marginTop, height, marginBottom].reduce(
@@ -46,7 +41,7 @@ export const MessageItem: FC<MessageItemProps> = memo(
           type: 'setMessagePosition',
           payload: {
             id: messageId,
-            top: viewportClientHeight + outerTop(messageItemRef.current),
+            top: viewportClientHeight + messageItemRef.current.offsetTop,
             height: outerHeight(messageItemRef.current)
           }
         })
