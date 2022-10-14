@@ -677,18 +677,25 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
-    const nextEntities = {
-      ...current(draft).messages.entities,
-      ...action.messages.reduce((acc, message) => {
-        acc[message.id] = message
-        return acc
-      }, {})
-    }
+    // const nextEntities = {
+    //   ...current(draft).messages.entities,
+    //   ...action.messages.reduce((acc, message) => {
+    //     acc[message.id] = message
+    //     return acc
+    //   }, {})
+    // }
 
-    draft.messages.entities = nextEntities
-    draft.messages.ids = filteredMessageIds(current(draft))
+    // draft.messages.entities = nextEntities
+    // draft.messages.ids = filteredMessageIds(current(draft))
 
     draft.whispers = action.whispers || []
+  }
+
+  if (action.type === ActionType.LoadMessage) {
+    draft.messages.entities[action.message.id] = action.message
+    if (shouldShowMessage(draft, action.message)) {
+      draft.messages.ids.push(action.message.id)
+    }
   }
 
   // Notes
