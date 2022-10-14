@@ -43,11 +43,7 @@ import { Room } from './room'
 import { sendToDiscord } from './sendToDiscord'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import * as Storage from './storage'
-
-interface EntityState<T> {
-  entities: Record<string, T>;
-  ids: string[];
-}
+import { EntityState } from './types'
 
 export interface State {
   firebaseApp: firebase.app.App;
