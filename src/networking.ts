@@ -32,7 +32,8 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction, SetUnlockedBadgesAction
+  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction, SetUnlockedBadgesAction,
+  SignalRHubCreatedAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { convertServerRoomData, Room } from './room'
@@ -75,6 +76,7 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 
   // dispatch connected action I guess
   const hubConnection = await connectSignalR(userId, dispatch)
+  dispatch(SignalRHubCreatedAction(hubConnection))
 }
 
 export async function disconnect (userId: string) {
@@ -495,6 +497,7 @@ export async function connectSignalR (userId: string, dispatch: Dispatch<Action>
     dispatch(UnlockBadgeAction(badge[0]))
   })
 
+  // Will this trigger the modal, or will it unload before it next triggers?
   window.addEventListener('beforeunload', (e) => {
     callAzureFunction('disconnect')
   })

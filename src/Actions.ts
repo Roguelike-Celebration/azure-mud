@@ -6,6 +6,7 @@ import { Modal } from './modals'
 import { ServerSettings } from '../server/src/types'
 import { ModalOptions } from './reducer'
 import { Badge } from '../server/src/badges'
+import { HubConnection } from '@microsoft/signalr'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -70,6 +71,7 @@ export type Action =
   | UpdateUnlockableBadgesAction
   | UnlockBadgeAction
   | SetUnlockedBadgesAction
+  | SignalRHubCreatedAction
 
 export enum ActionType {
   // Server-driven action
@@ -141,7 +143,8 @@ export enum ActionType {
   EquipBadge = 'EQUIP_BADGE',
   UnlockBadge = 'UNLOCK_BADGE',
   UpdateUnlockableBadges = 'UPDATE_UNLOCKABLE_BADGES',
-  SetUnlockedBadges = 'SET_UNLOCKED_BADGES'
+  SetUnlockedBadges = 'SET_UNLOCKED_BADGES',
+  SignalRHubCreated = 'SIGNAL_R_HUB_CREATED'
 }
 
 interface ReceivedMyProfileAction {
@@ -910,5 +913,17 @@ export const UpdateUnlockableBadgesAction = (badges: Badge[]): UpdateUnlockableB
   return {
     type: ActionType.UpdateUnlockableBadges,
     value: badges
+  }
+}
+
+interface SignalRHubCreatedAction {
+  type: ActionType.SignalRHubCreated;
+  value: HubConnection
+}
+
+export const SignalRHubCreatedAction = (connection: HubConnection): SignalRHubCreatedAction => {
+  return {
+    type: ActionType.SignalRHubCreated,
+    value: connection
   }
 }

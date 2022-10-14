@@ -327,7 +327,7 @@ const App = () => {
       break
     }
     case Modal.Disconnected: {
-      innerModalView = <DisconnectModalView userId={state.userId} />
+      innerModalView = <DisconnectModalView userId={state.userId} connection={state.signalRHub} />
       break
     }
     case Modal.HappeningNow: {
