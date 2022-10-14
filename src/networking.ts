@@ -1,4 +1,4 @@
-import * as SignalR from '@aspnet/signalr'
+import * as SignalR from '@microsoft/signalr'
 import { v4 as uuid } from 'uuid'
 
 import { RoomResponse, ErrorResponse, ServerSettings } from '../server/src/types'
@@ -73,7 +73,10 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 
   dispatch(UpdatedPresenceAction(result.presenceData))
 
-  connectSignalR(userId, dispatch)
+  const hubConnection = await connectSignalR(userId, dispatch)
+  if (hubConnection.state !== SignalR.HubConnectionState.Connected) {
+    throw Error('SignalR connection could not be established!')
+  }
 }
 
 export async function disconnect (userId: string) {
@@ -337,7 +340,7 @@ export async function updateRoom (roomId: string, roomData: Room): Promise<any> 
 
 // Setup
 
-async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
+export async function connectSignalR (userId: string, dispatch: Dispatch<Action>): Promise<SignalR.HubConnection> {
   class CustomHttpClient extends SignalR.DefaultHttpClient {
     public async send (request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
       const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
@@ -476,7 +479,11 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
 
   connection.onclose(() => {
     console.log('disconnected')
+    // This is called when the connection dies horribly.
+    // Chances are that if this happens we *can't* actually talk to the server, so the following function will fail
+    // most of the time. The disconnect modal will then enter a reconnect loop with backoff.
     callAzureFunction('disconnect')
+    dispatch(ShowModalAction(Modal.Disconnected))
   })
 
   connection.on('ping', () => {
@@ -496,12 +503,13 @@ async function connectSignalR (userId: string, dispatch: Dispatch<Action>) {
   })
 
   console.log('connecting...')
-  return await connection
+  await connection
     .start()
     .then(() => {
       console.log('Connected!')
     })
     .catch(console.error)
+  return connection
 }
 
 async function callAzureFunctionGet (endpoint: string): Promise<any> {
