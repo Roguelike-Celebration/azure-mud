@@ -6,8 +6,7 @@ import {
   BanToggleAction,
   HideModalAction,
   ModToggleAction,
-  ShowModalAction,
-  UnlockBadgeAction
+  ShowModalAction
 } from '../Actions'
 import { User } from '../../server/src/user'
 
@@ -82,12 +81,12 @@ export default function NameView (props: Props) {
       }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
     )
     if (doSpeaker) {
-      toggleUserSpeaker(data.id)
+      toggleUserSpeaker(data.id, '2022')
     }
   }
 
   const handlePastSpeaker = (e, data) => {
-    dispatch(UnlockBadgeAction(data.badge))
+    toggleUserSpeaker(data.id, '2021')
   }
 
   const pastSpeakerButton = userIsMod ? (
