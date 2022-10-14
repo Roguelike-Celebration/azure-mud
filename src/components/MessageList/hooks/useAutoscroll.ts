@@ -11,6 +11,7 @@ import {
   DeactivateAutoscrollAction
 } from '../../../Actions'
 import { DispatchContext } from '../../../App'
+import { VirtualizationContext } from '../../VirtualizationProvider/VirtualizationProvider'
 
 type ScrollContainerRef = MutableRefObject<HTMLOListElement>;
 type ScrollHandler = UIEventHandler<HTMLOListElement>;
@@ -18,6 +19,7 @@ type ScrollHandler = UIEventHandler<HTMLOListElement>;
 export const useAutoscroll = (
   autoscrollChat: boolean
 ): [ScrollContainerRef, ScrollHandler] => {
+  const [, virtualizaitonDispatch] = useContext(VirtualizationContext)
   const dispatch = useContext(DispatchContext)
   const scrollContainerRef = useRef<HTMLOListElement>()
 
@@ -35,6 +37,17 @@ export const useAutoscroll = (
       scrollContainerRef.current.scrollHeight
   })
 
+  useEffect(() => {
+    if (!scrollContainerRef.current) {
+      return
+    }
+
+    virtualizaitonDispatch({
+      type: 'setViewportClientHeight',
+      payload: scrollContainerRef.current.clientHeight
+    })
+  }, [virtualizaitonDispatch])
+
   const scrollHandler = useCallback<ScrollHandler>(
     ({ currentTarget }) => {
       const isScrolledToBottom =
@@ -47,6 +60,11 @@ export const useAutoscroll = (
       } else if (!isScrolledToBottom && autoscrollChat) {
         dispatch(DeactivateAutoscrollAction())
       }
+
+      virtualizaitonDispatch({
+        type: 'setViewportScrollTop',
+        payload: currentTarget.scrollTop
+      })
     },
     [autoscrollChat]
   )
