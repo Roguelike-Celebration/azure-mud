@@ -242,6 +242,7 @@ const App = () => {
 
   // TODO: If we get more modal options than just a size boolean, make this an options object.
   let modalIsFullScreen = false
+  let modalIsUnclosable = false
 
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
@@ -327,6 +328,7 @@ const App = () => {
       break
     }
     case Modal.Disconnected: {
+      modalIsUnclosable = true
       innerModalView = <DisconnectModalView userId={state.userId} />
       break
     }
@@ -354,7 +356,7 @@ const App = () => {
   }
 
   if (innerModalView) {
-    modalView = <ModalView fullScreen={modalIsFullScreen}>{innerModalView}</ModalView>
+    modalView = <ModalView fullScreen={modalIsFullScreen} unclosable={modalIsUnclosable}>{innerModalView}</ModalView>
   }
 
   const showMenu = () => {
