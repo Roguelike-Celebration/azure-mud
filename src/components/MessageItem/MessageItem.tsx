@@ -28,7 +28,7 @@ const outerHeight: (el: HTMLElement) => number = (el) => {
 
 export const MessageItem: FC<MessageItemProps> = memo(
   ({ messageId, hideTimestamp, msgIndex }) => {
-    const [{ positions, viewportClientHeight }, virtualizationDispatch] =
+    const [{ messagePositions, viewportClientHeight }, virtualizationDispatch] =
       useContext(VirtualizationContext)
     const { entities } = useContext(MessagesContext)
     const message = entities[messageId]
@@ -39,11 +39,11 @@ export const MessageItem: FC<MessageItemProps> = memo(
         return
       }
 
-      const { top, height } = positions[messageId]
+      const { top, height } = messagePositions[messageId] ?? {}
 
       if (top === undefined && height === undefined) {
         virtualizationDispatch({
-          type: 'setVerticalPosition',
+          type: 'setMessagePosition',
           payload: {
             id: messageId,
             top: viewportClientHeight + outerTop(messageItemRef.current),
@@ -53,7 +53,7 @@ export const MessageItem: FC<MessageItemProps> = memo(
       }
     }, [
       messageId,
-      positions[messageId],
+      messagePositions[messageId],
       viewportClientHeight,
       virtualizationDispatch
     ])
@@ -61,7 +61,7 @@ export const MessageItem: FC<MessageItemProps> = memo(
     return message ? (
       <li
         className="message-item"
-        style={{ top: positions[messageId]?.top }}
+        style={{ top: messagePositions[messageId]?.top }}
         ref={messageItemRef}
       >
         {message.type === MessageType.MovedRoom && <hr />}

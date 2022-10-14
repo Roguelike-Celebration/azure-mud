@@ -6,22 +6,23 @@ import React, {
   Reducer,
   ReducerAction,
   ReducerState,
+  StrictMode,
   useReducer
 } from 'react'
 import '../../../style/chat.css'
 import { Message } from '../../message'
-import { EntityState, PayloadAction } from '../../types'
+import { PayloadAction } from '../../types'
 
 type VerticalPosition = Pick<Message, 'id'> & Pick<DOMRect, 'top' | 'height'>;
 
 interface VirtualizationState {
-  positions: EntityState<VerticalPosition>;
+  messagePositions: Record<string, VerticalPosition>;
   viewportClientHeight: number;
   viewportScrollTop: number;
 }
 
-type SetVerticalPositionAction = PayloadAction<
-  'setVerticalPosition',
+type SetMessagePositionAction = PayloadAction<
+  'setMessagePosition',
   VerticalPosition
 >;
 type SetViewportClientHeightAction = PayloadAction<
@@ -31,26 +32,22 @@ type SetViewportClientHeightAction = PayloadAction<
 type SetViewportScrollTopAction = PayloadAction<'setViewportScrollTop', number>;
 
 type VirtualizationAction =
-  | SetVerticalPositionAction
+  | SetMessagePositionAction
   | SetViewportClientHeightAction
   | SetViewportScrollTopAction;
 
 type VirtualizationReducer = Reducer<VirtualizationState, VirtualizationAction>;
 
 const initialState: VirtualizationState = {
-  positions: {
-    entities: {},
-    ids: []
-  },
+  messagePositions: {},
   viewportClientHeight: 0,
   viewportScrollTop: 0
 }
 
 const reducer: VirtualizationReducer = produce((state, action) => {
   switch (action.type) {
-    case 'setVerticalPosition':
-      state.positions.entities[action.payload.id] = action.payload
-      state.positions.ids.push(action.payload.id)
+    case 'setMessagePosition':
+      state.messagePositions[action.payload.id] = action.payload
       break
 
     case 'setViewportClientHeight':
@@ -73,5 +70,9 @@ const { Provider } = VirtualizationContext
 
 export const VirtualizationProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  return <Provider value={[state, dispatch]}>{children}</Provider>
+  return (
+    <StrictMode>
+      <Provider value={[state, dispatch]}>{children}</Provider>
+    </StrictMode>
+  )
 }
