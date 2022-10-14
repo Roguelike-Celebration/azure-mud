@@ -1,10 +1,9 @@
-import { HubConnection, HubConnectionState } from '@microsoft/signalr'
 import React, { useEffect } from 'react'
-import { HideModalAction, SignalRHubCreatedAction } from '../Actions'
+import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { connect } from '../networking'
 
-export default function DisconnectModalView (props: { userId: string, connection: HubConnection }) {
+export default function DisconnectModalView (props: { userId: string }) {
   const [reconnecting, setReconnecting] = React.useState(false)
   const [secondsToReconnect, setsecondsToReconnect] = React.useState(1)
   const [nextSecondsToReconnect, setNextSecondsToReconnect] = React.useState(2)
@@ -15,9 +14,7 @@ export default function DisconnectModalView (props: { userId: string, connection
     // This actually sets & clears the timer every second anew.
     let timerId = setInterval(
       () => {
-        if (props.connection.state === HubConnectionState.Connected) {
-          dispatch(HideModalAction())
-        } else if (reconnecting) {
+        if (reconnecting) {
           // If you're already reconnecting, you don't want to double up
         } else if (!reconnecting && secondsToReconnect <= 0) {
           setReconnecting(true)

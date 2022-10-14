@@ -32,8 +32,7 @@ import {
   PlayerBannedAction,
   PlayerUnbannedAction,
   ReceivedServerSettingsAction,
-  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction, SetUnlockedBadgesAction,
-  SignalRHubCreatedAction
+  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction, SetUnlockedBadgesAction
 } from './Actions'
 import { User } from '../server/src/user'
 import { convertServerRoomData, Room } from './room'
@@ -78,7 +77,6 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
   if (hubConnection.state !== SignalR.HubConnectionState.Connected) {
     throw "SignalR connection could not be established!"
   }
-  dispatch(SignalRHubCreatedAction(hubConnection))
 }
 
 export async function disconnect (userId: string) {
@@ -482,7 +480,8 @@ export async function connectSignalR (userId: string, dispatch: Dispatch<Action>
   connection.onclose(() => {
     console.log('disconnected')
     // This is called when the connection dies horribly.
-    // If the screen is still on...
+    // Chances are that if this happens we *can't* actually talk to the server, so the following function will fail
+    // most of the time. The disconnect modal will then enter a reconnect loop with backoff.
     callAzureFunction('disconnect')
     dispatch(ShowModalAction(Modal.Disconnected))
   })
@@ -499,7 +498,6 @@ export async function connectSignalR (userId: string, dispatch: Dispatch<Action>
     dispatch(UnlockBadgeAction(badge[0]))
   })
 
-  // Will this trigger the modal, or will it unload before it next triggers?
   window.addEventListener('beforeunload', (e) => {
     callAzureFunction('disconnect')
   })

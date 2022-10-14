@@ -41,7 +41,6 @@ import Config from './config'
 import { Badge } from '../server/src/badges'
 import produce from 'immer'
 import { sendToDiscord } from './sendToDiscord'
-import { HubConnection } from '@microsoft/signalr'
 
 export interface State {
   firebaseApp: firebase.app.App;
@@ -49,7 +48,6 @@ export interface State {
   checkedAuthentication: boolean;
   authenticationProvider?: string;
   mustVerifyEmail?: boolean;
-  signalRHub?: HubConnection;
 
   hasDismissedAModal: boolean;
 
@@ -619,10 +617,6 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.UpdateUnlockableBadges) {
     draft.unlockableBadges = action.value
-  }
-
-  if (action.type === ActionType.SignalRHubCreated) {
-    draft.signalRHub = action.value
   }
 })
 
