@@ -40,8 +40,6 @@ import firebase from 'firebase/app'
 import Config from './config'
 import { Badge } from '../server/src/badges'
 import produce from 'immer'
-import { sendToDiscord } from './sendToDiscord'
-
 export interface State {
   firebaseApp: firebase.app.App;
   authenticated: boolean;
@@ -254,7 +252,6 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.ModMessage) {
-    sendToDiscord({ username: draft.userMap[action.value.name].username, message: action.value.message })
     addMessage(
       draft,
       createModMessage(
