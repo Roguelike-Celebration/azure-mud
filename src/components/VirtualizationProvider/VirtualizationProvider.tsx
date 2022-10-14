@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { current, produce } from 'immer'
 import React, {
   createContext,
   Dispatch,
@@ -48,6 +48,8 @@ const reducer: VirtualizationReducer = produce((state, action) => {
   switch (action.type) {
     case 'setMessagePosition':
       state.messagePositions[action.payload.id] = action.payload
+      // TODO: rename the state value, or this is wrong
+      state.viewportClientHeight += action.payload.height
       break
 
     case 'setViewportClientHeight':
