@@ -75,7 +75,7 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 
   const hubConnection = await connectSignalR(userId, dispatch)
   if (hubConnection.state !== SignalR.HubConnectionState.Connected) {
-    throw "SignalR connection could not be established!"
+    throw Error('SignalR connection could not be established!')
   }
 }
 

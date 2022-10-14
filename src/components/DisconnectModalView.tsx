@@ -12,7 +12,7 @@ export default function DisconnectModalView (props: { userId: string }) {
 
   useEffect(() => {
     // This actually sets & clears the timer every second anew.
-    let timerId = setInterval(
+    const timerId = setInterval(
       () => {
         if (reconnecting) {
           // If you're already reconnecting, you don't want to double up
@@ -32,15 +32,15 @@ export default function DisconnectModalView (props: { userId: string }) {
         }
       },
       1000
-    );
-    return () => clearInterval(timerId);
+    )
+    return () => clearInterval(timerId)
   }, [secondsToReconnect, reconnecting])
 
   return (
     <div>
-      <h1>There's a network issue!</h1>
-      <p>Sorry, the client's lost its connection to chat!</p>
-      <p>We'll attempt to periodically reconnect, or you can refresh your page to force it.</p>
+      <h1>There&apos;s a network issue!</h1>
+      <p>Sorry, the client&apos;s lost its connection to chat!</p>
+      <p>We&apos;ll attempt to periodically reconnect, or you can refresh your page to force it.</p>
       {secondsToReconnect !== 0 ? (
         <p>Next attempt in {secondsToReconnect} seconds.</p>
       ) : (
