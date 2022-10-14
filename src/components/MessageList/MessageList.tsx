@@ -1,6 +1,5 @@
 import React, { FC, useContext } from 'react'
 import { MessagesContext } from '../../App'
-import { MessageViewport } from '../MessageViewport'
 import { MessageItem } from '../MessageItem'
 import { useAutoscroll, useShouldHideTimestamp } from './hooks'
 import './MessageList.css'
@@ -16,24 +15,22 @@ export const MessageList: FC<MessageListProps> = ({ autoscrollChat }) => {
   const shouldHideTimestamp = useShouldHideTimestamp()
 
   return (
-    <MessageViewport>
-      <ol
-        className="message-list"
-        ref={scrollContainerRef}
-        onScroll={toggleAutoscroll}
-      >
-        {ids.map((id, i) => (
-          <MessageItem
-            key={id}
-            messageId={id}
-            hideTimestamp={shouldHideTimestamp(
-              entities[id],
-              entities[ids[i - 1]]
-            )}
-            msgIndex={i}
-          />
-        ))}
-      </ol>
-    </MessageViewport>
+    <ol
+      className="message-list"
+      ref={scrollContainerRef}
+      onScroll={toggleAutoscroll}
+    >
+      {ids.map((id, i) => (
+        <MessageItem
+          key={id}
+          messageId={id}
+          hideTimestamp={shouldHideTimestamp(
+            entities[id],
+            entities[ids[i - 1]]
+          )}
+          msgIndex={i}
+        />
+      ))}
+    </ol>
   )
 }

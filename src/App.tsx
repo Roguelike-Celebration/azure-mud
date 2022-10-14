@@ -47,6 +47,7 @@ import ServerSettingsView from './components/ServerSettingsView'
 import SettingsView from './components/SettingsView'
 import SideNavView from './components/SideNavView'
 import VerifyEmailView from './components/VerifyEmailView'
+import { VirtualizationProvider } from './components/VirtualizationProvider'
 import WelcomeModalView from './components/WelcomeModalView'
 import YouAreBannedView from './components/YouAreBannedView'
 import { Modal } from './modals'
@@ -462,7 +463,9 @@ const App = () => {
                             hasDismissedAModal={state.hasDismissedAModal}
                           />
                         ) : null}
-                        <MessageList autoscrollChat={state.autoscrollChat} />
+                        <VirtualizationProvider>
+                          <MessageList autoscrollChat={state.autoscrollChat} />
+                        </VirtualizationProvider>
                         <InputView
                           prepopulated={state.prepopulatedInput}
                           sendMessage={(message) =>

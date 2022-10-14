@@ -48,7 +48,7 @@ const initialState: VirtualizationState = {
 
 const reducer: VirtualizationReducer = produce((state, action) => {})
 
-const VirtualizationContext = createContext<
+export const VirtualizationContext = createContext<
   [
     ReducerState<VirtualizationReducer>,
     Dispatch<ReducerAction<VirtualizationReducer>>
@@ -56,11 +56,7 @@ const VirtualizationContext = createContext<
 >([initialState, () => {}])
 const { Provider } = VirtualizationContext
 
-const VirtualizationProvider: FC = ({ children }) => {
+export const VirtualizationProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   return <Provider value={[state, dispatch]}>{children}</Provider>
 }
-
-export const MessageViewport: FC = ({ children }) => (
-  <VirtualizationProvider>{children}</VirtualizationProvider>
-)
