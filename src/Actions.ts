@@ -20,6 +20,7 @@ export type Action =
   | ModMessageAction
   | DeleteMessageAction
   | LoadMessageArchiveAction
+  | LoadMessageAction
   | WhisperAction
   | ShoutAction
   | EmoteAction
@@ -126,6 +127,7 @@ export enum ActionType {
   BanToggle = 'BAN_TOGGLE',
   ModToggle = 'MOD_TOGGLE',
   LoadMessageArchive = 'LOAD_MESSAGE_ARCHIVE',
+  LoadMessage = 'LOAD_MESSAGE',
   // Note Wall
   NoteAdd = 'NOTE_ADD',
   NoteRemove = 'NOTE_REMOVE',
@@ -799,6 +801,16 @@ interface LoadMessageArchiveAction {
 export const LoadMessageArchiveAction = (messages: Message[], whispers: WhisperMessage[]): LoadMessageArchiveAction => {
   return { type: ActionType.LoadMessageArchive, messages: messages, whispers: whispers }
 }
+
+interface LoadMessageAction {
+  type: ActionType.LoadMessage;
+  message: Message;
+}
+
+export const LoadMessageAction = (message: Message): LoadMessageAction => ({
+  type: ActionType.LoadMessage,
+  message
+})
 
 interface NoteAddAction {
   type: ActionType.NoteAdd;
