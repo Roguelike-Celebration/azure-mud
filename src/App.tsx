@@ -6,6 +6,7 @@ import {
   Action,
   AuthenticateAction,
   IsRegisteredAction,
+  LoadMessageAction,
   LoadMessageArchiveAction,
   PlayerBannedAction,
   SendMessageAction,
@@ -129,9 +130,23 @@ const App = () => {
         if (messageArchive) {
           dispatch(
             LoadMessageArchiveAction(
-              messageArchive.messages,
+              [],
               messageArchive.whispers
             )
+          )
+
+          messageArchive.messages?.reduce(
+            (acc, message) =>
+              acc.then(
+                () =>
+                  new Promise((resolve) => {
+                    setTimeout(() => {
+                      dispatch(LoadMessageAction(message))
+                      resolve()
+                    }, 100)
+                  })
+              ),
+            new Promise<void>((resolve) => setTimeout(resolve, 5_000))
           )
         }
 
