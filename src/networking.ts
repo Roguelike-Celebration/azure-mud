@@ -74,8 +74,10 @@ export async function connect (userId: string, dispatch: Dispatch<Action>) {
 
   dispatch(UpdatedPresenceAction(result.presenceData))
 
-  // dispatch connected action I guess
   const hubConnection = await connectSignalR(userId, dispatch)
+  if (hubConnection.state !== SignalR.HubConnectionState.Connected) {
+    throw "SignalR connection could not be established!"
+  }
   dispatch(SignalRHubCreatedAction(hubConnection))
 }
 

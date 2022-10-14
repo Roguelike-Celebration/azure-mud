@@ -2,7 +2,7 @@ import { HubConnection, HubConnectionState } from '@microsoft/signalr'
 import React, { useEffect } from 'react'
 import { HideModalAction, SignalRHubCreatedAction } from '../Actions'
 import { DispatchContext } from '../App'
-import { connectSignalR } from '../networking'
+import { connect } from '../networking'
 
 export default function DisconnectModalView (props: { userId: string, connection: HubConnection }) {
   const [reconnecting, setReconnecting] = React.useState(false)
@@ -11,63 +11,24 @@ export default function DisconnectModalView (props: { userId: string, connection
 
   const dispatch = React.useContext(DispatchContext)
 
-  const forceReconnect = () => {
-    console.log("HARD RECONNECTING!")
-    setReconnecting(true)
-    connectSignalR(props.userId, dispatch).then((newConnection) => {
-      if (
-        newConnection.state === HubConnectionState.Connected ||
-        newConnection.state === HubConnectionState.Connecting ||
-        newConnection.state === HubConnectionState.Reconnecting
-      ) {
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        dispatch(HideModalAction())
-        setReconnecting(false)
-        dispatch(SignalRHubCreatedAction(newConnection))
-      } else {
-        setReconnecting(false)
-        console.log("RECONNECT FAILED")
-        setNextSecondsToReconnect(nextSecondsToReconnect * 2)
-        setsecondsToReconnect(nextSecondsToReconnect)
-      }
-    }).catch(() => {
-      console.log("FAILURE TO CONNECT SHOULD RESET SECONDS")
-      setNextSecondsToReconnect(nextSecondsToReconnect * 2)
-      setsecondsToReconnect(nextSecondsToReconnect)
-      setReconnecting(false)
-    })
-  }
-
   useEffect(() => {
-    console.log("in useEffect " + secondsToReconnect)
     // This actually sets & clears the timer every second anew.
-    // TODO: better text
-    // TODO: what if you actually...time out?
-
     let timerId = setInterval(
       () => {
-        if (reconnecting) {
+        if (props.connection.state === HubConnectionState.Connected) {
+          dispatch(HideModalAction())
+        } else if (reconnecting) {
           // If you're already reconnecting, you don't want to double up
-          console.log('skipping because reconnecting already')
-        } else if (secondsToReconnect <= 0) {
+        } else if (!reconnecting && secondsToReconnect <= 0) {
           setReconnecting(true)
-          console.log('NOW RECONNECTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-          connectSignalR(props.userId, dispatch).then((newConnection) => {
-            if (newConnection.state === HubConnectionState.Connected) {
-              setReconnecting(false)
-              dispatch(SignalRHubCreatedAction(newConnection))
-              dispatch(HideModalAction())
-            } else {
-              console.log("RECONNECT FAILED")
-              setReconnecting(false)
-              setNextSecondsToReconnect(nextSecondsToReconnect * 2)
-              setsecondsToReconnect(nextSecondsToReconnect)
-            }
-          }).catch(() => {
-            console.log("FAILURE TO CONNECT SHOULD RESET SECONDS")
+          connect(props.userId, dispatch).then(() => {
+            setReconnecting(false)
+            dispatch(HideModalAction())
+          }).catch((e) => {
+            console.error('Could not successfully reconnect!', e)
+            setReconnecting(false)
             setNextSecondsToReconnect(nextSecondsToReconnect * 2)
             setsecondsToReconnect(nextSecondsToReconnect)
-            setReconnecting(false)
           })
         } else if (secondsToReconnect > 0) {
           setsecondsToReconnect(secondsToReconnect - 1)
@@ -75,17 +36,19 @@ export default function DisconnectModalView (props: { userId: string, connection
       },
       1000
     );
-    console.log('RESOLVING INTERVAL')
     return () => clearInterval(timerId);
   }, [secondsToReconnect, reconnecting])
 
   return (
     <div>
-      <h1>Please Hold!</h1>
-      <p>
-        TODO: Possibly Add Error Copy!
-        Reconnect in: {secondsToReconnect}
-      </p>
+      <h1>There's a network issue!</h1>
+      <p>Sorry, the client's lost its connection to chat!</p>
+      <p>We'll attempt to periodically reconnect, or you can refresh your page to force it.</p>
+      {secondsToReconnect !== 0 ? (
+        <p>Next attempt in {secondsToReconnect} seconds.</p>
+      ) : (
+        <p>Attempting to reconnect...</p>
+      )}
     </div>
   )
 }
