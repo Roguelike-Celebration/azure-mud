@@ -25,10 +25,10 @@ type SetVerticalPositionAction = PayloadAction<
   VerticalPosition
 >;
 type SetViewportClientHeightAction = PayloadAction<
-  'viewportClientHeight',
+  'setViewportClientHeight',
   number
 >;
-type SetViewportScrollTopAction = PayloadAction<'viewportScrollTop', number>;
+type SetViewportScrollTopAction = PayloadAction<'setViewportScrollTop', number>;
 
 type VirtualizationAction =
   | SetVerticalPositionAction
@@ -46,7 +46,22 @@ const initialState: VirtualizationState = {
   viewportScrollTop: 0
 }
 
-const reducer: VirtualizationReducer = produce((state, action) => {})
+const reducer: VirtualizationReducer = produce((state, action) => {
+  switch (action.type) {
+    case 'setVerticalPosition':
+      state.positions.entities[action.payload.id] = action.payload
+      state.positions.ids.push(action.payload.id)
+      break
+
+    case 'setViewportClientHeight':
+      state.viewportClientHeight = action.payload
+      break
+
+    case 'setViewportScrollTop':
+      state.viewportScrollTop = action.payload
+      break
+  }
+})
 
 export const VirtualizationContext = createContext<
   [
