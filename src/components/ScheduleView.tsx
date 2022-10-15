@@ -6,25 +6,26 @@ export interface ScheduleEntry {
   time: Date,
   text: string,
   roomIds: string[]
-  breakoutRoomId?: string
+  breakoutRoomId?: string,
+  day: number
 }
 
-function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string) {
-  const dayPreview = (time) => new Date(`2022-09-11T${time}:00.000-07:00`)
-  const dayOneDate = (time) => new Date(`2022-10-22T${time}:00.000-07:00`)
-  const dayTwoDate = (time) => new Date(`2022-10-23T${time}:00.000-07:00`)
+const dayPreview = (time) => new Date(`2022-09-11T${time}:00.000-07:00`)
+const dayOneDate = (time) => new Date(`2022-10-22T${time}:00.000-07:00`)
+const dayTwoDate = (time) => new Date(`2022-10-23T${time}:00.000-07:00`)
 
+function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string) {
   if (day === 0) {
     return {
-      time: dayPreview(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId
+      time: dayPreview(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId, day
     }
   } else if (day === 1) {
     return {
-      time: dayOneDate(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId
+      time: dayOneDate(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId, day
     }
   } else if (day === 2) {
     return {
-      time: dayTwoDate(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId
+      time: dayTwoDate(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId, day
     }
   } else {
     console.error('Your static data is messed up, somehow.')
@@ -86,7 +87,22 @@ export default function ScheduleView () {
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
   const userTimeZone = formatter.resolvedOptions().timeZone
 
-  const rows = ScheduleEntries.flatMap(r => {
+  const today = new Date()
+
+  // If it's before the event or day 1, show day 1. Otherwise show day 2
+  // TODO: This logic will need adjusting for a preview event
+
+  const endOfDayOne = ScheduleEntries.slice().reverse().find(e => e.day === 1).time
+  endOfDayOne.setTime(endOfDayOne.getTime() + (1 * 60 * 60 * 1000)) // Add 1 hour after the last event
+
+  let day = 2
+  // TODO: This will be busted, time zones
+  if (today <= endOfDayOne) {
+    day = 1
+  }
+  const entries = ScheduleEntries.filter(e => e.day === day)
+
+  const rows = entries.flatMap(r => {
     if (r.text === SOCIAL_TIME) {
       return [(<tr key={formatter.format(r.time) + 'hr1'}><th className='break' colSpan={2}><hr /></th></tr>),
         (<tr key={formatter.format(r.time) + 'text'}><td className='time'>{formatter.format(r.time)}</td><td className='segment'>Social Time</td></tr>),
