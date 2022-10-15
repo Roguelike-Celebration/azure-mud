@@ -12,17 +12,13 @@ export const DullDoorRoomView = () => {
 
   const user = userMap[myId]
 
-  const walkThroughDoor = () => {
-    if (user.nameColor) {
-      Storage.setWasColoredEntering(true)
-    } else {
-      Storage.setWasColoredEntering(false)
-    }
+  const pullTheCleanRope = () => {
+    dispatch(UpdateProfileColorAction(null))
     dispatch(ShowModalAction(Modal.FeatureDullDoor))
   }
 
   return <div id="dull-door-div" className="feature-room-view">
-    <p><button id="dull-door-button" className='link-styled-button' onClick={walkThroughDoor}>Pull the clean rope</button>.</p>
+    <p><button id="dull-door-button" className='link-styled-button' onClick={pullTheCleanRope}>Pull the clean rope</button>.</p>
   </div>
 }
 
