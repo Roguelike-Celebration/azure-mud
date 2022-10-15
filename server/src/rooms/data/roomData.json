@@ -324,7 +324,7 @@
     "displayName": "underTheater",
     "shortName": "underTheater",
     "id": "underTheater",
-    "hidden": true
+    "hidden": true,
     "description": "You arrive at The Under Theater. Despite the forboding aura at the door, the interior of this space is rather pleasant. There is a table full of spare swag left over from the swag table above, a giant bucket of what appears to be [[lemonade->item]], and some [[slightly stale cookies->item]] neatly stacked on a silver platter for you. The swag table includes a stack of [[negasocks->item]], a [[negalongbow->item]], a [[healing scroll->item]], and an abominable [[negapuppy->item]], radiating malice (adorably).</br></br>This space doesn't appear to be directly connected to any alternate versions of the breakout rooms, and in fact the only door you can see at all is the main entrance, leading back to the [[Underworld->underworld]].",
     "roomId": "underTheater"
   },
