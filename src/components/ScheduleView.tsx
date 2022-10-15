@@ -128,7 +128,7 @@ export default function ScheduleView () {
 
   return (
     <div id='Schedule'>
-      <h1>Schedule</h1>
+      <h1>Schedule: Day {day}</h1>
       <p>Times below should be in your local time zone. We believe your time zone is {userTimeZone}.</p>
       <table>
         <tbody>
