@@ -55,6 +55,7 @@ import { currentUser, onAuthenticationStateChange } from './authentication'
 import _ from 'lodash'
 import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
+import DisconnectModalView from './components/DisconnectModalView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -241,6 +242,7 @@ const App = () => {
 
   // TODO: If we get more modal options than just a size boolean, make this an options object.
   let modalIsFullScreen = false
+  let modalIsUnclosable = false
 
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
@@ -325,6 +327,11 @@ const App = () => {
       innerModalView = <ClientDeployedModal />
       break
     }
+    case Modal.Disconnected: {
+      modalIsUnclosable = true
+      innerModalView = <DisconnectModalView userId={state.userId} />
+      break
+    }
     case Modal.HappeningNow: {
       innerModalView = <HappeningNowView roomData={state.roomData} entries={state.serverSettings.happeningNowEntries}/>
       break
@@ -349,7 +356,7 @@ const App = () => {
   }
 
   if (innerModalView) {
-    modalView = <ModalView fullScreen={modalIsFullScreen}>{innerModalView}</ModalView>
+    modalView = <ModalView fullScreen={modalIsFullScreen} unclosable={modalIsUnclosable}>{innerModalView}</ModalView>
   }
 
   const showMenu = () => {

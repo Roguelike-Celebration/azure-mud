@@ -81,9 +81,31 @@ export default function NameView (props: Props) {
       }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
     )
     if (doSpeaker) {
-      toggleUserSpeaker(data.id)
+      toggleUserSpeaker(data.id, '2022')
     }
   }
+
+  const handlePastSpeaker = (e, data) => {
+    toggleUserSpeaker(data.id, '2021')
+  }
+
+  const pastSpeakerButton = userIsMod ? (
+    <MenuItem
+      data={
+        {
+          badge: {
+            emoji: '🎙️',
+            description: 'Speaker Alumni Club'
+          }
+        }
+      }
+      onClick={handlePastSpeaker}
+    >
+    Make past speaker
+    </MenuItem>
+  ) : (
+    ''
+  )
 
   const banButton = userIsMod ? (
     <MenuItem
@@ -179,7 +201,7 @@ export default function NameView (props: Props) {
       <MenuItem onClick={showProfileEdit}>
             Edit Profile
       </MenuItem>
-
+      {pastSpeakerButton}
     </ContextMenu></>
 
     return (
@@ -202,6 +224,7 @@ export default function NameView (props: Props) {
         </MenuItem>
         {banButton}
         {modButtons}
+        {pastSpeakerButton}
       </ContextMenu>
     </>
 
