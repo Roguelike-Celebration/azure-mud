@@ -863,4 +863,5 @@ const filteredMessageIds = (state: State) =>
 export interface ModalOptions {
   hideVideo?: boolean;
   showJoinButton?: boolean;
+  unclosable?: boolean;
 }

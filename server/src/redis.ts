@@ -399,7 +399,7 @@ const Redis: RedisInternal = {
 const activeUsersKey = 'activeUsersList'
 
 const modListKey = 'mods'
-const speakerListKey = 'mods'
+const speakerListKey = 'speakers'
 
 const serverSettingsKey = 'serverSettings'
 

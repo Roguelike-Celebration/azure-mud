@@ -91,6 +91,10 @@ export const UnlockableBadges: Badge[] = [
   {
     emoji: '🐣',
     description: 'Attended the 2022 preview event!'
+  },
+  {
+    emoji: '🎙️',
+    description: 'Speaker Alumni Club'
   }
 ]
 
