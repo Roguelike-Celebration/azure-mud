@@ -2,7 +2,7 @@ import React, { FC, memo, useContext, useEffect, useRef } from 'react'
 import { MessagesContext } from '../../App'
 import { MessageType } from '../../message'
 import MessageView from '../MessageView'
-import { VirtualizationContext } from '../VirtualizationProvider/VirtualizationProvider'
+import { VirtualizationContext } from '../VirtualizationProvider'
 import './MessageItem.css'
 
 interface MessageItemProps {
@@ -23,7 +23,7 @@ const outerHeight: (el: HTMLElement) => number = (el) => {
 
 export const MessageItem: FC<MessageItemProps> = memo(
   ({ messageId, hideTimestamp, msgIndex }) => {
-    const [{ messagePositions, viewportClientHeight }, virtualizationDispatch] =
+    const [{ messagePositions, viewportScrollHeight }, virtualizationDispatch] =
       useContext(VirtualizationContext)
     const { entities } = useContext(MessagesContext)
     const message = entities[messageId]
@@ -41,7 +41,7 @@ export const MessageItem: FC<MessageItemProps> = memo(
           type: 'setMessagePosition',
           payload: {
             id: messageId,
-            top: viewportClientHeight + messageItemRef.current.offsetTop,
+            top: viewportScrollHeight + messageItemRef.current.offsetTop,
             height: outerHeight(messageItemRef.current)
           }
         })
@@ -49,7 +49,7 @@ export const MessageItem: FC<MessageItemProps> = memo(
     }, [
       messageId,
       messagePositions[messageId],
-      viewportClientHeight,
+      viewportScrollHeight,
       virtualizationDispatch
     ])
 

@@ -11,7 +11,7 @@ import {
   DeactivateAutoscrollAction
 } from '../../../Actions'
 import { DispatchContext } from '../../../App'
-import { VirtualizationContext } from '../../VirtualizationProvider/VirtualizationProvider'
+import { VirtualizationContext } from '../../VirtualizationProvider'
 
 type ScrollContainerRef = MutableRefObject<HTMLOListElement>;
 type ScrollHandler = UIEventHandler<HTMLOListElement>;
@@ -43,7 +43,7 @@ export const useAutoscroll = (
     }
 
     virtualizaitonDispatch({
-      type: 'setViewportClientHeight',
+      type: 'setViewportScrollHeight',
       payload: scrollContainerRef.current.clientHeight
     })
   }, [virtualizaitonDispatch])
