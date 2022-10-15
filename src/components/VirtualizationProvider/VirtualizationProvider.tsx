@@ -17,7 +17,7 @@ type VerticalPosition = Pick<Message, 'id'> & Pick<DOMRect, 'top' | 'height'>;
 
 interface VirtualizationState {
   messagePositions: Record<string, VerticalPosition>;
-  viewportClientHeight: number;
+  viewportScrollHeight: number;
   viewportScrollTop: number;
 }
 
@@ -25,22 +25,22 @@ type SetMessagePositionAction = PayloadAction<
   'setMessagePosition',
   VerticalPosition
 >;
-type SetViewportClientHeightAction = PayloadAction<
-  'setViewportClientHeight',
+type SetViewportScrollHeightAction = PayloadAction<
+  'setViewportScrollHeight',
   number
 >;
 type SetViewportScrollTopAction = PayloadAction<'setViewportScrollTop', number>;
 
 type VirtualizationAction =
   | SetMessagePositionAction
-  | SetViewportClientHeightAction
+  | SetViewportScrollHeightAction
   | SetViewportScrollTopAction;
 
 type VirtualizationReducer = Reducer<VirtualizationState, VirtualizationAction>;
 
 const initialState: VirtualizationState = {
   messagePositions: {},
-  viewportClientHeight: 0,
+  viewportScrollHeight: 0,
   viewportScrollTop: 0
 }
 
@@ -48,12 +48,11 @@ const reducer: VirtualizationReducer = produce((state, action) => {
   switch (action.type) {
     case 'setMessagePosition':
       state.messagePositions[action.payload.id] = action.payload
-      // TODO: rename the state value, or this is wrong
-      state.viewportClientHeight += action.payload.height
+      state.viewportScrollHeight += action.payload.height
       break
 
-    case 'setViewportClientHeight':
-      state.viewportClientHeight = action.payload
+    case 'setViewportScrollHeight':
+      state.viewportScrollHeight = action.payload
       break
 
     case 'setViewportScrollTop':
