@@ -92,12 +92,7 @@ export default function NameView (props: Props) {
   const pastSpeakerButton = userIsMod ? (
     <MenuItem
       data={
-        {
-          badge: {
-            emoji: '🎙️',
-            description: 'Speaker Alumni Club'
-          }
-        }
+        { id: props.userId }
       }
       onClick={handlePastSpeaker}
     >
