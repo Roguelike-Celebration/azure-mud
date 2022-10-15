@@ -1,1 +1,4 @@
-export { VirtualizationProvider } from './VirtualizationProvider'
+export {
+  VirtualizationContext,
+  VirtualizationProvider
+} from './VirtualizationProvider'
