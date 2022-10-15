@@ -19,6 +19,8 @@
   --red: #ff0000;
   --violet: #ee82ee;
   --yellow: #ffff00;
+  --active: #20b2aa;
+  --link: #20b2aa;
 }
 
 /* solarized dark */
@@ -39,6 +41,8 @@
   --red: #dc322f;
   --violet: #6c71c4;
   --yellow: #b58900;
+  --active: #859900;
+  --link: #859900;
 }
 
 /* solarized light */
@@ -59,7 +63,59 @@
   --red: #dc322f;
   --violet: #6c71c4;
   --yellow: #b58900;
+  --active:#859900;
+  --link:#859900;
 }
+
+/* monochrome-amber */
+.monochrome-amber {
+  --main-background:#212121;
+  --main-font:#FFCC00;
+  --gray-text:#FFB000;
+  --alternate-background: #212121;
+  --alternate-translucent: rgba(10,10,10,0.8);
+  --green:#20b2aa;
+  --highlight-line: #FFB000 ;
+  --highlighted-line-font: #212121;
+  --mod-line: #212121 ;
+  --pink: lightpink;
+  --blue: #87ceeb;
+  --cyan: #00ffff;
+  --magenta: #ff00ff;
+  --orange: #ffa500;
+  --red: #ff0000;
+  --violet: #ee82ee;
+  --yellow: #ffff00;
+  --link-decoration: underline;
+  --link-style: dashed; 
+  --active: #FFA300;
+  --link: #FFA300;
+  }
+
+/* monochrome-green */
+.monochrome-green {
+  --main-background: #212121;
+  --main-font:#33FF33;
+  --gray-text:#00FF66;
+  --alternate-background: #212121;
+  --alternate-translucent: rgba(10,10,10,0.8);
+  --green:#20b2aa;
+  --highlight-line: #33FF33;
+  --highlighted-line-font: #212121;
+  --mod-line: #212121 ;
+  --pink: lightpink;
+  --blue: #87ceeb;
+  --cyan: #00ffff;
+  --magenta: #ff00ff;
+  --orange: #ffa500;
+  --red: #ff0000;
+  --violet: #ee82ee;
+  --yellow: #ffff00;
+  --link-decoration: underline;
+  --link-style: dashed; 
+  --active: #66FF66;
+  --link: #66FF66;
+  }
 
 body {
   background-color: var(--main-background);
@@ -101,8 +157,9 @@ body {
 }
 
 a {
-  color:var(--green);
-  text-decoration: none;
+  color:var(--link);
+  text-decoration: var(--link-decoration, none);
+  text-decoration-style: var(--link-style, none);
   font-weight: bold;
 }
 
@@ -118,13 +175,13 @@ a {
 }
 
 a:visited {
-  color: var(--green);
+  color: var(--link);
 }
 
 .link-styled-button {
   background-color: transparent;
   border: none;
-  color: var(--green);
+  color: var(--link);
   cursor: pointer;
   display: inline; 
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;

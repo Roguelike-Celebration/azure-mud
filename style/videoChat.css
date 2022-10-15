@@ -26,7 +26,7 @@ input#send-audio {
 }
 
 video.speaking {
-  border: 5px solid var(--green);
+  border: 5px solid var(--active);
 }
 
 #media-view .video-button {
@@ -46,7 +46,7 @@ video.speaking {
 }
 
 #media-view .video-button.enabled {
-  color: var(--green);
+  color: var(--active);
 }
 
 #media-view .other-participant .video-button.enabled {

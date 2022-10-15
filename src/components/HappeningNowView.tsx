@@ -4,7 +4,7 @@ import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { moveToRoom } from '../networking'
 import { Room } from '../room'
-import { ScheduleEntries } from './ScheduleView'
+import { nowDate, ScheduleEntries } from './ScheduleView'
 
 // Apparently reverse() does an actual reversal! WELL. All right then, Javascript.
 const ReversedScheduleEntries = [...ScheduleEntries].reverse()
@@ -12,9 +12,7 @@ const ReversedScheduleEntries = [...ScheduleEntries].reverse()
 export default function HappeningNowView (props: { roomData: { [roomId: string]: Room }, entries: HappeningNowEntry[] }) {
   const dispatch = useContext(DispatchContext)
 
-  // To test this functionality, just set it at some appropriate date in the conference time
-  // const now = new Date(`2021-10-16T10:35:00.000-07:00`)
-  const now = new Date()
+  const now = nowDate()
   const currentlyScheduledIdx = ReversedScheduleEntries.findIndex((entry) => entry.time < now)
   const currentlyScheduled = ReversedScheduleEntries[currentlyScheduledIdx]
 
