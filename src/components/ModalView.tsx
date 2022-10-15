@@ -8,7 +8,8 @@ import { DispatchContext } from '../App'
 import ReactDOM from 'react-dom'
 
 interface Props {
-    fullScreen: boolean
+    fullScreen: boolean,
+    unclosable: boolean
 }
 
 export const ModalView: React.FunctionComponent<Props> = (props) => {
@@ -16,7 +17,7 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
 
   useEffect(() => {
     function keyListener (e) {
-      if (e.keyCode === 27) {
+      if (e.keyCode === 27 && !props.unclosable) {
         dispatch(HideModalAction())
       }
     }
@@ -27,7 +28,7 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
   })
 
   const close = (e) => {
-    if (e.target.id === 'modal-wrapper' || e.target.id === 'close-button') {
+    if (!props.unclosable && (e.target.id === 'modal-wrapper' || e.target.id === 'close-button')) {
       dispatch(HideModalAction())
     }
   }
@@ -37,13 +38,15 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
   return ReactDOM.createPortal(
     <div id='modal-wrapper' onClick={close} role='dialog' aria-modal={true}>
       <div id='modal' className={props.fullScreen ? 'full-screen' : null}>
-        <button
-          onClick={close}
-          id='close-button'
-          className='close'
-        >
-            x
-        </button>
+        {!props.unclosable ? (
+          <button
+            onClick={close}
+            id='close-button'
+            className='close'
+          >
+              x
+          </button>
+        ) : ''}
         {props.children}
       </div>
     </div>,

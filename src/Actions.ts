@@ -6,6 +6,7 @@ import { Modal } from './modals'
 import { ServerSettings } from '../server/src/types'
 import { ModalOptions } from './reducer'
 import { Badge } from '../server/src/badges'
+import { HubConnection } from '@microsoft/signalr'
 
 export type Action =
   | ReceivedMyProfileAction

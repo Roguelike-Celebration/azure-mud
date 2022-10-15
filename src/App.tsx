@@ -23,6 +23,7 @@ import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
 import ClientDeployedModal from './components/ClientDeployedModal'
 import CodeOfConductView from './components/CodeOfConductView'
+import DisconnectModalView from './components/DisconnectModalView'
 import EmailVerifiedView from './components/EmailVerifiedView'
 import DullDoorModalView from './components/feature/DullDoorViews'
 import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
@@ -128,12 +129,7 @@ const App = () => {
 
         const messageArchive = await Storage.getMessages()
         if (messageArchive) {
-          dispatch(
-            LoadMessageArchiveAction(
-              [],
-              messageArchive.whispers
-            )
-          )
+          dispatch(LoadMessageArchiveAction([], messageArchive.whispers))
 
           messageArchive.messages?.reduce(
             (acc, message) =>
@@ -274,6 +270,7 @@ const App = () => {
 
   // TODO: If we get more modal options than just a size boolean, make this an options object.
   let modalIsFullScreen = false
+  let modalIsUnclosable = false
 
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
@@ -380,6 +377,11 @@ const App = () => {
       innerModalView = <ClientDeployedModal />
       break
     }
+    case Modal.Disconnected: {
+      modalIsUnclosable = true
+      innerModalView = <DisconnectModalView userId={state.userId} />
+      break
+    }
     case Modal.HappeningNow: {
       innerModalView = (
         <HappeningNowView
@@ -412,7 +414,9 @@ const App = () => {
 
   if (innerModalView) {
     modalView = (
-      <ModalView fullScreen={modalIsFullScreen}>{innerModalView}</ModalView>
+      <ModalView fullScreen={modalIsFullScreen} unclosable={modalIsUnclosable}>
+        {innerModalView}
+      </ModalView>
     )
   }
 

@@ -1,9 +1,12 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { isSpeaker, minimizeUser, User } from '../user'
+import { awardUserBadge, isSpeaker, minimizeUser, User } from '../user'
 import { DB } from '../database'
+import { UnlockableBadgeMap } from '../badges'
 
 const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const userIdToToggle: string = inputs.userId
+  const isForPastYear = inputs.year !== '2022'
+
   if (!userIdToToggle) {
     return {
       httpResponse: {
@@ -15,12 +18,27 @@ const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, in
 
   let toggledUser: User
 
-  if (await isSpeaker(userIdToToggle)) {
-    log(`[MOD] Setting user ${userIdToToggle} to speaker=false`)
-    toggledUser = await DB.setSpeakerStatus(userIdToToggle, false)
+  /* toggle past speaker */
+  if (isForPastYear) {
+    const pastSpeakerBadge = UnlockableBadgeMap['🎙️']
+
+    const profile = await DB.getUser(userIdToToggle)
+
+    if (profile.unlockedBadges.includes(pastSpeakerBadge)) {
+      const remainingUnlockedBadges = profile.unlockedBadges.filter(badge => badge !== pastSpeakerBadge)
+      await DB.setPartialUserProfile(userIdToToggle, { unlockedBadges: remainingUnlockedBadges })
+    } else {
+      await awardUserBadge(userIdToToggle, pastSpeakerBadge)
+    }
+  /* toggle current speaker */
   } else {
-    log(`[MOD] Setting user ${userIdToToggle} to speaker=true`)
-    toggledUser = await DB.setSpeakerStatus(userIdToToggle, true)
+    if (await isSpeaker(userIdToToggle)) {
+      log(`[MOD] Setting user ${userIdToToggle} to speaker=false`)
+      toggledUser = await DB.setSpeakerStatus(userIdToToggle, false)
+    } else {
+      log(`[MOD] Setting user ${userIdToToggle} to speaker=true`)
+      toggledUser = await DB.setSpeakerStatus(userIdToToggle, true)
+    }
   }
 
   return {
