@@ -166,7 +166,6 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
-    const oldRoomId = draft.roomId
     draft.roomId = action.value.roomId
     draft.roomData = { ...draft.roomData, ...action.value.roomData }
 
@@ -184,8 +183,9 @@ export default produce((draft: State, action: Action) => {
     // Add a local "you have moved to X room" message
     // Don't display if we're in the same room (issue 162)
     if (draft.roomData && draft.roomData[action.value.roomId]) {
-      const room = draft.roomData[action.value.roomId]
-      if (draft.roomId !== oldRoomId) {
+      const room = current(draft).roomData[action.value.roomId]
+
+      if (current(draft).roomId !== original(draft).roomId) {
         addMessage(draft, createMovedRoomMessage(room.shortName))
       } else {
         addMessage(draft, createSameRoomMessage(room.shortName))
@@ -757,8 +757,7 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.CommandMessage) {
-    const message = createCommandMessage(action.value)
-    addMessage(draft, message)
+    addMessage(draft, createCommandMessage(action.value))
   }
 
   if (action.type === ActionType.EquipBadge) {

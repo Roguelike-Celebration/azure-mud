@@ -244,8 +244,8 @@ const App = () => {
     return <YouAreBannedView />
   }
 
-  // It's slightly weird we now construct this here and pass it as a prop to RoomView instead of constructing it there.
-  // Shrug, the conf is in 2 days.
+  // It's slightly weird we now construct this here and pass it as a prop to
+  // RoomView instead of constructing it there. Shrug, the conf is in 2 days.
   let videoChatView
   if (
     state.roomData &&
