@@ -1,6 +1,15 @@
+import { now } from 'lodash'
 import React from 'react'
 
 const SOCIAL_TIME = 'Social Time'
+
+// Generate the current date for both the schedule and "happening now"
+// If you want to test functionality, stub in a fake date here
+// (this only exists to allow that testing functionality)
+export function nowDate () {
+  // After 2022 day 1, before day 2: '2022-10-22T22:00:00.000-07:00'
+  return new Date()
+}
 
 export interface ScheduleEntry {
   time: Date,
@@ -87,7 +96,7 @@ export default function ScheduleView () {
   const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
   const userTimeZone = formatter.resolvedOptions().timeZone
 
-  const today = new Date()
+  const today = nowDate()
 
   // If it's before the event or day 1, show day 1. Otherwise show day 2
   // TODO: This logic will need adjusting for a preview event
