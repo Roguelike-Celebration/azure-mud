@@ -5,8 +5,14 @@
   margin: 0;
   padding: 0;
 
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 
   position: relative;
+}
+
+.sentinel {
+  width: 100%;
+  height: 1px;
+  position: absolute;
 }
