@@ -26,9 +26,9 @@ const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, in
 
     if (profile.unlockedBadges.includes(pastSpeakerBadge)) {
       const remainingUnlockedBadges = profile.unlockedBadges.filter(badge => badge !== pastSpeakerBadge)
-      await DB.setPartialUserProfile(userIdToToggle, { unlockedBadges: remainingUnlockedBadges })
+      toggledUser = await DB.setPartialUserProfile(userIdToToggle, { unlockedBadges: remainingUnlockedBadges })
     } else {
-      await awardUserBadge(userIdToToggle, pastSpeakerBadge)
+      toggledUser = await awardUserBadge(userIdToToggle, pastSpeakerBadge)
     }
   /* toggle current speaker */
   } else {
