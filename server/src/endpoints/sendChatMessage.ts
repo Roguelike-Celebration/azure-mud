@@ -69,7 +69,11 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
 
   const modMatch = /^\/(mod|mods|moderator|moderators) (.+)/.exec(message)
   if (modMatch) {
-    sendToDiscord({ username: user.username, message: modMatch[2] })
+    try {
+      sendToDiscord({ username: user.username, message: modMatch[2] })
+    } catch (err) {
+      log('sendToDiscord failed with error: ' + err)
+    }
 
     return {
       messages: [
