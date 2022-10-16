@@ -20,6 +20,11 @@ export default function RateTalksView () {
     setSelectedRating(parseInt(e.target.value))
   }
 
+  const selectedTalk = (e) => {
+    setSelectedRating(-1)
+    textRef.current.value = ''
+  }
+
   const clickSubmit = () => {
     if (selectedRating === -1) {
       alert('Please select a rating between 1 and 5')
@@ -52,7 +57,7 @@ export default function RateTalksView () {
     <div id='rate-talks'>
       <h1>Rate talks</h1>
       <label htmlFor='talk-list' defaultValue={currentTalk.text}>Select a talk</label>
-      <select id='talklist' ref={selectorRef}>
+      <select id='talklist' ref={selectorRef} onChange={selectedTalk}>
         {talkOptions}
       </select>
 
