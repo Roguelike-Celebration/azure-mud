@@ -6,7 +6,6 @@ import {
   Action,
   AuthenticateAction,
   IsRegisteredAction,
-  LoadMessageAction,
   LoadMessageArchiveAction,
   PlayerBannedAction,
   SendMessageAction,
@@ -475,7 +474,10 @@ const App = () => {
                           />
                         ) : null}
                         <VirtualizationProvider>
-                          <MessageList autoscrollChat={state.autoscrollChat} />
+                          <MessageList
+                            autoscrollChat={state.autoscrollChat}
+                            messagesLoadProgress={state.messagesLoadProgress}
+                          />
                         </VirtualizationProvider>
                         <InputView
                           prepopulated={state.prepopulatedInput}

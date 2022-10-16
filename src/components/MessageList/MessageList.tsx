@@ -7,53 +7,63 @@ import './MessageList.css'
 
 interface MessageListProps {
   autoscrollChat: boolean;
+  messagesLoadProgress: number;
 }
 
-export const MessageList: FC<MessageListProps> = ({ autoscrollChat }) => {
+export const MessageList: FC<MessageListProps> = ({
+  autoscrollChat,
+  messagesLoadProgress
+}) => {
   const { ids, entities } = useContext(MessagesContext)
-  const [{ messagePositions, viewportScrollTop, viewportScrollHeight }] = useContext(
-    VirtualizationContext
-  )
+  const [{ messagePositions, viewportScrollTop, viewportScrollHeight }] =
+    useContext(VirtualizationContext)
 
   const [scrollContainerRef, toggleAutoscroll] = useAutoscroll(autoscrollChat)
   const shouldHideTimestamp = useShouldHideTimestamp()
 
   return (
-    <ol
-      className="message-list"
-      ref={scrollContainerRef}
-      onScroll={toggleAutoscroll}
-    >
-      {ids.reduce<ReactNodeArray>((acc, id, i) => {
-        if (!scrollContainerRef.current) {
-          return acc
-        }
+    <>
+      <ol
+        className="message-list"
+        ref={scrollContainerRef}
+        onScroll={toggleAutoscroll}
+      >
+        {ids.reduce<ReactNodeArray>((acc, id, i) => {
+          if (!scrollContainerRef.current) {
+            return acc
+          }
 
-        const { clientHeight } = scrollContainerRef.current
-        const { top, height } = messagePositions[id] ?? {}
-        const didMeasure = top !== undefined && height !== undefined
-        const isInBounds =
+          const { clientHeight } = scrollContainerRef.current
+          const { top, height } = messagePositions[id] ?? {}
+          const didMeasure = top !== undefined && height !== undefined
+          const isInBounds =
           didMeasure &&
           top < viewportScrollTop + clientHeight &&
           top + height > viewportScrollTop
 
-        if (!didMeasure || isInBounds) {
-          acc.push(
-            <MessageItem
-              key={id}
-              messageId={id}
-              hideTimestamp={shouldHideTimestamp(
-                entities[id],
-                entities[ids[i - 1]]
-              )}
-              msgIndex={i}
-            />
-          )
-        }
+          if (!didMeasure || isInBounds) {
+            acc.push(
+              <MessageItem
+                key={id}
+                messageId={id}
+                hideTimestamp={shouldHideTimestamp(
+                  entities[id],
+                  entities[ids[i - 1]]
+                )}
+                msgIndex={i}
+              />
+            )
+          }
 
-        return acc
-      }, [])}
-      <li className="sentinel" style={{ top: viewportScrollHeight }}/>
-    </ol>
+          return acc
+        }, [])}
+        <li className="sentinel" style={{ top: viewportScrollHeight }} />
+      </ol>
+      {messagesLoadProgress < 1 && (
+        <div className="messages-load-progress">
+          Loading {Math.floor(messagesLoadProgress * 100)}%
+        </div>
+      )}
+    </>
   )
 }
