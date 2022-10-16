@@ -59,6 +59,9 @@ export const linkActions = {
   talkToRandorTheTwisted: () => {
     displayMessageFromList('randorTheTwisted')
   },
+  talkToFlower: () => {
+    displayMessageFromList('flower')
+  },
   orderNewDrink: () => {
     orderNewDrink()
   }
