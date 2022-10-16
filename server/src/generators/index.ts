@@ -11,6 +11,7 @@ import * as doctorHope from './doctorHope'
 import * as chadSilverbow from './chadSilverbow'
 import * as zeroCrash from './zeroCrash'
 import * as randorTheTwisted from './randorTheTwisted'
+import * as flower from './flower'
 import * as drinkSkeletons from './drinkSkeletons'
 import * as drinkVessels from './drinkVessels'
 import * as drinkContents from './drinkContents'
@@ -35,6 +36,7 @@ const generators: {[name: string]: Generator} = {
   chadSilverbow,
   zeroCrash,
   randorTheTwisted,
+  flower,
   drinkSkeletons,
   drinkVessels,
   drinkContents,

@@ -20,7 +20,7 @@
     "shortName": "rift3",
     "id": "rift3",
     "hidden": true,
-    "description": "Walking towards the glimmer, you see the world shift around you and resolve into some kind of a science lab filled with test tubes and floating test subjects. As you look around you notice that you also appear to be inside one of the tubes. A scientist notices you and gestures towards a colleague just as both run towards you enthusiastically. They begin furiously taking notes as other scientists join them. One reaches over towards a panel on the side of your tube, pressing some incomprehensible combination of buttons. The light within your tube shifts and you catch another glimmer in the air, though you're not sure how you could ever walk towards it now. As you stare at it and attempt to move, you can feel your perspective shifting despite your immobility. You think that if you just keep trying, you'll be able to [enter it -> rift4].",
+    "description": "Walking towards the glimmer, you see the world shift around you and resolve into some kind of a science lab filled with test tubes and floating test subjects. As you look around you notice that you also appear to be inside one of the tubes. A scientist notices you and gestures towards a colleague just as both run towards you enthusiastically. They begin furiously taking notes as other scientists join them. One reaches over towards a panel on the side of your tube, pressing some incomprehensible combination of buttons. The light within your tube shifts and you catch another glimmer in the air, though you're not sure how you could ever walk towards it now. As you stare at it and attempt to move, you can feel your perspective shifting despite your immobility. You think that if you just keep trying, you'll be able to [[enter it->rift4]].",
     "roomId": "rift3"
   },
   "adventurersGuildHall": {
@@ -70,7 +70,7 @@
     "shortName": "undermeadows",
     "id": "undermeadows",
     "hidden": true,
-    "description": "You walk out into a pleasant meadow. The wind sighs gently through the trees, and forest life is bountiful around you. Fawns, bunnies, and various other adorable woodland creatures hear you arrive and look up from whatever they were doing. Each gives you a confused look, as if they were expecting someone else instead. </br></br> As you walk around this space, you notice a shimmer in the air near one of the trees. You’re sure that if you approach it just right, you could [see what lies beyond -> underrift]. </br></br> Or you can head back to [[The Spire -> underspire]].",
+    "description": "You walk out into a pleasant meadow. The wind sighs gently through the trees, and forest life is bountiful around you. Fawns, bunnies, and various other adorable woodland creatures hear you arrive and look up from whatever they were doing. Each gives you a confused look, as if they were expecting someone else instead. </br></br> As you walk around this space, you notice a shimmer in the air near one of the trees. You’re sure that if you approach it just right, you could [[see what lies beyond->underrift]]. </br></br> Or you can head back to [[The Spire->underspire]].",
     "roomId": "undermeadows"
   },
   "barStools": {
@@ -97,7 +97,7 @@
     "id": "dockingBay",
     "displayName": "Docking Bay 4",
     "shortName": "the docking bay",
-    "description": "Enormous stacks of metal cargo boxes line one side of this massive room, with various starships occupying the remaining space. The ships are small, short-range vessels used to transport between larger ships or station, and each of them is as unique as the mothership, and species, it must have come from. Among the stacks of cargo boxes you catch a glimmer from time to time, as if angling your head in just the right way is bringing something into view, but you can't make it out without [moving closer -> rift1]. You can also go back to the central [[hall->centralHall]].",
+    "description": "Enormous stacks of metal cargo boxes line one side of this massive room, with various starships occupying the remaining space. The ships are small, short-range vessels used to transport between larger ships or station, and each of them is as unique as the mothership, and species, it must have come from. Among the stacks of cargo boxes you catch a glimmer from time to time, as if angling your head in just the right way is bringing something into view, but you can't make it out without [[moving closer->rift1]]. You can also go back to the central [[hall->centralHall]].",
     "roomId": "dockingBay"
   },
   "rift1": {
@@ -105,7 +105,7 @@
     "shortName": "rift1",
     "id": "rift1",
     "hidden": true,
-    "description": "As you walk towards the glimmer you angle your head slightly to the left and suddenly the image resolves around you and you appear in a deep, red cavern with glittering crystal formations growing in every direction. Enormous insects crawl over the crystals, spraying their surface with some fluid before taking small bites. You see such bite marks along every surface, part of the reason why the light is refracting so spectacularly. The light source itself seems to be a bulging mother bug attached to the wall in one corner as she is fed by her drones.</br></br>As you gaze in awe of the mother bug, you see another distortion in the air. Looking around yourself, there doesn't seem to be anywhere else to go. The portal you seem to have used to get here has gone, so you may as well [walk towards this new one -> rift2] to see what happens.",
+    "description": "As you walk towards the glimmer you angle your head slightly to the left and suddenly the image resolves around you and you appear in a deep, red cavern with glittering crystal formations growing in every direction. Enormous insects crawl over the crystals, spraying their surface with some fluid before taking small bites. You see such bite marks along every surface, part of the reason why the light is refracting so spectacularly. The light source itself seems to be a bulging mother bug attached to the wall in one corner as she is fed by her drones.</br></br>As you gaze in awe of the mother bug, you see another distortion in the air. Looking around yourself, there doesn't seem to be anywhere else to go. The portal you seem to have used to get here has gone, so you may as well [[walk towards this new one->rift2]] to see what happens.",
     "roomId": "rift1"
   },
   "videoDome": {
@@ -143,7 +143,7 @@
     "shortName": "underspire",
     "id": "underspire",
     "hidden": true,
-    "description": "A flash of crimson light announces your entrance into a circular room crafted of polished bone. Purple flames dance within the eye sockets of skulls floating just out of arms’ reach, casting an eerie light against the rune-covered walls. Obsidian pillars support walls which seem to stretch out to unfathomable heights. You can tell there is another floor above you, and you see a staircase winding along the walls, but something about the air here warps your vision and makes understanding the scope of this room impossible. </br></br>At the far side of the room is a throne, and atop that sits a brooding figure you vaguely recognize from the back of the bar. You suddenly know his name is Randor The Twisted, and you sense within him a great conflict.</br></br>Opposite the throne sits a crystal mirror within which you see a [distant landscape -> undermeadows]. Or you can [head back through the portal -> underbar].",
+    "description": "A flash of crimson light announces your entrance into a circular room crafted of polished bone. Purple flames dance within the eye sockets of skulls floating just out of arms’ reach, casting an eerie light against the rune-covered walls. Obsidian pillars support walls which seem to stretch out to unfathomable heights. You can tell there is another floor above you, and you see a staircase winding along the walls, but something about the air here warps your vision and makes understanding the scope of this room impossible. </br></br>At the far side of the room is a throne, and atop that sits a brooding figure you vaguely recognize from the back of the bar. You suddenly know his name is Randor The Twisted, and you sense within him a great conflict.</br></br>Opposite the throne sits a crystal mirror within which you see a [[distant landscape->undermeadows]]. Or you can [[head back through the portal->underbar]].",
     "roomId": "underspire"
   },
   "underworld": {
@@ -151,7 +151,7 @@
     "shortName": "underworld",
     "id": "underworld",
     "hidden": true,
-    "description": "Fragments of half-seen visions float through the air of a large, open space that closely resembles the central hall above. You hear the whispers of the attendees’ hopes and dreams, but just outside of your ability to understand what they are saying. A veil of shifting darkness seems to float over this place, blurring the edges of everything you see and giving the space a dreamlike quality.</br></br> Among the shifting ghosts, you see what appears to be a frazzled college student muttering about her PhD. She is carrying a deck emblazoned with the name Z3r0 Cr4sh, and seems to be looking for something.</br></br>You also see the doorways leading to the [Bar -> underbar], and the [Experimental Biology Lab -> underlab]. The hallways leading to the rest of the event space are covered in rubble of some kind, and the Theater doors pulse with an ominous hum that your mind refuses to approach.",
+    "description": "Fragments of half-seen visions float through the air of a large, open space that closely resembles the central hall above. You hear the whispers of the attendees’ hopes and dreams, but just outside of your ability to understand what they are saying. A veil of shifting darkness seems to float over this place, blurring the edges of everything you see and giving the space a dreamlike quality.</br></br> Among the shifting ghosts, you see what appears to be a frazzled college student muttering about her PhD. She is carrying a deck emblazoned with the name Z3r0 Cr4sh, and seems to be looking for something.</br></br>You also see the doorways leading to the [[Bar->underbar]], and the [[Experimental Biology Lab->underlab]]. The hallways leading to the rest of the event space are covered in rubble of some kind, and the Theater doors pulse with an ominous hum that your mind refuses to approach.",
     "roomId": "underworld"
   },
   "theaterWarrior": {
@@ -191,7 +191,7 @@
     "shortName": "rift2",
     "id": "rift2",
     "hidden": true,
-    "description": "You walk towards this glimmer and suddenly the world shifts around you and you find yourself deep underwater in some kind of bubble made of what you can only describe as self-luminescent crystal. Looking outwards, you see an ocean floor riddled with such bubbles, many of which are occupied by some kind of giant crab. Fortunately, your bubble appears to be empty for now, but you don't think it would be a great idea to stick around too long. </br></br>You look around you and see [another shimmer in the air -> rift3], but your previous portal has disappeared.",
+    "description": "You walk towards this glimmer and suddenly the world shifts around you and you find yourself deep underwater in some kind of bubble made of what you can only describe as self-luminescent crystal. Looking outwards, you see an ocean floor riddled with such bubbles, many of which are occupied by some kind of giant crab. Fortunately, your bubble appears to be empty for now, but you don't think it would be a great idea to stick around too long. </br></br>You look around you and see [[another shimmer in the air->rift3]], but your previous portal has disappeared.",
     "roomId": "rift2"
   },
   "underlab": {
@@ -199,7 +199,7 @@
     "shortName": "underlab",
     "id": "underlab",
     "hidden": true,
-    "description": "You enter what should have been the experimental biology lab, but find instead an unseeable abyss of solid black. You can walk around in it, you can feel the floor beneath you, but nothing else at all. You don’t feel any sense of either foreboding or acceptance, but you do feel the intense danger of ambivalence. It’s like this room doesn’t believe you exist at all. You hear, far in the distance, the sound of your parents protecting you from the consequences of your actions. It’s a strange feeling, as if the sound doesn’t belong to you.</br></br>There is nothing to do here. Head back to the [Underworld -> underworld]?",
+    "description": "You enter what should have been the experimental biology lab, but find instead an unseeable abyss of solid black. You can walk around in it, you can feel the floor beneath you, but nothing else at all. You don’t feel any sense of either foreboding or acceptance, but you do feel the intense danger of ambivalence. It’s like this room doesn’t believe you exist at all. You hear, far in the distance, the sound of your parents protecting you from the consequences of your actions. It’s a strange feeling, as if the sound doesn’t belong to you.</br></br>There is nothing to do here. Head back to the [[Underworld->underworld]]?",
     "roomId": "underlab"
   },
   "entryway": {
@@ -241,7 +241,7 @@
     "id": "oxygenFarm",
     "displayName": "Oxygen Farm",
     "shortName": "the oxygen farm",
-    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as it it were trying to get your attention. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]]."
+    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as it it were trying to [[get your attention->flower]]. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]]."
   },
   "theaterCleric": {
     "id": "theaterCleric",
@@ -269,7 +269,7 @@
     "shortName": "underbar",
     "id": "underbar",
     "hidden": true,
-    "description": "You enter a dark reflection of the bar above, overflowing with the spirits of those who have found themself here. An intense pulse of warmth and acceptance overwhelms you and puts you at ease. You notice the pulse is coming from a glowing beacon in the shape of Ubizara. She goes about her usual bartending duties, unaware of the intense light that streams from her and into  the hearts of each and every shadowy guest your eyes can half see. </br></br>At the back of the bar, where there should be a booth, you see a [swirling portal to some other place -> underspire]. Or you can head back to the [Underworld -> underworld].",
+    "description": "You enter a dark reflection of the bar above, overflowing with the spirits of those who have found themself here. An intense pulse of warmth and acceptance overwhelms you and puts you at ease. You notice the pulse is coming from a glowing beacon in the shape of Ubizara. She goes about her usual bartending duties, unaware of the intense light that streams from her and into  the hearts of each and every shadowy guest your eyes can half see. </br></br>At the back of the bar, where there should be a booth, you see a [[swirling portal to some other place->underspire]]. Or you can head back to the [[Underworld->underworld]].",
     "roomId": "underbar"
   },
   "barBack": {
@@ -283,7 +283,7 @@
     "shortName": "underrift",
     "id": "underrift",
     "hidden": true,
-    "description": "You suddenly arrive in the memory of a library. Everything here feels real, and yet the titles of books shift like serpents in fog.  This appears to be a shabby place, overrun with students and not nearly enough books for them all. You look around at haggard faces and recognize the tell-tale exhaustion of grad students. They do not see you, and you’re not really sure they would be able to engage with you if they did.</br></br>Near the front desk you can see another shimmer in the air. You don’t even feel the need to approach it, you sense that just by willing yourself to pass through it, [[you will -> rift4]].</br></br>You also see a stone tablet with an engraved riddle sitting conspiciously nearby.",
+    "description": "You suddenly arrive in the memory of a library. Everything here feels real, and yet the titles of books shift like serpents in fog.  This appears to be a shabby place, overrun with students and not nearly enough books for them all. You look around at haggard faces and recognize the tell-tale exhaustion of grad students. They do not see you, and you’re not really sure they would be able to engage with you if they did.</br></br>Near the front desk you can see another shimmer in the air. You don’t even feel the need to approach it, you sense that just by willing yourself to pass through it, [[you will->rift4]].</br></br>You also see a stone tablet with an engraved riddle sitting conspiciously nearby.",
     "roomId": "underrift",
     "riddles": [
       "Reject the written word\nOrder replaced by chaos\nClear your mind of expectation\nDive instead into the beginning\nAll you need is there\nLooking into the distance for missing pieces"
@@ -294,20 +294,29 @@
     "shortName": "rift4",
     "id": "rift4",
     "hidden": true,
-    "description": "You appear suddenly in the crumbling ruins of an ancient city. You stand in an open park between a forest of skyscrapers reaching up through the clouds, their tops somewhere beyond what your eyes can see. The upper reaches of these colossal towers sway gently in the breeze. On the ground are dilapidates benches and walking paths now reclaimed by the natural world. The chirping of some form of bird can be heard echoing among the towers, and you see bushes rustling with small animal life, though you see none of these creatures directly. </br></br>You sense within you a shift in the air. Reaching out, you can feel a myriad layers within the air, as if each glimmer you'd seen before was now a page of an enormous book that you could merely flip to on a whim. You run your fingers along the spine of this imaginary book until you find a familiar page. You know that if you turn this page, you'll appear back in the [Docking Bay -> dockingBay].",
+    "description": "You appear suddenly in the crumbling ruins of an ancient city. You stand in an open park between a forest of skyscrapers reaching up through the clouds, their tops somewhere beyond what your eyes can see. The upper reaches of these colossal towers sway gently in the breeze. On the ground are dilapidated benches and walking paths now reclaimed by the natural world. The chirping of some form of bird can be heard echoing among the towers, and you see bushes rustling with small animal life, though you see none of these creatures directly. </br></br>You sense within you a shift in the air. Reaching out, you can feel a myriad layers within the air, as if each glimmer you'd seen before was now a page of an enormous book that you could merely flip to on a whim. You run your fingers along the spine of this imaginary book until you find a familiar page. You know that if you turn this page, you'll appear back in the [[Docking Bay->dockingBay]].",
     "roomId": "rift4"
   },
   "procedural": {
     "displayName": "Procedural Hall",
     "shortName": "procedural",
     "id": "procedural",
-    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->]underTheater]].",
+    "hidden": true,
+    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->]underTheater]].</br></br>You also notice, in an obscure corner of the hall, stuck between two bricks that can't seem to shift away from this spot, a trail of papers leading into a [[patch of shadow->thesisDefense]].",
     "roomId": "procedural"
+  },
+  "thesisDefense": {
+  "displayName": "Hall of Thesis Defense",
+  "shortName": "thesisDefense",
+  "id": "thesisDefense",
+    "hidden": true,
+  "description": "You appear in the middle of a large hall, surrounded by seats and long, curved desks full of shadowy figures. Standing before you are the imposing shadowy forms of your PhD review panel, their gaze pinning you to the floor in pure terror. You can feel yourself speaking, offering two very different defenses of the same topic, neither of which is making a single coherent point between them. You know the topic better than this. You know you do. Yet you hear the laughter of your peers echoing in the distant corners of this hall.</br></br>On the desk you find a shimmering stack of papers, glistening in the dim light. The Golden Thesis. You sense that if you could just read its text one more time, you could do this. But you feel an irresistable force pulling you from this place, and back to the [[underworld]]."
   },
   "loversLake": {
     "displayName": "Lover's Lake",
     "shortName": "loversLake",
     "id": "loversLake",
+    "hidden": true,
     "description": "You see a crystal clear lake surrounded by verdant forests teeming with life and the kind of natural beauty that can fuel a poet for decades. Beside that lake sits a handsome young man sitting on a tree stump, surrounded by an assortment of woodland creatures. Bunnies, deer, squirrels, and birds gather around someone who clearly loves and respects them for the beautiful creatures they are. Even the crawling lizards and bugs below seem to earn this kind soul's affections. You sense a deep light thrumming through this space in a way that you can feel more than see. </br></br>On the ground you see a blood red jewel of some kind. It glows with malevolent light, but as you look closer it seems to have been recently purified. You can sense the change in its nature slowly growing as a result of exposure to the accepting light of this place.",
     "roomId": "LoversLake"
   },
@@ -315,7 +324,8 @@
     "displayName": "underTheater",
     "shortName": "underTheater",
     "id": "underTheater",
-    "description": "You arrive at The Under Theater. Despite the forboding aura at the door, the interior of this space is rather pleasant. There is a table full of spare swag left over from the swag table above, a giant bucket of what appears to be [[lemonade->item]], and some [[slightly stale cookies->item]] neatly stacked on a silver platter for you. The swag table includes a stack of [[negasocks->item]], a [[negalongbow->item]], a [[healing scroll ->item]], and an abominable [[negapuppy->item]], radiating malice (adorably).</br></br>This space doesn't appear to be directly connected to any alternate versions of the breakout rooms, and in fact the only door you can see at all is the main entrance, leading back to the [[underworld]].",
+    "hidden": true,
+    "description": "You arrive at The Under Theater. Despite the forboding aura at the door, the interior of this space is rather pleasant. There is a table full of spare swag left over from the swag table above, a giant bucket of what appears to be [[lemonade->item]], and some [[slightly stale cookies->item]] neatly stacked on a silver platter for you. The swag table includes a stack of [[negasocks->item]], a [[negalongbow->item]], a [[healing scroll->item]], and an abominable [[negapuppy->item]], radiating malice (adorably).</br></br>This space doesn't appear to be directly connected to any alternate versions of the breakout rooms, and in fact the only door you can see at all is the main entrance, leading back to the [[Underworld->underworld]].",
     "roomId": "underTheater"
   },
 }
