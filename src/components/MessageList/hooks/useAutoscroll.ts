@@ -46,6 +46,8 @@ export const useAutoscroll = (
       type: 'setViewportScrollHeight',
       payload: scrollContainerRef.current.clientHeight
     })
+
+    dispatch((_, getState) => getState().chatReady.resolve())
   }, [virtualizaitonDispatch])
 
   const scrollHandler = useCallback<ScrollHandler>(

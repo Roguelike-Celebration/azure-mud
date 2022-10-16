@@ -69,6 +69,7 @@ export interface State {
 
   profileData?: User;
 
+  chatReady: Deferred<void>;
   messageArchiveLoaded: Deferred<void>;
   messages: EntityState<Message>;
   whispers: WhisperMessage[];
@@ -125,6 +126,7 @@ export const defaultState: State = {
   checkedAuthentication: false,
   hasRegistered: false,
   connected: new Deferred(),
+  chatReady: new Deferred(),
   messageArchiveLoaded: new Deferred(),
   messages: {
     entities: {},
@@ -187,7 +189,7 @@ export default produce((draft: State, action: Action) => {
 
     // Add a local "you have moved to X room" message
     // Don't display if we're in the same room (issue 162)
-    if (draft.roomData && draft.roomData[action.value.roomId]) {
+    if (current(draft).roomData?.[action.value.roomId]) {
       const room = current(draft).roomData[action.value.roomId]
 
       if (current(draft).roomId !== original(draft).roomId) {
@@ -682,22 +684,23 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.LoadMessageArchive) {
-    // const nextEntities = {
-    //   ...current(draft).messages.entities,
-    //   ...action.messages.reduce((acc, message) => {
-    //     acc[message.id] = message
-    //     return acc
-    //   }, {})
-    // }
+    const nextEntities = {
+      ...current(draft).messages.entities,
+      ...action.messages.reduce((acc, message) => {
+        acc[message.id] = message
+        return acc
+      }, {})
+    }
 
-    // draft.messages.entities = nextEntities
-    // draft.messages.ids = filteredMessageIds(current(draft))
+    draft.messages.entities = nextEntities
+    draft.messages.ids = filteredMessageIds(current(draft))
 
     draft.whispers = action.whispers || []
   }
 
   if (action.type === ActionType.LoadMessage) {
     draft.messages.entities[action.message.id] = action.message
+
     if (shouldShowMessage(draft, action.message)) {
       draft.messages.ids.push(action.message.id)
     }
