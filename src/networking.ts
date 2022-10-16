@@ -18,6 +18,7 @@ import {
   CaptionMessageAction,
   ChatMessageAction,
   CommandMessageAction,
+  ConnectAction,
   DanceAction,
   DeleteMessageAction,
   EmoteAction,
@@ -57,7 +58,7 @@ import { ThunkDispatch } from './useReducerWithThunk'
 import { State } from './reducer'
 
 let myUserId: string
-let myDispatch: Dispatch<Action>
+let myDispatch: ThunkDispatch<Action, State>
 
 const inMediaChat: boolean = false
 
@@ -72,7 +73,7 @@ export async function connect (
 
   console.log(result)
   dispatch(
-    UpdatedCurrentRoomAction(
+    ConnectAction(
       result.roomId,
       convertServerRoomData(result.roomData)
     )

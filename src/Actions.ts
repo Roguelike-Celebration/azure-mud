@@ -186,15 +186,18 @@ interface UpdatedCurrentRoomAction {
 export const UpdatedCurrentRoomAction = (
   roomId: string,
   roomData: { [roomId: string]: Room }
+): UpdatedCurrentRoomAction => ({
+  type: ActionType.UpdatedCurrentRoom,
+  value: { roomId, roomData }
+})
+
+export const ConnectAction = (
+  roomId: string,
+  roomData: { [roomId: string]: Room }
 ): Thunk<Action, State> =>
   async (dispatch, getState) => {
     await getState().messageArchiveLoaded
-
-    dispatch({
-      type: ActionType.UpdatedCurrentRoom,
-      value: { roomId, roomData }
-    })
-
+    dispatch(UpdatedCurrentRoomAction(roomId, roomData))
     getState().connected.resolve()
   }
 
@@ -841,12 +844,28 @@ interface LoadMessageArchiveAction {
 export const LoadMessageArchiveAction = (
   messages: Message[],
   whispers: WhisperMessage[]
-): LoadMessageArchiveAction => {
-  return {
+): Thunk<Action, State> => async (dispatch, getState) => {
+  dispatch({
     type: ActionType.LoadMessageArchive,
-    messages: messages,
-    whispers: whispers
-  }
+    messages: [],
+    whispers
+  })
+
+  messages.reduce(
+    (acc, message) =>
+      acc.then(
+        () =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              dispatch(LoadMessageAction(message))
+              resolve()
+            }, 30)
+          })
+      ),
+    Promise.resolve()
+  )
+
+  getState().messageArchiveLoaded.resolve()
 }
 
 interface LoadMessageAction {
