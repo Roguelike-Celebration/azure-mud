@@ -7,11 +7,13 @@ import { Modal } from './modals'
 import { ModalOptions, State } from './reducer'
 import { Room } from './room'
 import { Thunk } from './useReducerWithThunk'
+import { fps } from './utils'
 
 export type Action =
   | ReceivedMyProfileAction
   | ReceivedServerSettingsAction
   | UpdatedCurrentRoomAction
+  | ConnectedAction
   | UpdatedRoomDataAction
   | UpdatedPresenceAction
   | PlayerConnectedAction
@@ -20,7 +22,9 @@ export type Action =
   | CaptionMessageAction
   | ModMessageAction
   | DeleteMessageAction
-  | LoadMessageArchiveAction
+  | ChatReadyAction
+  | LoadMessageArchiveActionStart
+  | LoadMessageArchiveActionEnd
   | LoadMessageAction
   | WhisperAction
   | ShoutAction
@@ -78,6 +82,7 @@ export enum ActionType {
   ReceivedMyProfile = 'RECEIVED_MY_PROFILE',
   ReceivedServerSettings = 'RECEIVED_SERVER_SETTINGS',
   UpdatedCurrentRoom = 'UPDATED_CURRENT_ROOM',
+  Connected = 'CONNECTED',
   UpdatedRoomData = 'UPDATED_ROOM_DATA',
   UpdatedPresence = 'UPDATED_PRESENCE',
   PlayerConnected = 'PLAYER_CONNECTED',
@@ -127,7 +132,9 @@ export enum ActionType {
   IsRegistered = 'IS_REGISTERED',
   BanToggle = 'BAN_TOGGLE',
   ModToggle = 'MOD_TOGGLE',
-  LoadMessageArchive = 'LOAD_MESSAGE_ARCHIVE',
+  ChatReady = 'CHAT_READY',
+  LoadMessageArchiveStart = 'LOAD_MESSAGE_ARCHIVE_START',
+  LoadMessageArchiveEnd = 'LOAD_MESSAGE_ARCHIVE_END',
   LoadMessage = 'LOAD_MESSAGE',
   // Note Wall
   NoteAdd = 'NOTE_ADD',
@@ -191,6 +198,24 @@ export const UpdatedCurrentRoomAction = (
   value: { roomId, roomData }
 })
 
+interface ConnectedAction {
+  type: ActionType.Connected;
+}
+
+export const ConnectedAction = (
+): ConnectedAction => ({
+  type: ActionType.Connected
+})
+
+interface ChatReadyAction {
+  type: ActionType.ChatReady;
+}
+
+export const ChatReadyAction = (
+): ChatReadyAction => ({
+  type: ActionType.ChatReady
+})
+
 export const ConnectAction =
   (
     roomId: string,
@@ -199,7 +224,7 @@ export const ConnectAction =
     async (dispatch, getState) => {
       await getState().messageArchiveLoaded.promise
       dispatch(UpdatedCurrentRoomAction(roomId, roomData))
-      getState().connected.resolve()
+      dispatch(ConnectedAction())
     }
 
 interface UpdatedRoomDataAction {
@@ -836,48 +861,61 @@ export const ModToggleAction = (userId: string): ModToggleAction => {
   return { type: ActionType.ModToggle, value: userId }
 }
 
-interface LoadMessageArchiveAction {
-  type: ActionType.LoadMessageArchive;
-  messages: Message[];
+interface LoadMessageArchiveActionStart {
+  type: ActionType.LoadMessageArchiveStart;
   whispers: WhisperMessage[];
 }
+
+const LoadMessageArchiveActionStart = (
+  whispers: WhisperMessage[]
+): LoadMessageArchiveActionStart => ({
+  type: ActionType.LoadMessageArchiveStart,
+  whispers
+})
+
+interface LoadMessageArchiveActionEnd {
+  type: ActionType.LoadMessageArchiveEnd;
+}
+
+const LoadMessageArchiveActionEnd = (
+): LoadMessageArchiveActionEnd => ({
+  type: ActionType.LoadMessageArchiveEnd
+})
 
 export const LoadMessageArchiveAction =
   (messages: Message[], whispers: WhisperMessage[]): Thunk<Action, State> =>
     async (dispatch, getState) => {
       await getState().chatReady.promise
 
-      dispatch({
-        type: ActionType.LoadMessageArchive,
-        messages: [],
-        whispers
-      })
+      dispatch(LoadMessageArchiveActionStart(whispers))
 
       await messages.reduce(
-        (acc, message) =>
+        (acc, message, i) =>
           acc.then(
             () =>
               new Promise((resolve) =>
                 setTimeout(() => {
-                  dispatch(LoadMessageAction(message))
+                  dispatch(LoadMessageAction(message, (i + 1) / messages.length))
                   resolve()
-                }, 1e3 / 60)
+                }, fps(30))
               )
           ),
         Promise.resolve()
       )
 
-      getState().messageArchiveLoaded.resolve()
+      dispatch(LoadMessageArchiveActionEnd())
     }
 
 interface LoadMessageAction {
   type: ActionType.LoadMessage;
   message: Message;
+  progress: number;
 }
 
-export const LoadMessageAction = (message: Message): LoadMessageAction => ({
+const LoadMessageAction = (message: Message, progress: number): LoadMessageAction => ({
   type: ActionType.LoadMessage,
-  message
+  message,
+  progress
 })
 
 interface NoteAddAction {

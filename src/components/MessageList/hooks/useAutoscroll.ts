@@ -8,6 +8,7 @@ import {
 } from 'react'
 import {
   ActivateAutoscrollAction,
+  ChatReadyAction,
   DeactivateAutoscrollAction
 } from '../../../Actions'
 import { DispatchContext } from '../../../App'
@@ -47,7 +48,7 @@ export const useAutoscroll = (
       payload: scrollContainerRef.current.clientHeight
     })
 
-    dispatch((_, getState) => getState().chatReady.resolve())
+    dispatch(ChatReadyAction())
   }, [virtualizaitonDispatch])
 
   const scrollHandler = useCallback<ScrollHandler>(

@@ -71,6 +71,7 @@ export interface State {
 
   chatReady: Deferred<void>;
   messageArchiveLoaded: Deferred<void>;
+  messagesLoadProgress: number;
   messages: EntityState<Message>;
   whispers: WhisperMessage[];
   autoscrollChat: boolean;
@@ -128,6 +129,7 @@ export const defaultState: State = {
   connected: new Deferred(),
   chatReady: new Deferred(),
   messageArchiveLoaded: new Deferred(),
+  messagesLoadProgress: 0,
   messages: {
     entities: {},
     ids: []
@@ -154,6 +156,10 @@ export default produce((draft: State, action: Action) => {
   console.log('In reducer', action)
 
   draft.prepopulatedInput = undefined
+
+  if (action.type === ActionType.Connected) {
+    draft.connected.resolve()
+  }
 
   if (action.type === ActionType.ReceivedMyProfile) {
     draft.profileData = action.value
@@ -660,7 +666,8 @@ export default produce((draft: State, action: Action) => {
       draft.authenticated = true
       draft.userId = action.value.userId
 
-      // If you haven't registered yet, we need to grab your username before we've pulled a server userMap
+      // If you haven't registered yet, we need to grab your username before
+      // we've pulled a server userMap
       draft.userMap[action.value.userId] = {
         id: action.value.userId,
         username: action.value.name
@@ -683,27 +690,25 @@ export default produce((draft: State, action: Action) => {
     toggleUserMod(action.value)
   }
 
-  if (action.type === ActionType.LoadMessageArchive) {
-    const nextEntities = {
-      ...current(draft).messages.entities,
-      ...action.messages.reduce((acc, message) => {
-        acc[message.id] = message
-        return acc
-      }, {})
-    }
+  if (action.type === ActionType.ChatReady) {
+    draft.chatReady.resolve()
+  }
 
-    draft.messages.entities = nextEntities
-    draft.messages.ids = filteredMessageIds(current(draft))
-
+  if (action.type === ActionType.LoadMessageArchiveStart) {
     draft.whispers = action.whispers || []
   }
 
   if (action.type === ActionType.LoadMessage) {
     draft.messages.entities[action.message.id] = action.message
+    draft.messagesLoadProgress = action.progress
 
     if (shouldShowMessage(draft, action.message)) {
       draft.messages.ids.push(action.message.id)
     }
+  }
+
+  if (action.type === ActionType.LoadMessageArchiveEnd) {
+    draft.messageArchiveLoaded.resolve()
   }
 
   // Notes
