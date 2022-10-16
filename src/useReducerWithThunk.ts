@@ -9,7 +9,7 @@ import { Reducer, useReducer } from 'react'
 
 export type ThunkDispatch<A, S> = (action: A | Thunk<A, S>) => void;
 type GetState<S> = () => S;
-type Thunk<A, S> = (
+export type Thunk<A, S> = (
   dispatch: ThunkDispatch<A, S>,
   getState: GetState<S>
 ) => void;

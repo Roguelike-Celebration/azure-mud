@@ -7,6 +7,7 @@ import { DEFAULT_SERVER_SETTINGS, ServerSettings } from '../server/src/types'
 import { MinimalUser, PublicUser, User } from '../server/src/user'
 import { Action, ActionType } from './Actions'
 import Config from './config'
+import { Deferred } from './Deferred'
 import {
   createCaptionMessage,
   createChatMessage,
@@ -51,6 +52,7 @@ export interface State {
   checkedAuthentication: boolean;
   authenticationProvider?: string;
   mustVerifyEmail?: boolean;
+  connected: Deferred<void>;
 
   hasDismissedAModal: boolean;
 
@@ -67,6 +69,7 @@ export interface State {
 
   profileData?: User;
 
+  messageArchiveLoaded: Deferred<void>;
   messages: EntityState<Message>;
   whispers: WhisperMessage[];
   autoscrollChat: boolean;
@@ -121,6 +124,8 @@ export const defaultState: State = {
   authenticated: false,
   checkedAuthentication: false,
   hasRegistered: false,
+  connected: new Deferred(),
+  messageArchiveLoaded: new Deferred(),
   messages: {
     entities: {},
     ids: []
