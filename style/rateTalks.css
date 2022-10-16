@@ -1,0 +1,17 @@
+#rate-talks fieldset {
+  margin-bottom: 1em;
+  margin-top: 1.5em;
+}
+
+#rate-talks input[type="radio"] {
+  margin-right: 2em;
+}
+
+#rate-talks textarea {
+  width: 99%;
+}
+
+#rate-talks #submit {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

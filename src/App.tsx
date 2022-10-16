@@ -56,6 +56,7 @@ import _ from 'lodash'
 import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
 import DisconnectModalView from './components/DisconnectModalView'
+import RateTalksView from './components/RateTalksView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -264,6 +265,10 @@ const App = () => {
     }
     case Modal.Settings: {
       innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} captionsEnabled={state.captionsEnabled} />
+      break
+    }
+    case Modal.RateTalks: {
+      innerModalView = <RateTalksView />
       break
     }
     case Modal.MediaSelector: {

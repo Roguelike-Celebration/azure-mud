@@ -101,6 +101,10 @@ export default function RoomView (props: Props) {
     dispatch(ShowModalAction(Modal.Riddles))
   }
 
+  const showRateView = () => {
+    dispatch(ShowModalAction(Modal.RateTalks))
+  }
+
   let noteWallView
   if (room && room.hasNoteWall) {
     if (room.noteWallData) {
@@ -193,6 +197,7 @@ export default function RoomView (props: Props) {
           ''
         )}
         {noteWallView}
+        <button onClick={showRateView}>Rate Talks</button>
       </div>
       {room ? (
         <PresenceView
