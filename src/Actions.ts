@@ -191,15 +191,16 @@ export const UpdatedCurrentRoomAction = (
   value: { roomId, roomData }
 })
 
-export const ConnectAction = (
-  roomId: string,
-  roomData: { [roomId: string]: Room }
-): Thunk<Action, State> =>
-  async (dispatch, getState) => {
-    await getState().messageArchiveLoaded
-    dispatch(UpdatedCurrentRoomAction(roomId, roomData))
-    getState().connected.resolve()
-  }
+export const ConnectAction =
+  (
+    roomId: string,
+    roomData: { [roomId: string]: Room }
+  ): Thunk<Action, State> =>
+    async (dispatch, getState) => {
+      await getState().messageArchiveLoaded.promise
+      dispatch(UpdatedCurrentRoomAction(roomId, roomData))
+      getState().connected.resolve()
+    }
 
 interface UpdatedRoomDataAction {
   type: ActionType.UpdatedRoomData;
@@ -841,32 +842,33 @@ interface LoadMessageArchiveAction {
   whispers: WhisperMessage[];
 }
 
-export const LoadMessageArchiveAction = (
-  messages: Message[],
-  whispers: WhisperMessage[]
-): Thunk<Action, State> => async (dispatch, getState) => {
-  dispatch({
-    type: ActionType.LoadMessageArchive,
-    messages: [],
-    whispers
-  })
+export const LoadMessageArchiveAction =
+  (messages: Message[], whispers: WhisperMessage[]): Thunk<Action, State> =>
+    async (dispatch, getState) => {
+      await getState().chatReady.promise
 
-  messages.reduce(
-    (acc, message) =>
-      acc.then(
-        () =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              dispatch(LoadMessageAction(message))
-              resolve()
-            }, 30)
-          })
-      ),
-    Promise.resolve()
-  )
+      dispatch({
+        type: ActionType.LoadMessageArchive,
+        messages: [],
+        whispers
+      })
 
-  getState().messageArchiveLoaded.resolve()
-}
+      await messages.reduce(
+        (acc, message) =>
+          acc.then(
+            () =>
+              new Promise((resolve) =>
+                setTimeout(() => {
+                  dispatch(LoadMessageAction(message))
+                  resolve()
+                }, 1e3 / 60)
+              )
+          ),
+        Promise.resolve()
+      )
+
+      getState().messageArchiveLoaded.resolve()
+    }
 
 interface LoadMessageAction {
   type: ActionType.LoadMessage;
