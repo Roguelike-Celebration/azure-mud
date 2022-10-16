@@ -699,10 +699,12 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.LoadMessage) {
-    draft.messages.entities[action.message.id] = action.message
+    if (action.message) {
+      draft.messages.entities[action.message.id] = action.message
+    }
     draft.messagesLoadProgress = action.progress
 
-    if (shouldShowMessage(draft, action.message)) {
+    if (action.message && shouldShowMessage(draft, action.message)) {
       draft.messages.ids.push(action.message.id)
     }
   }

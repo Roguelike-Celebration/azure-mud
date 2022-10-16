@@ -202,8 +202,7 @@ interface ConnectedAction {
   type: ActionType.Connected;
 }
 
-export const ConnectedAction = (
-): ConnectedAction => ({
+export const ConnectedAction = (): ConnectedAction => ({
   type: ActionType.Connected
 })
 
@@ -211,8 +210,7 @@ interface ChatReadyAction {
   type: ActionType.ChatReady;
 }
 
-export const ChatReadyAction = (
-): ChatReadyAction => ({
+export const ChatReadyAction = (): ChatReadyAction => ({
   type: ActionType.ChatReady
 })
 
@@ -877,42 +875,56 @@ interface LoadMessageArchiveActionEnd {
   type: ActionType.LoadMessageArchiveEnd;
 }
 
-const LoadMessageArchiveActionEnd = (
-): LoadMessageArchiveActionEnd => ({
+const LoadMessageArchiveActionEnd = (): LoadMessageArchiveActionEnd => ({
   type: ActionType.LoadMessageArchiveEnd
 })
 
 export const LoadMessageArchiveAction =
-  (messages: Message[], whispers: WhisperMessage[]): Thunk<Action, State> =>
+  (
+    messages: Message[] | null,
+    whispers: WhisperMessage[] | null
+  ): Thunk<Action, State> =>
     async (dispatch, getState) => {
       await getState().chatReady.promise
 
       dispatch(LoadMessageArchiveActionStart(whispers))
 
-      await messages.reduce(
-        (acc, message, i) =>
-          acc.then(
-            () =>
-              new Promise((resolve) =>
-                setTimeout(() => {
-                  dispatch(LoadMessageAction(message, (i + 1) / messages.length))
-                  resolve()
-                }, fps(30))
-              )
-          ),
-        Promise.resolve()
-      )
+      await (messages?.length
+        ? messages.reduce(
+          (acc, message, i) =>
+            acc.then(
+              () =>
+                new Promise((resolve) =>
+                  setTimeout(() => {
+                    dispatch(
+                      LoadMessageAction(message, (i + 1) / messages.length)
+                    )
+                    resolve()
+                  }, fps(30))
+                )
+            ),
+          Promise.resolve()
+        )
+        : new Promise<void>((resolve) =>
+          setTimeout(() => {
+            dispatch(LoadMessageAction(null, 1))
+            resolve()
+          }, fps(60))
+        ))
 
       dispatch(LoadMessageArchiveActionEnd())
     }
 
 interface LoadMessageAction {
   type: ActionType.LoadMessage;
-  message: Message;
+  message: Message | null;
   progress: number;
 }
 
-const LoadMessageAction = (message: Message, progress: number): LoadMessageAction => ({
+const LoadMessageAction = (
+  message: Message | null,
+  progress: number
+): LoadMessageAction => ({
   type: ActionType.LoadMessage,
   message,
   progress
