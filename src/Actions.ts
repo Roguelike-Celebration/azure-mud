@@ -4,8 +4,9 @@ import { ServerSettings } from '../server/src/types'
 import { MinimalUser, PublicUser, User } from '../server/src/user'
 import { Message, WhisperMessage } from './message'
 import { Modal } from './modals'
-import { ModalOptions } from './reducer'
+import { ModalOptions, State } from './reducer'
 import { Room } from './room'
+import { Thunk } from './useReducerWithThunk'
 
 export type Action =
   | ReceivedMyProfileAction
@@ -185,12 +186,17 @@ interface UpdatedCurrentRoomAction {
 export const UpdatedCurrentRoomAction = (
   roomId: string,
   roomData: { [roomId: string]: Room }
-): UpdatedCurrentRoomAction => {
-  return {
-    type: ActionType.UpdatedCurrentRoom,
-    value: { roomId, roomData }
+): Thunk<Action, State> =>
+  async (dispatch, getState) => {
+    await getState().messageArchiveLoaded
+
+    dispatch({
+      type: ActionType.UpdatedCurrentRoom,
+      value: { roomId, roomData }
+    })
+
+    getState().connected.resolve()
   }
-}
 
 interface UpdatedRoomDataAction {
   type: ActionType.UpdatedRoomData;
