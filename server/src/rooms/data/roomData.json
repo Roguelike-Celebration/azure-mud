@@ -241,7 +241,7 @@
     "id": "oxygenFarm",
     "displayName": "Oxygen Farm",
     "shortName": "the oxygen farm",
-    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as it it were trying to get your attention. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]]."
+    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as it it were trying to [[get your attention->flower]]. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]]."
   },
   "theaterCleric": {
     "id": "theaterCleric",
@@ -301,13 +301,22 @@
     "displayName": "Procedural Hall",
     "shortName": "procedural",
     "id": "procedural",
-    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->underTheater]].",
+    "hidden": true,
+    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->]underTheater]].</br></br>You also notice, in an obscure corner of the hall, stuck between two bricks that can't seem to shift away from this spot, a trail of papers leading into a [[patch of shadow->thesisDefense]].",
     "roomId": "procedural"
+  },
+  "thesisDefense": {
+  "displayName": "Hall of Thesis Defense",
+  "shortName": "thesisDefense",
+  "id": "thesisDefense",
+    "hidden": true,
+  "description": "You appear in the middle of a large hall, surrounded by seats and long, curved desks full of shadowy figures. Standing before you are the imposing shadowy forms of your PhD review panel, their gaze pinning you to the floor in pure terror. You can feel yourself speaking, offering two very different defenses of the same topic, neither of which is making a single coherent point between them. You know the topic better than this. You know you do. Yet you hear the laughter of your peers echoing in the distant corners of this hall.</br></br>On the desk you find a shimmering stack of papers, glistening in the dim light. The Golden Thesis. You sense that if you could just read its text one more time, you could do this. But you feel an irresistable force pulling you from this place, and back to the [[underworld]]."
   },
   "loversLake": {
     "displayName": "Lover's Lake",
     "shortName": "loversLake",
     "id": "loversLake",
+    "hidden": true,
     "description": "You see a crystal clear lake surrounded by verdant forests teeming with life and the kind of natural beauty that can fuel a poet for decades. Beside that lake sits a handsome young man sitting on a tree stump, surrounded by an assortment of woodland creatures. Bunnies, deer, squirrels, and birds gather around someone who clearly loves and respects them for the beautiful creatures they are. Even the crawling lizards and bugs below seem to earn this kind soul's affections. You sense a deep light thrumming through this space in a way that you can feel more than see. </br></br>On the ground you see a blood red jewel of some kind. It glows with malevolent light, but as you look closer it seems to have been recently purified. You can sense the change in its nature slowly growing as a result of exposure to the accepting light of this place.",
     "roomId": "LoversLake"
   },
@@ -315,6 +324,7 @@
     "displayName": "underTheater",
     "shortName": "underTheater",
     "id": "underTheater",
+    "hidden": true,
     "description": "You arrive at The Under Theater. Despite the forboding aura at the door, the interior of this space is rather pleasant. There is a table full of spare swag left over from the swag table above, a giant bucket of what appears to be [[lemonade->item]], and some [[slightly stale cookies->item]] neatly stacked on a silver platter for you. The swag table includes a stack of [[negasocks->item]], a [[negalongbow->item]], a [[healing scroll->item]], and an abominable [[negapuppy->item]], radiating malice (adorably).</br></br>This space doesn't appear to be directly connected to any alternate versions of the breakout rooms, and in fact the only door you can see at all is the main entrance, leading back to the [[Underworld->underworld]].",
     "roomId": "underTheater"
   },
