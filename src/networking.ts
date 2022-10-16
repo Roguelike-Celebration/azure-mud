@@ -53,13 +53,18 @@ import {
 import Config from './config'
 import { Modal } from './modals'
 import { convertServerRoomData, Room } from './room'
+import { ThunkDispatch } from './useReducerWithThunk'
+import { State } from './reducer'
 
 let myUserId: string
 let myDispatch: Dispatch<Action>
 
 const inMediaChat: boolean = false
 
-export async function connect (userId: string, dispatch: Dispatch<Action>) {
+export async function connect (
+  userId: string,
+  dispatch: ThunkDispatch<Action, State>
+) {
   myUserId = userId
   myDispatch = dispatch
 
