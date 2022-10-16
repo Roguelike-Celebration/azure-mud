@@ -309,6 +309,11 @@ export async function deleteMessage (messageId: string) {
   const result = await callAzureFunction('deleteMessage', { messageId })
 }
 
+export async function rateTalk (talk: string, rating: number, text?: string) {
+  const result = await callAzureFunction('rateTalk', { talk, rating, text })
+  console.log('Rated talk!', result)
+}
+
 export async function getRoomIds (): Promise<string[]> {
   const result = await callAzureFunction('getRoomIds')
   if (result.roomIds) {

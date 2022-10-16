@@ -123,6 +123,9 @@ interface Database {
   // When someone types /move [room], we generously try to interpret that
   // however we can. This uses a special cache for possible terms.
   getRoomIdFromFuzzySearch (search: string): Promise<string|undefined>
+
+  // --------------------------------------------------------------------
+  rateTalk(user: User, talk: string, rating: number, text?: string): Promise<User>
 }
 
 // eslint-disable-next-line no-undef

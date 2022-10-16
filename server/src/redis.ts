@@ -4,10 +4,8 @@ import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './typ
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import Database from './database'
-console.log('HIII?')
 // eslint-disable-next-line import/first
 import redis from 'redis'
-console.log('redis', redis)
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -26,8 +24,6 @@ const del = promisify(cache.del).bind(cache)
 const addToSet = promisify(cache.sadd).bind(cache)
 const removeFromSet = promisify(cache.srem).bind(cache)
 const getSet = promisify(cache.smembers).bind(cache)
-
-const redisKeys = promisify(cache.keys).bind(cache)
 
 interface RedisInternal extends Database {
   addOccupantToRoom (roomId: string, userId: string),
@@ -393,6 +389,20 @@ const Redis: RedisInternal = {
 
   async getRoomIds (): Promise<string[]> {
     return (await getSet(roomIdsKey)) || []
+  },
+
+  async rateTalk (user: User, talk: string, rating: number, text?: string): Promise<User> {
+    if (!user.ratedTalks) { user.ratedTalks = [] }
+    if (user.ratedTalks.includes(talk)) return user
+
+    // A list of every valid talk ratings key
+    await addToSet(talkRatingsMetaKey, talk)
+
+    // Each talk has an array of rating/text objects
+    await addToSet(talkRatingKey(talk), JSON.stringify({ rating, text }))
+
+    user.ratedTalks.push(talk)
+    return await Redis.setUserProfile(user.id, user)
   }
 }
 
@@ -406,6 +416,8 @@ const serverSettingsKey = 'serverSettings'
 const allUserIdsKey = 'allUserIds'
 
 const roomIdsKey = 'roomIds'
+
+const talkRatingsMetaKey = 'talkRatingKeys'
 
 function roomDataKey (roomId: string): string {
   return `room_${roomId}`
@@ -441,6 +453,10 @@ function roomFuzzySearchKey (search: string): string {
 
 function roomNotesKey (roomId: string): string {
   return `${roomId}Notes`
+}
+
+function talkRatingKey (talk: string): string {
+  return `ratings ${talk}`
 }
 
 export function videoPresenceKey (roomId: string) {

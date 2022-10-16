@@ -51,6 +51,10 @@ export interface User extends PublicUser {
 
   // Does this need to be in PublicUser?
   unlockedBadges: Badge[]
+
+  // An array of talks as we present them in the schedule
+  // (of the form "Firstname Lastname: Talk Title")
+  ratedTalks: string[]
 }
 
 export async function isMod (userId: string) {

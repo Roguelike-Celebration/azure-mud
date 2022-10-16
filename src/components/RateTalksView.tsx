@@ -3,6 +3,7 @@ import { DispatchContext } from '../App'
 import { nowDate, ScheduleEntries } from './ScheduleView'
 
 import '../../style/rateTalks.css'
+import { rateTalk } from '../networking'
 
 // For now, we assume that anything with a dedicated breakout room is a talk
 const talks = ScheduleEntries.filter(e => e.breakoutRoomId)
@@ -33,7 +34,7 @@ export default function RateTalksView () {
 
     const talk = selectorRef.current.value
     const text = textRef.current.value
-    console.log(talk, selectedRating, text)
+    rateTalk(talk, selectedRating, text)
   }
 
   // This makes it so a talk is visible any time after it starts
@@ -57,7 +58,7 @@ export default function RateTalksView () {
     <div id='rate-talks'>
       <h1>Rate talks</h1>
       <label htmlFor='talk-list' defaultValue={currentTalk.text}>Select a talk</label>
-      <select id='talklist' ref={selectorRef} onChange={selectedTalk}>
+      <select id='talklist' ref={selectorRef} onBlur={selectedTalk}>
         {talkOptions}
       </select>
 
