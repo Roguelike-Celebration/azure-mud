@@ -56,10 +56,11 @@ import { Modal } from './modals'
 import { checkIsRegistered, connect, getServerSettings } from './networking'
 import reducer, { defaultState, State } from './reducer'
 import * as Storage from './storage'
-import { useReducerWithThunk } from './useReducerWithThunk'
+import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 
-export const DispatchContext = createContext(null)
+export const DispatchContext =
+  createContext<ThunkDispatch<Action, State>>(null)
 export const MessagesContext = createContext<State['messages']>(null)
 export const UserMapContext = createContext(null)
 export const SettingsContext = createContext(null)
@@ -129,7 +130,12 @@ const App = () => {
 
         const messageArchive = await Storage.getMessages()
         if (messageArchive) {
-          dispatch(LoadMessageArchiveAction([], messageArchive.whispers))
+          dispatch(
+            LoadMessageArchiveAction(
+              messageArchive.messages,
+              messageArchive.whispers
+            )
+          )
         }
 
         const useSimpleNames = await Storage.getUseSimpleNames()
