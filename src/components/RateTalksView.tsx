@@ -8,7 +8,11 @@ import { rateTalk } from '../networking'
 // For now, we assume that anything with a dedicated breakout room is a talk
 const talks = ScheduleEntries.filter(e => e.breakoutRoomId)
 
-export default function RateTalksView () {
+interface Props {
+  ratedTalks: string[]
+}
+
+export default function RateTalksView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
   const [selectedRating, setSelectedRating] = useState(-1)
@@ -49,6 +53,7 @@ export default function RateTalksView () {
     return <option
       value={t.text}
       key={t.text.split(' ').join('-')}
+      disabled={props.ratedTalks.includes(t.text)}
     >
       {t.text}
     </option>

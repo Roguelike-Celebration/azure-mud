@@ -268,7 +268,9 @@ const App = () => {
       break
     }
     case Modal.RateTalks: {
-      innerModalView = <RateTalksView />
+      innerModalView = <RateTalksView
+        ratedTalks={state.profileData.ratedTalks}
+      />
       break
     }
     case Modal.MediaSelector: {
