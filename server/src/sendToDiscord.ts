@@ -1,12 +1,12 @@
-const request = require('request')
+import fetch from 'node-fetch'
 
-export function sendToDiscord ({ message, username }) {
+export async function sendToDiscord ({ message, username }) {
   const msg = {
     content: `${username}: ${message}`
   }
 
-  request.post({
-    url: process.env.DISCORD_URL,
+  await fetch(process.env.DISCORD_URL, {
+    method: 'post',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(msg)
   })
