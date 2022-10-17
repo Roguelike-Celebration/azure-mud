@@ -6,6 +6,8 @@ export interface Badge {
   emoji: string
 
   description?: string
+
+  isCustom?: boolean
 }
 
 export const FreeBadges: Badge[] = [
@@ -60,6 +62,11 @@ export const FreeBadges: Badge[] = [
   {
     emoji: '🧦',
     description: 'Equipped: Roguelike Celebration socks'
+  },
+  {
+    emoji: 'bard',
+    description: 'Procgen Bard',
+    isCustom: true
   }
 ]
 
