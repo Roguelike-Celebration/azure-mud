@@ -40,7 +40,6 @@ import {
   updateProfileColor
 } from './networking'
 import { Room } from './room'
-import { sendToDiscord } from './sendToDiscord'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import * as Storage from './storage'
 
@@ -315,10 +314,6 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.ModMessage) {
-    sendToDiscord({
-      username: draft.userMap[action.value.name].username,
-      message: action.value.message
-    })
     addMessage(
       draft,
       createModMessage(
