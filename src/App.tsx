@@ -1,63 +1,66 @@
-import React, { useEffect, createContext } from 'react'
+import React, { createContext, useEffect } from 'react'
 
-import RoomView from './components/RoomView'
-import ChatView from './components/ChatView'
-import InputView from './components/InputView'
-import { connect, checkIsRegistered, getServerSettings } from './networking'
-import reducer, { State, defaultState } from './reducer'
+import _ from 'lodash'
+import { IconContext } from 'react-icons/lib'
 import {
-  AuthenticateAction,
   Action,
+  AuthenticateAction,
   IsRegisteredAction,
   LoadMessageArchiveAction,
-  ShowSideMenuAction,
-  SendMessageAction,
-  SpaceIsClosedAction,
   PlayerBannedAction,
+  SendMessageAction,
+  SetCaptionsEnabledAction,
   SetKeepCameraWhenMovingAction,
-  SetTextOnlyModeAction,
   SetNumberOfFacesAction,
+  SetTextOnlyModeAction,
   SetUseSimpleNamesAction,
-  SetCaptionsEnabledAction
+  ShowSideMenuAction,
+  SpaceIsClosedAction
 } from './Actions'
-import ProfileView from './components/ProfileView'
-import { useReducerWithThunk } from './useReducerWithThunk'
-import MediaChatView from './components/MediaChatView'
-import ProfileEditView from './components/ProfileEditView'
-import SideNavView from './components/SideNavView'
-import { IconContext } from 'react-icons/lib'
-import { Modal } from './modals'
-import { NoteWallView } from './components/NoteWallView'
-import { ModalView } from './components/ModalView'
-import SettingsView from './components/SettingsView'
-import MediaSelectorView from './components/MediaSelectorView'
-import CodeOfConductView from './components/CodeOfConductView'
-import ScheduleView from './components/ScheduleView'
-import HelpView from './components/HelpView'
-import MapModalView from './components/MapModalView'
-import LoggedOutView from './components/LoggedOutView'
-import WelcomeModalView from './components/WelcomeModalView'
-import GoHomeView from './components/GoHomeView'
-import YouAreBannedView from './components/YouAreBannedView'
-import RoomListView from './components/RoomListView'
-import RainbowGateModalView from './components/feature/RainbowGateViews'
-import DullDoorModalView from './components/feature/DullDoorViews'
-import ServerSettingsView from './components/ServerSettingsView'
-import ClientDeployedModal from './components/ClientDeployedModal'
-import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
-import HappeningNowView from './components/HappeningNowView'
-import VerifyEmailView from './components/VerifyEmailView'
-import EmailVerifiedView from './components/EmailVerifiedView'
-import RiddleModalView from './components/RiddleModal'
-import * as Storage from './storage'
-import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import { currentUser, onAuthenticationStateChange } from './authentication'
-import _ from 'lodash'
 import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
+import ClientDeployedModal from './components/ClientDeployedModal'
+import CodeOfConductView from './components/CodeOfConductView'
 import DisconnectModalView from './components/DisconnectModalView'
+import EmailVerifiedView from './components/EmailVerifiedView'
+import DullDoorModalView from './components/feature/DullDoorViews'
+import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
+import RainbowGateModalView from './components/feature/RainbowGateViews'
+import GoHomeView from './components/GoHomeView'
+import HappeningNowView from './components/HappeningNowView'
+import HelpView from './components/HelpView'
+import InputView from './components/InputView'
+import LoggedOutView from './components/LoggedOutView'
+import MapModalView from './components/MapModalView'
+import MediaChatView from './components/MediaChatView'
+import MediaSelectorView from './components/MediaSelectorView'
+import { MessageList } from './components/MessageList'
+import { ModalView } from './components/ModalView'
+import { NoteWallView } from './components/NoteWallView'
+import ProfileEditView from './components/ProfileEditView'
+import ProfileView from './components/ProfileView'
+import RiddleModalView from './components/RiddleModal'
+import RoomListView from './components/RoomListView'
+import RoomView from './components/RoomView'
+import ScheduleView from './components/ScheduleView'
+import ServerSettingsView from './components/ServerSettingsView'
+import SettingsView from './components/SettingsView'
+import SideNavView from './components/SideNavView'
+import VerifyEmailView from './components/VerifyEmailView'
+import { VirtualizationProvider } from './components/VirtualizationProvider'
+import WelcomeModalView from './components/WelcomeModalView'
+import YouAreBannedView from './components/YouAreBannedView'
+import { Modal } from './modals'
+import { checkIsRegistered, connect, getServerSettings } from './networking'
+import reducer, { defaultState, State } from './reducer'
+import * as Storage from './storage'
+import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
+import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 
-export const DispatchContext = createContext(null)
+export const DispatchContext =
+  createContext<ThunkDispatch<Action, State>>(null)
+export const MessagesContext = createContext<State['messages']>(null)
 export const UserMapContext = createContext(null)
 export const SettingsContext = createContext(null)
 export const IsMobileContext = createContext(null)
@@ -74,7 +77,9 @@ const App = () => {
     // I (Em) started a refactor at one point, but abandoned it since it became too irrelevant from my task
     onAuthenticationStateChange(async (user) => {
       if (!user) {
-        dispatch(AuthenticateAction(undefined, undefined, undefined, undefined))
+        dispatch(
+          AuthenticateAction(undefined, undefined, undefined, undefined)
+        )
       } else if (user.shouldVerifyEmail) {
         const userId = user.id
         const providerId = user.providerId
@@ -84,12 +89,11 @@ const App = () => {
         const userId = user.id
         const providerId = user.providerId
 
-        const { registeredUsername, spaceIsClosed, isMod, isBanned } = await checkIsRegistered()
+        const { registeredUsername, spaceIsClosed, isMod, isBanned } =
+          await checkIsRegistered()
         if (!registeredUsername) {
           // If email, use ID to not leak, otherwise use service's default display name (for Twitter, their handle)
-          const defaultDisplayName = user.email
-            ? userId
-            : user.displayName
+          const defaultDisplayName = user.email ? userId : user.displayName
           dispatch(
             AuthenticateAction(userId, defaultDisplayName, providerId, false)
           )
@@ -160,17 +164,23 @@ const App = () => {
           const $main = document.getElementById('main')
           // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
           if ($main) {
-            const numberOfFaces = Math.floor($main.clientWidth / VideoWidth) - 1
+            const numberOfFaces =
+              Math.floor($main.clientWidth / VideoWidth) - 1
             dispatch(SetNumberOfFacesAction(numberOfFaces))
           } else {
-            console.warn('Attempted to call onResize when \'main\' element was null; will default to show no faces')
+            console.warn(
+              "Attempted to call onResize when 'main' element was null; will default to show no faces"
+            )
           }
         }
 
         // Our initial paint time is stupid slow
         // but waiting a long time seems to ensure that #main exists
         setTimeout(onResize, 2000)
-        window.addEventListener('resize', _.throttle(onResize, 100, { trailing: true }))
+        window.addEventListener(
+          'resize',
+          _.throttle(onResize, 100, { trailing: true })
+        )
       }
     })
   }, [])
@@ -184,7 +194,10 @@ const App = () => {
   )
 
   // This is kind of janky!
-  if (currentUser() && currentUser().isSignInWithEmailLink(window.location.href)) {
+  if (
+    currentUser() &&
+    currentUser().isSignInWithEmailLink(window.location.href)
+  ) {
     return <EmailVerifiedView />
   }
 
@@ -193,10 +206,9 @@ const App = () => {
   }
 
   if (state.checkedAuthentication && state.mustVerifyEmail) {
-    return <VerifyEmailView
-      userEmail={currentUser().email}
-      dispatch={dispatch}
-    />
+    return (
+      <VerifyEmailView userEmail={currentUser().email} dispatch={dispatch} />
+    )
   }
 
   if (state.checkedAuthentication && !state.authenticated) {
@@ -210,7 +222,9 @@ const App = () => {
         isFTUE={true}
         defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
-        prepopulateTwitterWithDefaultHandle={state.authenticationProvider === 'twitter'}
+        prepopulateTwitterWithDefaultHandle={
+          state.authenticationProvider === 'twitter'
+        }
       />
     )
   }
@@ -221,10 +235,15 @@ const App = () => {
     return <YouAreBannedView />
   }
 
-  // It's slightly weird we now construct this here and pass it as a prop to RoomView instead of constructing it there.
-  // Shrug, the conf is in 2 days.
+  // It's slightly weird we now construct this here and pass it as a prop to
+  // RoomView instead of constructing it there. Shrug, the conf is in 2 days.
   let videoChatView
-  if (state.roomData && state.roomId && state.roomData[state.roomId] && state.roomData[state.roomId].mediaChat) {
+  if (
+    state.roomData &&
+    state.roomId &&
+    state.roomData[state.roomId] &&
+    state.roomData[state.roomId].mediaChat
+  ) {
     videoChatView = (
       <MediaChatView
         visibleSpeakers={state.visibleSpeakers}
@@ -258,12 +277,22 @@ const App = () => {
     case Modal.NoteWall: {
       const room = state.roomData[state.roomId]
       innerModalView = (
-        <NoteWallView notes={room.notes} noteWallData={room.noteWallData} user={state.profileData} serverSettings={state.serverSettings} />
+        <NoteWallView
+          notes={room.notes}
+          noteWallData={room.noteWallData}
+          user={state.profileData}
+          serverSettings={state.serverSettings}
+        />
       )
       break
     }
     case Modal.Settings: {
-      innerModalView = <SettingsView keepCameraWhenMoving={state.keepCameraWhenMoving} captionsEnabled={state.captionsEnabled} />
+      innerModalView = (
+        <SettingsView
+          keepCameraWhenMoving={state.keepCameraWhenMoving}
+          captionsEnabled={state.captionsEnabled}
+        />
+      )
       break
     }
     case Modal.MediaSelector: {
@@ -271,7 +300,9 @@ const App = () => {
       // TODO: Fix this userIsSpeaking (it was...broken in the first place but if we're bordering we should do it here)
       innerModalView = (
         <MediaSelectorView
-          showJoinButton={!state.inMediaChat || state.activeModalOptions.showJoinButton}
+          showJoinButton={
+            !state.inMediaChat || state.activeModalOptions.showJoinButton
+          }
           hideVideo={state.activeModalOptions.hideVideo}
           userIsSpeaking={false}
           roomId={state.roomId}
@@ -281,11 +312,13 @@ const App = () => {
       break
     }
     case Modal.Badges: {
-      innerModalView = <BadgesModalView
-        equippedBadges={state.profileData?.equippedBadges}
-        unlockedBadges={state.profileData?.unlockedBadges}
-        unlockableBadges={state.unlockableBadges}
-      />
+      innerModalView = (
+        <BadgesModalView
+          equippedBadges={state.profileData?.equippedBadges}
+          unlockedBadges={state.profileData?.unlockedBadges}
+          unlockableBadges={state.unlockableBadges}
+        />
+      )
       break
     }
     case Modal.BadgeUnlock: {
@@ -303,7 +336,10 @@ const App = () => {
     case Modal.Map: {
       modalIsFullScreen = true
       innerModalView = (
-        <MapModalView presenceData={state.presenceData} currentRoomId={state.roomId} />
+        <MapModalView
+          presenceData={state.presenceData}
+          currentRoomId={state.roomId}
+        />
       )
       break
     }
@@ -320,7 +356,12 @@ const App = () => {
       break
     }
     case Modal.ServerSettings: {
-      innerModalView = <ServerSettingsView serverSettings={state.serverSettings} roomData={state.roomData}/>
+      innerModalView = (
+        <ServerSettingsView
+          serverSettings={state.serverSettings}
+          roomData={state.roomData}
+        />
+      )
       break
     }
     case Modal.ClientDeployed: {
@@ -333,7 +374,12 @@ const App = () => {
       break
     }
     case Modal.HappeningNow: {
-      innerModalView = <HappeningNowView roomData={state.roomData} entries={state.serverSettings.happeningNowEntries}/>
+      innerModalView = (
+        <HappeningNowView
+          roomData={state.roomData}
+          entries={state.serverSettings.happeningNowEntries}
+        />
+      )
       break
     }
     case Modal.FeatureRainbowGate: {
@@ -345,18 +391,24 @@ const App = () => {
       break
     }
     case Modal.FeatureFullRoomIndex: {
-      innerModalView = <FullRoomIndexModalView rooms={Object.values(state.roomData)}/>
+      innerModalView = (
+        <FullRoomIndexModalView rooms={Object.values(state.roomData)} />
+      )
       break
     }
     case Modal.Riddles: {
       const room = state.roomData[state.roomId]
-      innerModalView = <RiddleModalView riddles={room.riddles}/>
+      innerModalView = <RiddleModalView riddles={room.riddles} />
       break
     }
   }
 
   if (innerModalView) {
-    modalView = <ModalView fullScreen={modalIsFullScreen} unclosable={modalIsUnclosable}>{innerModalView}</ModalView>
+    modalView = (
+      <ModalView fullScreen={modalIsFullScreen} unclosable={modalIsUnclosable}>
+        {innerModalView}
+      </ModalView>
+    )
   }
 
   const showMenu = () => {
@@ -369,74 +421,80 @@ const App = () => {
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
-        <TwilioChatContextProvider active={!state.textOnlyMode}>
-          <IsMobileContext.Provider value={isMobile}>
-            <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
-              <UserMapContext.Provider
-                value={{ userMap: state.userMap, myId: state.userId }}
+        <MessagesContext.Provider value={state.messages}>
+          <TwilioChatContextProvider active={!state.textOnlyMode}>
+            <IsMobileContext.Provider value={isMobile}>
+              <SettingsContext.Provider
+                value={{ useSimpleNames: state.useSimpleNames }}
               >
-                <RoomDataContext.Provider value={state.roomData}>
-                  <div
-                    id={
-                      state.visibleProfile && !isMobile ? 'app-profile-open' : 'app'
-                    }
-                  >
-                    {shouldShowMenu ? (
-                      <span>
-                        <SideNavView
-                          presenceData={state.presenceData}
-                          currentRoomId={state.roomId}
-                          username={state.userMap[state.userId].username}
-                          spaceIsClosed={state.isClosed}
-                        />
-                        {/* Once we moved the sidebar to be position:fixed, we still
+                <UserMapContext.Provider
+                  value={{ userMap: state.userMap, myId: state.userId }}
+                >
+                  <RoomDataContext.Provider value={state.roomData}>
+                    <div
+                      id={
+                        state.visibleProfile && !isMobile
+                          ? 'app-profile-open'
+                          : 'app'
+                      }
+                    >
+                      {shouldShowMenu ? (
+                        <span>
+                          <SideNavView
+                            presenceData={state.presenceData}
+                            currentRoomId={state.roomId}
+                            username={state.userMap[state.userId].username}
+                            spaceIsClosed={state.isClosed}
+                          />
+                          {/* Once we moved the sidebar to be position:fixed, we still
                       needed something to take up its space in the CSS grid.
                       This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                        <div id="side-nav-placeholder" />
-                      </span>
-                    ) : (
-                      <button id="show-menu" onClick={showMenu}>
-                        <span role="img" aria-label="menu">
-                          🍔
+                          <div id="side-nav-placeholder" />
                         </span>
-                      </button>
-                    )}
-                    {modalView}
-                    <div id="main" role="main">
-                      {state.roomData[state.roomId] ? (
-                        <RoomView
-                          room={state.roomData[state.roomId]}
-                          userId={state.userId}
-                          roomData={state.roomData}
-                          presenceData={state.presenceData}
-                          inMediaChat={state.inMediaChat}
-                          keepCameraWhenMoving={state.keepCameraWhenMoving}
-                          textOnlyMode={state.textOnlyMode}
-                          mediaChatView={videoChatView}
-                          hasDismissedAModal={state.hasDismissedAModal}
+                      ) : (
+                        <button id="show-menu" onClick={showMenu}>
+                          <span role="img" aria-label="menu">
+                            🍔
+                          </span>
+                        </button>
+                      )}
+                      {modalView}
+                      <div id="main" role="main">
+                        {state.roomData[state.roomId] ? (
+                          <RoomView
+                            room={state.roomData[state.roomId]}
+                            userId={state.userId}
+                            roomData={state.roomData}
+                            presenceData={state.presenceData}
+                            inMediaChat={state.inMediaChat}
+                            keepCameraWhenMoving={state.keepCameraWhenMoving}
+                            textOnlyMode={state.textOnlyMode}
+                            mediaChatView={videoChatView}
+                            hasDismissedAModal={state.hasDismissedAModal}
+                          />
+                        ) : null}
+                        <VirtualizationProvider>
+                          <MessageList
+                            autoscrollChat={state.autoscrollChat}
+                            messagesLoadProgress={state.messagesLoadProgress}
+                          />
+                        </VirtualizationProvider>
+                        <InputView
+                          prepopulated={state.prepopulatedInput}
+                          sendMessage={(message) =>
+                            dispatch(SendMessageAction(message))
+                          }
+                          usersInRoom={state.roomData[state.roomId]?.users}
                         />
-                      ) : null}
-                      <ChatView
-                        messages={state.messages}
-                        autoscrollChat={state.autoscrollChat}
-                        serverSettings={state.serverSettings}
-                        captionsEnabled={state.captionsEnabled}
-                      />
-                      <InputView
-                        prepopulated={state.prepopulatedInput}
-                        sendMessage={(message) =>
-                          dispatch(SendMessageAction(message))
-                        }
-                        usersInRoom={state.roomData[state.roomId]?.users}
-                      />
+                      </div>
+                      {profile}
                     </div>
-                    {profile}
-                  </div>
-                </RoomDataContext.Provider>
-              </UserMapContext.Provider>
-            </SettingsContext.Provider>
-          </IsMobileContext.Provider>
-        </TwilioChatContextProvider>
+                  </RoomDataContext.Provider>
+                </UserMapContext.Provider>
+              </SettingsContext.Provider>
+            </IsMobileContext.Provider>
+          </TwilioChatContextProvider>
+        </MessagesContext.Provider>
       </DispatchContext.Provider>
     </IconContext.Provider>
   )
