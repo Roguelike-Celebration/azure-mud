@@ -69,6 +69,12 @@ export default function RoomView (props: Props) {
     if (actionName) {
       linkActions[actionName]()
     }
+
+    const showModal =
+      e.target && e.target.getAttribute && e.target.getAttribute('data-modal')
+    if (showModal) {
+      dispatch(ShowModalAction(Modal.SpecialFeatureText))
+    }
   }
 
   const toggleRoomDescriptionClick = (e) => {
@@ -222,6 +228,8 @@ function parseDescription (
     const userCount = presenceData[roomId]
     if (roomId === 'item') {
       return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
+    } else if (roomId === 'showModal') {
+      return `<a class='room-link' href='#' data-modal='${roomId}'>${text}</a>`
     } else if (room) {
       const userCountString = userCount > 0 ? ` (${userCount})` : ''
       return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCountString}</a>`
