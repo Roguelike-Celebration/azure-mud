@@ -900,7 +900,7 @@ export const LoadMessageArchiveAction =
                       LoadMessageAction(message, (i + 1) / messages.length)
                     )
                     resolve()
-                  }, fps(30))
+                  }, fps(60))
                 )
             ),
           Promise.resolve()
