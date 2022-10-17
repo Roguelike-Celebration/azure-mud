@@ -241,7 +241,7 @@
     "id": "oxygenFarm",
     "displayName": "Oxygen Farm",
     "shortName": "the oxygen farm",
-    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as it it were trying to [[get your attention->flower]]. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]]."
+    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as if it were trying to [[get your attention->talkToFlower]]. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]]."
   },
   "theaterCleric": {
     "id": "theaterCleric",
