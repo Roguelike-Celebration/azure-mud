@@ -36,7 +36,7 @@ export const generate = () => {
       "Rattlesnake",
       "Snake",
       "Troll",
-      "Ur-VIle",
+      "Ur-Vile",
       "Vampire",
       "Xeroc",
       "Yeti",
