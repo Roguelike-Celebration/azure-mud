@@ -41,6 +41,9 @@ export interface Room {
 
   // Array of users currently in this room
   users?: string[]
+
+  // text for a modal accessed by clicking a special link in the room description
+  specialFeatureText?: string
 }
 
 export interface NoteWallData {

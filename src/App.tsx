@@ -56,6 +56,7 @@ import _ from 'lodash'
 import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
 import DisconnectModalView from './components/DisconnectModalView'
+import SpecialTextModalView from './components/SpecialTextModalView'
 
 export const DispatchContext = createContext(null)
 export const UserMapContext = createContext(null)
@@ -352,6 +353,10 @@ const App = () => {
       const room = state.roomData[state.roomId]
       innerModalView = <RiddleModalView riddles={room.riddles}/>
       break
+    }
+    case Modal.SpecialFeatureText: {
+      const room = state.roomData[state.roomId]
+      innerModalView = <SpecialTextModalView text={room.specialFeatureText}/>
     }
   }
 
