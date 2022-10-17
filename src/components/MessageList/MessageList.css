@@ -5,6 +5,27 @@
   margin: 0;
   padding: 0;
 
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
+
+  position: relative;
+}
+
+.messages-load-progress {
+  background: var(--main-background);
+  
+  width: 100%;
+  height: 40vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+}
+
+.sentinel {
+  width: 100%;
+  height: 1px;
+  position: absolute;
 }

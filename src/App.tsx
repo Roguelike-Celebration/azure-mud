@@ -48,16 +48,18 @@ import ServerSettingsView from './components/ServerSettingsView'
 import SettingsView from './components/SettingsView'
 import SideNavView from './components/SideNavView'
 import VerifyEmailView from './components/VerifyEmailView'
+import { VirtualizationProvider } from './components/VirtualizationProvider'
 import WelcomeModalView from './components/WelcomeModalView'
 import YouAreBannedView from './components/YouAreBannedView'
 import { Modal } from './modals'
 import { checkIsRegistered, connect, getServerSettings } from './networking'
 import reducer, { defaultState, State } from './reducer'
 import * as Storage from './storage'
-import { useReducerWithThunk } from './useReducerWithThunk'
+import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 
-export const DispatchContext = createContext(null)
+export const DispatchContext =
+  createContext<ThunkDispatch<Action, State>>(null)
 export const MessagesContext = createContext<State['messages']>(null)
 export const UserMapContext = createContext(null)
 export const SettingsContext = createContext(null)
@@ -233,8 +235,8 @@ const App = () => {
     return <YouAreBannedView />
   }
 
-  // It's slightly weird we now construct this here and pass it as a prop to RoomView instead of constructing it there.
-  // Shrug, the conf is in 2 days.
+  // It's slightly weird we now construct this here and pass it as a prop to
+  // RoomView instead of constructing it there. Shrug, the conf is in 2 days.
   let videoChatView
   if (
     state.roomData &&
@@ -471,7 +473,12 @@ const App = () => {
                             hasDismissedAModal={state.hasDismissedAModal}
                           />
                         ) : null}
-                        <MessageList autoscrollChat={state.autoscrollChat} />
+                        <VirtualizationProvider>
+                          <MessageList
+                            autoscrollChat={state.autoscrollChat}
+                            messagesLoadProgress={state.messagesLoadProgress}
+                          />
+                        </VirtualizationProvider>
                         <InputView
                           prepopulated={state.prepopulatedInput}
                           sendMessage={(message) =>

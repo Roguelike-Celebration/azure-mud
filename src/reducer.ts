@@ -7,6 +7,7 @@ import { DEFAULT_SERVER_SETTINGS, ServerSettings } from '../server/src/types'
 import { MinimalUser, PublicUser, User } from '../server/src/user'
 import { Action, ActionType } from './Actions'
 import Config from './config'
+import { Deferred } from './Deferred'
 import {
   createCaptionMessage,
   createChatMessage,
@@ -42,11 +43,7 @@ import {
 import { Room } from './room'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import * as Storage from './storage'
-
-interface EntityState<T> {
-  entities: Record<string, T>;
-  ids: string[];
-}
+import { EntityState } from './types'
 
 export interface State {
   firebaseApp: firebase.app.App;
@@ -54,6 +51,7 @@ export interface State {
   checkedAuthentication: boolean;
   authenticationProvider?: string;
   mustVerifyEmail?: boolean;
+  connected: Deferred<void>;
 
   hasDismissedAModal: boolean;
 
@@ -70,6 +68,9 @@ export interface State {
 
   profileData?: User;
 
+  chatReady: Deferred<void>;
+  messageArchiveLoaded: Deferred<void>;
+  messagesLoadProgress: number;
   messages: EntityState<Message>;
   whispers: WhisperMessage[];
   autoscrollChat: boolean;
@@ -124,6 +125,10 @@ export const defaultState: State = {
   authenticated: false,
   checkedAuthentication: false,
   hasRegistered: false,
+  connected: new Deferred(),
+  chatReady: new Deferred(),
+  messageArchiveLoaded: new Deferred(),
+  messagesLoadProgress: 0,
   messages: {
     entities: {},
     ids: []
@@ -151,6 +156,10 @@ export default produce((draft: State, action: Action) => {
 
   draft.prepopulatedInput = undefined
 
+  if (action.type === ActionType.Connected) {
+    draft.connected.resolve()
+  }
+
   if (action.type === ActionType.ReceivedMyProfile) {
     draft.profileData = action.value
   }
@@ -169,7 +178,6 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
-    const oldRoomId = draft.roomId
     draft.roomId = action.value.roomId
     draft.roomData = { ...draft.roomData, ...action.value.roomData }
 
@@ -186,9 +194,10 @@ export default produce((draft: State, action: Action) => {
 
     // Add a local "you have moved to X room" message
     // Don't display if we're in the same room (issue 162)
-    if (draft.roomData && draft.roomData[action.value.roomId]) {
-      const room = draft.roomData[action.value.roomId]
-      if (draft.roomId !== oldRoomId) {
+    if (current(draft).roomData?.[action.value.roomId]) {
+      const room = current(draft).roomData[action.value.roomId]
+
+      if (current(draft).roomId !== original(draft).roomId) {
         addMessage(draft, createMovedRoomMessage(room.shortName))
       } else {
         addMessage(draft, createSameRoomMessage(room.shortName))
@@ -652,7 +661,8 @@ export default produce((draft: State, action: Action) => {
       draft.authenticated = true
       draft.userId = action.value.userId
 
-      // If you haven't registered yet, we need to grab your username before we've pulled a server userMap
+      // If you haven't registered yet, we need to grab your username before
+      // we've pulled a server userMap
       draft.userMap[action.value.userId] = {
         id: action.value.userId,
         username: action.value.name
@@ -675,19 +685,27 @@ export default produce((draft: State, action: Action) => {
     toggleUserMod(action.value)
   }
 
-  if (action.type === ActionType.LoadMessageArchive) {
-    const nextEntities = {
-      ...current(draft).messages.entities,
-      ...action.messages.reduce((acc, message) => {
-        acc[message.id] = message
-        return acc
-      }, {})
-    }
+  if (action.type === ActionType.ChatReady) {
+    draft.chatReady.resolve()
+  }
 
-    draft.messages.entities = nextEntities
-    draft.messages.ids = filteredMessageIds(current(draft))
-
+  if (action.type === ActionType.LoadMessageArchiveStart) {
     draft.whispers = action.whispers || []
+  }
+
+  if (action.type === ActionType.LoadMessage) {
+    if (action.message) {
+      draft.messages.entities[action.message.id] = action.message
+    }
+    draft.messagesLoadProgress = action.progress
+
+    if (action.message && shouldShowMessage(draft, action.message)) {
+      draft.messages.ids.push(action.message.id)
+    }
+  }
+
+  if (action.type === ActionType.LoadMessageArchiveEnd) {
+    draft.messageArchiveLoaded.resolve()
   }
 
   // Notes
@@ -749,8 +767,7 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.CommandMessage) {
-    const message = createCommandMessage(action.value)
-    addMessage(draft, message)
+    addMessage(draft, createCommandMessage(action.value))
   }
 
   if (action.type === ActionType.EquipBadge) {
