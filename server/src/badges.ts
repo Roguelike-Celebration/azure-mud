@@ -70,46 +70,46 @@ export const FreeBadges: Badge[] = [
   },
   {
     emoji: 'artificer',
-    description: 'Procgen Artificer',
+    description: 'Procgen Artificer: You get a tool, and you get a tool!',
     isCustom: true
   },
   {
     emoji: 'bard',
-    description: 'Procgen Bard',
+    description: 'Procgen Bard: Embrace the funky edges, make weird art!',
     isCustom: true
   },
   {
     emoji: 'cleric',
-    description: 'Procgen Cleric',
+    description: 'Procgen Cleric: It works if you run it twice... don\t ask why.',
     isCustom: true
   },
   {
     emoji: 'druid',
-    description: 'Procgen Druid',
+    description: 'Procgen Druid: Prune and shape your generator, watch it grow!',
     isCustom: true
   },
   {
     emoji: 'paladin',
-    description: 'Procgen Paladin',
+    description: 'Procgen Paladin: No, procedural does\'t just mean \'random\'',
     isCustom: true
   },
   {
     emoji: 'ranger',
-    description: 'Procgen Ranger',
+    description: 'Procgen Ranger: Guide your party around the oatmeal bogs!',
     isCustom: true
   },
   {
     emoji: 'sorceror',
-    description: 'Procgen Sorceror',
+    description: 'Procgen Sorceror: Generation is a conversation with yourself',
     isCustom: true
   },
   {
     emoji: 'warlock',
-    description: 'Procgen Warlock',
+    description: 'Procgen Warlock: Give the generator *whatever* it likes',
     isCustom: true
   }, {
     emoji: 'wizard',
-    description: 'Procgen Wizard',
+    description: 'Procgen Wizard: Gaze into the Abyss, understand WFC',
     isCustom: true
   }
 ]
