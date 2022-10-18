@@ -23,7 +23,7 @@ export default function BadgesModalView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
 
   const dragStart = (e) => {
-    const index = e.target.dataset.index
+    const index = e.target.closest('[data-index]').dataset.index
     const badge = props.unlockedBadges[index]
     e.dataTransfer.setData('text/plain', JSON.stringify(badge))
     e.dataTransfer.dropEffect = 'copy'

@@ -64,8 +64,52 @@ export const FreeBadges: Badge[] = [
     description: 'Equipped: Roguelike Celebration socks'
   },
   {
+    emoji: 'device_of_luthien',
+    description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
+    isCustom: true
+  },
+  {
+    emoji: 'artificer',
+    description: 'Procgen Artificer',
+    isCustom: true
+  },
+  {
     emoji: 'bard',
     description: 'Procgen Bard',
+    isCustom: true
+  },
+  {
+    emoji: 'cleric',
+    description: 'Procgen Cleric',
+    isCustom: true
+  },
+  {
+    emoji: 'druid',
+    description: 'Procgen Druid',
+    isCustom: true
+  },
+  {
+    emoji: 'paladin',
+    description: 'Procgen Paladin',
+    isCustom: true
+  },
+  {
+    emoji: 'ranger',
+    description: 'Procgen Ranger',
+    isCustom: true
+  },
+  {
+    emoji: 'sorceror',
+    description: 'Procgen Sorceror',
+    isCustom: true
+  },
+  {
+    emoji: 'warlock',
+    description: 'Procgen Warlock',
+    isCustom: true
+  }, {
+    emoji: 'wizard',
+    description: 'Procgen Wizard',
     isCustom: true
   }
 ]
@@ -102,6 +146,26 @@ export const UnlockableBadges: Badge[] = [
   {
     emoji: '🎙️',
     description: 'Speaker Alumni Club'
+  },
+  {
+    emoji: 'golden_thesis',
+    description: 'A PhD-worthy scientific paper',
+    isCustom: true
+  },
+  {
+    emoji: 'phylactery',
+    description: 'A blood-red jewel with a warm, accepting glow',
+    isCustom: true
+  },
+  {
+    emoji: 'nega_ticket',
+    description: 'Admit One',
+    isCustom: true
+  },
+  {
+    emoji: 'undermuffin',
+    description: 'It radiates hatred',
+    isCustom: true
   }
 ]
 
