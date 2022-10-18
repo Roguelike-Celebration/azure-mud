@@ -8,7 +8,7 @@ import { getUserIdForUsername, User } from '../user'
 import { MESSAGE_MAX_LENGTH } from '../config'
 import { dance } from '../dance'
 import { interact } from '../interact'
-// import { sendToDiscord } from '../sendToDiscord'
+import { sendToDiscord } from '../sendToDiscord'
 
 const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const message = inputs.text
@@ -69,11 +69,8 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
 
   const modMatch = /^\/(mod|mods|moderator|moderators) (.+)/.exec(message)
   if (modMatch) {
-    // try {
-    //   sendToDiscord({ username: user.username, message: modMatch[2] })
-    // } catch (err) {
-    //   log('sendToDiscord failed with error: ' + err)
-    // }
+    log(`Mod message received, user: ${user.username}, message: ${modMatch[2]} - sending to Discord.`)
+    sendToDiscord({ username: user.username, message: modMatch[2] }).catch((e) => log('sendToDiscord failed with error: ' + e))
 
     return {
       messages: [
