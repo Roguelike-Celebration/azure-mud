@@ -11,7 +11,7 @@ export default function BadgeView (props: {badge: Badge, isCustom?: boolean}) {
     return <span />
   }
 
-  const content = props.isCustom || b.isCustom
+  const content = props.isCustom
     ? <img alt={`${b.emoji} emoji`} className={`custom-badge badge-text-${b.emoji}`} src={customEmojiMap[b.emoji] ?? reservedEmojiMap[b.emoji]}/>
     : <span className={`badge-text-${b.emoji}`}>{b.emoji }</span>
 
