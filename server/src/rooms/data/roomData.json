@@ -329,14 +329,14 @@
     "description": "You arrive at The Under Theater. Despite the forboding aura at the door, the interior of this space is rather pleasant. There is a table full of spare swag left over from the swag table above, a giant bucket of what appears to be [[lemonade->item]], and some [[slightly stale cookies->item]] neatly stacked on a silver platter for you. The swag table includes a stack of [[negasocks->item]], a [[negalongbow->item]], a [[healing scroll->item]], and an abominable [[negapuppy->item]], radiating malice (adorably).</br></br>This space doesn't appear to be directly connected to any alternate versions of the breakout rooms, and in fact the only door you can see at all is the main entrance, leading back to the [[Underworld->underworld]].",
     "roomId": "underTheater"
   },
-  {
+  "rodney": {
   "displayName": "Rodney",
   "shortName": "rodney",
   "id": "rodney",
   "description": "You suddenly find yourself descending through layers of a dungeon made of memories and lived experiences, a place deep beneath the surface and devoid of any light. Scenes play out before you, a tall man in dark robes teaching you the ways of dark magic, a group of kids making fun of you, a neglectful family, and a loving dog. The scenes of abuse and neglect become more frequent, as does the image of the dark robed man. You feel a malicious heartbeat echo through these halls, building a determination to strike out at all of humankind for the suffering experienced in youth. The deeper you fall, the stronger these feelings grow. You feel yourself getting angrier, and just as you feel you can take it no more, a light suddenly appears.</br></br> Proceed To [[Lover’s Lake->loversLake]].",
   "roomId": "rodney"
   },
-  {
+  "yendor": {
   "displayName": "yendoR",
   "shortName": "yendor",
   "id": "yendor",
