@@ -145,7 +145,7 @@
     "hidden": true,
     "description": "A flash of crimson light announces your entrance into a circular room crafted of polished bone. Purple flames dance within the eye sockets of skulls floating just out of arms’ reach, casting an eerie light against the rune-covered walls. Obsidian pillars support walls which seem to stretch out to unfathomable heights. You can tell there is another floor above you, and you see a staircase winding along the walls, but something about the air here warps your vision and makes understanding the scope of this room impossible. </br></br>At the far side of the room is a throne, and atop that sits a brooding figure you vaguely recognize from the back of the bar. You suddenly know his name is [[Randor The Twisted->talkToRandorTheTwisted]], and you sense within him [[a great conflict->showModal]].</br></br>Opposite the throne sits a crystal mirror within which you see a [[distant landscape->undermeadows]]. Or you can [[head back through the portal->underbar]].",
     "roomId": "underspire",
-    "specialFeatureText": "A rival and a leader,\n An influence felt by all,\nKnown most for his necklace,\nFound deep under the crawl"
+    "specialFeatureText": "A rival and a leader,\nAn influence felt by all,\nKnown most for his necklace,\nFound deep under the crawl"
   },
   "underworld": {
     "displayName": "The Underworld",
@@ -200,7 +200,7 @@
     "shortName": "underlab",
     "id": "underlab",
     "hidden": true,
-    "description": "You enter what should have been the experimental biology lab, but find instead an unseeable abyss of solid black. You can walk around in it, you can feel the floor beneath you, but nothing else at all. You don’t feel any sense of either foreboding or acceptance, but you do feel the intense danger of ambivalence. It’s like this room doesn’t believe you exist at all. You hear, far in the distance, the sound of your parents protecting you from the consequences of your actions. It’s a strange feeling, as if the sound doesn’t belong to you.</br></br>There is nothing to do here. Head back to the [[Underworld->underworld]]?",
+    "description": "You enter what should have been the experimental biology lab, but find instead an unseeable abyss of solid black. You can walk around in it, you can feel the floor beneath you, but nothing else at all. You don’t feel any sense of either foreboding or acceptance, but you do feel the intense danger of ambivalence. It’s like this room doesn’t believe you exist at all. You hear, far in the distance, the sound of your parents protecting you from the consequences of your actions. It’s a strange feeling, as if the sound doesn’t belong to you.</br></br>As you stumble around in the dark, you find an even darker patch of black in the shape of a muffin. Floating nearby, you see dark letters etched into the air. P, E, U, R. </br></br>Head back to the [[Underworld->underworld]]?",
     "roomId": "underlab"
   },
   "entryway": {
@@ -303,7 +303,7 @@
     "shortName": "procedural",
     "id": "procedural",
     "hidden": true,
-    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->]underTheater]].</br></br>You also notice, in an obscure corner of the hall, stuck between two bricks that can't seem to shift away from this spot, a trail of papers leading into a [[patch of shadow->thesisDefense]].",
+    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->underTheater]].</br></br>You also notice, in an obscure corner of the hall, stuck between two bricks that can't seem to shift away from this spot, a trail of papers leading into a [[patch of shadow->thesisDefense]].",
     "roomId": "procedural"
   },
   "thesisDefense": {
