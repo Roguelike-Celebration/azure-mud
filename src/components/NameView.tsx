@@ -147,7 +147,7 @@ export default function NameView (props: Props) {
   }
 
   const badges = (user.equippedBadges || [])
-    .map((b, i) => <BadgeView key={`badge-${i}`} badge={b} />)
+    .map((b, i) => <BadgeView key={`badge-${i}`} badge={b} isCustom={b.isCustom} />)
 
   // TODO: This is not yet being set anywhere
   if (user.isSpeaker) {
