@@ -53,3 +53,7 @@ th.break {
     border-width: 2px;
     border-color: var(--main-font);
 }
+
+#bonus-modal .with-line-breaks {
+    white-space: pre;
+}
