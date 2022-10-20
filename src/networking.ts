@@ -75,17 +75,14 @@ export async function connect (
   dispatch(
     ConnectAction(
       result.roomId,
-      convertServerRoomData(result.roomData)
+      convertServerRoomData(result.roomData),
+      result.roomNotes
     )
   )
   dispatch(UserMapAction(result.users))
 
   if (result.profile) {
     dispatch(ReceivedMyProfileAction(result.profile))
-  }
-
-  if (result.roomNotes) {
-    dispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
   }
 
   if (result.unlockableBadges) {

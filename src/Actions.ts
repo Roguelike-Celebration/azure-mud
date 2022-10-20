@@ -217,11 +217,15 @@ export const ChatReadyAction = (): ChatReadyAction => ({
 export const ConnectAction =
   (
     roomId: string,
-    roomData: { [roomId: string]: Room }
+    roomData: { [roomId: string]: Room },
+    roomNotes?: RoomNote[]
   ): Thunk<Action, State> =>
     async (dispatch, getState) => {
       await getState().messageArchiveLoaded.promise
       dispatch(UpdatedCurrentRoomAction(roomId, roomData))
+      if (roomNotes) {
+        dispatch(NoteUpdateRoomAction(roomId, roomNotes))
+      }
       dispatch(ConnectedAction())
     }
 
