@@ -143,15 +143,16 @@
     "shortName": "underspire",
     "id": "underspire",
     "hidden": true,
-    "description": "A flash of crimson light announces your entrance into a circular room crafted of polished bone. Purple flames dance within the eye sockets of skulls floating just out of arms’ reach, casting an eerie light against the rune-covered walls. Obsidian pillars support walls which seem to stretch out to unfathomable heights. You can tell there is another floor above you, and you see a staircase winding along the walls, but something about the air here warps your vision and makes understanding the scope of this room impossible. </br></br>At the far side of the room is a throne, and atop that sits a brooding figure you vaguely recognize from the back of the bar. You suddenly know his name is Randor The Twisted, and you sense within him a great conflict.</br></br>Opposite the throne sits a crystal mirror within which you see a [[distant landscape->undermeadows]]. Or you can [[head back through the portal->underbar]].",
-    "roomId": "underspire"
+    "description": "A flash of crimson light announces your entrance into a circular room crafted of polished bone. Purple flames dance within the eye sockets of skulls floating just out of arms’ reach, casting an eerie light against the rune-covered walls. Obsidian pillars support walls which seem to stretch out to unfathomable heights. You can tell there is another floor above you, and you see a staircase winding along the walls, but something about the air here warps your vision and makes understanding the scope of this room impossible. </br></br>At the far side of the room is a throne, and atop that sits a brooding figure you vaguely recognize from the back of the bar. You suddenly know his name is [[Randor The Twisted->talkToRandorTheTwisted]], and you sense within him [[a great conflict->showModal]].</br></br>Opposite the throne sits a crystal mirror within which you see a [[distant landscape->undermeadows]]. Or you can [[head back through the portal->underbar]].",
+    "roomId": "underspire",
+    "specialFeatureText": "A rival and a leader,\nAn influence felt by all,\nKnown most for his necklace,\nFound deep under the crawl"
   },
   "underworld": {
     "displayName": "The Underworld",
     "shortName": "underworld",
     "id": "underworld",
     "hidden": true,
-    "description": "Fragments of half-seen visions float through the air of a large, open space that closely resembles the central hall above. You hear the whispers of the attendees’ hopes and dreams, but just outside of your ability to understand what they are saying. A veil of shifting darkness seems to float over this place, blurring the edges of everything you see and giving the space a dreamlike quality.</br></br> Among the shifting ghosts, you see what appears to be a frazzled college student muttering about her PhD. She is carrying a deck emblazoned with the name Z3r0 Cr4sh, and seems to be looking for something.</br></br>You also see the doorways leading to the [[Bar->underbar]], and the [[Experimental Biology Lab->underlab]]. The hallways leading to the rest of the event space are covered in rubble of some kind, and the Theater doors pulse with an ominous hum that your mind refuses to approach.",
+    "description": "Fragments of half-seen visions float through the air of a large, open space that closely resembles the central hall above. You hear the whispers of the attendees’ hopes and dreams, but just outside of your ability to understand what they are saying. A veil of shifting darkness seems to float over this place, blurring the edges of everything you see and giving the space a dreamlike quality.</br></br> Among the shifting ghosts, you see what appears to be a frazzled college student muttering about her PhD. She is carrying a deck emblazoned with the name [[Z3r0 Cr4sh->talkToZeroCrash]], and seems to be looking for something.</br></br>You also see the doorways leading to the [[Bar->underbar]], and the [[Experimental Biology Lab->underlab]]. The hallways leading to the rest of the event space are covered in rubble of some kind, and the Theater doors pulse with an ominous hum that your mind refuses to approach.",
     "roomId": "underworld"
   },
   "theaterWarrior": {
@@ -199,7 +200,7 @@
     "shortName": "underlab",
     "id": "underlab",
     "hidden": true,
-    "description": "You enter what should have been the experimental biology lab, but find instead an unseeable abyss of solid black. You can walk around in it, you can feel the floor beneath you, but nothing else at all. You don’t feel any sense of either foreboding or acceptance, but you do feel the intense danger of ambivalence. It’s like this room doesn’t believe you exist at all. You hear, far in the distance, the sound of your parents protecting you from the consequences of your actions. It’s a strange feeling, as if the sound doesn’t belong to you.</br></br>There is nothing to do here. Head back to the [[Underworld->underworld]]?",
+    "description": "You enter what should have been the experimental biology lab, but find instead an unseeable abyss of solid black. You can walk around in it, you can feel the floor beneath you, but nothing else at all. You don’t feel any sense of either foreboding or acceptance, but you do feel the intense danger of ambivalence. It’s like this room doesn’t believe you exist at all. You hear, far in the distance, the sound of your parents protecting you from the consequences of your actions. It’s a strange feeling, as if the sound doesn’t belong to you.</br></br>As you stumble around in the dark, you find an even darker patch of black in the shape of a muffin. Floating nearby, you see dark letters etched into the air. P, E, U, R. </br></br>Head back to the [[Underworld->underworld]]?",
     "roomId": "underlab"
   },
   "entryway": {
@@ -302,7 +303,7 @@
     "shortName": "procedural",
     "id": "procedural",
     "hidden": true,
-    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->]underTheater]].</br></br>You also notice, in an obscure corner of the hall, stuck between two bricks that can't seem to shift away from this spot, a trail of papers leading into a [[patch of shadow->thesisDefense]].",
+    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->underTheater]].</br></br>You also notice, in an obscure corner of the hall, stuck between two bricks that can't seem to shift away from this spot, a trail of papers leading into a [[patch of shadow->thesisDefense]].",
     "roomId": "procedural"
   },
   "thesisDefense": {
@@ -328,4 +329,18 @@
     "description": "You arrive at The Under Theater. Despite the forboding aura at the door, the interior of this space is rather pleasant. There is a table full of spare swag left over from the swag table above, a giant bucket of what appears to be [[lemonade->item]], and some [[slightly stale cookies->item]] neatly stacked on a silver platter for you. The swag table includes a stack of [[negasocks->item]], a [[negalongbow->item]], a [[healing scroll->item]], and an abominable [[negapuppy->item]], radiating malice (adorably).</br></br>This space doesn't appear to be directly connected to any alternate versions of the breakout rooms, and in fact the only door you can see at all is the main entrance, leading back to the [[Underworld->underworld]].",
     "roomId": "underTheater"
   },
+  "rodney": {
+  "displayName": "Rodney",
+  "shortName": "rodney",
+  "id": "rodney",
+  "description": "You suddenly find yourself descending through layers of a dungeon made of memories and lived experiences, a place deep beneath the surface and devoid of any light. Scenes play out before you, a tall man in dark robes teaching you the ways of dark magic, a group of kids making fun of you, a neglectful family, and a loving dog. The scenes of abuse and neglect become more frequent, as does the image of the dark robed man. You feel a malicious heartbeat echo through these halls, building a determination to strike out at all of humankind for the suffering experienced in youth. The deeper you fall, the stronger these feelings grow. You feel yourself getting angrier, and just as you feel you can take it no more, a light suddenly appears.</br></br> Proceed To [[Lover’s Lake->loversLake]].",
+  "roomId": "rodney"
+  },
+  "yendor": {
+  "displayName": "yendoR",
+  "shortName": "yendor",
+  "id": "yendor",
+  "description": "You feel yourself pulled up by the force of gravity, pulled towards the sky which is a deep orange. The sun’s darkness shrouds the land highlighted by the light of its shadows. You feel an unsettling sensation of wrongness pulse within you, as if you’ve made some terrible mistake, but in a way that is nearly right. This uncanny feeling compels you to correct yourself, if only you knew how.",
+  "roomId": "yendor"
+  }
 }
