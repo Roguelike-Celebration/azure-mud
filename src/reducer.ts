@@ -1,57 +1,51 @@
-import firebase from 'firebase/app'
-import { current, original, produce } from 'immer'
-import { v4 as uuidv4 } from 'uuid'
-import { Badge } from '../server/src/badges'
-import { MESSAGE_MAX_LENGTH } from '../server/src/config'
-import { DEFAULT_SERVER_SETTINGS, ServerSettings } from '../server/src/types'
-import { MinimalUser, PublicUser, User } from '../server/src/user'
-import { Action, ActionType } from './Actions'
-import Config from './config'
-import { Deferred } from './Deferred'
+import { Action, ActionType, UnlockBadgeAction } from './Actions'
 import {
-  createCaptionMessage,
-  createChatMessage,
-  createCommandMessage,
+  Message,
   createConnectedMessage,
-  createDanceMessage,
   createDisconnectedMessage,
-  createEmoteMessage,
   createEnteredMessage,
-  createErrorMessage,
   createLeftMessage,
+  createChatMessage,
+  createWhisperMessage,
+  createErrorMessage,
+  createShoutMessage,
+  createEmoteMessage,
+  createDanceMessage,
   createModMessage,
   createMovedRoomMessage,
   createSameRoomMessage,
-  createShoutMessage,
-  createWhisperMessage,
-  isCaptionMessage,
   isDeletableMessage,
-  isMovementMessage,
-  Message,
-  WhisperMessage
+  createCommandMessage,
+  WhisperMessage,
+  createCaptionMessage
 } from './message'
-import { Modal } from './modals'
+import { Room } from './room'
 import {
-  fetchProfile,
-  sendCaption,
   sendChatMessage,
   toggleUserBan,
   toggleUserMod,
+  updateProfileColor,
   updateFontReward,
-  updateProfileColor
+  fetchProfile,
+  sendCaption
 } from './networking'
-import { Room } from './room'
+import { PublicUser, MinimalUser, User } from '../server/src/user'
+import { v4 as uuidv4 } from 'uuid'
+import { Modal } from './modals'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config'
+import { ServerSettings, DEFAULT_SERVER_SETTINGS } from '../server/src/types'
 import * as Storage from './storage'
-import { EntityState } from './types'
-
+import firebase from 'firebase/app'
+import Config from './config'
+import { Badge } from '../server/src/badges'
+import produce from 'immer'
 export interface State {
   firebaseApp: firebase.app.App;
   authenticated: boolean;
   checkedAuthentication: boolean;
   authenticationProvider?: string;
   mustVerifyEmail?: boolean;
-  connected: Deferred<void>;
 
   hasDismissedAModal: boolean;
 
@@ -68,10 +62,7 @@ export interface State {
 
   profileData?: User;
 
-  chatReady: Deferred<void>;
-  messageArchiveLoaded: Deferred<void>;
-  messagesLoadProgress: number;
-  messages: EntityState<Message>;
+  messages: Message[];
   whispers: WhisperMessage[];
   autoscrollChat: boolean;
 
@@ -83,40 +74,40 @@ export interface State {
   /** This is poorly named, but being "in media chat" means "is publishing audio and/or video" */
   inMediaChat: boolean;
   keepCameraWhenMoving?: boolean;
-  captionsEnabled: boolean;
+  captionsEnabled: boolean,
 
   /** text-only mode functionally overrides audio-only mode, since we don't even connect to Twilio */
   textOnlyMode?: boolean;
   audioOnlyMode?: boolean;
 
   /** Tuples of userId and when they were last the visible speaker */
-  visibleSpeakers: [string, Date][];
-  currentSpeaker?: string;
+  visibleSpeakers: [string, Date][]
+  currentSpeaker?: string
 
   // How many people (other than you) to show in media chat
-  numberOfFaces: number;
+  numberOfFaces: number
 
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
-  activeModal: Modal;
-  activeModalOptions: ModalOptions;
+  activeModal: Modal
+  activeModalOptions: ModalOptions,
 
   // User ID of whose profile should be shwon
   visibleProfile?: PublicUser;
 
   // If the device is a portrait smartphone, we hide the menu in favor of a hamburger button
   // In that situation, this reflects whether the side menu is visible.
-  mobileSideMenuIsVisible?: boolean;
+  mobileSideMenuIsVisible?: boolean
 
   // If true, non-mods cannot access the space
-  isClosed?: boolean;
+  isClosed?: boolean
 
-  isBanned: boolean;
+  isBanned: boolean
 
-  serverSettings: ServerSettings;
+  serverSettings: ServerSettings
 
-  unlockableBadges: Badge[];
-  justUnlockedBadge?: Badge;
+  unlockableBadges: Badge[]
+  justUnlockedBadge?: Badge
 }
 
 console.log(Config.FIREBASE_CONFIG)
@@ -125,14 +116,7 @@ export const defaultState: State = {
   authenticated: false,
   checkedAuthentication: false,
   hasRegistered: false,
-  connected: new Deferred(),
-  chatReady: new Deferred(),
-  messageArchiveLoaded: new Deferred(),
-  messagesLoadProgress: 0,
-  messages: {
-    entities: {},
-    ids: []
-  },
+  messages: [],
   whispers: [],
   visibleSpeakers: [],
   autoscrollChat: true,
@@ -156,35 +140,20 @@ export default produce((draft: State, action: Action) => {
 
   draft.prepopulatedInput = undefined
 
-  if (action.type === ActionType.Connected) {
-    draft.connected.resolve()
-  }
-
   if (action.type === ActionType.ReceivedMyProfile) {
     draft.profileData = action.value
   }
 
   if (action.type === ActionType.ReceivedServerSettings) {
     draft.serverSettings = action.value
-
-    if (
-      original(draft).serverSettings.movementMessagesHideRoomIds !==
-        current(draft).serverSettings.movementMessagesHideRoomIds ||
-      original(draft).serverSettings.movementMessagesHideThreshold !==
-        current(draft).serverSettings.movementMessagesHideThreshold
-    ) {
-      draft.messages.ids = filteredMessageIds(draft)
-    }
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
+    const oldRoomId = draft.roomId
     draft.roomId = action.value.roomId
     draft.roomData = { ...draft.roomData, ...action.value.roomData }
 
-    if (
-      draft.roomId === 'entryway' ||
-      (draft.roomData[draft.roomId].mediaChat && !draft.hasDismissedAModal)
-    ) {
+    if (draft.roomId === 'entryway' || (draft.roomData[draft.roomId].mediaChat && !draft.hasDismissedAModal)) {
       // 2020 behavior: Show every time someone loads into the entryway (the starting room)
       // 2021 behavior: In order to fix videochat connection issues, forcing this on every reload
       //  was a hacky way to make sure that players always interacted with the page before we loaded videochat
@@ -194,10 +163,9 @@ export default produce((draft: State, action: Action) => {
 
     // Add a local "you have moved to X room" message
     // Don't display if we're in the same room (issue 162)
-    if (current(draft).roomData?.[action.value.roomId]) {
-      const room = current(draft).roomData[action.value.roomId]
-
-      if (current(draft).roomId !== original(draft).roomId) {
+    if (draft.roomData && draft.roomData[action.value.roomId]) {
+      const room = draft.roomData[action.value.roomId]
+      if (draft.roomId !== oldRoomId) {
         addMessage(draft, createMovedRoomMessage(room.shortName))
       } else {
         addMessage(draft, createSameRoomMessage(room.shortName))
@@ -238,10 +206,7 @@ export default produce((draft: State, action: Action) => {
     const roomData = draft.roomData[draft.roomId]
     if (roomData && roomData.users && !roomData?.users.includes(user.id)) {
       roomData.users.push(user.id)
-      addMessage(
-        draft,
-        createConnectedMessage(user.id, draft.roomId, roomData.users.length)
-      )
+      addMessage(draft, createConnectedMessage(user.id, draft.roomId, roomData.users.length))
     }
     draft.userMap[user.id] = user
   }
@@ -249,29 +214,15 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.PlayerDisconnected) {
     const roomData = draft.roomData[draft.roomId]
     roomData.users = roomData.users.filter((u) => u !== action.value)
-    addMessage(
-      draft,
-      createDisconnectedMessage(
-        action.value,
-        draft.roomId,
-        roomData.users.length
-      )
-    )
+    addMessage(draft, createDisconnectedMessage(action.value, draft.roomId, roomData.users.length))
   }
 
   if (action.type === ActionType.PlayerEntered) {
     const roomData = draft.roomData[draft.roomId]
     if (roomData.users && !roomData.users.includes(action.value.name)) {
       roomData.users.push(action.value.name)
-      addMessage(
-        draft,
-        createEnteredMessage(
-          action.value.name,
-          action.value.fromId,
-          action.value.fromName,
-          draft.roomId,
-          roomData.users.length
-        )
+      addMessage(draft,
+        createEnteredMessage(action.value.name, action.value.fromId, action.value.fromName, draft.roomId, roomData.users.length)
       )
     }
   }
@@ -279,45 +230,23 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.PlayerLeft) {
     const roomData = draft.roomData[draft.roomId]
     roomData.users = roomData.users.filter((u) => u !== action.value.name)
-    addMessage(
-      draft,
-      createLeftMessage(
-        action.value.name,
-        action.value.toId,
-        action.value.toName,
-        draft.roomId,
-        roomData.users.length
-      )
-    )
+    addMessage(draft, createLeftMessage(action.value.name, action.value.toId, action.value.toName, draft.roomId, roomData.users.length))
   }
 
   if (action.type === ActionType.ChatMessage) {
-    addMessage(
-      draft,
-      createChatMessage(
-        action.value.messageId,
-        action.value.name,
-        action.value.message
-      )
+    addMessage(draft,
+      createChatMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.CaptionMessage) {
-    addMessage(
-      draft,
-      createCaptionMessage(
-        action.value.messageId,
-        action.value.name,
-        action.value.message
-      )
+    addMessage(draft,
+      createCaptionMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.Whisper) {
-    const whisperMessage = createWhisperMessage(
-      action.value.name,
-      action.value.message
-    )
+    const whisperMessage = createWhisperMessage(action.value.name, action.value.message)
     addMessage(draft, whisperMessage)
     saveWhisper(draft, whisperMessage)
   }
@@ -338,35 +267,20 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.Shout) {
-    addMessage(
-      draft,
-      createShoutMessage(
-        action.value.messageId,
-        action.value.name,
-        action.value.message
-      )
+    addMessage(draft,
+      createShoutMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.Emote) {
-    addMessage(
-      draft,
-      createEmoteMessage(
-        action.value.messageId,
-        action.value.name,
-        action.value.message
-      )
+    addMessage(draft,
+      createEmoteMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
   if (action.type === ActionType.Dance) {
-    addMessage(
-      draft,
-      createDanceMessage(
-        action.value.messageId,
-        action.value.name,
-        action.value.message
-      )
+    addMessage(draft,
+      createDanceMessage(action.value.messageId, action.value.name, action.value.message)
     )
   }
 
@@ -384,10 +298,7 @@ export default produce((draft: State, action: Action) => {
       draft.isBanned = true
     } else {
       draft.userMap[action.value.id].isBanned = true
-      addMessage(
-        draft,
-        createErrorMessage('User ' + action.value.username + ' was banned!')
-      )
+      addMessage(draft, createErrorMessage('User ' + action.value.username + ' was banned!'))
     }
   }
 
@@ -396,27 +307,16 @@ export default produce((draft: State, action: Action) => {
     if (draft.userMap[action.value.id]) {
       draft.userMap[action.value.id].isBanned = false
     }
-    addMessage(
-      draft,
-      createErrorMessage('User ' + action.value.username + ' was unbanned!')
-    )
+    addMessage(draft, createErrorMessage('User ' + action.value.username + ' was unbanned!'))
   }
 
   if (action.type === ActionType.UpdateProfileColor) {
     draft.userMap[draft.userId].nameColor = action.color
 
     if (action.color) {
-      addMessage(
-        draft,
-        createErrorMessage('Your name color was changed to ' + action.color)
-      )
+      addMessage(draft, createErrorMessage('Your name color was changed to ' + action.color))
     } else {
-      addMessage(
-        draft,
-        createErrorMessage(
-          'Your name color has changed back to its original state.'
-        )
-      )
+      addMessage(draft, createErrorMessage('Your name color has changed back to its original state.'))
     }
 
     updateProfileColor(draft.userId, action.color)
@@ -427,19 +327,9 @@ export default produce((draft: State, action: Action) => {
 
     // I'm following the pattern of the set colour but... I don't think the user sees these message, and they aren't errors, why do we do this?
     if (action.font) {
-      addMessage(
-        draft,
-        createErrorMessage(
-          "You feel invigorated, and like you've become more... " + action.font
-        )
-      )
+      addMessage(draft, createErrorMessage('You feel invigorated, and like you\'ve become more... ' + action.font))
     } else {
-      addMessage(
-        draft,
-        createErrorMessage(
-          'You feel yourself return to your normal state, like you never went riddling to begin with.'
-        )
-      )
+      addMessage(draft, createErrorMessage('You feel yourself return to your normal state, like you never went riddling to begin with.'))
     }
 
     updateFontReward(draft.userId, action.font)
@@ -452,9 +342,7 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.MediaReceivedSpeakingData) {
     draft.currentSpeaker = action.value
     if (action.value !== null && action.value !== draft.userId) {
-      if (
-        !draft.visibleSpeakers.find(([userId, _]) => userId === action.value)
-      ) {
+      if (!draft.visibleSpeakers.find(([userId, _]) => userId === action.value)) {
         if (draft.visibleSpeakers.length < draft.numberOfFaces) {
           draft.visibleSpeakers.push([action.value, new Date()])
         } else {
@@ -491,36 +379,19 @@ export default produce((draft: State, action: Action) => {
     const messageId: string = uuidv4()
     const trimmedMessage = action.value.trim()
     const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
-    const matching = beginsWithSlash
-      ? matchingSlashCommand(trimmedMessage)
-      : undefined
+    const matching = beginsWithSlash ? matchingSlashCommand(trimmedMessage) : undefined
 
     if (trimmedMessage.length > MESSAGE_MAX_LENGTH) {
-      addMessage(
-        draft,
-        createErrorMessage(
-          'Your message is too long! Please try to keep it under ~600 characters!'
-        )
-      )
+      addMessage(draft, createErrorMessage('Your message is too long! Please try to keep it under ~600 characters!'))
     } else if (beginsWithSlash && matching === undefined) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
-      addMessage(
-        draft,
-        createErrorMessage(
-          `Your command ${
-            commandStr ? commandStr[1] : action.value
-          } is not a registered slash command!`
-        )
-      )
+      addMessage(draft, createErrorMessage(`Your command ${commandStr ? commandStr[1] : action.value} is not a registered slash command!`))
     } else if (beginsWithSlash && matching.type === SlashCommandType.Whisper) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
       const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
 
       if (!parsedUsernameMessage) {
-        addMessage(
-          draft,
-          createErrorMessage(`Your whisper to ${commandStr[2]} had no message!`)
-        )
+        addMessage(draft, createErrorMessage(`Your whisper to ${commandStr[2]} had no message!`))
       } else {
         sendChatMessage(messageId, trimmedMessage)
 
@@ -537,39 +408,23 @@ export default produce((draft: State, action: Action) => {
       }
     } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
       draft.activeModal = Modal.Help
-      addMessage(
-        draft,
-        createCommandMessage(
-          'You consult the help docs. (You can also find them in sidebar!)'
-        )
-      )
+      addMessage(draft, createCommandMessage('You consult the help docs. (You can also find them in sidebar!)'))
     } else if (beginsWithSlash && matching.type === SlashCommandType.Look) {
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
-      addMessage(
-        draft,
-        createCommandMessage(
-          `You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`
-        )
-      )
+      addMessage(draft, createCommandMessage(`You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`))
       sendChatMessage(messageId, trimmedMessage)
     } else if (beginsWithSlash) {
       sendChatMessage(messageId, trimmedMessage)
     } else {
       sendChatMessage(messageId, action.value)
-      addMessage(
-        draft,
-        createChatMessage(messageId, draft.userId, action.value)
-      )
+      addMessage(draft, createChatMessage(messageId, draft.userId, action.value))
     }
   }
 
   if (action.type === ActionType.SendCaption) {
     const messageId: string = uuidv4()
     sendCaption(messageId, action.value)
-    addMessage(
-      draft,
-      createCaptionMessage(messageId, draft.userId, action.value)
-    )
+    addMessage(draft, createCaptionMessage(messageId, draft.userId, action.value))
   }
 
   if (action.type === ActionType.StartWhisper) {
@@ -628,11 +483,6 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.SetCaptionsEnabled) {
     draft.captionsEnabled = action.value
-
-    if (original(draft).captionsEnabled !== current(draft).captionsEnabled) {
-      draft.messages.ids = filteredMessageIds(draft)
-    }
-
     Storage.setCaptionsEnabled(action.value)
   }
 
@@ -641,9 +491,7 @@ export default produce((draft: State, action: Action) => {
     if (!action.refresh) {
       Storage.setTextOnlyMode(action.textOnlyMode)
     } else {
-      Storage.setTextOnlyMode(action.textOnlyMode).then(() =>
-        window.location.reload()
-      )
+      Storage.setTextOnlyMode(action.textOnlyMode).then(() => window.location.reload())
     }
   }
 
@@ -661,8 +509,7 @@ export default produce((draft: State, action: Action) => {
       draft.authenticated = true
       draft.userId = action.value.userId
 
-      // If you haven't registered yet, we need to grab your username before
-      // we've pulled a server userMap
+      // If you haven't registered yet, we need to grab your username before we've pulled a server userMap
       draft.userMap[action.value.userId] = {
         id: action.value.userId,
         username: action.value.name
@@ -685,27 +532,9 @@ export default produce((draft: State, action: Action) => {
     toggleUserMod(action.value)
   }
 
-  if (action.type === ActionType.ChatReady) {
-    draft.chatReady.resolve()
-  }
-
-  if (action.type === ActionType.LoadMessageArchiveStart) {
+  if (action.type === ActionType.LoadMessageArchive) {
+    draft.messages = action.messages
     draft.whispers = action.whispers || []
-  }
-
-  if (action.type === ActionType.LoadMessage) {
-    if (action.message) {
-      draft.messages.entities[action.message.id] = action.message
-    }
-    draft.messagesLoadProgress = action.progress
-
-    if (action.message && shouldShowMessage(draft, action.message)) {
-      draft.messages.ids.push(action.message.id)
-    }
-  }
-
-  if (action.type === ActionType.LoadMessageArchiveEnd) {
-    draft.messageArchiveLoaded.resolve()
   }
 
   // Notes
@@ -723,7 +552,7 @@ export default produce((draft: State, action: Action) => {
     if (room.hasNoteWall) {
       if (!room.notes) room.notes = []
 
-      room.notes = room.notes.filter((n) => n.id !== action.value.noteId)
+      room.notes = room.notes.filter(n => n.id !== action.value.noteId)
     }
   }
 
@@ -732,7 +561,7 @@ export default produce((draft: State, action: Action) => {
     if (room.hasNoteWall) {
       if (!room.notes) room.notes = []
 
-      const note = room.notes.find((n) => n.id === action.value.noteId)
+      const note = room.notes.find(n => n.id === action.value.noteId)
       if (note) {
         note.likes = action.value.likes
       }
@@ -753,12 +582,7 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.SpaceOpenedOrClosed) {
     if (draft.userMap[draft.userId].isMod) {
       draft.isClosed = action.value
-      addMessage(
-        draft,
-        createCommandMessage(
-          `The space is now ${action.value ? 'closed' : 'open'}`
-        )
-      )
+      addMessage(draft, createCommandMessage(`The space is now ${action.value ? 'closed' : 'open'}`))
     } else {
       // Not reloading the page will show the 'go home' screen, but will still send SignalR data
       // Just hard-reloading the page will stop them from getting messages
@@ -767,7 +591,8 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.CommandMessage) {
-    addMessage(draft, createCommandMessage(action.value))
+    const message = createCommandMessage(action.value)
+    addMessage(draft, message)
   }
 
   if (action.type === ActionType.EquipBadge) {
@@ -795,85 +620,31 @@ export default produce((draft: State, action: Action) => {
 // WARNING: These three functions modify the message state without awaiting on the result.
 // If you're seeing weird race conditions with the message store, that's probably the issue.
 
-function deleteMessage (state: State, messageId: string) {
-  const target = state.messages.entities[messageId]
+function deleteMessage (state: State, messageId: String) {
+  const target = state.messages.find(m => isDeletableMessage(m) && m.id === messageId)
 
+  // Calling isDeletable again here so TypeScript can properly cast; if there's a nicer way to do this, please inform!
   if (isDeletableMessage(target)) {
     target.message = 'message was removed by moderator'
-
-    /**
-     * need to use `current` here because `deleteMessage` is called by the
-     * reducer which means its state is a proxied draft, which won't serialize
-     * to localForage correctly
-     *
-     * @see https://immerjs.github.io/immer/current
-     */
-    Storage.setMessages(Object.values(current(state).messages.entities))
+    Storage.setMessages(state.messages)
   }
 }
 
 async function saveWhisper (state: State, message: WhisperMessage) {
   state.whispers.push(message)
-  Storage.setWhispers(current(state).whispers)
+  Storage.setWhispers(state.whispers)
 }
 
 async function addMessage (state: State, message: Message) {
-  state.messages.entities[message.id] = message
-  if (shouldShowMessage(state, message)) {
-    state.messages.ids.push(message.id)
-  }
-
-  /**
-   * need to use `current` here because `addMessage` is called by the reducer
-   * which means its state is a proxied draft, which won't serialize to
-   * localForage correctly
-   *
-   * @see https://immerjs.github.io/immer/current
-   */
-  Storage.setMessages(Object.values(current(state).messages.entities))
+  state.messages.push(message)
+  state.messages = state.messages.slice(-500)
+  Storage.setMessages(state.messages)
 }
-
-const isHiddenRoom = (movementMessagesHideRoomIds: string[], roomId: string) =>
-  movementMessagesHideRoomIds.includes(roomId)
-const isBusyRoom = (
-  movementMessagesHideThreshold: number,
-  numUsersInRoom: number
-) => numUsersInRoom > movementMessagesHideThreshold
-
-const shouldShowMessage = (
-  {
-    serverSettings: {
-      movementMessagesHideRoomIds,
-      movementMessagesHideThreshold
-    },
-    captionsEnabled
-  }: State,
-  message: Message
-): boolean =>
-  // always show message *unless*
-  !(
-    // it's a movement message and the room is hidden or busy
-    (
-      isMovementMessage(message) &&
-      (isHiddenRoom(movementMessagesHideRoomIds, message.roomId) ||
-        isBusyRoom(movementMessagesHideThreshold, message.numUsersInRoom))
-    )
-  ) || // or it's a caption message and captions are not enabled
-  (isCaptionMessage(message) && !captionsEnabled)
-
-const filteredMessageIds = (state: State) =>
-  Object.entries(state.messages.entities).reduce((acc, [id, message]) => {
-    if (shouldShowMessage(state, message)) {
-      acc.push(id)
-    }
-
-    return acc
-  }, [])
 
 // This is intended to be a big old unreadable grab bag,
 // but seems better than alternatives
 export interface ModalOptions {
-  hideVideo?: boolean;
-  showJoinButton?: boolean;
-  unclosable?: boolean;
+    hideVideo?: boolean,
+    showJoinButton?: boolean,
+    unclosable?: boolean
 }
