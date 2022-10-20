@@ -1,17 +1,19 @@
-import { PublicUser, MinimalUser, User } from '../server/src/user'
-import { Room } from './room'
-import { Message, WhisperMessage } from './message'
-import { RoomNote } from '../server/src/roomNote'
-import { Modal } from './modals'
-import { ServerSettings } from '../server/src/types'
-import { ModalOptions } from './reducer'
 import { Badge } from '../server/src/badges'
-import { HubConnection } from '@microsoft/signalr'
+import { RoomNote } from '../server/src/roomNote'
+import { ServerSettings } from '../server/src/types'
+import { MinimalUser, PublicUser, User } from '../server/src/user'
+import { Message, WhisperMessage } from './message'
+import { Modal } from './modals'
+import { ModalOptions, State } from './reducer'
+import { Room } from './room'
+import { Thunk } from './useReducerWithThunk'
+import { fps } from './utils'
 
 export type Action =
   | ReceivedMyProfileAction
   | ReceivedServerSettingsAction
   | UpdatedCurrentRoomAction
+  | ConnectedAction
   | UpdatedRoomDataAction
   | UpdatedPresenceAction
   | PlayerConnectedAction
@@ -20,7 +22,10 @@ export type Action =
   | CaptionMessageAction
   | ModMessageAction
   | DeleteMessageAction
-  | LoadMessageArchiveAction
+  | ChatReadyAction
+  | LoadMessageArchiveActionStart
+  | LoadMessageArchiveActionEnd
+  | LoadMessageAction
   | WhisperAction
   | ShoutAction
   | EmoteAction
@@ -70,13 +75,14 @@ export type Action =
   | EquipBadgeAction
   | UpdateUnlockableBadgesAction
   | UnlockBadgeAction
-  | SetUnlockedBadgesAction
+  | SetUnlockedBadgesAction;
 
 export enum ActionType {
   // Server-driven action
   ReceivedMyProfile = 'RECEIVED_MY_PROFILE',
   ReceivedServerSettings = 'RECEIVED_SERVER_SETTINGS',
   UpdatedCurrentRoom = 'UPDATED_CURRENT_ROOM',
+  Connected = 'CONNECTED',
   UpdatedRoomData = 'UPDATED_ROOM_DATA',
   UpdatedPresence = 'UPDATED_PRESENCE',
   PlayerConnected = 'PLAYER_CONNECTED',
@@ -126,7 +132,10 @@ export enum ActionType {
   IsRegistered = 'IS_REGISTERED',
   BanToggle = 'BAN_TOGGLE',
   ModToggle = 'MOD_TOGGLE',
-  LoadMessageArchive = 'LOAD_MESSAGE_ARCHIVE',
+  ChatReady = 'CHAT_READY',
+  LoadMessageArchiveStart = 'LOAD_MESSAGE_ARCHIVE_START',
+  LoadMessageArchiveEnd = 'LOAD_MESSAGE_ARCHIVE_END',
+  LoadMessage = 'LOAD_MESSAGE',
   // Note Wall
   NoteAdd = 'NOTE_ADD',
   NoteRemove = 'NOTE_REMOVE',
@@ -142,7 +151,7 @@ export enum ActionType {
   EquipBadge = 'EQUIP_BADGE',
   UnlockBadge = 'UNLOCK_BADGE',
   UpdateUnlockableBadges = 'UPDATE_UNLOCKABLE_BADGES',
-  SetUnlockedBadges = 'SET_UNLOCKED_BADGES'
+  SetUnlockedBadges = 'SET_UNLOCKED_BADGES',
 }
 
 interface ReceivedMyProfileAction {
@@ -176,20 +185,45 @@ export const ReceivedServerSettingsAction = (
 interface UpdatedCurrentRoomAction {
   type: ActionType.UpdatedCurrentRoom;
   value: {
-    roomId: string,
-    roomData: {[roomId: string]: Room}
+    roomId: string;
+    roomData: { [roomId: string]: Room };
   };
 }
 
 export const UpdatedCurrentRoomAction = (
   roomId: string,
-  roomData: {[roomId: string]: Room}
-): UpdatedCurrentRoomAction => {
-  return {
-    type: ActionType.UpdatedCurrentRoom,
-    value: { roomId, roomData }
-  }
+  roomData: { [roomId: string]: Room }
+): UpdatedCurrentRoomAction => ({
+  type: ActionType.UpdatedCurrentRoom,
+  value: { roomId, roomData }
+})
+
+interface ConnectedAction {
+  type: ActionType.Connected;
 }
+
+export const ConnectedAction = (): ConnectedAction => ({
+  type: ActionType.Connected
+})
+
+interface ChatReadyAction {
+  type: ActionType.ChatReady;
+}
+
+export const ChatReadyAction = (): ChatReadyAction => ({
+  type: ActionType.ChatReady
+})
+
+export const ConnectAction =
+  (
+    roomId: string,
+    roomData: { [roomId: string]: Room }
+  ): Thunk<Action, State> =>
+    async (dispatch, getState) => {
+      await getState().messageArchiveLoaded.promise
+      dispatch(UpdatedCurrentRoomAction(roomId, roomData))
+      dispatch(ConnectedAction())
+    }
 
 interface UpdatedRoomDataAction {
   type: ActionType.UpdatedRoomData;
@@ -325,7 +359,7 @@ interface DeleteMessageAction {
   value: {
     modId: string;
     targetMessageId: string;
-  }
+  };
 }
 
 export const DeleteMessageAction = (
@@ -338,7 +372,11 @@ export const DeleteMessageAction = (
   }
 }
 
-export const ShoutAction = (messageId: string, name: string, message: string): ShoutAction => {
+export const ShoutAction = (
+  messageId: string,
+  name: string,
+  message: string
+): ShoutAction => {
   return {
     type: ActionType.Shout,
     value: { messageId, name, message }
@@ -360,10 +398,14 @@ interface EmoteAction {
     messageId: string;
     name: string;
     message: string;
-  }
+  };
 }
 
-export const EmoteAction = (messageId: string, name: string, message: string): EmoteAction => {
+export const EmoteAction = (
+  messageId: string,
+  name: string,
+  message: string
+): EmoteAction => {
   return {
     type: ActionType.Emote,
     value: { messageId, name, message }
@@ -376,10 +418,14 @@ interface DanceAction {
     messageId: string;
     name: string;
     message: string;
-  }
+  };
 }
 
-export const DanceAction = (messageId: string, name: string, message: string): DanceAction => {
+export const DanceAction = (
+  messageId: string,
+  name: string,
+  message: string
+): DanceAction => {
   return {
     type: ActionType.Dance,
     value: { messageId, name, message }
@@ -457,7 +503,9 @@ interface PlayerUnbannedAction {
   value: MinimalUser;
 }
 
-export const PlayerUnbannedAction = (user: MinimalUser): PlayerUnbannedAction => {
+export const PlayerUnbannedAction = (
+  user: MinimalUser
+): PlayerUnbannedAction => {
   return {
     type: ActionType.PlayerUnbanned,
     value: user
@@ -465,11 +513,13 @@ export const PlayerUnbannedAction = (user: MinimalUser): PlayerUnbannedAction =>
 }
 
 interface UpdateProfileColorAction {
-  type: ActionType.UpdateProfileColor,
-  color: string
+  type: ActionType.UpdateProfileColor;
+  color: string;
 }
 
-export const UpdateProfileColorAction = (color: string): UpdateProfileColorAction => {
+export const UpdateProfileColorAction = (
+  color: string
+): UpdateProfileColorAction => {
   return {
     type: ActionType.UpdateProfileColor,
     color: color
@@ -477,11 +527,13 @@ export const UpdateProfileColorAction = (color: string): UpdateProfileColorActio
 }
 
 interface UpdateFontRewardAction {
-  type: ActionType.UpdateFontReward,
-  font: string
+  type: ActionType.UpdateFontReward;
+  font: string;
 }
 
-export const UpdateFontRewardAction = (font: string): UpdateFontRewardAction => {
+export const UpdateFontRewardAction = (
+  font: string
+): UpdateFontRewardAction => {
   return {
     type: ActionType.UpdateFontReward,
     font: font
@@ -601,9 +653,7 @@ interface ShowProfileAction {
   value: PublicUser;
 }
 
-export const ShowProfileAction = (
-  user: PublicUser
-): ShowProfileAction => {
+export const ShowProfileAction = (user: PublicUser): ShowProfileAction => {
   return {
     type: ActionType.ShowProfile,
     value: user
@@ -612,7 +662,7 @@ export const ShowProfileAction = (
 
 interface ShowModalAction {
   type: ActionType.ShowModal;
-  value: Modal
+  value: Modal;
 }
 
 export const ShowModalAction = (modal: Modal): ShowModalAction => {
@@ -625,12 +675,15 @@ export const ShowModalAction = (modal: Modal): ShowModalAction => {
 interface ShowModalWithOptionsAction {
   type: ActionType.ShowModalWithOptions;
   value: {
-    modal: Modal,
-    options: ModalOptions
-  }
+    modal: Modal;
+    options: ModalOptions;
+  };
 }
 
-export const ShowModalWithOptionsAction = (modal: Modal, options: ModalOptions): ShowModalWithOptionsAction => {
+export const ShowModalWithOptionsAction = (
+  modal: Modal,
+  options: ModalOptions
+): ShowModalWithOptionsAction => {
   return {
     type: ActionType.ShowModalWithOptions,
     value: { modal, options }
@@ -647,7 +700,12 @@ export const HideModalAction = (): HideModalAction => {
 
 interface AuthenticateAction {
   type: ActionType.Authenticate;
-  value: { name: string; userId: string, provider: string, mustVerifyEmail: boolean };
+  value: {
+    name: string;
+    userId: string;
+    provider: string;
+    mustVerifyEmail: boolean;
+  };
 }
 
 interface ShowSideMenuAction {
@@ -701,7 +759,10 @@ interface SetKeepCameraWhenMovingAction {
 export const SetKeepCameraWhenMovingAction = (
   keepCameraWhenMoving: boolean
 ): SetKeepCameraWhenMovingAction => {
-  return { type: ActionType.SetKeepCameraWhenMoving, value: keepCameraWhenMoving }
+  return {
+    type: ActionType.SetKeepCameraWhenMoving,
+    value: keepCameraWhenMoving
+  }
 }
 
 interface SetTextOnlyModeAction {
@@ -714,7 +775,11 @@ export const SetTextOnlyModeAction = (
   textOnlyMode: boolean,
   refresh: boolean
 ): SetTextOnlyModeAction => {
-  return { type: ActionType.SetTextOnlyMode, textOnlyMode: textOnlyMode, refresh: refresh }
+  return {
+    type: ActionType.SetTextOnlyMode,
+    textOnlyMode: textOnlyMode,
+    refresh: refresh
+  }
 }
 
 interface SetAudioOnlyModeAction {
@@ -762,7 +827,10 @@ export const AuthenticateAction = (
   provider: string | undefined,
   mustVerifyEmail: boolean | undefined
 ): AuthenticateAction => {
-  return { type: ActionType.Authenticate, value: { userId, name, provider, mustVerifyEmail } }
+  return {
+    type: ActionType.Authenticate,
+    value: { userId, name, provider, mustVerifyEmail }
+  }
 }
 
 interface IsRegisteredAction {
@@ -791,49 +859,123 @@ export const ModToggleAction = (userId: string): ModToggleAction => {
   return { type: ActionType.ModToggle, value: userId }
 }
 
-interface LoadMessageArchiveAction {
-  type: ActionType.LoadMessageArchive;
-  messages: Message[];
+interface LoadMessageArchiveActionStart {
+  type: ActionType.LoadMessageArchiveStart;
   whispers: WhisperMessage[];
 }
 
-export const LoadMessageArchiveAction = (messages: Message[], whispers: WhisperMessage[]): LoadMessageArchiveAction => {
-  return { type: ActionType.LoadMessageArchive, messages: messages, whispers: whispers }
+const LoadMessageArchiveActionStart = (
+  whispers: WhisperMessage[]
+): LoadMessageArchiveActionStart => ({
+  type: ActionType.LoadMessageArchiveStart,
+  whispers
+})
+
+interface LoadMessageArchiveActionEnd {
+  type: ActionType.LoadMessageArchiveEnd;
 }
+
+const LoadMessageArchiveActionEnd = (): LoadMessageArchiveActionEnd => ({
+  type: ActionType.LoadMessageArchiveEnd
+})
+
+export const LoadMessageArchiveAction =
+  (
+    messages: Message[] | null,
+    whispers: WhisperMessage[] | null
+  ): Thunk<Action, State> =>
+    async (dispatch, getState) => {
+      await getState().chatReady.promise
+
+      dispatch(LoadMessageArchiveActionStart(whispers))
+
+      await (messages?.length
+        ? messages.reduce(
+          (acc, message, i) =>
+            acc.then(
+              () =>
+                new Promise((resolve) =>
+                  setTimeout(() => {
+                    dispatch(
+                      LoadMessageAction(message, (i + 1) / messages.length)
+                    )
+                    resolve()
+                  }, fps(60))
+                )
+            ),
+          Promise.resolve()
+        )
+        : new Promise<void>((resolve) =>
+          setTimeout(() => {
+            dispatch(LoadMessageAction(null, 1))
+            resolve()
+          }, fps(60))
+        ))
+
+      dispatch(LoadMessageArchiveActionEnd())
+    }
+
+interface LoadMessageAction {
+  type: ActionType.LoadMessage;
+  message: Message | null;
+  progress: number;
+}
+
+const LoadMessageAction = (
+  message: Message | null,
+  progress: number
+): LoadMessageAction => ({
+  type: ActionType.LoadMessage,
+  message,
+  progress
+})
 
 interface NoteAddAction {
   type: ActionType.NoteAdd;
-  value: { roomId: string, note: RoomNote };
+  value: { roomId: string; note: RoomNote };
 }
 
-export const NoteAddAction = (roomId: string, note: RoomNote): NoteAddAction => {
+export const NoteAddAction = (
+  roomId: string,
+  note: RoomNote
+): NoteAddAction => {
   return { type: ActionType.NoteAdd, value: { roomId, note } }
 }
 
 interface NoteRemoveAction {
   type: ActionType.NoteRemove;
-  value: { roomId: string, noteId: string };
+  value: { roomId: string; noteId: string };
 }
 
-export const NoteRemoveAction = (roomId: string, noteId: string): NoteRemoveAction => {
+export const NoteRemoveAction = (
+  roomId: string,
+  noteId: string
+): NoteRemoveAction => {
   return { type: ActionType.NoteRemove, value: { roomId, noteId } }
 }
 
 interface NoteUpdateLikesAction {
   type: ActionType.NoteUpdateLikes;
-  value: { roomId: string, noteId: string, likes: string[] };
+  value: { roomId: string; noteId: string; likes: string[] };
 }
 
-export const NoteUpdateLikesAction = (roomId: string, noteId: string, likes: string[]): NoteUpdateLikesAction => {
+export const NoteUpdateLikesAction = (
+  roomId: string,
+  noteId: string,
+  likes: string[]
+): NoteUpdateLikesAction => {
   return { type: ActionType.NoteUpdateLikes, value: { roomId, noteId, likes } }
 }
 
 interface NoteUpdateRoomAction {
   type: ActionType.NoteUpdateRoom;
-  value: { roomId: string, notes: RoomNote[] };
+  value: { roomId: string; notes: RoomNote[] };
 }
 
-export const NoteUpdateRoomAction = (roomId: string, notes: RoomNote[]): NoteUpdateRoomAction => {
+export const NoteUpdateRoomAction = (
+  roomId: string,
+  notes: RoomNote[]
+): NoteUpdateRoomAction => {
   return { type: ActionType.NoteUpdateRoom, value: { roomId, notes } }
 }
 
@@ -847,16 +989,18 @@ export const SpaceIsClosedAction = (): SpaceIsClosedAction => {
 
 interface SpaceOpenedOrClosedAction {
   type: ActionType.SpaceOpenedOrClosed;
-  value: boolean
+  value: boolean;
 }
 
-export const SpaceOpenedOrClosedAction = (value: boolean): SpaceOpenedOrClosedAction => {
+export const SpaceOpenedOrClosedAction = (
+  value: boolean
+): SpaceOpenedOrClosedAction => {
   return { type: ActionType.SpaceOpenedOrClosed, value }
 }
 
 interface CommandMessageAction {
   type: ActionType.CommandMessage;
-  value: string
+  value: string;
 }
 
 export const CommandMessageAction = (message: string): CommandMessageAction => {
@@ -868,10 +1012,13 @@ export const CommandMessageAction = (message: string): CommandMessageAction => {
 
 interface EquipBadgeAction {
   type: ActionType.EquipBadge;
-  value: {badge: Badge, index: number}
+  value: { badge: Badge; index: number };
 }
 
-export const EquipBadgeAction = (badge: Badge, index: number): EquipBadgeAction => {
+export const EquipBadgeAction = (
+  badge: Badge,
+  index: number
+): EquipBadgeAction => {
   return {
     type: ActionType.EquipBadge,
     value: { badge, index }
@@ -880,7 +1027,7 @@ export const EquipBadgeAction = (badge: Badge, index: number): EquipBadgeAction 
 
 interface UnlockBadgeAction {
   type: ActionType.UnlockBadge;
-  value: Badge
+  value: Badge;
 }
 
 export const UnlockBadgeAction = (badge: Badge): UnlockBadgeAction => {
@@ -892,10 +1039,12 @@ export const UnlockBadgeAction = (badge: Badge): UnlockBadgeAction => {
 
 interface SetUnlockedBadgesAction {
   type: ActionType.SetUnlockedBadges;
-  value: Badge[]
+  value: Badge[];
 }
 
-export const SetUnlockedBadgesAction = (badges: Badge[]): SetUnlockedBadgesAction => {
+export const SetUnlockedBadgesAction = (
+  badges: Badge[]
+): SetUnlockedBadgesAction => {
   return {
     type: ActionType.SetUnlockedBadges,
     value: badges
@@ -904,10 +1053,12 @@ export const SetUnlockedBadgesAction = (badges: Badge[]): SetUnlockedBadgesActio
 
 interface UpdateUnlockableBadgesAction {
   type: ActionType.UpdateUnlockableBadges;
-  value: Badge[]
+  value: Badge[];
 }
 
-export const UpdateUnlockableBadgesAction = (badges: Badge[]): UpdateUnlockableBadgesAction => {
+export const UpdateUnlockableBadgesAction = (
+  badges: Badge[]
+): UpdateUnlockableBadgesAction => {
   return {
     type: ActionType.UpdateUnlockableBadges,
     value: badges
