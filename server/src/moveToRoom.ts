@@ -156,7 +156,7 @@ function awardBadges (user: User, roomId: string) {
     ['thesisDefense', 'golden_thesis'],
     ['loversLake', 'phylactery'],
     ['procedural', 'nega_ticket'],
-    ['underTheater', 'undermuffin']
+    ['underlab', 'undermuffin']
   ]
 
   const unlockedEmoji: Badge[] = []
