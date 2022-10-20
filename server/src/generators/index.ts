@@ -5,7 +5,7 @@ import * as motivationPosters from './motivationPosters'
 import * as closedSigns from './closedSigns'
 import * as gameRecommendations from './gameRecs'
 import * as robots from './robots'
-import * as pickupLines from './pickupLines'
+import * as terribleJokes from './terribleJokes'
 import * as ubizaraTheBartender from './ubizaraTheBartender'
 import * as doctorHope from './doctorHope'
 import * as chadSilverbow from './chadSilverbow'
@@ -30,7 +30,7 @@ const generators: {[name: string]: Generator} = {
   closedSigns,
   gameRecommendations,
   robots,
-  pickupLines,
+  terribleJokes,
   ubizaraTheBartender,
   doctorHope,
   chadSilverbow,
