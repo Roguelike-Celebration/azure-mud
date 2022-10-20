@@ -23,7 +23,7 @@ export default function BadgesModalView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
 
   const dragStart = (e) => {
-    const index = e.target.dataset.index
+    const index = e.target.closest('[data-index]').dataset.index
     const badge = props.unlockedBadges[index]
     e.dataTransfer.setData('text/plain', JSON.stringify(badge))
     e.dataTransfer.dropEffect = 'copy'
@@ -144,7 +144,7 @@ export default function BadgesModalView (props: Props) {
         onKeyDown={keyDownOnEquipped}
         role='button'
         tabIndex={0}>
-        {rawEquippedBadges[i] && <BadgeView key={`equipped-${i}`} badge={b} />}
+        {rawEquippedBadges[i] && <BadgeView key={`equipped-${i}`} badge={b} isCustom={b.isCustom} />}
       </div>
     )
   }
@@ -178,7 +178,7 @@ export default function BadgesModalView (props: Props) {
         role='button'
         tabIndex={0}
       >
-        <BadgeView badge={b} />
+        <BadgeView badge={b} isCustom={b.isCustom} />
       </span>
     )
   })

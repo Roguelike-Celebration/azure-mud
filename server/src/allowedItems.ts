@@ -1,5 +1,5 @@
 export default [
-  'Roguelike Celebration mousepads',
+  'Roguelike Celebration socks',
   'a +1 longbow',
   'an unidentified scroll',
   'a tiny puppy',
@@ -14,5 +14,11 @@ export default [
   'Yet Another Silly Drink',
   'Orb of Zot',
   'Amulet of Yendor',
-  'box of crayons'
+  'box of crayons',
+  'lemonade',
+  'slightly stale cookies',
+  'negasocks',
+  'negalongbow',
+  'healing scroll',
+  'negapuppy'
 ]

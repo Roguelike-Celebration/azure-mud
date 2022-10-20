@@ -152,7 +152,11 @@ function awardBadges (user: User, roomId: string) {
     ['oxygenFarm', '🌱'],
     ['transmute', '🧙‍♀️'],
     ['adventurersGuildHall', '⚔️'],
-    ['steam', '💾']
+    ['officeOfSteam', '💾'],
+    ['thesisDefense', 'golden_thesis'],
+    ['loversLake', 'phylactery'],
+    ['procedural', 'nega_ticket'],
+    ['underTheater', 'undermuffin']
   ]
 
   const unlockedEmoji: Badge[] = []

@@ -1,4 +1,4 @@
-{
+
   {
     "bindings": [
       {
@@ -28,4 +28,4 @@
     ],
     "scriptFile": "../dist/orderNewDrink/index.js"
   }
-}
+

@@ -53,6 +53,15 @@ export const linkActions = {
   talkToChadSilverbow: () => {
     displayMessageFromList('chadSilverbow')
   },
+  talkToZeroCrash: () => {
+    displayMessageFromList('zeroCrash')
+  },
+  talkToRandorTheTwisted: () => {
+    displayMessageFromList('randorTheTwisted')
+  },
+  talkToFlower: () => {
+    displayMessageFromList('flower')
+  },
   orderNewDrink: () => {
     orderNewDrink()
   }
