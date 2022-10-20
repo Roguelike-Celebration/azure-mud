@@ -144,7 +144,7 @@ export default function BadgesModalView (props: Props) {
         onKeyDown={keyDownOnEquipped}
         role='button'
         tabIndex={0}>
-        {rawEquippedBadges[i] && <BadgeView key={`equipped-${i}`} badge={b} isCustom={b.isCustom} />}
+        {rawEquippedBadges[i] && <BadgeView key={`equipped-${i}`} badge={b} isCustom={b?.isCustom} />}
       </div>
     )
   }
@@ -178,7 +178,7 @@ export default function BadgesModalView (props: Props) {
         role='button'
         tabIndex={0}
       >
-        <BadgeView badge={b} isCustom={b.isCustom} />
+        <BadgeView badge={b} isCustom={b?.isCustom} />
       </span>
     )
   })
