@@ -160,9 +160,9 @@ export default function BadgesModalView (props: Props) {
         className='locked-badge' draggable={true}
         key={b.emoji}
       >
-        <BadgeView emoji='🔒' description={b?.description} isCustom={b?.isCustom} />
+        <BadgeView emoji='🔒' description={b?.description} />
       </span>
-    )
+    ) // Purposefully leave out the isCustom field for locked badges, to avoid trying to render them as images
   })
 
   const unlockedBadges = (props.unlockedBadges || []).map((b, i) => {
