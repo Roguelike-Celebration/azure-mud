@@ -31,7 +31,15 @@ export default function VerifyEmailView (props: Props) {
     <PageVisibility onChange={handleVisibilityChange}>
       <div>
         <header role="banner">
-          <h1>Please verify your email!</h1>
+          <div style={{border: 'solid', borderColor: 'red'}}>
+            <h1>ALERT: Please double-check your spam folder!</h1>
+            <h2>Gmail has been marking our registration emails as spam, sorry!</h2>
+            <p>
+              A couple of people have gotten back to us saying they can't find the registration emails, but they were
+              in spam, so please double-check.
+            </p>
+          </div>
+          <h1>Please verify your email.</h1>
         </header>
         <main role="main">
           <p>
