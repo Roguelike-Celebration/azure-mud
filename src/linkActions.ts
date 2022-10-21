@@ -64,6 +64,9 @@ export const linkActions = {
   },
   orderNewDrink: () => {
     orderNewDrink()
+  },
+  spinAround: () => {
+    spinTheRoom()
   }
 }
 
@@ -71,4 +74,11 @@ const pentagramAction = function (font: string) {
   updateFontReward(uuidv4(), font)
   sendChatMessage(uuidv4(), '/go ASCII')
   displayMessage('You feel changed by your journey through the pentagram...')
+}
+
+const spinTheRoom = () => {
+  document.querySelector('#main').classList.add('spin')
+  setTimeout(() => {
+    document.querySelector('#main').classList.remove('spin')
+  }, 1600)
 }
