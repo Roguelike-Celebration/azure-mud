@@ -129,14 +129,12 @@ const App = () => {
         }
 
         const messageArchive = await Storage.getMessages()
-        if (messageArchive) {
-          dispatch(
-            LoadMessageArchiveAction(
-              messageArchive.messages,
-              messageArchive.whispers
-            )
+        dispatch(
+          LoadMessageArchiveAction(
+            messageArchive ? messageArchive.messages : [],
+            messageArchive ? messageArchive.whispers : []
           )
-        }
+        )
 
         const useSimpleNames = await Storage.getUseSimpleNames()
         dispatch(SetUseSimpleNamesAction(useSimpleNames))

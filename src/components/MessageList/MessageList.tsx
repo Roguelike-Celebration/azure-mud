@@ -18,7 +18,7 @@ export const MessageList: FC<MessageListProps> = ({
   const [{ messagePositions, viewportScrollTop, viewportScrollHeight }] =
     useContext(VirtualizationContext)
 
-  const isLoading = messagesLoadProgress < 1
+  const isLoading = ids.length > 0 && messagesLoadProgress < 1
   const autoscrollAndNotLoading = autoscrollChat && !isLoading
   const [scrollContainerRef, toggleAutoscroll] = useAutoscroll(autoscrollAndNotLoading)
   const shouldHideTimestamp = useShouldHideTimestamp()
