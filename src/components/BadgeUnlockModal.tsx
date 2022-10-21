@@ -5,7 +5,8 @@ import { DispatchContext } from '../App'
 import { Modal } from '../modals'
 import BadgeView from './BadgeView'
 
-export default function BadgeUnlockModal (props: {badge: Badge}) {
+export default function BadgeUnlockModal (props: { badge: Badge }) {
+  const { badge } = props
   const dispatch = useContext(DispatchContext)
   const showBadges = () => {
     dispatch(ShowModalAction(Modal.Badges))
@@ -15,7 +16,7 @@ export default function BadgeUnlockModal (props: {badge: Badge}) {
     <div>
       <h1>You earned a badge!</h1>
 
-      <div>You can now equip the <BadgeView badge={props.badge}/> badge!</div>
+      <div>You can now equip the <BadgeView emoji={badge?.emoji} description={badge?.description} isCustom={badge?.isCustom} /> badge!</div>
 
       <button style={{ marginTop: '1em' }} onClick={showBadges}>Show Badge Inventory</button>
 
