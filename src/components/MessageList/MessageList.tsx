@@ -18,7 +18,9 @@ export const MessageList: FC<MessageListProps> = ({
   const [{ messagePositions, viewportScrollTop, viewportScrollHeight }] =
     useContext(VirtualizationContext)
 
-  const [scrollContainerRef, toggleAutoscroll] = useAutoscroll(autoscrollChat)
+  const isLoading = messagesLoadProgress < 1
+  const autoscrollAndNotLoading = autoscrollChat && !isLoading
+  const [scrollContainerRef, toggleAutoscroll] = useAutoscroll(autoscrollAndNotLoading)
   const shouldHideTimestamp = useShouldHideTimestamp()
 
   return (
@@ -59,7 +61,7 @@ export const MessageList: FC<MessageListProps> = ({
         }, [])}
         <li className="sentinel" style={{ top: viewportScrollHeight }} />
       </ol>
-      {messagesLoadProgress < 1 && (
+      {isLoading && (
         <div className="messages-load-progress">
           Loading {Math.floor(messagesLoadProgress * 100)}%
         </div>
