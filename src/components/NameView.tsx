@@ -147,18 +147,18 @@ export default function NameView (props: Props) {
   }
 
   const badges = (user.equippedBadges || [])
-    .map((b, i) => <BadgeView key={`badge-${i}`} badge={b} />)
+    .map((b, i) => <BadgeView key={`badge-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />)
 
   // TODO: This is not yet being set anywhere
   if (user.isSpeaker) {
     badges.unshift(
-      <BadgeView key='badge-speaker' isCustom={true} badge={{ emoji: 'speaker', description: 'Speaker' }} />
+      <BadgeView key='badge-speaker' isCustom={true} emoji='speaker' description='Speaker' />
     )
   }
 
   if (user.isMod) {
     badges.unshift(
-      <BadgeView key='badge-mod' isCustom={true} badge={{ emoji: 'mod', description: 'Moderator' }} />
+      <BadgeView key='badge-mod' isCustom={true} emoji='mod' description='Moderator' />
     )
   }
 

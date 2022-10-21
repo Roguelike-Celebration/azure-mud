@@ -129,7 +129,7 @@ export const UnlockableBadges: Badge[] = [
   },
   {
     emoji: '🧙‍♀️',
-    description: 'A wizened master of transmutation and alchemy'
+    description: 'A wizened master of the dark sciences'
   },
   {
     emoji: '💾',

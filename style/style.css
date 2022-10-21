@@ -249,3 +249,16 @@ td {
 .settingsContainer .form {
   margin-bottom: 1em;
 }
+
+.spin {
+  animation: rotate linear 500ms 2;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(359deg)
+  }
+}

@@ -144,7 +144,7 @@ export default function BadgesModalView (props: Props) {
         onKeyDown={keyDownOnEquipped}
         role='button'
         tabIndex={0}>
-        {rawEquippedBadges[i] && <BadgeView key={`equipped-${i}`} badge={b} isCustom={b.isCustom} />}
+        {rawEquippedBadges[i] && <BadgeView key={`equipped-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />}
       </div>
     )
   }
@@ -160,7 +160,7 @@ export default function BadgesModalView (props: Props) {
         className='locked-badge' draggable={true}
         key={b.emoji}
       >
-        <BadgeView badge={{ ...b, emoji: '🔒' }} />
+        <BadgeView emoji='🔒' description={b?.description} isCustom={b?.isCustom} />
       </span>
     )
   })
@@ -178,7 +178,7 @@ export default function BadgesModalView (props: Props) {
         role='button'
         tabIndex={0}
       >
-        <BadgeView badge={b} isCustom={b.isCustom} />
+        <BadgeView emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />
       </span>
     )
   })

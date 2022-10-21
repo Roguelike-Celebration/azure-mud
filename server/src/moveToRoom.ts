@@ -120,7 +120,7 @@ export async function moveToRoom (
 
     if (awardedBadges.length > 0) {
       result.messages.push({
-        groupId: user.id,
+        userId: user.id,
         target: 'unlockBadge',
         arguments: [awardedBadges]
       })
@@ -150,13 +150,13 @@ function awardBadges (user: User, roomId: string) {
   const tuples = [
     ['dockingBay', '🚀'],
     ['oxygenFarm', '🌱'],
-    ['transmute', '🧙‍♀️'],
+    ['experimentalBiology', '🧙‍♀️'],
     ['adventurersGuildHall', '⚔️'],
     ['officeOfSteam', '💾'],
     ['thesisDefense', 'golden_thesis'],
     ['loversLake', 'phylactery'],
     ['procedural', 'nega_ticket'],
-    ['underTheater', 'undermuffin']
+    ['underlab', 'undermuffin']
   ]
 
   const unlockedEmoji: Badge[] = []
