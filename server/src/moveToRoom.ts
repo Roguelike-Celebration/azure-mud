@@ -120,7 +120,7 @@ export async function moveToRoom (
 
     if (awardedBadges.length > 0) {
       result.messages.push({
-        groupId: user.id,
+        userId: user.id,
         target: 'unlockBadge',
         arguments: [awardedBadges]
       })
