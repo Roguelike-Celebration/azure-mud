@@ -81,7 +81,7 @@ export const useAutoscroll = (
        * viewport's scroll height as messages come in
        */
       const isScrolledToBottom =
-        scrollHeight ===
+        scrollHeight <=
         // not exactly sure why, but sometime's there's an extra half-pixel
         Math.floor(scrollTop + clientHeight + 1)
 

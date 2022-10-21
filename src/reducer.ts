@@ -706,6 +706,7 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.LoadMessageArchiveEnd) {
     draft.messageArchiveLoaded.resolve()
+    draft.autoscrollChat = true
   }
 
   // Notes
