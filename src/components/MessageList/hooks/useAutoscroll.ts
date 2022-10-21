@@ -52,7 +52,7 @@ export const useAutoscroll = (
 
     virtualizaitonDispatch({
       type: 'setViewportScrollHeight',
-      payload: scrollContainerRef.current.clientHeight
+      payload: 0
     })
 
     dispatch(ChatReadyAction())
@@ -61,20 +61,6 @@ export const useAutoscroll = (
   const scrollHandler = useCallback<ScrollHandler>(
     ({ currentTarget }) => {
       const { clientHeight, scrollTop, scrollHeight } = currentTarget
-
-      /**
-       * prevent scrolling back past the first/oldest message
-       */
-      const minScrollTop =
-        viewportScrollHeightRef.current - clientHeight < clientHeight
-          ? viewportScrollHeightRef.current - clientHeight
-          : clientHeight
-      if (
-        // scrollTop < viewportScrollTopRef.current &&
-        scrollTop < minScrollTop
-      ) {
-        currentTarget.scrollTop = minScrollTop
-      }
 
       /**
        * enable/disable "autoscroll" which is, scroll to the end of the
@@ -97,7 +83,7 @@ export const useAutoscroll = (
        */
       virtualizaitonDispatch({
         type: 'setViewportScrollTop',
-        payload: Math.max(minScrollTop, scrollTop)
+        payload: Math.max(scrollTop)
       })
     },
     [autoscrollChat, dispatch, virtualizaitonDispatch]
