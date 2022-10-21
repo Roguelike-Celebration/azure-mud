@@ -13,7 +13,11 @@ export const generate = () => {
     ],
     bardIntro: [
       'Chad clears his throat and says:',
-      'Chad puts on #expression.a# grin and says: '
+      'Chad puts on #expression.a# grin and says: ',
+      'Chad looks directly at you and winks. ',
+      'Chad gives the crowd finger-guns while saying: ',
+      'Chad tunes his lute for a moment, then says: ',
+      'Chad eats up every bit of the polite applause before continuing. '
     ],
     pickupLine: [
       'Your RNG or mine?',

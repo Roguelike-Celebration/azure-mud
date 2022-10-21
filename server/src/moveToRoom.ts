@@ -150,7 +150,7 @@ function awardBadges (user: User, roomId: string) {
   const tuples = [
     ['dockingBay', '🚀'],
     ['oxygenFarm', '🌱'],
-    ['transmute', '🧙‍♀️'],
+    ['experimentalBiology', '🧙‍♀️'],
     ['adventurersGuildHall', '⚔️'],
     ['officeOfSteam', '💾'],
     ['thesisDefense', 'golden_thesis'],

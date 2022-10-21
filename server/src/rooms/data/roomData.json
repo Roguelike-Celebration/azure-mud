@@ -56,7 +56,7 @@
     "id": "swag",
     "displayName": "Swag Table",
     "shortName": "the swag table",
-    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration mousepads->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A set of dwarves is busily building a new swag table, munching on plump helmets but otherwise engrossed in their fey mood. The swag tables is menacing with spikes, also made of plump helmet. The table is inscribed: \"Coming soon: Shirts, Pins, and More!\"<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[hall->centralHall]].",
+    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A set of dwarves is busily building a new swag table, munching on plump helmets but otherwise engrossed in their fey mood. The swag tables is menacing with spikes, also made of plump helmet. The table is inscribed: \"Coming soon: Shirts, Pins, and More!\"<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[hall->centralHall]].",
     "roomId": "swag"
   },
   "theaterMage": {
@@ -77,7 +77,7 @@
     "id": "barStools",
     "displayName": "Stools By the Bar",
     "shortName": "the stools by the bar",
-    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! Whee!</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]]."
+    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinTheRoom]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]]."
   },
   "theater": {
     "id": "theater",
@@ -113,7 +113,7 @@
     "displayName": "Video Dome",
     "shortName": "the video dome",
     "mediaChat": true,
-    "description": "An enormous dome made of brass, featuring steam-powered electrical screens instead of walls or ceiling. Everywhere you look you see beautiful landscapes and people going about their lives. The floor is a flat space with a subtle mosaic pattern, and is occupied by clockwork servant bots carrying screens to anyone who requests one. Your own clockwork video bot appears and offers you its video chat services.</br></br>From here you can also return to the [[hall->centralHall]] or the [[guild->adventurersGuildHall]].",
+    "description": "An enormous dome made of brass, featuring steam-powered electrical screens instead of walls or ceiling. Everywhere you look you see beautiful landscapes and people going about their lives. The floor is a flat space with a subtle mosaic pattern, and is occupied by clockwork servant bots carrying screens to anyone who requests one. Your own clockwork video bot appears and offers you its video chat services.</br></br>From here you can also return to the [[hall->centralHall]] or the [[guild->adventurersGuildHall]].<br/><br/><strong>WARNING: we have no idea if this works.</strong> Feel free to let us know, but we probably won't fix it this year.<br/>Sincerely,<br/>The MUD devs",
     "roomId": "videoDome"
   },
   "unconference": {
@@ -135,7 +135,7 @@
     "id": "barStage",
     "displayName": "Stage Near the Bar ",
     "shortName": "the bar stage",
-    "description": "It's time to play the music, to light the lights. A muscular bard, whose parents actually named [[Chad Silverbow->talkToChadSilverbow]], currently stands on stage telling [[terrible jokes->hearTerribleJokes]]. You almost feel bad for the poor guy.</br></br>From here you can see tables at the [[balcony->barBalcony]], [[along the bar->barStools]], the [[back->barBack]], and the [[rest of the bar->bar]].",
+    "description": "It's time to play the music, to light the lights. A muscular bard, whose parents actually named [[Chad Silverbow->talkToChadSilverbow]], currently stands on stage telling [[terrible jokes->hearTerribleJoke]]. You almost feel bad for the poor guy.</br></br>From here you can see tables at the [[balcony->barBalcony]], [[along the bar->barStools]], the [[back->barBack]], and the [[rest of the bar->bar]].",
     "roomId": "barStage"
   },
   "underspire": {
@@ -332,6 +332,7 @@
   "rodney": {
   "displayName": "Rodney",
   "shortName": "rodney",
+  "hidden": true,
   "id": "rodney",
   "description": "You suddenly find yourself descending through layers of a dungeon made of memories and lived experiences, a place deep beneath the surface and devoid of any light. Scenes play out before you, a tall man in dark robes teaching you the ways of dark magic, a group of kids making fun of you, a neglectful family, and a loving dog. The scenes of abuse and neglect become more frequent, as does the image of the dark robed man. You feel a malicious heartbeat echo through these halls, building a determination to strike out at all of humankind for the suffering experienced in youth. The deeper you fall, the stronger these feelings grow. You feel yourself getting angrier, and just as you feel you can take it no more, a light suddenly appears.</br></br> Proceed To [[Lover’s Lake->loversLake]].",
   "roomId": "rodney"
@@ -340,6 +341,7 @@
   "displayName": "yendoR",
   "shortName": "yendor",
   "id": "yendor",
+  "hidden": true,
   "description": "You feel yourself pulled up by the force of gravity, pulled towards the sky which is a deep orange. The sun’s darkness shrouds the land highlighted by the light of its shadows. You feel an unsettling sensation of wrongness pulse within you, as if you’ve made some terrible mistake, but in a way that is nearly right. This uncanny feeling compels you to correct yourself, if only you knew how.",
   "roomId": "yendor"
   }
