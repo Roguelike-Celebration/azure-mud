@@ -130,7 +130,7 @@ const App = () => {
 
         const messageArchive = await Storage.getMessages()
         // I'm styling it like a constant but it's just here; look it's late and the conf is in two days
-        const MAX_MESSAGES_TO_LOAD = 200
+        const MAX_MESSAGES_TO_LOAD = 400
         dispatch(
           LoadMessageArchiveAction(
             messageArchive ? messageArchive.messages.slice(0, MAX_MESSAGES_TO_LOAD) : [],
