@@ -3,7 +3,7 @@
     "id": "unconferenceStarShip",
     "displayName": "Unconferencing: Starship Bridge",
     "shortName": "Unconferencing: Starship",
-    "description": "This is an unconferencing room. The vacuum seal around the door hisses as you enter the flat-white-panelled interior of a starship. Computer screens glow softly from every direction, feeding you statistics about the ship's systems. You see engineers running from station to station to put out fires as a glowing red triangle warns of a nearby solar flare. The ship rocks every few moments from the force of impact caused by what seems to be the weapons of a nearby enemy vessel, and you can see a radar screen that indicates a fleet approaching. You're sure it's fine.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/84946016673?pwd=OTNRWjZKdmx0RGthWVVueHlqUm84Zz09 target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 046256)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "description": "This is an unconferencing room. The vacuum seal around the door hisses as you enter the flat-white-panelled interior of a starship. Computer screens glow softly from every direction, feeding you statistics about the ship's systems. You see engineers running from station to station to put out fires as a glowing red triangle warns of a nearby solar flare. The ship rocks every few moments from the force of impact caused by what seems to be the weapons of a nearby enemy vessel, and you can see a radar screen that indicates a fleet approaching. You're sure it's fine.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87042161886?pwd=Z3NXNlB5eWRKb2JKNVFnWVlxQS9Jdz09 target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 380841)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
     "hasNoteWall": true,
     "roomId": "unconferenceStarShip"
   },
@@ -11,7 +11,7 @@
     "id": "unconferenceRaveCave",
     "displayName": "Unconferencing: Rave Cave",
     "shortName": "Unconferencing: Rave Cave",
-    "description": "This is an unconferencing room. You step into what you can only describe as a Rave Disco, and are immediately assaulted with the thumping of an otherwordly bass. Floor panels glow in time with the music, alternating between the normal stone floors of a cave, to suddenly being alight with some energetic magic. Skeletons, slimes, and even a dragon appear to be bopping to the fierce beats, and you can see in the distance a menacing conga line protecting an oversized gorilla.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/82669162828?pwd=L3kxdkhHUjRqQWdFbU11Y0tocGlBdz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 379872)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Dig Site->unconferenceDigSite]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "description": "This is an unconferencing room. You step into what you can only describe as a Rave Disco, and are immediately assaulted with the thumping of an otherwordly bass. Floor panels glow in time with the music, alternating between the normal stone floors of a cave, to suddenly being alight with some energetic magic. Skeletons, slimes, and even a dragon appear to be bopping to the fierce beats, and you can see in the distance a menacing conga line protecting an oversized gorilla.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84996086440?pwd=VGpJSTBhdGUxYTNNL08vc1RFZWdVdz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 037611)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Dig Site->unconferenceDigSite]]. Or you can go back to the [[unconferencing lobby->unconference]].",
     "hasNoteWall": true,
     "roomId": "unconferenceRaveCave"
   },
@@ -56,7 +56,7 @@
     "id": "swag",
     "displayName": "Swag Table",
     "shortName": "the swag table",
-    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A set of dwarves is busily building a new swag table, munching on plump helmets but otherwise engrossed in their fey mood. The swag tables is menacing with spikes, also made of plump helmet. The table is inscribed: \"Coming soon: Shirts, Pins, and More!\"<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[hall->centralHall]].",
+    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A clearing amidst the pile has been lovingly lined with plump helmet, with showcase pillars for real world shirts, socks, and enamel pins, being sold by Ann Arbor T-shirt Company, that you can<a href=\"https://roguelikecelebration.itemorder.com/shop/home/ \">purchase for yourself</a>.<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[hall->centralHall]].",
     "roomId": "swag"
   },
   "theaterMage": {
@@ -77,7 +77,8 @@
     "id": "barStools",
     "displayName": "Stools By the Bar",
     "shortName": "the stools by the bar",
-    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinTheRoom]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]]."
+    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinAround]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]].",
+    "roomId": "barStools"
   },
   "theater": {
     "id": "theater",
@@ -170,7 +171,15 @@
       "RAINBOW_DOOR",
       "DULL_DOOR"
     ],
-    "roomId": "experimentalBiology"
+    "roomId": "experimentalBiology",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "There is a chalkboard set up to the side with \"REFERENCES!!!\" written across the top.",
+      "noteWallButton": "Add reference material",
+      "addNoteLinkText": "add a reference",
+      "addNotePrompt": "What would you like to link to",
+      "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
+    }
   },
   "bar": {
     "id": "bar",
@@ -215,7 +224,7 @@
     "id": "unconferenceDigSite",
     "displayName": "Unconferencing: Dig Site",
     "shortName": "Unconferencing: Dig Site",
-    "description": "This is an unconferencing room. You step into a winding cave with glittering jewels and gold embedded in every wall. Basic scaffolding has been placed here, indicating that perhaps this is some kind of archaeological site. You see in the distance an altar to some dark goddess and next to that, incongruously, what appears to be a shop manned by an angry-looking gentleman with a shotgun.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/87385558857?pwd=UHREZEgyRjQ1L2dta1N1amdWMmF6dz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 270805)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "description": "This is an unconferencing room. You step into a winding cave with glittering jewels and gold embedded in every wall. Basic scaffolding has been placed here, indicating that perhaps this is some kind of archaeological site. You see in the distance an altar to some dark goddess and next to that, incongruously, what appears to be a shop manned by an angry-looking gentleman with a shotgun.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84687652213?pwd=UnN6Q1FuNmpFWjJSdmhXYlJ1MHJRQT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 901367)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
     "hasNoteWall": true,
     "roomId": "unconferenceDigSite"
   },
@@ -254,7 +263,7 @@
     "id": "unconferenceElysium",
     "displayName": "Unconferencing: Elysium Fields",
     "shortName": "Unconferencing: Elysium",
-    "description": "This is an unconferencing room. The souls of the dead glow in the eerie light which seems to suffuse this place from every direction. Some kind of bioluminescent moss is growing on every surface here and bright red pottery has been placed along every wall by an overenthusiastic interior designer. Enormous golden pottery breaks up the space with massive shrubbery large enough to devour you whole, and you can't help but wonder how it was delivered here. You see unmanned chariots driving around the space on their own, but they don't seem to be interested in you.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us02web.zoom.us/j/87320810860?pwd=WmhISXBza1hPZ1k3MFhDdDZwVEtPQT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 799782)<br/><br/>The other unconferencing rooms are [[Star Ship->unconferenceStarShip]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "description": "This is an unconferencing room. The souls of the dead glow in the eerie light which seems to suffuse this place from every direction. Some kind of bioluminescent moss is growing on every surface here and bright red pottery has been placed along every wall by an overenthusiastic interior designer. Enormous golden pottery breaks up the space with massive shrubbery large enough to devour you whole, and you can't help but wonder how it was delivered here. You see unmanned chariots driving around the space on their own, but they don't seem to be interested in you.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/81512788533?pwd=SnRUZEh2OEhtYVRWRG1nd1FFL0NYUT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 284733)<br/><br/>The other unconferencing rooms are [[Star Ship->unconferenceStarShip]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
     "hasNoteWall": true,
     "roomId": "unconferenceElysium"
   },
