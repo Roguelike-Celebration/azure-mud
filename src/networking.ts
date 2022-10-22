@@ -1,88 +1,70 @@
 import * as SignalR from '@microsoft/signalr'
 import { v4 as uuid } from 'uuid'
 
-import axios from 'axios'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { RoomResponse, ErrorResponse, ServerSettings } from '../server/src/types'
 import { Dispatch } from 'react'
-import { Badge } from '../server/src/badges'
-import { MESSAGE_MAX_LENGTH } from '../server/src/config'
-import {
-  ErrorResponse,
-  RoomResponse,
-  ServerSettings
-} from '../server/src/types'
-import { User } from '../server/src/user'
 import {
   Action,
-  CaptionMessageAction,
-  ChatMessageAction,
-  CommandMessageAction,
-  ConnectAction,
-  DanceAction,
-  DeleteMessageAction,
-  EmoteAction,
-  EquipBadgeAction,
   ErrorAction,
-  HideModalAction,
-  ModMessageAction,
-  NoteAddAction,
-  NoteRemoveAction,
-  NoteUpdateLikesAction,
-  NoteUpdateRoomAction,
-  PlayerBannedAction,
   PlayerConnectedAction,
   PlayerDisconnectedAction,
+  ChatMessageAction,
   PlayerEnteredAction,
+  WhisperAction,
   PlayerLeftAction,
-  PlayerUnbannedAction,
-  ReceivedMyProfileAction,
-  ReceivedServerSettingsAction,
-  SetUnlockedBadgesAction,
   ShoutAction,
-  ShowModalAction,
+  EmoteAction,
+  DanceAction,
   ShowProfileAction,
-  SpaceOpenedOrClosedAction,
-  UnlockBadgeAction,
-  UpdatedCurrentRoomAction,
-  UpdatedPresenceAction,
-  UpdatedRoomDataAction,
-  UpdateUnlockableBadgesAction,
   UserMapAction,
-  WhisperAction
+  ModMessageAction,
+  UpdatedCurrentRoomAction,
+  UpdatedRoomDataAction,
+  UpdatedPresenceAction,
+  ReceivedMyProfileAction,
+  DeleteMessageAction,
+  NoteAddAction,
+  NoteRemoveAction,
+  NoteUpdateRoomAction,
+  NoteUpdateLikesAction,
+  HideModalAction,
+  SpaceOpenedOrClosedAction,
+  PlayerBannedAction,
+  PlayerUnbannedAction,
+  ReceivedServerSettingsAction,
+  ShowModalAction, CommandMessageAction, CaptionMessageAction, EquipBadgeAction, UpdateUnlockableBadgesAction, UnlockBadgeAction, SetUnlockedBadgesAction
 } from './Actions'
-import Config from './config'
-import { Modal } from './modals'
+import { User } from '../server/src/user'
 import { convertServerRoomData, Room } from './room'
-import { ThunkDispatch } from './useReducerWithThunk'
-import { State } from './reducer'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config'
+import { Modal } from './modals'
+import Config from './config'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import axios from 'axios'
+import { Badge } from '../server/src/badges'
 
 let myUserId: string
-let myDispatch: ThunkDispatch<Action, State>
+let myDispatch: Dispatch<Action>
 
 const inMediaChat: boolean = false
 
-export async function connect (
-  userId: string,
-  dispatch: ThunkDispatch<Action, State>
-) {
+export async function connect (userId: string, dispatch: Dispatch<Action>) {
   myUserId = userId
   myDispatch = dispatch
 
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(result)
-  dispatch(
-    ConnectAction(
-      result.roomId,
-      convertServerRoomData(result.roomData),
-      result.roomNotes
-    )
-  )
+  dispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
   dispatch(UserMapAction(result.users))
 
   if (result.profile) {
     dispatch(ReceivedMyProfileAction(result.profile))
+  }
+
+  if (result.roomNotes) {
+    dispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
   }
 
   if (result.unlockableBadges) {
@@ -150,17 +132,11 @@ export async function updateProfile (user: Partial<User>, isNew: boolean) {
 }
 
 export async function updateProfileColor (userId: string, color: string) {
-  const result = await callAzureFunction('updateProfileColor', {
-    userId: userId,
-    color: color
-  })
+  const result = await callAzureFunction('updateProfileColor', { userId: userId, color: color })
 }
 
 export async function updateFontReward (userId: string, font: string) {
-  const result = await callAzureFunction('updateFontReward', {
-    userId: userId,
-    font: font
-  })
+  const result = await callAzureFunction('updateFontReward', { userId: userId, font: font })
 }
 export async function equipBadge (badge: Badge, index: number) {
   const result = await callAzureFunction('equipBadge', { badge, index })
@@ -174,19 +150,9 @@ export async function equipBadge (badge: Badge, index: number) {
   }
 }
 
-export async function checkIsRegistered (): Promise<{
-  registeredUsername: string;
-  spaceIsClosed: boolean;
-  isMod: string;
-  isBanned: boolean;
-}> {
+export async function checkIsRegistered (): Promise<{registeredUsername: string, spaceIsClosed: boolean, isMod: string, isBanned: boolean}> {
   const result = await callAzureFunction('isRegistered')
-  return {
-    registeredUsername: result.registered,
-    spaceIsClosed: result.spaceIsClosed,
-    isMod: result.isMod,
-    isBanned: result.isBanned
-  }
+  return { registeredUsername: result.registered, spaceIsClosed: result.spaceIsClosed, isMod: result.isMod, isBanned: result.isBanned }
 }
 
 export async function pickUpRandomItemFromList (listName: string) {
@@ -261,12 +227,7 @@ export async function moveToRoom (roomId: string) {
   console.log(result)
 
   if (result) {
-    myDispatch(
-      UpdatedCurrentRoomAction(
-        result.roomId,
-        convertServerRoomData(result.roomData)
-      )
-    )
+    myDispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
 
     if (result.roomNotes) {
       myDispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
@@ -277,9 +238,7 @@ export async function moveToRoom (roomId: string) {
 export async function sendChatMessage (id: string, text: string) {
   // If it's over the character limit
   if (text.length > MESSAGE_MAX_LENGTH) {
-    console.log(
-      `Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`
-    )
+    console.log(`Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`)
     return
   }
 
@@ -295,12 +254,7 @@ export async function sendChatMessage (id: string, text: string) {
 
   // If it's a /move command
   if (result && result.roomId) {
-    myDispatch(
-      UpdatedCurrentRoomAction(
-        result.roomId,
-        convertServerRoomData(result.roomData)
-      )
-    )
+    myDispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
   } else if (result && result.user) {
     myDispatch(ShowProfileAction(result.user))
   } else if (result && result.error) {
@@ -311,9 +265,7 @@ export async function sendChatMessage (id: string, text: string) {
 export async function sendCaption (id: string, text: string) {
   // TODO: This may or may not be problematic
   if (text.length > MESSAGE_MAX_LENGTH) {
-    console.log(
-      `Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`
-    )
+    console.log(`Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`)
     return
   }
 
@@ -350,10 +302,7 @@ export async function toggleUserMod (userId: string) {
 }
 
 export async function toggleUserSpeaker (userId: string, year: string) {
-  const result = await callAzureFunction('toggleSpeakerStatus', {
-    userId,
-    year
-  })
+  const result = await callAzureFunction('toggleSpeakerStatus', { userId, year })
 }
 
 export async function deleteMessage (messageId: string) {
@@ -374,7 +323,7 @@ export async function getRoom (roomId: string): Promise<Room> {
   }
 }
 
-export async function getAllRooms (): Promise<{ [roomId: string]: Room }> {
+export async function getAllRooms (): Promise<{[roomId: string]: Room}> {
   const result = await callAzureFunction('getAllRooms')
   if (result.roomData) {
     return result.roomData
@@ -391,14 +340,9 @@ export async function updateRoom (roomId: string, roomData: Room): Promise<any> 
 
 // Setup
 
-export async function connectSignalR (
-  userId: string,
-  dispatch: Dispatch<Action>
-): Promise<SignalR.HubConnection> {
+export async function connectSignalR (userId: string, dispatch: Dispatch<Action>): Promise<SignalR.HubConnection> {
   class CustomHttpClient extends SignalR.DefaultHttpClient {
-    public async send (
-      request: SignalR.HttpRequest
-    ): Promise<SignalR.HttpResponse> {
+    public async send (request: SignalR.HttpRequest): Promise<SignalR.HttpResponse> {
       const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
       request.headers = {
         ...request.headers,
@@ -571,12 +515,15 @@ export async function connectSignalR (
 async function callAzureFunctionGet (endpoint: string): Promise<any> {
   try {
     const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
-    const r = await axios.get(`${Config.SERVER_HOSTNAME}/api/${endpoint}`, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${firebaseToken}`
+    const r = await axios.get(
+      `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${firebaseToken}`
+        }
       }
-    })
+    )
     console.log(r)
     return r.data
   } catch (e) {

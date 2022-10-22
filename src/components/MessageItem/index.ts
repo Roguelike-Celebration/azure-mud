@@ -1,1 +1,0 @@
-export { MessageItem } from './MessageItem'
