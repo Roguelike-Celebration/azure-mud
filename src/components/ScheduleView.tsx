@@ -49,7 +49,7 @@ export const ScheduleEntries = [
   ScheduleEntry('10:00', 1, 'Florence Smith Nichols: Object Biographies: An Archaeological Approach to PCG', ['theater'], 'rogue'),
   ScheduleEntry('10:15', 1, 'Tyler Robinson: Prototyping your games in Google Sheets', ['cleric'], ''),
   ScheduleEntry('10:30', 1, SOCIAL_TIME),
-  ScheduleEntry('11:00', 1, 'Sonut Uzun: Procedural Music of Tea Garden', ['theater'], 'warrior'),
+  ScheduleEntry('11:00', 1, 'Sonat Uzun: Procedural Music of Tea Garden', ['theater'], 'warrior'),
   ScheduleEntry('11:30', 1, 'Janelle Shane: The Baltimore Orioles Effect: Hey! Stop poisoning my image prompt!', ['theater'], 'mage'),
   ScheduleEntry('12:00', 1, SOCIAL_TIME),
   ScheduleEntry('13:00', 1, 'Dylan Gedig: Perfect Synergy: How Roguelike Developers and Streamers Form the Perfect Ecosystem', ['theater'], 'rogue'),
