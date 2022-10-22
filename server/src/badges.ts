@@ -72,6 +72,14 @@ export const FreeBadges: Badge[] = [
     description: 'Spreadsheet criminal'
   },
   {
+    emoji: '🎶',
+    description: 'Procedurally generated vibes'
+  },
+  {
+    emoji: '🍊',
+    description: 'Emoji of my favorite food, award-winning photography'
+  },
+  {
     emoji: 'device_of_luthien',
     description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
     isCustom: true
