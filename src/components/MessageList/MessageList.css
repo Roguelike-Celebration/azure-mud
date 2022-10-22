@@ -1,3 +1,7 @@
+.message-list-container {
+  position: relative;
+}
+
 .message-list {
   height: 40vh;
   list-style-type: none;
