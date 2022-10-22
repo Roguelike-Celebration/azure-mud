@@ -172,7 +172,7 @@ function awardBadges (user: User, roomId: string) {
 
   tuples.forEach(([room, emoji]) => {
     if (roomId === room &&
-    !includes(user.unlockedBadges, UnlockableBadgeMap[emoji])) {
+    !includes(user.unlockedBadges.map(b => b.emoji), emoji)) {
       console.log('Awarding badge', emoji, UnlockableBadgeMap[emoji])
       awardUserBadge(user.id, UnlockableBadgeMap[emoji])
       unlockedEmoji.push(UnlockableBadgeMap[emoji])
