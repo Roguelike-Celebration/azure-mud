@@ -146,7 +146,6 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
               {'Delete Message?'}
             </MenuItem>
           </ContextMenu>
-          <ReactTooltip />
         </span>
       </Linkify>
     )

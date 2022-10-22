@@ -3,6 +3,7 @@ import { RoomNote } from '../../server/src/roomNote'
 import { ServerSettings, toServerSettings } from '../../server/src/types'
 import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networking'
 import { NoteView } from './NoteView'
+import ReactTooltip from 'react-tooltip'
 
 import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
@@ -74,6 +75,7 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
 
   return (
     <div>
+      <ReactTooltip />
       {massDeleteButton}
       {setAsUnconferencingTopicsButton}
       <div className='note-wall-description'>

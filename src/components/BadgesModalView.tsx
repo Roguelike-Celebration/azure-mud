@@ -9,6 +9,7 @@ import { Badge } from '../../server/src/badges'
 import { EquipBadgeAction } from '../Actions'
 import { equipBadge } from '../networking'
 import { find, first, isNumber, uniq } from 'lodash'
+import ReactTooltip from 'react-tooltip'
 
 interface Props {
   unlockedBadges: Badge[]
@@ -191,7 +192,8 @@ export default function BadgesModalView (props: Props) {
     firstUnlockedBadge.contentEditable = 'false' // hack to force the focus ring to be visible
   }, [])
 
-  return (
+  return (<>
+    <ReactTooltip/>
     <div id='badges'>
       <h1>Your Badges</h1>
       <div className="badge-sections">
@@ -207,5 +209,6 @@ export default function BadgesModalView (props: Props) {
         </section>
       </div>
     </div>
+  </>
   )
 }

@@ -202,7 +202,8 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     isMod: user.isMod,
     isSpeaker: user.isSpeaker,
     fontReward: user.fontReward,
-    equippedBadges: user.equippedBadges
+    equippedBadges: user.equippedBadges,
+    pronouns: user.pronouns
   }
 
   return minimalUser

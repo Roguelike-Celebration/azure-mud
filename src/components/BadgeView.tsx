@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactTooltip from 'react-tooltip'
 import { Badge } from '../../server/src/badges'
 import customEmojiMap from '../emoji/customEmojiMap.json'
 import reservedEmojiMap from '../emoji/reservedEmojiMap.json'
@@ -22,7 +21,6 @@ function BadgeView (props: {emoji: string, description: string, isCustom?: boole
       <span className='badge' data-tip={description}>
         {content}
       </span>
-      <ReactTooltip />
     </>
   )
 }
