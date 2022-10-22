@@ -100,6 +100,18 @@ export const FreeBadges: Badge[] = [
     description: 'Don\'t Panic'
   },
   {
+    emoji: '🪤',
+    description: 'Build a better adventurer trap'
+  },
+  {
+    emoji: '🧠',
+    description: 'Neurogue'
+  },
+  {
+    emoji: '🎣',
+    description: 'Definitely not a monster. Really. I promise.'
+  },
+  {
     emoji: 'device_of_luthien',
     description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
     isCustom: true
