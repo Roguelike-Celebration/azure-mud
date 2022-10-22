@@ -35,6 +35,7 @@ import {
 } from '../message'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
 import NameView from './NameView'
+import { MinimalUser } from '../../server/src/user'
 
 const formatter = new Intl.DateTimeFormat('en', {
   hour: 'numeric',
@@ -237,11 +238,9 @@ const parseUserIdOrDisplay = (messageFragment): string => {
   return 'Malformed Mention'
 }
 
-const ChatMessageView = (props: ChatMessage) => {
-  const { userMap } = useContext(UserMapContext)
-
-  const splitMessage = props.message.split(/(@@.*?@@)/)
-  const joinedMessage = splitMessage.reduce<JSX.Element>(
+function renderChatMessageWithUsernames (message: string, id: string, userMap: { [userId: string]: MinimalUser }) {
+  const splitMessage = message.split(/(@@.*?@@)/)
+  return splitMessage.reduce<JSX.Element>(
     (acc, fragment, idx) => {
       if (fragment.startsWith('@@') && fragment.endsWith('@@')) {
         const userIdOrDisplay = parseUserIdOrDisplay(fragment)
@@ -250,7 +249,7 @@ const ChatMessageView = (props: ChatMessage) => {
           return (
             <>
               {acc}{' '}
-              <NameView userId={user.id} id={`${props.id}-mention-${idx}`} />
+              <NameView userId={user.id} id={`${id}-mention-${idx}`} />
             </>
           )
         } else {
@@ -272,6 +271,11 @@ const ChatMessageView = (props: ChatMessage) => {
     },
     <></>
   )
+}
+
+const ChatMessageView = (props: ChatMessage) => {
+  const { userMap } = useContext(UserMapContext)
+  const joinedMessage = renderChatMessageWithUsernames(props.message, props.id, userMap)
 
   return (
     <div className="message">
@@ -293,16 +297,19 @@ const CaptionView = (props: CaptionMessage) => (
 )
 
 const WhisperView = (props: WhisperMessage) => {
-  const dispatch = useContext(DispatchContext)
+  const { userMap } = useContext(UserMapContext)
+
   const openProfile = () => {
     fetchProfile(props.userId)
   }
+
+  const message = renderChatMessageWithUsernames(props.message, props.id, userMap)
 
   if (props.senderIsSelf) {
     return (
       <div className="whisper" onClick={openProfile}>
         You whisper to <NameView id={props.id} userId={props.userId} />:{' '}
-        {props.message}
+        {message}
       </div>
     )
   } else {
@@ -357,12 +364,15 @@ const ShoutView = (props: ShoutMessage) => {
 }
 
 const EmoteView = (props: EmoteMessage) => {
+  const { userMap } = useContext(UserMapContext)
+  const message = renderChatMessageWithUsernames(props.message, props.id, userMap)
+
   return (
     <div className="message">
       <em>
         <NameView userId={props.userId} id={props.id} />{' '}
         <DeletableMessageView messageId={props.id} messageText={props.message}>
-          {props.message}
+          {message}
         </DeletableMessageView>
       </em>
     </div>
