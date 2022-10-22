@@ -80,6 +80,26 @@ export const FreeBadges: Badge[] = [
     description: 'Emoji of my favorite food, award-winning photography'
   },
   {
+    emoji: '💓',
+    description: 'Mean hedonic rating increasing'
+  },
+  {
+    emoji: '🎛️',
+    description: 'Modder'
+  },
+  {
+    emoji: '✍️',
+    description: 'Documentation enthusiast'
+  },
+  {
+    emoji: '📺',
+    description: 'Streamer'
+  },
+  {
+    emoji: '👍',
+    description: 'Don\'t Panic'
+  },
+  {
     emoji: 'device_of_luthien',
     description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
     isCustom: true
