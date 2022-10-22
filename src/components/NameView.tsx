@@ -146,21 +146,22 @@ export default function NameView (props: Props) {
     className = className + ' font-' + user.fontReward
   }
 
-  const badges = (user.equippedBadges || [])
-    .map((b, i) => <BadgeView key={`badge-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />)
+  // Removed for perf reasons
+  // const badges = (user.equippedBadges || [])
+  //   .map((b, i) => <BadgeView key={`badge-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />)
 
-  // TODO: This is not yet being set anywhere
-  if (user.isSpeaker) {
-    badges.unshift(
-      <BadgeView key='badge-speaker' isCustom={true} emoji='speaker' description='Speaker' />
-    )
-  }
+  // // TODO: This is not yet being set anywhere
+  // if (user.isSpeaker) {
+  //   badges.unshift(
+  //     <BadgeView key='badge-speaker' isCustom={true} emoji='speaker' description='Speaker' />
+  //   )
+  // }
 
-  if (user.isMod) {
-    badges.unshift(
-      <BadgeView key='badge-mod' isCustom={true} emoji='mod' description='Moderator' />
-    )
-  }
+  // if (user.isMod) {
+  //   badges.unshift(
+  //     <BadgeView key='badge-mod' isCustom={true} emoji='mod' description='Moderator' />
+  //   )
+  // }
 
   // TODO: should be best handled via css
   const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
@@ -169,7 +170,7 @@ export default function NameView (props: Props) {
     <strong className={isMod ? 'mod' : ''}>
       {(!useSimpleNames && user && user.polymorph) || ''}
       {username || 'unknown'}
-      {useSimpleNames ? '' : badges}
+      {useSimpleNames ? '' : ''}
     </strong>
   )
 
