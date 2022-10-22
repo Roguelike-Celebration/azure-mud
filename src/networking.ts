@@ -76,6 +76,7 @@ export async function connect (
     ConnectAction(
       result.roomId,
       convertServerRoomData(result.roomData),
+      result.presenceData,
       result.roomNotes
     )
   )
@@ -88,8 +89,6 @@ export async function connect (
   if (result.unlockableBadges) {
     dispatch(UpdateUnlockableBadgesAction(result.unlockableBadges))
   }
-
-  dispatch(UpdatedPresenceAction(result.presenceData))
 
   const hubConnection = await connectSignalR(userId, dispatch)
   if (hubConnection.state !== SignalR.HubConnectionState.Connected) {
