@@ -64,6 +64,14 @@ export const FreeBadges: Badge[] = [
     description: 'Equipped: Roguelike Celebration socks'
   },
   {
+    emoji: '🤔',
+    description: 'Unreliable narrator'
+  },
+  {
+    emoji: '📊',
+    description: 'Spreadsheet criminal'
+  },
+  {
     emoji: 'device_of_luthien',
     description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
     isCustom: true
