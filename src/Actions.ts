@@ -4,7 +4,6 @@ import { ServerSettings } from '../server/src/types'
 import { MinimalUser, PublicUser, User } from '../server/src/user'
 import { Message, WhisperMessage } from './message'
 import { Modal } from './modals'
-import { connectRoomData } from './networking'
 import { ModalOptions, State } from './reducer'
 import { Room } from './room'
 import { Thunk } from './useReducerWithThunk'
@@ -922,7 +921,6 @@ export const LoadMessageArchiveAction =
         ))
 
       dispatch(LoadMessageArchiveActionEnd())
-      connectRoomData(dispatch)
     }
 
 interface LoadMessageAction {
