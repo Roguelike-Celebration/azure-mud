@@ -248,15 +248,17 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.PlayerDisconnected) {
     const roomData = draft.roomData[draft.roomId]
-    roomData.users = roomData.users.filter((u) => u !== action.value)
-    addMessage(
-      draft,
-      createDisconnectedMessage(
-        action.value,
-        draft.roomId,
-        roomData.users.length
+    if (roomData && roomData.users) {
+      roomData.users = roomData.users.filter((u) => u !== action.value)
+      addMessage(
+        draft,
+        createDisconnectedMessage(
+          action.value,
+          draft.roomId,
+          roomData.users.length
+        )
       )
-    )
+    }
   }
 
   if (action.type === ActionType.PlayerEntered) {
@@ -278,17 +280,20 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.PlayerLeft) {
     const roomData = draft.roomData[draft.roomId]
-    roomData.users = roomData.users.filter((u) => u !== action.value.name)
-    addMessage(
-      draft,
-      createLeftMessage(
-        action.value.name,
-        action.value.toId,
-        action.value.toName,
-        draft.roomId,
-        roomData.users.length
+    // You can get messages for players leaving before your loading finishes - hence the ignore guard here.
+    if (roomData && roomData.users) {
+      roomData.users = roomData.users.filter((u) => u !== action.value.name)
+      addMessage(
+        draft,
+        createLeftMessage(
+          action.value.name,
+          action.value.toId,
+          action.value.toName,
+          draft.roomId,
+          roomData.users.length
+        )
       )
-    )
+    }
   }
 
   if (action.type === ActionType.ChatMessage) {
