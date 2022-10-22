@@ -134,7 +134,7 @@ const App = () => {
         const MAX_MESSAGES_TO_LOAD = 400
         dispatch(
           LoadMessageArchiveAction(
-            messageArchive ? messageArchive.messages.slice(0, MAX_MESSAGES_TO_LOAD) : [],
+            messageArchive ? messageArchive.messages.slice(-MAX_MESSAGES_TO_LOAD) : [],
             messageArchive ? messageArchive.whispers : []
           )
         )
