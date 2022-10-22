@@ -77,7 +77,8 @@
     "id": "barStools",
     "displayName": "Stools By the Bar",
     "shortName": "the stools by the bar",
-    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinTheRoom]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]]."
+    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinAround]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]].",
+    "roomId": "barStools"
   },
   "theater": {
     "id": "theater",
