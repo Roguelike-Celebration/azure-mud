@@ -61,9 +61,6 @@ export const isMovementMessage = (
   message: Message
 ): message is AnyMovementMessage => movementMessageTypes.includes(message.type)
 
-export const isCaptionMessage = (message: Message): message is CaptionMessage =>
-  message.type === MessageType.Caption
-
 /**
  * message creators
  */

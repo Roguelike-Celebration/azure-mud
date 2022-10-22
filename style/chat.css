@@ -1,4 +1,9 @@
-/* TODO: refactor, this is all/only pertinent to the MessageView component now */
+#messages {
+  height: 40vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
 
 .message-wrapper .time {
   margin-right: 1.5em;
@@ -13,11 +18,11 @@
 }
 
 .message-wrapper:hover .time.show-on-hover {
-  opacity: 1;
+  opacity: 1
 }
 
 .message-wrapper.even-message {
-  background-color: var(--alternate-background);
+  background-color: var(--alternate-background)
 }
 
 .message {
@@ -25,7 +30,7 @@
 }
 
 .movement-message {
-  opacity: 0.5;
+  opacity: 0.5
 }
 
 .inline-custom-emoji {
