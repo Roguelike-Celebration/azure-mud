@@ -72,6 +72,13 @@ export async function connect (
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(result)
+  dispatch(UpdatedCurrentRoomAction(result.roomId, convertServerRoomData(result.roomData)))
+  if (result.presenceData) {
+    dispatch(UpdatedPresenceAction(result.presenceData))
+  }
+  if (result.roomNotes) {
+    dispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
+  }
   dispatch(
     ConnectAction(
       result.roomId,
@@ -94,6 +101,7 @@ export async function connect (
   if (hubConnection.state !== SignalR.HubConnectionState.Connected) {
     throw Error('SignalR connection could not be established!')
   }
+  return hubConnection
 }
 
 export async function disconnect (userId: string) {

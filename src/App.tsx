@@ -128,6 +128,15 @@ const App = () => {
           }
         }
 
+        const useSimpleNames = await Storage.getUseSimpleNames()
+        dispatch(SetUseSimpleNamesAction(useSimpleNames))
+        const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
+        dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
+        const textOnlyMode = await Storage.getTextOnlyMode()
+        dispatch(SetTextOnlyModeAction(textOnlyMode, false))
+        const captionsEnabled = await Storage.getCaptionsEnabled()
+        dispatch(SetCaptionsEnabledAction(captionsEnabled))
+
         const messageArchive = await Storage.getMessages()
         // I'm styling it like a constant but it's just here; look it's late and the conf is in two days
         const MAX_MESSAGES_TO_LOAD = 400
@@ -138,14 +147,7 @@ const App = () => {
           )
         )
 
-        const useSimpleNames = await Storage.getUseSimpleNames()
-        dispatch(SetUseSimpleNamesAction(useSimpleNames))
-        const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
-        dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
-        const textOnlyMode = await Storage.getTextOnlyMode()
-        dispatch(SetTextOnlyModeAction(textOnlyMode, false))
-        const captionsEnabled = await Storage.getCaptionsEnabled()
-        dispatch(SetCaptionsEnabledAction(captionsEnabled))
+        // const completedLoading = await state.messageArchiveLoaded.promise
 
         dispatch(IsRegisteredAction())
         connect(userId, dispatch)

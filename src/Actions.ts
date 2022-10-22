@@ -223,13 +223,6 @@ export const ConnectAction =
   ): Thunk<Action, State> =>
     async (dispatch, getState) => {
       await getState().messageArchiveLoaded.promise
-      dispatch(UpdatedCurrentRoomAction(roomId, roomData))
-      if (presenceData) {
-        dispatch(UpdatedPresenceAction(presenceData))
-      }
-      if (roomNotes) {
-        dispatch(NoteUpdateRoomAction(roomId, roomNotes))
-      }
       dispatch(ConnectedAction())
     }
 
