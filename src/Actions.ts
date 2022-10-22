@@ -222,14 +222,18 @@ export const ConnectAction =
     roomNotes?: RoomNote[]
   ): Thunk<Action, State> =>
     async (dispatch, getState) => {
-      await getState().messageArchiveLoaded.promise
       dispatch(UpdatedCurrentRoomAction(roomId, roomData))
+
+      await getState().messageArchiveLoaded.promise
+
       if (presenceData) {
         dispatch(UpdatedPresenceAction(presenceData))
       }
+
       if (roomNotes) {
         dispatch(NoteUpdateRoomAction(roomId, roomNotes))
       }
+
       dispatch(ConnectedAction())
     }
 
@@ -893,6 +897,7 @@ export const LoadMessageArchiveAction =
     whispers: WhisperMessage[] | null
   ): Thunk<Action, State> =>
     async (dispatch, getState) => {
+      await getState().roomDataReady.promise
       await getState().chatReady.promise
 
       dispatch(LoadMessageArchiveActionStart(whispers))
