@@ -218,11 +218,15 @@ export const ConnectAction =
   (
     roomId: string,
     roomData: { [roomId: string]: Room },
+    presenceData?: { [roomId: string]: string[] },
     roomNotes?: RoomNote[]
   ): Thunk<Action, State> =>
     async (dispatch, getState) => {
       await getState().messageArchiveLoaded.promise
       dispatch(UpdatedCurrentRoomAction(roomId, roomData))
+      if (presenceData) {
+        dispatch(UpdatedPresenceAction(presenceData))
+      }
       if (roomNotes) {
         dispatch(NoteUpdateRoomAction(roomId, roomNotes))
       }
