@@ -62,6 +62,19 @@ let myDispatch: ThunkDispatch<Action, State>
 
 const inMediaChat: boolean = false
 
+// HACK WARNING! this is used to resync the presence data after loading
+// there's *still* a race condition in that if somebody joins/leaves while the HTTP call is transiting
+// then they're invisible and it's not great
+// and there's no system of recourse. but! that already existed!
+export async function connectRoomData (
+  dispatch: ThunkDispatch<Action, State>
+) {
+  const result: RoomResponse = await callAzureFunction('connect')
+  if (result.presenceData) {
+    dispatch(UpdatedPresenceAction(result.presenceData))
+  }
+}
+
 export async function connect (
   userId: string,
   dispatch: ThunkDispatch<Action, State>

@@ -32,6 +32,7 @@ import {
 } from './message'
 import { Modal } from './modals'
 import {
+  connect,
   fetchProfile,
   sendCaption,
   sendChatMessage,
