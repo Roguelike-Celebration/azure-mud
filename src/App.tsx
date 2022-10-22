@@ -58,6 +58,7 @@ import * as Storage from './storage'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import SpecialTextModalView from './components/SpecialTextModalView'
+import ReactTooltip from 'react-tooltip'
 
 export const DispatchContext =
   createContext<ThunkDispatch<Action, State>>(null)
@@ -443,6 +444,7 @@ const App = () => {
                           : 'app'
                       }
                     >
+                      <ReactTooltip/>
                       {shouldShowMenu ? (
                         <span>
                           <SideNavView

@@ -26,11 +26,10 @@ const ProfileWhisperView = (props: WhisperMessage & {id: string, otherUser: Publ
     return (
       <div className="whisper-message">
         <em>
-          <span data-tip={otherUser && otherUser.pronouns}>
+          <span data-tip={otherUser?.pronouns}>
             {otherUser.username}
           </span>:{' '}
           {props.message}
-          <ReactTooltip />
         </em>
       </div>
     )
@@ -104,7 +103,8 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     </a>
   )
 
-  return (
+  return (<>
+    <ReactTooltip />
     <Linkify componentDecorator={linkDecorator}>
       <div id="profile" style={{ overflowWrap: 'anywhere' }}>
         <div className='fixed'>
@@ -138,5 +138,6 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
         </div>
       </div>
     </Linkify>
+  </>
   )
 }

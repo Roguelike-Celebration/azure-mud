@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaThumbsUp, FaRegThumbsUp } from 'react-icons/fa'
 import ReactTooltip from 'react-tooltip'
 import Linkify from 'react-linkify'
@@ -12,6 +12,7 @@ import NameView from './NameView'
 export function NoteView (props: { note: RoomNote }) {
   const { userMap, myId } = useContext(UserMapContext)
   const n = props.note
+  ReactTooltip.rebuild()
 
   const me: MinimalUser = userMap[myId]
   const canDelete = me.isMod || n.authorId === myId
@@ -23,13 +24,10 @@ export function NoteView (props: { note: RoomNote }) {
     }
   }
 
-  const hasLiked = n.likes && n.likes.includes(myId)
   const likes = n.likes ? n.likes.length : 0
-  let likeNames
+  const hasLiked = n.likes && n.likes.includes(myId)
 
-  if (hasLiked) {
-    likeNames = n.likes.map(l => userMap[l].username).join(', ')
-  }
+  const likeNames = n.likes?.map(l => userMap[l].username).join(', ')
 
   const onClickLike = () => {
     if (!canLike) return
@@ -51,9 +49,8 @@ export function NoteView (props: { note: RoomNote }) {
       <div className='note'>
         {canDelete ? <button onClick={onClickDelete} className='link-styled-button note-delete'>X</button> : ''}
         {n.message} <br/>
-        <button className={`link-styled-button like-button ${hasLiked || !canLike ? 'liked' : 'unliked'}`} onClick={onClickLike} data-tip={likeNames}>
+        <button className={`link-styled-button like-button ${hasLiked || !canLike ? 'liked' : 'unliked'}`} onClick={onClickLike} data-tip={hasLiked ? likeNames : ''}>
           {likes}{hasLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
-          <ReactTooltip />
         </button>
         -<NameView userId={n.authorId} id={`noteAuthor-${n.id}`}/> <br/>
       </div>

@@ -29,6 +29,8 @@ export default function NameView (props: Props) {
   const { useSimpleNames } = useContext(SettingsContext)
   const { userMap, myId } = useContext(UserMapContext)
 
+  ReactTooltip.rebuild()
+
   const isSelf = props.userId === myId
 
   const user: User = userMap[props.userId]
@@ -166,7 +168,7 @@ export default function NameView (props: Props) {
   const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
 
   const nameEl = (
-    <strong className={isMod ? 'mod' : ''}>
+    <strong data-tip={!useSimpleNames && (user?.pronouns ?? '')} className={isMod ? 'mod' : ''}>
       {(!useSimpleNames && user && user.polymorph) || ''}
       {username || 'unknown'}
       {useSimpleNames ? '' : badges}
@@ -200,9 +202,8 @@ export default function NameView (props: Props) {
     </ContextMenu></>
 
     return (
-      <span className={className} data-tip={user?.pronouns} style={customStyle} >
+      <span className={className} style={customStyle} >
         {props.skipMenu ? nameEl : menu}
-        <ReactTooltip />
       </span>
     )
   } else {
@@ -224,9 +225,8 @@ export default function NameView (props: Props) {
     </>
 
     return (
-      <span className={className} data-tip={user?.pronouns} style={customStyle} >
+      <span className={className} style={customStyle} >
         {props.skipMenu ? nameEl : menu}
-        <ReactTooltip />
       </span>
     )
   }

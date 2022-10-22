@@ -9,9 +9,11 @@ interface Props {
 }
 
 export default function RoomListView (props: Props) {
-  const list = props.rooms.map((r) => {
-    return r.hidden ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
-  })
+  const list = props.rooms
+    .sort((a, b) => a.displayName.toLowerCase() > b.displayName.toLowerCase() ? 1 : -1)
+    .map((r) => {
+      return r.hidden ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
+    })
 
   return (
     <div>
