@@ -101,7 +101,7 @@ export default function ScheduleView () {
   // If it's before the event or day 1, show day 1. Otherwise show day 2
   // TODO: This logic will need adjusting for a preview event
 
-  const endOfDayOne = ScheduleEntries.slice().reverse().find(e => e.day === 1).time
+  const endOfDayOne = new Date(ScheduleEntries.slice().reverse().find(e => e.day === 1).time)
   endOfDayOne.setTime(endOfDayOne.getTime() + (1 * 60 * 60 * 1000)) // Add 1 hour after the last event
 
   let day = 2
