@@ -192,6 +192,10 @@ export const UnlockableBadges: Badge[] = [
     description: 'Attended the 2022 preview event!'
   },
   {
+    emoji: '7️⃣',
+    description: 'Attended the seventh Roguelike Celebration in 2022!'
+  },
+  {
     emoji: '🎙️',
     description: 'Speaker Alumni Club'
   },
