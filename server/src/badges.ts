@@ -112,6 +112,18 @@ export const FreeBadges: Badge[] = [
     description: 'Definitely not a monster. Really. I promise.'
   },
   {
+    emoji: '🧃',
+    description: 'Juice, now 100% vegan!'
+  },
+  {
+    emoji: '😵‍💫',
+    description: 'Got a strange mood'
+  },
+  {
+    emoji: '⏳',
+    description: 'Sand with anxiety'
+  },
+  {
     emoji: 'device_of_luthien',
     description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
     isCustom: true
