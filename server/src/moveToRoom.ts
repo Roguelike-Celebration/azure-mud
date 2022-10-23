@@ -161,13 +161,20 @@ function awardBadges (user: User, roomId: string) {
 
   const unlockedEmoji: Badge[] = []
 
-  if (!includes(user.unlockedBadges, UnlockableBadgeMap['🐣']) &&
-    (new Date()).getMonth() === 8) {
-    awardUserBadge(user.id, UnlockableBadgeMap['🐣'])
-    // Not adding to unlockedEmoji because we don't want a modal dialog,
-    // We just want it to be quietly added.
+  // Unlock the "I attended!" badge for the current event
+  // This is gated on time, so you can update this for a future event.
+  // Just change the emoji, the month, and the year.
+  const currentEventBadge = UnlockableBadgeMap['7️⃣']
+  const today = new Date()
+  if (!includes(user.unlockedBadges, currentEventBadge) &&
+    today.getMonth() === 9 && // getMonth is 0-indexed, not 1-indexed
+    today.getFullYear() === 2022) {
+    // We handle this differently than others because we want it to be quietly added
+    // rather than popping a modal dialog
+    //
     // Note that this does mean someone will have to refresh the page after first pageload to apply it.
     // That's fine. Maybe eventually we can add a "silent" flag to the client unlock emoji action
+    awardUserBadge(user.id, currentEventBadge)
   }
 
   tuples.forEach(([room, emoji]) => {
