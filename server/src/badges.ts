@@ -124,6 +124,18 @@ export const FreeBadges: Badge[] = [
     description: 'Sand with anxiety'
   },
   {
+    emoji: '😉',
+    description: 'Cute but difficult'
+  },
+  {
+    emoji: '🔢',
+    description: 'Math! Math! Math!'
+  },
+  {
+    emoji: '🎴',
+    description: 'Deck enjoyer'
+  },
+  {
     emoji: 'device_of_luthien',
     description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
     isCustom: true
