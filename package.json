@@ -23,6 +23,7 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "dependencies": {
     "@microsoft/signalr": "^6.0.10",
+    "@zoomus/websdk": "^2.9.7",
     "ace-builds": "^1.5.3",
     "axios": "^0.21.2",
     "firebase": "8.10.0",
