@@ -2,7 +2,6 @@
 
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { authenticatedAzureWrap } from "../src/azureWrap";
-const KJUR = require("jsrsasign");
 import zoomToken from "../src/endpoints/zoomToken";
 
 const httpTrigger: AzureFunction = async function (
