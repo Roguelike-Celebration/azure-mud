@@ -63,6 +63,8 @@ let myDispatch: ThunkDispatch<Action, State>;
 const inMediaChat: boolean = false;
 
 // "Safe" functions (HTTP result not used)
+// Can immediately swap these out to use PubSub
+//---------------------------------------
 
 export async function pickUpRandomItemFromList(listName: string) {
   await callAzureFunction("pickUpItem", { list: listName });
@@ -106,7 +108,61 @@ export async function disconnect(userId: string) {
   await callAzureFunction("disconnect");
 }
 
-// "Unsafe" functions (Using HTTP result, need to modify)
+export async function deleteRoomNote(noteId: string) {
+  await callAzureFunction("deleteRoomNote", { noteId });
+}
+
+export async function likeRoomNote(noteId: string) {
+  await callAzureFunction("likeRoomNote", { noteId, like: true });
+}
+
+export async function unlikeRoomNote(noteId: string) {
+  await callAzureFunction("likeRoomNote", { noteId, like: false });
+}
+
+export async function addNoteToWall(message: string) {
+  if (message !== null && message.length > 0) {
+    const id = uuid();
+    await callAzureFunction("addRoomNote", { id, message });
+  }
+}
+
+export async function openOrCloseSpace(spaceIsClosed) {
+  await callAzureFunction("openOrCloseSpace", { spaceIsClosed });
+}
+
+export async function toggleUserBan(userId: string) {
+  await callAzureFunction("banUser", { userId });
+}
+
+export async function toggleUserMod(userId: string) {
+  await callAzureFunction("toggleModStatus", { userId });
+}
+
+export async function toggleUserSpeaker(userId: string, year: string) {
+  await callAzureFunction("toggleSpeakerStatus", {
+    userId,
+    year,
+  });
+}
+
+export async function deleteMessage(messageId: string) {
+  await callAzureFunction("deleteMessage", { messageId });
+}
+
+export async function deleteRoom(roomId: string): Promise<any> {
+  await callAzureFunction("deleteRoom", { roomId });
+}
+
+export async function updateRoom(roomId: string, roomData: Room): Promise<any> {
+  await callAzureFunction("updateRoom", { roomId, roomData });
+}
+
+// "Unsafe" functions using HTTP result.
+// We can leave these as-is for now, but they will need refactoring
+// in order to switch them over to 100% PubSub
+//--------------------------------------------------------------
+
 // HACK WARNING! this is used to resync the presence data after loading
 // there's *still* a race condition in that if somebody joins/leaves while the HTTP call is transiting
 // then they're invisible and it's not great
@@ -150,120 +206,13 @@ export async function connect(
   if (hubConnection.state !== SignalR.HubConnectionState.Connected) {
     throw Error("SignalR connection could not be established!");
   }
+
+  // "serverSettings" is a handled SignalR action
+  // So we should just automatically send this down on `connect`
+  // (This used to be a separate call, but it's only made right after `connect`)
+  const settings: ServerSettings = await callAzureFunctionGet("serverSettings");
+  dispatch(ReceivedServerSettingsAction(settings));
 }
-
-export async function getServerSettings(dispatch: Dispatch<Action>) {
-  const result: ServerSettings = await callAzureFunctionGet("serverSettings");
-  dispatch(ReceivedServerSettingsAction(result));
-}
-
-export async function updateServerSettings(serverSettings: ServerSettings) {
-  const result = await callAzureFunction("serverSettings", serverSettings);
-  if (result) {
-    myDispatch(HideModalAction());
-  }
-}
-
-export async function resetRoomData() {
-  const response = await callAzureFunction("resetRoomData");
-  if (response.roomData) {
-    myDispatch(UpdatedRoomDataAction(convertServerRoomData(response.roomData)));
-  }
-}
-
-export async function resetBadgeData() {
-  const response = await callAzureFunction("resetBadgeData");
-
-  if (response.unlockedBadges) {
-    myDispatch(SetUnlockedBadgesAction(response.unlockedBadges));
-  }
-
-  // This is janky, but this is debug funcitonality, so shrug
-  if (response.equippedBadges && response.equippedBadges.length === 0) {
-    myDispatch(EquipBadgeAction(undefined, 0));
-    myDispatch(EquipBadgeAction(undefined, 1));
-  }
-}
-
-// If isNewUser is true, a successful update will refresh the entire page instead of dismissing a modal
-export async function updateProfile(user: Partial<User>, isNew: boolean) {
-  const result = await callAzureFunction("updateProfile", { user, isNew });
-  if (result.valid) {
-    if (isNew) {
-      window.location.reload();
-    } else {
-      myDispatch(ReceivedMyProfileAction(result.user));
-      myDispatch(HideModalAction());
-    }
-  } else if (result.error) {
-    alert(result.error);
-  }
-}
-
-export async function equipBadge(badge: Badge, index: number) {
-  const result = await callAzureFunction("equipBadge", { badge, index });
-  if (!result || !result.badges) {
-    console.log("ERROR: Server did not return badges from an equipBadge call");
-    return;
-  }
-  console.log(result.badges);
-  for (let i = 0; i < result.badges.length; i++) {
-    myDispatch(EquipBadgeAction(result.badges[i], i));
-  }
-}
-
-export async function checkIsRegistered(): Promise<{
-  registeredUsername: string;
-  spaceIsClosed: boolean;
-  isMod: string;
-  isBanned: boolean;
-}> {
-  const result = await callAzureFunction("isRegistered");
-  return {
-    registeredUsername: result.registered,
-    spaceIsClosed: result.spaceIsClosed,
-    isMod: result.isMod,
-    isBanned: result.isBanned,
-  };
-}
-
-// "Real" HTTP Functions (used just as an HTTP request, no WS needed)
-export async function fetchTwilioToken() {
-  return await callAzureFunction("twilioToken");
-}
-
-export async function fetchCognitiveServicesKey() {
-  return await callAzureFunction("cognitiveServicesKey");
-}
-
-// Post-it notes
-
-export async function addNoteToWall(message: string) {
-  if (message !== null && message.length > 0) {
-    const id = uuid();
-    await callAzureFunction("addRoomNote", { id, message });
-  }
-}
-
-export async function deleteRoomNote(noteId: string) {
-  await callAzureFunction("deleteRoomNote", { noteId });
-}
-
-export async function likeRoomNote(noteId: string) {
-  await callAzureFunction("likeRoomNote", { noteId, like: true });
-}
-
-export async function unlikeRoomNote(noteId: string) {
-  await callAzureFunction("likeRoomNote", { noteId, like: false });
-}
-
-//
-
-export async function openOrCloseSpace(spaceIsClosed) {
-  await callAzureFunction("openOrCloseSpace", { spaceIsClosed });
-}
-
-//
 
 export async function moveToRoom(roomId: string) {
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
@@ -356,25 +305,55 @@ export async function fetchProfile(userId: string) {
   }
 }
 
-export async function toggleUserBan(userId: string) {
-  const result = await callAzureFunction("banUser", { userId });
+export async function resetRoomData() {
+  const response = await callAzureFunction("resetRoomData");
+  if (response.roomData) {
+    myDispatch(UpdatedRoomDataAction(convertServerRoomData(response.roomData)));
+  }
 }
 
-export async function toggleUserMod(userId: string) {
-  const result = await callAzureFunction("toggleModStatus", { userId });
+export async function resetBadgeData() {
+  const response = await callAzureFunction("resetBadgeData");
+
+  if (response.unlockedBadges) {
+    myDispatch(SetUnlockedBadgesAction(response.unlockedBadges));
+  }
+
+  // This is janky, but this is debug funcitonality, so shrug
+  if (response.equippedBadges && response.equippedBadges.length === 0) {
+    myDispatch(EquipBadgeAction(undefined, 0));
+    myDispatch(EquipBadgeAction(undefined, 1));
+  }
 }
 
-export async function toggleUserSpeaker(userId: string, year: string) {
-  const result = await callAzureFunction("toggleSpeakerStatus", {
-    userId,
-    year,
-  });
+export async function equipBadge(badge: Badge, index: number) {
+  const result = await callAzureFunction("equipBadge", { badge, index });
+  if (!result || !result.badges) {
+    console.log("ERROR: Server did not return badges from an equipBadge call");
+    return;
+  }
+  console.log(result.badges);
+  for (let i = 0; i < result.badges.length; i++) {
+    myDispatch(EquipBadgeAction(result.badges[i], i));
+  }
 }
 
-export async function deleteMessage(messageId: string) {
-  const result = await callAzureFunction("deleteMessage", { messageId });
+export async function checkIsRegistered(): Promise<{
+  registeredUsername: string;
+  spaceIsClosed: boolean;
+  isMod: string;
+  isBanned: boolean;
+}> {
+  const result = await callAzureFunction("isRegistered");
+  return {
+    registeredUsername: result.registered,
+    spaceIsClosed: result.spaceIsClosed,
+    isMod: result.isMod,
+    isBanned: result.isBanned,
+  };
 }
 
+// These 3 functions are only used by admin.
 export async function getRoomIds(): Promise<string[]> {
   const result = await callAzureFunction("getRoomIds");
   if (result.roomIds) {
@@ -396,12 +375,38 @@ export async function getAllRooms(): Promise<{ [roomId: string]: Room }> {
   }
 }
 
-export async function deleteRoom(roomId: string): Promise<any> {
-  return await callAzureFunction("deleteRoom", { roomId });
+// "Real" HTTP Functions
+// used just as an HTTP request, do not refactor to WS
+//---------------------------------------------------------------
+export async function fetchTwilioToken() {
+  return await callAzureFunction("twilioToken");
 }
 
-export async function updateRoom(roomId: string, roomData: Room): Promise<any> {
-  return await callAzureFunction("updateRoom", { roomId, roomData });
+export async function fetchCognitiveServicesKey() {
+  return await callAzureFunction("cognitiveServicesKey");
+}
+
+// If isNewUser is true, a successful update will refresh the entire page instead of dismissing a modal
+export async function updateProfile(user: Partial<User>, isNew: boolean) {
+  const result = await callAzureFunction("updateProfile", { user, isNew });
+  if (result.valid) {
+    if (isNew) {
+      window.location.reload();
+    } else {
+      myDispatch(ReceivedMyProfileAction(result.user));
+      myDispatch(HideModalAction());
+    }
+  } else if (result.error) {
+    alert(result.error);
+  }
+}
+
+// These are only for admins
+export async function updateServerSettings(serverSettings: ServerSettings) {
+  const result = await callAzureFunction("serverSettings", serverSettings);
+  if (result) {
+    myDispatch(HideModalAction());
+  }
 }
 
 // Setup
