@@ -1,4 +1,3 @@
-import * as SignalR from "@microsoft/signalr";
 import { v4 as uuid } from "uuid";
 
 import axios from "axios";
@@ -202,10 +201,8 @@ export async function connect(
     dispatch(UpdateUnlockableBadgesAction(result.unlockableBadges));
   }
 
-  const hubConnection = await connectSignalR(userId, dispatch);
-  if (hubConnection.state !== SignalR.HubConnectionState.Connected) {
-    throw Error("SignalR connection could not be established!");
-  }
+  const eventMapping = generateEventMapping(userId, dispatch);
+  await connectPubSub(eventMapping);
 
   // "serverSettings" is a handled SignalR action
   // So we should just automatically send this down on `connect`
@@ -411,7 +408,7 @@ export async function updateServerSettings(serverSettings: ServerSettings) {
 
 // Setup
 
-const eventMapping = (userId: string, dispatch: Dispatch<Action>) => {
+function generateEventMapping(userId: string, dispatch: Dispatch<Action>) {
   return {
     playerConnected: (user) => {
       console.log("Player joined!", user);
@@ -519,18 +516,25 @@ const eventMapping = (userId: string, dispatch: Dispatch<Action>) => {
       dispatch(UnlockBadgeAction(badge[0]));
     },
   };
-};
+}
 
-export async function connectPubSub() {
+export async function connectPubSub(eventMapping: {
+  [event: string]: Function;
+}) {
   /*
   const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
       request.headers = {
         ...request.headers,
         userid: firebase.auth().currentUser.uid
       }
+
+              Authorization: `Bearer ${firebaseToken}`,
+        userId: myUserId,
+
   */
   // negotiate
-  const result = await callAzureFunctionGet("negotiate");
+  const result = await callAzureFunctionGet("negotiatePubSub");
+  console.log("Connected pubsub", result);
   if (!result.url) {
     console.error("Did not get URL", result);
     return;
@@ -544,62 +548,14 @@ export async function connectPubSub() {
     // Note status
   });
   ws.addEventListener("message", (event) => {
-    const message = event.data;
+    const { type, value } = JSON.parse(event.data);
+    eventMapping[type](...value);
   });
   // ws.send(message);
-}
-
-export async function connectSignalR(
-  userId: string,
-  dispatch: Dispatch<Action>
-): Promise<SignalR.HubConnection> {
-  class CustomHttpClient extends SignalR.DefaultHttpClient {
-    public async send(
-      request: SignalR.HttpRequest
-    ): Promise<SignalR.HttpResponse> {
-      const firebaseToken = await firebase.auth().currentUser.getIdToken(false);
-      request.headers = {
-        ...request.headers,
-        userid: firebase.auth().currentUser.uid,
-      };
-      return super.send(request);
-    }
-  }
-
-  const connection = new SignalR.HubConnectionBuilder()
-    .withUrl(`${Config.SERVER_HOSTNAME}/api`, {
-      httpClient: new CustomHttpClient(console),
-    })
-    .configureLogging(SignalR.LogLevel.Debug)
-    .build();
-
-  const mapping = eventMapping(userId, dispatch);
-
-  Object.keys(mapping).forEach((eventName) => {
-    connection.on(eventName, eventMapping[eventName]);
-  });
-
-  connection.onclose(() => {
-    console.log("disconnected");
-    // This is called when the connection dies horribly.
-    // Chances are that if this happens we *can't* actually talk to the server, so the following function will fail
-    // most of the time. The disconnect modal will then enter a reconnect loop with backoff.
-    callAzureFunction("disconnect");
-    dispatch(ShowModalAction(Modal.Disconnected));
-  });
 
   window.addEventListener("beforeunload", (e) => {
     callAzureFunction("disconnect");
   });
-
-  console.log("connecting...");
-  await connection
-    .start()
-    .then(() => {
-      console.log("Connected!");
-    })
-    .catch(console.error);
-  return connection;
 }
 
 async function callAzureFunctionGet(endpoint: string): Promise<any> {
@@ -609,6 +565,7 @@ async function callAzureFunctionGet(endpoint: string): Promise<any> {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${firebaseToken}`,
+        userId: myUserId,
       },
     });
     console.log(r);
