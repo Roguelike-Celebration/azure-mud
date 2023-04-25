@@ -52,7 +52,7 @@ import { VirtualizationProvider } from './components/VirtualizationProvider'
 import WelcomeModalView from './components/WelcomeModalView'
 import YouAreBannedView from './components/YouAreBannedView'
 import { Modal } from './modals'
-import { checkIsRegistered, connect, getServerSettings } from './networking'
+import { checkIsRegistered, connect } from './networking'
 import reducer, { defaultState, State } from './reducer'
 import * as Storage from './storage'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
@@ -134,7 +134,9 @@ const App = () => {
         const MAX_MESSAGES_TO_LOAD = 400
         dispatch(
           LoadMessageArchiveAction(
-            messageArchive ? messageArchive.messages.slice(-MAX_MESSAGES_TO_LOAD) : [],
+            messageArchive
+              ? messageArchive.messages.slice(-MAX_MESSAGES_TO_LOAD)
+              : [],
             messageArchive ? messageArchive.whispers : []
           )
         )
@@ -150,7 +152,6 @@ const App = () => {
 
         dispatch(IsRegisteredAction())
         connect(userId, dispatch)
-        getServerSettings(dispatch)
 
         // WARNING: Prior to the "calculate number of faces for videochat" code,
         // there was a no-op resize handler here.
@@ -405,7 +406,7 @@ const App = () => {
     }
     case Modal.SpecialFeatureText: {
       const room = state.roomData[state.roomId]
-      innerModalView = <SpecialTextModalView text={room.specialFeatureText}/>
+      innerModalView = <SpecialTextModalView text={room.specialFeatureText} />
     }
   }
 
@@ -444,7 +445,7 @@ const App = () => {
                           : 'app'
                       }
                     >
-                      <ReactTooltip/>
+                      <ReactTooltip />
                       {shouldShowMenu ? (
                         <span>
                           <SideNavView
