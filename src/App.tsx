@@ -1,7 +1,7 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect } from 'react'
 
-import _ from "lodash";
-import { IconContext } from "react-icons/lib";
+import _ from 'lodash'
+import { IconContext } from 'react-icons/lib'
 import {
   Action,
   AuthenticateAction,
@@ -15,64 +15,64 @@ import {
   SetTextOnlyModeAction,
   SetUseSimpleNamesAction,
   ShowSideMenuAction,
-  SpaceIsClosedAction,
-} from "./Actions";
-import { currentUser, onAuthenticationStateChange } from "./authentication";
-import BadgesModalView from "./components/BadgesModalView";
-import BadgeUnlockModal from "./components/BadgeUnlockModal";
-import ClientDeployedModal from "./components/ClientDeployedModal";
-import CodeOfConductView from "./components/CodeOfConductView";
-import DisconnectModalView from "./components/DisconnectModalView";
-import EmailVerifiedView from "./components/EmailVerifiedView";
-import DullDoorModalView from "./components/feature/DullDoorViews";
-import FullRoomIndexModalView from "./components/feature/FullRoomIndexViews";
-import RainbowGateModalView from "./components/feature/RainbowGateViews";
-import GoHomeView from "./components/GoHomeView";
-import HappeningNowView from "./components/HappeningNowView";
-import HelpView from "./components/HelpView";
-import InputView from "./components/InputView";
-import LoggedOutView from "./components/LoggedOutView";
-import MapModalView from "./components/MapModalView";
-import MediaChatView from "./components/MediaChatView";
-import MediaSelectorView from "./components/MediaSelectorView";
-import { MessageList } from "./components/MessageList";
-import { ModalView } from "./components/ModalView";
-import { NoteWallView } from "./components/NoteWallView";
-import ProfileEditView from "./components/ProfileEditView";
-import ProfileView from "./components/ProfileView";
-import RiddleModalView from "./components/RiddleModal";
-import RoomListView from "./components/RoomListView";
-import RoomView from "./components/RoomView";
-import ScheduleView from "./components/ScheduleView";
-import ServerSettingsView from "./components/ServerSettingsView";
-import SettingsView from "./components/SettingsView";
-import SideNavView from "./components/SideNavView";
-import VerifyEmailView from "./components/VerifyEmailView";
-import { VirtualizationProvider } from "./components/VirtualizationProvider";
-import WelcomeModalView from "./components/WelcomeModalView";
-import YouAreBannedView from "./components/YouAreBannedView";
-import { Modal } from "./modals";
-import { checkIsRegistered, connect, getServerSettings } from "./networking";
-import reducer, { defaultState, State } from "./reducer";
-import * as Storage from "./storage";
-import { ThunkDispatch, useReducerWithThunk } from "./useReducerWithThunk";
-import { TwilioChatContextProvider } from "./videochat/twilioChatContext";
-import SpecialTextModalView from "./components/SpecialTextModalView";
-import ReactTooltip from "react-tooltip";
+  SpaceIsClosedAction
+} from './Actions'
+import { currentUser, onAuthenticationStateChange } from './authentication'
+import BadgesModalView from './components/BadgesModalView'
+import BadgeUnlockModal from './components/BadgeUnlockModal'
+import ClientDeployedModal from './components/ClientDeployedModal'
+import CodeOfConductView from './components/CodeOfConductView'
+import DisconnectModalView from './components/DisconnectModalView'
+import EmailVerifiedView from './components/EmailVerifiedView'
+import DullDoorModalView from './components/feature/DullDoorViews'
+import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
+import RainbowGateModalView from './components/feature/RainbowGateViews'
+import GoHomeView from './components/GoHomeView'
+import HappeningNowView from './components/HappeningNowView'
+import HelpView from './components/HelpView'
+import InputView from './components/InputView'
+import LoggedOutView from './components/LoggedOutView'
+import MapModalView from './components/MapModalView'
+import MediaChatView from './components/MediaChatView'
+import MediaSelectorView from './components/MediaSelectorView'
+import { MessageList } from './components/MessageList'
+import { ModalView } from './components/ModalView'
+import { NoteWallView } from './components/NoteWallView'
+import ProfileEditView from './components/ProfileEditView'
+import ProfileView from './components/ProfileView'
+import RiddleModalView from './components/RiddleModal'
+import RoomListView from './components/RoomListView'
+import RoomView from './components/RoomView'
+import ScheduleView from './components/ScheduleView'
+import ServerSettingsView from './components/ServerSettingsView'
+import SettingsView from './components/SettingsView'
+import SideNavView from './components/SideNavView'
+import VerifyEmailView from './components/VerifyEmailView'
+import { VirtualizationProvider } from './components/VirtualizationProvider'
+import WelcomeModalView from './components/WelcomeModalView'
+import YouAreBannedView from './components/YouAreBannedView'
+import { Modal } from './modals'
+import { checkIsRegistered, connect, getServerSettings } from './networking'
+import reducer, { defaultState, State } from './reducer'
+import * as Storage from './storage'
+import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
+import { TwilioChatContextProvider } from './videochat/twilioChatContext'
+import SpecialTextModalView from './components/SpecialTextModalView'
+import ReactTooltip from 'react-tooltip'
 
 export const DispatchContext =
-  createContext<ThunkDispatch<Action, State>>(null);
-export const MessagesContext = createContext<State["messages"]>(null);
-export const UserMapContext = createContext(null);
-export const SettingsContext = createContext(null);
-export const IsMobileContext = createContext(null);
-export const RoomDataContext = createContext(null);
+  createContext<ThunkDispatch<Action, State>>(null)
+export const MessagesContext = createContext<State['messages']>(null)
+export const UserMapContext = createContext(null)
+export const SettingsContext = createContext(null)
+export const IsMobileContext = createContext(null)
+export const RoomDataContext = createContext(null)
 
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(
     reducer,
     defaultState
-  );
+  )
 
   useEffect(() => {
     // TODO: This flow has a lot of confusing, potentially duplicated messages that I'm not sure are necessary
@@ -81,57 +81,57 @@ const App = () => {
       if (!user) {
         dispatch(
           AuthenticateAction(undefined, undefined, undefined, undefined)
-        );
+        )
       } else if (user.shouldVerifyEmail) {
-        const userId = user.id;
-        const providerId = user.providerId;
-        dispatch(AuthenticateAction(userId, userId, providerId, true));
+        const userId = user.id
+        const providerId = user.providerId
+        dispatch(AuthenticateAction(userId, userId, providerId, true))
       } else {
-        const user = currentUser();
-        const userId = user.id;
-        const providerId = user.providerId;
+        const user = currentUser()
+        const userId = user.id
+        const providerId = user.providerId
 
         const { registeredUsername, spaceIsClosed, isMod, isBanned } =
-          await checkIsRegistered();
+          await checkIsRegistered()
         if (!registeredUsername) {
           // If email, use ID to not leak, otherwise use service's default display name (for Twitter, their handle)
-          const defaultDisplayName = user.email ? userId : user.displayName;
+          const defaultDisplayName = user.email ? userId : user.displayName
           dispatch(
             AuthenticateAction(userId, defaultDisplayName, providerId, false)
-          );
-          return;
+          )
+          return
         }
 
         // TODO: I thiiiink we want this to be in an 'else'
         dispatch(
           AuthenticateAction(userId, registeredUsername, providerId, false)
-        );
+        )
 
         if (isBanned) {
           dispatch(
             PlayerBannedAction({
               id: userId,
               username: registeredUsername,
-              isBanned: isBanned,
+              isBanned: isBanned
             })
-          );
-          dispatch(IsRegisteredAction());
-          return;
+          )
+          dispatch(IsRegisteredAction())
+          return
         }
 
         if (spaceIsClosed) {
-          dispatch(SpaceIsClosedAction());
+          dispatch(SpaceIsClosedAction())
 
           if (!isMod) {
             // non-mods shouldn't subscribe to SignalR if the space is closed
-            dispatch(IsRegisteredAction());
-            return;
+            dispatch(IsRegisteredAction())
+            return
           }
         }
 
-        const messageArchive = await Storage.getMessages();
+        const messageArchive = await Storage.getMessages()
         // I'm styling it like a constant but it's just here; look it's late and the conf is in two days
-        const MAX_MESSAGES_TO_LOAD = 400;
+        const MAX_MESSAGES_TO_LOAD = 400
         dispatch(
           LoadMessageArchiveAction(
             messageArchive
@@ -139,19 +139,19 @@ const App = () => {
               : [],
             messageArchive ? messageArchive.whispers : []
           )
-        );
+        )
 
-        const useSimpleNames = await Storage.getUseSimpleNames();
-        dispatch(SetUseSimpleNamesAction(useSimpleNames));
-        const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving();
-        dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving));
-        const textOnlyMode = await Storage.getTextOnlyMode();
-        dispatch(SetTextOnlyModeAction(textOnlyMode, false));
-        const captionsEnabled = await Storage.getCaptionsEnabled();
-        dispatch(SetCaptionsEnabledAction(captionsEnabled));
+        const useSimpleNames = await Storage.getUseSimpleNames()
+        dispatch(SetUseSimpleNamesAction(useSimpleNames))
+        const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
+        dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
+        const textOnlyMode = await Storage.getTextOnlyMode()
+        dispatch(SetTextOnlyModeAction(textOnlyMode, false))
+        const captionsEnabled = await Storage.getCaptionsEnabled()
+        dispatch(SetCaptionsEnabledAction(captionsEnabled))
 
-        dispatch(IsRegisteredAction());
-        connect(userId, dispatch);
+        dispatch(IsRegisteredAction())
+        connect(userId, dispatch)
 
         // WARNING: Prior to the "calculate number of faces for videochat" code,
         // there was a no-op resize handler here.
@@ -159,63 +159,63 @@ const App = () => {
         // I frankly have no idea what this was doing,
         // and worry my changes will cause unexpected errors
         // -Em, 10/12/2021
-        window.addEventListener("resize", () => {});
+        window.addEventListener('resize', () => {})
         const onResize = () => {
           // It seems like a smell to do this in here and have to grab into #main,
           // but I think it's fine?
-          const VideoWidth = 180;
-          const $main = document.getElementById("main");
+          const VideoWidth = 180
+          const $main = document.getElementById('main')
           // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
           if ($main) {
             const numberOfFaces =
-              Math.floor($main.clientWidth / VideoWidth) - 1;
-            dispatch(SetNumberOfFacesAction(numberOfFaces));
+              Math.floor($main.clientWidth / VideoWidth) - 1
+            dispatch(SetNumberOfFacesAction(numberOfFaces))
           } else {
             console.warn(
               "Attempted to call onResize when 'main' element was null; will default to show no faces"
-            );
+            )
           }
-        };
+        }
 
         // Our initial paint time is stupid slow
         // but waiting a long time seems to ensure that #main exists
-        setTimeout(onResize, 2000);
+        setTimeout(onResize, 2000)
         window.addEventListener(
-          "resize",
+          'resize',
           _.throttle(onResize, 100, { trailing: true })
-        );
+        )
       }
-    });
-  }, []);
+    })
+  }, [])
 
-  const isMobile = window.outerWidth < 500;
+  const isMobile = window.outerWidth < 500
 
   const profile = state.visibleProfile ? (
     <ProfileView user={state.visibleProfile} whispers={state.whispers} />
   ) : (
-    ""
-  );
+    ''
+  )
 
   // This is kind of janky!
   if (
     currentUser() &&
     currentUser().isSignInWithEmailLink(window.location.href)
   ) {
-    return <EmailVerifiedView />;
+    return <EmailVerifiedView />
   }
 
   if (!state.checkedAuthentication) {
-    return <div />;
+    return <div />
   }
 
   if (state.checkedAuthentication && state.mustVerifyEmail) {
     return (
       <VerifyEmailView userEmail={currentUser().email} dispatch={dispatch} />
-    );
+    )
   }
 
   if (state.checkedAuthentication && !state.authenticated) {
-    return <LoggedOutView />;
+    return <LoggedOutView />
   }
 
   if (!state.hasRegistered) {
@@ -226,21 +226,21 @@ const App = () => {
         defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
         prepopulateTwitterWithDefaultHandle={
-          state.authenticationProvider === "twitter"
+          state.authenticationProvider === 'twitter'
         }
       />
-    );
+    )
   }
 
   if (state.isClosed && !state.userMap[state.userId].isMod) {
-    return <GoHomeView />;
+    return <GoHomeView />
   } else if (state.isBanned) {
-    return <YouAreBannedView />;
+    return <YouAreBannedView />
   }
 
   // It's slightly weird we now construct this here and pass it as a prop to
   // RoomView instead of constructing it there. Shrug, the conf is in 2 days.
-  let videoChatView;
+  let videoChatView
   if (
     state.roomData &&
     state.roomId &&
@@ -257,14 +257,14 @@ const App = () => {
         audioOnlyMode={state.audioOnlyMode}
         currentUser={state.userMap[state.userId]}
       />
-    );
+    )
   }
 
-  let innerModalView, modalView;
+  let innerModalView, modalView
 
   // TODO: If we get more modal options than just a size boolean, make this an options object.
-  let modalIsFullScreen = false;
-  let modalIsUnclosable = false;
+  let modalIsFullScreen = false
+  let modalIsUnclosable = false
 
   switch (state.activeModal) {
     case Modal.ProfileEdit: {
@@ -274,11 +274,11 @@ const App = () => {
           defaultHandle={state.userMap[state.userId].username}
           user={state.profileData}
         />
-      );
-      break;
+      )
+      break
     }
     case Modal.NoteWall: {
-      const room = state.roomData[state.roomId];
+      const room = state.roomData[state.roomId]
       innerModalView = (
         <NoteWallView
           notes={room.notes}
@@ -286,8 +286,8 @@ const App = () => {
           user={state.profileData}
           serverSettings={state.serverSettings}
         />
-      );
-      break;
+      )
+      break
     }
     case Modal.Settings: {
       innerModalView = (
@@ -295,11 +295,11 @@ const App = () => {
           keepCameraWhenMoving={state.keepCameraWhenMoving}
           captionsEnabled={state.captionsEnabled}
         />
-      );
-      break;
+      )
+      break
     }
     case Modal.MediaSelector: {
-      console.log("Opening media selector");
+      console.log('Opening media selector')
       // TODO: Fix this userIsSpeaking (it was...broken in the first place but if we're bordering we should do it here)
       innerModalView = (
         <MediaSelectorView
@@ -311,8 +311,8 @@ const App = () => {
           roomId={state.roomId}
           keepCameraWhenMoving={state.keepCameraWhenMoving}
         />
-      );
-      break;
+      )
+      break
     }
     case Modal.Badges: {
       innerModalView = (
@@ -321,42 +321,42 @@ const App = () => {
           unlockedBadges={state.profileData?.unlockedBadges}
           unlockableBadges={state.unlockableBadges}
         />
-      );
-      break;
+      )
+      break
     }
     case Modal.BadgeUnlock: {
-      innerModalView = <BadgeUnlockModal badge={state.justUnlockedBadge} />;
-      break;
+      innerModalView = <BadgeUnlockModal badge={state.justUnlockedBadge} />
+      break
     }
     case Modal.CodeOfConduct: {
-      innerModalView = <CodeOfConductView />;
-      break;
+      innerModalView = <CodeOfConductView />
+      break
     }
     case Modal.Schedule: {
-      innerModalView = <ScheduleView />;
-      break;
+      innerModalView = <ScheduleView />
+      break
     }
     case Modal.Map: {
-      modalIsFullScreen = true;
+      modalIsFullScreen = true
       innerModalView = (
         <MapModalView
           presenceData={state.presenceData}
           currentRoomId={state.roomId}
         />
-      );
-      break;
+      )
+      break
     }
     case Modal.RoomList: {
-      innerModalView = <RoomListView rooms={Object.values(state.roomData)} />;
-      break;
+      innerModalView = <RoomListView rooms={Object.values(state.roomData)} />
+      break
     }
     case Modal.Help: {
-      innerModalView = <HelpView />;
-      break;
+      innerModalView = <HelpView />
+      break
     }
     case Modal.Welcome: {
-      innerModalView = <WelcomeModalView />;
-      break;
+      innerModalView = <WelcomeModalView />
+      break
     }
     case Modal.ServerSettings: {
       innerModalView = (
@@ -364,17 +364,17 @@ const App = () => {
           serverSettings={state.serverSettings}
           roomData={state.roomData}
         />
-      );
-      break;
+      )
+      break
     }
     case Modal.ClientDeployed: {
-      innerModalView = <ClientDeployedModal />;
-      break;
+      innerModalView = <ClientDeployedModal />
+      break
     }
     case Modal.Disconnected: {
-      modalIsUnclosable = true;
-      innerModalView = <DisconnectModalView userId={state.userId} />;
-      break;
+      modalIsUnclosable = true
+      innerModalView = <DisconnectModalView userId={state.userId} />
+      break
     }
     case Modal.HappeningNow: {
       innerModalView = (
@@ -382,31 +382,31 @@ const App = () => {
           roomData={state.roomData}
           entries={state.serverSettings.happeningNowEntries}
         />
-      );
-      break;
+      )
+      break
     }
     case Modal.FeatureRainbowGate: {
-      innerModalView = <RainbowGateModalView />;
-      break;
+      innerModalView = <RainbowGateModalView />
+      break
     }
     case Modal.FeatureDullDoor: {
-      innerModalView = <DullDoorModalView />;
-      break;
+      innerModalView = <DullDoorModalView />
+      break
     }
     case Modal.FeatureFullRoomIndex: {
       innerModalView = (
         <FullRoomIndexModalView rooms={Object.values(state.roomData)} />
-      );
-      break;
+      )
+      break
     }
     case Modal.Riddles: {
-      const room = state.roomData[state.roomId];
-      innerModalView = <RiddleModalView riddles={room.riddles} />;
-      break;
+      const room = state.roomData[state.roomId]
+      innerModalView = <RiddleModalView riddles={room.riddles} />
+      break
     }
     case Modal.SpecialFeatureText: {
-      const room = state.roomData[state.roomId];
-      innerModalView = <SpecialTextModalView text={room.specialFeatureText} />;
+      const room = state.roomData[state.roomId]
+      innerModalView = <SpecialTextModalView text={room.specialFeatureText} />
     }
   }
 
@@ -415,18 +415,18 @@ const App = () => {
       <ModalView fullScreen={modalIsFullScreen} unclosable={modalIsUnclosable}>
         {innerModalView}
       </ModalView>
-    );
+    )
   }
 
   const showMenu = () => {
-    dispatch(ShowSideMenuAction());
-  };
+    dispatch(ShowSideMenuAction())
+  }
 
-  const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible;
+  const shouldShowMenu = !isMobile || state.mobileSideMenuIsVisible
 
   // TODO: userMapContext should actually do the thing
   return (
-    <IconContext.Provider value={{ style: { verticalAlign: "middle" } }}>
+    <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
         <MessagesContext.Provider value={state.messages}>
           <TwilioChatContextProvider active={!state.textOnlyMode}>
@@ -441,8 +441,8 @@ const App = () => {
                     <div
                       id={
                         state.visibleProfile && !isMobile
-                          ? "app-profile-open"
-                          : "app"
+                          ? 'app-profile-open'
+                          : 'app'
                       }
                     >
                       <ReactTooltip />
@@ -505,7 +505,7 @@ const App = () => {
         </MessagesContext.Provider>
       </DispatchContext.Provider>
     </IconContext.Provider>
-  );
-};
+  )
+}
 
-export default App;
+export default App
