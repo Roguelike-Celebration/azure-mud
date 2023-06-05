@@ -72,7 +72,7 @@ jobs:
       - name: Deploy Backend
         uses: Azure/functions-action@v1
         with:
-          app-name: ${{ inputs.AZURE_FUNCTION_APP_NAME }}
+          app-name: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
           package: server
           scm-do-build-during-deployment: true
