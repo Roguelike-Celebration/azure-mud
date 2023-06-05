@@ -8,15 +8,16 @@ jobs:
   build-and-deploy:
     uses: ./.github/workflows/deploy.yml
     with:
-      SERVER_HOSTNAME: ${{ secrets.SERVER_HOSTNAME }}
-      AZURE_FUNCTION_APP_NAME: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
+
     secrets:
+      SERVER_HOSTNAME: ${{ secrets.SERVER_HOSTNAME }}
       FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
       FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
       FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
       FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
       FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
       FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+      AZURE_FUNCTION_APP_NAME: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
       AZURE_FUNCTIONAPP_PUBLISH_PROFILE: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
       FIREBASE_SERVER_JSON: ${{ secrets.FIREBASE_SERVER_JSON }}
       DEPLOY_WEBHOOK_KEY: ${{ secrets.DEPLOY_WEBHOOK_KEY }}

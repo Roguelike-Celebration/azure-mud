@@ -2,15 +2,10 @@ name: Build and Deploy to Azure Functions and GH Pages
 
 on:
   workflow_call:
-    inputs:
-      SERVER_HOSTNAME:
-        required: true
-        type: string
-      AZURE_FUNCTION_APP_NAME:
-        required: true
-        type: string
     secrets:
       # LMAO at how long this is.
+      SERVER_HOSTNAME:
+        required: true
       FIREBASE_API_KEY:
         required: true
       FIREBASE_AUTH_DOMAIN:
@@ -22,6 +17,8 @@ on:
       FIREBASE_MESSAGING_SENDER_ID:
         required: true
       FIREBASE_APP_ID:
+        required: true
+      AZURE_FUNCTION_APP_NAME:
         required: true
       AZURE_FUNCTIONAPP_PUBLISH_PROFILE:
         required: true
@@ -42,7 +39,7 @@ jobs:
       - name: Build Frontend
         run: npm run build
         env:
-          SERVER_HOSTNAME: ${{ inputs.SERVER_HOSTNAME }}
+          SERVER_HOSTNAME: ${{ secrets.SERVER_HOSTNAME }}
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
@@ -59,7 +56,7 @@ jobs:
       - name: Notify connected clients
         run: node deployWebhook.cjs
         env:
-          APP_NAME: ${{ inputs.AZURE_FUNCTION_APP_NAME }}
+          APP_NAME: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
           TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}
 
       - name: Create Firebase JSON file
