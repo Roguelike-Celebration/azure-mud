@@ -23,8 +23,6 @@ on:
         required: true
       FIREBASE_APP_ID:
         required: true
-      GITHUB_TOKEN:
-        required: true
       AZURE_FUNCTIONAPP_PUBLISH_PROFILE:
         required: true
       FIREBASE_SERVER_JSON:
