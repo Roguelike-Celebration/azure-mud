@@ -1,8 +1,26 @@
 name: Build and Deploy to GH Pages
 
 on:
-  push:
-    branches: [main]
+  workflow_call:
+    secrets:
+      SERVER_HOSTNAME:
+        required: true
+      FIREBASE_API_KEY:
+        required: true
+      FIREBASE_AUTH_DOMAIN:
+        required: true
+      FIREBASE_PROJECT_ID:
+        required: true
+      FIREBASE_STORAGE_BUCKET:
+        required: true
+      FIREBASE_MESSAGING_SENDER_ID:
+        required: true
+      FIREBASE_APP_ID:
+        required: true
+      GITHUB_TOKEN:
+        required: true
+      AZURE_FUNCTION_APP_NAME:
+        required: true
 
 jobs:
   build:

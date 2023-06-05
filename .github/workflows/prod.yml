@@ -1,0 +1,5 @@
+uses: ./.github/workflows/deploy.yml@main
+    with:
+      config-path: .github/labeler.yml
+    secrets:
+      envPAT: ${{ secrets.envPAT }}
