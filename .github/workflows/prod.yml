@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
-    uses: ./.github/workflows/deploy.yml@main
+    uses: ./.github/workflows/deploy.yml
     with:
       SERVER_HOSTNAME: { { secrets.SERVER_HOSTNAME } }
       AZURE_FUNCTION_APP_NAME: { { secrets.AZURE_FUNCTION_APP_NAME } }
