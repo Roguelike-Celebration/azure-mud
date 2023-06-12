@@ -171,7 +171,7 @@
 		},
 		{
 			"apiVersion": "2021-01-15",
-			"name": "[parameters('name')]",
+			"name": "[parameters('aswaName')]",
 			"type": "Microsoft.Web/staticSites",
 			"location": "[resourceGroup().location]",
 			"properties": {
