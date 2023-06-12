@@ -35,8 +35,8 @@
 		"signalRName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-signalr')]",
 		"redisCacheName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-redis')]",
 		"appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-ai')]",
-		"aswaName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-aswa')]"
-
+		"aswaName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-aswa')]",
+		"pubsubName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-pubsub')]"
 	},
 	"resources": [{
 			"type": "Microsoft.Storage/storageAccounts",
@@ -242,6 +242,65 @@
 					}]
 				}
 			}
-		}
-	]
+		},
+
+			{
+				"type": "Microsoft.SignalRService/webPubSub",
+				"apiVersion": "2021-10-01",
+				"name": "[parameters('pubsubName')]",
+				"location": "[resourceGroup().location)]",
+				"sku": {
+					"capacity": 1,
+					"name": "Free_F1",
+					"tier": "Free"
+				},
+				"identity": {
+					"type": "None"
+				},
+				"properties": {
+					"disableAadAuth": false,
+					"disableLocalAuth": false,
+					"liveTraceConfiguration": {
+						"categories": [
+							{
+								"enabled": "false",
+								"name": "ConnectivityLogs"
+							},
+							{
+								"enabled": "false",
+								"name": "MessagingLogs"
+							}
+						],
+						"enabled": "false"
+					},
+					"networkACLs": {
+						"defaultAction": "Deny",
+						"publicNetwork": {
+							"allow": [
+								"ServerConnection",
+								"ClientConnection",
+								"RESTAPI",
+								"Trace"
+							]
+						}
+					},
+					"publicNetworkAccess": "Enabled",
+					"resourceLogConfiguration": {
+						"categories": [
+							{
+								"enabled": "true",
+								"name": "ConnectivityLogs"
+							},
+							{
+								"enabled": "true",
+								"name": "MessagingLogs"
+							}
+						]
+					},
+					"tls": {
+						"clientCertEnabled": false
+					}
+				}
+			}
+		]
 }
