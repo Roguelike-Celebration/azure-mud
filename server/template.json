@@ -171,7 +171,7 @@
 		},
 		{
 			"apiVersion": "2021-01-15",
-			"name": "[parameters('aswaName')]",
+			"name": "[variables('aswaName')]",
 			"type": "Microsoft.Web/staticSites",
 			"location": "[resourceGroup().location]",
 			"properties": {
@@ -247,8 +247,8 @@
 		{
 			"type": "Microsoft.SignalRService/webPubSub",
 			"apiVersion": "2021-10-01",
-			"name": "[parameters('pubsubName')]",
-			"location": "[resourceGroup().location)]",
+			"name": "[variables('pubsubName')]",
+			"location": "[resourceGroup().location]",
 			"sku": {
 				"capacity": 1,
 				"name": "Free_F1",
