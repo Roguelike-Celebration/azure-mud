@@ -15,6 +15,18 @@
 			"metadata": {
 				"description": "The hostname for where your frontend will be hosted. This must be served over HTTPS.)"
 			}
+		},   
+		"repositoryToken": {
+			"type": "string",
+			"metadata": {
+				"description": "The GitHub personal access token used to access your repository."
+			}
+		},
+		"repositoryUrl": {
+			"type": "string",
+			"metadata": {
+				"description": "The URL of the GitHub repository for your azure-mud fork"
+			}
 		}
 	},
 	"variables": {
@@ -22,7 +34,9 @@
 		"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'functions')]",
 		"signalRName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-signalr')]",
 		"redisCacheName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-redis')]",
-		"appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-ai')]"
+		"appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-ai')]",
+		"aswaName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-aswa')]"
+
 	},
 	"resources": [{
 			"type": "Microsoft.Storage/storageAccounts",
@@ -154,6 +168,24 @@
 			"properties": {
 				"applicationId": "[variables('appInsightsName')]"
 			}
+		},
+		{
+			"apiVersion": "2021-01-15",
+			"name": "[parameters('name')]",
+			"type": "Microsoft.Web/staticSites",
+			"location": "[resourceGroup().location]",
+			"properties": {
+					"repositoryUrl": "[parameters('repositoryUrl')]",
+					"branch": "main",
+					"repositoryToken": "[parameters('repositoryToken')]",
+					"buildProperties": {
+							"skipGithubActionWorkflowGeneration": true
+					}
+			},
+			"sku": {
+					"Tier": "Free",
+					"Name": "Free]"
+			},
 		},
 		{
 			"type": "Microsoft.SignalRService/SignalR",
