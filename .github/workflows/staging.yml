@@ -8,7 +8,7 @@ jobs:
   build-and-deploy:
     uses: ./.github/workflows/deploy.yml
     secrets:
-      SERVER_HOSTNAME: ${{ secrets.SERVER_HOSTNAME }}
+      SERVER_HOSTNAME: ${{ secrets.STAGING_SERVER_HOSTNAME }}
       FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
       FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
       FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
