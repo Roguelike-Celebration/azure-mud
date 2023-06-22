@@ -11,7 +11,6 @@ import config from '../config'
 interface Props {
   isFTUE: boolean;
   defaultHandle?: string;
-  prepopulateTwitterWithDefaultHandle?: boolean
   user?: PublicUser;
 }
 
@@ -29,7 +28,7 @@ function sanitizeUsername (s: string) : string {
 export default function ProfileEditView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
-  const { defaultHandle, user, prepopulateTwitterWithDefaultHandle } = props
+  const { defaultHandle, user } = props
 
   const [handle, setHandle] = useState(
     (user && user.username) || defaultHandle || ''
@@ -43,7 +42,6 @@ export default function ProfileEditView (props: Props) {
   const [url, setUrl] = useState((user && user.url) || '')
   const [twitter, setTwitter] = useState(
     (user && user.twitterHandle) ||
-    (prepopulateTwitterWithDefaultHandle && defaultHandle) ||
     '')
 
   const close = () => {

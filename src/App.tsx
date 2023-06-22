@@ -225,9 +225,6 @@ const App = () => {
         isFTUE={true}
         defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
-        prepopulateTwitterWithDefaultHandle={
-          state.authenticationProvider === 'twitter'
-        }
       />
     )
   }
