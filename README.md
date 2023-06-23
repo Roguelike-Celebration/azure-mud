@@ -175,7 +175,7 @@ Outdated info: The ASCII map was created with [MonoDraw](https://monodraw.helfto
 
 ## Adding a Mod
 
-A moderator has the ability to make any other user a mod by clicking their username and choosing the appropriate option in the space. That said, you'll need to manually add the first mod.
+A moderator has the ability to make any other user a mod by clicking their username and choosing the appropriate option in the space. By default, the first user who creates a user account will become a mod. However, if something gets messed up and you need to do this manually, here's how to add a mod directly to the database:
 
 1. Find the user ID of the user you want to make a mod. In the space, if you open your browser's development tools and go to the network inspector, and then click their name (including your own name in the top-left corner if you want to mod your own user) and "view profile", you will see a HTTP request to `/fetchProfile` that contains the userId in JSON as the request payload.
 
@@ -191,4 +191,4 @@ If you're looking to get involved: awesome! There's a "Good First Issue" tag in 
 
 Fork this repo, make your changes, open a pull request! Once you've contributed, I'm fairly liberal with granting people contributor access, but the `main` branch is still locked.
 
-Pull requests are run through a few automated checks. If the `ESLint` checks fail, first try running `npm run eslint-fix` to try to automatically fix as many of the errors as you can; anything that doesn't catch will need to be fixed manually.
+Pull requests are run through a few automated checks. If the `ESLint` checks fail, first try running `npm run lint-fix` to try to automatically fix as many of the errors as you can; anything that doesn't catch will need to be fixed manually.

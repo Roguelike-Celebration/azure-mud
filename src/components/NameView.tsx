@@ -45,7 +45,7 @@ export default function NameView (props: Props) {
 
   // This sometimes gets called before `connect` returns any users
   // That itself is a bug to fix, but this can at least guard against it.
-  if (!user || Object.keys(userMap).length === 1) {
+  if (!user || (Object.keys(userMap).length === 1 && !isSelf)) {
     return <div />
   }
 
