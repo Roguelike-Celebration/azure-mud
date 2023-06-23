@@ -56,6 +56,10 @@ const Redis: RedisInternal = {
     return getSet(activeUsersKey) || []
   },
 
+  async getAllUserIds() {
+    return await getSet(allUserIdsKey) || []
+  },
+
   // TODO: This is potentially unperformant
   // Storing all users as a Redis set is tricky,
   // since profile updates need to replace the existing user,

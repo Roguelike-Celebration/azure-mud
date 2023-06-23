@@ -1,6 +1,7 @@
 import { DB } from './database'
 import { Badge, FreeBadges } from './badges'
 import { uniqWith } from 'lodash'
+import resetRoomData from './endpoints/resetRoomData';
 
 // TODO: If we have tooltip popups showing profile info,
 // the distinction between a 'full' and 'minimal' user is no longer useful
@@ -134,7 +135,23 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   } as User // TODO: Could use real validation here?
   console.log('New profile data', newProfile)
 
+  const allDbUsers = await DB.getAllUserIds()
+  const isFirstUser = allDbUsers.length === 0 || (allDbUsers.length === 1 && allDbUsers[0] === userId && !profile.isMod)
+
+  console.log("Is first DB user?", isFirstUser, allDbUsers)
+  if (isFirstUser) {
+    newProfile.isMod = true
+    await resetRoomData(newProfile, {}, console.log);
+  }
+
+
   const result = await DB.setUserProfile(userId, newProfile)
+
+  if (isFirstUser) {
+    console.log('First user, making them an admin')
+    await DB.setModStatus(userId, true)
+  }
+
   console.log('Update user result', result)
   return newProfile
 }

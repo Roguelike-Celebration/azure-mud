@@ -21,6 +21,9 @@ interface Database {
   /** Returns an array of users for all active logged-in users */
   getActiveUsers(): Promise<string[]>;
 
+  /** Returns all user IDs for registered users */
+  getAllUserIds(): Promise<string[]>;
+
   /** Returns all registered user objects */
   getAllUsers(): Promise<User[]>;
 
