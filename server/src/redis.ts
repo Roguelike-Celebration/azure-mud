@@ -56,7 +56,7 @@ const Redis: RedisInternal = {
     return getSet(activeUsersKey) || []
   },
 
-  async getAllUserIds() {
+  async getAllUserIds () {
     return await getSet(allUserIdsKey) || []
   },
 

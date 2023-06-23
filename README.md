@@ -191,4 +191,4 @@ If you're looking to get involved: awesome! There's a "Good First Issue" tag in 
 
 Fork this repo, make your changes, open a pull request! Once you've contributed, I'm fairly liberal with granting people contributor access, but the `main` branch is still locked.
 
-Pull requests are run through a few automated checks. If the `ESLint` checks fail, first try running `npm run eslint-fix` to try to automatically fix as many of the errors as you can; anything that doesn't catch will need to be fixed manually.
+Pull requests are run through a few automated checks. If the `ESLint` checks fail, first try running `npm run lint-fix` to try to automatically fix as many of the errors as you can; anything that doesn't catch will need to be fixed manually.
