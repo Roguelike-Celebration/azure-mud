@@ -22,7 +22,7 @@ In context of Roguelike Celebration, we think of this project as being composed 
 
 ### Content Dev
 
-There is a browser-based "level editor" / CMS located at `/admin/index.html` for a valid instance (e.g. https`://chat.roguelike.club/admin/index.html`). To access the CMS, you will need to be an admin in that instance. Ask an existing admin, or see instructions at the end of this README if you're setting up your own instance.
+There is a browser-based "level editor" / CMS located at `/admin/index.html` for a valid instance (e.g. `https://chat.roguelike.club/admin/index.html`). To access the CMS, you will need to be an admin in that instance. Ask an existing admin, or see instructions at the end of this README if you're setting up your own instance.
 
 There's no public docs yet for this editor tool, but hopefully it should be relatively self-explanatory given an understanding of our room format (which I think also sadly isn't documented, but will look familiar to those who have used Twine).
 
@@ -67,14 +67,14 @@ After completing ARM template deployment, there are still a few things you need 
 #### Deployment: If you're a Roguelike Celebration volunteer
 If you are a volunteer working on the core Roguelike Celebration space, you can use our development Firebase account. If you do not plan to deploy your frontend anywhere (i.e. you will just access it at `localhost`, you do not need to do steps beyond 2.
 
-    1. In the shared password manager, find the entry for "Dev Firebase"
-    2. In your GitHub repo, add Repository Secrets (Settings -> Secrets -> New Repository Secret) containing each field from the password manager entry. You should name these Secrets `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`, and `FIREBASE_SERVER_JSON`, the latter of which should contain the entire text of the attached JSON file.
-    3. If you'd like to test your frontend locally via `localhost`, you need to add this locally via a `.env` file. In a local copy of the repo, rename `.env.sample` to `.env` and replace the dummy values with the appropriate real data.
-    4. Go to the Firebase Console (https://console.firebase.google.com/), logging in as the shared account.
-    5. Create one more GitHub Actions repository secret, called `SERVER_HOSTNAME`, containing the URL to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template). Do the same thing to your local `.env` file as appropriate.
-    6. Since you're using the shared dev Firebase account, you'll need to tell Firebase to allow your publicly-hosted dev frontend. Log into Firebase as the shared account, and select the "Roguelike Celebration dev" project.
-    6. Select "Build" and then "Authentication" from the left-side menu, then "Settings" and "Authorized domains" from the main pane
-    7. Click "add domain", enter the domain where your deployed dev frontend will live, and click "add". If you set up a custom domain, use that. If you don't know what this URL is, go to the Azure Portal, find the Static Web Apps instance in your project's resource group, and enter the URL it gives you. It's usually something along the lines of `https://[adjective]-[noun]-[hexadecimal numbers].azurestaticapps.net`.
+1. In the shared password manager, find the entry for "Dev Firebase"
+2. In your GitHub repo, add Repository Secrets (Settings -> Secrets -> New Repository Secret) containing each field from the password manager entry. You should name these Secrets `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`, and `FIREBASE_SERVER_JSON`, the latter of which should contain the entire text of the attached JSON file.
+3. If you'd like to test your frontend locally via `localhost`, you need to add this locally via a `.env` file. In a local copy of the repo, rename `.env.sample` to `.env` and replace the dummy values with the appropriate real data.
+4. Go to the Firebase Console (https://console.firebase.google.com/), logging in as the shared account.
+5. Create one more GitHub Actions repository secret, called `SERVER_HOSTNAME`, containing the URL to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template). Do the same thing to your local `.env` file as appropriate.
+6. Since you're using the shared dev Firebase account, you'll need to tell Firebase to allow your publicly-hosted dev frontend. Log into Firebase as the shared account, and select the "Roguelike Celebration dev" project.
+7. Select "Build" and then "Authentication" from the left-side menu, then "Settings" and "Authorized domains" from the main pane
+8. Click "add domain", enter the domain where your deployed dev frontend will live, and click "add". If you set up a custom domain, use that. If you don't know what this URL is, go to the Azure Portal, find the Static Web Apps instance in your project's resource group, and enter the URL it gives you. It's usually something along the lines of `https://[adjective]-[noun]-[hexadecimal numbers].azurestaticapps.net`.
 
 From here, you will still need to deploy your backend server code, and likely deploy your frontend to the public web as well. Jump down to "Deploying new Changes via GitHub Actions" to continue setting up automatic deployments on git push.
 
@@ -107,11 +107,9 @@ By default, when someone goes into the GitHub Actions tab of the main azure-mud 
 
 1. Add a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?WT.mc_id=spatial-8206-emwalker) to generate a publish profile and add that as a GH Secret titled `AZURE_FUNCTIONAPP_PUBLISH_PROFILE`.
 
-2. In your list of repository secrets, you should have a secret that you didn't manually add that starts with `AZURE_STATIC_WEB_APPS_API_TOKEN_` (and then typically has an adjective, a noun, and a string of hexadecimal numbers). In your fork's `.github/workflows/deploy.yml` file, update the `ASWA_API_TOKEN` value to point to that secret name.
+2. Go to the "Actions" tab of your repo, and click the button to enable the preexisting forked Actions in your project.
 
-3. Go to the "Actions" tab of your repo, and click the button to enable the preexisting forked Actions in your project.
-
-4. Optionally, the GitHub Action workflow will send a webhook to the server when a new deployment has completed, which allows us to notify connected clients that a new browser app has been deployed and they should refresh the page. To enable this, create a random string to use as a token (we recommend running `uuidgen` on a Mac or a Linux machine). Store it as a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) under the key `DEPLOY_WEBHOOK_KEY`. Also store it as an ENV variable in the Azure Functions App (while viewing the Function App in the Portal, Configuration -> New Application Setting) under the key `DEPLOY_WEBHOOK_KEY`. Now, if you have your frontend open when you deploy via GitHub Actions, you should see a pop-up in the frontend instructing you to refresh.
+3. Optionally, the GitHub Action workflow will send a webhook to the server when a new deployment has completed, which allows us to notify connected clients that a new browser app has been deployed and they should refresh the page. To enable this, create a random string to use as a token (we recommend running `uuidgen` on a Mac or a Linux machine). Store it as a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) under the key `DEPLOY_WEBHOOK_KEY`. Also store it as an ENV variable in the Azure Functions App (while viewing the Function App in the Portal, Configuration -> New Application Setting) under the key `DEPLOY_WEBHOOK_KEY`. Now, if you have your frontend open when you deploy via GitHub Actions, you should see a pop-up in the frontend instructing you to refresh.
 
 If you select the "Production Build and Deploy" workflow in your Actions tab, you can then click "Run Workflow" and start a new deploy. If you refresh the page, you can click on the new run to see real-time progress.
 
@@ -170,15 +168,9 @@ If you would prefer to not use the ARM template above, here is how you can manua
 
 ## Deployment and CI/CD via GitHub Actions
 
-By default, this project uses GitHub Actions for a few things.
+In addition to the production/staging deploys (which, as mentioned, run manually and on main push, respectively, the "lint" workflow runs on every open PR and on every commit to main. It checks (a) whether the code passes a TypeScript compilation/typecheck step, (b) whether all your room description links are valid (see below), and (c) whether the front-end code passes accessibility best standars (via [axe linter](https://axe-linter.deque.com/))/.
 
-The "lint" workflow runs on every open PR and on every commit to main, and checks (a) whether the code passes a TypeScript compilation/typecheck step, (b) whether all your room description links are valid (see below), and (c) whether the front-end code passes accessibility best standars (via [axe linter](https://axe-linter.deque.com/))/.
-
-The "deploy" workflow runs every time code is pushed to the `main` branch (or a PR is merged, etc). It builds the app, and deploys both the front-end (to Azure Static Web Apps) and the back-end (to Azure Functions).
-
-If you fork this project, you will get this behavior for free, although you will need to change a few things:
-
-You can naturally disable either or both of these behaviors if you'd prefer.
+You can naturally disable this if you'd prefer.
 
 ## Designing your own space
 
