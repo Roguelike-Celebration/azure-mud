@@ -14,8 +14,6 @@ On the frontend, it's a rich single-page webapp built in TypeScript and React, u
 
 ## Setting up a development environment
 
-**WARNING: I'm in the process of revamping this. These instructions are sort of correct.**
-
 In context of Roguelike Celebration, we think of this project as being composed of three different parts: the frontend, the backend, and the content.
 
 - To contribute to the frontend, you can just follow the "frontend dev" instructions.
@@ -53,6 +51,8 @@ However, you cannot actually run the backend locally. You'll need to deploy your
 Currently, this project only runs on Azure. This requires your own [Azure subscription](https://azure.com/free/?WT.mc_id=spatial-8206-emwalker).
 
 If you don't already have an Azure account/subscription, you'll get a few hundred bucks of credits to use your first month, but if that's not the case you will want to keep an eye on the fact that **running this backend will cost you actual money**.
+
+**If you are a Roguelike Celebration volunteer**: I apologize if this looks extremely daunting! I promise it's not a lot of work -- it 90% consists of "click a link to automatically deploy a bunch of Azure stuff, then shuffle around some secret keys into GitHub Actions and a local .env file, then make a single Firebase config change".
 
 ### Deploying via ARM Template
 
