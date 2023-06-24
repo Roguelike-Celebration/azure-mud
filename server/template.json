@@ -69,7 +69,7 @@
 						"allowedOrigins": [
 							"http://localhost:1234",
 							"[parameters('clientHostname')]",
-							"[reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName]"
+							"[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
 						],
 						"supportCredentials": true
 					},
@@ -146,7 +146,7 @@
 					"allowedExternalRedirectUrls": [
 						"http://localhost:1234",
 						"[parameters('clientHostname')]",
-						"[reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName]"
+						"[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
 					]
 				}
 			}]
@@ -226,7 +226,7 @@
 					"allowedOrigins": [
 						"http://localhost:1234",
 						"[parameters('clientHostname')]",
-						"[reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName]"
+						"[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
 					],
 					"supportCredentials": true
 				},
