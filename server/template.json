@@ -179,7 +179,8 @@
 				"branch": "main",
 				"repositoryToken": "[parameters('repositoryToken')]",
 				"buildProperties": {
-					"skipGithubActionWorkflowGeneration": true
+					"skipGithubActionWorkflowGeneration": true,
+					"githubActionSecretNameOverride": "AZURE_STATIC_WEB_APPS_API_TOKEN"
 				}
 			},
 			"sku": {
