@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "parcel *.html",
     "build": "parcel build *.html --public-url ./ --dist-dir ./dist; cp CNAME dist; rsync -r images dist",
-    "deploy": "npm run build; cp CNAME dist; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
+    "build-server": "pushd ./server; npm run build; popd",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\"",
     "lint-fix": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" --fix",

@@ -49,6 +49,17 @@ jobs:
           FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
+      - name: Create Firebase JSON file
+        working-directory: server
+        run: echo $FIREBASE_SERVER_JSON > firebase-admin.json
+        env:
+          FIREBASE_SERVER_JSON: ${{ secrets.FIREBASE_SERVER_JSON }}
+  
+      - name: Build Backend
+        working-directory: server
+        run: npm install && npm run build
+  
+
       # - name: Deploy GH Pages
       #   uses: peaceiris/actions-gh-pages@v3
       #   with:
@@ -63,25 +74,16 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "/dist" # App source code path
+          api_location: "/server"
           skip_app_build: true
-          api_location: "" # Api source code path - optional
-          output_location: "" # Built app content directory - optional
-
+          skip_api_build: true
+ 
       - name: Notify connected clients
         run: node deployWebhook.cjs
         env:
           APP_NAME: ${{ secrets.AZURE_FUNCTION_APP_NAME }}
           TOKEN: ${{ secrets.DEPLOY_WEBHOOK_KEY }}
 
-      - name: Create Firebase JSON file
-        working-directory: server
-        run: echo $FIREBASE_SERVER_JSON > firebase-admin.json
-        env:
-          FIREBASE_SERVER_JSON: ${{ secrets.FIREBASE_SERVER_JSON }}
-
-      - name: Build Backend
-        working-directory: server
-        run: npm install && npm run build
 
       - name: Deploy Backend
         uses: Azure/functions-action@v1
