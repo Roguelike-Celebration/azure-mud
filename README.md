@@ -71,10 +71,10 @@ If you are a volunteer working on the core Roguelike Celebration space, you can 
     2. In your GitHub repo, add Repository Secrets (Settings -> Secrets -> New Repository Secret) containing each field from the password manager entry. You should name these Secrets `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`, and `FIREBASE_SERVER_JSON`, the latter of which should contain the entire text of the attached JSON file.
     3. If you'd like to test your frontend locally via `localhost`, you need to add this locally via a `.env` file. In a local copy of the repo, rename `.env.sample` to `.env` and replace the dummy values with the appropriate real data.
     4. Go to the Firebase Console (https://console.firebase.google.com/), logging in as the shared account.
-    5. Select the "Roguelike Celebration dev" project.
+    5. Create one more GitHub Actions repository secret, called `SERVER_HOSTNAME`, containing the URL to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template). Do the same thing to your local `.env` file as appropriate.
+    6. Since you're using the shared dev Firebase account, you'll need to tell Firebase to allow your publicly-hosted dev frontend. Log into Firebase as the shared account, and select the "Roguelike Celebration dev" project.
     6. Select "Build" and then "Authentication" from the left-side menu, then "Settings" and "Authorized domains" from the main pane
-    7. Click "add domain", enter the domain where your deployed dev frontend will live, and click "add"
-    8. Create one more GitHub Actions repository secret, called `SERVER_HOSTNAME`, containing the URL to your own Function App instance (the Azure URL for your backend — typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template). Do the same thing to your local `.env` file as appropriate.
+    7. Click "add domain", enter the domain where your deployed dev frontend will live, and click "add". If you set up a custom domain, use that. If you don't know what this URL is, go to the Azure Portal, find the Static Web Apps instance in your project's resource group, and enter the URL it gives you. It's usually something along the lines of `https://[adjective]-[noun]-[hexadecimal numbers].azurestaticapps.net`.
 
 From here, you will still need to deploy your backend server code, and likely deploy your frontend to the public web as well. Jump down to "Deploying new Changes via GitHub Actions" to continue setting up automatic deployments on git push.
 
@@ -103,9 +103,9 @@ From here, you will still need to deploy your backend server code, and likely de
 
 ### Deploying new Changes via GitHub Actions
 
-By default, when someone goes into the GitHub Actions tab of the main azure-mud repo and runs the "Production build and deploy" action, it builds and deploys the frontend and backend. It's very little work to configure this same behavior to make your GitHub fork deploy to yoru dev instance.
+By default, when someone goes into the GitHub Actions tab of the main azure-mud repo and runs the "Production build and deploy" action, it builds and deploys the frontend and backend. It's very little work to configure this same behavior to make your GitHub fork deploy to yoru dev instance (and you should do this if you're a Roguelike volunteer).
 
-1. Add a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?WT.mc_id=spatial-8206-emwalker) to generate a publish profile and add that as a GH Secret as well.
+1. Add a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?WT.mc_id=spatial-8206-emwalker) to generate a publish profile and add that as a GH Secret titled `AZURE_FUNCTIONAPP_PUBLISH_PROFILE`.
 
 2. In your list of repository secrets, you should have a secret that you didn't manually add that starts with `AZURE_STATIC_WEB_APPS_API_TOKEN_` (and then typically has an adjective, a noun, and a string of hexadecimal numbers). In your fork's `.github/workflows/deploy.yml` file, update the `ASWA_API_TOKEN` value to point to that secret name.
 
@@ -118,6 +118,19 @@ If you select the "Production Build and Deploy" workflow in your Actions tab, yo
 After this succeeds, both your frontend and backend services should be live. You can find the URL for your frontend by finding your Azure Static Web Apps resource within the created resource group in the Azure Portal. You will also need to either set up a custom domain for Azure Static Web Apps, or if this is the URL you will use, go into Firebase and add this URL as an Authorized Domain for auth ("Build" and then "Authentication" from the left-side menu, then "Settings" and "Authorized domains" from the main pane).
 
 (If you are working on your own project rather than contributing to Roguelike Celebration, I'd recommend modifying these workflows to auto-deploy on push. It's trickier for Roguelike Celebration, since this is the CI setup for our main branch and it's annoying to have your local workflow files out-of-sync with the main repo. I'm thinking through solutions, potentially involving GitHub's "environments" feature)
+
+**To verify your setup, you should have the following repository secrets:**
+- `AZURE_FUNCTIONAPP_PUBLISH_PROFILE` (the full text of a file downloaded from the Function App page on the Azure Portal) 
+- `AZURE_FUNCTION_APP_NAME`
+- `AZURE_STATIC_WEB_APPS_API_TOKEN` (automatically generated on ARM template deploy, you do not need to create this)
+- `FIREBASE_API_KEY` (from password manager)
+- `FIREBASE_APP_ID` (from password manager)
+- `FIREBASE_AUTH_DOMAIN` (from password manager)
+- `FIREBASE_MESSAGING_SENDER_ID` (from password manager)
+- `FIREBASE_PROJECT_ID` (from password manager)
+- `FIREBASE_SERVER_JSON` (file contents from password manager)
+- `FIREBASE_STORAGE_BUCKET` (from password manager)
+- `SERVER_HOSTNAME` (typically `https://azure_function_app_name.azurewebsites.net`)
 
 #### Deploying new Changes via VS Code
 
