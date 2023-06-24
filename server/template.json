@@ -219,7 +219,7 @@
 					"allowedOrigins": [
 						"http://localhost:1234",
 						"[parameters('clientHostname')]",
-						"[reference(resourceId('Microsoft.Web/sites', variables('aswaName')), '2021-01-15').defaultHostName]",
+						"[reference(resourceId('Microsoft.Web/sites', variables('aswaName')), '2021-01-15').defaultHostName]"
 					],
 					"supportCredentials": true
 				},
