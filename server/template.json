@@ -19,7 +19,7 @@
 		"repositoryToken": {
 			"type": "string",
 			"metadata": {
-				"description": "The GitHub personal access token used to access your repository."
+				"description": "The GitHub personal access token used to access your repository. See https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
 			}
 		},
 		"repositoryUrl": {
@@ -215,7 +215,8 @@
 				"cors": {
 					"allowedOrigins": [
 						"http://localhost:1234",
-						"[parameters('clientHostname')]"
+						"[parameters('clientHostname')]",
+						"[reference(resourceId('Microsoft.Web/sites', variables('aswaName'), '2021-01-15').defaultHostName]"
 					],
 					"supportCredentials": true
 				},
