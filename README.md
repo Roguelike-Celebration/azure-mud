@@ -134,9 +134,15 @@ After this succeeds, both your frontend and backend services should be live. You
 
 If you use VS Code as an IDE, the Azure Functions extension makes it extremely easy to deploy directly from there. Check out [this tutorial](https://docs.microsoft.com/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-javascript&WT.mc_id=spatial-8206-emwalker) for more info.
 
+VS Code will likely get confused if your active project is the root of your fork — we recommend explicilty opening the "server" directory in VS Code and deploying from there.
+
+You will also need to make sure there is a `firebase-admin.json` file in the `server` directory.
+
 #### Deploying new Changes via CLI
 
 If you have the [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local&WT.mc_id=spatial-8206-emwalker) installed, you can run `func azure functionapp publish [project name]` to deploy directly from the CLI.
+
+You will also need to make sure there is a `firebase-admin.json` file in the `server` directory.
 
 ### Costs and Scaling
 
