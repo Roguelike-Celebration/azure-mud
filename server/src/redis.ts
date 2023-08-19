@@ -24,7 +24,7 @@ const expireAt = promisify(cache.expireat).bind(cache)
 const del = promisify(cache.del).bind(cache)
 
 const addToSet = promisify(cache.sadd).bind(cache)
-const removeFromSet = promisify(cache.srem).bind(cache)
+const removeFromSet: (key: string, member: string) => void = promisify(cache.srem).bind(cache)
 const getSet = promisify(cache.smembers).bind(cache)
 
 const redisKeys = promisify(cache.keys).bind(cache)
@@ -391,7 +391,7 @@ const Redis: RedisInternal = {
   },
 
   async deleteRoomData (roomId: string): Promise<void> {
-    await removeFromSet(roomId)
+    await removeFromSet(roomIdsKey, roomId)
     return await del(roomDataKey(roomId))
   },
 
