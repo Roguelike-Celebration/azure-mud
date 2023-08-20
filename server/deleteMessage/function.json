@@ -17,7 +17,7 @@
       "name": "actions",
       "hub": "chat",
       "direction": "out"
-    }
+    },
     {
       "tableName": "auditLog",
       "name": "tableBinding",

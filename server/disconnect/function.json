@@ -12,7 +12,7 @@
       "name": "actions",
       "hub": "chat",
       "direction": "out"
-    }
+    },
     {
       "type": "http",
       "direction": "out",
