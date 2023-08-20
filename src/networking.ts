@@ -302,10 +302,15 @@ export async function fetchProfile (userId: string) {
   }
 }
 
-export async function resetRoomData () {
+export async function resetRoomData (isFromAdminPanel: boolean) {
   const response = await callAzureFunction('resetRoomData')
   if (response.roomData) {
-    myDispatch(UpdatedRoomDataAction(convertServerRoomData(response.roomData)))
+    if (isFromAdminPanel) {
+      // Admin panel doesn't have the same state tracking and you can't dispatch
+      window.location.reload()
+    } else {
+      myDispatch(UpdatedRoomDataAction(convertServerRoomData(response.roomData)))
+    }
   }
 }
 
