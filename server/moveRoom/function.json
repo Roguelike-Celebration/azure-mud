@@ -23,12 +23,6 @@
       "name": "tableBinding",
       "type": "table",
       "direction": "out"
-    },
-    {
-      "type": "webPubSub",
-      "name": "actions",
-      "hub": "chat",
-      "direction": "out"
     }
   ],
   "scriptFile": "../dist/moveRoom/index.js"
