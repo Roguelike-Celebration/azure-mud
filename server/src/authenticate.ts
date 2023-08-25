@@ -130,6 +130,8 @@ export default async function authenticate (
 
   const handled = await handler(user)
 
+  // TODO: Restore or trash
+  // This is commented out because the upgrade from Functions 3 -> 4 broke something, somehow
   // if (options.audit) {
   //   context.log(`Auditing for user '${user.id}'`);
   //   context.bindings.tableBinding = [

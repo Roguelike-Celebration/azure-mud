@@ -7,7 +7,7 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<any> {
   context.log('In connect')
-  await authenticatedAzureWrap(context, req, connect)
+  await authenticatedAzureWrap(context, req, connect, { audit: true })
 }
 
 export default httpTrigger
