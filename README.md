@@ -64,6 +64,14 @@ This ARM template asks you to plug in a GitHub Personal Access Token (PAT), whic
 
 After completing ARM template deployment, there are still a few things you need to manually configure before the app will function.
 
+#### Adding WebPubSub
+You need to add the proper connection string to your functions app. This should probably be in the template, but for now, follow these steps:
+
+1. Go into your WebPubSub resource in the Azure portal and get the connection string from WebPubSub service "Keys" on the left
+2. Go to your functions app in the Azure portal and hit "Configuration" -> "New application setting" 
+3. Add a new key with "WebPubSubConnectionString" with that value
+4. Hit save
+
 #### Deployment: If you're a Roguelike Celebration volunteer
 If you are a volunteer working on the core Roguelike Celebration space, you can use our development Firebase account. If you do not plan to deploy your frontend anywhere (i.e. you will just access it at `localhost`, you do not need to do steps beyond 2.
 
