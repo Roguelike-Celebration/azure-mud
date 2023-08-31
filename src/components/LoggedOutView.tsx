@@ -28,7 +28,7 @@ export default function LoggedOutView () {
   return (
     <div>
       <header role="banner">
-        <h1>Welcome to Roguelike Celebration 2022!</h1>
+        <h1>Welcome to Roguelike Celebration 2023!</h1>
       </header>
       <main role="main">
         <p>

@@ -19,9 +19,9 @@ export interface ScheduleEntry {
   day: number
 }
 
-const dayPreview = (time) => new Date(`2022-09-11T${time}:00.000-07:00`)
-const dayOneDate = (time) => new Date(`2022-10-22T${time}:00.000-07:00`)
-const dayTwoDate = (time) => new Date(`2022-10-23T${time}:00.000-07:00`)
+const dayPreview = (time) => new Date(`2023-09-10T${time}:00.000-07:00`)
+const dayOneDate = (time) => new Date(`2023-10-21T${time}:00.000-07:00`)
+const dayTwoDate = (time) => new Date(`2023-10-22T${time}:00.000-07:00`)
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string) {
   if (day === 0) {
