@@ -117,31 +117,6 @@
   --link: #66FF66;
   }
 
-  /* mall-theme */
-  .mall-theme {
-    --main-background: #e7e5d9;
-    --main-font:#540B6E;
-    --gray-text:#6b6d7a;;
-    --alternate-background: #efedde; 
-    --alternate-translucent: rgba(10,10,10,0.8);
-    --green:#0cc08b;
-    --highlight-line: #03e9f8;
-    --highlighted-line-font: #212121;
-    --mod-line: #03e9f8 ;
-    --pink: #fec5e5;
-    --blue: #688ff4;
-    --cyan: #05c8f6;
-    --magenta: #e706ea;
-    --orange: #ff6c12;
-    --red: #fd1d53;
-    --violet: #a744e8;
-    --yellow: #f9c70e;
-    --link-decoration: underline;
-    --link-style: dashed; 
-    --active: #82e6c2;
-    --link: #db3a97;
-  }
-
 body {
   background-color: var(--main-background);
   color: var(--main-font);

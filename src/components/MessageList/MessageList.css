@@ -1,4 +1,6 @@
 .message-list {
+  border: 1px solid var(--fbc-white);
+  border-radius: 4px;
   height: 40vh;
   list-style-type: none;
 
@@ -29,3 +31,4 @@
   height: 1px;
   position: absolute;
 }
+

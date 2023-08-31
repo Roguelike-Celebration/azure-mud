@@ -127,13 +127,14 @@ export default function ProfileEditView (props: Props) {
             />
           </div>
           <div className="field">
-            <label htmlFor="twitter">Twitter Handle</label>
-            <em>Optional: Don't include the @</em>
+            <label htmlFor="twitter">Social Link</label>
+            <em>Optional: where can we tag you?</em>
             <input
               type="text"
               id="twitter"
+              placeholder="https://example.com/you"
               value={twitter}
-              onChange={(e) => setTwitter(sanitizeString(e.currentTarget.value, 20))}
+              onChange={(e) => setTwitter(sanitizeString(e.currentTarget.value, 200))}
             />
           </div>
           <div className="field">
