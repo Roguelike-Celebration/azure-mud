@@ -103,6 +103,16 @@ export default function SettingsView (props: Props) {
           />
           <label htmlFor="monochrome-green">Green CRT</label>
         </div>
+        <div className="radio">
+          <input
+            type="radio"
+            id="mall-theme"
+            value="mall-theme"
+            checked={selectedTheme === 'mall-theme'}
+            onChange={handleThemeSelection}
+          />
+          <label htmlFor="mall-theme">Mall Vibes</label>
+        </div>
       </div>
       <div className="form" id="simpleNamesSelectionForm">
         <label htmlFor="simpleNamesSelectionForm" className='form-header'>Username Display Mode:</label>
