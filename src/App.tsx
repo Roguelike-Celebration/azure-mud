@@ -281,6 +281,7 @@ const App = () => {
       const room = state.roomData[state.roomId]
       innerModalView = (
         <NoteWallView
+          roomDisplayName={room.displayName}
           notes={room.notes}
           noteWallData={room.noteWallData}
           user={state.profileData}
