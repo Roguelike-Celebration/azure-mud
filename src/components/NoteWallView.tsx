@@ -52,7 +52,7 @@ export function NoteWallView (props: Props) {
         likes: v.likes?.map((likerId) => {
           return {
             likerId: likerId,
-            likerName: userMap[likerId]?.userName
+            likerName: userMap[likerId]?.username
           }
         })
       }
