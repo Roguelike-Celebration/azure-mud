@@ -35,7 +35,7 @@ export default function VerifyEmailView (props: Props) {
             <h1>ALERT: Please double-check your spam folder!</h1>
             <h2>Gmail has been marking our registration emails as spam, sorry!</h2>
             <p>
-              A couple of people have gotten back to us saying they can&pos;t find the registration emails, but they were
+              A couple of people have gotten back to us saying they could not find the registration emails, but they were
               in spam, so please double-check.
             </p>
           </div>
