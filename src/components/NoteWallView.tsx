@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { RoomNote } from '../../server/src/roomNote'
-import { ServerSettings, toServerSettings } from '../../server/src/types'
+import { ServerSettings } from '../../server/src/types'
 import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networking'
 import { NoteView } from './NoteView'
 import ReactTooltip from 'react-tooltip'
+import { UserMapContext } from '../App'
 
 import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
@@ -19,11 +20,52 @@ function numLikes (roomNote: RoomNote) {
   return !roomNote.likes ? 0 : roomNote.likes.length
 }
 
-export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWallData, user: PublicUser, serverSettings: ServerSettings}) {
+interface Props {
+  roomDisplayName: string,
+  notes: RoomNote[],
+  noteWallData?: NoteWallData,
+  user: PublicUser,
+  serverSettings: ServerSettings
+}
+
+export function NoteWallView (props: Props) {
+  const { userMap } = useContext(UserMapContext)
+
   const addNote = () => {
     const promptText = props.noteWallData ? props.noteWallData.addNotePrompt : 'What do you type on the note wall?'
     const message = prompt(promptText)
     addNoteToWall(message)
+  }
+
+  const saveNotes = async () => {
+    interface ExportedNote {
+      authorId: string,
+      authorName: string
+    }
+
+    const mappedNotes = props.notes.map((v) => {
+      return {
+        id: v.id,
+        message: v.message,
+        authorId: v.authorId,
+        authorUsername: userMap[v.authorId]?.username,
+        likes: v.likes?.map((likerId) => {
+          return {
+            likerId: likerId,
+            likerName: userMap[likerId]?.userName
+          }
+        })
+      }
+    })
+    const notesJSON = JSON.stringify(mappedNotes, null, 2)
+    const fileName = 'notes-' + props.roomDisplayName + '-' + new Date().toISOString() + '.json'
+
+    // via https://stackoverflow.com/questions/34156282/how-do-i-save-json-to-local-text-file
+    var a = document.createElement('a')
+    var file = new Blob([notesJSON], { type: 'application/json' })
+    a.href = URL.createObjectURL(file)
+    a.download = fileName
+    a.click()
   }
 
   const deleteAllNotes = () => {
@@ -61,6 +103,12 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
     : 'You are looking at a wall with space for people to place sticky notes.'
   const buttonText = props.noteWallData ? props.noteWallData.addNoteLinkText : 'add a note'
 
+  const saveButton = props.user && props.user.isMod ? (
+    <button onClick={saveNotes}>Mod: Download notes to disk</button>
+  ) : (
+    ''
+  )
+
   const massDeleteButton = props.user && props.user.isMod ? (
     <button onClick={deleteAllNotes}>Mod: Delete all notes</button>
   ) : (
@@ -76,6 +124,7 @@ export function NoteWallView (props: {notes: RoomNote[], noteWallData?: NoteWall
   return (
     <div>
       <ReactTooltip />
+      {saveButton}
       {massDeleteButton}
       {setAsUnconferencingTopicsButton}
       <div className='note-wall-description'>
