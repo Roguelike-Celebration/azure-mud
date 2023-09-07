@@ -3,6 +3,7 @@
   margin-top: 30px;
   position: fixed;
   width: 250px;
+  z-index: 1;
 }
 
 @media only screen and (max-device-width: 500px) {

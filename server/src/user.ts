@@ -123,7 +123,7 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   if (data.description) { data.description = sanitizeString(data.description, 200) }
   if (data.pronouns) { data.pronouns = sanitizeString(data.pronouns, 40) }
   if (data.url) { data.url = sanitizeString(data.url, 200) }
-  if (data.twitterHandle) { data.twitterHandle = sanitizeString(data.twitterHandle, 20) }
+  if (data.twitterHandle) { data.twitterHandle = sanitizeString(data.twitterHandle, 200) }
   if (data.askMeAbout) { data.askMeAbout = sanitizeString(data.askMeAbout, 200) }
 
   const newProfile: User = {

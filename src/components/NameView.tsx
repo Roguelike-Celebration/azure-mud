@@ -83,7 +83,7 @@ export default function NameView (props: Props) {
       }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
     )
     if (doSpeaker) {
-      toggleUserSpeaker(data.id, '2022')
+      toggleUserSpeaker(data.id, '2023')
     }
   }
 
@@ -146,6 +146,9 @@ export default function NameView (props: Props) {
   }
   if (!useSimpleNames && user && user.fontReward) {
     className = className + ' font-' + user.fontReward
+  }
+  if (userIsMod) {
+    className += ' mod'
   }
 
   const badges = (user.equippedBadges || [])
