@@ -224,21 +224,21 @@ const clickableAreas: ClickableArea[] = [
     roomId: 'screen1',
     x: 22,
     y: 1,
-    width: 12, 
+    width: 12,
     height: 4
   },
   {
     roomId: 'theater',
     x: 36,
     y: 1,
-    width: 16, 
+    width: 16,
     height: 8
   },
   {
     roomId: 'screen2',
     x: 56,
     y: 1,
-    width: 12, 
+    width: 12,
     height: 4
   },
   {
@@ -267,21 +267,21 @@ const clickableAreas: ClickableArea[] = [
     x: 82,
     y: 22,
     width: 18,
-    height: 4 
+    height: 4
   },
   {
     roomId: 'pretzelPlace',
     x: 82,
     y: 28,
     width: 18,
-    height: 5 
+    height: 5
   },
   {
     roomId: 'hotDogStand',
     x: 82,
     y: 34,
     width: 18,
-    height: 4 
+    height: 4
   },
   {
     roomId: 'foodCourt',
@@ -307,7 +307,7 @@ const clickableAreas: ClickableArea[] = [
   {
     roomId: 'arcade',
     x: 1,
-    y: 28 ,
+    y: 28,
     width: 32,
     height: 5
   },
@@ -378,7 +378,7 @@ const clickableAreas: ClickableArea[] = [
     roomId: 'photoBooth',
     x: 55,
     y: 17,
-    width: 12, 
+    width: 12,
     height: 5
   },
   {
