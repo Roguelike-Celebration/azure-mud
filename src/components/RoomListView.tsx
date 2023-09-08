@@ -40,7 +40,7 @@ const RoomListItem = (props: { room: Room }) => {
   return (
     <li style={{ listStyle: 'none' }}>
       <button onClick={onClick} className="link-styled-button">
-        <strong>{room.displayName}</strong> {userCount} {videoIcon}
+        <strong>{room.hidden ? "(hidden) " : ""}{room.displayName}</strong> {userCount} {videoIcon}
       </button>
     </li>
   )
