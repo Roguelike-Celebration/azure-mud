@@ -128,7 +128,7 @@ export default function ProfileEditView (props: Props) {
           </div>
           <div className="field">
             <label htmlFor="twitter">Social Link</label>
-            <em>Optional: where can we tag you?</em>
+            <em>Optional: Where can people find you?</em>
             <input
               type="text"
               id="twitter"
