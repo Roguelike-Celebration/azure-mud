@@ -10,6 +10,7 @@ import { EquipBadgeAction } from '../Actions'
 import { equipBadge } from '../networking'
 import { find, first, isNumber, uniq } from 'lodash'
 import ReactTooltip from 'react-tooltip'
+import { BadgeCategories } from '../../server/src/types'
 
 interface Props {
   unlockedBadges: Badge[]
@@ -150,38 +151,55 @@ export default function BadgesModalView (props: Props) {
     )
   }
 
-  // TODO: Can you see description with screen reader?
-  // If we have perf issues, we can map-ify unlockedBadges like on the server
-  const lockedBadges = uniq(props.unlockableBadges || []).filter(b => {
-    return !find(props.unlockedBadges, (c) => c.emoji === b.emoji)
-  }).map((b) => {
-    return (
-      <span
-        aria-pressed={selectedBadge === b}
-        className='locked-badge' draggable={true}
-        key={b.emoji}
-      >
-        <BadgeView emoji='🔒' description={b?.description} />
-      </span>
-    ) // Purposefully leave out the isCustom field for locked badges, to avoid trying to render them as images
+  const unlockedBadgesSet = new Set<string>()
+
+  const unlockedBadgesByCategory = new Map<BadgeCategories, JSX.Element[]>()
+  props.unlockedBadges.forEach((b, i) => {
+    if (!unlockedBadgesByCategory.has(b.category)) {
+      unlockedBadgesByCategory.set(b.category, [])
+    }
+
+    unlockedBadgesSet.add(b.emoji)
+    unlockedBadgesByCategory.get(b.category).push(
+      (
+        <span
+          aria-pressed={selectedBadge === b}
+          className={`unlocked-badge${selectedBadge === b ? ' selected' : ''}`} draggable={true}
+          key={b.emoji}
+          data-index={i}
+          onClick={selectUnlockedBadge}
+          onDragStart={dragStart}
+          onKeyDown={keyDownOnUnlocked}
+          role='button'
+          tabIndex={0}
+        >
+          <BadgeView emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />
+        </span>
+      )
+    )
   })
 
-  const unlockedBadges = (props.unlockedBadges || []).map((b, i) => {
-    return (
-      <span
-        aria-pressed={selectedBadge === b}
-        className={`unlocked-badge${selectedBadge === b ? ' selected' : ''}`} draggable={true}
-        key={b.emoji}
-        data-index={i}
-        onClick={selectUnlockedBadge}
-        onDragStart={dragStart}
-        onKeyDown={keyDownOnUnlocked}
-        role='button'
-        tabIndex={0}
-      >
-        <BadgeView emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />
-      </span>
+  // TODO: Can you see description with screen reader?
+  const lockedBadgesByCategory = new Map<BadgeCategories, JSX.Element[]>()
+  uniq(props.unlockableBadges || []).filter(b => {
+    return !unlockedBadgesSet.has(b.emoji)
+  }).forEach((b) => {
+    if (!lockedBadgesByCategory.has(b.category)) {
+      lockedBadgesByCategory.set(b.category, [])
+    }
+
+    lockedBadgesByCategory.get(b.category).push(
+      (
+        <span
+          aria-pressed={selectedBadge === b}
+          className='locked-badge' draggable={true}
+          key={b.emoji}
+        >
+          <BadgeView emoji='🔒' description={b?.description} />
+        </span>
+      )
     )
+    // Purposefully leave out the isCustom field for locked badges, to avoid trying to render them as images
   })
 
   // keyboard navigation: move the focus to the first unlocked badge after mount
@@ -191,6 +209,11 @@ export default function BadgesModalView (props: Props) {
     firstUnlockedBadge.focus()
     firstUnlockedBadge.contentEditable = 'false' // hack to force the focus ring to be visible
   }, [])
+
+  // If you don't assign this as a const, the useLayoutEffect causes an exception after loading.
+  // I guess React lazy-evaluates the code going into the element? Or something like that?
+  // I dunno, I don't know React, I do servers.
+  const defaultBadges = unlockedBadgesByCategory.get(BadgeCategories.Default)
 
   return (<>
     <ReactTooltip/>
@@ -203,9 +226,17 @@ export default function BadgesModalView (props: Props) {
           <div>(right-click or highlight & press delete to unequip)</div>
         </section>
         <section className="all">
-          <h2>All</h2>
-          {lockedBadges}
-          {unlockedBadges}
+          <h2>Default</h2>
+          {defaultBadges}
+          <h2>2022 Space Badges</h2>
+          {unlockedBadgesByCategory.get(BadgeCategories.Year2022)}
+          {lockedBadgesByCategory.get(BadgeCategories.Year2022)}
+          <h2>2022 Talk Badges</h2>
+          {unlockedBadgesByCategory.get(BadgeCategories.Talk2022)}
+          {lockedBadgesByCategory.get(BadgeCategories.Talk2022)}
+          <h2>Special</h2>
+          {unlockedBadgesByCategory.get(BadgeCategories.Special)}
+          {lockedBadgesByCategory.get(BadgeCategories.Special)}
         </section>
       </div>
     </div>

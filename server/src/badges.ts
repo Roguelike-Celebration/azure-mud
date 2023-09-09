@@ -1,4 +1,5 @@
 import { keyBy } from 'lodash'
+import { BadgeCategories } from './types'
 
 export interface Badge {
   /** We don't do any checks around string length, because Unicode Is Weird.
@@ -8,240 +9,296 @@ export interface Badge {
   description?: string
 
   isCustom?: boolean
+
+  category: BadgeCategories
 }
 
 export const FreeBadges: Badge[] = [
   {
     emoji: '🏳️‍⚧️',
-    description: 'Why is everyone from this country so attractive?'
+    description: 'Why is everyone from this country so attractive?',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🦀',
-    description: "It's a crab."
+    description: "It's a crab.",
+    category: BadgeCategories.Default
   },
   {
     emoji: '🍑',
-    description: 'A juicy piece of fruit with no innuendo.'
+    description: 'A juicy piece of fruit with no innuendo.',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🇨🇦',
-    description: 'Nice country, eh?'
+    description: 'Nice country, eh?',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🦷',
-    description: 'Teeth! Teeth! Teeth!'
+    description: 'Teeth! Teeth! Teeth!',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🏳️‍🌈',
-    description: '🌈🌈🌈'
+    description: '🌈🌈🌈',
+    category: BadgeCategories.Default
   },
   {
     emoji: '👋',
-    description: 'Say hi to me!'
+    description: 'Say hi to me!',
+    category: BadgeCategories.Default
   },
   {
     emoji: '📸',
-    description: 'Tourist'
+    description: 'Tourist',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🐀',
-    description: 'Killed by a rat on level 1'
+    description: 'Killed by a rat on level 1',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🕴️',
-    description: 'Caves of Qud, probably'
+    description: 'Caves of Qud, probably',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🥣',
-    description: 'Reformed oatmeal maker'
+    description: 'Reformed oatmeal maker',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🖼️',
-    description: 'Does this dungeon have a tileset?'
+    description: 'Does this dungeon have a tileset?',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🧦',
-    description: 'Equipped: Roguelike Celebration socks'
+    description: 'Equipped: Roguelike Celebration socks',
+    category: BadgeCategories.Default
   },
   {
     emoji: '🤔',
-    description: 'Unreliable narrator'
+    description: 'Unreliable narrator',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '📊',
-    description: 'Spreadsheet criminal'
+    description: 'Spreadsheet criminal',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🎶',
-    description: 'Procedurally generated vibes'
+    description: 'Procedurally generated vibes',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🍊',
-    description: 'Emoji of my favorite food, award-winning photography'
+    description: 'Emoji of my favorite food, award-winning photography',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '💓',
-    description: 'Mean hedonic rating increasing'
+    description: 'Mean hedonic rating increasing',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🎛️',
-    description: 'Modder'
+    description: 'Modder',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '✍️',
-    description: 'Documentation enthusiast'
+    description: 'Documentation enthusiast',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '📺',
-    description: 'Streamer'
+    description: 'Streamer',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '👍',
-    description: 'Don\'t Panic'
+    description: 'Don\'t Panic',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🪤',
-    description: 'Build a better adventurer trap'
+    description: 'Build a better adventurer trap',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🧠',
-    description: 'Neurogue'
+    description: 'Neurogue',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🎣',
-    description: 'Definitely not a monster. Really. I promise.'
+    description: 'Definitely not a monster. Really. I promise.',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🧃',
-    description: 'Juice, now 100% vegan!'
+    description: 'Juice, now 100% vegan!',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '😵‍💫',
-    description: 'Got a strange mood'
+    description: 'Got a strange mood',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '⏳',
-    description: 'Sand with anxiety'
+    description: 'Sand with anxiety',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '😉',
-    description: 'Cute but difficult'
+    description: 'Cute but difficult',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🔢',
-    description: 'Math! Math! Math!'
+    description: 'Math! Math! Math!',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: '🎴',
-    description: 'Deck enjoyer'
+    description: 'Deck enjoyer',
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: 'device_of_luthien',
     description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Talk2022
   },
   {
     emoji: 'artificer',
     description: 'Procgen Artificer: You get a tool, and you get a tool!',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   },
   {
     emoji: 'bard',
     description: 'Procgen Bard: Embrace the funky edges, make weird art!',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   },
   {
     emoji: 'cleric',
     description: 'Procgen Cleric: It works if you run it twice... don\t ask why.',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   },
   {
     emoji: 'druid',
     description: 'Procgen Druid: Prune and shape your generator, watch it grow!',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   },
   {
     emoji: 'paladin',
     description: 'Procgen Paladin: No, procedural does\'t just mean \'random\'',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   },
   {
     emoji: 'ranger',
     description: 'Procgen Ranger: Guide your party around the oatmeal bogs!',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   },
   {
     emoji: 'sorceror',
     description: 'Procgen Sorceror: Generation is a conversation with yourself',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   },
   {
     emoji: 'warlock',
     description: 'Procgen Warlock: Give the generator *whatever* it likes',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   }, {
     emoji: 'wizard',
     description: 'Procgen Wizard: Gaze into the Abyss, understand WFC',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Default
   }
 ]
 
 export const UnlockableBadges: Badge[] = [
   {
     emoji: '🌱',
-    description: 'The tiniest little plant can survive anywhere'
+    description: 'The tiniest little plant can survive anywhere',
+    category: BadgeCategories.Year2022
   },
   {
     emoji: '🚀',
-    description: 'To infinity and beyond!'
+    description: 'To infinity and beyond!',
+    category: BadgeCategories.Year2022
   },
   {
     emoji: '⚔️',
-    description: 'A mighty adventurer'
+    description: 'A mighty adventurer',
+    category: BadgeCategories.Year2022
   },
   {
     emoji: '🧙‍♀️',
-    description: 'A wizened master of the dark sciences'
+    description: 'A wizened master of the dark sciences',
+    category: BadgeCategories.Year2022
   },
   {
     emoji: '💾',
-    description: 'C://STEAM.EXE'
+    description: 'C://STEAM.EXE',
+    category: BadgeCategories.Year2022
   },
   {
     emoji: '🌎',
-    description: 'A worldly traveler of our event space!'
+    description: 'A worldly traveler of our event space!',
+    category: BadgeCategories.Year2022
   },
   {
     emoji: '🐣',
-    description: 'Attended the 2022 preview event!'
+    description: 'Attended the 2022 preview event!',
+    category: BadgeCategories.Year2022
   },
   {
     emoji: '7️⃣',
-    description: 'Attended the seventh Roguelike Celebration in 2022!'
+    description: 'Attended the seventh Roguelike Celebration in 2022!',
+    category: BadgeCategories.Year2022
   },
   {
     emoji: '🎙️',
-    description: 'Speaker Alumni Club'
+    description: 'Speaker Alumni Club',
+    category: BadgeCategories.Special
   },
   {
     emoji: 'golden_thesis',
     description: 'A PhD-worthy scientific paper',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Year2022
   },
   {
     emoji: 'phylactery',
     description: 'A blood-red jewel with a warm, accepting glow',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Year2022
   },
   {
     emoji: 'nega_ticket',
     description: 'Admit One',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Year2022
   },
   {
     emoji: 'undermuffin',
     description: 'It radiates hatred',
-    isCustom: true
+    isCustom: true,
+    category: BadgeCategories.Year2022
   }
 ]
 

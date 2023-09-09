@@ -1,5 +1,4 @@
 import React from 'react'
-import { Badge } from '../../server/src/badges'
 import customEmojiMap from '../emoji/customEmojiMap.json'
 import reservedEmojiMap from '../emoji/reservedEmojiMap.json'
 
