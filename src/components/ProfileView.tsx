@@ -65,9 +65,7 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
   const socialLink = user.twitterHandle ? (
     <div id="profile-social">
       <strong>Social Link</strong>:{' '}
-      <a href={user.twitterHandle} target="_blank" rel="noreferrer">
-        {user.twitterHandle}
-      </a>
+      {user.twitterHandle}
     </div>
   ) : (
     null
