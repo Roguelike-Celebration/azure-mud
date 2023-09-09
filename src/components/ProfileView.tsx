@@ -9,6 +9,7 @@ import NameView from './NameView'
 import ReactTooltip from 'react-tooltip'
 
 import '../../style/profileView.css'
+import BadgeView from './BadgeView'
 
 const ProfileWhisperView = (props: WhisperMessage & {id: string, otherUser: PublicUser}) => {
   const { otherUser } = props
@@ -112,6 +113,11 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
             <h2 className={user.isMod ? 'mod' : ''}><NameView userId={user.id} id={`profile-nameview-${user.id}`} /></h2>
             <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>X</button>
           </div>
+          <section className="badges">
+            {user.unlockedBadges.map(badge => {
+              <BadgeView emoji={badge.emoji} description={badge.description} isCustom={badge.isCustom} />
+            })}
+          </section>
           <section className="profile-details">
             <p>
               {realName}

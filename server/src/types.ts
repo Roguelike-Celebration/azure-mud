@@ -90,5 +90,7 @@ export enum BadgeCategories {
   Default = 'DEFAULT',
   Year2022 = 'YEAR_2022',
   Talk2022 = 'TALK_2022',
-  Special = 'SPECIAL'
+  Special = 'SPECIAL',
+  Year2023 = 'YEAR_2023',
+  Talk2023 = 'TALK_2023'
 }
