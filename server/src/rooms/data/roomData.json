@@ -116,10 +116,10 @@
     "hidden": true
   },
   "screen2": {
-    "displayName": "Screen 2: Attack of the 50 Foot Halfing",
-    "shortName": "Attack of the 50 Foot Halfing",
+    "displayName": "Screen 2: Attack of the 50 Foot Goblin",
+    "shortName": "Attack of the 50 Foot Goblin",
     "id": "screen2",
-    "description": "You enter a pitch black space you can only assume must be a theater with a screen at one end and many seats. You see nothing, however, beyond a blackness that cannot possibly be natural. You hear wet noises coming from the back corner of this room, and you fear to wonder what might be their source.<br/><br/>Or you can head back to the [[main theater->theater]].",
+    "description": "As you walk into the theater, a goblin wearing a bikini walks into a visibly fake power line, crushing it in her hands. The camera cuts to a goblin cafe as a couple makes out under flickering lights, and complains about the disruption.<br/><br/>Or you can head back to the [[main theater->theater]].",
     "roomId": "screen2"
   },
   "barBack": {
@@ -147,10 +147,10 @@
     "hidden": true
   },
   "screen4": {
-    "displayName": "Screen 4: My Big Fat Dwarf Wedding",
-    "shortName": "My Big Fat Dwarf Wedding",
+    "displayName": "Screen 4: My Big Fat Orc Wedding",
+    "shortName": "My Big Fat Orc Wedding",
     "id": "screen4",
-    "description": "You step into a dark room where the floor feels like it is made of some kind of adhesive. Each step pains you as you drag reluctant feet forward along the most viscous surface you have ever known. Something in your stomach churns in rebellion against the unfathomable texture here. You must find your seat quickly.<br/><br/>Or you can go back to the [[main theater->theater]].",
+    "description": "You step into a dark theater to find a screen projecting a long line of orcs in fancy dress, each holding hands in a chain and dancing together as many other orcs in the background clap and sing.<br/><br/>Or you can go back to the [[main theater->theater]].",
     "roomId": "screen4"
   },
   "centralHall": {
@@ -188,7 +188,7 @@
     "displayName": "Screen 3: Jabberwock Park",
     "shortName": "Jabberwock Park",
     "id": "screen3",
-    "description": "You enter a theater projecting an action movie of some kind. Explosions fill the room with light and the sound rocks the flat surfaces so intensely that you are nearly knocked off your feet. An errant popcorn kernel hits the side of your head in time with sharp bark of a scream, causing you to involuntarily flinch.<br/><br/>Or you can go back to the [[main theater->theater]].",
+    "description": "You enter a pitch black space and immediately a roaring mouth fills the screen. A vorpal sword shifts into and then out of focus as the camera focuses on a mirror which reads \"Objects in mirror are farther away than they appear\".<br/><br/>Or you can go back to the [[main theater->theater]].",
     "roomId": "screen3"
   },
   "destinations": {
@@ -524,7 +524,7 @@
     "displayName": "Screen 1: I Was a Teenage Gelatinous Cube",
     "shortName": "I Was a Teenage Gelatinous Cube",
     "id": "screen1",
-    "description": "You walk into a dark theater space with a blank screen at one end. Every surface of this space has been either covered by, or replaced with, popcorn. The smell of butter and salt wafts through the air, and you feel the crunch of kernels beneath you as you move.<br/><br/>Or you can head back to the [[main theater->theater]].",
+    "description": "You walk into a dark theater just as a Gelatinous Cube wearing ripped jeans rudely tells his mother that she just doesn't understand. You step into the room and find your seat as he flips a tuft of disembodied black hair over one floating eye.<br/><br/>Or you can head back to the [[main theater->theater]].",
     "roomId": "screen1"
   },
   "unconferenceDigSite": {
@@ -549,7 +549,7 @@
     "id": "theater",
     "displayName": "Cineplex",
     "shortName": "the cineplex",
-    "description": "You enter the cineplex and are confronted by an impossibly-large screen dominating one entire wall of the space. Before it is a small field of mismatched chairs visibly pulled from anywhere a spare could be found.<br/><br/>You can return to the [[information obelisk->obelisk]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Screen 1->screen1]], [[Screen 2->screen2]], [[Screen 3->screen3]], or [[Screen 4->screen4]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
+    "description": "You enter the cineplex and are confronted by an impossibly-large screen dominating one entire wall of the space. Before it is a small field of mismatched chairs visibly pulled from anywhere a spare could be found.<br/><br/>You can return to the [[information obelisk->obelisk]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[I Was a Teenage Gelatinous Cube->screen1]], [[Attack of the 50 Foot Goblin->screen2]], [[Jabberwock Park->screen3]], or [[My Big Fat Orc Wedding->screen4]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
     "hasNoteWall": true,
     "noteWallData": {
       "roomWallDescription": "There is a whiteboard set up to the side with \"SPEAKER QUESTIONS\" written at the top. \"Questions for speakers not questions from speakers!\" is hastily scrawled below it.",
