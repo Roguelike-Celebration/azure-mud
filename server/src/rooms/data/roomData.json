@@ -215,10 +215,10 @@
     "roomId": "rift4"
   },
   "arcade": {
-    "displayName": "Player One Arcade (Unconferencing Lobby)",
-    "shortName": "Player One Arcade",
+    "displayName": "Unconferencing Arcade",
+    "shortName": "the unconferencing arcade",
     "id": "arcade",
-    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.<br/><br/>Unconferencing rooms: the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], the [[anime racing game->unconferenceRacing]], and the [[retro cabs->unconference80s]]. You can also go out to the [[ice rink->iceRink]].",
+    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.<br/><br/>A [[crane game->playCraneGame]] beckons enticingly from the far wall.<br/><br/>Unconferencing rooms: the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], the [[anime racing game->unconferenceRacing]], and the [[retro cabs->unconference80s]]. You can also go out to the [[ice rink->iceRink]].",
     "roomId": "arcade"
   },
   "theaterWarrior": {
