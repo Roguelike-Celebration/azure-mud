@@ -18,7 +18,7 @@
     "displayName": "Map Obelisk",
     "shortName": "a map obelisk",
     "id": "obelisk",
-    "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.",
+    "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.<br/><br/>There's an [[empty storefront->emptyStore]] on your right, and a bustling [[arcade->arcade]] on your left. Further down, the concourse opens into an [[ice skating rink->ice rink]]. ",
     "roomId": "obelisk"
   },
   "emptyStore": {
@@ -70,7 +70,7 @@
     "displayName": "Unconferencing Room: Anime Racing Game",
     "shortName": "the anime racing game",
     "id": "unconferenceRacing",
-    "description": "(an unconferencing room)",
+    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[retro cabs->unconference80s]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceRacing"
   },
   "rodney": {
@@ -85,7 +85,7 @@
     "displayName": "American Eagle",
     "shortName": "American Eagle",
     "id": "americanEagle",
-    "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly woven into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.",
+    "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly woven into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.<br/><br/>Just outside, you can hear the unmistakable sounds of a [[kid zone->kidZone]]. The concourse continues beyond it to the [[ice skating rink->iceRink]].",
     "roomId": "americanEagle"
   },
   "underrift": {
@@ -116,8 +116,8 @@
     "hidden": true
   },
   "screen2": {
-    "displayName": "Screen 2",
-    "shortName": "Screen 2",
+    "displayName": "Screen 2: Attack of the 50 Foot Halfing",
+    "shortName": "Attack of the 50 Foot Halfing",
     "id": "screen2",
     "description": "You enter a pitch black space you can only assume must be a theater with a screen at one end and many seats. You see nothing, however, beyond a blackness that cannot possibly be natural. You hear wet noises coming from the back corner of this room, and you fear to wonder what might be their source.<br/><br/>Or you can head back to the [[main theater->theater]].",
     "roomId": "screen2"
@@ -147,8 +147,8 @@
     "hidden": true
   },
   "screen4": {
-    "displayName": "Screen 4",
-    "shortName": "Screen 4",
+    "displayName": "Screen 4: My Big Fat Dwarf Wedding",
+    "shortName": "My Big Fat Dwarf Wedding",
     "id": "screen4",
     "description": "You step into a dark room where the floor feels like it is made of some kind of adhesive. Each step pains you as you drag reluctant feet forward along the most viscous surface you have ever known. Something in your stomach churns in rebellion against the unfathomable texture here. You must find your seat quickly.<br/><br/>Or you can go back to the [[main theater->theater]].",
     "roomId": "screen4"
@@ -185,8 +185,8 @@
     "roomId": "LoversLake"
   },
   "screen3": {
-    "displayName": "Screen 3",
-    "shortName": "Screen 3",
+    "displayName": "Screen 3: Jabberwock Park",
+    "shortName": "Jabberwock Park",
     "id": "screen3",
     "description": "You enter a theater projecting an action movie of some kind. Explosions fill the room with light and the sound rocks the flat surfaces so intensely that you are nearly knocked off your feet. An errant popcorn kernel hits the side of your head in time with sharp bark of a scream, causing you to involuntarily flinch.<br/><br/>Or you can go back to the [[main theater->theater]].",
     "roomId": "screen3"
@@ -218,7 +218,7 @@
     "displayName": "Player One Arcade (Unconferencing Lobby)",
     "shortName": "Player One Arcade",
     "id": "arcade",
-    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.",
+    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.<br/><br/>Unconferencing rooms: the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], the [[anime racing game->unconferenceRacing]], and the [[retro cabs->unconference80s]]. You can also go out to the [[ice rink->iceRink]].",
     "roomId": "arcade"
   },
   "theaterWarrior": {
@@ -275,14 +275,14 @@
     "displayName": "Book Store",
     "shortName": "the book store",
     "id": "bookstore",
-    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence, the people beg for the knowledge and humor within, surely someone will find a way.",
+    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence, the people beg for the knowledge and humor within, surely someone will find a way.<br/><br/>The [[cineplex->theater]] is next door, and [[Hot Topic->hotTopic]] is next door on the other side.",
     "roomId": "bookstore"
   },
   "kidZone": {
     "displayName": "Kid Zone",
     "shortName": "the kid zone",
     "id": "kidZone",
-    "description": "Vibrant colors assault your eyes from every direction as you stand beneath a mountain of tubes slightly too small for the average adult to traverse comfortably. You hear laughter echoing from within the tubes, though you cannot place where the source of it might be.",
+    "description": "Vibrant colors assault your eyes from every direction as you stand beneath a mountain of tubes slightly too small for the average adult to traverse comfortably. You hear laughter echoing from within the tubes, though you cannot place where the source of it might be.<br/><br/>Flee to the quiet of the [[book store->bookstore]].",
     "roomId": "kidZone"
   },
   "hotTopic": {
@@ -304,14 +304,14 @@
     "displayName": "Ice Rink",
     "shortName": "the ice rink",
     "id": "iceRink",
-    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.",
+    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.<br/><br/>Just off to the side you can see a [[photo booth->photoBooth]]. If you need to rest after all that skating, the [[food court->foodCourt]] is nearby. ",
     "roomId": "iceRink"
   },
   "unconferenceDance": {
     "displayName": "Unconferencing Room: Dance Machine",
     "shortName": "the Dance Machine cabinet",
     "id": "unconferenceDance",
-    "description": "(an unconferencing room)",
+    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[retro cabs->unconference80s]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceDance"
   },
   "theaterMage": {
@@ -366,7 +366,7 @@
     "displayName": "Unconferencing Room: FighterMan Machine",
     "shortName": "the FighterMan Machine",
     "id": "unconferenceFighterman",
-    "description": "an unconferencing room",
+    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[retro cabs->unconference80s]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceFighterman"
   },
   "yendor": {
@@ -381,7 +381,7 @@
     "displayName": "Unconferencing Room: 80s Section",
     "shortName": "the retro cabs",
     "id": "unconference80s",
-    "description": "(an unconferencing room)",
+    "description": "(an unconferencing room).<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconference80s"
   },
   "rift2": {
@@ -477,7 +477,7 @@
     "displayName": "H & M and Fitch Postale Republic",
     "shortName": "H&M",
     "id": "h&m",
-    "description": "You enter a dark space filled with clothes that all appear to your eye as if they should be distinct, but which blend together into meaningless visual noise. You feel as if the culture here is trendy and cool in a way that bucks convention, and yet the apparel shifts as you look at it, presenting whatever vibe you project onto it. As you look next door you see another store with slightly dimmer lighting and brighter wood tones, selling exactly the same products. The store next to that is very slightly brighter. An endless array of similar stores stretches as far as you can see, their clothes all morphing as you stare. You feel you could be trapped here if you aren’t careful.",
+    "description": "You enter a dark space filled with clothes that all appear to your eye as if they should be distinct, but which blend together into meaningless visual noise. You feel as if the culture here is trendy and cool in a way that bucks convention, and yet the apparel shifts as you look at it, presenting whatever vibe you project onto it. As you look next door you see another store with slightly dimmer lighting and brighter wood tones, selling exactly the same products. The store next to that is very slightly brighter. An endless array of similar stores stretches as far as you can see, their clothes all morphing as you stare. You feel you could be trapped here if you aren’t careful.<br/><br/>There's [[an American Eagle->americanEagle]] next door.",
     "roomId": "h&m"
   },
   "underbar": {
@@ -521,8 +521,8 @@
     "hidden": true
   },
   "screen1": {
-    "displayName": "Screen 1",
-    "shortName": "Screen 1",
+    "displayName": "Screen 1: I Was a Teenage Gelatinous Cube",
+    "shortName": "I Was a Teenage Gelatinous Cube",
     "id": "screen1",
     "description": "You walk into a dark theater space with a blank screen at one end. Every surface of this space has been either covered by, or replaced with, popcorn. The smell of butter and salt wafts through the air, and you feel the crunch of kernels beneath you as you move.<br/><br/>Or you can head back to the [[main theater->theater]].",
     "roomId": "screen1"
