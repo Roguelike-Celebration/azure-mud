@@ -343,7 +343,15 @@
     "shortName": "the photo booth",
     "id": "photoBooth",
     "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.",
-    "roomId": "photoBooth"
+    "roomId": "photoBooth",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "Next to the booth, a sign asks visitors to describe their favourite Mall of Moria memory on the back of a photo and drop it in the provided box, for a chance to win a $3 gift card. You see no sign of a box, but the pile of pens have been put to good use scribbling graffiti directly onto the wall.",
+      "noteWallButton": "Add your mark",
+      "addNoteLinkText": "Contribute",
+      "addNotePrompt": "Contribute to the graffitti?",
+      "noteWallDescription": "Someone has scratched ‘Rodney was here’ directly into the wall here, and a web of messages in various hands spreads out around it."
+    }
   },
   "unconferenceStarShip": {
     "id": "unconferenceStarShip",
