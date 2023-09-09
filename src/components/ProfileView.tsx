@@ -62,11 +62,11 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     null
   )
 
-  const twitterHandle = user.twitterHandle ? (
-    <div id="profile-twitter">
-      <strong>Twitter</strong>:{' '}
-      <a href={`https://twitter.com/${user.twitterHandle}`} target="_blank" rel="noreferrer">
-      @{user.twitterHandle}
+  const socialLink = user.twitterHandle ? (
+    <div id="profile-social">
+      <strong>Social Link</strong>:{' '}
+      <a href={user.twitterHandle} target="_blank" rel="noreferrer">
+        {user.twitterHandle}
       </a>
     </div>
   ) : (
@@ -103,6 +103,8 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     </a>
   )
 
+  const noInformation = !realName && !user.pronouns && !description && !socialLink && !url && !askMeAbout
+
   return (<>
     <ReactTooltip />
     <Linkify componentDecorator={linkDecorator}>
@@ -112,19 +114,27 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
             <h2 className={user.isMod ? 'mod' : ''}><NameView userId={user.id} id={`profile-nameview-${user.id}`} /></h2>
             <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>X</button>
           </div>
-          <p>
-            {realName}
-            <div id="profile-pronouns">{user.pronouns}</div>
-            {description}
-          </p>
+          <section className="profile-details">
+            <p>
+              {realName}
+              <div id="profile-pronouns">{user.pronouns}</div>
+              <i>{description}</i>
+            </p>
 
-          {user.item ? <p>{user.username} is currently holding {user.item}</p> : null}
+            <p>
+              {socialLink}
+              {url}
+              {askMeAbout}
+            </p>
 
-          <p>
-            {twitterHandle}
-            {url}
-            {askMeAbout}
-          </p>
+            {noInformation &&
+              <i>{user.username} has no further information. How mysterious!</i>
+            }
+
+            {user.item && <p>{user.username} is currently holding {user.item}</p>}
+
+          </section>
+
           <div id="chat-container">
             <div id="chat-header">Whisper Chat</div>
             <div id="chat">

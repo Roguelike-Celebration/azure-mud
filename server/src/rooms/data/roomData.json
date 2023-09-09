@@ -1,105 +1,32 @@
 {
-  "unconferenceStarShip": {
-    "id": "unconferenceStarShip",
-    "displayName": "Unconferencing: Starship Bridge",
-    "shortName": "Unconferencing: Starship",
-    "description": "This is an unconferencing room. The vacuum seal around the door hisses as you enter the flat-white-panelled interior of a starship. Computer screens glow softly from every direction, feeding you statistics about the ship's systems. You see engineers running from station to station to put out fires as a glowing red triangle warns of a nearby solar flare. The ship rocks every few moments from the force of impact caused by what seems to be the weapons of a nearby enemy vessel, and you can see a radar screen that indicates a fleet approaching. You're sure it's fine.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87042161886?pwd=Z3NXNlB5eWRKb2JKNVFnWVlxQS9Jdz09 target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 380841)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceStarShip"
-  },
-  "unconferenceRaveCave": {
-    "id": "unconferenceRaveCave",
-    "displayName": "Unconferencing: Rave Cave",
-    "shortName": "Unconferencing: Rave Cave",
-    "description": "This is an unconferencing room. You step into what you can only describe as a Rave Disco, and are immediately assaulted with the thumping of an otherwordly bass. Floor panels glow in time with the music, alternating between the normal stone floors of a cave, to suddenly being alight with some energetic magic. Skeletons, slimes, and even a dragon appear to be bopping to the fierce beats, and you can see in the distance a menacing conga line protecting an oversized gorilla.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84996086440?pwd=VGpJSTBhdGUxYTNNL08vc1RFZWdVdz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 037611)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Dig Site->unconferenceDigSite]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceRaveCave"
-  },
-  "rift3": {
-    "displayName": "The Rift - 3",
-    "shortName": "rift3",
-    "id": "rift3",
-    "hidden": true,
-    "description": "Walking towards the glimmer, you see the world shift around you and resolve into some kind of a science lab filled with test tubes and floating test subjects. As you look around you notice that you also appear to be inside one of the tubes. A scientist notices you and gestures towards a colleague just as both run towards you enthusiastically. They begin furiously taking notes as other scientists join them. One reaches over towards a panel on the side of your tube, pressing some incomprehensible combination of buttons. The light within your tube shifts and you catch another glimmer in the air, though you're not sure how you could ever walk towards it now. As you stare at it and attempt to move, you can feel your perspective shifting despite your immobility. You think that if you just keep trying, you'll be able to [[enter it->rift4]].",
-    "roomId": "rift3"
-  },
-  "adventurersGuildHall": {
-    "id": "adventurersGuildHall",
-    "displayName": "Adventurer's Guild Hall",
-    "shortName": "the Guild",
-    "description": "A shockingly fast steam engine whisks you to a grand lounge of bronze, dark woods, and ivy trellises. Every once in a while you hear the pneumatic \"whoosh\" as items are carried through tubing. There's plenty of sturdy tufted couches and velvet lounge chairs, and a variety of elegantly carved coffee tables covered in books and journals.</br></br>You can go back to the central [[hall->centralHall]], or visit the [[Office of Steam->officeOfSteam]] or the [[Video Dome->videoDome]].",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "One journal is open, a black tome decorated with silvery and bronze swirls - \"Procedural Generation Surprises\" on the cover. Quill pens are nearby.",
-      "noteWallButton": "Contribute",
-      "addNoteLinkText": "Contribute",
-      "addNotePrompt": "Tell us of a time a procedural generator has surprised or delighted you!",
-      "noteWallDescription": "Tales of strange, delightful emergent results from procedural generators."
-    },
-    "roomId": "adventurersGuildHall"
-  },
-  "centralHall": {
-    "id": "centralHall",
-    "displayName": "Central Hall",
-    "shortName": "the hall",
-    "description": "Lights and sounds fill your senses as you enter the towering Central Hall. The warm hum of conversation gently envelops you and the rest of the crowd here as each of you share in the collective grandeur. High above you see ascii sigils glittering in the air as the ceiling fades into an impossible distance. Each of the branching hallways leaving this central hub seem to shift from stonework into wood, brass, or some kind of hi-tech polymer material as the needs of the space make its theming tangible.<br/><br/>Just to the right of the central pathway is a booth covered in various bits and bobs, labeled the [[Swag Table->swag]]. On the opposite side of that same path is a towering monolith of signs behind a roped off area marked as [[Destinations->destinations]]. At the ends of the hall, where the paths begin to fade into wooden panelling, you see a painted tavern sign just above the entrance to the [[Bar->bar]],and just beyond that a short hallways leads to the [[unconferencing rooms->Unconferencing]]. Opposite that, a carpeted hallway leads up to the [[Video Dome->videoDome]]. Directly between the left and right halls, at the end of the central path you've been travelling, a chorus of lights dance above a door advertising the [[Theater->theater]] entrance.<br/><br/>",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "A big bulletin board sits in the middle of the hall, with a banner on top - \"Social Space Feedback\". An array of markers and sticky notes are nearby.",
-      "noteWallButton": "Add feedback",
-      "addNoteLinkText": "Add feedback",
-      "addNotePrompt": "What feedback do you have about the social space itself?",
-      "noteWallDescription": "Social Space Feedback"
-    }
-  },
-  "swag": {
-    "id": "swag",
-    "displayName": "Swag Table",
-    "shortName": "the swag table",
-    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A clearing amidst the pile has been lovingly lined with plump helmet, with showcase pillars for real world shirts, socks, and enamel pins, being sold by Ann Arbor T-shirt Company, that you can<a href=\"https://roguelikecelebration.itemorder.com/shop/home/ \">purchase for yourself</a>.<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[hall->centralHall]].",
-    "roomId": "swag"
-  },
-  "theaterMage": {
-    "id": "theaterMage",
-    "displayName": "Breakout room: Mage's Circle",
-    "shortName": "Mage Breakout",
-    "description": "Ever-changing sigils on the ground, pulsing with an eerie glow. A cauldron bubbling in the corner, being stirred continuously by a capybara with a purple cape. Or you can head back to the [[theater]]."
-  },
-  "undermeadows": {
-    "displayName": "The Meadows",
-    "shortName": "undermeadows",
-    "id": "undermeadows",
-    "hidden": true,
-    "description": "You walk out into a pleasant meadow. The wind sighs gently through the trees, and forest life is bountiful around you. Fawns, bunnies, and various other adorable woodland creatures hear you arrive and look up from whatever they were doing. Each gives you a confused look, as if they were expecting someone else instead. </br></br> As you walk around this space, you notice a shimmer in the air near one of the trees. You’re sure that if you approach it just right, you could [[see what lies beyond->underrift]]. </br></br> Or you can head back to [[The Spire->underspire]].",
-    "roomId": "undermeadows"
-  },
-  "barStools": {
-    "id": "barStools",
-    "displayName": "Stools By the Bar",
-    "shortName": "the stools by the bar",
-    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinAround]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]].",
-    "roomId": "barStools"
-  },
-  "theater": {
-    "id": "theater",
-    "displayName": "Theater",
-    "shortName": "the theater",
-    "description": "A stage, confusingly decorated with Halloween skulls and streamers. There are a few dozen flimsy metal chairs you can sit in, plus some comfy couches in the back. <br/><br/>You can return to the [[hall->centralHall]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Warrior->theaterWarrior]], [[Mage->theaterMage]], [[Rogue->theaterRogue]], or [[Cleric->theaterCleric]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "There is a whiteboard set up to the side with \"SPEAKER QUESTIONS\" written at the top. \"Questions for speakers not questions from speakers!\" is hastily scrawled below it.",
-      "noteWallButton": "Write a question",
-      "addNoteLinkText": "add a question",
-      "addNotePrompt": "What would you like to ask?",
-      "noteWallDescription": "Questions for the current speaker, ranked by upvotes."
-    }
-  },
   "dockingBay": {
     "id": "dockingBay",
     "displayName": "Docking Bay 4",
     "shortName": "the docking bay",
     "description": "Enormous stacks of metal cargo boxes line one side of this massive room, with various starships occupying the remaining space. The ships are small, short-range vessels used to transport between larger ships or station, and each of them is as unique as the mothership, and species, it must have come from. Among the stacks of cargo boxes you catch a glimmer from time to time, as if angling your head in just the right way is bringing something into view, but you can't make it out without [[moving closer->rift1]]. You can also go back to the central [[hall->centralHall]].",
-    "roomId": "dockingBay"
+    "roomId": "dockingBay",
+    "hidden": true
+  },
+  "hotDogStand": {
+    "displayName": "Hot Dog Stand",
+    "shortName": "the hot dog stand",
+    "id": "hotDogStand",
+    "description": "As you approach you are assaulted with the image of a brightly colored hat no mortal should be forced to endure. The physical manifestation of shame itself holds up a hotdog deep fried in delicious breading and slathered with some mysterious sauce that appears to be unaffected by things as mundane as gravity. $2.99. Not bad!",
+    "roomId": "hotDogStand"
+  },
+  "obelisk": {
+    "displayName": "Map Obelisk",
+    "shortName": "a map obelisk",
+    "id": "obelisk",
+    "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.",
+    "roomId": "obelisk"
+  },
+  "emptyStore": {
+    "displayName": "Empty Storefront",
+    "shortName": "an empty storefront",
+    "id": "emptyStore",
+    "description": "nothing to see here.",
+    "roomId": "emptyStore"
   },
   "rift1": {
     "displayName": "The Rift - 1",
@@ -109,13 +36,68 @@
     "description": "As you walk towards the glimmer you angle your head slightly to the left and suddenly the image resolves around you and you appear in a deep, red cavern with glittering crystal formations growing in every direction. Enormous insects crawl over the crystals, spraying their surface with some fluid before taking small bites. You see such bite marks along every surface, part of the reason why the light is refracting so spectacularly. The light source itself seems to be a bulging mother bug attached to the wall in one corner as she is fed by her drones.</br></br>As you gaze in awe of the mother bug, you see another distortion in the air. Looking around yourself, there doesn't seem to be anywhere else to go. The portal you seem to have used to get here has gone, so you may as well [[walk towards this new one->rift2]] to see what happens.",
     "roomId": "rift1"
   },
-  "videoDome": {
-    "id": "videoDome",
-    "displayName": "Video Dome",
-    "shortName": "the video dome",
-    "mediaChat": true,
-    "description": "An enormous dome made of brass, featuring steam-powered electrical screens instead of walls or ceiling. Everywhere you look you see beautiful landscapes and people going about their lives. The floor is a flat space with a subtle mosaic pattern, and is occupied by clockwork servant bots carrying screens to anyone who requests one. Your own clockwork video bot appears and offers you its video chat services.</br></br>From here you can also return to the [[hall->centralHall]] or the [[guild->adventurersGuildHall]].<br/><br/><strong>WARNING: we have no idea if this works.</strong> Feel free to let us know, but we probably won't fix it this year.<br/>Sincerely,<br/>The MUD devs",
-    "roomId": "videoDome"
+  "theaterCleric": {
+    "id": "theaterCleric",
+    "displayName": "Breakout room: Cleric's Hall",
+    "shortName": "Cleric Breakout",
+    "description": "A quiet church hall shines in beams of radiant light reflecting off the myriad colors of an entire wall made of stained glass. An entire fountain of holy water sits at the center of several priests blessing it in the name of their various deities.. Or you can head back to the [[theater]].",
+    "hidden": true,
+    "roomId": "theaterCleric"
+  },
+  "pretzelPlace": {
+    "displayName": "Pretzel Place",
+    "shortName": "the pretzel place",
+    "id": "pretzelPlace",
+    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.",
+    "roomId": "pretzelPlace"
+  },
+  "thesisDefense": {
+    "displayName": "Hall of Thesis Defense",
+    "shortName": "thesisDefense",
+    "id": "thesisDefense",
+    "hidden": true,
+    "description": "You appear in the middle of a large hall, surrounded by seats and long, curved desks full of shadowy figures. Standing before you are the imposing shadowy forms of your PhD review panel, their gaze pinning you to the floor in pure terror. You can feel yourself speaking, offering two very different defenses of the same topic, neither of which is making a single coherent point between them. You know the topic better than this. You know you do. Yet you hear the laughter of your peers echoing in the distant corners of this hall.</br></br>On the desk you find a shimmering stack of papers, glistening in the dim light. The Golden Thesis. You sense that if you could just read its text one more time, you could do this. But you feel an irresistable force pulling you from this place, and back to the [[underworld]]."
+  },
+  "procedural": {
+    "displayName": "Procedural Hall",
+    "shortName": "procedural",
+    "id": "procedural",
+    "hidden": true,
+    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->underTheater]].</br></br>You also notice, in an obscure corner of the hall, stuck between two bricks that can't seem to shift away from this spot, a trail of papers leading into a [[patch of shadow->thesisDefense]].",
+    "roomId": "procedural"
+  },
+  "unconferenceRacing": {
+    "displayName": "Unconferencing Room: Anime Racing Game",
+    "shortName": "the anime racing game",
+    "id": "unconferenceRacing",
+    "description": "(an unconferencing room)",
+    "roomId": "unconferenceRacing"
+  },
+  "rodney": {
+    "displayName": "Rodney",
+    "shortName": "rodney",
+    "hidden": true,
+    "id": "rodney",
+    "description": "You suddenly find yourself descending through layers of a dungeon made of memories and lived experiences, a place deep beneath the surface and devoid of any light. Scenes play out before you, a tall man in dark robes teaching you the ways of dark magic, a group of kids making fun of you, a neglectful family, and a loving dog. The scenes of abuse and neglect become more frequent, as does the image of the dark robed man. You feel a malicious heartbeat echo through these halls, building a determination to strike out at all of humankind for the suffering experienced in youth. The deeper you fall, the stronger these feelings grow. You feel yourself getting angrier, and just as you feel you can take it no more, a light suddenly appears.</br></br> Proceed To [[Lover’s Lake->loversLake]].",
+    "roomId": "rodney"
+  },
+  "americanEagle": {
+    "displayName": "American Eagle",
+    "shortName": "American Eagle",
+    "id": "americanEagle",
+    "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly woven into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.",
+    "roomId": "americanEagle"
+  },
+  "underrift": {
+    "displayName": "The Underrift",
+    "shortName": "underrift",
+    "id": "underrift",
+    "hidden": true,
+    "description": "You suddenly arrive in the memory of a library. Everything here feels real, and yet the titles of books shift like serpents in fog.  This appears to be a shabby place, overrun with students and not nearly enough books for them all. You look around at haggard faces and recognize the tell-tale exhaustion of grad students. They do not see you, and you’re not really sure they would be able to engage with you if they did.</br></br>Near the front desk you can see another shimmer in the air. You don’t even feel the need to approach it, you sense that just by willing yourself to pass through it, [[you will->rift4]].</br></br>You also see a stone tablet with an engraved riddle sitting conspiciously nearby.",
+    "roomId": "underrift",
+    "riddles": [
+      "Reject the written word\nOrder replaced by chaos\nClear your mind of expectation\nDive instead into the beginning\nAll you need is there\nLooking into the distance for missing pieces"
+    ]
   },
   "unconference": {
     "id": "unconference",
@@ -130,37 +112,122 @@
       "addNotePrompt": "What would you like to suggest?",
       "noteWallDescription": "Topics for unconferencing discussion, ranked by upvotes."
     },
-    "roomId": "unconference"
+    "roomId": "unconference",
+    "hidden": true
   },
-  "barStage": {
-    "id": "barStage",
-    "displayName": "Stage Near the Bar ",
-    "shortName": "the bar stage",
-    "description": "It's time to play the music, to light the lights. A muscular bard, whose parents actually named [[Chad Silverbow->talkToChadSilverbow]], currently stands on stage telling [[terrible jokes->hearTerribleJoke]]. You almost feel bad for the poor guy.</br></br>From here you can see tables at the [[balcony->barBalcony]], [[along the bar->barStools]], the [[back->barBack]], and the [[rest of the bar->bar]].",
-    "roomId": "barStage"
+  "screen2": {
+    "displayName": "Screen 2",
+    "shortName": "Screen 2",
+    "id": "screen2",
+    "description": "You enter a pitch black space you can only assume must be a theater with a screen at one end and many seats. You see nothing, however, beyond a blackness that cannot possibly be natural. You hear wet noises coming from the back corner of this room, and you fear to wonder what might be their source.<br/><br/>Or you can head back to the [[main theater->theater]].",
+    "roomId": "screen2"
   },
-  "underspire": {
-    "displayName": "The Spire",
-    "shortName": "underspire",
-    "id": "underspire",
+  "barBack": {
+    "id": "barBack",
+    "displayName": "Booth at the Back",
+    "shortName": "the booth at the back",
+    "description": "A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>From here, you can see tables [[on the balcony->barBalcony]], the [[stage->barStage]], or [[along the bar->barStools]], and the [[rest of the bar->bar]].",
     "hidden": true,
-    "description": "A flash of crimson light announces your entrance into a circular room crafted of polished bone. Purple flames dance within the eye sockets of skulls floating just out of arms’ reach, casting an eerie light against the rune-covered walls. Obsidian pillars support walls which seem to stretch out to unfathomable heights. You can tell there is another floor above you, and you see a staircase winding along the walls, but something about the air here warps your vision and makes understanding the scope of this room impossible. </br></br>At the far side of the room is a throne, and atop that sits a brooding figure you vaguely recognize from the back of the bar. You suddenly know his name is [[Randor The Twisted->talkToRandorTheTwisted]], and you sense within him [[a great conflict->showModal]].</br></br>Opposite the throne sits a crystal mirror within which you see a [[distant landscape->undermeadows]]. Or you can [[head back through the portal->underbar]].",
-    "roomId": "underspire",
-    "specialFeatureText": "A rival and a leader,\nAn influence felt by all,\nKnown most for his necklace,\nFound deep under the crawl"
+    "roomId": "barBack"
   },
-  "underworld": {
-    "displayName": "The Underworld",
-    "shortName": "underworld",
-    "id": "underworld",
+  "foodCourt": {
+    "displayName": "Food Court",
+    "shortName": "the food court",
+    "id": "foodCourt",
+    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.",
+    "roomId": "foodCourt"
+  },
+  "unconferenceRaveCave": {
+    "id": "unconferenceRaveCave",
+    "displayName": "Unconferencing: Rave Cave",
+    "shortName": "Unconferencing: Rave Cave",
+    "description": "This is an unconferencing room. You step into what you can only describe as a Rave Disco, and are immediately assaulted with the thumping of an otherwordly bass. Floor panels glow in time with the music, alternating between the normal stone floors of a cave, to suddenly being alight with some energetic magic. Skeletons, slimes, and even a dragon appear to be bopping to the fierce beats, and you can see in the distance a menacing conga line protecting an oversized gorilla.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84996086440?pwd=VGpJSTBhdGUxYTNNL08vc1RFZWdVdz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 037611)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Dig Site->unconferenceDigSite]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true,
+    "roomId": "unconferenceRaveCave",
+    "hidden": true
+  },
+  "screen4": {
+    "displayName": "Screen 4",
+    "shortName": "Screen 4",
+    "id": "screen4",
+    "description": "You step into a dark room where the floor feels like it is made of some kind of adhesive. Each step pains you as you drag reluctant feet forward along the most viscous surface you have ever known. Something in your stomach churns in rebellion against the unfathomable texture here. You must find your seat quickly.<br/><br/>Or you can go back to the [[main theater->theater]].",
+    "roomId": "screen4"
+  },
+  "centralHall": {
+    "id": "centralHall",
+    "displayName": "Central Hall",
+    "shortName": "the hall",
+    "description": "Lights and sounds fill your senses as you enter the towering Central Hall. The warm hum of conversation gently envelops you and the rest of the crowd here as each of you share in the collective grandeur. High above you see ascii sigils glittering in the air as the ceiling fades into an impossible distance. Each of the branching hallways leaving this central hub seem to shift from stonework into wood, brass, or some kind of hi-tech polymer material as the needs of the space make its theming tangible.<br/><br/>Just to the right of the central pathway is a booth covered in various bits and bobs, labeled the [[Swag Table->swag]]. On the opposite side of that same path is a towering monolith of signs behind a roped off area marked as [[Destinations->destinations]]. At the ends of the hall, where the paths begin to fade into wooden panelling, you see a painted tavern sign just above the entrance to the [[Bar->bar]],and just beyond that a short hallways leads to the [[unconferencing rooms->Unconferencing]]. Opposite that, a carpeted hallway leads up to the [[Video Dome->videoDome]]. Directly between the left and right halls, at the end of the central path you've been travelling, a chorus of lights dance above a door advertising the [[Theater->theater]] entrance.<br/><br/>",
+    "hasNoteWall": true,
     "hidden": true,
-    "description": "Fragments of half-seen visions float through the air of a large, open space that closely resembles the central hall above. You hear the whispers of the attendees’ hopes and dreams, but just outside of your ability to understand what they are saying. A veil of shifting darkness seems to float over this place, blurring the edges of everything you see and giving the space a dreamlike quality.</br></br> Among the shifting ghosts, you see what appears to be a frazzled college student muttering about her PhD. She is carrying a deck emblazoned with the name [[Z3r0 Cr4sh->talkToZeroCrash]], and seems to be looking for something.</br></br>You also see the doorways leading to the [[Bar->underbar]], and the [[Experimental Biology Lab->underlab]]. The hallways leading to the rest of the event space are covered in rubble of some kind, and the Theater doors pulse with an ominous hum that your mind refuses to approach.",
-    "roomId": "underworld"
+    "noteWallData": {
+      "roomWallDescription": "A big bulletin board sits in the middle of the hall, with a banner on top - \"Social Space Feedback\". An array of markers and sticky notes are nearby.",
+      "noteWallButton": "Add feedback",
+      "addNoteLinkText": "Add feedback",
+      "addNotePrompt": "What feedback do you have about the social space itself?",
+      "noteWallDescription": "Social Space Feedback"
+    },
+    "roomId": "centralHall"
+  },
+  "sears": {
+    "displayName": "Sears",
+    "shortName": "Sears",
+    "id": "sears",
+    "description": "You find yourself inside a large store that seems to sell an incoherent mixture of everything. Televisions, Blenders, and Blue Jeans are all haphazardly strewn about, and even though you sense everything was placed with precision, you can’t help but feel like none of this makes sense. Why did you come here? Was it for a new power drill, or pair of shoes? No matter how many times you ask yourself, you can’t seem to remember. ",
+    "roomId": "sears"
+  },
+  "loversLake": {
+    "displayName": "Lover's Lake",
+    "shortName": "loversLake",
+    "id": "loversLake",
+    "hidden": true,
+    "description": "You see a crystal clear lake surrounded by verdant forests teeming with life and the kind of natural beauty that can fuel a poet for decades. Beside that lake sits a handsome young man sitting on a tree stump, surrounded by an assortment of woodland creatures. Bunnies, deer, squirrels, and birds gather around someone who clearly loves and respects them for the beautiful creatures they are. Even the crawling lizards and bugs below seem to earn this kind soul's affections. You sense a deep light thrumming through this space in a way that you can feel more than see. </br></br>On the ground you see a blood red jewel of some kind. It glows with malevolent light, but as you look closer it seems to have been recently purified. You can sense the change in its nature slowly growing as a result of exposure to the accepting light of this place.",
+    "roomId": "LoversLake"
+  },
+  "screen3": {
+    "displayName": "Screen 3",
+    "shortName": "Screen 3",
+    "id": "screen3",
+    "description": "You enter a theater projecting an action movie of some kind. Explosions fill the room with light and the sound rocks the flat surfaces so intensely that you are nearly knocked off your feet. An errant popcorn kernel hits the side of your head in time with sharp bark of a scream, causing you to involuntarily flinch.<br/><br/>Or you can go back to the [[main theater->theater]].",
+    "roomId": "screen3"
+  },
+  "destinations": {
+    "id": "destinations",
+    "displayName": "Destinations",
+    "shortName": "the destinations hallway",
+    "description": "You stand beneath an imposing monolith made up of signs to every possible destination in every possible multiverse. Beyond it lies a hallway that seems to flicker incomprehensibly, doorways fading in and out of existence. You notice they all appear to be marked with a paper sign, which you can [[try to read->readClosedSign]].<br/><br/>Beneath the shifting monolith's infinite destination signs lie two more permanent ones. One is made of steel and imbedded LED lights spell out [[Oxygen Farm->oxygenFarm]]. The other is made of brass and features an ornate crest advertising the [[Adventurer's Guild->adventurersGuildHall]].</br></br>You can also return to the [[Central Hall->centralHall]]",
+    "roomId": "destinations",
+    "hidden": true
+  },
+  "kiosk": {
+    "displayName": "kiosk",
+    "shortName": "a kiosk",
+    "id": "kiosk",
+    "description": "A small cart full of alien artifacts sits in the center of a hall. As you try to pass by, you feel a bizarre contraption made of vibrating wires attach itself to your head as perfume is sprayed directly into your eyes. An RC car slams into your feet as you stumble on, and you feel a clipboard shoved into your hand from somewhere, begging you to sign. You don’t want anything from here. No one ever has. Yet somehow it feels too rude to just leave.",
+    "roomId": "kiosk"
+  },
+  "rift4": {
+    "displayName": "The Rift - 4",
+    "shortName": "rift4",
+    "id": "rift4",
+    "hidden": true,
+    "description": "You appear suddenly in the crumbling ruins of an ancient city. You stand in an open park between a forest of skyscrapers reaching up through the clouds, their tops somewhere beyond what your eyes can see. The upper reaches of these colossal towers sway gently in the breeze. On the ground are dilapidated benches and walking paths now reclaimed by the natural world. The chirping of some form of bird can be heard echoing among the towers, and you see bushes rustling with small animal life, though you see none of these creatures directly. </br></br>You sense within you a shift in the air. Reaching out, you can feel a myriad layers within the air, as if each glimmer you'd seen before was now a page of an enormous book that you could merely flip to on a whim. You run your fingers along the spine of this imaginary book until you find a familiar page. You know that if you turn this page, you'll appear back in the [[Docking Bay->dockingBay]].",
+    "roomId": "rift4"
+  },
+  "arcade": {
+    "displayName": "Player One Arcade (Unconferencing Lobby)",
+    "shortName": "Player One Arcade",
+    "id": "arcade",
+    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.",
+    "roomId": "arcade"
   },
   "theaterWarrior": {
     "id": "theaterWarrior",
     "displayName": "Breakout room: Warrior's Training Grounds",
     "shortName": "Warrior Breakout",
-    "description": "Training weights, padded dummies, and a single gigantic rock fill a workout room that reeks of sweat. One wall is lined with enough bladed objects to make even the most reserved berserker blush. Or you can head back to the [[theater]]."
+    "description": "Training weights, padded dummies, and a single gigantic rock fill a workout room that reeks of sweat. One wall is lined with enough bladed objects to make even the most reserved berserker blush. Or you can head back to the [[theater]].",
+    "hidden": true,
+    "roomId": "theaterWarrior"
   },
   "experimentalBiology": {
     "id": "experimentalBiology",
@@ -173,6 +240,7 @@
     ],
     "roomId": "experimentalBiology",
     "hasNoteWall": true,
+    "hidden": true,
     "noteWallData": {
       "roomWallDescription": "There is a chalkboard set up to the side with \"REFERENCES!!!\" written across the top.",
       "noteWallButton": "Add reference material",
@@ -180,6 +248,324 @@
       "addNotePrompt": "What would you like to link to",
       "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
     }
+  },
+  "spencers": {
+    "displayName": "Spencer's Gifts",
+    "shortName": "Spencer's Gifts",
+    "id": "spencers",
+    "description": "A deep sense of whimsy comes over you as your eyes behold vibrant posters for movies you’re pretty sure you’ve never actually seen, but have heard talked about so much that you know them anyway. Racks and racks of mildly-offensive t-shirts cover one entire half of the store, and somewhere in a back corner you see an inappropriately-shaped neon lamp glowing brightly.",
+    "roomId": "spencers"
+  },
+  "orangeJulius": {
+    "displayName": "Orange Julius",
+    "shortName": "Orange Julius",
+    "id": "orangeJulius",
+    "description": "You aren't really sure what this place is as you walk by. Its presence seems entrenched into the concept of this space as a whole, but you're not sure why, almost like some fundamental element of the universe dictates that the concept of a mall needs the concept of an Orange Julius, but you don't see any particular function here which you understand. As you look around you see an array of arcane sigils floating in the air and feel the sensation of a wait staff without the accompanying visual presence. An array of cold beverages appears out of the ether, and you feel like you could order one, though you're not entirely sure from whence they come.",
+    "roomId": "orangeJulius"
+  },
+  "underworld": {
+    "displayName": "The Underworld",
+    "shortName": "underworld",
+    "id": "underworld",
+    "hidden": true,
+    "description": "Fragments of half-seen visions float through the air of a large, open space that closely resembles the central hall above. You hear the whispers of the attendees’ hopes and dreams, but just outside of your ability to understand what they are saying. A veil of shifting darkness seems to float over this place, blurring the edges of everything you see and giving the space a dreamlike quality.</br></br> Among the shifting ghosts, you see what appears to be a frazzled college student muttering about her PhD. She is carrying a deck emblazoned with the name [[Z3r0 Cr4sh->talkToZeroCrash]], and seems to be looking for something.</br></br>You also see the doorways leading to the [[Bar->underbar]], and the [[Experimental Biology Lab->underlab]]. The hallways leading to the rest of the event space are covered in rubble of some kind, and the Theater doors pulse with an ominous hum that your mind refuses to approach.",
+    "roomId": "underworld"
+  },
+  "bookstore": {
+    "displayName": "Book Store",
+    "shortName": "the book store",
+    "id": "bookstore",
+    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence, the people beg for the knowledge and humor within, surely someone will find a way.",
+    "roomId": "bookstore"
+  },
+  "kidZone": {
+    "displayName": "Kid Zone",
+    "shortName": "the kid zone",
+    "id": "kidZone",
+    "description": "Vibrant colors assault your eyes from every direction as you stand beneath a mountain of tubes slightly too small for the average adult to traverse comfortably. You hear laughter echoing from within the tubes, though you cannot place where the source of it might be.",
+    "roomId": "kidZone"
+  },
+  "hotTopic": {
+    "displayName": "Hot Topic",
+    "shortName": "Hot Topic",
+    "id": "hotTopic",
+    "description": "A hollowed out husk of a store that seems to have once sold t-shirts, if the piles in the corner are to be believed. You see, in its shell, that a new life form has taken residence here. The center of the store has been retrofitted with an arcane podium of some kind, a large man with a floppy hat and robes stands atop it, offering a compelling argument on what sounds like the topic of AI and what it means to be intelligent. As his sentences end, you see a crew of teens wearing dark, baggy clothes and far too many chains each respond, loudly agreeing or disagreeing, and offering their own perspectives on these subjects. The debate seems endless, and the idea of attempting to join in fills you with dread. However, you do see a marker next to the shirt pile. You could probably write your own.",
+    "roomId": "hotTopic"
+  },
+  "oxygenFarm": {
+    "id": "oxygenFarm",
+    "displayName": "Oxygen Farm",
+    "shortName": "the oxygen farm",
+    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as if it were trying to [[get your attention->talkToFlower]]. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]].",
+    "hidden": true,
+    "roomId": "oxygenFarm"
+  },
+  "iceRink": {
+    "displayName": "Ice Rink",
+    "shortName": "the ice rink",
+    "id": "iceRink",
+    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.",
+    "roomId": "iceRink"
+  },
+  "unconferenceDance": {
+    "displayName": "Unconferencing Room: Dance Machine",
+    "shortName": "the Dance Machine cabinet",
+    "id": "unconferenceDance",
+    "description": "(an unconferencing room)",
+    "roomId": "unconferenceDance"
+  },
+  "theaterMage": {
+    "id": "theaterMage",
+    "displayName": "Breakout room: Mage's Circle",
+    "shortName": "Mage Breakout",
+    "description": "Ever-changing sigils on the ground, pulsing with an eerie glow. A cauldron bubbling in the corner, being stirred continuously by a capybara with a purple cape. Or you can head back to the [[theater]].",
+    "hidden": true,
+    "roomId": "theaterMage"
+  },
+  "photoBooth": {
+    "displayName": "Photo Booth",
+    "shortName": "the photo booth",
+    "id": "photoBooth",
+    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.",
+    "roomId": "photoBooth"
+  },
+  "unconferenceStarShip": {
+    "id": "unconferenceStarShip",
+    "displayName": "Unconferencing: Starship Bridge",
+    "shortName": "Unconferencing: Starship",
+    "description": "This is an unconferencing room. The vacuum seal around the door hisses as you enter the flat-white-panelled interior of a starship. Computer screens glow softly from every direction, feeding you statistics about the ship's systems. You see engineers running from station to station to put out fires as a glowing red triangle warns of a nearby solar flare. The ship rocks every few moments from the force of impact caused by what seems to be the weapons of a nearby enemy vessel, and you can see a radar screen that indicates a fleet approaching. You're sure it's fine.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87042161886?pwd=Z3NXNlB5eWRKb2JKNVFnWVlxQS9Jdz09 target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 380841)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true,
+    "roomId": "unconferenceStarShip",
+    "hidden": true
+  },
+  "barStage": {
+    "id": "barStage",
+    "displayName": "Stage Near the Bar ",
+    "shortName": "the bar stage",
+    "description": "It's time to play the music, to light the lights. A muscular bard, whose parents actually named [[Chad Silverbow->talkToChadSilverbow]], currently stands on stage telling [[terrible jokes->hearTerribleJoke]]. You almost feel bad for the poor guy.</br></br>From here you can see tables at the [[balcony->barBalcony]], [[along the bar->barStools]], the [[back->barBack]], and the [[rest of the bar->bar]].",
+    "roomId": "barStage",
+    "hidden": true
+  },
+  "officeOfSteam": {
+    "id": "officeOfSteam",
+    "displayName": "Office of Steam",
+    "shortName": "the Office of Steam",
+    "description": "This sparsely-furnished room has little more in it than a typewriter standing on a pillar at its center. As you look down, however, you see a glass floor suspending you above an enormous sprawling mass of pipes and brass machinery. Chutes and tubes create fire and move steam in intricate patterns all ultimately funelling back into the typewriter stand you noticed before. Dwarves are scurrying to and fro, tinkering with the machines. Hooked to the typewriter is a small screen, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. Anachronistically, a cute Post-It Note shaped like a quokka is on the side of the screen, with the note \"Coming Soon: 2022 Steam Sale\" in loopy handwriting. If you'd like, you can investigate the <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">source of its steam power</a>, or go back to the [[Guild Hall->adventurersGuildHall]].",
+    "roomId": "officeOfSteam",
+    "hidden": true
+  },
+  "rift3": {
+    "displayName": "The Rift - 3",
+    "shortName": "rift3",
+    "id": "rift3",
+    "hidden": true,
+    "description": "Walking towards the glimmer, you see the world shift around you and resolve into some kind of a science lab filled with test tubes and floating test subjects. As you look around you notice that you also appear to be inside one of the tubes. A scientist notices you and gestures towards a colleague just as both run towards you enthusiastically. They begin furiously taking notes as other scientists join them. One reaches over towards a panel on the side of your tube, pressing some incomprehensible combination of buttons. The light within your tube shifts and you catch another glimmer in the air, though you're not sure how you could ever walk towards it now. As you stare at it and attempt to move, you can feel your perspective shifting despite your immobility. You think that if you just keep trying, you'll be able to [[enter it->rift4]].",
+    "roomId": "rift3"
+  },
+  "unconferenceFighterman": {
+    "displayName": "Unconferencing Room: FighterMan Machine",
+    "shortName": "the FighterMan Machine",
+    "id": "unconferenceFighterman",
+    "description": "an unconferencing room",
+    "roomId": "unconferenceFighterman"
+  },
+  "yendor": {
+    "displayName": "yendoR",
+    "shortName": "yendor",
+    "id": "yendor",
+    "hidden": true,
+    "description": "You feel yourself pulled up by the force of gravity, pulled towards the sky which is a deep orange. The sun’s darkness shrouds the land highlighted by the light of its shadows. You feel an unsettling sensation of wrongness pulse within you, as if you’ve made some terrible mistake, but in a way that is nearly right. This uncanny feeling compels you to correct yourself, if only you knew how.",
+    "roomId": "yendor"
+  },
+  "unconference80s": {
+    "displayName": "Unconferencing Room: 80s Section",
+    "shortName": "the retro cabs",
+    "id": "unconference80s",
+    "description": "(an unconferencing room)",
+    "roomId": "unconference80s"
+  },
+  "rift2": {
+    "displayName": "The Rift - 2",
+    "shortName": "rift2",
+    "id": "rift2",
+    "hidden": true,
+    "description": "You walk towards this glimmer and suddenly the world shifts around you and you find yourself deep underwater in some kind of bubble made of what you can only describe as self-luminescent crystal. Looking outwards, you see an ocean floor riddled with such bubbles, many of which are occupied by some kind of giant crab. Fortunately, your bubble appears to be empty for now, but you don't think it would be a great idea to stick around too long. </br></br>You look around you and see [[another shimmer in the air->rift3]], but your previous portal has disappeared.",
+    "roomId": "rift2"
+  },
+  "entryway": {
+    "id": "entryway",
+    "displayName": "Mall Entrance",
+    "description": "The sign overhead proclaims this to be the entrance to THE MALL OF MORIA. A handpainted sandwich board on the sidewalk adds, 'Welcome to Roguelike Celebration 2023!' Beyond the doors you can see crowds of what have to be the coolest and most attractive people you've ever met. You should [[go inside->sears]].",
+    "shortName": "the entryway",
+    "hidden": true,
+    "roomId": "entryway"
+  },
+  "swag": {
+    "id": "swag",
+    "displayName": "Swag Table",
+    "shortName": "the swag table",
+    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A clearing amidst the pile has been lovingly lined with plump helmet, with showcase pillars for real world shirts, socks, and enamel pins, being sold by Ann Arbor T-shirt Company, that you can<a href=\"https://roguelikecelebration.itemorder.com/shop/home/ \">purchase for yourself</a>.<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[hall->centralHall]].",
+    "roomId": "swag",
+    "hidden": true
+  },
+  "barStools": {
+    "id": "barStools",
+    "displayName": "Stools By the Bar",
+    "shortName": "the stools by the bar",
+    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinAround]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]].",
+    "roomId": "barStools",
+    "hidden": true
+  },
+  "videoDome": {
+    "id": "videoDome",
+    "displayName": "Video Dome",
+    "shortName": "the video dome",
+    "mediaChat": true,
+    "description": "An enormous dome made of brass, featuring steam-powered electrical screens instead of walls or ceiling. Everywhere you look you see beautiful landscapes and people going about their lives. The floor is a flat space with a subtle mosaic pattern, and is occupied by clockwork servant bots carrying screens to anyone who requests one. Your own clockwork video bot appears and offers you its video chat services.</br></br>From here you can also return to the [[hall->centralHall]] or the [[guild->adventurersGuildHall]].<br/><br/><strong>WARNING: we have no idea if this works.</strong> Feel free to let us know, but we probably won't fix it this year.<br/>Sincerely,<br/>The MUD devs",
+    "roomId": "videoDome",
+    "hidden": true
+  },
+  "underspire": {
+    "displayName": "The Spire",
+    "shortName": "underspire",
+    "id": "underspire",
+    "hidden": true,
+    "description": "A flash of crimson light announces your entrance into a circular room crafted of polished bone. Purple flames dance within the eye sockets of skulls floating just out of arms’ reach, casting an eerie light against the rune-covered walls. Obsidian pillars support walls which seem to stretch out to unfathomable heights. You can tell there is another floor above you, and you see a staircase winding along the walls, but something about the air here warps your vision and makes understanding the scope of this room impossible. </br></br>At the far side of the room is a throne, and atop that sits a brooding figure you vaguely recognize from the back of the bar. You suddenly know his name is [[Randor The Twisted->talkToRandorTheTwisted]], and you sense within him [[a great conflict->showModal]].</br></br>Opposite the throne sits a crystal mirror within which you see a [[distant landscape->undermeadows]]. Or you can [[head back through the portal->underbar]].",
+    "roomId": "underspire",
+    "specialFeatureText": "A rival and a leader,\nAn influence felt by all,\nKnown most for his necklace,\nFound deep under the crawl"
+  },
+  "undermeadows": {
+    "displayName": "The Meadows",
+    "shortName": "undermeadows",
+    "id": "undermeadows",
+    "hidden": true,
+    "description": "You walk out into a pleasant meadow. The wind sighs gently through the trees, and forest life is bountiful around you. Fawns, bunnies, and various other adorable woodland creatures hear you arrive and look up from whatever they were doing. Each gives you a confused look, as if they were expecting someone else instead. </br></br> As you walk around this space, you notice a shimmer in the air near one of the trees. You’re sure that if you approach it just right, you could [[see what lies beyond->underrift]]. </br></br> Or you can head back to [[The Spire->underspire]].",
+    "roomId": "undermeadows"
+  },
+  "underTheater": {
+    "displayName": "underTheater",
+    "shortName": "underTheater",
+    "id": "underTheater",
+    "hidden": true,
+    "description": "You arrive at The Under Theater. Despite the forboding aura at the door, the interior of this space is rather pleasant. There is a table full of spare swag left over from the swag table above, a giant bucket of what appears to be [[lemonade->item]], and some [[slightly stale cookies->item]] neatly stacked on a silver platter for you. The swag table includes a stack of [[negasocks->item]], a [[negalongbow->item]], a [[healing scroll->item]], and an abominable [[negapuppy->item]], radiating malice (adorably).</br></br>This space doesn't appear to be directly connected to any alternate versions of the breakout rooms, and in fact the only door you can see at all is the main entrance, leading back to the [[Underworld->underworld]].",
+    "roomId": "underTheater"
+  },
+  "lockedDoor": {
+    "displayName": "Locked Door",
+    "shortName": "a locked door",
+    "id": "lockedDoor",
+    "description": "The door says EMPLOYEES ONLY, so you're not surprised when it's locked. An inset window reveals a dim hallway stretching into the distance.",
+    "roomId": "lockedDoor",
+    "hidden": true
+  },
+  "barBalcony": {
+    "id": "barBalcony",
+    "displayName": "Balcony Booth",
+    "shortName": "the balcony booth",
+    "description": "A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.</br></br>From here, you can see [[the seats at the bar->barStools]], the [[stage->barStage]], or [[at the back of the room->barBack]], and the [[rest of the bar->bar]].",
+    "hidden": true,
+    "roomId": "barBalcony"
+  },
+  "fountain": {
+    "displayName": "Forever 21 Fountain",
+    "shortName": "the Forever 21 Fountain",
+    "id": "fountain",
+    "description": "You behold a fountain before you, spraying water into impossible shapes and patterns. As you gaze upon this wonder, you feel your body and mind change. You feel the awkwardness suffuse you, as if you are strong and virile enough to be on your own, but not established enough to know how to do that yet. You can feel within you a deep and powerful need to move into a cheap apartment with three too many friends.",
+    "roomId": "fountain"
+  },
+  "h&m": {
+    "displayName": "H & M and Fitch Postale Republic",
+    "shortName": "H&M",
+    "id": "h&m",
+    "description": "You enter a dark space filled with clothes that all appear to your eye as if they should be distinct, but which blend together into meaningless visual noise. You feel as if the culture here is trendy and cool in a way that bucks convention, and yet the apparel shifts as you look at it, presenting whatever vibe you project onto it. As you look next door you see another store with slightly dimmer lighting and brighter wood tones, selling exactly the same products. The store next to that is very slightly brighter. An endless array of similar stores stretches as far as you can see, their clothes all morphing as you stare. You feel you could be trapped here if you aren’t careful.",
+    "roomId": "h&m"
+  },
+  "underbar": {
+    "displayName": "The Underbar",
+    "shortName": "underbar",
+    "id": "underbar",
+    "hidden": true,
+    "description": "You enter a dark reflection of the bar above, overflowing with the spirits of those who have found themself here. An intense pulse of warmth and acceptance overwhelms you and puts you at ease. You notice the pulse is coming from a glowing beacon in the shape of Ubizara. She goes about her usual bartending duties, unaware of the intense light that streams from her and into  the hearts of each and every shadowy guest your eyes can half see. </br></br>At the back of the bar, where there should be a booth, you see a [[swirling portal to some other place->underspire]]. Or you can head back to the [[Underworld->underworld]].",
+    "roomId": "underbar"
+  },
+  "theaterRogue": {
+    "id": "theaterRogue",
+    "displayName": "Breakout room: Rogue's Hideaway",
+    "shortName": "Rogue Breakout",
+    "description": "A dimly-lit room with more dark corners than flat spaces. You don't see anyone else in the space, but you have a distinct feeling that you are being watched by dozens of shifting eyes. Or you can head back to the [[theater]].",
+    "hidden": true,
+    "roomId": "theaterRogue"
+  },
+  "underlab": {
+    "displayName": "The Underlab",
+    "shortName": "underlab",
+    "id": "underlab",
+    "hidden": true,
+    "description": "You enter what should have been the experimental biology lab, but find instead an unseeable abyss of solid black. You can walk around in it, you can feel the floor beneath you, but nothing else at all. You don’t feel any sense of either foreboding or acceptance, but you do feel the intense danger of ambivalence. It’s like this room doesn’t believe you exist at all. You hear, far in the distance, the sound of your parents protecting you from the consequences of your actions. It’s a strange feeling, as if the sound doesn’t belong to you.</br></br>As you stumble around in the dark, you find an even darker patch of black in the shape of a muffin. Floating nearby, you see dark letters etched into the air. P, E, U, R. </br></br>Head back to the [[Underworld->underworld]]?",
+    "roomId": "underlab"
+  },
+  "adventurersGuildHall": {
+    "id": "adventurersGuildHall",
+    "displayName": "Adventurer's Guild Hall",
+    "shortName": "the Guild",
+    "description": "A shockingly fast steam engine whisks you to a grand lounge of bronze, dark woods, and ivy trellises. Every once in a while you hear the pneumatic \"whoosh\" as items are carried through tubing. There's plenty of sturdy tufted couches and velvet lounge chairs, and a variety of elegantly carved coffee tables covered in books and journals.</br></br>You can go back to the central [[hall->centralHall]], or visit the [[Office of Steam->officeOfSteam]] or the [[Video Dome->videoDome]].",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "One journal is open, a black tome decorated with silvery and bronze swirls - \"Procedural Generation Surprises\" on the cover. Quill pens are nearby.",
+      "noteWallButton": "Contribute",
+      "addNoteLinkText": "Contribute",
+      "addNotePrompt": "Tell us of a time a procedural generator has surprised or delighted you!",
+      "noteWallDescription": "Tales of strange, delightful emergent results from procedural generators."
+    },
+    "roomId": "adventurersGuildHall",
+    "hidden": true
+  },
+  "screen1": {
+    "displayName": "Screen 1",
+    "shortName": "Screen 1",
+    "id": "screen1",
+    "description": "You walk into a dark theater space with a blank screen at one end. Every surface of this space has been either covered by, or replaced with, popcorn. The smell of butter and salt wafts through the air, and you feel the crunch of kernels beneath you as you move.<br/><br/>Or you can head back to the [[main theater->theater]].",
+    "roomId": "screen1"
+  },
+  "unconferenceDigSite": {
+    "id": "unconferenceDigSite",
+    "displayName": "Unconferencing: Dig Site",
+    "shortName": "Unconferencing: Dig Site",
+    "description": "This is an unconferencing room. You step into a winding cave with glittering jewels and gold embedded in every wall. Basic scaffolding has been placed here, indicating that perhaps this is some kind of archaeological site. You see in the distance an altar to some dark goddess and next to that, incongruously, what appears to be a shop manned by an angry-looking gentleman with a shotgun.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84687652213?pwd=UnN6Q1FuNmpFWjJSdmhXYlJ1MHJRQT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 901367)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true,
+    "roomId": "unconferenceDigSite",
+    "hidden": true
+  },
+  "unconferenceElysium": {
+    "id": "unconferenceElysium",
+    "displayName": "Unconferencing: Elysium Fields",
+    "shortName": "Unconferencing: Elysium",
+    "description": "This is an unconferencing room. The souls of the dead glow in the eerie light which seems to suffuse this place from every direction. Some kind of bioluminescent moss is growing on every surface here and bright red pottery has been placed along every wall by an overenthusiastic interior designer. Enormous golden pottery breaks up the space with massive shrubbery large enough to devour you whole, and you can't help but wonder how it was delivered here. You see unmanned chariots driving around the space on their own, but they don't seem to be interested in you.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/81512788533?pwd=SnRUZEh2OEhtYVRWRG1nd1FFL0NYUT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 284733)<br/><br/>The other unconferencing rooms are [[Star Ship->unconferenceStarShip]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true,
+    "roomId": "unconferenceElysium",
+    "hidden": true
+  },
+  "theater": {
+    "id": "theater",
+    "displayName": "Cineplex",
+    "shortName": "the cineplex",
+    "description": "You enter the cineplex and are confronted by an impossibly-large screen dominating one entire wall of the space. Before it is a small field of mismatched chairs visibly pulled from anywhere a spare could be found.<br/><br/>You can return to the [[information obelisk->obelisk]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Screen 1->screen1]], [[Screen 2->screen2]], [[Screen 3->screen3]], or [[Screen 4->screen4]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "There is a whiteboard set up to the side with \"SPEAKER QUESTIONS\" written at the top. \"Questions for speakers not questions from speakers!\" is hastily scrawled below it.",
+      "noteWallButton": "Write a question",
+      "addNoteLinkText": "add a question",
+      "addNotePrompt": "What would you like to ask?",
+      "noteWallDescription": "Questions for the current speaker, ranked by upvotes."
+    },
+    "roomId": "theater"
+  },
+  "bodyWorks": {
+    "displayName": "Body Works",
+    "shortName": "Body Works",
+    "id": "bodyWorks",
+    "description": "Elaborate scientific equipment juts out of the broken display cases of what once must have been a collection of small bottles. The science equipment includes glass vials, beakers, and a vast array of liquids being heated to different temperatures. The fluids flow from one side to another, changing colors and textures as they go, before ultimately arriving at the far end. At that end, a woman in a long white lab coat collects them and sets them up for display. The end result of this process seems to be a display shelf full of labeled bottles, which you could take if you wished.",
+    "roomId": "bodyWorks"
   },
   "bar": {
     "id": "bar",
@@ -194,164 +580,7 @@
       "addNotePrompt": "Contribute to the graffitti?",
       "noteWallDescription": "Someone has scratched ‘Rodney was here’ on an absurdly large unisex bathroom stall wall."
     },
-    "roomId": "bar"
-  },
-  "rift2": {
-    "displayName": "The Rift - 2",
-    "shortName": "rift2",
-    "id": "rift2",
-    "hidden": true,
-    "description": "You walk towards this glimmer and suddenly the world shifts around you and you find yourself deep underwater in some kind of bubble made of what you can only describe as self-luminescent crystal. Looking outwards, you see an ocean floor riddled with such bubbles, many of which are occupied by some kind of giant crab. Fortunately, your bubble appears to be empty for now, but you don't think it would be a great idea to stick around too long. </br></br>You look around you and see [[another shimmer in the air->rift3]], but your previous portal has disappeared.",
-    "roomId": "rift2"
-  },
-  "underlab": {
-    "displayName": "The Underlab",
-    "shortName": "underlab",
-    "id": "underlab",
-    "hidden": true,
-    "description": "You enter what should have been the experimental biology lab, but find instead an unseeable abyss of solid black. You can walk around in it, you can feel the floor beneath you, but nothing else at all. You don’t feel any sense of either foreboding or acceptance, but you do feel the intense danger of ambivalence. It’s like this room doesn’t believe you exist at all. You hear, far in the distance, the sound of your parents protecting you from the consequences of your actions. It’s a strange feeling, as if the sound doesn’t belong to you.</br></br>As you stumble around in the dark, you find an even darker patch of black in the shape of a muffin. Floating nearby, you see dark letters etched into the air. P, E, U, R. </br></br>Head back to the [[Underworld->underworld]]?",
-    "roomId": "underlab"
-  },
-  "entryway": {
-    "id": "entryway",
-    "displayName": "Registration Desk",
-    "description": "A big banner before you reads 'Welcome to Roguelike Celebration 2022!' Beyond the doorway you hear welcoming chatter and merriment. Once you've got your bearings about you, you can move through to the [[Central Hall->centralHall]].",
-    "shortName": "the registration desk",
-    "hidden": true,
-    "roomId": "entryway"
-  },
-  "unconferenceDigSite": {
-    "id": "unconferenceDigSite",
-    "displayName": "Unconferencing: Dig Site",
-    "shortName": "Unconferencing: Dig Site",
-    "description": "This is an unconferencing room. You step into a winding cave with glittering jewels and gold embedded in every wall. Basic scaffolding has been placed here, indicating that perhaps this is some kind of archaeological site. You see in the distance an altar to some dark goddess and next to that, incongruously, what appears to be a shop manned by an angry-looking gentleman with a shotgun.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84687652213?pwd=UnN6Q1FuNmpFWjJSdmhXYlJ1MHJRQT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 901367)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceDigSite"
-  },
-  "destinations": {
-    "id": "destinations",
-    "displayName": "Destinations",
-    "shortName": "the destinations hallway",
-    "description": "You stand beneath an imposing monolith made up of signs to every possible destination in every possible multiverse. Beyond it lies a hallway that seems to flicker incomprehensibly, doorways fading in and out of existence. You notice they all appear to be marked with a paper sign, which you can [[try to read->readClosedSign]].<br/><br/>Beneath the shifting monolith's infinite destination signs lie two more permanent ones. One is made of steel and imbedded LED lights spell out [[Oxygen Farm->oxygenFarm]]. The other is made of brass and features an ornate crest advertising the [[Adventurer's Guild->adventurersGuildHall]].</br></br>You can also return to the [[Central Hall->centralHall]]",
-    "roomId": "destinations"
-  },
-  "theaterRogue": {
-    "id": "theaterRogue",
-    "displayName": "Breakout room: Rogue's Hideaway",
-    "shortName": "Rogue Breakout",
-    "description": "A dimly-lit room with more dark corners than flat spaces. You don't see anyone else in the space, but you have a distinct feeling that you are being watched by dozens of shifting eyes. Or you can head back to the [[theater]]."
-  },
-  "barBalcony": {
-    "id": "barBalcony",
-    "displayName": "Balcony Booth",
-    "shortName": "the balcony booth",
-    "description": "A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.</br></br>From here, you can see [[the seats at the bar->barStools]], the [[stage->barStage]], or [[at the back of the room->barBack]], and the [[rest of the bar->bar]]."
-  },
-  "oxygenFarm": {
-    "id": "oxygenFarm",
-    "displayName": "Oxygen Farm",
-    "shortName": "the oxygen farm",
-    "description": "A verdant garden grows under a glass dome looking out over a vast expanse of stars. Scientists attend to enormous trees which all seem to be swaying in some wind you can't feel. You get a strong impression that there is a conversation happening in this room, just beyond your ability to hear it. The scientists are each wearing headphones and holding notepads upon which they are furiously writing.</br></br>A lone sunflower grows under a heat lamp at the far corner of the room, just beneath a cabinet full of medical syringes. It seems to be pointed directly at you as it waves back and forth, almost as if it were trying to [[get your attention->talkToFlower]]. </br></br> At the far end of the room is a hallway that leads to [[Docking Bay 4->dockingBay]]."
-  },
-  "theaterCleric": {
-    "id": "theaterCleric",
-    "displayName": "Breakout room: Cleric's Hall",
-    "shortName": "Cleric Breakout",
-    "description": "A quiet church hall shines in beams of radiant light reflecting off the myriad colors of an entire wall made of stained glass. An entire fountain of holy water sits at the center of several priests blessing it in the name of their various deities.. Or you can head back to the [[theater]]."
-  },
-  "unconferenceElysium": {
-    "id": "unconferenceElysium",
-    "displayName": "Unconferencing: Elysium Fields",
-    "shortName": "Unconferencing: Elysium",
-    "description": "This is an unconferencing room. The souls of the dead glow in the eerie light which seems to suffuse this place from every direction. Some kind of bioluminescent moss is growing on every surface here and bright red pottery has been placed along every wall by an overenthusiastic interior designer. Enormous golden pottery breaks up the space with massive shrubbery large enough to devour you whole, and you can't help but wonder how it was delivered here. You see unmanned chariots driving around the space on their own, but they don't seem to be interested in you.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/81512788533?pwd=SnRUZEh2OEhtYVRWRG1nd1FFL0NYUT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 284733)<br/><br/>The other unconferencing rooms are [[Star Ship->unconferenceStarShip]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceElysium"
-  },
-  "officeOfSteam": {
-    "id": "officeOfSteam",
-    "displayName": "Office of Steam",
-    "shortName": "the Office of Steam",
-    "description": "This sparsely-furnished room has little more in it than a typewriter standing on a pillar at its center. As you look down, however, you see a glass floor suspending you above an enormous sprawling mass of pipes and brass machinery. Chutes and tubes create fire and move steam in intricate patterns all ultimately funelling back into the typewriter stand you noticed before. Dwarves are scurrying to and fro, tinkering with the machines. Hooked to the typewriter is a small screen, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. Anachronistically, a cute Post-It Note shaped like a quokka is on the side of the screen, with the note \"Coming Soon: 2022 Steam Sale\" in loopy handwriting. If you'd like, you can investigate the <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">source of its steam power</a>, or go back to the [[Guild Hall->adventurersGuildHall]].",
-    "roomId": "officeOfSteam"
-  },
-  "underbar": {
-    "displayName": "The Underbar",
-    "shortName": "underbar",
-    "id": "underbar",
-    "hidden": true,
-    "description": "You enter a dark reflection of the bar above, overflowing with the spirits of those who have found themself here. An intense pulse of warmth and acceptance overwhelms you and puts you at ease. You notice the pulse is coming from a glowing beacon in the shape of Ubizara. She goes about her usual bartending duties, unaware of the intense light that streams from her and into  the hearts of each and every shadowy guest your eyes can half see. </br></br>At the back of the bar, where there should be a booth, you see a [[swirling portal to some other place->underspire]]. Or you can head back to the [[Underworld->underworld]].",
-    "roomId": "underbar"
-  },
-  "barBack": {
-    "id": "barBack",
-    "displayName": "Booth at the Back",
-    "shortName": "the booth at the back",
-    "description": "A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>From here, you can see tables [[on the balcony->barBalcony]], the [[stage->barStage]], or [[along the bar->barStools]], and the [[rest of the bar->bar]]."
-  },
-  "underrift": {
-    "displayName": "The Underrift",
-    "shortName": "underrift",
-    "id": "underrift",
-    "hidden": true,
-    "description": "You suddenly arrive in the memory of a library. Everything here feels real, and yet the titles of books shift like serpents in fog.  This appears to be a shabby place, overrun with students and not nearly enough books for them all. You look around at haggard faces and recognize the tell-tale exhaustion of grad students. They do not see you, and you’re not really sure they would be able to engage with you if they did.</br></br>Near the front desk you can see another shimmer in the air. You don’t even feel the need to approach it, you sense that just by willing yourself to pass through it, [[you will->rift4]].</br></br>You also see a stone tablet with an engraved riddle sitting conspiciously nearby.",
-    "roomId": "underrift",
-    "riddles": [
-      "Reject the written word\nOrder replaced by chaos\nClear your mind of expectation\nDive instead into the beginning\nAll you need is there\nLooking into the distance for missing pieces"
-    ]
-  },
-  "rift4": {
-    "displayName": "The Rift - 4",
-    "shortName": "rift4",
-    "id": "rift4",
-    "hidden": true,
-    "description": "You appear suddenly in the crumbling ruins of an ancient city. You stand in an open park between a forest of skyscrapers reaching up through the clouds, their tops somewhere beyond what your eyes can see. The upper reaches of these colossal towers sway gently in the breeze. On the ground are dilapidated benches and walking paths now reclaimed by the natural world. The chirping of some form of bird can be heard echoing among the towers, and you see bushes rustling with small animal life, though you see none of these creatures directly. </br></br>You sense within you a shift in the air. Reaching out, you can feel a myriad layers within the air, as if each glimmer you'd seen before was now a page of an enormous book that you could merely flip to on a whim. You run your fingers along the spine of this imaginary book until you find a familiar page. You know that if you turn this page, you'll appear back in the [[Docking Bay->dockingBay]].",
-    "roomId": "rift4"
-  },
-  "procedural": {
-    "displayName": "Procedural Hall",
-    "shortName": "procedural",
-    "id": "procedural",
-    "hidden": true,
-    "description": "You appear in a winding hallway of ever-shifting concrete bricks. The room appears to be creating itself as you move along it, probably saving someone a great deal of loading time. You wonder if anything exists while you aren't looking at it, but no matter how quickly you move your head the walls appear as intended. You silently curse the programmers for their efficient code. </br></br>Looking around you see various objects populating different parts of the room, semi-permanent markers which help your mind to understand the difficult space. Among those items is a table, upon which you find the NegaTicketStub, an item which you can use to appear in this world's [[Theater->underTheater]].</br></br>You also notice, in an obscure corner of the hall, stuck between two bricks that can't seem to shift away from this spot, a trail of papers leading into a [[patch of shadow->thesisDefense]].",
-    "roomId": "procedural"
-  },
-  "thesisDefense": {
-  "displayName": "Hall of Thesis Defense",
-  "shortName": "thesisDefense",
-  "id": "thesisDefense",
-    "hidden": true,
-  "description": "You appear in the middle of a large hall, surrounded by seats and long, curved desks full of shadowy figures. Standing before you are the imposing shadowy forms of your PhD review panel, their gaze pinning you to the floor in pure terror. You can feel yourself speaking, offering two very different defenses of the same topic, neither of which is making a single coherent point between them. You know the topic better than this. You know you do. Yet you hear the laughter of your peers echoing in the distant corners of this hall.</br></br>On the desk you find a shimmering stack of papers, glistening in the dim light. The Golden Thesis. You sense that if you could just read its text one more time, you could do this. But you feel an irresistable force pulling you from this place, and back to the [[underworld]]."
-  },
-  "loversLake": {
-    "displayName": "Lover's Lake",
-    "shortName": "loversLake",
-    "id": "loversLake",
-    "hidden": true,
-    "description": "You see a crystal clear lake surrounded by verdant forests teeming with life and the kind of natural beauty that can fuel a poet for decades. Beside that lake sits a handsome young man sitting on a tree stump, surrounded by an assortment of woodland creatures. Bunnies, deer, squirrels, and birds gather around someone who clearly loves and respects them for the beautiful creatures they are. Even the crawling lizards and bugs below seem to earn this kind soul's affections. You sense a deep light thrumming through this space in a way that you can feel more than see. </br></br>On the ground you see a blood red jewel of some kind. It glows with malevolent light, but as you look closer it seems to have been recently purified. You can sense the change in its nature slowly growing as a result of exposure to the accepting light of this place.",
-    "roomId": "LoversLake"
-  },
-  "underTheater": {
-    "displayName": "underTheater",
-    "shortName": "underTheater",
-    "id": "underTheater",
-    "hidden": true,
-    "description": "You arrive at The Under Theater. Despite the forboding aura at the door, the interior of this space is rather pleasant. There is a table full of spare swag left over from the swag table above, a giant bucket of what appears to be [[lemonade->item]], and some [[slightly stale cookies->item]] neatly stacked on a silver platter for you. The swag table includes a stack of [[negasocks->item]], a [[negalongbow->item]], a [[healing scroll->item]], and an abominable [[negapuppy->item]], radiating malice (adorably).</br></br>This space doesn't appear to be directly connected to any alternate versions of the breakout rooms, and in fact the only door you can see at all is the main entrance, leading back to the [[Underworld->underworld]].",
-    "roomId": "underTheater"
-  },
-  "rodney": {
-  "displayName": "Rodney",
-  "shortName": "rodney",
-  "hidden": true,
-  "id": "rodney",
-  "description": "You suddenly find yourself descending through layers of a dungeon made of memories and lived experiences, a place deep beneath the surface and devoid of any light. Scenes play out before you, a tall man in dark robes teaching you the ways of dark magic, a group of kids making fun of you, a neglectful family, and a loving dog. The scenes of abuse and neglect become more frequent, as does the image of the dark robed man. You feel a malicious heartbeat echo through these halls, building a determination to strike out at all of humankind for the suffering experienced in youth. The deeper you fall, the stronger these feelings grow. You feel yourself getting angrier, and just as you feel you can take it no more, a light suddenly appears.</br></br> Proceed To [[Lover’s Lake->loversLake]].",
-  "roomId": "rodney"
-  },
-  "yendor": {
-  "displayName": "yendoR",
-  "shortName": "yendor",
-  "id": "yendor",
-  "hidden": true,
-  "description": "You feel yourself pulled up by the force of gravity, pulled towards the sky which is a deep orange. The sun’s darkness shrouds the land highlighted by the light of its shadows. You feel an unsettling sensation of wrongness pulse within you, as if you’ve made some terrible mistake, but in a way that is nearly right. This uncanny feeling compels you to correct yourself, if only you knew how.",
-  "roomId": "yendor"
+    "roomId": "bar",
+    "hidden": true
   }
 }

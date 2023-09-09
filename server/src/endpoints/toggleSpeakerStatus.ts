@@ -5,7 +5,7 @@ import { UnlockableBadgeMap } from '../badges'
 
 const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const userIdToToggle: string = inputs.userId
-  const isForPastYear = inputs.year !== '2022'
+  const isForPastYear = inputs.year !== '2023'
 
   if (!userIdToToggle) {
     return {
