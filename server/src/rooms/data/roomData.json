@@ -203,7 +203,7 @@
     "displayName": "Feedback Kiosk",
     "shortName": "a kiosk",
     "id": "kiosk",
-    "description": "A small cart full of alien artifacts sits in the center of a hall. As you try to pass by, you feel a bizarre contraption made of vibrating wires attach itself to your head as perfume is sprayed directly into your eyes. An RC car slams into your feet as you stumble on, and you feel a clipboard shoved into your hand from somewhere, begging you to sign. You don’t want anything from here. No one ever has. Yet somehow it feels too rude to just leave.",
+    "description": "A small cart full of alien artifacts sits in the center of a hall. When you try to pass by you feel a bizarre contraption made of vibrating wires attach itself to your head as perfume is sprayed directly into your eyes. An RC car slams into your feet as you stumble on, and you feel a clipboard shoved into your hand from somewhere, begging you to sign. You don’t want anything from here. No one ever has. Yet somehow it feels too rude to just leave.",
     "roomId": "kiosk",
     "hasNoteWall": true,
     "noteWallData": {
@@ -227,7 +227,15 @@
     "shortName": "Player One Arcade",
     "id": "arcade",
     "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.",
-    "roomId": "arcade"
+    "roomId": "arcade",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "Adjacent to a screen showing recent high scores, a curious screen displays what may not be a game at all, but is rather labelled \"UNCONFERENCE TOPIC SUGGESTIONS!\" A small sign clarifies \"Write what you want to chat with others about, and upvote topics you find interesting. Moderators will assign the top six topics rooms, 5 minutes into each unconference block. Have fun!\"",
+      "noteWallButton": "Inspect the topics",
+      "addNoteLinkText": "suggest a topic",
+      "addNotePrompt": "What would you like to suggest?",
+      "noteWallDescription": "Topics for unconferencing discussion, ranked by upvotes."
+    }
   },
   "theaterWarrior": {
     "id": "theaterWarrior",
