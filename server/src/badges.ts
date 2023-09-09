@@ -173,7 +173,7 @@ export const FreeBadges: Badge[] = [
     emoji: 'device_of_luthien',
     description: 'Heraldic Device of Lúthien Tinúviel (h/t MicroChasm)',
     isCustom: true,
-    category: BadgeCategories.Talk2022
+    category: BadgeCategories.Special
   },
   {
     emoji: 'artificer',
