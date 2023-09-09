@@ -99,7 +99,7 @@ From here, you will still need to deploy your backend server code, and likely de
         1. Generate and download a private key file for your new project as instructed here: <https://firebase.google.com/docs/admin/setup#initialize-sdk>
         2. Create a new GitHub repository secret (Settings -> Secrets -> New Repository Secret) whose key is `FIREBASE_SERVER_JSON` and whose value is the entire text of the downloaded JSON file.
         3. You may also want to move the downloaded JSON file to `server/firebase-admin.json`. This file will by default not be tracked by git (and we don't recommend you commit it), but you will need this file to be present if you wish to deploy the backend via CLI or VS Code instead of GitHub Actions (see "Deploying new Changes" sections below)
-    5. Go to the `Firebase console` -> `Authentication` -> `Sign-in method` and enable the providers as desired (we currently support email, Google, and Twitter) by following the instructions in each provider's section. For a dev setup, `Email/Password` should be sufficient.
+    5. Go to the `Firebase console` -> `Authentication` -> `Sign-in method` and enable the providers as desired (we currently support email and Google) by following the instructions in each provider's section. For a dev setup, `Email/Password` should be sufficient.
     1. To enable email, you must:
         1. Check the `Email link (passwordless sign-in)` button.
         2. Add your server domain to the `Authorized domains` section beneath the providers list.
@@ -174,11 +174,9 @@ If you would prefer to not use the ARM template above, here is how you can manua
 
 5) As above, you want to take your Redis access key, the hostname, and the port, and add them as Application settings to the Function App with the keys `RedisKey` and `RedisHostname`, `RedisPort`.
 
-6) Set up Twitter authentication. In the Azure Portal, pull up the Function App and go to "Authentication". In another window, go to <https://developer.twitter.com/apps> and register a new Twitter developer application. You will need to paste the consumer key and secret from Twitter into the Azure setup screen for Twitter. The callback URL to enter in the Twitter app is `https://your-function-app.azurewebsites.net/.auth/login/twitter/callback`, swapping in the URL hostname of your Function app. In the Azure Portal authentication screen, make sure that "Token Store" is on, and add "http://localhost:1234" (and any other URLs you want to be able to use) to the Allowed External Redirect URLs list.
+6) Set up CORS in the Azure Portal page for the Function app. There's a "CORS" menu item on the left. Allow `http://localhost:1234` for local development, as well as whatever URLs you're using for a production version of the frontend.
 
-7) Set up CORS in the Azure Portal page for the Function app. There's a "CORS" menu item on the left. Allow `http://localhost:1234` for local development, as well as whatever URLs you're using for a production version of the frontend.
-
-8) In `src/config.ts` in this repo, update the hostname to point to your own Function App instance (the Azure URL for your backend, NOT wherever you're hosting the app's frontend).
+7) In `src/config.ts` in this repo, update the hostname to point to your own Function App instance (the Azure URL for your backend, NOT wherever you're hosting the app's frontend).
 
 ## Deployment and CI/CD via GitHub Actions
 
