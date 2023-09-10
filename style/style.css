@@ -117,6 +117,31 @@
   --link: #66FF66;
   }
 
+  /* vaporwave light bg: #e7eef4;, good puprel: #6b3097*/
+.vaporwave {
+  --main-background: #302c7b;
+  --main-font:#B1ECE5; ;
+  --gray-text:#3c88cc;
+  --alternate-background: #1e1c4f;
+  --alternate-translucent: rgba(10,10,10,0.8);
+  --green:#20b2aa;
+  --highlight-line: #f440ac;
+  --highlighted-line-font: #231b54;
+  --mod-line: #3c88cc ;
+  --pink: lightpink;
+  --blue: #87ceeb;
+  --cyan: #00ffff;
+  --magenta: #ff00ff;
+  --orange: #ffa500;
+  --red: #ff0000;
+  --violet: #ee82ee;
+  --yellow: #ffff00;
+  --link-decoration: underline;
+  --link-style: dashed; 
+  --active: #1e1c4f;
+  --link: #ee82ee; 
+  }
+  
 body {
   background-color: var(--main-background);
   color: var(--main-font);
