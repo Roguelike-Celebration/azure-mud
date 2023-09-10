@@ -44,15 +44,14 @@ export default function DullDoorModalView () {
   if (!wasColoredEntering) {
     return (
       <div>
-        <p>You're already free of whatever dye is in the water of the adjacent fountain, but no harm getting a little cleaner! You give your hands a scrub and feel refreshed, ready to brave the mall once more.</p>
+        <p>You&apos;re already free of whatever dye is in the water of the adjacent fountain, but no harm getting a little cleaner! You give your hands a scrub and feel refreshed, ready to brave the mall once more.</p>
       </div>
     )
   } else {
     return (
       <div>
-        <p>There's enough soap in this jug to last years, so nobody is going to notice if you help yourself. After all, the mall ownership likely doesn't appreciate those multi-coloured footprints you've been leaving!</p>
-        <p>With a generous pump of soap and some vigorous scrubbing, you're left dye-free and smelling vaguely of lemons.</p>
-        <p>As you sit in the chair, Doctor Hope looks up with excitement and begins to approach. As your hand touches the clean rope, however, she rolls her eyes and returns to her work. A stream of clear liquid covers your body, leaving you feeling refreshed.</p>
+        <p>There&apos;s enough soap in this jug to last years, so nobody is going to notice if you help yourself. After all, the mall ownership likely doesn&apos;t appreciate those multi-coloured footprints you&apos;ve been leaving!</p>
+        <p>With a generous pump of soap and some vigorous scrubbing, you&apos;re left dye-free and smelling vaguely of lemons.</p>
       </div>
     )
   }
