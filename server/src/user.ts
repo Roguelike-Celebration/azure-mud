@@ -37,6 +37,7 @@ export interface PublicUser extends MinimalUser {
   askMeAbout?: string;
   twitterHandle?: string;
   url?: string;
+  unlockedBadges: Badge[]
 }
 
 // A private representation of the current user
@@ -49,9 +50,6 @@ export interface User extends PublicUser {
   hostname: string;
 
   heartbeat: number;
-
-  // Does this need to be in PublicUser?
-  unlockedBadges: Badge[]
 }
 
 export async function isMod (userId: string) {
