@@ -99,22 +99,6 @@
       "Reject the written word\nOrder replaced by chaos\nClear your mind of expectation\nDive instead into the beginning\nAll you need is there\nLooking into the distance for missing pieces"
     ]
   },
-  "unconference": {
-    "id": "unconference",
-    "displayName": "Unconferencing Lobby",
-    "shortName": "the unconferencing lobby",
-    "description": "Winding corridors lead to a large dungeon-like room. Sticky notes and magic markers are piled up on tables along with assorted adventuring gear. White banners with blocky black text label several hallways leading to the unconferencing rooms - [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. You can also return back to the [[hall->centralHall]].",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "One wall of this room is taken up by a large whiteboard titled \"UNCONFERENCE TOPIC SUGGESTIONS!\" Smaller font clarifies \"Write what you want to chat with others about, and upvote topics you find interesting. Moderators will assign the top four topics rooms, 5 minutes into each unconference block. Have fun!\"",
-      "noteWallButton": "Inspect the topics",
-      "addNoteLinkText": "suggest a topic",
-      "addNotePrompt": "What would you like to suggest?",
-      "noteWallDescription": "Topics for unconferencing discussion, ranked by upvotes."
-    },
-    "roomId": "unconference",
-    "hidden": true
-  },
   "screen2": {
     "displayName": "Screen 2: Attack of the 50 Foot Goblin",
     "shortName": "Attack of the 50 Foot Goblin",
@@ -136,15 +120,6 @@
     "id": "foodCourt",
     "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.<br/><br/>Would you care for an [[Orange Juiblex->orangeJuiblex]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]?",
     "roomId": "foodCourt"
-  },
-  "unconferenceRaveCave": {
-    "id": "unconferenceRaveCave",
-    "displayName": "Unconferencing: Rave Cave",
-    "shortName": "Unconferencing: Rave Cave",
-    "description": "This is an unconferencing room. You step into what you can only describe as a Rave Disco, and are immediately assaulted with the thumping of an otherwordly bass. Floor panels glow in time with the music, alternating between the normal stone floors of a cave, to suddenly being alight with some energetic magic. Skeletons, slimes, and even a dragon appear to be bopping to the fierce beats, and you can see in the distance a menacing conga line protecting an oversized gorilla.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84996086440?pwd=VGpJSTBhdGUxYTNNL08vc1RFZWdVdz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 037611)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Dig Site->unconferenceDigSite]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceRaveCave",
-    "hidden": true
   },
   "screen4": {
     "displayName": "Screen 4: My Big Fat Orc Wedding",
@@ -353,15 +328,6 @@
       "noteWallDescription": "Someone has scratched ‘Rodney was here’ directly into the wall here, and a web of messages in various hands spreads out around it."
     }
   },
-  "unconferenceStarShip": {
-    "id": "unconferenceStarShip",
-    "displayName": "Unconferencing: Starship Bridge",
-    "shortName": "Unconferencing: Starship",
-    "description": "This is an unconferencing room. The vacuum seal around the door hisses as you enter the flat-white-panelled interior of a starship. Computer screens glow softly from every direction, feeding you statistics about the ship's systems. You see engineers running from station to station to put out fires as a glowing red triangle warns of a nearby solar flare. The ship rocks every few moments from the force of impact caused by what seems to be the weapons of a nearby enemy vessel, and you can see a radar screen that indicates a fleet approaching. You're sure it's fine.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87042161886?pwd=Z3NXNlB5eWRKb2JKNVFnWVlxQS9Jdz09 target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 380841)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceStarShip",
-    "hidden": true
-  },
   "barStage": {
     "id": "barStage",
     "displayName": "Stage Near the Bar ",
@@ -554,24 +520,6 @@
     "id": "screen1",
     "description": "You walk into a dark theater just as a Gelatinous Cube wearing ripped jeans rudely tells his mother that she just doesn't understand. You step into the room and find your seat as he flips a tuft of disembodied black hair over one floating eye.<br/><br/>Or you can head back to the [[main theater->theater]].",
     "roomId": "screen1"
-  },
-  "unconferenceDigSite": {
-    "id": "unconferenceDigSite",
-    "displayName": "Unconferencing: Dig Site",
-    "shortName": "Unconferencing: Dig Site",
-    "description": "This is an unconferencing room. You step into a winding cave with glittering jewels and gold embedded in every wall. Basic scaffolding has been placed here, indicating that perhaps this is some kind of archaeological site. You see in the distance an altar to some dark goddess and next to that, incongruously, what appears to be a shop manned by an angry-looking gentleman with a shotgun.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84687652213?pwd=UnN6Q1FuNmpFWjJSdmhXYlJ1MHJRQT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 901367)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceDigSite",
-    "hidden": true
-  },
-  "unconferenceElysium": {
-    "id": "unconferenceElysium",
-    "displayName": "Unconferencing: Elysium Fields",
-    "shortName": "Unconferencing: Elysium",
-    "description": "This is an unconferencing room. The souls of the dead glow in the eerie light which seems to suffuse this place from every direction. Some kind of bioluminescent moss is growing on every surface here and bright red pottery has been placed along every wall by an overenthusiastic interior designer. Enormous golden pottery breaks up the space with massive shrubbery large enough to devour you whole, and you can't help but wonder how it was delivered here. You see unmanned chariots driving around the space on their own, but they don't seem to be interested in you.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/81512788533?pwd=SnRUZEh2OEhtYVRWRG1nd1FFL0NYUT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 284733)<br/><br/>The other unconferencing rooms are [[Star Ship->unconferenceStarShip]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
-    "hasNoteWall": true,
-    "roomId": "unconferenceElysium",
-    "hidden": true
   },
   "theater": {
     "id": "theater",
