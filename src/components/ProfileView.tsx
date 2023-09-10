@@ -115,7 +115,7 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
           </div>
           <section className="badges">
             {user.unlockedBadges?.map(badge => {
-              return (<BadgeView emoji={badge.emoji} description={badge.description} isCustom={badge.isCustom} />)
+              return (<BadgeView key={badge.emoji} emoji={badge.emoji} description={badge.description} isCustom={badge.isCustom} />)
             })}
           </section>
           <section className="profile-details">
