@@ -114,8 +114,8 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
             <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>X</button>
           </div>
           <section className="badges">
-            {user.unlockedBadges.map(badge => {
-              <BadgeView emoji={badge.emoji} description={badge.description} isCustom={badge.isCustom} />
+            {user.unlockedBadges?.map(badge => {
+              return (<BadgeView key={badge.emoji} emoji={badge.emoji} description={badge.description} isCustom={badge.isCustom} />)
             })}
           </section>
           <section className="profile-details">

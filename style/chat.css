@@ -8,6 +8,10 @@
   text-transform: lowercase;
 }
 
+.message-wrapper {
+  padding: 0.25rem;
+}
+
 .message-wrapper .time.show-on-hover {
   opacity: 0;
 }
