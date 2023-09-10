@@ -11,21 +11,21 @@
     "displayName": "Hot Dog Stand",
     "shortName": "the hot dog stand",
     "id": "hotDogStand",
-    "description": "As you approach you are assaulted with the image of a brightly colored hat no mortal should be forced to endure. The physical manifestation of shame itself holds up a hotdog deep fried in delicious breading and slathered with some mysterious sauce that appears to be unaffected by things as mundane as gravity. $2.99. Not bad!",
+    "description": "As you approach you are assaulted with the image of a brightly colored hat no mortal should be forced to endure. The physical manifestation of shame itself holds up a hotdog deep fried in delicious breading and slathered with some mysterious sauce that appears to be unaffected by things as mundane as gravity. $2.99. Not bad!<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or an [[Orange Julius->orangeJulius]].",
     "roomId": "hotDogStand"
   },
   "obelisk": {
     "displayName": "Map Obelisk",
     "shortName": "a map obelisk",
     "id": "obelisk",
-    "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.<br/><br/>There's an [[empty storefront->emptyStore]] on your right, and a bustling [[arcade->arcade]] on your left. Further down, the concourse opens into an [[ice skating rink->ice rink]]. ",
+    "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.<br/><br/>There's an [[empty storefront->emptyStore]] on your right, and a bustling [[arcade->arcade]] on your left. Further down, the concourse opens into an [[ice skating rink->iceRink]]. ",
     "roomId": "obelisk"
   },
   "emptyStore": {
     "displayName": "Empty Storefront",
     "shortName": "an empty storefront",
     "id": "emptyStore",
-    "description": "nothing to see here.",
+    "description": "Nothing to see here. You should go back to the [[info thing->obelisk]].",
     "roomId": "emptyStore"
   },
   "rift1": {
@@ -48,8 +48,8 @@
     "displayName": "Pretzel Place",
     "shortName": "the pretzel place",
     "id": "pretzelPlace",
-    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.",
-    "roomId": "pretzelPlace"
+    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.<br/><br/>You can go back to the [[food court tables->foodCourt]], or grab an [[Orange Julius->orangeJulius]] or a [[hot dog->hotDogStand]].",
+  "roomId": "pretzelPlace"
   },
   "thesisDefense": {
     "displayName": "Hall of Thesis Defense",
@@ -119,7 +119,7 @@
     "displayName": "Screen 2: Attack of the 50 Foot Goblin",
     "shortName": "Attack of the 50 Foot Goblin",
     "id": "screen2",
-    "description": "As you walk into the theater, a goblin wearing a bikini walks into a visibly fake power line, crushing it in her hands. The camera cuts to a goblin cafe as a couple makes out under flickering lights, and complains about the disruption.<br/><br/>Or you can head back to the [[main theater->theater]].",
+    "description": "As you walk into the theater, on the screen a goblin wearing a bikini walks into a visibly fake power line, crushing it in her hands. The camera cuts to a goblin cafe as a couple makes out under flickering lights, and complains about the disruption.<br/><br/>You can take a seat here, or you can head back to the [[main theater->theater]].",
     "roomId": "screen2"
   },
   "barBack": {
@@ -134,7 +134,7 @@
     "displayName": "Food Court",
     "shortName": "the food court",
     "id": "foodCourt",
-    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.",
+    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.<br/><br/>Would you care for an [[Orange Julius->orangeJulius]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]?",
     "roomId": "foodCourt"
   },
   "unconferenceRaveCave": {
@@ -150,7 +150,7 @@
     "displayName": "Screen 4: My Big Fat Orc Wedding",
     "shortName": "My Big Fat Orc Wedding",
     "id": "screen4",
-    "description": "You step into a dark theater to find a screen projecting a long line of orcs in fancy dress, each holding hands in a chain and dancing together as many other orcs in the background clap and sing.<br/><br/>Or you can go back to the [[main theater->theater]].",
+    "description": "You step into a dark theater to find a screen projecting a long line of orcs in fancy dress, each holding hands in a chain and dancing together as many other orcs in the background clap and sing.<br/><br/>You can take a seat here, or you can go back to the [[main theater->theater]].",
     "roomId": "screen4"
   },
   "centralHall": {
@@ -188,7 +188,7 @@
     "displayName": "Screen 3: Jabberwock Park",
     "shortName": "Jabberwock Park",
     "id": "screen3",
-    "description": "You enter a pitch black space and immediately a roaring mouth fills the screen. A vorpal sword shifts into and then out of focus as the camera focuses on a mirror which reads \"Objects in mirror are farther away than they appear\".<br/><br/>Or you can go back to the [[main theater->theater]].",
+    "description": "You enter a pitch black space and immediately a roaring mouth fills the screen. A vorpal sword shifts into and then out of focus as the camera zooms in on a mirror which reads \"Objects in mirror are farther away than they appear\".<br/><br/>You can take a seat here, or you can go back to the [[main theater->theater]].",
     "roomId": "screen3"
   },
   "destinations": {
@@ -260,7 +260,7 @@
     "displayName": "Orange Julius",
     "shortName": "Orange Julius",
     "id": "orangeJulius",
-    "description": "You aren't really sure what this place is as you walk by. Its presence seems entrenched into the concept of this space as a whole, but you're not sure why, almost like some fundamental element of the universe dictates that the concept of a mall needs the concept of an Orange Julius, but you don't see any particular function here which you understand. As you look around you see an array of arcane sigils floating in the air and feel the sensation of a wait staff without the accompanying visual presence. An array of cold beverages appears out of the ether, and you feel like you could order one, though you're not entirely sure from whence they come.",
+    "description": "You aren't really sure what this place is as you walk by. Its presence seems entrenched into the concept of this space as a whole, but you're not sure why, almost like some fundamental element of the universe dictates that the concept of a mall needs the concept of an Orange Julius, but you don't see any particular function here which you understand. As you look around you see an array of arcane sigils floating in the air and feel the sensation of a wait staff without the accompanying visual presence. An array of cold beverages appears out of the ether, and you feel like you could order one, though you're not entirely sure from whence they come.<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or [[hot dog->hotDogStand]].",
     "roomId": "orangeJulius"
   },
   "underworld": {
@@ -326,7 +326,7 @@
     "displayName": "Photo Booth",
     "shortName": "the photo booth",
     "id": "photoBooth",
-    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.",
+    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].",
     "roomId": "photoBooth"
   },
   "unconferenceStarShip": {
