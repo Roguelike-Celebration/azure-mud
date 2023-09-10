@@ -42,14 +42,14 @@ export default function DullDoorModalView () {
   }
 
   // This flag doesn't seem to be working, it's always false. Disabling for now since it's fine to just have the same message each time.
-  /*if (!wasColoredEntering) {
+  /* if (!wasColoredEntering) {
     return (
       <div>
-        <p>You&apos;re already free of whatever dye is in the water of the adjacent fountain, but no harm getting a little cleaner!</p> 
+        <p>You&apos;re already free of whatever dye is in the water of the adjacent fountain, but no harm getting a little cleaner!</p>
         <p>You give your hands a scrub and feel refreshed, ready to brave the mall once more.</p>
       </div>
     )
-  } else {*/
+  } else { */
   return (
     <div>
       <p>There&apos;s enough soap in this jug to last years, so nobody is going to notice if you help yourself.</p>
@@ -57,5 +57,5 @@ export default function DullDoorModalView () {
       <p>With a generous pump of soap and some vigorous scrubbing, you&apos;re left dye-free and smelling vaguely of lemons.</p>
     </div>
   )
-  //}
+  // }
 }
