@@ -126,7 +126,7 @@
     "id": "barBack",
     "displayName": "Booth at the Back",
     "shortName": "the booth at the back",
-    "description": "A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>From here, you can see tables [[on the balcony->barBalcony]], the [[stage->barStage]], or [[along the bar->barStools]], and the [[rest of the bar->bar]].",
+    "description": "A secluded booth, tucked in a corner and quiet enough to speak without raising your voice. A brooding mysterious figure in a cloak stands awkwardly nearby, looking petulant at losing their preferred seat.<br/><br/>From here, you can see tables [[on the balcony->barBalcony]], the [[stage->barStage]], or [[along the old_bar->barStools]], and the [[rest of the bar->old_bar]].",
     "hidden": true,
     "roomId": "barBack"
   },
@@ -157,7 +157,7 @@
     "id": "centralHall",
     "displayName": "Central Hall",
     "shortName": "the hall",
-    "description": "Lights and sounds fill your senses as you enter the towering Central Hall. The warm hum of conversation gently envelops you and the rest of the crowd here as each of you share in the collective grandeur. High above you see ascii sigils glittering in the air as the ceiling fades into an impossible distance. Each of the branching hallways leaving this central hub seem to shift from stonework into wood, brass, or some kind of hi-tech polymer material as the needs of the space make its theming tangible.<br/><br/>Just to the right of the central pathway is a booth covered in various bits and bobs, labeled the [[Swag Table->swag]]. On the opposite side of that same path is a towering monolith of signs behind a roped off area marked as [[Destinations->destinations]]. At the ends of the hall, where the paths begin to fade into wooden panelling, you see a painted tavern sign just above the entrance to the [[Bar->bar]],and just beyond that a short hallways leads to the [[unconferencing rooms->Unconferencing]]. Opposite that, a carpeted hallway leads up to the [[Video Dome->videoDome]]. Directly between the left and right halls, at the end of the central path you've been travelling, a chorus of lights dance above a door advertising the [[Theater->theater]] entrance.<br/><br/>",
+    "description": "Lights and sounds fill your senses as you enter the towering Central Hall. The warm hum of conversation gently envelops you and the rest of the crowd here as each of you share in the collective grandeur. High above you see ascii sigils glittering in the air as the ceiling fades into an impossible distance. Each of the branching hallways leaving this central hub seem to shift from stonework into wood, brass, or some kind of hi-tech polymer material as the needs of the space make its theming tangible.<br/><br/>Just to the right of the central pathway is a booth covered in various bits and bobs, labeled the [[Swag Table->swag]]. On the opposite side of that same path is a towering monolith of signs behind a roped off area marked as [[Destinations->destinations]]. At the ends of the hall, where the paths begin to fade into wooden panelling, you see a painted tavern sign just above the entrance to the [[Bar->old_bar]],and just beyond that a short hallways leads to the [[unconferencing rooms->Unconferencing]]. Opposite that, a carpeted hallway leads up to the [[Video Dome->videoDome]]. Directly between the left and right halls, at the end of the central path you've been travelling, a chorus of lights dance above a door advertising the [[Theater->theater]] entrance.<br/><br/>",
     "hasNoteWall": true,
     "hidden": true,
     "noteWallData": {
@@ -320,7 +320,7 @@
     "displayName": "Ice Rink",
     "shortName": "the ice rink",
     "id": "iceRink",
-    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.<br/><br/>Just off to the side you can see a [[photo booth->photoBooth]]. If you need to rest after all that skating, the [[food court->foodCourt]] is nearby. ",
+    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.<br/><br/>Just off to the side you can see a [[photo booth->bar]]. If you need to rest after all that skating, the [[food court->foodCourt]] is nearby. ",
     "roomId": "iceRink"
   },
   "unconferenceDance": {
@@ -338,18 +338,18 @@
     "hidden": true,
     "roomId": "theaterMage"
   },
-  "photoBooth": {
+  "bar": {
     "displayName": "Photo Booth",
     "shortName": "the photo booth",
-    "id": "photoBooth",
-    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].",
-    "roomId": "photoBooth",
+    "id": "bar",
+    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].<br/>",
+    "roomId": "bar",
     "hasNoteWall": true,
     "noteWallData": {
       "roomWallDescription": "Next to the booth, a sign asks visitors to describe their favourite Mall of Moria memory on the back of a photo and drop it in the provided box, for a chance to win a $3 gift card. You see no sign of a box, but the pile of pens have been put to good use scribbling graffiti directly onto the wall.",
       "noteWallButton": "Add your mark",
       "addNoteLinkText": "Contribute",
-      "addNotePrompt": "Contribute to the graffitti?",
+      "addNotePrompt": "Contribute to the graffiti?",
       "noteWallDescription": "Someone has scratched ‘Rodney was here’ directly into the wall here, and a web of messages in various hands spreads out around it."
     }
   },
@@ -366,7 +366,7 @@
     "id": "barStage",
     "displayName": "Stage Near the Bar ",
     "shortName": "the bar stage",
-    "description": "It's time to play the music, to light the lights. A muscular bard, whose parents actually named [[Chad Silverbow->talkToChadSilverbow]], currently stands on stage telling [[terrible jokes->hearTerribleJoke]]. You almost feel bad for the poor guy.</br></br>From here you can see tables at the [[balcony->barBalcony]], [[along the bar->barStools]], the [[back->barBack]], and the [[rest of the bar->bar]].",
+    "description": "It's time to play the music, to light the lights. A muscular bard, whose parents actually named [[Chad Silverbow->talkToChadSilverbow]], currently stands on stage telling [[terrible jokes->hearTerribleJoke]]. You almost feel bad for the poor guy.</br></br>From here you can see tables at the [[balcony->barBalcony]], [[along the bar->barStools]], the [[back->barBack]], and the [[rest of the bar->old_bar]].",
     "roomId": "barStage",
     "hidden": true
   },
@@ -436,7 +436,7 @@
     "id": "barStools",
     "displayName": "Stools By the Bar",
     "shortName": "the stools by the bar",
-    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinAround]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->bar]].",
+    "description": "Stools let you comfortably squeeze in at the bar for fast service and casual conversation. Most importantly, they swivel! [[Whee!->spinAround]]</br></br>From here, you can see tables [[up on the balcony->barBalcony]], the [[stage->barStage]], or [[at the back->barBack]], and the [[rest of the bar->old_bar]].",
     "roomId": "barStools",
     "hidden": true
   },
@@ -486,15 +486,15 @@
     "id": "barBalcony",
     "displayName": "Balcony Booth",
     "shortName": "the balcony booth",
-    "description": "A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.</br></br>From here, you can see [[the seats at the bar->barStools]], the [[stage->barStage]], or [[at the back of the room->barBack]], and the [[rest of the bar->bar]].",
+    "description": "A cozy booth with a perfect view down to your fellow attendees coming and going from the main hall.</br></br>From here, you can see [[the seats at the bar->barStools]], the [[stage->barStage]], or [[at the back of the room->barBack]], and the [[rest of the bar->old_bar]].",
     "hidden": true,
     "roomId": "barBalcony"
   },
   "fountain": {
-    "displayName": "Forever 21 Fountain",
-    "shortName": "the Forever 21 Fountain",
+    "displayName": "Forever D21 Fountain",
+    "shortName": "the Forever D21 Fountain",
     "id": "fountain",
-    "description": "You behold a fountain before you, spraying water into impossible shapes and patterns in vibrant shifting colour. As you gaze upon this wonder, you feel your body and mind change. You feel the awkwardness suffuse you, as if you are strong and virile enough to be on your own, but not established enough to know how to do that yet. You can feel within you a deep and powerful need to move into a cheap apartment with three too many friends.<br/>You realize the colourful display isn't just a trick of the light, and excess water is leaving brightly hued puddles on the floor. A jug of soap the size of a small child sits next to an abandoned mop, a picture of futility against this endlessly staining flow.",
+    "description": "You behold a fountain before you, spraying water into impossible shapes and patterns in vibrant shifting colour. As you gaze upon this wonder, you feel your body and mind change. You feel the awkwardness suffuse you, as if you are strong and virile enough to be on your own, but not established enough to know how to do that yet. You can feel within you a deep and powerful need to move into a cheap apartment with three too many friends.<br/><br/>You realize the colourful display isn't just a trick of the light, and excess water is leaving brightly hued puddles on the floor. A jug of soap the size of a small child sits next to an abandoned mop, a picture of futility against this endlessly staining flow.",
     "roomId": "fountain",
     "specialFeatures": [
       "RAINBOW_DOOR",
@@ -592,11 +592,11 @@
     "displayName": "Body Works",
     "shortName": "Body Works",
     "id": "bodyWorks",
-    "description": "Elaborate scientific equipment juts out of the broken display cases of what once must have been a collection of small bottles. The science equipment includes glass vials, beakers, and a vast array of liquids being heated to different temperatures. The fluids flow from one side to another, changing colors and textures as they go, before ultimately arriving at the far end. At that end, a woman in a long white lab coat collects them and sets them up for display. The end result of this process seems to be a display shelf full of labeled bottles, which you could take if you wished.<br/>One shelf is loaded with [[colourful bottles->drinkPolymorph]] of many fun shapes and hues, and another with [[plain bottles of clear liquid->drinkCancellation]] that are simply labelled \"Normal\" in a bold typeface.",
+    "description": "Elaborate scientific equipment juts out of the broken display cases of what once must have been a collection of small bottles. The science equipment includes glass vials, beakers, and a vast array of liquids being heated to different temperatures. The fluids flow from one side to another, changing colors and textures as they go, before ultimately arriving at the far end. At that end, a woman in a long white lab coat collects them and sets them up for display. The end result of this process seems to be a display shelf full of labeled bottles, which you could take if you wished.<br/><br/>One shelf is loaded with [[colourful bottles->drinkPolymorph]] of many fun shapes and hues, and another with [[plain bottles of clear liquid->drinkCancellation]] that are simply labelled \"Normal\" in a blocky typeface.",
     "roomId": "bodyWorks"
   },
-  "bar": {
-    "id": "bar",
+  "old_bar": {
+    "id": "old_bar",
     "displayName": "Bar",
     "shortName": "the bar",
     "description": "The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. [[Ubizara the Bartender->talkToUbizara]] will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight's specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).<br/>A self-serve table nearby has two crates packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]].<br/><br/>Four areas provide opportunities to sit and enjoy conversation in smaller groups - up on the [[balcony->barBalcony]], seated [[along the bar->barStools]], by the [[stage->barStage]], and tucked away [[at the back->barBack]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->centralHall]].<br/>",
@@ -608,7 +608,7 @@
       "addNotePrompt": "Contribute to the graffitti?",
       "noteWallDescription": "Someone has scratched ‘Rodney was here’ on an absurdly large unisex bathroom stall wall."
     },
-    "roomId": "bar",
+    "roomId": "old_bar",
     "hidden": true
   }
 }
