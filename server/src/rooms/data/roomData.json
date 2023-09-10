@@ -291,7 +291,7 @@
     "displayName": "Book Store",
     "shortName": "the book store",
     "id": "bookstore",
-    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence, the people beg for the knowledge and humor within, surely someone will find a way.<br/><br/>The [[cineplex->theater]] is next door, and [[Hot Topic->hotTopic]] is next door on the other side.",
+    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence, the people beg for the knowledge and humor within, surely someone will find a way.<br/><br/>The [[theatre->theater]] is next door, and [[Hot Topic->hotTopic]] is next door on the other side.",
     "roomId": "bookstore"
   },
   "kidZone": {
