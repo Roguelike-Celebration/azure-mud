@@ -40,10 +40,15 @@ export default function LoggedOutView () {
         </p>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <p>
-          If you logged in with Twitter in previous years, we&apos;re sorry but
+          <strong>If you logged in with Twitter in previous years,</strong> we&apos;re sorry but
           due to the recent unpleasantness, our Twitter integration has ceased
           to function. You&apos;ll have to create a new account via email or Google.
           Sorry for the trouble.
+        </p>
+        <p>
+          <strong>If you&apos;re having trouble signing in with Google Sign In,</strong> please try using Chrome. It
+          appears to sometimes fail with Firefox and Safari, but always works with Chrome. Go figure. Or, you can just
+          use the email login.
         </p>
         <p>
           If you log in via email, we will require you to verify that email address.
