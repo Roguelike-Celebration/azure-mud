@@ -50,12 +50,12 @@ export default function DullDoorModalView () {
       </div>
     )
   } else {*/
-    return (
-      <div>
-        <p>There&apos;s enough soap in this jug to last years, so nobody is going to notice if you help yourself.</b>
-        <p>After all, the mall ownership likely doesn&apos;t appreciate those multi-coloured footprints you&apos;ve been leaving!</p>
-        <p>With a generous pump of soap and some vigorous scrubbing, you&apos;re left dye-free and smelling vaguely of lemons.</p>
-      </div>
-    )
+  return (
+    <div>
+      <p>There&apos;s enough soap in this jug to last years, so nobody is going to notice if you help yourself.</p>
+      <p>After all, the mall ownership likely doesn&apos;t appreciate those multi-coloured footprints you&apos;ve been leaving!</p>
+      <p>With a generous pump of soap and some vigorous scrubbing, you&apos;re left dye-free and smelling vaguely of lemons.</p>
+    </div>
+  )
   //}
 }
