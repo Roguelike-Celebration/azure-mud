@@ -11,7 +11,7 @@
     "displayName": "Hot Dog Stand",
     "shortName": "the hot dog stand",
     "id": "hotDogStand",
-    "description": "As you approach you are assaulted with the image of a brightly colored hat no mortal should be forced to endure. The physical manifestation of shame itself holds up a hotdog deep fried in delicious breading and slathered with some mysterious sauce that appears to be unaffected by things as mundane as gravity. $2.99. Not bad!<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or an [[Orange Julius->orangeJulius]].",
+    "description": "As you approach you are assaulted with the image of a brightly colored hat no mortal should be forced to endure. The physical manifestation of shame itself holds up a hotdog deep fried in delicious breading and slathered with some mysterious sauce that appears to be unaffected by things as mundane as gravity. $2.99. Not bad!<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or an [[Orange Juiblex->orangeJuiblex]].",
     "roomId": "hotDogStand"
   },
   "obelisk": {
@@ -48,7 +48,7 @@
     "displayName": "Pretzel Place",
     "shortName": "the pretzel place",
     "id": "pretzelPlace",
-    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.<br/><br/>You can go back to the [[food court tables->foodCourt]], or grab an [[Orange Julius->orangeJulius]] or a [[hot dog->hotDogStand]].",
+    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.<br/><br/>You can go back to the [[food court tables->foodCourt]], or grab an [[Orange Juiblex->orangeJuiblex]] or a [[hot dog->hotDogStand]].",
   "roomId": "pretzelPlace"
   },
   "thesisDefense": {
@@ -134,7 +134,7 @@
     "displayName": "Food Court",
     "shortName": "the food court",
     "id": "foodCourt",
-    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.<br/><br/>Would you care for an [[Orange Julius->orangeJulius]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]?",
+    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.<br/><br/>Would you care for an [[Orange Juiblex->orangeJuiblex]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]?",
     "roomId": "foodCourt"
   },
   "unconferenceRaveCave": {
@@ -169,12 +169,12 @@
     },
     "roomId": "centralHall"
   },
-  "sears": {
-    "displayName": "Sears",
-    "shortName": "Sears",
-    "id": "sears",
+  "seers": {
+    "displayName": "Seers",
+    "shortName": "Seers",
+    "id": "seers",
     "description": "You find yourself inside a large store that seems to sell an incoherent mixture of everything. Televisions, Blenders, and Blue Jeans are all haphazardly strewn about, and even though you sense everything was placed with precision, you can’t help but feel like none of this makes sense. Why did you come here? Was it for a new power drill, or pair of shoes? No matter how many times you ask yourself, you can’t seem to remember. ",
-    "roomId": "sears"
+    "roomId": "seers"
   },
   "loversLake": {
     "displayName": "Lover's Lake",
@@ -266,18 +266,18 @@
     }
   },
   "spencers": {
-    "displayName": "Spencer's Gifts",
-    "shortName": "Spencer's Gifts",
+    "displayName": "Izchak's Gifts",
+    "shortName": "Izchak's Gifts",
     "id": "spencers",
-    "description": "A deep sense of whimsy comes over you as your eyes behold vibrant posters for movies you’re pretty sure you’ve never actually seen, but have heard talked about so much that you know them anyway. Racks and racks of mildly-offensive t-shirts cover one entire half of the store, and somewhere in a back corner you see an inappropriately-shaped neon lamp glowing brightly.",
+    "description": "The quantity of candles in this store must be some kind of safety violation, especially in proximity to the many vibrant posters advertising movies you’re pretty sure you’ve never actually seen, but have heard talked about so much that you know them anyway. Neon lamps twisted into ASCII characters line the back, while the floor is filled with shelves of novelty goods. You read a nearby mug - \"Don't talk to me until I've quaffed my brown potion.\"",
     "roomId": "spencers"
   },
-  "orangeJulius": {
-    "displayName": "Orange Julius",
-    "shortName": "Orange Julius",
-    "id": "orangeJulius",
-    "description": "You aren't really sure what this place is as you walk by. Its presence seems entrenched into the concept of this space as a whole, but you're not sure why, almost like some fundamental element of the universe dictates that the concept of a mall needs the concept of an Orange Julius, but you don't see any particular function here which you understand. As you look around you see an array of arcane sigils floating in the air and feel the sensation of a wait staff without the accompanying visual presence. An array of cold beverages appears out of the ether, and you feel like you could order one, though you're not entirely sure from whence they come.<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or [[hot dog->hotDogStand]].",
-    "roomId": "orangeJulius"
+  "orangeJuiblex": {
+    "displayName": "Orange Juiblex",
+    "shortName": "Orange Juiblex",
+    "id": "orangeJuiblex",
+    "description": "You smell it before you see it - fruity, with swampy undertones. You’ve never known anyone to come to the mall in search of juice and yet, the presence of an Orange Juiblex seems entrenched into the concept of the space as a whole in a fundamental law of the universe. Fresh slime molds in hoppers wait to be humanely squeezed, and you feel the sensation of wait staff even without the accompanying visual presence. An enticingly cold beverage appears, sitting on the other side of some slimy membrane. You feel like you could push your hand through and grab it, though its composition is a mystery.<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or [[hot dog->hotDogStand]].",
+    "roomId": "orangeJuiblex"
   },
   "underworld": {
     "displayName": "The Underworld",
@@ -305,7 +305,7 @@
     "displayName": "Hot Topic",
     "shortName": "Hot Topic",
     "id": "hotTopic",
-    "description": "A hollowed out husk of a store that seems to have once sold t-shirts, if the piles in the corner are to be believed. You see, in its shell, that a new life form has taken residence here. The center of the store has been retrofitted with an arcane podium of some kind, a large man with a floppy hat and robes stands atop it, offering a compelling argument on what sounds like the topic of AI and what it means to be intelligent. As his sentences end, you see a crew of teens wearing dark, baggy clothes and far too many chains each respond, loudly agreeing or disagreeing, and offering their own perspectives on these subjects. The debate seems endless, and the idea of attempting to join in fills you with dread. However, you do see a marker next to the shirt pile. You could probably write your own.",
+    "description": "You see, in the center of a dark store, a podium of some kind where a large man with a floppy hat and robes stands, offering a compelling argument on the topic of AI and what it means to be intelligent. His listeners, a crowd of teens wearing dark, baggy clothes (and far too many chains) respond loudly with their own perspectives. The heated debate seems endless, and the idea of attempting to join in fills you with dread. However, along the sides of the room you find pile upon pile of t-shirts with odd or humorous slogans. Next to them you find some markers. You could probably write your own.",
     "roomId": "hotTopic"
   },
   "oxygenFarm": {
@@ -419,7 +419,7 @@
   "entryway": {
     "id": "entryway",
     "displayName": "Mall Entrance",
-    "description": "The sign overhead proclaims this to be the entrance to THE MALL OF MORIA. A handpainted sandwich board on the sidewalk adds, 'Welcome to Roguelike Celebration 2023!' Beyond the doors you can see crowds of what have to be the coolest and most attractive people you've ever met. You should [[go inside->sears]].",
+    "description": "The sign overhead proclaims this to be the entrance to THE MALL OF MORIA. A handpainted sandwich board on the sidewalk adds, 'Welcome to Roguelike Celebration 2023!' Beyond the doors you can see crowds of what have to be the coolest and most attractive people you've ever met. You should [[go inside->seers]].",
     "shortName": "the entryway",
     "hidden": true,
     "roomId": "entryway"
@@ -502,10 +502,10 @@
     ]
   },
   "h&m": {
-    "displayName": "H & M and Fitch Postale Republic",
+    "displayName": "H & M",
     "shortName": "H&M",
     "id": "h&m",
-    "description": "You enter a dark space filled with clothes that all appear to your eye as if they should be distinct, but which blend together into meaningless visual noise. You feel as if the culture here is trendy and cool in a way that bucks convention, and yet the apparel shifts as you look at it, presenting whatever vibe you project onto it. As you look next door you see another store with slightly dimmer lighting and brighter wood tones, selling exactly the same products. The store next to that is very slightly brighter. An endless array of similar stores stretches as far as you can see, their clothes all morphing as you stare. You feel you could be trapped here if you aren’t careful.<br/><br/>There's [[an American Eagle->americanEagle]] next door.",
+    "description": "You enter a dark place filled with rack after rack of fashionable clothing. At the center of the room stands a Frost Giant, an Ice Demon, and a Mummy. They stand atop a pedestal, radiant in their accent lighting and wearing the latest in trendy fashions. They look down at you as if you are beneath them, but you know you could elevate yourself to their level if you were to coordinate your outfit well enough. To your right, one of the racks of clothes hisses as you near it.<br/><br/>There's [[an American Eagle->americanEagle]] next door.",
     "roomId": "h&m"
   },
   "underbar": {
