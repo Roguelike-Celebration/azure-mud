@@ -15,6 +15,11 @@ export interface Badge {
 
 export const FreeBadges: Badge[] = [
   {
+    emoji: '😈',
+    description: 'Staying awhile and listening',
+    category: BadgeCategories.Default
+  },
+  {
     emoji: '🏳️‍⚧️',
     description: 'Why is everyone from this country so attractive?',
     category: BadgeCategories.Default
@@ -299,6 +304,21 @@ export const UnlockableBadges: Badge[] = [
     description: 'It radiates hatred',
     isCustom: true,
     category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '🏬',
+    description: 'Attended the 2023 preview event!',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '8️⃣',
+    description: 'Attended the eighth Roguelike Celebration in 2023!',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🔑',
+    description: 'Employees ONLY?',
+    category: BadgeCategories.Year2023
   }
 ]
 

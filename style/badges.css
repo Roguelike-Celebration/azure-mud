@@ -50,3 +50,9 @@
   padding-right: 4rem;
   width: 33%;
 }
+
+#badges .toggle-badge-category {
+  border: 0;
+  color: var(--link);
+  cursor: pointer;
+}

@@ -11,21 +11,21 @@
     "displayName": "Hot Dog Stand",
     "shortName": "the hot dog stand",
     "id": "hotDogStand",
-    "description": "As you approach you are assaulted with the image of a brightly colored hat no mortal should be forced to endure. The physical manifestation of shame itself holds up a hotdog deep fried in delicious breading and slathered with some mysterious sauce that appears to be unaffected by things as mundane as gravity. $2.99. Not bad!",
+    "description": "As you approach you are assaulted with the image of a brightly colored hat no mortal should be forced to endure. The physical manifestation of shame itself holds up a hotdog deep fried in delicious breading and slathered with some mysterious sauce that appears to be unaffected by things as mundane as gravity. $2.99. Not bad!<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or an [[Orange Julius->orangeJulius]].",
     "roomId": "hotDogStand"
   },
   "obelisk": {
     "displayName": "Map Obelisk",
     "shortName": "a map obelisk",
     "id": "obelisk",
-    "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.",
+    "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.<br/><br/>There's an [[empty storefront->emptyStore]] on your right, and a bustling [[arcade->arcade]] on your left. Further down, the concourse opens into an [[ice skating rink->iceRink]]. ",
     "roomId": "obelisk"
   },
   "emptyStore": {
     "displayName": "Empty Storefront",
     "shortName": "an empty storefront",
     "id": "emptyStore",
-    "description": "nothing to see here.",
+    "description": "Nothing to see here. You should go back to the [[info thing->obelisk]].",
     "roomId": "emptyStore"
   },
   "rift1": {
@@ -48,8 +48,8 @@
     "displayName": "Pretzel Place",
     "shortName": "the pretzel place",
     "id": "pretzelPlace",
-    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.",
-    "roomId": "pretzelPlace"
+    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.<br/><br/>You can go back to the [[food court tables->foodCourt]], or grab an [[Orange Julius->orangeJulius]] or a [[hot dog->hotDogStand]].",
+  "roomId": "pretzelPlace"
   },
   "thesisDefense": {
     "displayName": "Hall of Thesis Defense",
@@ -70,7 +70,7 @@
     "displayName": "Unconferencing Room: Anime Racing Game",
     "shortName": "the anime racing game",
     "id": "unconferenceRacing",
-    "description": "(an unconferencing room)",
+    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[retro cabs->unconference80s]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceRacing"
   },
   "rodney": {
@@ -85,7 +85,7 @@
     "displayName": "American Eagle",
     "shortName": "American Eagle",
     "id": "americanEagle",
-    "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly woven into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.",
+    "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly woven into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.<br/><br/>Just outside, you can hear the unmistakable sounds of a [[kid zone->kidZone]]. The concourse continues beyond it to the [[ice skating rink->iceRink]].",
     "roomId": "americanEagle"
   },
   "underrift": {
@@ -116,10 +116,10 @@
     "hidden": true
   },
   "screen2": {
-    "displayName": "Screen 2",
-    "shortName": "Screen 2",
+    "displayName": "Screen 2: Attack of the 50 Foot Goblin",
+    "shortName": "Attack of the 50 Foot Goblin",
     "id": "screen2",
-    "description": "You enter a pitch black space you can only assume must be a theater with a screen at one end and many seats. You see nothing, however, beyond a blackness that cannot possibly be natural. You hear wet noises coming from the back corner of this room, and you fear to wonder what might be their source.<br/><br/>Or you can head back to the [[main theater->theater]].",
+    "description": "As you walk into the theater, on the screen a goblin wearing a bikini walks into a visibly fake power line, crushing it in her hands. The camera cuts to a goblin cafe as a couple makes out under flickering lights, and complains about the disruption.<br/><br/>You can take a seat here, or you can head back to the [[main theater->theater]].",
     "roomId": "screen2"
   },
   "barBack": {
@@ -134,7 +134,7 @@
     "displayName": "Food Court",
     "shortName": "the food court",
     "id": "foodCourt",
-    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.",
+    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.<br/><br/>Would you care for an [[Orange Julius->orangeJulius]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]?",
     "roomId": "foodCourt"
   },
   "unconferenceRaveCave": {
@@ -147,10 +147,10 @@
     "hidden": true
   },
   "screen4": {
-    "displayName": "Screen 4",
-    "shortName": "Screen 4",
+    "displayName": "Screen 4: My Big Fat Orc Wedding",
+    "shortName": "My Big Fat Orc Wedding",
     "id": "screen4",
-    "description": "You step into a dark room where the floor feels like it is made of some kind of adhesive. Each step pains you as you drag reluctant feet forward along the most viscous surface you have ever known. Something in your stomach churns in rebellion against the unfathomable texture here. You must find your seat quickly.<br/><br/>Or you can go back to the [[main theater->theater]].",
+    "description": "You step into a dark theater to find a screen projecting a long line of orcs in fancy dress, each holding hands in a chain and dancing together as many other orcs in the background clap and sing.<br/><br/>You can take a seat here, or you can go back to the [[main theater->theater]].",
     "roomId": "screen4"
   },
   "centralHall": {
@@ -185,10 +185,10 @@
     "roomId": "LoversLake"
   },
   "screen3": {
-    "displayName": "Screen 3",
-    "shortName": "Screen 3",
+    "displayName": "Screen 3: Jabberwock Park",
+    "shortName": "Jabberwock Park",
     "id": "screen3",
-    "description": "You enter a theater projecting an action movie of some kind. Explosions fill the room with light and the sound rocks the flat surfaces so intensely that you are nearly knocked off your feet. An errant popcorn kernel hits the side of your head in time with sharp bark of a scream, causing you to involuntarily flinch.<br/><br/>Or you can go back to the [[main theater->theater]].",
+    "description": "You enter a pitch black space and immediately a roaring mouth fills the screen. A vorpal sword shifts into and then out of focus as the camera zooms in on a mirror which reads \"Objects in mirror are farther away than they appear\".<br/><br/>You can take a seat here, or you can go back to the [[main theater->theater]].",
     "roomId": "screen3"
   },
   "destinations": {
@@ -215,10 +215,10 @@
     "roomId": "rift4"
   },
   "arcade": {
-    "displayName": "Player One Arcade (Unconferencing Lobby)",
-    "shortName": "Player One Arcade",
+    "displayName": "Unconferencing Arcade",
+    "shortName": "the unconferencing arcade",
     "id": "arcade",
-    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.",
+    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.<br/><br/>A [[crane game->playCraneGame]] beckons enticingly from the far wall.<br/><br/>Unconferencing rooms: the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], the [[anime racing game->unconferenceRacing]], and the [[retro cabs->unconference80s]]. You can also go out to the [[ice rink->iceRink]].",
     "roomId": "arcade"
   },
   "theaterWarrior": {
@@ -260,7 +260,7 @@
     "displayName": "Orange Julius",
     "shortName": "Orange Julius",
     "id": "orangeJulius",
-    "description": "You aren't really sure what this place is as you walk by. Its presence seems entrenched into the concept of this space as a whole, but you're not sure why, almost like some fundamental element of the universe dictates that the concept of a mall needs the concept of an Orange Julius, but you don't see any particular function here which you understand. As you look around you see an array of arcane sigils floating in the air and feel the sensation of a wait staff without the accompanying visual presence. An array of cold beverages appears out of the ether, and you feel like you could order one, though you're not entirely sure from whence they come.",
+    "description": "You aren't really sure what this place is as you walk by. Its presence seems entrenched into the concept of this space as a whole, but you're not sure why, almost like some fundamental element of the universe dictates that the concept of a mall needs the concept of an Orange Julius, but you don't see any particular function here which you understand. As you look around you see an array of arcane sigils floating in the air and feel the sensation of a wait staff without the accompanying visual presence. An array of cold beverages appears out of the ether, and you feel like you could order one, though you're not entirely sure from whence they come.<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or [[hot dog->hotDogStand]].",
     "roomId": "orangeJulius"
   },
   "underworld": {
@@ -275,14 +275,14 @@
     "displayName": "Book Store",
     "shortName": "the book store",
     "id": "bookstore",
-    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence, the people beg for the knowledge and humor within, surely someone will find a way.",
+    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence, the people beg for the knowledge and humor within, surely someone will find a way.<br/><br/>The [[cineplex->theater]] is next door, and [[Hot Topic->hotTopic]] is next door on the other side.",
     "roomId": "bookstore"
   },
   "kidZone": {
     "displayName": "Kid Zone",
     "shortName": "the kid zone",
     "id": "kidZone",
-    "description": "Vibrant colors assault your eyes from every direction as you stand beneath a mountain of tubes slightly too small for the average adult to traverse comfortably. You hear laughter echoing from within the tubes, though you cannot place where the source of it might be.",
+    "description": "Vibrant colors assault your eyes from every direction as you stand beneath a mountain of tubes slightly too small for the average adult to traverse comfortably. You hear laughter echoing from within the tubes, though you cannot place where the source of it might be.<br/><br/>Flee to the quiet of the [[book store->bookstore]].",
     "roomId": "kidZone"
   },
   "hotTopic": {
@@ -304,14 +304,14 @@
     "displayName": "Ice Rink",
     "shortName": "the ice rink",
     "id": "iceRink",
-    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.",
+    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.<br/><br/>Just off to the side you can see a [[photo booth->photoBooth]]. If you need to rest after all that skating, the [[food court->foodCourt]] is nearby. ",
     "roomId": "iceRink"
   },
   "unconferenceDance": {
     "displayName": "Unconferencing Room: Dance Machine",
     "shortName": "the Dance Machine cabinet",
     "id": "unconferenceDance",
-    "description": "(an unconferencing room)",
+    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[retro cabs->unconference80s]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceDance"
   },
   "theaterMage": {
@@ -326,7 +326,7 @@
     "displayName": "Photo Booth",
     "shortName": "the photo booth",
     "id": "photoBooth",
-    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.",
+    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].",
     "roomId": "photoBooth"
   },
   "unconferenceStarShip": {
@@ -366,7 +366,7 @@
     "displayName": "Unconferencing Room: FighterMan Machine",
     "shortName": "the FighterMan Machine",
     "id": "unconferenceFighterman",
-    "description": "an unconferencing room",
+    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[retro cabs->unconference80s]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceFighterman"
   },
   "yendor": {
@@ -381,7 +381,7 @@
     "displayName": "Unconferencing Room: 80s Section",
     "shortName": "the retro cabs",
     "id": "unconference80s",
-    "description": "(an unconferencing room)",
+    "description": "(an unconferencing room).<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconference80s"
   },
   "rift2": {
@@ -477,7 +477,7 @@
     "displayName": "H & M and Fitch Postale Republic",
     "shortName": "H&M",
     "id": "h&m",
-    "description": "You enter a dark space filled with clothes that all appear to your eye as if they should be distinct, but which blend together into meaningless visual noise. You feel as if the culture here is trendy and cool in a way that bucks convention, and yet the apparel shifts as you look at it, presenting whatever vibe you project onto it. As you look next door you see another store with slightly dimmer lighting and brighter wood tones, selling exactly the same products. The store next to that is very slightly brighter. An endless array of similar stores stretches as far as you can see, their clothes all morphing as you stare. You feel you could be trapped here if you aren’t careful.",
+    "description": "You enter a dark space filled with clothes that all appear to your eye as if they should be distinct, but which blend together into meaningless visual noise. You feel as if the culture here is trendy and cool in a way that bucks convention, and yet the apparel shifts as you look at it, presenting whatever vibe you project onto it. As you look next door you see another store with slightly dimmer lighting and brighter wood tones, selling exactly the same products. The store next to that is very slightly brighter. An endless array of similar stores stretches as far as you can see, their clothes all morphing as you stare. You feel you could be trapped here if you aren’t careful.<br/><br/>There's [[an American Eagle->americanEagle]] next door.",
     "roomId": "h&m"
   },
   "underbar": {
@@ -521,10 +521,10 @@
     "hidden": true
   },
   "screen1": {
-    "displayName": "Screen 1",
-    "shortName": "Screen 1",
+    "displayName": "Screen 1: I Was a Teenage Gelatinous Cube",
+    "shortName": "I Was a Teenage Gelatinous Cube",
     "id": "screen1",
-    "description": "You walk into a dark theater space with a blank screen at one end. Every surface of this space has been either covered by, or replaced with, popcorn. The smell of butter and salt wafts through the air, and you feel the crunch of kernels beneath you as you move.<br/><br/>Or you can head back to the [[main theater->theater]].",
+    "description": "You walk into a dark theater just as a Gelatinous Cube wearing ripped jeans rudely tells his mother that she just doesn't understand. You step into the room and find your seat as he flips a tuft of disembodied black hair over one floating eye.<br/><br/>Or you can head back to the [[main theater->theater]].",
     "roomId": "screen1"
   },
   "unconferenceDigSite": {
@@ -549,7 +549,7 @@
     "id": "theater",
     "displayName": "Cineplex",
     "shortName": "the cineplex",
-    "description": "You enter the cineplex and are confronted by an impossibly-large screen dominating one entire wall of the space. Before it is a small field of mismatched chairs visibly pulled from anywhere a spare could be found.<br/><br/>You can return to the [[information obelisk->obelisk]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Screen 1->screen1]], [[Screen 2->screen2]], [[Screen 3->screen3]], or [[Screen 4->screen4]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
+    "description": "You enter the cineplex and are confronted by an impossibly-large screen dominating one entire wall of the space. Before it is a small field of mismatched chairs visibly pulled from anywhere a spare could be found.<br/><br/>You can return to the [[information obelisk->obelisk]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[I Was a Teenage Gelatinous Cube->screen1]], [[Attack of the 50 Foot Goblin->screen2]], [[Jabberwock Park->screen3]], or [[My Big Fat Orc Wedding->screen4]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
     "hasNoteWall": true,
     "noteWallData": {
       "roomWallDescription": "There is a whiteboard set up to the side with \"SPEAKER QUESTIONS\" written at the top. \"Questions for speakers not questions from speakers!\" is hastily scrawled below it.",

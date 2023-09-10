@@ -1,4 +1,4 @@
-import React, { DragEventHandler, useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useState, useReducer } from 'react'
 import { DispatchContext } from '../App'
 
 import '../../style/badges.css'
@@ -8,7 +8,7 @@ import BadgeView from './BadgeView'
 import { Badge } from '../../server/src/badges'
 import { EquipBadgeAction } from '../Actions'
 import { equipBadge } from '../networking'
-import { find, first, isNumber, uniq } from 'lodash'
+import { isNumber, uniq } from 'lodash'
 import ReactTooltip from 'react-tooltip'
 import { BadgeCategories } from '../../server/src/types'
 
@@ -21,6 +21,22 @@ interface Props {
 export default function BadgesModalView (props: Props) {
   const [selectedEquippedIndex, setSelectedEquippedIndex] = useState<number|undefined>(undefined)
   const [selectedBadge, setSelectedBadge] = useState<Badge|undefined>(undefined)
+
+  const initialState = {}
+  Object.values(BadgeCategories).forEach(category => {
+    initialState[category] = true
+  })
+
+  const localReducer = (state, action) => {
+    switch (action.type) {
+      case 'hide':
+        return { ...state, [action.category]: false }
+      case 'show':
+        return { ...state, [action.category]: true }
+    }
+  }
+
+  const [localState, localDispatch] = useReducer(localReducer, initialState)
 
   const dispatch = React.useContext(DispatchContext)
 
@@ -215,6 +231,36 @@ export default function BadgesModalView (props: Props) {
   // I dunno, I don't know React, I do servers.
   const defaultBadges = unlockedBadgesByCategory.get(BadgeCategories.Default)
 
+  const ToggleVisible = ({ category }) => {
+    const toggle = () => {
+      if (localState[category]) {
+        localDispatch({ type: 'hide', category: category })
+      } else {
+        localDispatch({ type: 'show', category: category })
+      }
+    }
+
+    const keyboardToggle = (e) => {
+      if (e.code !== 'Tab') {
+        toggle()
+      }
+    }
+
+    return (<button className="toggle-badge-category" onClick={toggle} onKeyDown={keyboardToggle}>{localState[category] ? '(hide)' : '(show)'}</button>)
+  }
+
+  const BadgeCategoryView = ({ title, badgeCategory }) => {
+    return (<section>
+      <h2>{title} <ToggleVisible category={badgeCategory} /></h2>
+      {localState[badgeCategory] &&
+        <>
+          <span>{unlockedBadgesByCategory.get(badgeCategory)}</span>
+          <span>{lockedBadgesByCategory.get(badgeCategory)}</span>
+        </>
+      }
+    </section>)
+  }
+
   return (<>
     <ReactTooltip/>
     <div id='badges'>
@@ -228,15 +274,11 @@ export default function BadgesModalView (props: Props) {
         <section className="all">
           <h2>Default</h2>
           {defaultBadges}
-          <h2>2022 Space Badges</h2>
-          {unlockedBadgesByCategory.get(BadgeCategories.Year2022)}
-          {lockedBadgesByCategory.get(BadgeCategories.Year2022)}
-          <h2>2022 Talk Badges</h2>
-          {unlockedBadgesByCategory.get(BadgeCategories.Talk2022)}
-          {lockedBadgesByCategory.get(BadgeCategories.Talk2022)}
-          <h2>Special</h2>
-          {unlockedBadgesByCategory.get(BadgeCategories.Special)}
-          {lockedBadgesByCategory.get(BadgeCategories.Special)}
+          <BadgeCategoryView title="2023 Space Badges" badgeCategory={BadgeCategories.Year2023} />
+          <BadgeCategoryView title="2023 Talk Badges" badgeCategory={BadgeCategories.Talk2023} />
+          <BadgeCategoryView title="Special" badgeCategory={BadgeCategories.Special} />
+          <BadgeCategoryView title="2022 Space Badges" badgeCategory={BadgeCategories.Year2022} />
+          <BadgeCategoryView title="2022 Talk Badges" badgeCategory={BadgeCategories.Talk2022} />
         </section>
       </div>
     </div>
