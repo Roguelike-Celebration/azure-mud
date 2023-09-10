@@ -70,7 +70,7 @@
     "displayName": "Unconferencing Room: Anime Racing Game",
     "shortName": "the anime racing game",
     "id": "unconferenceRacing",
-    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[retro cabs->unconference80s]]. You can also just wander around the [[arcade->arcade]].",
+    "description": "A line-up of six flashy racing cockpits, displaying a flashy attract animation in perfect sync for \"Shiren the Drifter\".<br/><br/>Each machine has a card slot to accept a paper save data card, with a sticker proudly advertising you can import save data from the \"Cockatrice Racing\" spin-off.<br/><br/>(this is an unconferencing room)<br/><br/>The other unconferencing rooms are the [[Angbands vs Hacks machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[retro cabs->unconference80s]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceRacing"
   },
   "rodney": {
@@ -302,7 +302,7 @@
     "displayName": "Unconferencing Room: Dance Machine",
     "shortName": "the Dance Machine cabinet",
     "id": "unconferenceDance",
-    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[retro cabs->unconference80s]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
+    "description": "The marquee above this arcade cabinet (with two large dance pads) reads \"NecroDancer's Revenge Exxxtreme Party Mix\", but the monitor itself shows a title screen for \"Raise 'Em Up '23: Dank Dungeons and Dank Beats\".<br/><br/>Off to the side of the machine, a shrimpy teenage orc is explaining to a sweaty out-of-breath elf that Exxxtreme Party Mix was a failed attempt to introduce the series to a Western audience, so a lot of arcade operators bought them up for cheap and flash them with fan-made firmware. The elf stares off into the distance uninterested as he heaves and quaffs his Potion of Alligator Aid.<br/><br/>(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[Angbands vs Hacks machine->unconferenceFighterman]], the [[retro cabs->unconference80s]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceDance"
   },
   "theaterMage": {
@@ -356,7 +356,7 @@
     "displayName": "Unconferencing Room: FighterMan Machine",
     "shortName": "the FighterMan Machine",
     "id": "unconferenceFighterman",
-    "description": "(an unconferencing room)<br/><br/>The other unconferencing rooms are the [[retro cabs->unconference80s]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
+    "description": "Resting alone on an elevated dais, as if to suggest a position of importance, is a cabinet for the fighting game \"Angbands vs Hacks 2\".<br/><br/>The AvH series made a huge splash when it first came out for being the first FGC title to let players act out their dream match-ups across different lineages of roguelikes. @ vs @, @ vs @, or even @ vs @ are possible!<br/><br/>A player has taped a tier list to the top of the cabinet. @ is S-tier, @ and @ are both A tier, @ and @ are C tier, and poor @ is F tier.<br/><br/>At the base of the screen are a long line of zorkmids, demarking who's got next game.<br/><br/>(This is an unconferencing room.)<br/><br/>The other unconferencing rooms are the [[retro cabs->unconference80s]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceFighterman"
   },
   "yendor": {
@@ -368,10 +368,10 @@
     "roomId": "yendor"
   },
   "unconference80s": {
-    "displayName": "Unconferencing Room: 80s Section",
+    "displayName": "Unconferencing Room: The Retro Corner",
     "shortName": "the retro cabs",
     "id": "unconference80s",
-    "description": "(an unconferencing room).<br/><br/>The other unconferencing rooms are the [[FighterMan machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
+    "description": "Tucked away in a cobwebbed corner of the arcade are three rows of vintage games. They all appear to be by the legendary publisher Broughnami, who are known primarily for their minimalist food-themed games.<br/><br/>The first row contains cabinets for \"868-SNACK\" and \"Become a Sandwich Artist in Just 10 Seconds\" (infamously sponsored by a certain chain lunch restaurant).<br/><br/> Next are two foreign imports, \"Bratwurst Imbrotlio\" and \"Cinco Pãos de Queijos\".<br/><br/>Finally, a hand-written \"21+ only!\" sign is taped to the \"Glitch Tankard\" and \"Vesper.5 O'Clock Somewhere\" cabs, although there is nary a bouncer in sight.<br/><br/>(an unconferencing room).<br/><br/>The other unconferencing rooms are the [[Angbands vs Hacks machine->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconference80s"
   },
   "rift2": {
