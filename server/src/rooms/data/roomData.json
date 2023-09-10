@@ -36,6 +36,13 @@
     "description": "As you walk towards the glimmer you angle your head slightly to the left and suddenly the image resolves around you and you appear in a deep, red cavern with glittering crystal formations growing in every direction. Enormous insects crawl over the crystals, spraying their surface with some fluid before taking small bites. You see such bite marks along every surface, part of the reason why the light is refracting so spectacularly. The light source itself seems to be a bulging mother bug attached to the wall in one corner as she is fed by her drones.</br></br>As you gaze in awe of the mother bug, you see another distortion in the air. Looking around yourself, there doesn't seem to be anywhere else to go. The portal you seem to have used to get here has gone, so you may as well [[walk towards this new one->rift2]] to see what happens.",
     "roomId": "rift1"
   },
+  "pretzelPlace": {
+    "displayName": "Pretzel Place",
+    "shortName": "the pretzel place",
+    "id": "pretzelPlace",
+    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.<br/><br/>You can go back to the [[food court tables->foodCourt]], or grab an [[Orange Juiblex->orangeJuiblex]] or a [[hot dog->hotDogStand]].",
+    "roomId": "pretzelPlace"
+  },
   "theaterCleric": {
     "id": "theaterCleric",
     "displayName": "Breakout room: Cleric's Hall",
@@ -43,13 +50,6 @@
     "description": "A quiet church hall shines in beams of radiant light reflecting off the myriad colors of an entire wall made of stained glass. An entire fountain of holy water sits at the center of several priests blessing it in the name of their various deities.. Or you can head back to the [[theater]].",
     "hidden": true,
     "roomId": "theaterCleric"
-  },
-  "pretzelPlace": {
-    "displayName": "Pretzel Place",
-    "shortName": "the pretzel place",
-    "id": "pretzelPlace",
-    "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.<br/><br/>You can go back to the [[food court tables->foodCourt]], or grab an [[Orange Juiblex->orangeJuiblex]] or a [[hot dog->hotDogStand]].",
-  "roomId": "pretzelPlace"
   },
   "thesisDefense": {
     "displayName": "Hall of Thesis Defense",
@@ -88,6 +88,22 @@
     "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly woven into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.<br/><br/>Just outside, you can hear the unmistakable sounds of a [[kid zone->kidZone]]. The concourse continues beyond it to the [[ice skating rink->iceRink]].",
     "roomId": "americanEagle"
   },
+  "old_bar": {
+    "id": "old_bar",
+    "displayName": "Bar",
+    "shortName": "the bar",
+    "description": "The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. [[Ubizara the Bartender->talkToUbizara]] will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight's specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).<br/>A self-serve table nearby has two crates packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]].<br/><br/>Four areas provide opportunities to sit and enjoy conversation in smaller groups - up on the [[balcony->barBalcony]], seated [[along the bar->barStools]], by the [[stage->barStage]], and tucked away [[at the back->barBack]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->centralHall]].<br/>",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "By the bathrooms there's a pile of pens and markers - it seems the bar decided if they can't stop graffitti, they might as well encourage patrons to use glitter pens instead of boring ballpoint.",
+      "noteWallButton": "Add your mark",
+      "addNoteLinkText": "Contribute",
+      "addNotePrompt": "Contribute to the graffitti?",
+      "noteWallDescription": "Someone has scratched ‘Rodney was here’ on an absurdly large unisex bathroom stall wall."
+    },
+    "roomId": "old_bar",
+    "hidden": true
+  },
   "underrift": {
     "displayName": "The Underrift",
     "shortName": "underrift",
@@ -98,6 +114,22 @@
     "riddles": [
       "Reject the written word\nOrder replaced by chaos\nClear your mind of expectation\nDive instead into the beginning\nAll you need is there\nLooking into the distance for missing pieces"
     ]
+  },
+  "unconference": {
+    "id": "unconference",
+    "displayName": "Unconferencing Lobby",
+    "shortName": "the unconferencing lobby",
+    "description": "Winding corridors lead to a large dungeon-like room. Sticky notes and magic markers are piled up on tables along with assorted adventuring gear. White banners with blocky black text label several hallways leading to the unconferencing rooms - [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. You can also return back to the [[hall->centralHall]].",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "One wall of this room is taken up by a large whiteboard titled \"UNCONFERENCE TOPIC SUGGESTIONS!\" Smaller font clarifies \"Write what you want to chat with others about, and upvote topics you find interesting. Moderators will assign the top four topics rooms, 5 minutes into each unconference block. Have fun!\"",
+      "noteWallButton": "Inspect the topics",
+      "addNoteLinkText": "suggest a topic",
+      "addNotePrompt": "What would you like to suggest?",
+      "noteWallDescription": "Topics for unconferencing discussion, ranked by upvotes."
+    },
+    "roomId": "unconference",
+    "hidden": true
   },
   "screen2": {
     "displayName": "Screen 2: Attack of the 50 Foot Goblin",
@@ -118,8 +150,17 @@
     "displayName": "Food Court",
     "shortName": "the food court",
     "id": "foodCourt",
-    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.<br/><br/>Would you care for an [[Orange Juiblex->orangeJuiblex]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]?",
+    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it’s been here.<br/><br/>Would you care for an [[Orange Juiblex->orangeJuiblex]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]? If you're not in the mood, you can return to the [[ice rink->iceRink]].",
     "roomId": "foodCourt"
+  },
+  "unconferenceRaveCave": {
+    "id": "unconferenceRaveCave",
+    "displayName": "Unconferencing: Rave Cave",
+    "shortName": "Unconferencing: Rave Cave",
+    "description": "This is an unconferencing room. You step into what you can only describe as a Rave Disco, and are immediately assaulted with the thumping of an otherwordly bass. Floor panels glow in time with the music, alternating between the normal stone floors of a cave, to suddenly being alight with some energetic magic. Skeletons, slimes, and even a dragon appear to be bopping to the fierce beats, and you can see in the distance a menacing conga line protecting an oversized gorilla.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84996086440?pwd=VGpJSTBhdGUxYTNNL08vc1RFZWdVdz09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 037611)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Dig Site->unconferenceDigSite]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true,
+    "roomId": "unconferenceRaveCave",
+    "hidden": true
   },
   "screen4": {
     "displayName": "Screen 4: My Big Fat Orc Wedding",
@@ -127,6 +168,13 @@
     "id": "screen4",
     "description": "You step into a dark theater to find a screen projecting a long line of orcs in fancy dress, each holding hands in a chain and dancing together as many other orcs in the background clap and sing.<br/><br/>You can take a seat here, or you can go back to the [[main theater->theater]].",
     "roomId": "screen4"
+  },
+  "orangeJuiblex": {
+    "displayName": "Orange Juiblex",
+    "shortName": "Orange Juiblex",
+    "id": "orangeJuiblex",
+    "description": "You smell it before you see it - fruity, with swampy undertones. You’ve never known anyone to come to the mall in search of juice and yet, the presence of an Orange Juiblex seems entrenched into the concept of the space as a whole in a fundamental law of the universe. Fresh slime molds in hoppers wait to be humanely squeezed, and you feel the sensation of wait staff even without the accompanying visual presence. An enticingly cold beverage appears, sitting on the other side of some slimy membrane. You feel like you could push your hand through and grab it, though its composition is a mystery.<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or [[hot dog->hotDogStand]].",
+    "roomId": "orangeJuiblex"
   },
   "centralHall": {
     "id": "centralHall",
@@ -144,13 +192,6 @@
     },
     "roomId": "centralHall"
   },
-  "seers": {
-    "displayName": "Seers",
-    "shortName": "Seers",
-    "id": "seers",
-    "description": "You find yourself inside a large store that seems to sell an incoherent mixture of everything. Televisions, Blenders, and Blue Jeans are all haphazardly strewn about, and even though you sense everything was placed with precision, you can’t help but feel like none of this makes sense. Why did you come here? Was it for a new power drill, or pair of shoes? No matter how many times you ask yourself, you can’t seem to remember. ",
-    "roomId": "seers"
-  },
   "loversLake": {
     "displayName": "Lover's Lake",
     "shortName": "loversLake",
@@ -159,6 +200,13 @@
     "description": "You see a crystal clear lake surrounded by verdant forests teeming with life and the kind of natural beauty that can fuel a poet for decades. Beside that lake sits a handsome young man sitting on a tree stump, surrounded by an assortment of woodland creatures. Bunnies, deer, squirrels, and birds gather around someone who clearly loves and respects them for the beautiful creatures they are. Even the crawling lizards and bugs below seem to earn this kind soul's affections. You sense a deep light thrumming through this space in a way that you can feel more than see. </br></br>On the ground you see a blood red jewel of some kind. It glows with malevolent light, but as you look closer it seems to have been recently purified. You can sense the change in its nature slowly growing as a result of exposure to the accepting light of this place.",
     "roomId": "LoversLake"
   },
+  "seers": {
+    "displayName": "Seers",
+    "shortName": "Seers",
+    "id": "seers",
+    "description": "You find yourself inside a large store that seems to sell an incoherent mixture of everything. Televisions, Blenders, and Blue Jeans are all haphazardly strewn about, and even though you sense everything was placed with precision, you can’t help but feel like none of this makes sense. Why did you come here? Was it for a new power drill, or pair of shoes? No matter how many times you ask yourself, you can’t seem to remember.<br/><br/>You can leave to the [[feedback kiosk->kiosk]] or the [[fountain->fountain]].",
+    "roomId": "seers"
+  },
   "screen3": {
     "displayName": "Screen 3: Jabberwock Park",
     "shortName": "Jabberwock Park",
@@ -166,19 +214,11 @@
     "description": "You enter a pitch black space and immediately a roaring mouth fills the screen. A vorpal sword shifts into and then out of focus as the camera zooms in on a mirror which reads \"Objects in mirror are farther away than they appear\".<br/><br/>You can take a seat here, or you can go back to the [[main theater->theater]].",
     "roomId": "screen3"
   },
-  "destinations": {
-    "id": "destinations",
-    "displayName": "Destinations",
-    "shortName": "the destinations hallway",
-    "description": "You stand beneath an imposing monolith made up of signs to every possible destination in every possible multiverse. Beyond it lies a hallway that seems to flicker incomprehensibly, doorways fading in and out of existence. You notice they all appear to be marked with a paper sign, which you can [[try to read->readClosedSign]].<br/><br/>Beneath the shifting monolith's infinite destination signs lie two more permanent ones. One is made of steel and imbedded LED lights spell out [[Oxygen Farm->oxygenFarm]]. The other is made of brass and features an ornate crest advertising the [[Adventurer's Guild->adventurersGuildHall]].</br></br>You can also return to the [[Central Hall->centralHall]]",
-    "roomId": "destinations",
-    "hidden": true
-  },
   "kiosk": {
     "displayName": "Feedback Kiosk",
     "shortName": "a kiosk",
     "id": "kiosk",
-    "description": "A small cart full of alien artifacts sits in the center of a hall. When you try to pass by you feel a bizarre contraption made of vibrating wires attach itself to your head as perfume is sprayed directly into your eyes. An RC car slams into your feet as you stumble on, and you feel a clipboard shoved into your hand from somewhere, begging you to sign. You don’t want anything from here. No one ever has. Yet somehow it feels too rude to just leave.",
+    "description": "A small cart full of alien artifacts sits in the center of a hall. When you try to pass by you feel a bizarre contraption made of vibrating wires attach itself to your head as perfume is sprayed directly into your eyes. An RC car slams into your feet as you stumble on, and you feel a clipboard shoved into your hand from somewhere, begging you to sign. You don’t want anything from here. No one ever has. Yet somehow it feels too rude to just leave.<br/><br/>You can exit towards the [[photo booth->bar]], into the [[Seers->seers]], or to the [[fountain->fountain]].<br/><br/>",
     "roomId": "kiosk",
     "hasNoteWall": true,
     "noteWallData": {
@@ -188,6 +228,14 @@
       "addNotePrompt": "What feedback do you have about the social space itself?",
       "noteWallDescription": "Social Space Feedback"
     }
+  },
+  "destinations": {
+    "id": "destinations",
+    "displayName": "Destinations",
+    "shortName": "the destinations hallway",
+    "description": "You stand beneath an imposing monolith made up of signs to every possible destination in every possible multiverse. Beyond it lies a hallway that seems to flicker incomprehensibly, doorways fading in and out of existence. You notice they all appear to be marked with a paper sign, which you can [[try to read->readClosedSign]].<br/><br/>Beneath the shifting monolith's infinite destination signs lie two more permanent ones. One is made of steel and imbedded LED lights spell out [[Oxygen Farm->oxygenFarm]]. The other is made of brass and features an ornate crest advertising the [[Adventurer's Guild->adventurersGuildHall]].</br></br>You can also return to the [[Central Hall->centralHall]]",
+    "roomId": "destinations",
+    "hidden": true
   },
   "rift4": {
     "displayName": "The Rift - 4",
@@ -201,7 +249,7 @@
     "displayName": "Unconferencing Arcade",
     "shortName": "the unconferencing arcade",
     "id": "arcade",
-    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.<br/><br/>A [[crane game->playCraneGame]] beckons enticingly from the far wall.<br/><br/>Unconferencing rooms: the [[fighting game cabinet->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], the [[anime racing game->unconferenceRacing]], and the [[retro cabs->unconference80s]]. You can also go out to the [[ice rink->iceRink]].",
+    "description": "You walk into the loudest space in the whole mall. The clamor of a thousand bells echoes incongruently, as if several dozens of people have all won a prize right at this moment, but that moment never seems to end. A dance machine sits at the center of the floor, its coin machine overflowing and spilling onto the surrounding floor. Brilliant lights draw your attention to an actual car sitting atop a pedestal, suspended in some impossible way above a plaque demanding an incomprehensibly large number of tickets no single human person could ever possibly hold.<br/><br/>A [[crane game->playCraneGame]] beckons enticingly from the far wall.<br/><br/>Unconferencing rooms: the [[fighting game cabinet->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], the [[anime racing game->unconferenceRacing]], and the [[retro cabs->unconference80s]]. You can also go out to the [[ice rink->iceRink]] or the [[kid zone->kidZone]].<br/><br/>",
     "roomId": "arcade",
     "hasNoteWall": true,
     "noteWallData": {
@@ -244,15 +292,8 @@
     "displayName": "Izchak's Gifts",
     "shortName": "Izchak's Gifts",
     "id": "spencers",
-    "description": "The quantity of candles in this store must be some kind of safety violation, especially in proximity to the many vibrant posters advertising movies you’re pretty sure you’ve never actually seen, but have heard talked about so much that you know them anyway. Neon lamps twisted into ASCII characters line the back, while the floor is filled with shelves of novelty goods. You read a nearby mug - \"Don't talk to me until I've quaffed my brown potion.\"",
+    "description": "The quantity of candles in this store must be some kind of safety violation, especially in proximity to the many vibrant posters advertising movies you’re pretty sure you’ve never actually seen, but have heard talked about so much that you know them anyway. Neon lamps twisted into ASCII characters line the back, while the floor is filled with shelves of novelty goods. You read a nearby mug - \"Don't talk to me until I've quaffed my brown potion.\"<br/><br/>The only exit is back out to the [[fountain->fountain]].",
     "roomId": "spencers"
-  },
-  "orangeJuiblex": {
-    "displayName": "Orange Juiblex",
-    "shortName": "Orange Juiblex",
-    "id": "orangeJuiblex",
-    "description": "You smell it before you see it - fruity, with swampy undertones. You’ve never known anyone to come to the mall in search of juice and yet, the presence of an Orange Juiblex seems entrenched into the concept of the space as a whole in a fundamental law of the universe. Fresh slime molds in hoppers wait to be humanely squeezed, and you feel the sensation of wait staff even without the accompanying visual presence. An enticingly cold beverage appears, sitting on the other side of some slimy membrane. You feel like you could push your hand through and grab it, though its composition is a mystery.<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or [[hot dog->hotDogStand]].",
-    "roomId": "orangeJuiblex"
   },
   "underworld": {
     "displayName": "The Underworld",
@@ -273,14 +314,14 @@
     "displayName": "Kid Zone",
     "shortName": "the kid zone",
     "id": "kidZone",
-    "description": "Vibrant colors assault your eyes from every direction as you stand beneath a mountain of tubes slightly too small for the average adult to traverse comfortably. You hear laughter echoing from within the tubes, though you cannot place where the source of it might be.<br/><br/>Flee to the quiet of the [[book store->bookstore]].",
+    "description": "Vibrant colors assault your eyes from every direction as you stand beneath a mountain of tubes slightly too small for the average adult to traverse comfortably. You hear laughter echoing from within the tubes, though you cannot place where the source of it might be.<br/><br/>Escape to the [[ice rink->iceRink]], flee to the quiet of the [[H&M->h&m]], duck into the safety of the [[American Eagle->americanEagle]], or dive into the [[arcade->arcade]].",
     "roomId": "kidZone"
   },
   "hotTopic": {
     "displayName": "Hot Topic",
     "shortName": "Hot Topic",
     "id": "hotTopic",
-    "description": "You see, in the center of a dark store, a podium of some kind where a large man with a floppy hat and robes stands, offering a compelling argument on the topic of AI and what it means to be intelligent. His listeners, a crowd of teens wearing dark, baggy clothes (and far too many chains) respond loudly with their own perspectives. The heated debate seems endless, and the idea of attempting to join in fills you with dread. However, along the sides of the room you find pile upon pile of t-shirts with odd or humorous slogans. Next to them you find some markers. You could probably write your own.",
+    "description": "You see, in the center of a dark store, a podium of some kind where a large man with a floppy hat and robes stands, offering a compelling argument on the topic of AI and what it means to be intelligent. His listeners, a crowd of teens wearing dark, baggy clothes (and far too many chains) respond loudly with their own perspectives. The heated debate seems endless, and the idea of attempting to join in fills you with dread. However, along the sides of the room you find pile upon pile of t-shirts with odd or humorous slogans. Next to them you find some markers. You could probably write your own.<br/><br/>You can exit to the [[fountain->fountain]], or go take the back door to the [[bookstore->bookstore]].",
     "roomId": "hotTopic"
   },
   "oxygenFarm": {
@@ -295,7 +336,7 @@
     "displayName": "Ice Rink",
     "shortName": "the ice rink",
     "id": "iceRink",
-    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.<br/><br/>Just off to the side you can see a [[photo booth->bar]]. If you need to rest after all that skating, the [[food court->foodCourt]] is nearby. ",
+    "description": "In the center of the mall lies a large open space covered over with ice. This wonder of modern technology has created a space for bored mall patrons to hone their skill at sliding over an ice lake with knives attached to their feet, a very practical skill for the city-dwelling natives of this town. At the center of the ice there appears to be an enormous chair which houses what is either a living pumpkin, or a man in an elaborate costume. Either way, he appears to be handing out candy.<br/><br/>Back near the doors is the [[info thing->obelisk]], and deeper into the mall lies the [[theater->theater]]. Just off to the side you can see a [[photo booth->bar]], next to the door to the [[book store->bookstore]]. Opposite it you can hear laughter, echoing from the [[kid zone->kidZone]]. If you need to rest after all that skating, the [[food court->foodCourt]] is nearby.",
     "roomId": "iceRink"
   },
   "unconferenceDance": {
@@ -313,20 +354,14 @@
     "hidden": true,
     "roomId": "theaterMage"
   },
-  "bar": {
-    "displayName": "Photo Booth",
-    "shortName": "the photo booth",
-    "id": "bar",
-    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].<br/>",
-    "roomId": "bar",
+  "unconferenceStarShip": {
+    "id": "unconferenceStarShip",
+    "displayName": "Unconferencing: Starship Bridge",
+    "shortName": "Unconferencing: Starship",
+    "description": "This is an unconferencing room. The vacuum seal around the door hisses as you enter the flat-white-panelled interior of a starship. Computer screens glow softly from every direction, feeding you statistics about the ship's systems. You see engineers running from station to station to put out fires as a glowing red triangle warns of a nearby solar flare. The ship rocks every few moments from the force of impact caused by what seems to be the weapons of a nearby enemy vessel, and you can see a radar screen that indicates a fleet approaching. You're sure it's fine.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87042161886?pwd=Z3NXNlB5eWRKb2JKNVFnWVlxQS9Jdz09 target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 380841)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
     "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "Next to the booth, a sign asks visitors to describe their favourite Mall of Moria memory on the back of a photo and drop it in the provided box, for a chance to win a $3 gift card. You see no sign of a box, but the pile of pens have been put to good use scribbling graffiti directly onto the wall.",
-      "noteWallButton": "Add your mark",
-      "addNoteLinkText": "Contribute",
-      "addNotePrompt": "Contribute to the graffiti?",
-      "noteWallDescription": "Someone has scratched ‘Rodney was here’ directly into the wall here, and a web of messages in various hands spreads out around it."
-    }
+    "roomId": "unconferenceStarShip",
+    "hidden": true
   },
   "barStage": {
     "id": "barStage",
@@ -353,7 +388,7 @@
     "roomId": "rift3"
   },
   "unconferenceFighterman": {
-    "displayName": "Unconferencing Room: FighterMan Machine",
+    "displayName": "Unconferencing Room: Fighting Game Cabinet",
     "shortName": "the FighterMan Machine",
     "id": "unconferenceFighterman",
     "description": "Resting alone on an elevated dais, as if to suggest a position of importance, is a cabinet for the fighting game \"Angbands vs Hacks 2\".<br/><br/>The AvH series made a huge splash when it first came out for being the first FGC title to let players act out their dream match-ups across different lineages of roguelikes. @ vs @, @ vs @, or even @ vs @ are possible!<br/><br/>A player has taped a tier list to the top of the cabinet. @ is S-tier, @ and @ are both A tier, @ and @ are C tier, and poor @ is F tier.<br/><br/>At the base of the screen are a long line of zorkmids, demarking who's got next game.<br/><br/>(This is an unconferencing room.)<br/><br/>The other unconferencing rooms are the [[retro cabs->unconference80s]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
@@ -460,7 +495,7 @@
     "displayName": "Forever D21 Fountain",
     "shortName": "the Forever D21 Fountain",
     "id": "fountain",
-    "description": "You behold a fountain before you, spraying water into impossible shapes and patterns in vibrant shifting colour. As you gaze upon this wonder, you feel your body and mind change. You feel the awkwardness suffuse you, as if you are strong and virile enough to be on your own, but not established enough to know how to do that yet. You can feel within you a deep and powerful need to move into a cheap apartment with three too many friends.<br/><br/>You realize the colourful display isn't just a trick of the light, and excess water is leaving brightly hued puddles on the floor. A jug of soap the size of a small child sits next to an abandoned mop, a picture of futility against this endlessly staining flow.",
+    "description": "You behold a fountain before you, spraying water into impossible shapes and patterns in vibrant shifting colour. As you gaze upon this wonder, you feel your body and mind change. You feel the awkwardness suffuse you, as if you are strong and virile enough to be on your own, but not established enough to know how to do that yet. You can feel within you a deep and powerful need to move into a cheap apartment with three too many friends.<br/><br/>You realize the colourful display isn't just a trick of the light, and excess water is leaving brightly hued puddles on the floor. A jug of soap the size of a small child sits next to an abandoned mop, a picture of futility against this endlessly staining flow.<br/><br/>Around the fountain lie a circle of stores. There's [[Hot Topic->hotTopic]], [[Body Works->bodyWorks]], [[Izchak's Gifts->spencers]], and a [[Seers->seers]]. To the south is the [[feedback kiosk->kiosk]].",
     "roomId": "fountain",
     "specialFeatures": [
       "RAINBOW_DOOR",
@@ -471,7 +506,7 @@
     "displayName": "H & M",
     "shortName": "H&M",
     "id": "h&m",
-    "description": "You enter a dark place filled with rack after rack of fashionable clothing. At the center of the room stands a Frost Giant, an Ice Demon, and a Mummy. They stand atop a pedestal, radiant in their accent lighting and wearing the latest in trendy fashions. They look down at you as if you are beneath them, but you know you could elevate yourself to their level if you were to coordinate your outfit well enough. To your right, one of the racks of clothes hisses as you near it.<br/><br/>There's [[an American Eagle->americanEagle]] next door.",
+    "description": "You enter a dark place filled with rack after rack of fashionable clothing. At the center of the room stands a Frost Giant, an Ice Demon, and a Mummy. They stand atop a pedestal, radiant in their accent lighting and wearing the latest in trendy fashions. They look down at you as if you are beneath them, but you know you could elevate yourself to their level if you were to coordinate your outfit well enough. To your right, one of the racks of clothes hisses as you near it.<br/><br/>There's [[an American Eagle->americanEagle]] next door. Outside you can hear the cacaphony of the [[kid zone->kidZone]].",
     "roomId": "h&m"
   },
   "underbar": {
@@ -521,11 +556,29 @@
     "description": "You walk into a dark theater just as a Gelatinous Cube wearing ripped jeans rudely tells his mother that she just doesn't understand. You step into the room and find your seat as he flips a tuft of disembodied black hair over one floating eye.<br/><br/>Or you can head back to the [[main theater->theater]].",
     "roomId": "screen1"
   },
+  "unconferenceDigSite": {
+    "id": "unconferenceDigSite",
+    "displayName": "Unconferencing: Dig Site",
+    "shortName": "Unconferencing: Dig Site",
+    "description": "This is an unconferencing room. You step into a winding cave with glittering jewels and gold embedded in every wall. Basic scaffolding has been placed here, indicating that perhaps this is some kind of archaeological site. You see in the distance an altar to some dark goddess and next to that, incongruously, what appears to be a shop manned by an angry-looking gentleman with a shotgun.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/84687652213?pwd=UnN6Q1FuNmpFWjJSdmhXYlJ1MHJRQT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 901367)<br/><br/>The other unconferencing rooms are [[Elysium->unconferenceElysium]], [[Star Ship->unconferenceStarShip]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true,
+    "roomId": "unconferenceDigSite",
+    "hidden": true
+  },
+  "unconferenceElysium": {
+    "id": "unconferenceElysium",
+    "displayName": "Unconferencing: Elysium Fields",
+    "shortName": "Unconferencing: Elysium",
+    "description": "This is an unconferencing room. The souls of the dead glow in the eerie light which seems to suffuse this place from every direction. Some kind of bioluminescent moss is growing on every surface here and bright red pottery has been placed along every wall by an overenthusiastic interior designer. Enormous golden pottery breaks up the space with massive shrubbery large enough to devour you whole, and you can't help but wonder how it was delivered here. You see unmanned chariots driving around the space on their own, but they don't seem to be interested in you.<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/81512788533?pwd=SnRUZEh2OEhtYVRWRG1nd1FFL0NYUT09 \" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 284733)<br/><br/>The other unconferencing rooms are [[Star Ship->unconferenceStarShip]], [[Dig Site->unconferenceDigSite]], and [[Rave Cave->unconferenceRaveCave]]. Or you can go back to the [[unconferencing lobby->unconference]].",
+    "hasNoteWall": true,
+    "roomId": "unconferenceElysium",
+    "hidden": true
+  },
   "theater": {
     "id": "theater",
     "displayName": "Theater",
     "shortName": "the theater",
-    "description": "Passing underneath a swirling circular Cinemaplex logo, you are confronted by an impossibly-large screen dominating one entire wall of the space. Before it is a small field of mismatched chairs visibly pulled from anywhere a spare could be found.<br/><br/>You can return to the [[information obelisk->obelisk]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[I Was a Teenage Gelatinous Cube->screen1]], [[Attack of the 50 Foot Goblin->screen2]], [[Jabberwock Park->screen3]], or [[My Big Fat Orc Wedding->screen4]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
+    "description": "Passing underneath a swirling circular Cinemaplex logo, you are confronted by an impossibly-large screen dominating one entire wall of the space. Before it is a small field of mismatched chairs visibly pulled from anywhere a spare could be found.<br/><br/>You can return to the [[skating rink->iceRink]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[I Was a Teenage Gelatinous Cube->screen1]], [[Attack of the 50 Foot Goblin->screen2]], [[Jabberwock Park->screen3]], or [[My Big Fat Orc Wedding->screen4]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
     "hasNoteWall": true,
     "noteWallData": {
       "roomWallDescription": "There is a whiteboard set up to the side with \"SPEAKER QUESTIONS\" written at the top. \"Questions for speakers not questions from speakers!\" is hastily scrawled below it.",
@@ -540,23 +593,22 @@
     "displayName": "Body Works",
     "shortName": "Body Works",
     "id": "bodyWorks",
-    "description": "Elaborate scientific equipment juts out of the broken display cases of what once must have been a collection of small bottles. The science equipment includes glass vials, beakers, and a vast array of liquids being heated to different temperatures. The fluids flow from one side to another, changing colors and textures as they go, before ultimately arriving at the far end. At that end, a woman in a long white lab coat collects them and sets them up for display. The end result of this process seems to be a display shelf full of labeled bottles, which you could take if you wished.<br/><br/>One shelf is loaded with [[colourful bottles->drinkPolymorph]] of many fun shapes and hues, and another with [[plain bottles of clear liquid->drinkCancellation]] that are simply labelled \"Normal\" in a blocky typeface.",
+    "description": "Elaborate scientific equipment juts out of the broken display cases of what once must have been a collection of small bottles. The science equipment includes glass vials, beakers, and a vast array of liquids being heated to different temperatures. The fluids flow from one side to another, changing colors and textures as they go, before ultimately arriving at the far end. At that end, a woman in a long white lab coat collects them and sets them up for display. The end result of this process seems to be a display shelf full of labeled bottles, which you could take if you wished.<br/><br/>One shelf is loaded with [[colourful bottles->drinkPolymorph]] of many fun shapes and hues, and another with [[plain bottles of clear liquid->drinkCancellation]] that are simply labelled \"Normal\" in a blocky typeface.<br/><br/>You can exit to the [[fountain->fountain]].",
     "roomId": "bodyWorks"
   },
-  "old_bar": {
-    "id": "old_bar",
-    "displayName": "Bar",
-    "shortName": "the bar",
-    "description": "The bustle of the hall fades away as you ascend the stairs, coming upon a beautiful long bar with hundreds of colourful bottles spanning up to the ceiling. [[Ubizara the Bartender->talkToUbizara]] will happily make you whatever you want, sliding glasses over the table with ease. A laminated sign on the bartop advertises tonight's specials: [[Divine Nectar->item]] (a locally crafted mead, donated by intelligent philanthropic bees), [[the Fizzbuzz->item]] (a non-alcoholic flavored seltzer which alternates sour and sweet), and [[Yet Another Silly Drink->item]] (a colorful, layered drink with a toy cockatrice floating on top).<br/>A self-serve table nearby has two crates packed to the brim with potions. One is loaded with [[colourful potions->drinkPolymorph]] of many shapes and hues, and the other with [[plain potions of clear liquid->drinkCancellation]].<br/><br/>Four areas provide opportunities to sit and enjoy conversation in smaller groups - up on the [[balcony->barBalcony]], seated [[along the bar->barStools]], by the [[stage->barStage]], and tucked away [[at the back->barBack]]. Stairs at the back lead directly to the [[theater]], or back to the [[Central Hall->centralHall]].<br/>",
+  "bar": {
+    "displayName": "Photo Booth",
+    "shortName": "the photo booth",
+    "id": "bar",
+    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].<br/><br/>",
+    "roomId": "bar",
     "hasNoteWall": true,
     "noteWallData": {
-      "roomWallDescription": "By the bathrooms there's a pile of pens and markers - it seems the bar decided if they can't stop graffitti, they might as well encourage patrons to use glitter pens instead of boring ballpoint.",
+      "roomWallDescription": "Next to the booth, a sign asks visitors to describe their favourite Mall of Moria memory on the back of a photo and drop it in the provided box, for a chance to win a $3 gift card. You see no sign of a box, but the pile of pens have been put to good use scribbling graffiti directly onto the wall.",
       "noteWallButton": "Add your mark",
       "addNoteLinkText": "Contribute",
-      "addNotePrompt": "Contribute to the graffitti?",
-      "noteWallDescription": "Someone has scratched ‘Rodney was here’ on an absurdly large unisex bathroom stall wall."
-    },
-    "roomId": "old_bar",
-    "hidden": true
+      "addNotePrompt": "Contribute to the graffiti?",
+      "noteWallDescription": "Someone has scratched ‘Rodney was here’ directly into the wall here, and a web of messages in various hands spreads out around it."
+    }
   }
 }
