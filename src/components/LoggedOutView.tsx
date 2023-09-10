@@ -40,9 +40,9 @@ export default function LoggedOutView () {
         </p>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <p>
-          If you logged in with Twitter in previous years, we&pos;re sorry but
+          If you logged in with Twitter in previous years, we&apos;re sorry but
           due to the recent unpleasantness, our Twitter integration has ceased
-          to function. You&pos;ll have to create a new account via email or Google.
+          to function. You&apos;ll have to create a new account via email or Google.
           Sorry for the trouble.
         </p>
         <p>
