@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import '../../style/profileEditView.css'
 import { SetUseSimpleNamesAction, SetCaptionsEnabledAction } from '../Actions'
 import { DispatchContext, SettingsContext } from '../App'
+import { Badge } from '../../server/src/badges'
 
 import { currentTheme, setTheme } from '../storage'
 import VideoAudioSettingsView from './VideoAudioSettingsView'
@@ -10,6 +11,7 @@ import VideoAudioSettingsView from './VideoAudioSettingsView'
 interface Props {
   keepCameraWhenMoving: boolean;
   captionsEnabled: boolean;
+  unlockedBadges: Badge[];
 }
 
 export default function SettingsView (props: Props) {
@@ -113,6 +115,18 @@ export default function SettingsView (props: Props) {
           />
           <label htmlFor="vaporwave">Vaporwave</label>
         </div>
+        {props.unlockedBadges.some(p => p.emoji === '🌭') &&
+          <div className="radio">
+            <input
+              type="radio"
+              id="hotdogstand"
+              value="hotdogstand"
+              checked={selectedTheme === 'hotdogstand'}
+              onChange={handleThemeSelection}
+            />
+            <label htmlFor="hotdogstand">HotDog Stand</label>
+          </div>
+        }
       </div>
       <div className="form" id="simpleNamesSelectionForm">
         <label htmlFor="simpleNamesSelectionForm" className='form-header'>Username Display Mode:</label>

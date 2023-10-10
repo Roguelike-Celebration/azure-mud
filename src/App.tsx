@@ -295,6 +295,7 @@ const App = () => {
         <SettingsView
           keepCameraWhenMoving={state.keepCameraWhenMoving}
           captionsEnabled={state.captionsEnabled}
+          unlockedBadges={state.profileData.unlockedBadges}
         />
       )
       break
