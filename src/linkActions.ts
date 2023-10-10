@@ -70,6 +70,24 @@ export const linkActions = {
   },
   spinAround: () => {
     spinTheRoom()
+  },
+  talkToBodyWorksCharacter: () => {
+    displayMessageFromList('bodyWorksCharacter')
+  },
+  readCatalog: () => {
+    pickUpRandomItemFromList('seersCatalog')
+  },
+  talkToZara: () => {
+    displayMessageFromList('zara')
+  },
+  talkToHotDogGuy: () => {
+    displayMessageFromList('hotDogGuy')
+  },
+  talkToRay: () => {
+    displayMessageFromList('ray')
+  },
+  talkToLoudRobert: () => {
+    displayMessageFromList('loudRobert')
   }
 }
 

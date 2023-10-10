@@ -158,7 +158,9 @@ function awardBadges (user: User, roomId: string) {
     ['procedural', 'nega_ticket'],
     ['underlab', 'undermuffin'],
     // begin 2023
-    ['lockedDoor', '🔑']
+    ['lockedDoor', '🔑'],
+    ['hotDogStand', '🌭'],
+    ['emptyStore', '🎃']
   ]
 
   const unlockedEmoji: Badge[] = []
