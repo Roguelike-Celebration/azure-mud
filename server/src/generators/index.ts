@@ -16,7 +16,14 @@ import * as drinkSkeletons from './drinkSkeletons'
 import * as drinkVessels from './drinkVessels'
 import * as drinkContents from './drinkContents'
 import * as drinkNames from './drinkNames'
+// begin 2023
 import * as craneGame from './craneGame'
+import * as bodyWorksCharacter from './bodyWorksCharacter'
+import * as seersCatalog from './seersCatalog'
+import * as zara from './zara'
+import * as hotDogGuy from './hotDogGuy'
+import * as ray from './ray'
+import * as loudRobert from './loudRobert'
 
 interface Generator {
     generate(): string
@@ -42,7 +49,13 @@ const generators: {[name: string]: Generator} = {
   drinkVessels,
   drinkContents,
   drinkNames,
-  craneGame
+  craneGame,
+  bodyWorksCharacter,
+  seersCatalog,
+  zara,
+  hotDogGuy,
+  ray,
+  loudRobert
 }
 
 export default generators

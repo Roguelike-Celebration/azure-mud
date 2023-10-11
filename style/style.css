@@ -117,8 +117,7 @@
   --link: #66FF66;
   }
 
-  /* vaporwave light bg: #e7eef4;, good puprel: #6b3097*/
-.vaporwave {
+  .vaporwave {
   --main-background: #302c7b;
   --main-font:#B1ECE5; ;
   --gray-text:#3c88cc;
@@ -141,6 +140,29 @@
   --active: #1e1c4f;
   --link: #ee82ee; 
   }
+  
+.hotdogstand {
+  --main-background: #ff0000 ;
+  --main-font:#000000;
+  --gray-text:#888888;
+  --alternate-background: #ffff00;
+  --alternate-translucent: rgba(255, 255, 0, 0.8);
+  --green:#00ff00;
+  --highlight-line: #ffffff;
+  --highlighted-line-font: #ff0000;
+  --pink: hotpink;
+  --blue: #0000ff;
+  --cyan: #00ffff;
+  --magenta: #ff00ff;
+  --orange: #ffa500;
+  --red: #ff0000;
+  --violet: #ee82ee;
+  --yellow: #ffff00;
+  --link-decoration: underline;
+  --link-style: dashed; 
+  --active: #ffff00;
+  --link: #ffffff; 
+}  
   
 body {
   background-color: var(--main-background);

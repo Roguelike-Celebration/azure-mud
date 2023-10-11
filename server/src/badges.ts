@@ -319,6 +319,16 @@ export const UnlockableBadges: Badge[] = [
     emoji: '🔑',
     description: 'Employees ONLY?',
     category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🌭',
+    description: 'A much better food than a color scheme',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🎃',
+    description: 'Happy Crawloween!',
+    category: BadgeCategories.Year2023
   }
 ]
 
