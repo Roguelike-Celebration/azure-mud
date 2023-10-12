@@ -8,17 +8,17 @@ export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
       '#pillType# Pills for #malady#',
-      '#person#&apos;s #cureType# Cure',
-      '#cureType# cure for #malady#',
+      '#person#\'s #cureType# Cure',
+      '#cureType# Cure for #malady#',
       'System Builder and Lung Restorer',
       'Giant Power Electric Belt',
-      'Griffons&apos; Plush Cape',
+      'Griffons\' Plush Cape',
       'Maternity Outfit For Mother',
-      'Seer&apos; Motor Buggy',
+      'Seer\'s Motor Buggy',
       'Saving Plan For Upper Planes Home Buyer',
       'A Chicken',
       'Wide Cuffed Pants +1',
-      '#person#&apos; #item#'
+      '#person#\'s #item#'
     ],
     person: [
       'Syzygyrior',
@@ -32,12 +32,14 @@ export const generate = () => {
       'Wizard',
       'Cursed',
       'Blessed',
-      'Definitely Not Cursed'
+      'Definitely Not Cursed',
+      'Math'
     ],
     cureType: [
       'Consumption',
       'Quick',
-      'Vegetable'
+      'Vegetable',
+      'Instant'
     ],
     malady: [
       'Weak Goblins',
