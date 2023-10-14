@@ -71,10 +71,10 @@ const PresenceView = (props: {
       if (!user) {
         return <span />
       }
-      const id = `presence-${idx}`
+
       return (
-        <span key={`room-presence-${id}`}>
-          <NameView userId={u} id={id} key={id} />
+        <span key={`room-presence-${user.id}`}>
+          <NameView userId={u} id={user.id} />
           {audioUsers && audioUsers.includes(user.id) ? (
             <FaVolumeUp className="has-audio" />
           ) : null}

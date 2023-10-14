@@ -63,7 +63,7 @@ import ReactTooltip from 'react-tooltip'
 export const DispatchContext =
   createContext<ThunkDispatch<Action, State>>(null)
 export const MessagesContext = createContext<State['messages']>(null)
-export const UserMapContext = createContext(null)
+export const UserMapContext = createContext<{ userMap: State['userMap'], myId: State['userId'] }>(null)
 export const SettingsContext = createContext(null)
 export const IsMobileContext = createContext(null)
 export const RoomDataContext = createContext(null)
