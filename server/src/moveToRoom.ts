@@ -91,7 +91,11 @@ export async function moveToRoom (
   const result: Result = {
     httpResponse: {
       status: 200,
-      body: response
+      // Instead of returning relevant data in the HTTP response, we use websockets.
+      // This helps dealing with desyncs.
+      // Unfortunately things like outgoing whispers/messages still encounter desyncs.
+      // 'least it's obvious!
+      body: undefined
     }
   }
 
@@ -99,10 +103,7 @@ export async function moveToRoom (
   // nothing should happen: issue 162
   if (user.roomId !== to.id) {
     console.log(`Moving from ${user.roomId} to ${to.id}`)
-    console.log(JSON.stringify(await globalPresenceMessage([user.roomId, to.id]), null, 2))
     await DB.setCurrentRoomForUser(user, to.id)
-    console.log('After setting')
-    console.log(JSON.stringify(await globalPresenceMessage([user.roomId, to.id]), null, 2))
 
     result.messages = [
       {
@@ -114,6 +115,11 @@ export async function moveToRoom (
         groupId: to.id,
         target: 'playerEntered',
         arguments: [user.id, user.roomId, currentRoom.shortName]
+      },
+      {
+        userId: user.id,
+        target: 'updatedCurrentRoom',
+        arguments: [response]
       },
       await globalPresenceMessage([user.roomId, to.id])
     ]

@@ -212,27 +212,14 @@ export async function connect (
 }
 
 export async function moveToRoom (roomId: string) {
+  // We used to use the result, but we now use PubSub instead, receiving updatedCurrentRoom.
+  // A lot of other stuff still uses HTTP results - ideally we'd just use PubSub.
   const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
     'moveRoom',
     {
       to: roomId
     }
   )
-
-  console.log(result)
-
-  if (result) {
-    myDispatch(
-      UpdatedCurrentRoomAction(
-        result.roomId,
-        convertServerRoomData(result.roomData)
-      )
-    )
-
-    if (result.roomNotes) {
-      myDispatch(NoteUpdateRoomAction(result.roomId, result.roomNotes))
-    }
-  }
 }
 
 export async function sendChatMessage (id: string, text: string) {
@@ -422,6 +409,18 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
     playerDisconnected: (otherId) => {
       console.log('Player left!', otherId)
       dispatch(PlayerDisconnectedAction(otherId))
+    },
+    updatedCurrentRoom: (data) => {
+      myDispatch(
+        UpdatedCurrentRoomAction(
+          data.roomId,
+          convertServerRoomData(data.roomData)
+        )
+      )
+
+      if (data.roomNotes) {
+        myDispatch(NoteUpdateRoomAction(data.roomId, data.roomNotes))
+      }
     },
     presenceData: (data) => {
       dispatch(UpdatedPresenceAction(data))
