@@ -8,18 +8,35 @@ export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
       '#material# #item#',
+      '#material# #item#',
       '#size# #material# #item#'
     ],
     size: [
       'huge',
-      'miniature'
+      'miniature',
+      'average',
+      'microscopic',
+      'life-sized',
+      'room-sized'
     ],
     material: [
       'stuffed',
       'plush',
       'plastic',
       'mithril',
-      'leather'
+      'leather',
+      'dragonglass',
+      'faux-leather',
+      'stainless steel',
+      'jello',
+      'wooden',
+      'glass',
+      'ceramic',
+      'cardboard',
+      'ceramic',
+      'cloth',
+      'golden',
+      'titanium'
     ],
     item: [
       'eel'
