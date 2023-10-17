@@ -23,7 +23,8 @@ export const generate = () => {
       'pocket-sized',
       'extra-large',
       'tiny',
-      'gigantic'
+      'gigantic',
+      'eel-sized'
     ],
     color: [
       'pale',
@@ -54,7 +55,8 @@ export const generate = () => {
       'ceramic',
       'cloth',
       'golden',
-      'titanium'
+      'titanium',
+      'eelskin'
     ],
     item: [
       'eel'

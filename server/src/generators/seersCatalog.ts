@@ -25,7 +25,32 @@ export const generate = () => {
     diabloToy: [
       '#toy# of #suffix#',
       '#prefix# #toy#',
-      '#prefix# #toy# of #suffix#'
+      '#prefix# #toy# of #suffix#',
+      '#species# Pocket Pet',
+      'Stuffed #species#',
+      'Beanie Baby #species# No. 42',
+      '#appliance_desc# Throwing Disc',
+      '#house_desc# Doll Dream Home',
+      'Plastic Playtime #appliance#'
+    ],
+    species: [
+      'Cockatrice',
+      'Eel',
+      'Skeleton',
+      'Inaccurate Spider Skeleton',
+      'Floating Eye',
+      'Bear',
+      'Capybara',
+      'Chicken',
+      'Grid Bug',
+      'Oklob Plant',
+      'Squid',
+      'Pit Bloat',
+      'Pink Jelly',
+      'Vampire Bat',
+      'Kobold',
+      'Imp',
+      'Tentacle Horror'
     ],
     item: [
       'System Builder and Lung Restorer',
