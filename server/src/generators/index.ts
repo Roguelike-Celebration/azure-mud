@@ -24,6 +24,7 @@ import * as zara from './zara'
 import * as hotDogGuy from './hotDogGuy'
 import * as ray from './ray'
 import * as loudRobert from './loudRobert'
+import * as tossARock from './chasm'
 
 interface Generator {
     generate(): string
@@ -55,7 +56,8 @@ const generators: {[name: string]: Generator} = {
   zara,
   hotDogGuy,
   ray,
-  loudRobert
+  loudRobert,
+  tossARock
 }
 
 export default generators

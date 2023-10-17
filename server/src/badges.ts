@@ -329,6 +329,16 @@ export const UnlockableBadges: Badge[] = [
     emoji: '🎃',
     description: 'Happy Crawloween!',
     category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🔮',
+    description: 'Won the game',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '👁️',
+    description: 'Found harmony',
+    category: BadgeCategories.Year2023
   }
 ]
 
