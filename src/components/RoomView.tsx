@@ -13,6 +13,7 @@ import { FaChevronDown, FaChevronUp, FaCog } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
+import { ConfettiRoomView } from './feature/ConfettiRoomView'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
@@ -189,6 +190,9 @@ export default function RoomView (props: Props) {
           ) : (
             ''
           )}
+        {room?.specialFeatures?.includes('CONFETTI') &&
+          <ConfettiRoomView />
+        }
         {room && room.riddles ? (
           <button id="riddle-button" onClick={showRiddles}>
             {room.riddles.length > 1

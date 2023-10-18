@@ -6,6 +6,25 @@
     "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly woven into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.<br/><br/>Just outside, you can hear the unmistakable sounds of a [[kid zone->kidZone]]. The concourse continues beyond it to the [[ice skating rink->iceRink]].",
     "roomId": "americanEagle"
   },
+  "yourStrength": {
+    "displayName": "Your Strength",
+    "shortName": "your strength",
+    "id": "yourStrength",
+    "description": "You meet the enormous gaze with confidence, puffing out your chest and taking up as much space as you can. You've heard that wild animals respond to displays of size, and you make yourself as big as you can. In doing so you actually feel your body grow, as if the land here is making your imagination real. Just as you feel yourself reach twice your normal size, a sharp pain lances across your chest, and you see the razor barbs of the creatures tentacles for the first time. Those tentacles now drop with your blood, but you only notice this for the briefest of instants before you are struck again, and then again, and on and on until your consciousness dims and you reappear back at [[The Vault]].",
+    "hidden": true,
+    "roomId": "onABeach"
+  },
+  "orbOfZot": {
+    "displayName": "Orb Of Zot",
+    "shortName": "orb of zot",
+    "id": "orbOfZot",
+    "description": "You hear a glorious voice booming from a highly-compressed audio file. It says 'YOU HAVE WON!'.<br/><br/>A cheap confetti effect rains down from above as some digital approximation of a trumpet plays a victorious fanfare in your honor.<br/><br/>Before you is a passageway leading into [[The Back->theBack]].",
+    "hidden": true,
+    "roomId": "orbOfZot",
+    "specialFeatures": [
+      "CONFETTI"
+    ]
+  },
   "hotDogStand": {
     "displayName": "Hot Dog Stand",
     "shortName": "the hot dog stand",
@@ -13,12 +32,52 @@
     "description": "As you approach you are assaulted with the image of a brightly colored hat no mortal should be forced to endure. The physical manifestation of shame itself holds up a hotdog deep fried in delicious breading and slathered with some mysterious sauce that appears to be unaffected by things as mundane as gravity. $2.99. Not bad!<br/><br/>The weary stall goblin [[waits for your order->talkToHotDogGuy]].<br/><br/>You can go back to the [[food court tables->foodCourt]], or pick up a [[pretzel->pretzelPlace]] or an [[Orange Juiblex->orangeJuiblex]].",
     "roomId": "hotDogStand"
   },
+  "backHallway": {
+    "displayName": "Back Hallway",
+    "shortName": "back hallway",
+    "id": "backHallway",
+    "description": "You continue walking and reach a distant part of the labyrinth of hallways. A dank smell wafts through the air just before your eyes catch sight of a man in a long trench coat standing next to a slimmer man with long hair. Around them both are a small army of mall rats, chittering as they eat crumbs off the floor. The mall rats appear to be dressed just like the rest of the feral teens you've seen.<br/><br/>The man in the trenchoat introduces himself as [[Loud Robert->talkToLoudRobert]], and his friend, [[Ray->talkToRay]], puts out his hand and offers you what appears to be a tightly-rolled cigarette.<br/><br/>You could also ignore the people here, and continue towards the [[Chasm->chasm]].<br/><br/>Or you could return to the [[Left Hallway->leftHallway]].",
+    "hidden": true,
+    "roomId": "backHallway"
+  },
+  "leftHallway": {
+    "displayName": "Left Hallway",
+    "shortName": "left hallway",
+    "id": "leftHallway",
+    "description": "You enter the left hallway to find a kiosk featuring some wildly alien contraptions. An attacking horde of wires jut from some kind of handle, waiting to commit violence upon the heads of anyone walking too close to it. The threat of horrible perfume lingers on the air, and you feel a sharp pain as a remote control car slams violently into your ankles. You're not sure how any of this is possible, given there is no one manning the kiosk, but feel its malevolence all the same. Maybe it's back here for good reason. <br/><br/>You can continue down into the [[Back Hallway]].<br/><br/>To the right you see, glowing incongruously, the [[Mystic Breakroom]].",
+    "hidden": true,
+    "roomId": "leftHallway"
+  },
+  "accountant": {
+    "displayName": "Accountant's Dream",
+    "shortName": "accountant's dream",
+    "id": "accountant",
+    "description": "You are searching for a gift here, in this place of many stores. You remember working in this place a few years ago, it was here that you learned about your love of numbers. It was here you found yourself. You've moved on from this place, but some part of you still remembers what it was like to return here every day, knowing it was just a stepping stone for you. A part of you knows that your current job is also a stepping stone. Another part of you knows that all of life is yet another stepping stone. Each step no less important than the one before it. <br/><br/>You suddenly see a door in front of you, leading to the [[Mystic Breakroom->mysticBreakroom]].<br/><br/>Or you can return to the [[Janitor's Closet->janitorsCloset]].",
+    "hidden": true,
+    "roomId": "accountant"
+  },
+  "theBack": {
+    "displayName": "The Back",
+    "shortName": "the back",
+    "id": "theBack",
+    "description": "You see stack upon endless stack of items here. There seems to be everything a person could ask for, every rare, out of stock, or otherwise desirable item one might want, or violently demand, is here. Dust lays heavily on the ground, undisturbed. You can feel you’re not supposed to be here, you’re not even really sure how you got here. There doesn’t seem to be a door.<br/><br/> On the shelves you see 3 rare collectibles:<br/>[[Slap Bracelet of Zot->item]]<br/>[[Moon-Touched Bop-It->item]]<br/>[[Vorpal Tamagotchi->item]]<br/><br/>You have enough time to choose your reward, but you feel yourself drawn back to the [[Food Court->foodCourt]].",
+    "hidden": true,
+    "roomId": "theBack"
+  },
   "screen1": {
     "displayName": "Screen 1: I Was a Teenage Gelatinous Cube",
     "shortName": "I Was a Teenage Gelatinous Cube",
     "id": "screen1",
     "description": "You walk into a dark theater just as a Gelatinous Cube wearing ripped jeans rudely tells his mother that she just doesn't understand. You step into the room and find your seat as he flips a tuft of disembodied black hair over one floating eye.<br/><br/>Or you can head back to the [[main theater->theater]].",
     "roomId": "screen1"
+  },
+  "dreamSpace": {
+    "displayName": "Dream Space",
+    "shortName": "dream space",
+    "id": "dreamSpace",
+    "description": "You enter a realm of clouds and hope, a warm feeling of sunlight filling every corner of your heart. As you look around, you see the ghostly images of the aspirations of all the employees here. You see the mall itself, a transitory space leading to a thousand new paths. A stepping stone on the way to infinite visions of a better life, each one unique to the person who created it<br/><br/>You could step into the dream of a [[Retail Manager->retailManager]].<br/><br/>Or you could step into the dream of a [[Security Guard->securityGuard]].<br/><br/>Or you could return to the [[Janitor's Closet->janitorsCloset]].",
+    "hidden": true,
+    "roomId": "dreamSpace"
   },
   "theater": {
     "id": "theater",
@@ -57,6 +116,30 @@
     "description": "The quantity of candles in this store must be some kind of safety violation, especially in proximity to the many vibrant posters advertising movies you’re pretty sure you’ve never actually seen, but have heard talked about so much that you know them anyway. Neon lamps twisted into ASCII characters line the back, while the floor is filled with shelves of novelty goods. You read a nearby mug - \"Don't talk to me until I've quaffed my brown potion.\"<br/><br/>The only exit is back out to the [[fountain->fountain]].",
     "roomId": "spencers"
   },
+  "spin": {
+    "displayName": "Spin In Mid-Air",
+    "shortName": "spin",
+    "id": "spin",
+    "description": "You spin wildly in mid-air, enjoying the sensation of the breeze as you fall. Your body responds to the currents moving through the impossible air around you, a strange sensation without any visible ground to orient you. As you spin, your stomach starts to churn, making you nauseous. The spin doesn't seem to have accomplished anything, but it was pretty fun for a while there.<br/><br/>[[lean into the dive]]<br/><br/>[[accept the fall]]",
+    "hidden": true,
+    "roomId": "spin"
+  },
+  "shimmeringDoorway": {
+    "displayName": "Shimmering Doorway",
+    "shortName": "shimmering door",
+    "id": "shimmeringDoorway",
+    "description": "You enter the shimmering doorway and find yourself falling through a void. Nothing extends out in all directions, and you can only tell you are falling because of the sensation in the pit of your stomach. You can't fathom how gravity could exist here, and yet you find yourself trapped by it. <br/><br/>You can try to [[spin in mid-air]].<br/><br/>Or you can try to flatten your arms to your side and [[lean into the dive]].<br/><br/>Or you can give in and [[accept the fall]].",
+    "hidden": true,
+    "roomId": "shimmeringDoorway"
+  },
+  "pairOfEyes": {
+    "displayName": "Pair Of Eyes",
+    "shortName": "pair of eyes",
+    "id": "pairOfEyes",
+    "description": "You notice a pair of disturbing eyes looking at you from the bushes, and your paranoia gets the best of you. You think of the enormous creature you just met, but do not get the same sense of warmth and understand you felt there. Instead, the eyes close as you approach them, and whatever creature they were attached to disappears into the foliage. <br/><br/>You look back behind you, and reappear [[On A Beach]].",
+    "hidden": true,
+    "roomId": "pairOfEyes"
+  },
   "bookstore": {
     "displayName": "Book Store",
     "shortName": "the book store",
@@ -79,12 +162,28 @@
     "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.<br/><br/>There's an [[empty storefront->emptyStore]] on your right, and a bustling [[arcade->arcade]] on your left. Further down, the concourse opens into an [[ice skating rink->iceRink]]. ",
     "roomId": "obelisk"
   },
+  "rightHallway": {
+    "displayName": "Right Hallway",
+    "shortName": "right hallway",
+    "id": "rightHallway",
+    "description": "You enter the right hallway and are confronted by a pack of feral teens. They growl at you as you walk by, but they seem mostly harmless. They stand among a pile of discarded cigarette butts and vinyl records. You see no signs of life in their eyes. <br/><br/>Straight ahead you see the hallway fades into [[Darkness]].<br/><br/>To your left, you see a door labelled [[Exalted Office of the Chief Janitor->janitorsCloset]].",
+    "hidden": true,
+    "roomId": "rightHallway"
+  },
   "unconference80s": {
     "displayName": "Unconferencing Room: The Retro Corner",
     "shortName": "the retro cabs",
     "id": "unconference80s",
-    "description": "Tucked away in a cobwebbed corner of the arcade are three rows of vintage games. They all appear to be by the legendary publisher Broughnami, who are known primarily for their minimalist food-themed games.<br/><br/>The first row contains cabinets for \"868-SNACK\" and \"Become a Sandwich Artist in Just 10 Seconds\" (infamously sponsored by a certain chain lunch restaurant).<br/><br/> Next are two foreign imports, \"Bratwurst Imbrotlio\" and \"Cinco Pãos de Queijos\".<br/><br/>Finally, a hand-written \"21+ only!\" sign is taped to the \"Glitch Tankard\" and \"Vesper.5 O'Clock Somewhere\" cabs, although there is nary a bouncer in sight.<br/><br/>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"????\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode ?????)<br/><br/>The other unconferencing rooms are the [[fighting game cabinet->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
+    "description": "Tucked away in a cobwebbed corner of the arcade are three rows of vintage games. They all appear to be by the legendary publisher Broughnami, who are known primarily for their minimalist food-themed games.<br/><br/>The first row contains cabinets for \"868-SNACK\" and \"Become a Sandwich Artist in Just 10 Seconds\" (infamously sponsored by a certain chain lunch restaurant).<br/><br/> Next are two foreign imports, \"Bratwurst Imbrotlio\" and \"Cinco Pãos de Queijos\".<br/><br/>Finally, a hand-written \"21+ only!\" sign is taped to the \"Glitch Tankard\" and \"Vesper.5 O'Clock Somewhere\" cabs, although there is nary a bouncer in sight.<br/><br/>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/85153133482?pwd=muPgiZMpQPPK9hrOof3AY0AFOqg3rb.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 188778)<br/><br/>The other unconferencing rooms are the [[fighting game cabinet->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconference80s"
+  },
+  "acceptTheFall": {
+    "displayName": "Accept The Fall",
+    "shortName": "accept the fall",
+    "id": "acceptTheFall",
+    "description": "You acknowledge the void and accept the fall. Nothing can harm you here, and there's nothing you can do to affect your future. You simply have to trust that you will get through this ok. <br/><br/>[[Touch The Ground->touchGround]].",
+    "hidden": true,
+    "roomId": "acceptTheFall"
   },
   "orangeJuiblex": {
     "displayName": "Orange Juiblex",
@@ -116,6 +215,14 @@
     "roomId": "adventurersGuildHall",
     "hidden": true
   },
+  "yourFears": {
+    "displayName": "Your Fears",
+    "shortName": "your fears",
+    "id": "yourFears",
+    "description": "You bring forth your deepest insecurities and place them at the forefront of your mind. All the things you worry will come to pass, all the things you try not to admit, and all the things that terrify you. The creature looks at them in confusion, very briefly, and then looks directly at you. You can feel the creature looking past these fears, as if they don't matter, as if the much more important thing to see is still within. You feel the air around you condense, as if embracing you, and the land offers warmth to fill the space that had been occupied by fear. Everything and everyone around you moves, subtly, to fill in the space where fear had been. In allowing them to see these fears, you allowed them to see the voids within you, and to create warmth there instead. <br/><br/>You get the feeling that this exchange is not localized only to this space, this creature, and as you realize this, you feel yourself appear suddenly [[On A Beach]].",
+    "hidden": true,
+    "roomId": "yourFears"
+  },
   "fountain": {
     "displayName": "Forever D21 Fountain",
     "shortName": "the Forever D21 Fountain",
@@ -127,12 +234,28 @@
       "DULL_DOOR"
     ]
   },
+  "feralTeen": {
+    "displayName": "Feral Teen's Dream",
+    "shortName": "feral teen",
+    "id": "feralTeen",
+    "description": "You are hanging out with your friends at the one place your parents won't bother you. You can feel the untrusting eyes of the security guard on you, just one more adult trying to control your life with their arbitrary rules. You look at him and feel a desperate need to avoid that fate. To live your life for something more than paranoia and control. To create a world where security guards are seen as the pointless role that you know they are. <br/><br/>You see some old [[Accountant]] passing by.<br/><br/>You also see your [[Retail Manager]].<br/><br/>Or you can return to the [[Janitor's Closet->janitorsCloset]].",
+    "hidden": true,
+    "roomId": "feralTeen"
+  },
   "unconferenceFighterman": {
     "displayName": "Unconferencing Room: Fighting Game Cabinet",
     "shortName": "the FighterMan Machine",
     "id": "unconferenceFighterman",
-    "description": "Resting alone on an elevated dais, as if to suggest a position of importance, is a cabinet for the fighting game \"Angbands vs Hacks 2\".<br/><br/>The AvH series, of course, made a huge splash when it for being the first FGC title to let players act out dream match-ups across different roguelikes. @ vs @, @ vs @, or even @ vs @!<br/><br/>A player has taped a tier list to the top of the cabinet. @ is S-tier, @ and @ are both A tier, @ and @ are C tier, and poor @ is F tier.<br/><br/>At the base of the screen are a long line of zorkmids, indicating who's got next.<br/><br/>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"????\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode ????)<br/><br/>The other unconferencing rooms are the [[retro cabs->unconference80s]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
+    "description": "Resting alone on an elevated dais, as if to suggest a position of importance, is a cabinet for the fighting game \"Angbands vs Hacks 2\".<br/><br/>The AvH series, of course, made a huge splash when it for being the first FGC title to let players act out dream match-ups across different roguelikes. @ vs @, @ vs @, or even @ vs @!<br/><br/>A player has taped a tier list to the top of the cabinet. @ is S-tier, @ and @ are both A tier, @ and @ are C tier, and poor @ is F tier.<br/><br/>At the base of the screen are a long line of zorkmids, indicating who's got next.<br/><br/>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/82047349458?pwd=ICTOm73aAvKFiFxiiL3geZ8kfQaYlH.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 396553)<br/><br/>The other unconferencing rooms are the [[retro cabs->unconference80s]], the [[Dance Machine game->unconferenceDance]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceFighterman"
+  },
+  "chasm": {
+    "displayName": "Chasm",
+    "shortName": "chasm",
+    "id": "chasm",
+    "description": "You see, in the far distance, the red glow of an exit sign. The light of the sign barely reaches you from the other side of a massive chasm which drops down some interminable distance, shrouded in inky darkness. <br/><br/>You can [[toss a rock->tossARock]] into the chasm to see how dangerous this hazard is.<br/><br/>You can try to walk the [[Narrow Path->narrowPath]].<br/>Or you can return to the [[Back Hallway->backHallway]].",
+    "hidden": true,
+    "roomId": "chasm"
   },
   "screen3": {
     "displayName": "Screen 3: Jabberwock Park",
@@ -145,7 +268,7 @@
     "displayName": "Locked Door",
     "shortName": "a locked door",
     "id": "lockedDoor",
-    "description": "The door says EMPLOYEES ONLY, so you're not surprised when it's locked. An inset window reveals a dim hallway stretching into the distance.",
+    "description": "The door says EMPLOYEES ONLY, so you're not surprised when it's locked. An inset window reveals a dim hallway stretching into the distance.<br/><br/>You feel a sudden tugging at your pocket. Reaching in, you find a key has appeared. Enter the [[Hallway->employeeHallway]]?",
     "roomId": "lockedDoor",
     "hidden": true
   },
@@ -153,15 +276,47 @@
     "displayName": "Unconferencing Room: Dance Machine",
     "shortName": "the Dance Machine cabinet",
     "id": "unconferenceDance",
-    "description": "The marquee above this arcade cabinet (with two large dance pads) reads \"NecroDancer's Revenge Exxxtreme Party Mix\", but the monitor itself shows a title screen for \"Raise 'Em Up '23: Dank Dungeons and Dank Beats\".<br/><br/>Off to the side of the machine, a shrimpy teenage orc is explaining to a sweaty out-of-breath elf that Exxxtreme Party Mix was a failed attempt to introduce the series to a Western audience, so a lot of arcade operators bought them up for cheap and flash them with fan-made firmware. The elf stares off into the distance uninterested as he heaves and quaffs his Potion of Alligator Aid.<br/><br/>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"????\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode ????)<br/><br/>The other unconferencing rooms are the [[fighting game cabinet->unconferenceFighterman]], the [[retro cabs->unconference80s]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
+    "description": "The marquee above this arcade cabinet (with two large dance pads) reads \"NecroDancer's Revenge Exxxtreme Party Mix\", but the monitor itself shows a title screen for \"Raise 'Em Up '23: Dank Dungeons and Dank Beats\".<br/><br/>Off to the side of the machine, a shrimpy teenage orc is explaining to a sweaty out-of-breath elf that Exxxtreme Party Mix was a failed attempt to introduce the series to a Western audience, so a lot of arcade operators bought them up for cheap and flash them with fan-made firmware. The elf stares off into the distance uninterested as he heaves and quaffs his Potion of Alligator Aid.<br/><br/>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87833202905?pwd=NDJBVDIybdLDUd746NJoMrzm0b1At1.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 833995)<br/><br/>The other unconferencing rooms are the [[fighting game cabinet->unconferenceFighterman]], the [[retro cabs->unconference80s]], and the [[anime racing game->unconferenceRacing]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceDance"
+  },
+  "tossARock": {
+    "displayName": "Toss A Rock",
+    "shortName": "toss a rock",
+    "id": "tossARock",
+    "description": "You toss a rock into the abyss and as you do so the earth shakes beneath you. You look up just in time to see a cascade of enormous stones falling from the ceiling directly on top of where you are standing.<br/><br/>The next thing you know, you appear back at the entrance of the [[Employee Only Hallway]].",
+    "roomId": "tossARock",
+    "hidden": true
+  },
+  "vault": {
+    "displayName": "The Vault",
+    "shortName": "vault",
+    "id": "vault",
+    "description": "You enter a golden vault, glittering with mountains of gold arcade coins. Just the gold you can see from where you’re standing could easily fund this entire mall for the rest of your natural life. In fact, you think you see a lich’s phylactery on the accountant’s desk, as if some opportunistic necromancer has decided that this is the key to eternal stability. That same accountant’s desk boldly holds a spreadsheet written in all black ink, and featuring a frankly ludicrous number of 0’s.<br/><br/>You see a chute above the pile of gold, leading up to the [[Dance Machine]].<br/><br/>You also see, out of the corner of your eye, a [[Shimmering Doorway]].",
+    "hidden": true,
+    "roomId": "vault"
   },
   "emptyStore": {
     "displayName": "Spirit Crawloween",
     "shortName": "an empty storefront",
     "id": "emptyStore",
-    "description": "A vinyl banner above this previously empty space proclaims it to now be 'Spirit Crawloween.' You should probably go back to the [[info thing->obelisk]].",
+    "description": "A vinyl banner above this previously empty space proclaims it to now be 'Spirit Crawloween.' Inside you see a cacophony of bright color and cheap plastic masks. [[Fake vampire fangs->item]] and cheap blood are stocked in innumerable quantity, along with every kind of cobweb you could ever need. You have no idea how this place has been filled so thoroughly, so quickly, but you swear you see movement out of the corner of your eyes. Perhaps it's better not to question it. <br/><br/>You should probably go back to the [[info thing->obelisk]].",
     "roomId": "emptyStore"
+  },
+  "janitorsCloset": {
+    "displayName": "Exalted Office of the Chief Janitor",
+    "shortName": "janitors closet",
+    "id": "janitorsCloset",
+    "description": "You enter a closet that's been hastily converted to a throne room built out of mops, brushes, and stacks of toilet paper. The throne looks incredibly uncomfortable, and is sized for someone no more than 3 feet tall. On the throne you see several written complaints demanding the return of stolen equipment, including one that refers to a stolen mustache. A small set of janitor's overalls hangs on the wall nearby.<br/><br/>Past that is the door to [[The Vault]].<br/><br/>You also see a strange shimmer in the air, leading to [[Dream Space]].",
+    "hidden": true,
+    "roomId": "janitorsCloset"
+  },
+  "steelNerves": {
+    "displayName": "Steel Your Nerves",
+    "shortName": "steel nerves",
+    "id": "steelNerves",
+    "description": "You take a deep breath and try to steel your nerves, but your legs won't stop trembling. You look around to find rocks falling from the ceiling as the cavern begins to rumble. A large rock directly above you begins to fall.<br/><br/>You dive out of the way, the way you came. [[Back Hallway]]",
+    "hidden": true,
+    "roomId": "steelNerves"
   },
   "swag": {
     "id": "swag",
@@ -171,12 +326,28 @@
     "roomId": "swag",
     "hidden": true
   },
+  "microwave": {
+    "displayName": "Microwave",
+    "shortName": "microwave",
+    "id": "microwave",
+    "description": "Within the microwave you see the creation of an entire universe. The land is being created along a grid pattern, clearly using a procedural algorithm. You see the creation of a castle with 512 rooms, 12 different monster types, 8 treasures, and 3 spells.<br/><br/>You may return to the [[Mystic Breakroom]].",
+    "hidden": true,
+    "roomId": "microwave"
+  },
   "seers": {
     "displayName": "Seers",
     "shortName": "Seers",
     "id": "seers",
-    "description": "You find yourself inside a large store that seems to sell an incoherent mixture of everything. Televisions, Blenders, and Blue Jeans are all haphazardly strewn about, and even though you sense everything was placed with precision, you can’t help but feel like none of this makes sense. Why did you come here? Was it for a new power drill, or pair of shoes? No matter how many times you ask yourself, you can’t seem to remember.<br/><br/>There is an enormous catalog on a spotlit pedestal. It dares you to [[read it->readCatalog]].<br/><br/>You can leave to the [[feedback kiosk->kiosk]] or the [[fountain->fountain]].",
+    "description": "You find yourself inside a large store that seems to sell an incoherent mixture of everything. Televisions, Blenders, and Blue Jeans are all haphazardly strewn about, and even though you sense everything was placed with precision, you can’t help but feel like none of this makes sense. Why did you come here? Was it for a new power drill, or pair of shoes? No matter how many times you ask yourself, you can’t seem to remember.<br/><br/>The legendary Seer's Catalog sits on a spotlit pedestal. It dares you to [[read it->readCatalog]].<br/><br/>You can leave to the [[feedback kiosk->kiosk]] or the [[fountain->fountain]].",
     "roomId": "seers"
+  },
+  "retailManager": {
+    "displayName": "Retail Manager's Dream",
+    "shortName": "retail manager",
+    "id": "retailManager",
+    "description": "You feel yourself don the authority of management, the authority earned through years of working in a menial job before being recognized for your responsibility and level-headedness, but an authority you ultimately know you don't care about. You flash to a memory of home, where you are also a manager, but of a different kind. Kids look up at you, begging for dinner, demanding entertainment and time. You long to give them more of your time, but you know that the role you have here at this mall is what keeps them healthy and safe. It allows you to provide for what's truly important in your life. The authority you've earned here pales in comparison. A job is a job. Your family is your life.<br/><br/>You see a passing [[Accountant]] nearby.<br/><br/>Or you can return to the [[Janitor's Closet->janitorsCloset]].",
+    "hidden": true,
+    "roomId": "retailManager"
   },
   "iceRink": {
     "displayName": "Ice Rink",
@@ -201,6 +372,22 @@
     },
     "roomId": "centralHall"
   },
+  "metalChairs": {
+    "displayName": "Cheap Metal Chairs",
+    "shortName": "metal chairs",
+    "id": "metalChairs",
+    "description": "You see a collected stack of cheap metal chairs resting precariously along one wall. Tucked among the chairs, you find a Rune Staff, etched with symbols indicating a powerful teleportation magic. You realize you don't need this tool, because you can simply type /go and visit any room by name.<br/><br/>You can return to the [[Mystic Breakroom]].",
+    "hidden": true,
+    "roomId": "metalChairs"
+  },
+  "onABeach": {
+    "displayName": "On A Beach",
+    "shortName": "on a beach",
+    "id": "onABeach",
+    "description": "Warmth suffuses you, and light suffuses the land around you. The warmth and the light bring harmony and peace to this place, and cool water laps up at the nearby shore to bring the system into balance. <br/><br/>You look around and immediately know that somewhere here is your destination. The place you have been trying to reach without knowing it. You must choose carefully or begin your journey again.<br/><br/>You see a [[pair of eyes]] looking out from a nearby tree.<br/><br/>You see a [[mystic sword]], half buried in the sand.<br/><br/>You see a [[coconut]], cracked open and oozing sweetened water.",
+    "hidden": true,
+    "roomId": "onABeach"
+  },
   "hotTopic": {
     "displayName": "Hot Topic",
     "shortName": "Hot Topic",
@@ -215,11 +402,19 @@
     "description": "You step into a dark theater to find a screen projecting a long line of orcs in fancy dress, each holding hands in a chain and dancing together as many other orcs in the background clap and sing.<br/><br/>You can take a seat here, or you can go back to the [[main theater->theater]].",
     "roomId": "screen4"
   },
+  "leanIn": {
+    "displayName": "Lean Into The Dive",
+    "shortName": "lean in",
+    "id": "leanIn",
+    "description": "You lean into the dive, hastening your descent, but it doesn't seem to accomplish anything. You are still trapped in a void, a place with no sense of up or down, and you get the feeling, somehow, that your desire to leave has angered something. <br/><br/>You feel yourself being forced out, returning to [[The Vault]].",
+    "hidden": true,
+    "roomId": "leanIn"
+  },
   "unconferenceRacing": {
     "displayName": "Unconferencing Room: Anime Racing Game",
     "shortName": "the anime racing game",
     "id": "unconferenceRacing",
-    "description": "A line-up of six flashy racing cockpits, displaying a flashy attract animation in perfect sync for \"Shiren the Drifter\".<br/><br/>Each machine has a card slot to accept a paper save data card, with a sticker proudly advertising you can import save data from the \"Cockatrice Racing\" spin-off.<br/><br/>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"????\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode ????)<br/><br/>The other unconferencing rooms are the [[fighting game cabinet->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[retro cabs->unconference80s]]. You can also just wander around the [[arcade->arcade]].",
+    "description": "A line-up of six flashy racing cockpits, displaying a flashy attract animation in perfect sync for \"Shiren the Drifter\".<br/><br/>Each machine has a card slot to accept a paper save data card, with a sticker proudly advertising you can import save data from the \"Cockatrice Racing\" spin-off.<br/><br/>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/82303197877?pwd=uR5Lw05Vvmb5jqc7QZwiCwRyaDtpzV.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 036186)<br/><br/>The other unconferencing rooms are the [[fighting game cabinet->unconferenceFighterman]], the [[Dance Machine game->unconferenceDance]], and the [[retro cabs->unconference80s]]. You can also just wander around the [[arcade->arcade]].",
     "roomId": "unconferenceRacing"
   },
   "dockingBay": {
@@ -237,11 +432,19 @@
     "description": "The smell of salt wafts through the air as you approach an array of snacks filled with yet more snacks in some kind of deliciously horrible chimera of flavors. Meats, cheeses, vegetables, and every spice known to man are all being haphazardly inserted into pretzels and baked as if this were a thing normal people just did on their own.<br/><br/>You can go back to the [[food court tables->foodCourt]], or grab an [[Orange Juiblex->orangeJuiblex]] or a [[hot dog->hotDogStand]].",
     "roomId": "pretzelPlace"
   },
+  "narrowPath": {
+    "displayName": "Narrow Path",
+    "shortName": "narrow path",
+    "id": "narrowPath",
+    "description": "You break into a sprint along this rail-thin rock outcropping and begin to see rocks rain down from the ceiling. One smashes into the stone path and you leap forward and out of the way just as it rolls into the darkness. You realize that if you hadn't moved, you might have been crushed. <br/><br/>You continue towards the [[Exit Door]]",
+    "hidden": true,
+    "roomId": "narrowPath"
+  },
   "foodCourt": {
     "displayName": "Food Court",
     "shortName": "the food court",
     "id": "foodCourt",
-    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it's been here.<br/><br/>Would you care for an [[Orange Juiblex->orangeJuiblex]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]? <br/><br/>There is a [[curious person here->talkToZara]].<br/><br/>If you're not in the mood, you can return to the [[ice rink->iceRink]].",
+    "description": "Vendors line the walls here, any number of stores serving food from an improbable combination of cultures. Tables fill the floor space between them, offering seats no matter which cuisine you choose. You see a cheap plastic tray full of the remnants of chinese bao, some kind of lentil soup, and a burrito. You cannot tell how long it's been here.<br/><br/>Prowling around the floor here is [[Zara, Food Court Warlord->talkToZara]].<br/><br/>Would you care for an [[Orange Juiblex->orangeJuiblex]]? Perhaps a [[hot dog->hotDogStand]]? Maybe just a [[pretzel->pretzelPlace]]? <br/><br/>If you're not in the mood, you can return to the [[ice rink->iceRink]].",
     "roomId": "foodCourt"
   },
   "officeOfSteam": {
@@ -251,6 +454,14 @@
     "description": "This sparsely-furnished room has little more in it than a typewriter standing on a pillar at its center. As you look down, however, you see a glass floor suspending you above an enormous sprawling mass of pipes and brass machinery. Chutes and tubes create fire and move steam in intricate patterns all ultimately funelling back into the typewriter stand you noticed before. Dwarves are scurrying to and fro, tinkering with the machines. Hooked to the typewriter is a small screen, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. Anachronistically, a cute Post-It Note shaped like a quokka is on the side of the screen, with the note \"Coming Soon: 2022 Steam Sale\" in loopy handwriting. If you'd like, you can investigate the <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">source of its steam power</a>, or go back to the [[Guild Hall->adventurersGuildHall]].",
     "roomId": "officeOfSteam",
     "hidden": true
+  },
+  "minifridge": {
+    "displayName": "Mini Fridge",
+    "shortName": "mini fridge",
+    "id": "minifridge",
+    "description": "You peer into the minifridge and feel another mind touching yours. It attempts to probe you to understand which of you has the greater intellect, for some reason you don't fully understand. Echoing in its thoughts, a phrase is repeated. DEATHSPELL.<br/><br/>You can return to the [[Mystic Breakroom]].",
+    "hidden": true,
+    "roomId": "minifridge"
   },
   "experimentalBiology": {
     "id": "experimentalBiology",
@@ -279,6 +490,46 @@
     "description": "As you walk into the theater, on the screen a goblin wearing a bikini walks into a visibly fake power line, crushing it in her hands. The camera cuts to a goblin cafe as a couple makes out under flickering lights, and complains about the disruption.<br/><br/>You can take a seat here, or you can head back to the [[main theater->theater]].",
     "roomId": "screen2"
   },
+  "coconut": {
+    "displayName": "Coconut",
+    "shortName": "coconut",
+    "id": "coconut",
+    "description": "You look at the cracked-open seed and feel a sense of comraderie. Just as you were able to pass the eye only by cracking yourself open to bear the sweetness within, the coconut bears itself to you. As you look past its imperfections, you see the brilliant core inside, glowing with a soft hum. The more you stare at it, the more it seems to pulse with the beat of your heart, and the more you focus on that beat, the more you feel it reverberate through the air, the sky, and the sun above. The harmony pulses, the warmth spreads, and you disappear into [[The Back->theBack]].",
+    "hidden": true,
+    "roomId": "coconut"
+  },
+  "yourPassions": {
+    "displayName": "Your Passions",
+    "shortName": "your passions",
+    "id": "yourPassions",
+    "description": "You allow the creature to see into your heart, and participate in your joy. You show it the hobbies that consume your down time, and the stories and peoples that have impacted your life. You show the creature everything that makes you happy, and everything that drives you to do more, and live bigger. You show the creature the unfiltered radiance within you, and in response the world itself shines more brightly. As if the eye were now a sun, the landscape shines with glorious light. Something here is manifesting your passions and turning them into fuel to lighten everything and everyone who sees you. <br/><br/>You get the sense that the creature is doing nothing. You get the sense that this happens no matter where you go, and just as you realize that, you appear [[On A Beach]].",
+    "hidden": true,
+    "roomId": "yourPassions"
+  },
+  "touchGround": {
+    "displayName": "Touch The Ground",
+    "shortName": "touch ground",
+    "id": "touchGround",
+    "description": "You touch down on something you cannot see, and as your weight settles into place, an enormous purple eye opens before you, revealing both the eye, but also a landscape that the eye is overseeing. Grass appears beneath your feet, and trees appear overhead. Mountains settle in the far distance, and all of it disappears again each time the enormous creature blinks. The eye gazes deep into you, looking for something. <br/><br/>Show the creature [[your strength->yourStrength]].<br/><br/>Show the creature [[your fears->yourFears]].<br/><br/>Show the creature [[your passions->yourPassions]].",
+    "hidden": true,
+    "roomId": "touchGround"
+  },
+  "exitDoor": {
+    "displayName": "Exit Door",
+    "shortName": "exit door",
+    "id": "exitDoor",
+    "description": "Walking into the red glow of the Exit Door you feel yourself vibrate with a strange sensation and collapse to the ground. As you fall to the floor, you are hit by an overwhelming disgust for the filth you see collected here. You begin to attack the grime with your hands, but a mop appears in them suddenly. You clean the floor until it is sparkling, and as you finish your task you suddenly come to your senses, standing in a [[Janitor's Closet->janitorsCloset]].",
+    "hidden": true,
+    "roomId": "exitDoor"
+  },
+  "mysticSword": {
+    "displayName": "Mystic Sword",
+    "shortName": "mystic sword",
+    "id": "mysticSword",
+    "description": "You seek the power of a mystic sword buried in the sand. Your avarice compels you to hoard the strength or the wealth you find here, compels you to collect rare items as you see them, but this place feels this need within you to put into your inventory an item you have no need for, and rejects it. Rejects you. <br/><br/>A bright flash and a wooshing of air overwhelm you and you appear back in the [[Employee Only Hallway]].",
+    "hidden": true,
+    "roomId": "mysticSword"
+  },
   "arcade": {
     "displayName": "Unconferencing Arcade",
     "shortName": "the unconferencing arcade",
@@ -287,7 +538,7 @@
     "roomId": "arcade",
     "hasNoteWall": true,
     "noteWallData": {
-      "roomWallDescription": "Adjacent to a screen showing recent high scores, a curious screen displays what may not be a game at all, but is rather labelled \"UNCONFERENCE TOPIC SUGGESTIONS!\" A small sign clarifies \"Write what you want to chat with others about, and upvote topics you find interesting. Moderators will assign the top six topics rooms, 5 minutes into each unconference block. Have fun!\"",
+      "roomWallDescription": "Adjacent to a screen showing recent high scores, a curious screen displays what may not be a game at all, but is rather labelled \"UNCONFERENCE TOPIC SUGGESTIONS!\" A small sign clarifies \"Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each uncoferencing block, moderators will assign the top four topics to rooms. Have fun!\"",
       "noteWallButton": "Inspect the topics",
       "addNoteLinkText": "suggest a topic",
       "addNotePrompt": "What would you like to suggest?",
@@ -324,13 +575,45 @@
       "noteWallDescription": "Social Space Feedback"
     }
   },
+  "postItNotes": {
+    "displayName": "Post-It Notes",
+    "shortName": "post-it notes",
+    "id": "postItNotes",
+    "description": "You see a cork board full of post-it notes that are filling themselves with a strange new language. As you gaze at them you understand a smattering of seemingly-random words.<br/><br/>You read RUBY RED, PALE PEARL, OPAL EYE, GREEN GEM, BLUE FLAME, and NORN STONE, though you are not sure what these things refer to.<br/><br/>You can return to the [[Mystic Breakroom]]",
+    "hidden": true,
+    "roomId": "postItNotes"
+  },
+  "darkness": {
+    "displayName": "Darkness",
+    "shortName": "darkness",
+    "id": "darkness",
+    "description": "You enter the darkness and immediately you feel a hot breath on the back of your neck. A sense of danger flashes through your mind just as you feel sharp teeth sink into your throat. You have been eaten by a grue. <br/><br/>Or you would, if this game had death mechanics, but instead your feel yourself pulled back to the beginning of the [[Employee Only Hallway->employeeHallway]].",
+    "hidden": true,
+    "roomId": "darkness"
+  },
+  "employeeHallway": {
+    "displayName": "Employee Only Hallway",
+    "shortName": "employee hallway",
+    "id": "employeeHallway",
+    "description": "You enter a long, open hallway with dingy white walls and dull, clinical lighting. You see doors sporadically along the walls, each one labeled blandly with the name of a store you recognize. You may be able to enter those stores from here, but you will get no joy in doing so. In fact, this entire space seem to suck the life out of you, just seeing it. Up ahead you see the path seems to fork. <br/><br/>Go down the [[Left Hallway->leftHallway]].</br>Go down the [[Right Hallway->rightHallway]].",
+    "roomId": "employeeHallway",
+    "hidden": true
+  },
   "destinations": {
     "id": "destinations",
     "displayName": "Destinations",
     "shortName": "the destinations hallway",
-    "description": "You stand beneath an imposing monolith made up of signs to every possible destination in every possible multiverse. Beyond it lies a hallway that seems to flicker incomprehensibly, doorways fading in and out of existence. You notice they all appear to be marked with a paper sign, which you can [[try to read->readClosedSign]].<br/><br/>Beneath the shifting monolith's infinite destination signs lie two more permanent ones. One is made of steel and imbedded LED lights spell out [[Oxygen Farm->oxygenFarm]]. The other is made of brass and features an ornate crest advertising the [[Adventurer's Guild->adventurersGuildHall]].</br></br>You can also return to the [[Central Hall->centralHall]]",
+    "description": "You stand beneath an imposing monolith made up of signs to every possible destination in every possible multiverse. Beyond it lies a hallway that seems to flicker incomprehensibly, doorways fading in and out of existence. You notice they all appear to be marked with a paper sign, which you can [[try to read->readClosedSign]].<br/><br/>Beneath the shifting monolith's infinite destination signs lie two more permanent ones. One is made of steel and imbedded LED lights spell out [[Oxygen Farm->oxygenFarm]]. The other is made of brass and features an ornate crest advertising the [[Adventurer's Guild->adventurersGuildHall]].</br></br>You can also return to the [[Central Hall->centralHall]].",
     "roomId": "destinations",
     "hidden": true
+  },
+  "mysticBreakroom": {
+    "displayName": "Mystic Breakroom",
+    "shortName": "mystic breakroom",
+    "id": "mysticBreakroom",
+    "description": "Translucent white walls only partly conceal a vast sea of stars. A [[microwave]] hums softly with the buzz of a new universe being brought to life. A nearby [[minifridge]] is filled up with metal cans that seem to contain the very essence of intellect itself. A set of [[cheap metal chairs]] radiate with glorious power, and a set of [[post-it notes]] adhere themselves to a cork board and begin to fill themselves with the beginnings of language.<br/><br/>A voice speaks from the empty space. It says 'Visit The Ultimate Treasure!'<br/><br/>Or you can return to the [[Employee Only Hallway]].",
+    "hidden": true,
+    "roomId": "mysticBreakroom"
   },
   "old_bar": {
     "id": "old_bar",
@@ -347,6 +630,14 @@
     },
     "roomId": "old_bar",
     "hidden": true
+  },
+  "securityGuard": {
+    "displayName": "Security Guard's Dream",
+    "shortName": "security guard",
+    "id": "securityGuard",
+    "description": "You feel yourself become a bastion of safety, the watchful eye protecting this space from harm. Most of your days are spent standing around in idle boredom, but when you do act, it is with a fury of adrenaline. Others may look down on you, but you know, deep within, that you are serving an essential function of society.<br/><br/>You look around and see others looking at you.<br/><br/>You can step into the dream of a [[Feral Teen]].<br/><br/>Or you can step into the dream of a passing [[Accountant]].<br/><br/>Or you can return to the [[Janitor's Closet->janitorsCloset]].",
+    "hidden": true,
+    "roomId": "securityGuard"
   },
   "bodyWorks": {
     "displayName": "Body Works",

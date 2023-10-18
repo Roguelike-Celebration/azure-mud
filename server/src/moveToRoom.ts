@@ -166,7 +166,9 @@ function awardBadges (user: User, roomId: string) {
     // begin 2023
     ['lockedDoor', '🔑'],
     ['hotDogStand', '🌭'],
-    ['emptyStore', '🎃']
+    ['emptyStore', '🎃'],
+    ['orbOfZot', '🔮'],
+    ['coconut', '👁️']
   ]
 
   const unlockedEmoji: Badge[] = []

@@ -88,6 +88,9 @@ export const linkActions = {
   },
   talkToLoudRobert: () => {
     displayMessageFromList('loudRobert')
+  },
+  tossARock: () => {
+    displayMessageFromList('tossARock')
   }
 }
 

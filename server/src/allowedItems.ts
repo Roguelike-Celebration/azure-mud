@@ -20,5 +20,9 @@ export default [
   'negasocks',
   'negalongbow',
   'healing scroll',
-  'negapuppy'
+  'negapuppy',
+  'Slap Bracelet of Zot',
+  'Moon-Touched Bop-It',
+  'Vorpal Tamagotchi',
+  'fake vampire fangs'
 ]
