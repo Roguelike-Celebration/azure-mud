@@ -6,6 +6,8 @@ import { DispatchContext } from './App'
 import { getAllRooms, getRoom, resetRoomData } from '../../networking'
 import { UpdateAndShowRoomAction } from '../actions'
 
+const TalkBadgesFakeRoomID = "talk-badges"
+
 export default function (props: {roomIds: string[]}) {
   const dispatch = useContext(DispatchContext)
 
@@ -42,6 +44,15 @@ export default function (props: {roomIds: string[]}) {
 
   return (
     <ul id='room-list'>
+      <li key={TalkBadgesFakeRoomID}
+        className='nav-item'
+        /* This treats talk badges like a "room" whose id is "talk-badges".
+        We special-case that key when getting/setting from the server. */
+        data-room={TalkBadgesFakeRoomID}
+        onClick={onClick}
+      >
+        Current Year Talk Badges
+      </li>
       {roomIds.map(id => {
         return (
           <li key={`room-button-${id}`}>

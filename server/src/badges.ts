@@ -1,5 +1,6 @@
-import { keyBy } from 'lodash'
+import { isBoolean, isString, keyBy } from 'lodash'
 import { BadgeCategories } from './types'
+import Redis from './redis'
 
 export interface Badge {
   /** We don't do any checks around string length, because Unicode Is Weird.
@@ -13,7 +14,129 @@ export interface Badge {
   category: BadgeCategories
 }
 
-export const FreeBadges: Badge[] = [
+// TODO After each year: manually migrate the talk badges from the "talk-badges" room into the permanent list
+async function getTalkBadges(): Promise<Badge[]> {
+  // Cursed sand-crime: in order to get CMS behavior for free (browser live-updating, the ability to export to and restore from disk, etc), the list of talk badges is a "room" that we manually kludge to bypass type safety.
+
+  const talkBadges = (await Redis.getRoomData("talk-badges") as any) as Badge[]
+  return talkBadges.filter(b => {
+      return b.category === BadgeCategories.Talk2023 
+        && isString(b.description)
+        && isString(b.emoji)
+        && isBoolean(b.isCustom)
+    }) 
+}
+
+export const UnlockableBadges: Badge[] = [
+  {
+    emoji: '🌱',
+    description: 'The tiniest little plant can survive anywhere',
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '🚀',
+    description: 'To infinity and beyond!',
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '⚔️',
+    description: 'A mighty adventurer',
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '🧙‍♀️',
+    description: 'A wizened master of the dark sciences',
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '💾',
+    description: 'C://STEAM.EXE',
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '🌎',
+    description: 'A worldly traveler of our event space!',
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '🐣',
+    description: 'Attended the 2022 preview event!',
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '7️⃣',
+    description: 'Attended the seventh Roguelike Celebration in 2022!',
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '🎙️',
+    description: 'Speaker Alumni Club',
+    category: BadgeCategories.Special
+  },
+  {
+    emoji: 'golden_thesis',
+    description: 'A PhD-worthy scientific paper',
+    isCustom: true,
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: 'phylactery',
+    description: 'A blood-red jewel with a warm, accepting glow',
+    isCustom: true,
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: 'nega_ticket',
+    description: 'Admit One',
+    isCustom: true,
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: 'undermuffin',
+    description: 'It radiates hatred',
+    isCustom: true,
+    category: BadgeCategories.Year2022
+  },
+  {
+    emoji: '🏬',
+    description: 'Attended the 2023 preview event!',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '8️⃣',
+    description: 'Attended the eighth Roguelike Celebration in 2023!',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🔑',
+    description: 'Employees ONLY?',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🌭',
+    description: 'A much better food than a color scheme',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🎃',
+    description: 'Happy Crawloween!',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🔮',
+    description: 'Won the game',
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '👁️',
+    description: 'Found harmony',
+    category: BadgeCategories.Year2023
+  }
+]
+
+export async function FreeBadges(): Promise<Badge[]> {
+  const talkBadges: Badge[] = await getTalkBadges()
+  const badges: Badge[] = [
   {
     emoji: '😈',
     description: 'Staying awhile and listening',
@@ -234,113 +357,8 @@ export const FreeBadges: Badge[] = [
     category: BadgeCategories.Default
   }
 ]
-
-export const UnlockableBadges: Badge[] = [
-  {
-    emoji: '🌱',
-    description: 'The tiniest little plant can survive anywhere',
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '🚀',
-    description: 'To infinity and beyond!',
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '⚔️',
-    description: 'A mighty adventurer',
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '🧙‍♀️',
-    description: 'A wizened master of the dark sciences',
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '💾',
-    description: 'C://STEAM.EXE',
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '🌎',
-    description: 'A worldly traveler of our event space!',
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '🐣',
-    description: 'Attended the 2022 preview event!',
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '7️⃣',
-    description: 'Attended the seventh Roguelike Celebration in 2022!',
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '🎙️',
-    description: 'Speaker Alumni Club',
-    category: BadgeCategories.Special
-  },
-  {
-    emoji: 'golden_thesis',
-    description: 'A PhD-worthy scientific paper',
-    isCustom: true,
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: 'phylactery',
-    description: 'A blood-red jewel with a warm, accepting glow',
-    isCustom: true,
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: 'nega_ticket',
-    description: 'Admit One',
-    isCustom: true,
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: 'undermuffin',
-    description: 'It radiates hatred',
-    isCustom: true,
-    category: BadgeCategories.Year2022
-  },
-  {
-    emoji: '🏬',
-    description: 'Attended the 2023 preview event!',
-    category: BadgeCategories.Year2023
-  },
-  {
-    emoji: '8️⃣',
-    description: 'Attended the eighth Roguelike Celebration in 2023!',
-    category: BadgeCategories.Year2023
-  },
-  {
-    emoji: '🔑',
-    description: 'Employees ONLY?',
-    category: BadgeCategories.Year2023
-  },
-  {
-    emoji: '🌭',
-    description: 'A much better food than a color scheme',
-    category: BadgeCategories.Year2023
-  },
-  {
-    emoji: '🎃',
-    description: 'Happy Crawloween!',
-    category: BadgeCategories.Year2023
-  },
-  {
-    emoji: '🔮',
-    description: 'Won the game',
-    category: BadgeCategories.Year2023
-  },
-  {
-    emoji: '👁️',
-    description: 'Found harmony',
-    category: BadgeCategories.Year2023
-  }
-]
+return badges.concat(talkBadges)
+}
 
 /* This results in an object of the form
 *   {
