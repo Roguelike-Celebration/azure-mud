@@ -548,7 +548,7 @@ export async function connectPubSub (eventMapping: {
   const ws = new WebSocket(result.url)
   // TODO: Handle error and close
   ws.addEventListener('open', () => {
-    console.log('Conneted to PubSub Service')
+    console.log('Connected to PubSub Service')
     // Note status
   })
   ws.addEventListener('message', (event) => {
