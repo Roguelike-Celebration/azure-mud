@@ -61,13 +61,18 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
   }
 
   result.groupManagementTasks = [
-    ...await setUpRoomsForUser(user.id, user.roomId),
-    {
-      userId: user.id,
-      groupId: user.roomId,
-      action: 'add'
-    }
+    ...await setUpRoomsForUser(user.id, user.roomId)
   ]
+
+  // Originally this was placed in the above assignment behind the spread operator
+  // For whatever reason this would lead to fresh logins being unable to see text
+  // I don't know why it's insane that moving this into a push works! Is there some sort of lazy evaluation going on
+  // that the push forces!?
+  result.groupManagementTasks.push({
+    userId: user.id,
+    groupId: user.roomId,
+    action: 'add'
+  })
 
   if (await isMod(user.id)) {
     result.groupManagementTasks.push({
