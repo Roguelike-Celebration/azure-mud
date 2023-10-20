@@ -3,7 +3,7 @@
     "displayName": "American Eagle",
     "shortName": "American Eagle",
     "id": "americanEagle",
-    "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly woven into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.<br/><br/>Just outside, you can hear the unmistakable sounds of a [[kid zone->kidZone]]. The concourse continues beyond it to the [[ice skating rink->iceRink]].",
+    "description": "You walk into a darkened space and are immediately greeted with an enormous, hostile eye. Its feathered head cocks sideways to focus on you as you enter what can only be described as its nest. You see razor-sharp talons appear from under its folded wings, but as of right now you sense no hostility. The room it occupies appears to be dried grasses roughly fashioned into a comfortable bed for its enormous frame. Woven into its bedding you see strips of red, white, and blue cloth. You get the sense that as long as you don't try to get too close, you may share this space with the gigantic raptor peacefully.<br/><br/>Just outside, you can hear the unmistakable sounds of a [[kid zone->kidZone]]. The concourse continues beyond it to the [[ice skating rink->iceRink]].",
     "roomId": "americanEagle"
   },
   "yourStrength": {
@@ -75,7 +75,7 @@
     "displayName": "Dream Space",
     "shortName": "dream space",
     "id": "dreamSpace",
-    "description": "You enter a realm of clouds and hope, a warm feeling of sunlight filling every corner of your heart. As you look around, you see the ghostly images of the aspirations of all the employees here. You see the mall itself, a transitory space leading to a thousand new paths. A stepping stone on the way to infinite visions of a better life, each one unique to the person who created it<br/><br/>You could step into the dream of a [[Retail Manager->retailManager]].<br/><br/>Or you could step into the dream of a [[Security Guard->securityGuard]].<br/><br/>Or you could return to the [[Janitor's Closet->janitorsCloset]].",
+    "description": "You enter a realm of clouds and hope, a warm feeling of sunlight filling every corner of your heart. As you look around, you see the ghostly images of the aspirations of all the employees here. You see the mall itself, a transitory space leading to a thousand new paths. A stepping stone on the way to infinite visions of a better life, each one unique to the person who created it.<br/><br/>You could step into the dream of a [[Retail Manager->retailManager]].<br/><br/>Or you could step into the dream of a [[Security Guard->securityGuard]].<br/><br/>Or you could return to the [[Janitor's Closet->janitorsCloset]].",
     "hidden": true,
     "roomId": "dreamSpace"
   },
@@ -113,7 +113,7 @@
     "displayName": "Izchak's Gifts",
     "shortName": "Izchak's Gifts",
     "id": "spencers",
-    "description": "The quantity of candles in this store must be some kind of safety violation, especially in proximity to the many vibrant posters advertising movies you’re pretty sure you’ve never actually seen, but have heard talked about so much that you know them anyway. Neon lamps twisted into ASCII characters line the back, while the floor is filled with shelves of novelty goods. You read a nearby mug - \"Don't talk to me until I've quaffed my brown potion.\"<br/><br/>The only exit is back out to the [[fountain->fountain]].",
+    "description": "The quantity of candles in this store must be some kind of safety violation, especially in proximity to the many vibrant posters advertising movies you’re pretty sure you’ve never actually seen, but have heard talked about so much that you know them anyway. Neon lamps twisted into ASCII characters line the back, while the floor is filled with shelves of novelty goods. You read a nearby mug - \"Don't talk to me until I've quaffed my brown potion,\" <a href=\"https://???/\" target=\"_blank\"> and you just HAVE to get one.</a> <br/><br/>The only exit is back out to the [[fountain->fountain]].",
     "roomId": "spencers"
   },
   "spin": {
@@ -144,23 +144,23 @@
     "displayName": "Book Store",
     "shortName": "the book store",
     "id": "bookstore",
-    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence, the people beg for the knowledge and humor within, surely someone will find a way.<br/><br/>For a book store, this place sure does seem to stock a lot of video games: there's a huge display right in the front dedicated to something called <a href=\"https://store.steampowered.com/sale/roguelikecelebration2023 \" target=\"_blank\">the Roguelike Celebration Celebration</a>.<br/><br/>The [[theater->theater]] is next door, and [[Hot Topic->hotTopic]] is next door on the other side.",
-    "roomId": "bookstore",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "There is a large shelf to the side labelled \"RECOMMENDATIONS!\".",
-      "noteWallButton": "Add reference",
-      "addNoteLinkText": "add a reference",
-      "addNotePrompt": "What would you like to link to",
-      "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
-    }
+    "description": "You enter a quiet space suffuse with the smell of old paper and an aura of peacefulness. The sign on the front of this space changes even as you look at it, endlessly shifting ownership. The books here shift in theme and display as each new store name comes with a new vision for how to make this place work. The mall demands its presence; the people beg for the knowledge and humor within: surely someone will find a way.<br/><br/>For a book store, this place sure does seem to stock a lot of video games: there's a huge display right in the front dedicated to something called <a href=\"https://store.steampowered.com/sale/roguelikecelebration2023 \" target=\"_blank\">the Roguelike Celebration Celebration</a>.<br/><br/>The [[theater->theater]] is next door, and [[Hot Topic->hotTopic]] is next door on the other side.",
+    "roomId": "bookstore"
   },
   "obelisk": {
     "displayName": "Map Obelisk",
     "shortName": "a map obelisk",
     "id": "obelisk",
     "description": "You appear beneath a radiant monolith, its flawless sides emitting an image of a mall. You look deep within and see store after store depicted here, begging to be explored. As you shift from side to side you almost catch sight of more rooms somewhere deeper within the monolith. As your focus shifts beyond your current reality, you begin to feel the sensation of stars zipping past you, even as you stand still.<br/><br/>There's an [[empty storefront->emptyStore]] on your right, and a bustling [[arcade->arcade]] on your left. Further down, the concourse opens into an [[ice skating rink->iceRink]]. ",
-    "roomId": "obelisk"
+    "roomId": "obelisk",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "Much wisdom is collected here. Perhaps you should share your own.",
+      "noteWallButton": "Add reference",
+      "addNoteLinkText": "add a reference",
+      "addNotePrompt": "What would you like to link to",
+      "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
+    }
   },
   "rightHallway": {
     "displayName": "Right Hallway",
@@ -549,7 +549,7 @@
     "displayName": "Photo Booth",
     "shortName": "the photo booth",
     "id": "bar",
-    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].<br/><br/>",
+    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if the camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].<br/><br/>",
     "roomId": "bar",
     "hasNoteWall": true,
     "noteWallData": {
@@ -564,7 +564,7 @@
     "displayName": "Feedback Kiosk",
     "shortName": "a kiosk",
     "id": "kiosk",
-    "description": "A small cart full of alien artifacts sits in the center of a hall. When you try to pass by you feel a bizarre contraption made of vibrating wires attach itself to your head as perfume is sprayed directly into your eyes. An RC car slams into your feet as you stumble on, and you feel a clipboard shoved into your hand from somewhere, begging you to sign. You don't want anything from here. No one ever has. Yet somehow it feels too rude to just leave.<br/><br/>On the other hand, they've got some <a href=\"https://roguelikecelebration.itemorder.com/shop/home/\" target=\"_blank\">legitimately cool shirts</a>!<br/><br/>You can exit towards the [[photo booth->bar]], into the [[Seers->seers]], or to the [[fountain->fountain]].<br/><br/>",
+    "description": "A small cart full of alien artifacts sits in the center of a hall. When you try to pass by you feel a bizarre contraption made of vibrating wires attach itself to your head as perfume is sprayed directly into your eyes. An RC car slams into your feet as you stumble on, and you feel a clipboard shoved into your hand from somewhere, begging you to sign. You don't want anything from here. No one ever has. Yet somehow it feels too rude to just leave.<br/><br/>You can exit towards the [[photo booth->bar]], into the [[Seers->seers]], or to the [[fountain->fountain]].<br/><br/>",
     "roomId": "kiosk",
     "hasNoteWall": true,
     "noteWallData": {
