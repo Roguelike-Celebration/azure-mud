@@ -49,10 +49,14 @@ export function NoteView (props: { note: RoomNote }) {
       <div className='note'>
         {canDelete ? <button onClick={onClickDelete} className='link-styled-button note-delete'>X</button> : ''}
         {n.message} <br/>
-        <button className={`link-styled-button like-button ${hasLiked || !canLike ? 'liked' : 'unliked'}`} onClick={onClickLike} data-tip={hasLiked ? likeNames : ''}>
-          {likes}{hasLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
-        </button>
-        -<NameView userId={n.authorId} id={`noteAuthor-${n.id}`}/> <br/>
+        <div className='note-author'>
+        -<NameView userId={n.authorId} id={`noteAuthor-${n.id}`}/>
+        </div>
+        <div className='note-like-button-container'>
+          <button className={`link-styled-button like-button ${hasLiked || !canLike ? 'liked' : 'unliked'}`} onClick={onClickLike} data-tip={hasLiked ? likeNames : ''}>
+            {likes}{hasLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
+          </button>
+        </div>
       </div>
     </Linkify>
   )
