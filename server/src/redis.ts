@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import { User, isMod } from './user'
-import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
+import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings, BadgeCategories } from './types'
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import Database from './database'
@@ -373,11 +373,13 @@ const Redis: RedisInternal = {
   // This is currently only accessed when resetRoomData is called, and on admin CMS update
   // If that changes, consider adding more security / tightening access to this
   async setRoomData (room: Room) {
-    await setCache(roomFuzzySearchKey(room.shortName.replace(' ', '').toUpperCase()), room.id)
-    await setCache(roomFuzzySearchKey(room.id.replace(' ', '').toUpperCase()), room.id)
-    await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
+    if (room.id !== 'talk-badges') {
+      await setCache(roomFuzzySearchKey(room.shortName.replace(' ', '').toUpperCase()), room.id)
+      await setCache(roomFuzzySearchKey(room.id.replace(' ', '').toUpperCase()), room.id)
+      await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
+      await addToSet(roomIdsKey, room.id)
+    }
 
-    await addToSet(roomIdsKey, room.id)
     return await setCache(roomDataKey(room.id), JSON.stringify(room))
   },
 
@@ -450,7 +452,7 @@ function roomNotesKey (roomId: string): string {
 export function videoPresenceKey (roomId: string) {
   return `${roomId}PresenceVideo`
 }
-const userMapKey = 'userMap'
+
 const spaceAvailabilityKey = 'spaceIsClosed'
 
 export default Redis

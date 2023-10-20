@@ -196,7 +196,7 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
   }
 
   profile.unlockedBadges = (profile.unlockedBadges || [])
-    .concat(FreeBadges)
+    .concat(await FreeBadges())
 
   return {
     ...profile,
