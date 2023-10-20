@@ -373,8 +373,7 @@ const Redis: RedisInternal = {
   // This is currently only accessed when resetRoomData is called, and on admin CMS update
   // If that changes, consider adding more security / tightening access to this
   async setRoomData (room: Room) {
-
-    if (room.id !== "talk-badges") {
+    if (room.id !== 'talk-badges') {
       await setCache(roomFuzzySearchKey(room.shortName.replace(' ', '').toUpperCase()), room.id)
       await setCache(roomFuzzySearchKey(room.id.replace(' ', '').toUpperCase()), room.id)
       await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
