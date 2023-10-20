@@ -284,6 +284,7 @@ const App = () => {
           roomDisplayName={room.displayName}
           notes={room.notes}
           noteWallData={room.noteWallData}
+          roomData={state.roomData}
           user={state.profileData}
           serverSettings={state.serverSettings}
         />

@@ -5,6 +5,7 @@ import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networki
 import { NoteView } from './NoteView'
 import ReactTooltip from 'react-tooltip'
 import { UserMapContext } from '../App'
+import { Room } from '../room'
 
 import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
@@ -12,9 +13,9 @@ import { PublicUser } from '../../server/src/user'
 import { sortBy } from 'lodash'
 
 // TODO: We hardcode room names for the 'auto-assign topics to unconference rooms' feature
-// This is silly, and we almost missed this in 2022.
-// Take a note to update this for 2023, and consider refactoring (to e.g. an 'unconference' flag in the room data?)
-const UNCONFERENCING_ROOM_IDS = ['unconferenceDigSite', 'unconferenceElysium', 'unconferenceRaveCave', 'unconferenceStarShip']
+// This is silly, and we almost missed this in 2022 AND 2023.
+// Take a note to update this for 2024, and consider refactoring (to e.g. an 'unconference' flag in the room data?)
+const UNCONFERENCING_ROOM_IDS = ['unconference80s', 'unconferenceDance', 'unconferenceFighterman', 'unconferenceRacing']
 
 function numLikes (roomNote: RoomNote) {
   return !roomNote.likes ? 0 : roomNote.likes.length
@@ -25,7 +26,8 @@ interface Props {
   notes: RoomNote[],
   noteWallData?: NoteWallData,
   user: PublicUser,
-  serverSettings: ServerSettings
+  serverSettings: ServerSettings,
+  roomData: { [roomId: string]: Room }
 }
 
 export function NoteWallView (props: Props) {
@@ -76,14 +78,15 @@ export function NoteWallView (props: Props) {
   }
 
   const setAsUnconferencingTopics = () => {
-    const confirmation = confirm('This will assign the top 6 rooms to the unconferencing rooms, are you sure?')
+    const confirmation = confirm('This will assign the top N topics to the unconferencing rooms, are you sure?')
     if (confirmation && props.notes.length > 0) {
       const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
-      const sortedDescending = props.notes.sort((a, b) => numLikes(a) < numLikes(b) ? 1 : -1)
+      const sortedDescending = [...props.notes].sort((a, b) => numLikes(a) < numLikes(b) ? 1 : -1)
       const newEntries = []
       for (var i = 0; i < Math.min(sortedDescending.length, UNCONFERENCING_ROOM_IDS.length); i++) {
+        const { displayName } = props.roomData[UNCONFERENCING_ROOM_IDS[i]]
         newEntries.push({
-          text: `Unconference: ${sortedDescending[i].message} in the ${UNCONFERENCING_ROOM_IDS[i]} room.`,
+          text: `Unconference: ${sortedDescending[i].message} in ${displayName}.`,
           roomId: UNCONFERENCING_ROOM_IDS[i]
         })
       }
