@@ -178,7 +178,7 @@ function awardBadges (user: User, roomId: string) {
   const currentEventBadge = UnlockableBadgeMap['8️⃣']
   const today = new Date()
   if (!includes(user.unlockedBadges, currentEventBadge) &&
-    today.getMonth() === 8 && // getMonth is 0-indexed, not 1-indexed
+    today.getMonth() === 9 && // getMonth is 0-indexed, not 1-indexed
     today.getFullYear() === 2023) {
     // We handle this differently than others because we want it to be quietly added
     // rather than popping a modal dialog
