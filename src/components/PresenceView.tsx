@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaVideo, FaVolumeUp } from 'react-icons/fa'
 import { UserMapContext } from '../App'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
@@ -33,6 +33,7 @@ const PresenceView = (props: {
   const { userMap } = React.useContext(UserMapContext)
   let { users, userId } = props
   const { callParticipants } = useMediaChatContext()
+  const [summarizeUsersInRoom, setSummarizeUsersInRoom] = useState(false)
 
   let audioUsers, videoUsers
   if (callParticipants) {
@@ -58,12 +59,21 @@ const PresenceView = (props: {
       )
     }
 
+    const UserSummary = () => {
+      return (<span id="dynamic-room-description">
+        There are {users.length} other people sitting in here.
+      </span>)
+    }
+
     if (props.roomId === 'theater') {
-      return (
-        <div id="dynamic-room-description">
-          There are {users.length} other people sitting in here.
-        </div>
+      return (<UserSummary />
       )
+    }
+
+    if (summarizeUsersInRoom) {
+      return (<div style={{ paddingBottom: '0.5rem' }}>
+        <UserSummary /> <button style={{ display: 'inline' }} onClick={() => setSummarizeUsersInRoom(false)}>show them to me</button>
+      </div>)
     }
 
     const userViews = users.map((u, idx) => {
@@ -105,7 +115,7 @@ const PresenceView = (props: {
 
     return (
       <div id="dynamic-room-description">
-        Also here {users.length === 1 ? 'is' : 'are'} {names}. <HeldItemView />
+        {!summarizeUsersInRoom && <span>Also here {users.length === 1 ? 'is' : 'are'} {names}. <button style={{ display: 'inline-block' }} onClick={() => setSummarizeUsersInRoom(true)}>hide them from me</button> </span>}<HeldItemView />
       </div>
     )
   } else {

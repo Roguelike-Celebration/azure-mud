@@ -10,6 +10,6 @@ export const ConfettiRoomView = () => {
     return () => confetti.clear()
   }, [])
   return (
-    <canvas style={ { position: 'absolute', top: 0 } } id='confetti-canvas'></canvas>
+    <canvas style={ { position: 'absolute', top: 0, zIndex: 0 } } id='confetti-canvas'></canvas>
   )
 }
