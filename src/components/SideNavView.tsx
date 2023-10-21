@@ -46,6 +46,7 @@ export default function SideNavView (props: Props) {
         <MenuItem title="Room List" modal={Modal.RoomList} />
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
         <MenuItem title="Help" modal={Modal.Help} />
+        <a href="https://annarbortees.chipply.com/RoguelikeCelebration/" rel="noreferrer" target="_blank" style={{ color: 'var(--main-font)', textDecoration: 'none' }}><li>Merch Store <span role="img" aria-label="new!">🆕</span></li></a>
       </ul>
       {props.presenceData && props.currentRoomId
         ? <MiniMapView presenceData={props.presenceData} currentRoomId={props.currentRoomId}/>

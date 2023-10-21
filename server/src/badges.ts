@@ -249,6 +249,26 @@ export const FreeBadges: Badge[] = [
     description: 'Does this EELicit a smile?',
     isCustom: true,
     category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🧝‍♂️',
+    description: 'Pocket Elrond',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🧭',
+    description: 'Finding a path through chaos',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '⏬',
+    description: 'The invention of depth',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🐻',
+    description: 'Non-violent bear',
+    category: BadgeCategories.Talk2023
   }
 ]
 
