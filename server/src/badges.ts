@@ -85,6 +85,11 @@ export const FreeBadges: Badge[] = [
     category: BadgeCategories.Default
   },
   {
+    emoji: '⛏️',
+    description: 'Diggy diggy hole',
+    category: BadgeCategories.Default
+  },
+  {
     emoji: '🤔',
     description: 'Unreliable narrator',
     category: BadgeCategories.Talk2022
@@ -232,6 +237,18 @@ export const FreeBadges: Badge[] = [
     description: 'Procgen Wizard: Gaze into the Abyss, understand WFC',
     isCustom: true,
     category: BadgeCategories.Default
+  },
+  {
+    emoji: 'eelhead',
+    description: 'EELated to be here',
+    isCustom: true,
+    category: BadgeCategories.Year2023
+  },
+  {
+    emoji: 'eeltail',
+    description: 'Does this EELicit a smile?',
+    isCustom: true,
+    category: BadgeCategories.Year2023
   }
 ]
 

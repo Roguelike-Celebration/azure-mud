@@ -13,5 +13,7 @@
   "spelunky_pug": "https://static.wikia.nocookie.net/spelunky/images/a/a4/Monty_Link_S2.png",
   "warlock": "images/badges/procgen_warlock.png",
   "wizard": "images/badges/procgen_wizard.png",
-  "undermuffin": "images/badges/undermuffin.png"
+  "undermuffin": "images/badges/undermuffin.png",
+  "eelhead": "images/badges/eel_0.png",
+  "eeltail": "images/badges/eel_1.png"
 }
