@@ -273,7 +273,7 @@ export function StreamEmbed () {
         title="stream"
         ref={streamRef}
         height="315"
-        src="https://www.youtube.com/embed/live_stream?channel=UCKv_QzXft4mD6TXmQBZtzIA"
+        src="https://www.youtube.com/embed/cYQr-m9ltXM?si=LhkiyoBByZOKIgq-"
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
