@@ -269,6 +269,21 @@ export const FreeBadges: Badge[] = [
     emoji: '🐻',
     description: 'Non-violent bear',
     category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🧑‍🤝‍🧑',
+    description: 'Date around and find out',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🧟',
+    description: 'Negative hitpoints monster',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🧙‍♂️',
+    description: 'Searching for Endlebrook',
+    category: BadgeCategories.Talk2023
   }
 ]
 
