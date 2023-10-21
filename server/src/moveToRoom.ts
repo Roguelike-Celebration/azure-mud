@@ -97,7 +97,11 @@ export async function moveToRoom (
   // If you're already in the room and try to 're-enter' the room,
   // nothing should happen: issue 162
   if (user.roomId !== to.id) {
+    // TODO: console.log doesn't work pass in the logFn
     console.log(`Moving from ${user.roomId} to ${to.id}`)
+    // This is to force the resolution of the unlocked badges
+    // TODO: Find a nicer way to do this
+    await DB.getUser(user.id)
     await DB.setCurrentRoomForUser(user, to.id)
 
     result.messages = [
