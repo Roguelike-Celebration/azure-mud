@@ -304,6 +304,21 @@ export const FreeBadges: Badge[] = [
     emoji: '⚾',
     description: 'The name\'s Blaggart. Mud Blaggart.',
     category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🎼',
+    description: 'Traversing the musical lattice',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🏷️',
+    description: 'The poor game dev\'s constraint solver',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🚪',
+    description: 'Door apologist',
+    category: BadgeCategories.Talk2023
   }
 ]
 
