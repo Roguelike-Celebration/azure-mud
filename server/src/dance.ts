@@ -57,7 +57,10 @@ const danceList = [
   'executes a competent Angbarndance.',
   'speedruns through a dance- wow!',
   'absolutely nails a flawlessly executed Ascension Kit. Great form!',
-  'does the Sargasso Sea Shimmy! It\'s unclear where the dance starts and ends...'
+  'does the Sargasso Sea Shimmy! It\'s unclear where the dance starts and ends...',
+  'does the hjklyubn step',
+  'does the Fish Doorbell to get the security cameras\' attention',
+  'does the Boot Screen Boogie'
 ]
 
 export function dance (user: User, messageId: string): Result {
