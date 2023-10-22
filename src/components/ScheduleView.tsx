@@ -79,7 +79,7 @@ export const ScheduleEntries: ScheduleEntry[] = [
   ScheduleEntry('16:30', 2, 'Paul Hembree: Audible Geometry: Coordinate Systems as a Resource for Music Generation', ['theater'], 'screen1'),
   ScheduleEntry('17:00', 2, 'Jurie Horneman: Why Dynamic Content Selection Is Hard', ['theater'], 'screen2'),
   ScheduleEntry('17:30', 2, SOCIAL_TIME),
-  ScheduleEntry('18:00', 2, 'Unconferencing', ['unconference']),
+  ScheduleEntry('18:00', 2, 'Unconferencing', ['arcade']),
   ScheduleEntry('19:00', 2, 'Doors Close'),
 
   ScheduleEntry('09:00', 3, 'Doors Open'),
@@ -88,7 +88,7 @@ export const ScheduleEntries: ScheduleEntry[] = [
   ScheduleEntry('10:00', 3, 'Jesse Collet, Keni: Fireside chat about the development of NetHack', ['theater'], 'screen2'),
   ScheduleEntry('10:30', 3, 'Leigh Alexander: McMansions of Hell: Roguelikes and Reality TV', ['theater'], 'screen3'),
   ScheduleEntry('11:00', 3, SOCIAL_TIME),
-  ScheduleEntry('11:30', 3, 'Unconferencing', ['unconference']),
+  ScheduleEntry('11:30', 3, 'Unconferencing', ['arcade']),
   ScheduleEntry('12:30', 3, SOCIAL_TIME),
   ScheduleEntry('13:00', 3, 'Ray: Remixing the Layer Cake: Facilitating fan reinterpretation through Caves of Qud\'s modular data files', ['theater'], 'screen1'),
   ScheduleEntry('13:15', 3, 'Crashtroid: Preventing Ear Fatigue with Roguelike Music', ['theater'], 'screen2'),
