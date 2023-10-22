@@ -335,9 +335,30 @@ export const FreeBadges: Badge[] = [
     emoji: '📬',
     description: 'Delivered by the mail daemon',
     category: BadgeCategories.Talk2023
-  }, {
+  },
+  {
     emoji: '🕵️',
     description: 'MacMansion murder mystery solver',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🔧',
+    description: 'eXcited about Modding Languages',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🎹',
+    description: 'Gameplay beat drop',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🦄',
+    description: 'A tapestry of aesthetic value',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🅰️',
+    description: 'More than Spam and space',
     category: BadgeCategories.Talk2023
   }
 ]
