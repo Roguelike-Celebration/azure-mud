@@ -325,6 +325,20 @@ export const FreeBadges: Badge[] = [
     description: 'Post it to the obelisk',
     isCustom: true,
     category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🧩',
+    description: 'Looking for the relic, to find the merchant, to...',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '📬',
+    description: 'Delivered by the mail daemon',
+    category: BadgeCategories.Talk2023
+  }, {
+    emoji: '🕵️',
+    description: 'MacMansion murder mystery solver',
+    category: BadgeCategories.Talk2023
   }
 ]
 
