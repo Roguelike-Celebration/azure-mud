@@ -319,6 +319,12 @@ export const FreeBadges: Badge[] = [
     emoji: '🚪',
     description: 'Door apologist',
     category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: 'obelisk',
+    description: 'Post it to the obelisk',
+    isCustom: true,
+    category: BadgeCategories.Year2023
   }
 ]
 
