@@ -360,6 +360,26 @@ export const FreeBadges: Badge[] = [
     emoji: '🅰️',
     description: 'More than Spam and space',
     category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🧹',
+    description: 'Real time procedural generation!',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '📖',
+    description: 'Looking into the simulation',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🃏',
+    description: 'Boring shuffle -> Better cards',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🛠️',
+    description: 'Better living through internal tooling',
+    category: BadgeCategories.Talk2023
   }
 ]
 
