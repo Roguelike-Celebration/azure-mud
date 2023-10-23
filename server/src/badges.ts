@@ -380,7 +380,7 @@ export const FreeBadges: Badge[] = [
     emoji: '🤖',
     description: 'Curating the chaos',
     category: BadgeCategories.Talk2023
-  },
+  }
 ]
 
 export const UnlockableBadges: Badge[] = [
