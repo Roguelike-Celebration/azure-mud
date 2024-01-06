@@ -9,10 +9,6 @@ import {
   LoadMessageArchiveAction,
   PlayerBannedAction,
   SendMessageAction,
-  SetCaptionsEnabledAction,
-  SetKeepCameraWhenMovingAction,
-  SetNumberOfFacesAction,
-  SetTextOnlyModeAction,
   SetUseSimpleNamesAction,
   ShowSideMenuAction,
   SpaceIsClosedAction
@@ -33,8 +29,6 @@ import HelpView from './components/HelpView'
 import InputView from './components/InputView'
 import LoggedOutView from './components/LoggedOutView'
 import MapModalView from './components/MapModalView'
-import MediaChatView from './components/MediaChatView'
-import MediaSelectorView from './components/MediaSelectorView'
 import { MessageList } from './components/MessageList'
 import { ModalView } from './components/ModalView'
 import { NoteWallView } from './components/NoteWallView'
@@ -56,7 +50,6 @@ import { checkIsRegistered, connect } from './networking'
 import reducer, { defaultState, State } from './reducer'
 import * as Storage from './storage'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
-import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import SpecialTextModalView from './components/SpecialTextModalView'
 import ReactTooltip from 'react-tooltip'
 
@@ -143,47 +136,15 @@ const App = () => {
 
         const useSimpleNames = await Storage.getUseSimpleNames()
         dispatch(SetUseSimpleNamesAction(useSimpleNames))
-        const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
-        dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
-        const textOnlyMode = await Storage.getTextOnlyMode()
-        dispatch(SetTextOnlyModeAction(textOnlyMode, false))
-        const captionsEnabled = await Storage.getCaptionsEnabled()
-        dispatch(SetCaptionsEnabledAction(captionsEnabled))
 
         dispatch(IsRegisteredAction())
         connect(userId, dispatch)
 
-        // WARNING: Prior to the "calculate number of faces for videochat" code,
-        // there was a no-op resize handler here.
-        // window.addEventListener('resize', () => {})
-        // I frankly have no idea what this was doing,
-        // and worry my changes will cause unexpected errors
-        // -Em, 10/12/2021
+        // WARNING: I don't know what this does.
+        // When videochat existed, we had a warning that this no-op existed prior to videochat
+        // So when I removed videochat, I left it here
+        // (-Emilia)
         window.addEventListener('resize', () => {})
-        const onResize = () => {
-          // It seems like a smell to do this in here and have to grab into #main,
-          // but I think it's fine?
-          const VideoWidth = 180
-          const $main = document.getElementById('main')
-          // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
-          if ($main) {
-            const numberOfFaces =
-              Math.floor($main.clientWidth / VideoWidth) - 1
-            dispatch(SetNumberOfFacesAction(numberOfFaces))
-          } else {
-            console.warn(
-              "Attempted to call onResize when 'main' element was null; will default to show no faces"
-            )
-          }
-        }
-
-        // Our initial paint time is stupid slow
-        // but waiting a long time seems to ensure that #main exists
-        setTimeout(onResize, 2000)
-        window.addEventListener(
-          'resize',
-          _.throttle(onResize, 100, { trailing: true })
-        )
       }
     })
   }, [])
@@ -238,28 +199,6 @@ const App = () => {
     return <YouAreBannedView />
   }
 
-  // It's slightly weird we now construct this here and pass it as a prop to
-  // RoomView instead of constructing it there. Shrug, the conf is in 2 days.
-  let videoChatView
-  if (
-    state.roomData &&
-    state.roomId &&
-    state.roomData[state.roomId] &&
-    state.roomData[state.roomId].mediaChat
-  ) {
-    videoChatView = (
-      <MediaChatView
-        visibleSpeakers={state.visibleSpeakers}
-        currentSpeaker={state.currentSpeaker}
-        numberOfFaces={state.numberOfFaces}
-        inMediaChat={state.inMediaChat}
-        textOnlyMode={state.textOnlyMode}
-        audioOnlyMode={state.audioOnlyMode}
-        currentUser={state.userMap[state.userId]}
-      />
-    )
-  }
-
   let innerModalView, modalView
 
   // TODO: If we get more modal options than just a size boolean, make this an options object.
@@ -294,25 +233,7 @@ const App = () => {
     case Modal.Settings: {
       innerModalView = (
         <SettingsView
-          keepCameraWhenMoving={state.keepCameraWhenMoving}
-          captionsEnabled={state.captionsEnabled}
           unlockedBadges={state.profileData?.unlockedBadges}
-        />
-      )
-      break
-    }
-    case Modal.MediaSelector: {
-      console.log('Opening media selector')
-      // TODO: Fix this userIsSpeaking (it was...broken in the first place but if we're bordering we should do it here)
-      innerModalView = (
-        <MediaSelectorView
-          showJoinButton={
-            !state.inMediaChat || state.activeModalOptions.showJoinButton
-          }
-          hideVideo={state.activeModalOptions.hideVideo}
-          userIsSpeaking={false}
-          roomId={state.roomId}
-          keepCameraWhenMoving={state.keepCameraWhenMoving}
         />
       )
       break
@@ -432,7 +353,6 @@ const App = () => {
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
         <MessagesContext.Provider value={state.messages}>
-          <TwilioChatContextProvider active={!state.textOnlyMode}>
             <IsMobileContext.Provider value={isMobile}>
               <SettingsContext.Provider
                 value={{ useSimpleNames: state.useSimpleNames }}
@@ -477,10 +397,6 @@ const App = () => {
                             userId={state.userId}
                             roomData={state.roomData}
                             presenceData={state.presenceData}
-                            inMediaChat={state.inMediaChat}
-                            keepCameraWhenMoving={state.keepCameraWhenMoving}
-                            textOnlyMode={state.textOnlyMode}
-                            mediaChatView={videoChatView}
                             hasDismissedAModal={state.hasDismissedAModal}
                           />
                         ) : null}
@@ -504,7 +420,6 @@ const App = () => {
                 </UserMapContext.Provider>
               </SettingsContext.Provider>
             </IsMobileContext.Provider>
-          </TwilioChatContextProvider>
         </MessagesContext.Provider>
       </DispatchContext.Provider>
     </IconContext.Provider>

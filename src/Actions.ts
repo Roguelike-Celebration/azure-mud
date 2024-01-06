@@ -20,7 +20,6 @@ export type Action =
   | PlayerConnectedAction
   | PlayerDisconnectedAction
   | ChatMessageAction
-  | CaptionMessageAction
   | ModMessageAction
   | DeleteMessageAction
   | ChatReadyAction
@@ -37,13 +36,8 @@ export type Action =
   | PlayerBannedAction
   | PlayerUnbannedAction
   | UpdateProfileColorAction
-  | MediaReceivedSpeakingDataAction
-  | StopVideoChatAction
-  | StartVideoChatAction
   | ErrorAction
-  | RefreshReactAction
   | SendMessageAction
-  | SendCaptionAction
   | SetNameAction
   | StartWhisperAction
   | ShowProfileAction
@@ -64,11 +58,6 @@ export type Action =
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
   | SetUseSimpleNamesAction
-  | SetKeepCameraWhenMovingAction
-  | SetTextOnlyModeAction
-  | SetAudioOnlyModeAction
-  | SetNumberOfFacesAction
-  | SetCaptionsEnabledAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
@@ -104,12 +93,7 @@ export enum ActionType {
   PlayerUnbanned = 'PLAYER_UNBANNED',
   UpdateProfileColor = 'UPDATE_PROFILE_COLOR',
   UpdateFontReward = 'UPDATE_FONT_REWARD',
-  // WebRTC
-  StopVideoChat = 'STOP_VIDEO_CHAT',
-  StartVideoChat = 'START_VIDEO_CHAT',
-  MediaReceivedSpeakingData = 'MEDIA_RECEIVED_SPEAKING_DATA',
   // UI actions
-  RefreshReact = 'REFRESH_REACT',
   SendMessage = 'SEND_MESSAGE',
   SendCaption = 'SEND_CAPTION',
   SetName = 'SET_NAME',
@@ -123,11 +107,6 @@ export enum ActionType {
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
   SetUseSimpleNames = 'SET_USE_SIMPLE_NAMES',
-  SetKeepCameraWhenMoving = 'SET_KEEP_CAMERA_WHEN_MOVING',
-  SetTextOnlyMode = 'SET_TEXT_ONLY_MODE',
-  SetAudioOnlyMode = 'SET_AUDIO_ONLY_MODE',
-  SetNumberOfFaces = 'SET_NUMBER_OF_FACES',
-  SetCaptionsEnabled = 'SET_CAPTIONS_ENABLED',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -306,26 +285,6 @@ export const ChatMessageAction = (
 ): ChatMessageAction => {
   return {
     type: ActionType.ChatMessage,
-    value: { messageId, name, message }
-  }
-}
-
-interface CaptionMessageAction {
-  type: ActionType.CaptionMessage;
-  value: {
-    messageId: string;
-    name: string;
-    message: string;
-  };
-}
-
-export const CaptionMessageAction = (
-  messageId: string,
-  name: string,
-  message: string
-): CaptionMessageAction => {
-  return {
-    type: ActionType.CaptionMessage,
     value: { messageId, name, message }
   }
 }
@@ -549,35 +508,6 @@ export const UpdateFontRewardAction = (
   }
 }
 
-interface MediaReceivedSpeakingDataAction {
-  type: ActionType.MediaReceivedSpeakingData;
-  value: string;
-}
-
-export const MediaReceivedSpeakingDataAction = (
-  participantId: string
-): MediaReceivedSpeakingDataAction => {
-  return {
-    type: ActionType.MediaReceivedSpeakingData,
-    value: participantId
-  }
-}
-
-interface StopVideoChatAction {
-  type: ActionType.StopVideoChat;
-}
-
-export const StopVideoChatAction = (): StopVideoChatAction => {
-  return { type: ActionType.StopVideoChat }
-}
-
-interface StartVideoChatAction {
-  type: ActionType.StartVideoChat;
-}
-
-export const StartVideoChatAction = (): StartVideoChatAction => {
-  return { type: ActionType.StartVideoChat }
-}
 
 interface ErrorAction {
   type: ActionType.Error;
@@ -593,31 +523,8 @@ export const ErrorAction = (error: string): ErrorAction => {
 
 // UI Actions
 
-// HACK ALERT: Used to force a re-render, but ideally the data relevant to the re-render should be tied to the action.
-// Used right now because of timing issues in room presence between the client state and Twilio.
-interface RefreshReactAction {
-  type: ActionType.RefreshReact;
-}
-
-export const RefreshReactAction = (): RefreshReactAction => {
-  return {
-    type: ActionType.RefreshReact
-  }
-}
-
 interface SendMessageAction {
   type: ActionType.SendMessage;
-  value: string;
-}
-
-export const SendCaptionAction = (message: string): SendCaptionAction => {
-  return {
-    type: ActionType.SendCaption,
-    value: message
-  }
-}
-interface SendCaptionAction {
-  type: ActionType.SendCaption;
   value: string;
 }
 
@@ -758,76 +665,6 @@ export const SetUseSimpleNamesAction = (
   useSimpleNames: boolean
 ): SetUseSimpleNamesAction => {
   return { type: ActionType.SetUseSimpleNames, value: useSimpleNames }
-}
-
-interface SetKeepCameraWhenMovingAction {
-  type: ActionType.SetKeepCameraWhenMoving;
-  value: boolean;
-}
-
-export const SetKeepCameraWhenMovingAction = (
-  keepCameraWhenMoving: boolean
-): SetKeepCameraWhenMovingAction => {
-  return {
-    type: ActionType.SetKeepCameraWhenMoving,
-    value: keepCameraWhenMoving
-  }
-}
-
-interface SetTextOnlyModeAction {
-  type: ActionType.SetTextOnlyMode;
-  textOnlyMode: boolean;
-  refresh: boolean;
-}
-
-export const SetTextOnlyModeAction = (
-  textOnlyMode: boolean,
-  refresh: boolean
-): SetTextOnlyModeAction => {
-  return {
-    type: ActionType.SetTextOnlyMode,
-    textOnlyMode: textOnlyMode,
-    refresh: refresh
-  }
-}
-
-interface SetAudioOnlyModeAction {
-  type: ActionType.SetAudioOnlyMode;
-  value: boolean;
-}
-
-export const SetAudioOnlyModeAction = (
-  enable: boolean
-): SetAudioOnlyModeAction => {
-  return {
-    type: ActionType.SetAudioOnlyMode,
-    value: enable
-  }
-}
-interface SetCaptionsEnabledAction {
-  type: ActionType.SetCaptionsEnabled;
-  value: boolean;
-}
-
-export const SetCaptionsEnabledAction = (
-  enable: boolean
-): SetCaptionsEnabledAction => {
-  return {
-    type: ActionType.SetCaptionsEnabled,
-    value: enable
-  }
-}
-
-interface SetNumberOfFacesAction {
-  type: ActionType.SetNumberOfFaces;
-  value: number;
-}
-
-export const SetNumberOfFacesAction = (num: number): SetNumberOfFacesAction => {
-  return {
-    type: ActionType.SetNumberOfFaces,
-    value: num
-  }
 }
 
 export const AuthenticateAction = (
