@@ -6,7 +6,6 @@ import {
 } from '../networking'
 import { DispatchContext } from '../App'
 import {
-  StopVideoChatAction,
   ShowModalAction
 } from '../Actions'
 import { FaChevronDown, FaChevronUp, FaCog } from 'react-icons/fa'
@@ -25,7 +24,6 @@ interface Props {
   userId: string;
   roomData: { [roomId: string]: Room };
   presenceData: { [roomId: string]: number };
-  inMediaChat: boolean;
   hasDismissedAModal: boolean
 }
 
