@@ -360,6 +360,26 @@ export const FreeBadges: Badge[] = [
     emoji: '🅰️',
     description: 'More than Spam and space',
     category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🎒',
+    description: 'Inventory manager',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🚢',
+    description: 'Storylet scribe',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🕯️',
+    description: 'Generating solvable puzzles',
+    category: BadgeCategories.Talk2023
+  },
+  {
+    emoji: '🤖',
+    description: 'Curating the chaos',
+    category: BadgeCategories.Talk2023
   }
 ]
 
