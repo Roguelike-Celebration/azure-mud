@@ -145,7 +145,6 @@ const Redis: RedisInternal = {
     await Redis.addOccupantToRoom(roomId, user.id)
   },
 
-
   // User
   async getUser (userId: string) {
     const userData = await getCache(profileKeyForUser(userId))

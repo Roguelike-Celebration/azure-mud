@@ -34,7 +34,7 @@ const deletableMessageTypes = [
   MessageType.Chat,
   MessageType.Emote,
   MessageType.Shout,
-  MessageType.Dance,
+  MessageType.Dance
 ]
 
 export const isDeletableMessage = (

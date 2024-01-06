@@ -508,7 +508,6 @@ export const UpdateFontRewardAction = (
   }
 }
 
-
 interface ErrorAction {
   type: ActionType.Error;
   value: string;

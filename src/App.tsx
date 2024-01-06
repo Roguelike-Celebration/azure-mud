@@ -353,73 +353,73 @@ const App = () => {
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
         <MessagesContext.Provider value={state.messages}>
-            <IsMobileContext.Provider value={isMobile}>
-              <SettingsContext.Provider
-                value={{ useSimpleNames: state.useSimpleNames }}
+          <IsMobileContext.Provider value={isMobile}>
+            <SettingsContext.Provider
+              value={{ useSimpleNames: state.useSimpleNames }}
+            >
+              <UserMapContext.Provider
+                value={{ userMap: state.userMap, myId: state.userId }}
               >
-                <UserMapContext.Provider
-                  value={{ userMap: state.userMap, myId: state.userId }}
-                >
-                  <RoomDataContext.Provider value={state.roomData}>
-                    <div
-                      id={
-                        state.visibleProfile && !isMobile
-                          ? 'app-profile-open'
-                          : 'app'
-                      }
-                    >
-                      <ReactTooltip />
-                      {shouldShowMenu ? (
-                        <span>
-                          <SideNavView
-                            presenceData={state.presenceData}
-                            currentRoomId={state.roomId}
-                            username={state.userMap[state.userId].username}
-                            spaceIsClosed={state.isClosed}
-                          />
-                          {/* Once we moved the sidebar to be position:fixed, we still
+                <RoomDataContext.Provider value={state.roomData}>
+                  <div
+                    id={
+                      state.visibleProfile && !isMobile
+                        ? 'app-profile-open'
+                        : 'app'
+                    }
+                  >
+                    <ReactTooltip />
+                    {shouldShowMenu ? (
+                      <span>
+                        <SideNavView
+                          presenceData={state.presenceData}
+                          currentRoomId={state.roomId}
+                          username={state.userMap[state.userId].username}
+                          spaceIsClosed={state.isClosed}
+                        />
+                        {/* Once we moved the sidebar to be position:fixed, we still
                       needed something to take up its space in the CSS grid.
                       This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                          <div id="side-nav-placeholder" />
-                        </span>
-                      ) : (
-                        <button id="show-menu" onClick={showMenu}>
-                          <span role="img" aria-label="menu">
+                        <div id="side-nav-placeholder" />
+                      </span>
+                    ) : (
+                      <button id="show-menu" onClick={showMenu}>
+                        <span role="img" aria-label="menu">
                             🍔
-                          </span>
-                        </button>
-                      )}
-                      {modalView}
-                      <div id="main" role="main">
-                        {state.roomData[state.roomId] ? (
-                          <RoomView
-                            room={state.roomData[state.roomId]}
-                            userId={state.userId}
-                            roomData={state.roomData}
-                            presenceData={state.presenceData}
-                            hasDismissedAModal={state.hasDismissedAModal}
-                          />
-                        ) : null}
-                        <VirtualizationProvider>
-                          <MessageList
-                            autoscrollChat={state.autoscrollChat}
-                            messagesLoadProgress={state.messagesLoadProgress}
-                          />
-                        </VirtualizationProvider>
-                        <InputView
-                          prepopulated={state.prepopulatedInput}
-                          sendMessage={(message) =>
-                            dispatch(SendMessageAction(message))
-                          }
-                          usersInRoom={state.roomData[state.roomId]?.users}
+                        </span>
+                      </button>
+                    )}
+                    {modalView}
+                    <div id="main" role="main">
+                      {state.roomData[state.roomId] ? (
+                        <RoomView
+                          room={state.roomData[state.roomId]}
+                          userId={state.userId}
+                          roomData={state.roomData}
+                          presenceData={state.presenceData}
+                          hasDismissedAModal={state.hasDismissedAModal}
                         />
-                      </div>
-                      {profile}
+                      ) : null}
+                      <VirtualizationProvider>
+                        <MessageList
+                          autoscrollChat={state.autoscrollChat}
+                          messagesLoadProgress={state.messagesLoadProgress}
+                        />
+                      </VirtualizationProvider>
+                      <InputView
+                        prepopulated={state.prepopulatedInput}
+                        sendMessage={(message) =>
+                          dispatch(SendMessageAction(message))
+                        }
+                        usersInRoom={state.roomData[state.roomId]?.users}
+                      />
                     </div>
-                  </RoomDataContext.Provider>
-                </UserMapContext.Provider>
-              </SettingsContext.Provider>
-            </IsMobileContext.Provider>
+                    {profile}
+                  </div>
+                </RoomDataContext.Provider>
+              </UserMapContext.Provider>
+            </SettingsContext.Provider>
+          </IsMobileContext.Provider>
         </MessagesContext.Provider>
       </DispatchContext.Provider>
     </IconContext.Provider>

@@ -156,7 +156,7 @@ export default function SettingsView (props: Props) {
           This will automatically transcribe spoken audio as messages in the
           text chat.
         </span>
-      
+
       </div>
     </div>
   )
