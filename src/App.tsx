@@ -331,6 +331,18 @@ const App = () => {
     case Modal.SpecialFeatureText: {
       const room = state.roomData[state.roomId]
       innerModalView = <SpecialTextModalView text={room.specialFeatureText} />
+      break
+    }
+    case Modal.Obelisk: {
+      const room = state.roomData.obelisk
+      innerModalView = <NoteWallView
+        roomDisplayName="obelisk"
+        notes={room.notes}
+        noteWallData={room.noteWallData}
+        roomData={state.roomData}
+        user={state.profileData}
+        serverSettings={state.serverSettings}
+      />
     }
   }
 

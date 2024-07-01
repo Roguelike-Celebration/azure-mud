@@ -379,6 +379,9 @@ export const FreeBadges: Badge[] = [
   {
     emoji: '🛠️',
     description: 'Better living through internal tooling',
+    category: BadgeCategories.Talk2023
+  },
+  {
     emoji: '🎒',
     description: 'Inventory manager',
     category: BadgeCategories.Talk2023
