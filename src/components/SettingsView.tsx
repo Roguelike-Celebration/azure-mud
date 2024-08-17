@@ -116,6 +116,25 @@ export default function SettingsView (props: Props) {
             <label htmlFor="hotdogstand">HotDog Stand</label>
           </div>
         }
+        <div className="radio">
+          <input
+            type="radio"
+            id="summer-camp"
+            value="summer-camp"
+            checked={selectedTheme === 'summer-camp'}
+            onChange={handleThemeSelection}
+          />
+          <label htmlFor="summer-camp">Summer Camp</label>
+        </div> <div className="radio">
+          <input
+            type="radio"
+            id="summer-camp-dark"
+            value="summer-camp-dark"
+            checked={selectedTheme === 'summer-camp-dark'}
+            onChange={handleThemeSelection}
+          />
+          <label htmlFor="summer-camp-dark">Summer Camp (Dark)</label>
+        </div>
       </div>
       <div className="form" id="simpleNamesSelectionForm">
         <label htmlFor="simpleNamesSelectionForm" className='form-header'>Username Display Mode:</label>

@@ -22,7 +22,7 @@ export const RainbowGateRoomView = () => {
   }
 
   return <div id="rainbow-gate-div" className="feature-room-view">
-    <p><button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Splash in the fountain?</button></p>
+    <p><button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Get a tattoo?</button></p>
   </div>
 }
 

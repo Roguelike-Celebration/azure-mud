@@ -30,3 +30,9 @@ button.note-delete {
     vertical-align: top !important;
     margin-left: 4px;
 }
+
+@media (max-width: 600px) {
+    .note {
+        width: 90%;
+    }
+}
