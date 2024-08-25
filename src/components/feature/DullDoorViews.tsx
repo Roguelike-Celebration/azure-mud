@@ -18,7 +18,7 @@ export const DullDoorRoomView = () => {
   }
 
   return <div id="dull-door-div" className="feature-room-view">
-    <p><button id="dull-door-button" className='link-styled-button' onClick={pullTheCleanRope}>Clean yourself off with the soap</button></p>
+    <p><button id="dull-door-button" className='link-styled-button' onClick={pullTheCleanRope}>Remove your regrets</button></p>
   </div>
 }
 
