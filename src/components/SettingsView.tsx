@@ -1,13 +1,16 @@
 import React, { useContext, useEffect } from 'react'
 
 import '../../style/profileEditView.css'
-import { SetUseSimpleNamesAction } from '../Actions'
+import { SetUseSimpleNamesAction, SetCaptionsEnabledAction } from '../Actions'
 import { DispatchContext, SettingsContext } from '../App'
 import { Badge } from '../../server/src/badges'
 
 import { currentTheme, setTheme } from '../storage'
+import VideoAudioSettingsView from './VideoAudioSettingsView'
 
 interface Props {
+  keepCameraWhenMoving: boolean;
+  captionsEnabled: boolean;
   unlockedBadges: Badge[];
 }
 
@@ -36,6 +39,14 @@ export default function SettingsView (props: Props) {
 
   const handleSimpleNamesSelection = (simple: boolean) => {
     dispatch(SetUseSimpleNamesAction(simple))
+  }
+
+  const handleCaptionChoice = (e) => {
+    if (e.target.value === 'captions-enabled') {
+      dispatch(SetCaptionsEnabledAction(true))
+    } else if (e.target.value === 'captions-disabled') {
+      dispatch(SetCaptionsEnabledAction(false))
+    }
   }
 
   return (
@@ -175,8 +186,30 @@ export default function SettingsView (props: Props) {
           This will automatically transcribe spoken audio as messages in the
           text chat.
         </span>
-
+        <div className="radio">
+          <input
+            type="radio"
+            id="captions-enabled"
+            value="captions-enabled"
+            checked={props.captionsEnabled}
+            onChange={handleCaptionChoice}
+          />
+          <label htmlFor="captions-enabled">Enabled</label>
+        </div>
+        <div className="radio">
+          <input
+            type="radio"
+            id="captions-disabled"
+            value="captions-disabled"
+            checked={!props.captionsEnabled}
+            onChange={handleCaptionChoice}
+          />
+          <label htmlFor="captions-disabled">Disabled</label>
+        </div>
       </div>
+      <VideoAudioSettingsView
+        keepCameraWhenMoving={props.keepCameraWhenMoving}
+      />
     </div>
   )
 }

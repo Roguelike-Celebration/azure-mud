@@ -1,0 +1,153 @@
+video {
+  display: block;
+  box-sizing: border-box;
+  width: 180px; /** I guess this is where we set the width? */
+  height: 135px;
+}
+
+input#send-audio {
+  margin-left: 1em;
+}
+
+#media-view {
+  display: flex;
+  flex-flow: row wrap;
+  height: 200px;
+  overflow: hidden;
+  margin-left: 1rem;
+}
+
+.participant-track-square {
+  max-height: 195px;
+  min-height: 195px;
+  min-width: 180px;
+  max-width: 180px;
+  overflow: hidden
+}
+
+video.speaking {
+  border: 5px solid var(--active);
+}
+
+#media-view .video-button {
+  color:var(--main-font);
+  padding: 10px;
+}
+
+.other-participant {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+#media-view .other-participant .video-button {
+  color:var(--main-font);
+  padding: 10px;
+  float: right;
+}
+
+#media-view .video-button.enabled {
+  color: var(--active);
+}
+
+#media-view .other-participant .video-button.enabled {
+  color: var(--main-font);
+}
+
+#media-view .video-button.disabled {
+  color: var(--pink);
+}
+
+.my-video video {
+  /** Horizontally mirror your own webcam */
+  /** WARNING: If we ever add screen-sharing, we'll need to be subtler */
+  transform: scale(-1, 1);
+}
+
+/** Selector modal */
+
+#media-selector .videoAudioSettingsContainer  {
+  margin-top: 2em;
+}
+
+#media-selector .my-video, #media-selector .selects {
+  float: left;
+}
+
+#media-selector .selects {
+  margin-left: 30px;
+  margin-top: 1em;
+}
+
+#media-selector select {
+  display: block;
+}
+
+#media-selector #join {
+  background-color:var(--main-background);
+  border: 2px solid var(--highlight-line);
+  border-radius: 5px;
+  bottom: 20px;
+  color: var(--main-font);
+  cursor: pointer;
+  display: block;
+  font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
+  font-size: 16px;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  right: 30px;
+}
+
+.offscreen-count {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#join-audio-chat {
+  margin-left: 2em;
+}
+
+#media-wrapper {
+  margin-bottom: 1em;
+}
+
+#media-chat-buttons {
+  margin-bottom: 1em; 
+  margin-top: 1em;
+}
+
+/** Placeholder avatar */
+.participant-track-square, .my-video {
+  position: relative;
+}
+
+.placeholder-avatar {
+  position: absolute;
+  top: 55px;
+  left: 45px;
+}
+
+#play-audio, #play-video, #send-video, #send-audio, #show-media-selector {
+  position: absolute;
+  bottom: 0px;
+}
+
+#play-audio {
+  right: 0px;
+}
+
+#play-video {
+  right: 30px;
+}
+
+#send-audio {
+  left: 30px;
+}
+
+#send-video {
+  left: 0px;
+}
+
+#show-media-selector {
+  left: 60px;
+}

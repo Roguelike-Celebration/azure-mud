@@ -4,6 +4,7 @@ export enum Modal {
     ProfileEdit,
     NoteWall,
     Settings,
+    MediaSelector,
     CodeOfConduct,
     Schedule,
     Help,
