@@ -83,12 +83,12 @@ export default function NameView (props: Props) {
       }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
     )
     if (doSpeaker) {
-      toggleUserSpeaker(data.id, '2023')
+      toggleUserSpeaker(data.id, '2024')
     }
   }
 
   const handlePastSpeaker = (e, data) => {
-    toggleUserSpeaker(data.id, '2021')
+    toggleUserSpeaker(data.id, '2023')
   }
 
   const pastSpeakerButton = userIsMod ? (
@@ -98,7 +98,7 @@ export default function NameView (props: Props) {
       }
       onClick={handlePastSpeaker}
     >
-    Make past speaker
+    Make 2023 speaker
     </MenuItem>
   ) : (
     ''
