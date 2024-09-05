@@ -22,6 +22,11 @@ a.room-link:visited {
   color: var(--link);
 }
 
+#join-video-chat {
+  vertical-align: top;
+  margin-bottom: 0.5em;
+}
+
 #toggle-text-only-mode {
   margin-left: 2em;
   vertical-align: top;
@@ -70,4 +75,9 @@ a.room-link:visited {
 
 #room-name {
   margin-bottom: 0;
+}
+
+#dynamic-room-description .has-audio, #dynamic-room-description .has-video {
+  padding-left: 0.5em;
+  cursor: pointer;
 }

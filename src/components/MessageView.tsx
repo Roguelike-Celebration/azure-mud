@@ -15,6 +15,7 @@ import {
 } from '../App'
 import { renderCustomEmojiString } from '../emoji'
 import {
+  CaptionMessage,
   ChatMessage,
   CommandMessage,
   ConnectedMessage,
@@ -63,6 +64,7 @@ export default memo(function MessageView (props: {
     [MessageType.Shout]: ShoutView,
     [MessageType.Emote]: EmoteView,
     [MessageType.Dance]: DanceView,
+    [MessageType.Caption]: CaptionView,
     [MessageType.Error]: ErrorView,
     [MessageType.Mod]: ModMessageView,
     [MessageType.Command]: CommandView
@@ -284,6 +286,15 @@ const ChatMessageView = (props: ChatMessage) => {
     </div>
   )
 }
+
+const CaptionView = (props: CaptionMessage) => (
+  <div className="message">
+    <NameView userId={props.userId} id={props.id} /> (spoken):{' '}
+    <DeletableMessageView messageId={props.id} messageText={props.message}>
+      {props.message}
+    </DeletableMessageView>
+  </div>
+)
 
 const WhisperView = (props: WhisperMessage) => {
   const { userMap } = useContext(UserMapContext)

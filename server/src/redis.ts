@@ -145,6 +145,20 @@ const Redis: RedisInternal = {
     await Redis.addOccupantToRoom(roomId, user.id)
   },
 
+  async updateVideoPresenceForUser (user: User, isActive: boolean) {
+    if (isActive) {
+      await addToSet(videoPresenceKey(user.roomId), user.id)
+    } else {
+      await removeFromSet(videoPresenceKey(user.roomId), user.id)
+    }
+
+    return await Redis.getVideoPresenceForRoom(user.roomId)
+  },
+
+  async getVideoPresenceForRoom (roomId: string) {
+    return await getSet(videoPresenceKey(roomId)) || []
+  },
+
   // User
   async getUser (userId: string) {
     const userData = await getCache(profileKeyForUser(userId))
@@ -433,6 +447,9 @@ function roomNotesKey (roomId: string): string {
   return `${roomId}Notes`
 }
 
+export function videoPresenceKey (roomId: string) {
+  return `${roomId}PresenceVideo`
+}
 const userMapKey = 'userMap'
 const spaceAvailabilityKey = 'spaceIsClosed'
 

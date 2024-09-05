@@ -18,6 +18,7 @@
     "redis": "^3.0.2",
     "storyboard-engine": "0.0.5",
     "tracery-grammar": "^2.7.4",
+    "twilio": "^3.55.0",
     "uuid": "^8.3.0"
   },
   "devDependencies": {

@@ -50,6 +50,12 @@ interface Database {
   /** Removes a user from their current room, and adds them to a new room */
   setCurrentRoomForUser(user: User, roomId: string);
 
+  /** Updates the status and returns an array of userIds with active video in the given user's room */
+  updateVideoPresenceForUser (user: User, isActive: boolean): Promise<string[]>;
+
+  /* Returns a list of users currently in videochat */
+  getVideoPresenceForRoom(roomId: string): Promise<string[]>
+
   // -----------------------------------------------------------------
   // USER DATA
   // -----------------------------------------------------------------

@@ -137,6 +137,34 @@ const CosmosDB = {
     }
   },
 
+  // WARNING: This is currently broken.
+  // Needs to be updated to return a string list of all userIds in the user's current room
+  async updateVideoPresenceForUser (user: User, isActive: boolean) {
+    const data = { ...user, isInVideoChat: isActive }
+
+    try {
+      const container = getContainer('users')
+      await container.item(user.id, partitionKey).replace(data)
+      return []
+    } catch (e) {
+      console.log('ERROR: Could not update user video presence', user.id, isActive, e)
+    }
+  },
+
+  // TODO: Should this be shoved into roomOccupants?
+  async getVideoPresenceForRoom (roomId: string) {
+    const container = await getContainer('users')
+    const query = {
+      query: 'select c.id from c where c.videoRoomId = @roomId and c.isActive = true',
+      parameters: [{
+        name: '@videoRoomId',
+        value: roomId
+      }]
+    }
+    const { resources: users } = await container.items.query(query, { partitionKey }).fetchAll()
+    return users
+  },
+
   async getPublicUser (userId: string) {
     const container = await getContainer('users')
     const result = await container.item(userId, partitionKey).read()
