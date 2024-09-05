@@ -17,14 +17,15 @@ export interface ScheduleEntry {
   day: number
 }
 
-const PREVIEW_END = new Date('2023-09-10T19:00:00-07:00')
-const FIRST_DAY_END = new Date('2023-10-20T21:00:00-07:00')
-const SECOND_DAY_END = new Date('2023-10-21T21:00:00-07:00')
+const PREVIEW_END = new Date('2024-09-10T15:30:00-07:00')
+const FIRST_DAY_END = new Date('2024-10-19T21:00:00-07:00')
+const SECOND_DAY_END = new Date('2024-10-20T21:00:00-07:00')
 
-const dayPreview = (time) => new Date(`2023-09-10T${time}:00.000-07:00`)
-const dayOneDate = (time) => new Date(`2023-10-20T${time}:00.000-07:00`)
-const dayTwoDate = (time) => new Date(`2023-10-21T${time}:00.000-07:00`)
-const dayThreeDate = (time) => new Date(`2023-10-22T${time}:00.000-07:00`)
+const dayPreview = (time) => new Date(`2024-09-08T${time}:00.000-07:00`)
+// Don't think we're doing a pre-party in 2024
+const dayOneDate = (time) => new Date(`2024-10-19T${time}:00.000-07:00`)
+const dayTwoDate = (time) => new Date(`2024-10-20T${time}:00.000-07:00`)
+const dayThreeDate = (time) => new Date(`2024-10-21T${time}:00.000-07:00`)
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
   if (day === 0) {
@@ -49,12 +50,12 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
 }
 
 export const ScheduleEntries: ScheduleEntry[] = [
-  ScheduleEntry('16:00', 0, 'Doors Open'),
-  ScheduleEntry('16:10', 0, 'Kickoff', ['theater']),
-  ScheduleEntry('16:15', 0, 'David Brevik: Fireside chat about the making of Diablo', ['theater']),
-  ScheduleEntry('16:50', 0, 'Nic Junius: Play as in Stage Play: Designing Dynamic Narrative Moments Through Character Acting', ['theater']),
-  ScheduleEntry('17:25', 0, 'Aron Pietroń and Michał Ogłoziński: Fireside chat about Roguelite citybuilder Against the Storm', ['theater']),
-  ScheduleEntry('17:00', 0, 'Doors Close'),
+  ScheduleEntry('12:45', 0, 'Doors Open'),
+  ScheduleEntry('13:00', 0, 'James Cartlidge: The Rise of the Roguelite: Inside a Gaming Phenomenon', ['theater']),
+  ScheduleEntry('13:45', 0, 'Andrew Cedotal: Literary Origins of the Rogue Archetype', ['theater']),
+  ScheduleEntry('14:15', 0, 'Gavin Verhey: Fireside Chat About Randomness in Magic: The Gathering', ['theater']),
+  ScheduleEntry('15:00', 0, SOCIAL_TIME),
+  ScheduleEntry('15:30', 0, 'Doors Close'),
 
   ScheduleEntry('18:00', 1, 'Doors Open'),
   ScheduleEntry('20:00', 1, 'Doors Close'),

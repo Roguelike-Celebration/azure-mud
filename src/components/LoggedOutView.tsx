@@ -18,8 +18,7 @@ const uiConfig = {
     }
   },
   signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    firebase.auth.EmailAuthProvider.PROVIDER_ID
   ]
 }
 
@@ -27,7 +26,7 @@ export default function LoggedOutView () {
   return (
     <div>
       <header role="banner">
-        <h1>Welcome to Roguelike Celebration 2023!</h1>
+        <h1>Welcome to Roguelike Celebration 2024!</h1>
       </header>
       <main role="main">
         <p>
@@ -40,24 +39,13 @@ export default function LoggedOutView () {
         </p>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <p>
-          <strong>If you logged in with Twitter in previous years,</strong> we&apos;re sorry but
-          due to the recent unpleasantness, our Twitter integration has ceased
-          to function. You&apos;ll have to create a new account via email or Google.
-          Sorry for the trouble.
+          <strong>We no longer support signing in with any form other than email.</strong> We&apos;re sorry if you used
+          one of the third-party sign-ons in previous years. If you sign in using the same email you used for Twitter
+          or Google, you should be able to recover your account (it will ask you to reset your password) - otherwise,
+          please make a new account.
         </p>
         <p>
-          <strong>If you&apos;re having trouble signing in with Google Sign In,</strong> please try using Chrome. It
-          appears to sometimes fail with Firefox and Safari, but always works with Chrome. Go figure. Or, you can just
-          use the email login.
-        </p>
-        <p>
-          If you log in via email, we will require you to verify that email address.
-        </p>
-        <p>
-          No matter which service you log in with, we do not access any data
-          other than what is needed to authenticate you. If it would make you
-          more comfortable, feel free to sign up for and use a throwaway
-          account on one of these services.
+          If you sign up for a new account, we will require you to verify that email address.
         </p>
         <p>
           After logging in, you will have the opportunity to pick whatever chat handle you would
