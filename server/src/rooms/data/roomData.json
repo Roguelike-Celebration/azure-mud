@@ -1,18 +1,10 @@
 {
-  "kiosk": {
-    "displayName": "Bulletin Board",
-    "shortName": "bulletin board",
-    "id": "kiosk",
-    "description": "A sprawling cacophony of paper stands attached to a series of wooden planks held together by pure willpower. Each tiny note screams a message at passersby, threatening them with a message from whatever tiny goblin has felt the need to express themself.",
-    "roomId": "kiosk",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "A goblin in a tiny trenchcoat stands nearby offering you a colorful piece of paper and a pen.",
-      "noteWallButton": "Add feedback",
-      "addNoteLinkText": "Add feedback",
-      "addNotePrompt": "What feedback do you have about the social space itself?",
-      "noteWallDescription": "Social Space Feedback"
-    }
+  "swag": {
+    "id": "swag",
+    "displayName": "Swag Table",
+    "shortName": "the swag table",
+    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A clearing amidst the pile has been lovingly lined with plump helmet, with showcase pillars for real world shirts, socks, and enamel pins, being sold by Ann Arbor T-shirt Company, that you can <a href=\"https://roguelikecelebration.itemorder.com/shop/home/ \">purchase for yourself</a>.<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[Night Market]].",
+    "roomId": "swag"
   },
   "tattooTruck": {
     "displayName": "Tattoo Truck",
@@ -25,266 +17,19 @@
     ],
     "roomId": "tattooTruck"
   },
-  "steamSale": {
-    "displayName": "Steam Sale",
-    "shortName": "Steam Sale",
-    "id": "steamSale",
-    "description": "You enter a makeshift store filled with shelves and colorful boxes in every direction. These shelves appear to be illegal knockoffs of games, made by the goblin merchants. A greasy goblin stands behind the counter, swearing to anyone who asks that his products are legit. You notice a table in the back corner of the space, devoted to actual video games, which you are free to peruse.",
-    "roomId": "steamSale"
-  },
-  "unconfWeaponsTraining": {
-    "displayName": "Unconferencing: Weapons Training Field",
-    "shortName": "training grounds",
-    "id": "unconfWeaponsTraining",
-    "description": "You walk into an empty field amidst a forest of trees, a cleared out space on the edge of the goblin camp. This space has been intentionally flattened with next to no grass left at its center. Pedestals line one side of the space, and visibly magical weapons sit atop them, shining in radiant glory. In the middle of the clear space stands a skeleton in a fighting stance, begging you forward to fight him. <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87833202905?pwd=NDJBVDIybdLDUd746NJoMrzm0b1At1.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 833995)</p><p>The other unconferencing rooms are the [[wood shop->unconfWoodShop]], the [[docks->unconfDocks]], and the [[archery range->unconfArchery]]. You can also just wander around the [[pavilion->unconferencinghub]].</p>",
-    "roomId": "unconfWeaponsTraining"
-  },
-  "officeOfSteam": {
-    "id": "officeOfSteam",
-    "displayName": "Office of Steam",
-    "shortName": "the Office of Steam",
-    "description": "This sparsely-furnished room has little more in it than a typewriter standing on a pillar at its center. As you look down, however, you see a glass floor suspending you above an enormous sprawling mass of pipes and brass machinery. Chutes and tubes create fire and move steam in intricate patterns all ultimately funelling back into the typewriter stand you noticed before. Dwarves are scurrying to and fro, tinkering with the machines. Hooked to the typewriter is a small screen, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. Anachronistically, a cute Post-It Note shaped like a quokka is on the side of the screen, with the note \"Coming Soon: 2022 Steam Sale\" in loopy handwriting. If you'd like, you can investigate the <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">source of its steam power</a>, or go back to the [[Guild Hall->adventurersGuildHall]].",
-    "roomId": "officeOfSteam",
-    "hidden": true
-  },
   "bobaTruck": {
     "displayName": "Boba Truck",
     "shortName": "boba truck",
     "id": "bobaTruck",
-    "description": "A rotund man in a brilliant purple and gold outfit stands behind a counter, singing boisterously. His voice rattles the walls and echoes far into the distance. In front of him is a table arrayed with a selection of vibrant, chilled liquids. Next to them is a set of containers labeled with different kinds of boba that might be put into your drink, if you like.",
+    "description": "A rotund man in a brilliant purple and gold outfit stands behind a counter, singing boisterously. His voice rattles the walls and echoes far into the distance. In front of him is a table arrayed with a selection of vibrant, chilled liquids. Next to them is a set of containers labeled with different kinds of boba that might be put into your drink, if you like. Or you can head back to the [[Night Market->nightMarket]]",
     "roomId": "bobaTruck"
   },
-  "unconfDocks": {
-    "displayName": "Unconferencing: Docks",
-    "shortName": "docks",
-    "id": "unconfDocks",
-    "description": "You walk out to the local lake and find a quiet space seemingly devoid of goblin presence. Looking around, you see old docks protruding out into the water where the lake meets a river, and looking down that river you see it slowly expand and become tumultuous rapids. At the start of that river, sitting on a raft at the docks, is a dog. The dog carries a bright orange backpack and stares at you expectantly, but you’re not sure why. <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87833202905?pwd=NDJBVDIybdLDUd746NJoMrzm0b1At1.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 833995)</p><p>The other unconferencing rooms are the [[wood shop->unconfWoodShop]], the [[archery range->unconfArchery]], and the [[training field->unconfWeaponsTraining]]. You can also just wander around the [[pavilion->unconferencinghub]].</p>",
-    "roomId": "unconfDocks"
-  },
-  "backHallway": {
-    "displayName": "Back Hallway",
-    "shortName": "back hallway",
-    "id": "backHallway",
-    "description": "You continue walking and reach a distant part of the labyrinth of hallways. A dank smell wafts through the air just before your eyes catch sight of a man in a long trench coat standing next to a slimmer man with long hair. Around them both are a small army of mall rats, chittering as they eat crumbs off the floor. The mall rats appear to be dressed just like the rest of the feral teens you've seen.<br/><br/>The man in the trenchoat introduces himself as [[Loud Robert->talkToLoudRobert]], and his friend, [[Ray->talkToRay]], puts out his hand and offers you what appears to be a tightly-rolled cigarette.<br/><br/>You could also ignore the people here, and continue towards the [[Chasm->chasm]].<br/><br/>Or you could return to the [[Left Hallway->leftHallway]].",
-    "hidden": true,
-    "roomId": "backHallway"
-  },
-  "unconfWoodShop": {
-    "displayName": "Unconferencing: Wood Shop",
-    "shortName": "wood shop",
-    "id": "unconfWoodShop",
-    "description": "You walk into an old barn that’s very visibly been turned into a workshop, saws and various other equipment whirring in every corner, creating a noisy atmosphere of creativity. You see a pile of wood planks, tree stumps, and what appear to be nodules from derelict spacecraft. Sitting amongst the pile is an otter wearing a floppy purple wizard’s hat and glasses. A chalk board along the wall announces that this week’s craft project is “Shard Collector”, whatever that means. <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87833202905?pwd=NDJBVDIybdLDUd746NJoMrzm0b1At1.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 833995)</p><p>TThe other unconferencing rooms are the [[archery range->unconfArchery]], the [[docks->unconfDocks]], and the [[training field->unconfWeaponsTraining]]. You can also just wander around the [[pavilion->unconferencinghub]]..</p>",
-    "roomId": "unconfWoodShop"
-  },
-  "adventurersGuildHall": {
-    "id": "adventurersGuildHall",
-    "displayName": "Adventurer's Guild Hall",
-    "shortName": "the Guild",
-    "description": "A shockingly fast steam engine whisks you to a grand lounge of bronze, dark woods, and ivy trellises. Every once in a while you hear the pneumatic \"whoosh\" as items are carried through tubing. There's plenty of sturdy tufted couches and velvet lounge chairs, and a variety of elegantly carved coffee tables covered in books and journals.</br></br>You can go back to the central [[hall->centralHall]], or visit the [[Office of Steam->officeOfSteam]] or the [[Video Dome->videoDome]].",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "One journal is open, a black tome decorated with silvery and bronze swirls - \"Procedural Generation Surprises\" on the cover. Quill pens are nearby.",
-      "noteWallButton": "Contribute",
-      "addNoteLinkText": "Contribute",
-      "addNotePrompt": "Tell us of a time a procedural generator has surprised or delighted you!",
-      "noteWallDescription": "Tales of strange, delightful emergent results from procedural generators."
-    },
-    "roomId": "adventurersGuildHall",
-    "hidden": true
-  },
-  "securityGuard": {
-    "displayName": "Security Guard's Dream",
-    "shortName": "security guard",
-    "id": "securityGuard",
-    "description": "You feel yourself become a bastion of safety, the watchful eye protecting this space from harm. Most of your days are spent standing around in idle boredom, but when you do act, it is with a fury of adrenaline. Others may look down on you, but you know, deep within, that you are serving an essential function of society.<br/><br/>You look around and see others looking at you.<br/><br/>You can step into the dream of a [[Feral Teen]].<br/><br/>Or you can step into the dream of a passing [[Accountant]].<br/><br/>Or you can return to the [[Janitor's Closet->janitorsCloset]].",
-    "hidden": true,
-    "roomId": "securityGuard"
-  },
-  "whipShow": {
-    "displayName": "Whip Show",
-    "shortName": "whip show",
-    "id": "whipShow",
-    "description": "You approach a stage hosting a goblin wearing colorful stripes and wielding long whips that crack through the air on a rhythm. Above that goblin are several others in similarly bright colors and holding themselves in tight balls as they fly at least twenty feet above the ground. Each time one of them begins to drop, a whip cracks out and they bounce another few feet back up into the sky. The whip-wielding goblin drips in sweat, but the crowd roars in excitement with each successful juggle.<p>You can also head back to the [[theater]].</p>",
-    "roomId": "whipShow"
-  },
-  "unconferencingHub": {
-    "displayName": "Unconferencing Pavilion",
-    "shortName": "Unconferencing Pavilion",
-    "id": "unconferencingHub",
-    "description": "You enter a pastoral campground in the clearing of a forest. Standing beneath the sunbeams is a crowd of goblins in pastel-colored polo shirts. The one in the center of the group is holding a guitar and smiling warmly at you, singing a song about the joys of making new friends. The campground appears to be split into four distinct sections, and there's a smiling goblin waiting at each to help guide you. You see [[the archery range->unconfArchery]], [[a wood shop->unconfWoodShop]], [[the docks->unconfDocks]], and [[a training field->unconfWeaponsTraining]].",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "Adjacent to a screen showing recent high scores, a curious screen displays what may not be a game at all, but is rather labelled \"UNCONFERENCE TOPIC SUGGESTIONS!\" A small sign clarifies \"Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each uncoferencing block, moderators will assign the top four topics to rooms. Have fun!\"",
-      "noteWallButton": "Inspect the topics",
-      "addNoteLinkText": "suggest a topic",
-      "addNotePrompt": "What would you like to suggest?",
-      "noteWallDescription": "Topics for unconferencing discussion, ranked by upvotes."
-    },
-    "roomId": "unconferencingHub"
-  },
-  "obelisk": {
-    "displayName": "Obelisk",
-    "shortName": "obelisk",
-    "id": "obelisk",
-    "description": "You stand beneath a towering stone slab which glows faintly with layers upon layers of finely-carved runes sprawling across the surface in elaborate patterns. As you stare at the glowing runes, you feel your mind begin to connect with it. It demands information. A deep fear imbeds itself within your heart as you realize the stone is sentient. Feed it your most valuable links, or else you fear what may come to pass.",
-    "roomId": "obelisk",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "Much wisdom is collected here. Perhaps you should share your own.",
-      "noteWallButton": "Add reference",
-      "addNoteLinkText": "add a reference",
-      "addNotePrompt": "What would you like to link to",
-      "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
-    }
-  },
-  "centralHall": {
-    "id": "centralHall",
-    "displayName": "Central Hall",
-    "shortName": "the hall",
-    "description": "Lights and sounds fill your senses as you enter the towering Central Hall. The warm hum of conversation gently envelops you and the rest of the crowd here as each of you share in the collective grandeur. High above you see ascii sigils glittering in the air as the ceiling fades into an impossible distance. Each of the branching hallways leaving this central hub seem to shift from stonework into wood, brass, or some kind of hi-tech polymer material as the needs of the space make its theming tangible.<br/><br/>Just to the right of the central pathway is a booth covered in various bits and bobs, labeled the [[Swag Table->swag]]. On the opposite side of that same path is a towering monolith of signs behind a roped off area marked as [[Destinations->destinations]]. At the ends of the hall, where the paths begin to fade into wooden panelling, you see a painted tavern sign just above the entrance to the [[Bar->old_bar]],and just beyond that a short hallways leads to the [[unconferencing rooms->Unconferencing]]. Opposite that, a carpeted hallway leads up to the [[Video Dome->videoDome]]. Directly between the left and right halls, at the end of the central path you've been travelling, a chorus of lights dance above a door advertising the [[Theater->theater]] entrance.<br/><br/>",
-    "hasNoteWall": true,
-    "hidden": true,
-    "noteWallData": {
-      "roomWallDescription": "A big bulletin board sits in the middle of the hall, with a banner on top - \"Social Space Feedback\". An array of markers and sticky notes are nearby.",
-      "noteWallButton": "Add feedback",
-      "addNoteLinkText": "Add feedback",
-      "addNotePrompt": "What feedback do you have about the social space itself?",
-      "noteWallDescription": "Social Space Feedback"
-    },
-    "roomId": "centralHall"
-  },
-  "tacoTruck": {
-    "displayName": "Taco Truck",
-    "shortName": "taco truck",
-    "id": "tacoTruck",
-    "description": "An older man with a bushy white beard and wearing a prospector's outfit stands behind a table full of taco ingredients. Everything here appears to be freely up for grabs, but you can't help noticing the nearby shotgun. The old man stands neutrally in his thick apron, but you fear you see a glint of fury in his eyes.",
-    "roomId": "tacoTruck"
-  },
-  "orbOfZot": {
-    "displayName": "Orb Of Zot",
-    "shortName": "orb of zot",
-    "id": "orbOfZot",
-    "description": "You hear a glorious voice booming from a highly-compressed audio file. It says 'YOU HAVE WON!'.<br/><br/>A cheap confetti effect rains down from above as some digital approximation of a trumpet plays a victorious fanfare in your honor.<br/><br/>Before you is a passageway leading into [[The Back->theBack]].",
-    "hidden": true,
-    "roomId": "orbOfZot",
-    "specialFeatures": [
-      "CONFETTI"
-    ]
-  },
-  "bar": {
-    "displayName": "Grafitti Notewall Room",
-    "shortName": "the photo booth",
-    "id": "bar",
-    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if the camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].<br/><br/>",
-    "roomId": "bar",
-    "hasNoteWall": true,
-    "hidden": true,
-    "noteWallData": {
-      "roomWallDescription": "Next to the booth, a sign asks visitors to describe their favourite Mall of Moria memory on the back of a photo and drop it in the provided box, for a chance to win a $3 gift card. You see no sign of a box, but the pile of pens have been put to good use scribbling graffiti directly onto the wall.",
-      "noteWallButton": "Add your mark",
-      "addNoteLinkText": "Contribute",
-      "addNotePrompt": "Contribute to the graffiti?",
-      "noteWallDescription": "Someone has scratched ‘Rodney was here’ directly into the wall here, and a web of messages in various hands spreads out around it."
-    }
-  },
-  "joust": {
-    "displayName": "Jousting Arena",
-    "shortName": "jousting",
-    "id": "joust",
-    "description": "You enter a sandy gladiator's pit surrounded by stands full of screaming fans. Two goblins ride horseback, wearing armor and wielding lances at least six times their height. Other armored goblins run about the space swinging sharpened metal without any thought for the safety of either themselves or others. Every time you hear the sound of an impact, it's immediately followed by a cheer, and you're pretty sure it doesn't matter who could be considered winning.<p>You can also head back to the [[theater]].</p>",
-    "roomId": "joust"
-  },
-  "fountain": {
-    "displayName": "Fountain",
-    "shortName": "fountain",
-    "id": "fountain",
-    "description": "You approach a beautiful fountain surrounded by a group of weirdly-attractive goblins in skimpy clothing. A young goblin man with rippling, well-oiled muscles approaches and hands you a minty fruit drink. A buxom goblin woman sings a lilting song in the distance. There's a small line leading up to a booth of beautiful goblins offering free hugs, and you see a crowd of people lying beneath the shade, catching a little rest.<p>You can also head back to the [[theater]].</p>",
-    "roomId": "fountain"
-  },
-  "bawdySingers": {
-    "displayName": "Bawdy Singers",
-    "shortName": "Bawdy Singers",
-    "id": "bawdySingers",
-    "description": "You enter a ring of felled logs arrayed into seating before a stage manned by a troupe of colorful goblins of mixed gender. They are singing a raucous tavern song with wildly inappropriate lyrics, and managing to do so while mostly staying on-key. The audience appears to be in various stages of intoxication, and emits riotous laughter every few moments, regardless of the lyrics being sung on stage.<p>You can also head back to the [[theater]].</p>",
-    "roomId": "bawdySingers"
-  },
-  "swag": {
-    "id": "swag",
-    "displayName": "Swag Table",
-    "shortName": "the swag table",
-    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A clearing amidst the pile has been lovingly lined with plump helmet, with showcase pillars for real world shirts, socks, and enamel pins, being sold by Ann Arbor T-shirt Company, that you can <a href=\"https://roguelikecelebration.itemorder.com/shop/home/ \">purchase for yourself</a>.<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[hall->centralHall]].",
-    "roomId": "swag"
-  },
-  "goofyItems": {
-    "displayName": "Goofy Items",
-    "shortName": "goofy items",
-    "id": "goofyItems",
-    "description": "A massively overweight goblin sits sprawled out behind a table, his dexterous hands busy carving intricate patterns into the body of a wooden doll. Though this doll is clearly made of wood, the parts of it which have already been worked over by the enormous goblin appear so lifelike that you might swear it were real. The table before him is covered in objects of every variety, with seemingly no organization at all. [Reach into the pile and pull something out]",
+  "pinVendor": {
+    "displayName": "Pin Vendor",
+    "shortName": "pin vendor",
+    "id": "pinVendor",
+    "description": "You walk up to a table covered in signs advertising handmade pins. The table is covered in an assortment of pins, but they're all marked as \"display only\". The only purchasing option appears to be an enormous iron bingo machine repurposed to dispense pins instead of numbered balls. A heavily-muscled goblin stands at the crank with a massive smile, seeming eager to spin the crank and [[dispense a pin for you->drinkPolymorph]].<p>There's a tiny bucket labelled \"returns\", which is being lorded over by a muscular goblin with a withering scowl. The [[bucket->drinkCancellation]] appears to be empty.</p>. Or you can head back to the [[Courtyard]].",
     "roomId": "goofyItems"
-  },
-  "standingTables": {
-    "displayName": "Standing Tables",
-    "shortName": "standing tables",
-    "id": "standingTables",
-    "description": "You walk up to a table covered in signs advertising handmade pins. The table is covered in an assortment of pins, but they're all marked as \"display only\". The only purchasing option appears to be an enormous iron bingo machine repurposed to dispense pins instead of numbered balls. A heavily-muscled goblin stands at the crank with a massive smile, seeming eager to spin the crank and [[dispense a pin for you->drinkPolymorph]].<p>There's a tiny bucket labelled \"returns\", which is being lorded over by a muscular goblin with a withering scowl. The [[bucket->drinkCancellation]] appears to be empty.</p>",
-    "roomId": "standingTables"
-  },
-  "entryway": {
-    "id": "entryway",
-    "displayName": "Fairgrounds Entrance",
-    "description": "You arrive at a path in a thickly wooded forest and see before you a colorful array of banners and a wall only barely containing a cacophony of what you assume is music. A gate stands before you with a banner hanging atop it, a banner made of no less than 6 other banners. Together they say \"Welcome To The Roguelike Celebration Camp Faire Market Extravaganza!\".<p>At the gate, you see 3 goblins pushing each other out of the way to try and reach you first, each one competing to hand you a flier advertising their part of this event. As you approach you are assaulted with advertisements for the [[Renaissance Theater->theater]], the [[Camp Grounds->unconferencingHub]], and the [[Night Market->nightMarket]]. Or you can just ignore them and walk into the Courtyard of the [[Obelisk]].</p>",
-    "shortName": "the entryway",
-    "hidden": true,
-    "roomId": "entryway"
-  },
-  "theater": {
-    "id": "theater",
-    "displayName": "Theater",
-    "shortName": "the theater",
-    "description": "You enter the main stage area, and see brightly-colored goblins in fanciful suits waiting to assist you to find your seat, or to redirect you to the appropriate breakout room.<br/><br/>You can return to the [[skating rink->iceRink]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[I Was a Teenage Gelatinous Cube->screen1]], [[Attack of the 50 Foot Goblin->screen2]], [[Jabberwock Park->screen3]], or [[My Big Fat Orc Wedding->screen4]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
-    "hasNoteWall": true,
-    "noteWallData": {
-      "roomWallDescription": "There is a whiteboard set up to the side with \"SPEAKER QUESTIONS\" written at the top. \"Questions for speakers not questions from speakers!\" is hastily scrawled below it.",
-      "noteWallButton": "Write a question",
-      "addNoteLinkText": "add a question",
-      "addNotePrompt": "What would you like to ask?",
-      "noteWallDescription": "Questions for the current speaker, ranked by upvotes."
-    },
-    "roomId": "theater"
-  },
-  "unconfArchery": {
-    "displayName": "Unconferencing: the Archery Range",
-    "shortName": "archery",
-    "id": "unconfArchery",
-    "description": "You walk onto a grassy area, most of which has been cordoned off by ropes. On this side of the ropes is a walking path with various stations set aside with tables holding strange equipment. Each station is setup down the path from a bale of hay with a target on it, and at the very last sation along the row you see a crowd of goblins standing behind a naked human child. The child faces his target, launching tears with terrifying accuracy. One goblin stands at the nearest station, attempting to replicate the child’s feat to a mixed level of success. <p>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/85153133482?pwd=muPgiZMpQPPK9hrOof3AY0AFOqg3rb.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 188778)<br/><br/>The other unconferencing rooms are the [[wood shop->unconfWoodShop]], the [[docks->unconfDocks]], and the [[training field->unconfWeaponsTraining]]. You can also just wander around the [[pavilion->unconferencinghub]].</p>",
-    "roomId": "unconfArchery"
-  },
-  "veganTruck": {
-    "displayName": "Vegan Truck",
-    "shortName": "vegan truck",
-    "id": "veganTruck",
-    "description": "You approach a food truck with a jaunty sign labelling it as \"Farm Fresh, Organic, Local, Monster-Alternative Bowls and Wraps\". As you peer into the truck, a shiver runs down your spine as you lock eyes with the entity running the operation. It wears richly-appointed black robes covered in golden coins, and its shadowed face is topped with a wide-brimmed hat. Its mouth leaks a chilling purple fog into the air. You may attempt to communicate with the entity, or you may simply take a food bowl.",
-    "roomId": "veganTruck"
-  },
-  "experimentalBiology": {
-    "id": "experimentalBiology",
-    "displayName": "Experimental Biology Lab",
-    "shortName": "experimental biology",
-    "description": "Endless bottles and mismatched jars line the walls, casting disorienting lights in every direction. At the center of the visual cacophony stands a mechanical contraption that looks like the exact midpoint between an examination table, a lounge chair, and a torture device. Standing beside that is [[Doctor Hope->talkToDrHope]], a tall, gangly scientist who looks like the result of plugging a child into an electrical socket at a formative age.<br/> To her left is a table covered in baked goods. There appears to be bread and muffins of every kind you can imagine.<br/><br/>From here you can return to the [[hall->centralHall]].",
-    "specialFeatures": [
-      "RAINBOW_DOOR",
-      "DULL_DOOR"
-    ],
-    "roomId": "experimentalBiology",
-    "hasNoteWall": true,
-    "hidden": true,
-    "noteWallData": {
-      "roomWallDescription": "There is a chalkboard set up to the side with \"REFERENCES!!!\" written across the top.",
-      "noteWallButton": "Add reference material",
-      "addNoteLinkText": "add a reference",
-      "addNotePrompt": "What would you like to link to",
-      "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
-    }
   },
   "old_bar": {
     "id": "old_bar",
@@ -306,14 +51,284 @@
     "displayName": "Kebab Truck",
     "shortName": "kebab truck",
     "id": "kebabTruck",
-    "description": "You step into a small shop with display tables and a long counter. Behind that counter stands a young man with stark white hair and a green bandana. On each of the display tables is a beautifully-appointed array of meats, each one labelled with the name of the local creature from which it was harvested. You can see swords, bags, and other adventuring equipment right behind the shopkeeper, and can only assume he must retrieve his goods himself. He stands ready at the desk, offering tiny sticks to turn these exotic meats into kebabs for you.",
+    "description": "You step into a small shop with display tables and a long counter. Behind that counter stands a young man with stark white hair and a green bandana. On each of the display tables is a beautifully-appointed array of meats, each one labelled with the name of the local creature from which it was harvested. You can see swords, bags, and other adventuring equipment right behind the shopkeeper, and can only assume he must retrieve his goods himself. He stands ready at the desk, offering tiny sticks to turn these exotic meats into kebabs for you. Or you can head back to the [[Night Market->nightMarket]]",
     "roomId": "kebabTruck"
+  },
+  "orbOfZot": {
+    "displayName": "Orb Of Zot",
+    "shortName": "orb of zot",
+    "id": "orbOfZot",
+    "description": "You hear a glorious voice booming from a highly-compressed audio file. It says 'YOU HAVE WON!'.<br/><br/>A cheap confetti effect rains down from above as some digital approximation of a trumpet plays a victorious fanfare in your honor.<br/><br/>Before you is a passageway leading into [[The Back->theBack]].",
+    "hidden": true,
+    "roomId": "orbOfZot",
+    "specialFeatures": [
+      "CONFETTI"
+    ]
+  },
+  "theater": {
+    "id": "theater",
+    "displayName": "Theater",
+    "shortName": "the theater",
+    "description": "You enter the main stage area, and see brightly-colored goblins in fanciful suits waiting to assist you to find your seat, or to redirect you to the appropriate breakout room.<br/><br/>You can return to the [[Courtyard]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Bawdy Singers Stage->bawdySingers]], [[Joust Arena]], [[Whip Show]], or the [[Fountain]]. (Check the \"Happening Now\" button on the left for speaker room assignments!)<br/><br/><a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "There is a whiteboard set up to the side with \"SPEAKER QUESTIONS\" written at the top. \"Questions for speakers not questions from speakers!\" is hastily scrawled below it.",
+      "noteWallButton": "Write a question",
+      "addNoteLinkText": "add a question",
+      "addNotePrompt": "What would you like to ask?",
+      "noteWallDescription": "Questions for the current speaker, ranked by upvotes."
+    },
+    "roomId": "theater"
+  },
+  "veganTruck": {
+    "displayName": "Vegan Truck",
+    "shortName": "vegan truck",
+    "id": "veganTruck",
+    "description": "You approach a food truck with a jaunty sign labelling it as \"Farm Fresh, Organic, Local, Monster-Alternative Bowls and Wraps\". As you peer into the truck, a shiver runs down your spine as you lock eyes with the entity running the operation. It wears richly-appointed black robes covered in golden coins, and its shadowed face is topped with a wide-brimmed hat. Its mouth leaks a chilling purple fog into the air. You may attempt to communicate with the entity, or you may simply take a food bowl. Or you can head back to the [[Night Market]]",
+    "roomId": "veganTruck"
+  },
+  "steamSale": {
+    "displayName": "Steam Sale",
+    "shortName": "Steam Sale",
+    "id": "steamSale",
+    "description": "You enter a makeshift store filled with shelves and colorful boxes in every direction. These shelves appear to be illegal knockoffs of games, made by the goblin merchants. A greasy goblin stands behind the counter, swearing to anyone who asks that his products are legit. You notice a table in the back corner of the space, devoted to actual video games, which you are free to peruse. <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">",
+    "roomId": "steamSale"
   },
   "nightMarket": {
     "displayName": "Night Market",
     "shortName": "night market",
     "id": "nightMarket",
-    "description": "You walk into a sprawling goblin market full of food trucks and stalls run by a colorful collection of mischievous shopkeepers and chefs. Colorful banners draw your eye to each individual seller, and you hear raucous callouts begging for your attention everywhere you walk within this overwhelming cacophony. A central space is cleared out to provide a social space to gather away from the goblins peddling their wares. In this space you see people of every kind, mixed among performers doing energetic dances, or playing instruments in hope of a tip.",
+    "description": "You walk into a sprawling goblin market full of food trucks and stalls run by a colorful collection of mischievous shopkeepers and chefs. Colorful banners draw your eye to each individual seller, and you hear raucous callouts begging for your attention everywhere you walk within this overwhelming cacophony. A central space is cleared out to provide a social space to gather away from the goblins peddling their wares. In this space you see people of every kind, mixed among performers doing energetic dances, or playing instruments in hope of a tip. Ahead of you, you see [[a peddler of games->steamSale]]. To your left are [[some standing tables->standingTables]] and a [[picnic grounds->picnicGrounds]]. To your right you see [[a goblin selling swag->swag]], and some food trucks. There's [[a kebab truck->kebabTruck]], [[a boba truck->bobaTruck]], [[a taco truck->tacoTruck]], and [[a vegan truck->veganTruck]].",
     "roomId": "nightMarket"
+  },
+  "unconferencingHub": {
+    "displayName": "Unconferencing Pavilion",
+    "shortName": "Unconferencing Pavilion",
+    "id": "unconferencingHub",
+    "description": "You enter a pastoral campground in the clearing of a forest. Standing beneath the sunbeams is a crowd of goblins in pastel-colored polo shirts. The one in the center of the group is holding a guitar and smiling warmly at you, singing a song about the joys of making new friends. The campground appears to be split into four distinct sections, and there's a smiling goblin waiting at each to help guide you. You see [[the archery range->unconfArchery]], [[a wood shop->unconfWoodShop]], [[the docks->unconfDocks]], and [[a training field->unconfWeaponsTraining]].",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "Standing amidst the campground, a large wooden sign with haphazardly painted text reads \"UNCONFERENCE TOPIC SUGGESTIONS!\" A smaller sign nailed at a jaunty angle clarifies \"Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each uncoferencing block, moderators will assign the top four topics to rooms. Have fun!\"",
+      "noteWallButton": "Inspect the topics",
+      "addNoteLinkText": "suggest a topic",
+      "addNotePrompt": "What would you like to suggest?",
+      "noteWallDescription": "Topics for unconferencing discussion, ranked by upvotes."
+    },
+    "roomId": "unconferencingHub"
+  },
+  "bawdySingers": {
+    "displayName": "Bawdy Singers",
+    "shortName": "Bawdy Singers",
+    "id": "bawdySingers",
+    "description": "You enter a ring of felled logs arrayed into seating before a stage manned by a troupe of colorful goblins of mixed gender. They are singing a raucous tavern song with wildly inappropriate lyrics, and managing to do so while mostly staying on-key. The audience appears to be in various stages of intoxication, and emits riotous laughter every few moments, regardless of the lyrics being sung on stage.<p>You can also head back to the [[theater]].</p>",
+    "roomId": "bawdySingers"
+  },
+  "courtyard": {
+    "id": "courtyard",
+    "displayName": "The Courtyard",
+    "shortName": "courtyard",
+    "description": "Sights, sounds, and smells fill your senses as you enter the central courtyard. Dozens of goblins mill about among the festival goers like yourself, a cacophony of peoples wandering the grounds. The faire seems to have taken over what was once a park just far enough away from civilization to create the illusion of an untouched wilderness.<br/><br/>Towering above the courtyard, floating menacingly amidst a crossroads of paths, lies [[The Obelisk->obelisk]]. Just to the right of the central pathway is a booth covered in decorative pins, labeled the [[Pin Vendor->pinVendor]]. Just ahead and to the left is a [[Tattoo Truck->tattooTruck]] with colorful patrons coming and going. Opposite that Truck sits a [[wall full of notes->kiosk]]. <br/><br/> Following the path to the left of the courtyard, you see the [[Night Market->nightMarket]]. To the right you see [[Unconferencing->unconferencingHub]]. Directly ahead you see a massive stage surrounded by goblins in colorful garb, beckoning you towards the [[Theater->theater]] entrance.<br/><br/>",
+    "hasNoteWall": true,
+    "hidden": true,
+    "noteWallData": {
+      "roomWallDescription": "A big bulletin board sits in the middle of the hall, with a banner on top - \"Social Space Feedback\". An array of markers and sticky notes are nearby.",
+      "noteWallButton": "Add feedback",
+      "addNoteLinkText": "Add feedback",
+      "addNotePrompt": "What feedback do you have about the social space itself?",
+      "noteWallDescription": "Social Space Feedback"
+    },
+    "roomId": "courtyard"
+  },
+  "tacoTruck": {
+    "displayName": "Taco Truck",
+    "shortName": "taco truck",
+    "id": "tacoTruck",
+    "description": "An older man with a bushy white beard and wearing a prospector's outfit stands behind a table full of taco ingredients. Everything here appears to be freely up for grabs, but you can't help noticing the nearby shotgun. The old man stands neutrally in his thick apron, but you fear you see a glint of fury in his eyes. Or you can head back to the [[Night Market]]",
+    "roomId": "tacoTruck"
+  },
+  "entryway": {
+    "id": "entryway",
+    "displayName": "Fairgrounds Entrance",
+    "description": "You arrive at a path in a thickly wooded forest and see before you a colorful array of banners and a wall only barely containing a cacophony of what you assume is music. A gate stands before you with a banner hanging atop it, a banner made of no less than 6 other banners. Together they say \"Welcome To The Roguelike Celebration Camp Faire Market Extravaganza!\".<p>At the gate, you see 3 goblins pushing each other out of the way to try and reach you first, each one competing to hand you a flier advertising their part of this event. As you approach you are assaulted with advertisements for the [[Renaissance Theater->theater]], the [[Camp Grounds->unconferencingHub]], and the [[Night Market->nightMarket]]. Or you can just ignore them and walk into the [[Courtyard]] of the [[Obelisk]].</p>",
+    "shortName": "the entryway",
+    "hidden": true,
+    "roomId": "entryway"
+  },
+  "standingTables": {
+    "displayName": "Standing Tables",
+    "shortName": "standing tables",
+    "id": "standingTables",
+    "description": "You walk among a quieter part of the night market where you find a collection of standing tables set aside for people to relax while they eat. The hustle and bustle of the night market stirs in the distance, but here you can find some sense of peace. You feel the cool breeze wafting the scents of delicious foods being prepared nearby as you take a moment to simply enjoy yourself in the night air. When you are ready, you may head back to the [[Night Market]]</p>",
+    "roomId": "standingTables"
+  },
+  "goofyItems": {
+    "displayName": "Goofy Items",
+    "shortName": "goofy items",
+    "id": "goofyItems",
+    "description": "You walk up to a table covered in signs advertising handmade pins. The table is covered in an assortment of pins, but they're all marked as \"display only\". The only purchasing option appears to be an enormous iron bingo machine repurposed to dispense pins instead of numbered balls. A heavily-muscled goblin stands at the crank with a massive smile, seeming eager to spin the crank and [[dispense a pin for you->drinkPolymorph]].<p>There's a tiny bucket labelled \"returns\", which is being lorded over by a muscular goblin with a withering scowl. The [[bucket->drinkCancellation]] appears to be empty.</p>. Or you can head back to the [[Courtyard]].",
+    "roomId": "goofyItems"
+  },
+  "unconfArchery": {
+    "displayName": "Unconferencing: the Archery Range",
+    "shortName": "archery",
+    "id": "unconfArchery",
+    "description": "You walk onto a grassy area, most of which has been cordoned off by ropes. On this side of the ropes is a walking path with various stations set aside with tables holding strange equipment. Each station is setup down the path from a bale of hay with a target on it, and at the very last sation along the row you see a crowd of goblins standing behind a naked human child. The child faces his target, launching tears with terrifying accuracy. One goblin stands at the nearest station, attempting to replicate the child’s feat to a mixed level of success. <p>(This is an unconferencing room.)<br/><br/>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/85153133482?pwd=muPgiZMpQPPK9hrOof3AY0AFOqg3rb.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 188778)<br/><br/>The other unconferencing rooms are the [[wood shop->unconfWoodShop]], the [[docks->unconfDocks]], and the [[training field->unconfWeaponsTraining]]. You can also just wander around the [[pavilion->unconferencinghub]].</p>",
+    "roomId": "unconfArchery"
+  },
+  "backHallway": {
+    "displayName": "Back Hallway",
+    "shortName": "back hallway",
+    "id": "backHallway",
+    "description": "You continue walking and reach a distant part of the labyrinth of hallways. A dank smell wafts through the air just before your eyes catch sight of a man in a long trench coat standing next to a slimmer man with long hair. Around them both are a small army of mall rats, chittering as they eat crumbs off the floor. The mall rats appear to be dressed just like the rest of the feral teens you've seen.<br/><br/>The man in the trenchoat introduces himself as [[Loud Robert->talkToLoudRobert]], and his friend, [[Ray->talkToRay]], puts out his hand and offers you what appears to be a tightly-rolled cigarette.<br/><br/>You could also ignore the people here, and continue towards the [[Chasm->chasm]].<br/><br/>Or you could return to the [[Left Hallway->leftHallway]].",
+    "hidden": true,
+    "roomId": "backHallway"
+  },
+  "adventurersGuildHall": {
+    "id": "adventurersGuildHall",
+    "displayName": "Adventurer's Guild Hall",
+    "shortName": "the Guild",
+    "description": "A shockingly fast steam engine whisks you to a grand lounge of bronze, dark woods, and ivy trellises. Every once in a while you hear the pneumatic \"whoosh\" as items are carried through tubing. There's plenty of sturdy tufted couches and velvet lounge chairs, and a variety of elegantly carved coffee tables covered in books and journals.</br></br>You can go back to the central [[hall->centralHall]], or visit the [[Office of Steam->officeOfSteam]] or the [[Video Dome->videoDome]].",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "One journal is open, a black tome decorated with silvery and bronze swirls - \"Procedural Generation Surprises\" on the cover. Quill pens are nearby.",
+      "noteWallButton": "Contribute",
+      "addNoteLinkText": "Contribute",
+      "addNotePrompt": "Tell us of a time a procedural generator has surprised or delighted you!",
+      "noteWallDescription": "Tales of strange, delightful emergent results from procedural generators."
+    },
+    "roomId": "adventurersGuildHall",
+    "hidden": true
+  },
+  "obelisk": {
+    "displayName": "Obelisk",
+    "shortName": "obelisk",
+    "id": "obelisk",
+    "description": "You stand beneath a towering stone slab which glows faintly with layers upon layers of finely-carved runes sprawling across the surface in elaborate patterns. As you stare at the glowing runes, you feel your mind begin to connect with it. It demands information. A deep fear imbeds itself within your heart as you realize the stone is sentient. Feed it your most valuable links, or else you fear what may come to pass. </br></br> When you're done, you head back to the [[Courtyard]].</br></br>",
+    "roomId": "obelisk",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "Much wisdom is collected here. You are compelled to share your own.",
+      "noteWallButton": "Add reference",
+      "addNoteLinkText": "add a reference",
+      "addNotePrompt": "What would you like to link to",
+      "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
+    }
+  },
+  "unconfWeaponsTraining": {
+    "displayName": "Unconferencing: Weapons Training Field",
+    "shortName": "training grounds",
+    "id": "unconfWeaponsTraining",
+    "description": "You walk into an empty field amidst a forest of trees, a cleared out space on the edge of the goblin camp. This space has been intentionally flattened with next to no grass left at its center. Pedestals line one side of the space, and visibly magical weapons sit atop them, shining in radiant glory. In the middle of the clear space stands a skeleton in a fighting stance, begging you forward to fight him. <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87833202905?pwd=NDJBVDIybdLDUd746NJoMrzm0b1At1.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 833995)</p><p>The other unconferencing rooms are the [[wood shop->unconfWoodShop]], the [[docks->unconfDocks]], and the [[archery range->unconfArchery]]. You can also just wander around the [[pavilion->unconferencinghub]].</p>",
+    "roomId": "unconfWeaponsTraining"
+  },
+  "officeOfSteam": {
+    "id": "officeOfSteam",
+    "displayName": "Office of Steam",
+    "shortName": "the Office of Steam",
+    "description": "This sparsely-furnished room has little more in it than a typewriter standing on a pillar at its center. As you look down, however, you see a glass floor suspending you above an enormous sprawling mass of pipes and brass machinery. Chutes and tubes create fire and move steam in intricate patterns all ultimately funelling back into the typewriter stand you noticed before. Dwarves are scurrying to and fro, tinkering with the machines. Hooked to the typewriter is a small screen, akin to teletext, and regularly printing out game [[recommendations->getGameRec]]. Anachronistically, a cute Post-It Note shaped like a quokka is on the side of the screen, with the note \"Coming Soon: 2022 Steam Sale\" in loopy handwriting. If you'd like, you can investigate the <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">source of its steam power</a>, or go back to the [[Guild Hall->adventurersGuildHall]].",
+    "roomId": "officeOfSteam",
+    "hidden": true
+  },
+  "fountain": {
+    "displayName": "Fountain",
+    "shortName": "fountain",
+    "id": "fountain",
+    "description": "You approach a beautiful fountain surrounded by a group of weirdly-attractive goblins in skimpy clothing. A young goblin man with rippling, well-oiled muscles approaches and hands you a minty fruit drink. A buxom goblin woman sings a lilting song in the distance. There's a small line leading up to a booth of beautiful goblins offering free hugs, and you see a crowd of people lying beneath the shade, catching a little rest.<p>You can also head back to the [[theater]].</p>",
+    "roomId": "fountain"
+  },
+  "unconfDocks": {
+    "displayName": "Unconferencing: Docks",
+    "shortName": "docks",
+    "id": "unconfDocks",
+    "description": "You walk out to the local lake and find a quiet space seemingly devoid of goblin presence. Looking around, you see old docks protruding out into the water where the lake meets a river, and looking down that river you see it slowly expand and become tumultuous rapids. At the start of that river, sitting on a raft at the docks, is a dog. The dog carries a bright orange backpack and stares at you expectantly, but you’re not sure why. <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87833202905?pwd=NDJBVDIybdLDUd746NJoMrzm0b1At1.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 833995)</p><p>The other unconferencing rooms are the [[wood shop->unconfWoodShop]], the [[archery range->unconfArchery]], and the [[training field->unconfWeaponsTraining]]. You can also just wander around the [[pavilion->unconferencinghub]].</p>",
+    "roomId": "unconfDocks"
+  },
+  "whipShow": {
+    "displayName": "Whip Show",
+    "shortName": "whip show",
+    "id": "whipShow",
+    "description": "You approach a stage hosting a goblin wearing colorful stripes and wielding long whips that crack through the air on a rhythm. Above that goblin are several others in similarly bright colors and holding themselves in tight balls as they fly at least twenty feet above the ground. Each time one of them begins to drop, a whip cracks out and they bounce another few feet back up into the sky. The whip-wielding goblin drips in sweat, but the crowd roars in excitement with each successful juggle.<p>You can also head back to the [[theater]].</p>",
+    "roomId": "whipShow"
+  },
+  "centralHall": {
+    "id": "centralHall",
+    "displayName": "Central Hall",
+    "shortName": "the hall",
+    "description": "Lights and sounds fill your senses as you enter the towering Central Hall. The warm hum of conversation gently envelops you and the rest of the crowd here as each of you share in the collective grandeur. High above you see ascii sigils glittering in the air as the ceiling fades into an impossible distance. Each of the branching hallways leaving this central hub seem to shift from stonework into wood, brass, or some kind of hi-tech polymer material as the needs of the space make its theming tangible.<br/><br/>Just to the right of the central pathway is a booth covered in various bits and bobs, labeled the [[Swag Table->swag]]. On the opposite side of that same path is a towering monolith of signs behind a roped off area marked as [[Destinations->destinations]]. At the ends of the hall, where the paths begin to fade into wooden panelling, you see a painted tavern sign just above the entrance to the [[Bar->old_bar]],and just beyond that a short hallways leads to the [[unconferencing rooms->Unconferencing]]. Opposite that, a carpeted hallway leads up to the [[Video Dome->videoDome]]. Directly between the left and right halls, at the end of the central path you've been travelling, a chorus of lights dance above a door advertising the [[Theater->theater]] entrance.<br/><br/>",
+    "hasNoteWall": true,
+    "hidden": true,
+    "noteWallData": {
+      "roomWallDescription": "A big bulletin board sits in the middle of the hall, with a banner on top - \"Social Space Feedback\". An array of markers and sticky notes are nearby.",
+      "noteWallButton": "Add feedback",
+      "addNoteLinkText": "Add feedback",
+      "addNotePrompt": "What feedback do you have about the social space itself?",
+      "noteWallDescription": "Social Space Feedback"
+    },
+    "roomId": "centralHall"
+  },
+  "unconfWoodShop": {
+    "displayName": "Unconferencing: Wood Shop",
+    "shortName": "wood shop",
+    "id": "unconfWoodShop",
+    "description": "You walk into an old barn that’s very visibly been turned into a workshop, saws and various other equipment whirring in every corner, creating a noisy atmosphere of creativity. You see a pile of wood planks, tree stumps, and what appear to be nodules from derelict spacecraft. Sitting amongst the pile is an otter wearing a floppy purple wizard’s hat and glasses. A chalk board along the wall announces that this week’s craft project is “Shard Collector”, whatever that means. <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us06web.zoom.us/j/87833202905?pwd=NDJBVDIybdLDUd746NJoMrzm0b1At1.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (Passcode 833995)</p><p>TThe other unconferencing rooms are the [[archery range->unconfArchery]], the [[docks->unconfDocks]], and the [[training field->unconfWeaponsTraining]]. You can also just wander around the [[pavilion->unconferencinghub]]..</p>",
+    "roomId": "unconfWoodShop"
+  },
+  "joust": {
+    "displayName": "Jousting Arena",
+    "shortName": "jousting",
+    "id": "joust",
+    "description": "You enter a sandy gladiator's pit surrounded by stands full of screaming fans. Two goblins ride horseback, wearing armor and wielding lances at least six times their height. Other armored goblins run about the space swinging sharpened metal without any thought for the safety of either themselves or others. Every time you hear the sound of an impact, it's immediately followed by a cheer, and you're pretty sure it doesn't matter who could be considered winning.<p>You can also head back to the [[theater]].</p>",
+    "roomId": "joust"
+  },
+  "bar": {
+    "displayName": "Grafitti Notewall Room",
+    "shortName": "the photo booth",
+    "id": "bar",
+    "description": "Every 5 seconds you hear a camera shutter go off, and photos are printed in sets of 5 in a strange string. You are here alone, and yet the photos print with faces of cheerful teenagers surrounding your confused one. It’s impossible to know if this place is haunted, or if the camera just wants you to feel like you’re not alone.<br/><br/>From here you can see the gothic facade of a [[Hot Topic->hotTopic]], or follow your nose to the [[food court->foodCourt]].<br/><br/>",
+    "roomId": "bar",
+    "hasNoteWall": true,
+    "hidden": true,
+    "noteWallData": {
+      "roomWallDescription": "Next to the booth, a sign asks visitors to describe their favourite Mall of Moria memory on the back of a photo and drop it in the provided box, for a chance to win a $3 gift card. You see no sign of a box, but the pile of pens have been put to good use scribbling graffiti directly onto the wall.",
+      "noteWallButton": "Add your mark",
+      "addNoteLinkText": "Contribute",
+      "addNotePrompt": "Contribute to the graffiti?",
+      "noteWallDescription": "Someone has scratched ‘Rodney was here’ directly into the wall here, and a web of messages in various hands spreads out around it."
+    }
+  },
+  "kiosk": {
+    "displayName": "Bulletin Board",
+    "shortName": "bulletin board",
+    "id": "kiosk",
+    "description": "A sprawling cacophony of paper stands attached to a series of wooden planks held together by pure willpower. Each tiny note screams a message at passersby, threatening them with a message from whatever tiny goblin has felt the need to express themself.",
+    "roomId": "kiosk",
+    "hasNoteWall": true,
+    "noteWallData": {
+      "roomWallDescription": "A goblin in a tiny trenchcoat stands nearby offering you a colorful piece of paper and a pen.",
+      "noteWallButton": "Add feedback",
+      "addNoteLinkText": "Add feedback",
+      "addNotePrompt": "What feedback do you have about the social space itself?",
+      "noteWallDescription": "Social Space Feedback"
+    }
+  },
+  "experimentalBiology": {
+    "id": "experimentalBiology",
+    "displayName": "Experimental Biology Lab",
+    "shortName": "experimental biology",
+    "description": "Endless bottles and mismatched jars line the walls, casting disorienting lights in every direction. At the center of the visual cacophony stands a mechanical contraption that looks like the exact midpoint between an examination table, a lounge chair, and a torture device. Standing beside that is [[Doctor Hope->talkToDrHope]], a tall, gangly scientist who looks like the result of plugging a child into an electrical socket at a formative age.<br/> To her left is a table covered in baked goods. There appears to be bread and muffins of every kind you can imagine.<br/><br/>From here you can return to the [[hall->centralHall]].",
+    "specialFeatures": [
+      "RAINBOW_DOOR",
+      "DULL_DOOR"
+    ],
+    "roomId": "experimentalBiology",
+    "hasNoteWall": true,
+    "hidden": true,
+    "noteWallData": {
+      "roomWallDescription": "There is a chalkboard set up to the side with \"REFERENCES!!!\" written across the top.",
+      "noteWallButton": "Add reference material",
+      "addNoteLinkText": "add a reference",
+      "addNotePrompt": "What would you like to link to",
+      "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
+    }
   }
 }
