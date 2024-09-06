@@ -17,7 +17,27 @@ export const generate = () => {
       'You notice, sticking out from its hiding place beneath a stack of books, a check signed \'Mom & Dad\'.',
       'As she moves, the burnt hay stack that is her hair stiffly waves back and forth, as if trying to signal for rescue.',
       'She walks by a trash can, mumbling, and you can\'t help but notice a pile of Cease and Desist letters, torn and discarded.',
-      'You look at the equipment she\'s using and can\t help but marvel at how clean it is, a stark contrast to her own lab coat.'
+      'You look at the equipment she\'s using and can\t help but marvel at how clean it is, a stark contrast to her own lab coat.',
+      'You peer over her notes - is that a recipe for #bakedGood#?'
+    ],
+    bakedGood: [
+      '#flavor# cookies',
+      'extremely decadent brownies',
+      'cheesecake',
+      'brioche',
+      'coffee cake'
+    ],
+    flavor: [
+      'fortune',
+      'chocolate chip',
+      'snickerdoodle',
+      'chocolate mint',
+      'coconut caramel',
+      'lemon drizzle',
+      'maple cream',
+      'speculaas',
+      'shortbread',
+      'gingersnap'
     ]
   })
 

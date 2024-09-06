@@ -29,6 +29,8 @@ export default function NameView (props: Props) {
   const { useSimpleNames } = useContext(SettingsContext)
   const { userMap, myId } = useContext(UserMapContext)
 
+  ReactTooltip.rebuild()
+
   const isSelf = props.userId === myId
 
   const user: User = userMap[props.userId]
@@ -43,7 +45,7 @@ export default function NameView (props: Props) {
 
   // This sometimes gets called before `connect` returns any users
   // That itself is a bug to fix, but this can at least guard against it.
-  if (!user || Object.keys(userMap).length === 1) {
+  if (!user || (Object.keys(userMap).length === 1 && !isSelf)) {
     return <div />
   }
 
@@ -81,27 +83,22 @@ export default function NameView (props: Props) {
       }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
     )
     if (doSpeaker) {
-      toggleUserSpeaker(data.id, '2022')
+      toggleUserSpeaker(data.id, '2024')
     }
   }
 
   const handlePastSpeaker = (e, data) => {
-    toggleUserSpeaker(data.id, '2021')
+    toggleUserSpeaker(data.id, '2023')
   }
 
   const pastSpeakerButton = userIsMod ? (
     <MenuItem
       data={
-        {
-          badge: {
-            emoji: '🎙️',
-            description: 'Speaker Alumni Club'
-          }
-        }
+        { id: props.userId }
       }
       onClick={handlePastSpeaker}
     >
-    Make past speaker
+    Make 2023 speaker
     </MenuItem>
   ) : (
     ''
@@ -150,20 +147,23 @@ export default function NameView (props: Props) {
   if (!useSimpleNames && user && user.fontReward) {
     className = className + ' font-' + user.fontReward
   }
+  if (userIsMod) {
+    className += ' mod'
+  }
 
   const badges = (user.equippedBadges || [])
-    .map((b, i) => <BadgeView key={`badge-${i}`} badge={b} />)
+    .map((b, i) => <BadgeView key={`badge-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />)
 
   // TODO: This is not yet being set anywhere
   if (user.isSpeaker) {
     badges.unshift(
-      <BadgeView key='badge-speaker' isCustom={true} badge={{ emoji: 'speaker', description: 'Speaker' }} />
+      <BadgeView key='badge-speaker' isCustom={true} emoji='speaker' description='Speaker' />
     )
   }
 
   if (user.isMod) {
     badges.unshift(
-      <BadgeView key='badge-mod' isCustom={true} badge={{ emoji: 'mod', description: 'Moderator' }} />
+      <BadgeView key='badge-mod' isCustom={true} emoji='mod' description='Moderator' />
     )
   }
 
@@ -171,7 +171,7 @@ export default function NameView (props: Props) {
   const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
 
   const nameEl = (
-    <strong className={isMod ? 'mod' : ''}>
+    <strong data-tip={!useSimpleNames && (user?.pronouns ?? '')} className={isMod ? 'mod' : ''}>
       {(!useSimpleNames && user && user.polymorph) || ''}
       {username || 'unknown'}
       {useSimpleNames ? '' : badges}
@@ -205,9 +205,8 @@ export default function NameView (props: Props) {
     </ContextMenu></>
 
     return (
-      <span className={className} data-tip={user?.pronouns} style={customStyle} >
+      <span className={className} style={customStyle} >
         {props.skipMenu ? nameEl : menu}
-        <ReactTooltip />
       </span>
     )
   } else {
@@ -229,9 +228,8 @@ export default function NameView (props: Props) {
     </>
 
     return (
-      <span className={className} data-tip={user?.pronouns} style={customStyle} >
+      <span className={className} style={customStyle} >
         {props.skipMenu ? nameEl : menu}
-        <ReactTooltip />
       </span>
     )
   }

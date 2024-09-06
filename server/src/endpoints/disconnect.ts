@@ -18,10 +18,6 @@ const disconnect: AuthenticatedEndpointFunction = async (user: User, inputs: any
         target: 'playerDisconnected',
         arguments: [user.id]
       },
-      {
-        target: 'videoPresence',
-        arguments: [user.roomId, await DB.updateVideoPresenceForUser(user, false)]
-      },
       await globalPresenceMessage([user.roomId])
     ],
     httpResponse: {

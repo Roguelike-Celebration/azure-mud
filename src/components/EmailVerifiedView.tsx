@@ -1,7 +1,4 @@
-import React, { useContext } from 'react'
-import { DispatchContext } from '../App'
-import { AuthenticateAction, HideSideMenuAction } from '../Actions'
-import config from '../config'
+import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 

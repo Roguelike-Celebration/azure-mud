@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaVideo } from 'react-icons/fa'
+import { UserMapContext } from '../App'
 import { moveToRoom } from '../networking'
 
 import { Room } from '../room'
@@ -9,9 +10,13 @@ interface Props {
 }
 
 export default function RoomListView (props: Props) {
-  const list = props.rooms.map((r) => {
-    return r.hidden ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
-  })
+  const { userMap, myId } = useContext(UserMapContext)
+
+  const list = props.rooms
+    .sort((a, b) => a.displayName.toLowerCase() > b.displayName.toLowerCase() ? 1 : -1)
+    .map((r) => {
+      return (r.hidden && !userMap[myId].isMod) ? '' : <RoomListItem room={r} key={`room-sidebar-${r.id}`} />
+    })
 
   return (
     <div>
@@ -35,7 +40,7 @@ const RoomListItem = (props: { room: Room }) => {
   return (
     <li style={{ listStyle: 'none' }}>
       <button onClick={onClick} className="link-styled-button">
-        <strong>{room.displayName}</strong> {userCount} {videoIcon}
+        <strong>{room.hidden ? '(hidden) ' : ''}{room.displayName}</strong> {userCount} {videoIcon}
       </button>
     </li>
   )

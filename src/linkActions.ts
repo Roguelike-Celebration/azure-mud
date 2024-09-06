@@ -5,6 +5,9 @@ export const linkActions = {
   generateFood: () => {
     pickUpRandomItemFromList('vendingMachineFood')
   },
+  playCraneGame: () => {
+    pickUpRandomItemFromList('craneGame')
+  },
   pickUpPuppy: () => {
     pickUpItem('a tiny puppy')
   },
@@ -64,6 +67,30 @@ export const linkActions = {
   },
   orderNewDrink: () => {
     orderNewDrink()
+  },
+  spinAround: () => {
+    spinTheRoom()
+  },
+  talkToBodyWorksCharacter: () => {
+    displayMessageFromList('bodyWorksCharacter')
+  },
+  readCatalog: () => {
+    pickUpRandomItemFromList('seersCatalog')
+  },
+  talkToZara: () => {
+    displayMessageFromList('zara')
+  },
+  talkToHotDogGuy: () => {
+    displayMessageFromList('hotDogGuy')
+  },
+  talkToRay: () => {
+    displayMessageFromList('ray')
+  },
+  talkToLoudRobert: () => {
+    displayMessageFromList('loudRobert')
+  },
+  tossARock: () => {
+    displayMessageFromList('tossARock')
   }
 }
 
@@ -71,4 +98,11 @@ const pentagramAction = function (font: string) {
   updateFontReward(uuidv4(), font)
   sendChatMessage(uuidv4(), '/go ASCII')
   displayMessage('You feel changed by your journey through the pentagram...')
+}
+
+const spinTheRoom = () => {
+  document.querySelector('#main').classList.add('spin')
+  setTimeout(() => {
+    document.querySelector('#main').classList.remove('spin')
+  }, 1600)
 }

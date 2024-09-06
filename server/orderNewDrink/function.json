@@ -1,4 +1,4 @@
-{
+
   {
     "bindings": [
       {
@@ -14,9 +14,9 @@
         "name": "res"
       },
       {
-        "type": "signalR",
-        "name": "signalRMessages",
-        "hubName": "chat",
+        "type": "webPubSub",
+        "name": "actions",
+        "hub": "chat",
         "direction": "out"
       },
       {
@@ -28,4 +28,4 @@
     ],
     "scriptFile": "../dist/orderNewDrink/index.js"
   }
-}
+

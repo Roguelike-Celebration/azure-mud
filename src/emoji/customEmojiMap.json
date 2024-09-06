@@ -1,3 +1,20 @@
 {
-  "spelunky_pug": "https://static.wikia.nocookie.net/spelunky/images/a/a4/Monty_Link_S2.png"
+  "artificer": "images/badges/procgen_artificer.png",
+  "bard": "images/badges/procgen_bard.png",
+  "cleric": "images/badges/procgen_cleric.png",
+  "device_of_luthien": "images/badges/device_of_luthien.png",
+  "druid": "images/badges/procgen_druid.png",
+  "golden_thesis": "images/badges/golden_thesis.png",
+  "nega_ticket": "images/badges/nega_ticket.png",
+  "paladin": "images/badges/procgen_paladin.png",
+  "phylactery": "images/badges/phylactery.png",
+  "ranger": "images/badges/procgen_ranger.png",
+  "sorceror": "images/badges/procgen_sorceror.png",
+  "spelunky_pug": "https://static.wikia.nocookie.net/spelunky/images/a/a4/Monty_Link_S2.png",
+  "warlock": "images/badges/procgen_warlock.png",
+  "wizard": "images/badges/procgen_wizard.png",
+  "undermuffin": "images/badges/undermuffin.png",
+  "eelhead": "images/badges/eel_0.png",
+  "eeltail": "images/badges/eel_1.png",
+  "obelisk": "images/badges/OBELISK_1.png"
 }

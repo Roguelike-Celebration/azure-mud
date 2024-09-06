@@ -28,7 +28,7 @@ const pickUpItem: AuthenticatedEndpointFunction = async (user: User, inputs: any
     log(privateActionString)
   } else if (inputs.item) {
     item = inputs.item
-    if (!allowedItems.includes(item)) {
+    if (!allowedItems.map(item => item.toUpperCase()).includes(item.toUpperCase())) {
       return {
         httpResponse: {
           status: 400,

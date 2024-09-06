@@ -42,7 +42,7 @@ const danceList = [
   'does the 7DRL and just barely finishes.',
   'does a realtime dance with roguelike elements.',
   'does the Z Level.',
-  'does starts to do the Line of Sight but then falls into a rabbit hole about which implementation to dance.',
+  'starts to do the Line of Sight but then falls into a rabbit hole about which implementation to dance.',
   'does the Flood Fill.',
   'started doing a simple Roguelike Developer dance but somehow now they\'re trying to to wrap their mind around the Computational Graph Theory dance?',
   'does the Auto-Explore.',
@@ -56,7 +56,11 @@ const danceList = [
   'does the Ancient Dance of Mystery.',
   'executes a competent Angbarndance.',
   'speedruns through a dance- wow!',
-  'absolutely nails a flawlessly executed Ascension Kit. Great form!'
+  'absolutely nails a flawlessly executed Ascension Kit. Great form!',
+  'does the Sargasso Sea Shimmy! It\'s unclear where the dance starts and ends...',
+  'does the hjklyubn step',
+  'does the Fish Doorbell to get the security cameras\' attention',
+  'does the Boot Screen Boogie'
 ]
 
 export function dance (user: User, messageId: string): Result {

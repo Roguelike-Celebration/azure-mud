@@ -13,6 +13,7 @@ import { FaChevronDown, FaChevronUp, FaCog } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
+import { ConfettiRoomView } from './feature/ConfettiRoomView'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
@@ -68,6 +69,12 @@ export default function RoomView (props: Props) {
       e.target && e.target.getAttribute && e.target.getAttribute('data-action')
     if (actionName) {
       linkActions[actionName]()
+    }
+
+    const showModal =
+      e.target && e.target.getAttribute && e.target.getAttribute('data-modal')
+    if (showModal) {
+      dispatch(ShowModalAction(Modal.SpecialFeatureText))
     }
   }
 
@@ -183,6 +190,9 @@ export default function RoomView (props: Props) {
           ) : (
             ''
           )}
+        {room?.specialFeatures?.includes('CONFETTI') &&
+          <ConfettiRoomView />
+        }
         {room && room.riddles ? (
           <button id="riddle-button" onClick={showRiddles}>
             {room.riddles.length > 1
@@ -222,6 +232,8 @@ function parseDescription (
     const userCount = presenceData[roomId]
     if (roomId === 'item') {
       return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
+    } else if (roomId === 'showModal') {
+      return `<a class='room-link' href='#' data-modal='${roomId}'>${text}</a>`
     } else if (room) {
       const userCountString = userCount > 0 ? ` (${userCount})` : ''
       return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCountString}</a>`
@@ -261,7 +273,7 @@ export function StreamEmbed () {
         title="stream"
         ref={streamRef}
         height="315"
-        src="https://www.youtube.com/embed/live_stream?channel=UCKv_QzXft4mD6TXmQBZtzIA"
+        src="https://www.youtube.com/embed/CZYon-aK4O0?si=BYUl5NQHPgW7jQ1j"
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

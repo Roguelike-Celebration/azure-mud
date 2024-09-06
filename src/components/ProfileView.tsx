@@ -9,6 +9,7 @@ import NameView from './NameView'
 import ReactTooltip from 'react-tooltip'
 
 import '../../style/profileView.css'
+import BadgeView from './BadgeView'
 
 const ProfileWhisperView = (props: WhisperMessage & {id: string, otherUser: PublicUser}) => {
   const { otherUser } = props
@@ -26,11 +27,10 @@ const ProfileWhisperView = (props: WhisperMessage & {id: string, otherUser: Publ
     return (
       <div className="whisper-message">
         <em>
-          <span data-tip={otherUser && otherUser.pronouns}>
+          <span data-tip={otherUser?.pronouns}>
             {otherUser.username}
           </span>:{' '}
           {props.message}
-          <ReactTooltip />
         </em>
       </div>
     )
@@ -63,12 +63,10 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     null
   )
 
-  const twitterHandle = user.twitterHandle ? (
-    <div id="profile-twitter">
-      <strong>Twitter</strong>:{' '}
-      <a href={`https://twitter.com/${user.twitterHandle}`} target="_blank" rel="noreferrer">
-      @{user.twitterHandle}
-      </a>
+  const socialLink = user.twitterHandle ? (
+    <div id="profile-social">
+      <strong>Social Link</strong>:{' '}
+      {user.twitterHandle}
     </div>
   ) : (
     null
@@ -104,7 +102,10 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     </a>
   )
 
-  return (
+  const noInformation = !realName && !user.pronouns && !description && !socialLink && !url && !askMeAbout
+
+  return (<>
+    <ReactTooltip />
     <Linkify componentDecorator={linkDecorator}>
       <div id="profile" style={{ overflowWrap: 'anywhere' }}>
         <div className='fixed'>
@@ -112,19 +113,32 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
             <h2 className={user.isMod ? 'mod' : ''}><NameView userId={user.id} id={`profile-nameview-${user.id}`} /></h2>
             <button className='close-profile' onClick={() => dispatch(HideProfileAction())}>X</button>
           </div>
-          <p>
-            {realName}
-            <div id="profile-pronouns">{user.pronouns}</div>
-            {description}
-          </p>
+          <section className="badges">
+            {user.unlockedBadges?.map(badge => {
+              return (<BadgeView key={badge.emoji} emoji={badge.emoji} description={badge.description} isCustom={badge.isCustom} />)
+            })}
+          </section>
+          <section className="profile-details">
+            <p>
+              {realName}
+              <div id="profile-pronouns">{user.pronouns}</div>
+              <i>{description}</i>
+            </p>
 
-          {user.item ? <p>{user.username} is currently holding {user.item}</p> : null}
+            <p>
+              {socialLink}
+              {url}
+              {askMeAbout}
+            </p>
 
-          <p>
-            {twitterHandle}
-            {url}
-            {askMeAbout}
-          </p>
+            {noInformation &&
+              <i>{user.username} has no further information. How mysterious!</i>
+            }
+
+            {user.item && <p>{user.username} is currently holding {user.item}</p>}
+
+          </section>
+
           <div id="chat-container">
             <div id="chat-header">Whisper Chat</div>
             <div id="chat">
@@ -138,5 +152,6 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
         </div>
       </div>
     </Linkify>
+  </>
   )
 }

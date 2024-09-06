@@ -12,8 +12,8 @@ export default function (props: {roomIds: string[]}) {
   const roomIds = _.sortBy(props.roomIds || [])
 
   const clickedResetData = async () => {
-    if (!confirm("Are you sure you'd like to reset room data?")) return
-    await resetRoomData()
+    if (!confirm("Are you sure you'd like to reset room data? This may cause irrevocable data loss. (will also force a page refresh sorry)")) return
+    await resetRoomData(true)
     await getAllRooms()
   }
 
@@ -31,7 +31,7 @@ export default function (props: {roomIds: string[]}) {
 
   const onClick = async (e) => {
     const roomId = e.target && e.target.getAttribute && e.target.getAttribute('data-room')
-    if (roomId) {
+    if (roomId && confirm('Did you save your changes?')) {
       // TODO: This is bad compared to handling this async better
       // The cobbler's children have no shoes.
       const roomData = await getRoom(roomId)

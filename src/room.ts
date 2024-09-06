@@ -20,6 +20,7 @@ export interface Room {
   notes?: RoomNote[]
   specialFeatures?: string[]
   riddles?: string[]
+  specialFeatureText?: string
 }
 
 export interface MinimalRoom {
@@ -39,7 +40,8 @@ export function convertServerRoom (room: Server.Room): Room {
     hidden: room.hidden,
     specialFeatures: room.specialFeatures,
     riddles: room.riddles,
-    users: room.users
+    users: room.users,
+    specialFeatureText: room.specialFeatureText
   }
 }
 

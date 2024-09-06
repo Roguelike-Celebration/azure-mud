@@ -90,10 +90,6 @@ async function disconnectAndBan (user: User, target: User, result: Result) {
       target: 'playerDisconnected',
       arguments: [target.id]
     },
-    {
-      target: 'videoPresence',
-      arguments: [target.roomId, await DB.updateVideoPresenceForUser(target, false)]
-    },
     await globalPresenceMessage([target.roomId])
   ]
 }

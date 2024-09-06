@@ -18,9 +18,7 @@ const uiConfig = {
     }
   },
   signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.TwitterAuthProvider.PROVIDER_ID
+    firebase.auth.EmailAuthProvider.PROVIDER_ID
   ]
 }
 
@@ -28,7 +26,7 @@ export default function LoggedOutView () {
   return (
     <div>
       <header role="banner">
-        <h1>Welcome to Roguelike Celebration 2022!</h1>
+        <h1>Welcome to Roguelike Celebration 2024!</h1>
       </header>
       <main role="main">
         <p>
@@ -41,13 +39,13 @@ export default function LoggedOutView () {
         </p>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <p>
-          If you log in via email, we will require you to verify that email address.
+          <strong>We no longer support signing in with any form other than email.</strong> We&apos;re sorry if you used
+          one of the third-party sign-ons in previous years. If you sign in using the same email you used for Twitter
+          or Google, you should be able to recover your account (it will ask you to reset your password) - otherwise,
+          please make a new account.
         </p>
         <p>
-          No matter which service you log in with, we do not access any data
-          other than what is needed to authenticate you. If it would make you
-          more comfortable, feel free to sign up for and use a throwaway
-          account on one of these services.
+          If you sign up for a new account, we will require you to verify that email address.
         </p>
         <p>
           After logging in, you will have the opportunity to pick whatever chat handle you would

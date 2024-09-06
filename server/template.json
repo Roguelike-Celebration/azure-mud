@@ -4,16 +4,28 @@
 	"parameters": {
 		"appName": {
 			"type": "string",
-            "defaultValue": "your-app-name",
+			"defaultValue": "your-app-name",
 			"metadata": {
 				"description": "The name of the function app that you wish to create."
 			}
 		},
 		"clientHostname": {
 			"type": "string",
-			"defaultValue": "https://lazerwalker.com",
+			"defaultValue": "https://chat.roguelike.club",
 			"metadata": {
-				"description": "The hostname for where your frontend will be hosted. This must be served over HTTPS.)"
+				"description": "The hostname for where your frontend will be hosted. This must be served over HTTPS. You can leave this as the default if you don't plan to set up a custom domain (but it can't be empty because computers)"
+			}
+		},
+		"repositoryToken": {
+			"type": "string",
+			"metadata": {
+				"description": "The GitHub personal access token used to access your repository. See https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+			}
+		},
+		"repositoryUrl": {
+			"type": "string",
+			"metadata": {
+				"description": "The URL of the GitHub repository for your azure-mud fork"
 			}
 		}
 	},
@@ -22,7 +34,9 @@
 		"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'functions')]",
 		"signalRName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-signalr')]",
 		"redisCacheName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-redis')]",
-		"appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-ai')]"
+		"appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-ai')]",
+		"aswaName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-aswa')]",
+		"pubsubName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-pubsub')]"
 	},
 	"resources": [{
 			"type": "Microsoft.Storage/storageAccounts",
@@ -47,17 +61,21 @@
 			],
 			"properties": {
 				"name": "[variables('functionAppName')]",
+				"dependsOn": [
+					"[resourceId('Microsoft.Web/staticSites', variables('aswaName'))]"
+				],
 				"siteConfig": {
 					"cors": {
 						"allowedOrigins": [
 							"http://localhost:1234",
-							"[parameters('clientHostname')]"
+							"[parameters('clientHostname')]",
+							"[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
 						],
 						"supportCredentials": true
 					},
 					"appSettings": [{
 							"name": "FUNCTIONS_EXTENSION_VERSION",
-							"value": "~3"
+							"value": "~4"
 						},
 						{
 							"name": "FUNCTIONS_WORKER_RUNTIME",
@@ -65,7 +83,7 @@
 						},
 						{
 							"name": "WEBSITE_NODE_DEFAULT_VERSION",
-							"value": "~12"
+							"value": "~14"
 						},
 						{
 							"name": "WEBSITE_RUN_FROM_PACKAGE",
@@ -116,7 +134,8 @@
 				"type": "config",
 				"location": "[resourceGroup().location]",
 				"dependsOn": [
-					"[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
+					"[resourceId('Microsoft.Web/sites', variables('functionAppName'))]",
+					"[resourceId('Microsoft.Web/staticSites', variables('aswaName'))]"
 				],
 				"properties": {
 					"enabled": true,
@@ -126,7 +145,8 @@
 
 					"allowedExternalRedirectUrls": [
 						"http://localhost:1234",
-						"[parameters('clientHostname')]"
+						"[parameters('clientHostname')]",
+						"[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
 					]
 				}
 			}]
@@ -156,6 +176,25 @@
 			}
 		},
 		{
+			"apiVersion": "2021-01-15",
+			"name": "[variables('aswaName')]",
+			"type": "Microsoft.Web/staticSites",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"repositoryUrl": "[parameters('repositoryUrl')]",
+				"branch": "main",
+				"repositoryToken": "[parameters('repositoryToken')]",
+				"buildProperties": {
+					"skipGithubActionWorkflowGeneration": true,
+					"githubActionSecretNameOverride": "AZURE_STATIC_WEB_APPS_API_TOKEN"
+				}
+			},
+			"sku": {
+				"Tier": "Free",
+				"Name": "Free"
+			}
+		},
+		{
 			"type": "Microsoft.SignalRService/SignalR",
 			"apiVersion": "2020-07-01-preview",
 			"name": "[variables('signalRName')]",
@@ -165,6 +204,9 @@
 				"name": "Free_F1"
 			},
 			"kind": "SignalR",
+			"dependsOn": [
+				"[resourceId('Microsoft.Web/staticSites', variables('aswaName'))]"
+			],
 			"properties": {
 				"hostNamePrefix": "[variables('signalRName')]",
 				"features": [{
@@ -183,7 +225,8 @@
 				"cors": {
 					"allowedOrigins": [
 						"http://localhost:1234",
-						"[parameters('clientHostname')]"
+						"[parameters('clientHostname')]",
+						"[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
 					],
 					"supportCredentials": true
 				},
@@ -208,6 +251,63 @@
 						"hubPattern": "*",
 						"urlTemplate": "https://example.com/chat/api/connect"
 					}]
+				}
+			}
+		},
+
+		{
+			"type": "Microsoft.SignalRService/webPubSub",
+			"apiVersion": "2021-10-01",
+			"name": "[variables('pubsubName')]",
+			"location": "[resourceGroup().location]",
+			"sku": {
+				"capacity": 1,
+				"name": "Free_F1",
+				"tier": "Free"
+			},
+			"identity": {
+				"type": "None"
+			},
+			"properties": {
+				"disableAadAuth": false,
+				"disableLocalAuth": false,
+				"liveTraceConfiguration": {
+					"categories": [{
+							"enabled": "false",
+							"name": "ConnectivityLogs"
+						},
+						{
+							"enabled": "false",
+							"name": "MessagingLogs"
+						}
+					],
+					"enabled": "false"
+				},
+				"networkACLs": {
+					"defaultAction": "Deny",
+					"publicNetwork": {
+						"allow": [
+							"ServerConnection",
+							"ClientConnection",
+							"RESTAPI",
+							"Trace"
+						]
+					}
+				},
+				"publicNetworkAccess": "Enabled",
+				"resourceLogConfiguration": {
+					"categories": [{
+							"enabled": "true",
+							"name": "ConnectivityLogs"
+						},
+						{
+							"enabled": "true",
+							"name": "MessagingLogs"
+						}
+					]
+				},
+				"tls": {
+					"clientCertEnabled": false
 				}
 			}
 		}

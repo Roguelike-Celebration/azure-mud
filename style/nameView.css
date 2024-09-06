@@ -42,11 +42,6 @@ span.name {
   font-style: normal;
 }
 
-.mod {
-  background-color: var(--mod-line);
-  color: var(--main-text);
-}
-
 .name.Blue {
   color: var(--blue)
 }

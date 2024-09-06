@@ -20,5 +20,7 @@ export enum Modal {
     HappeningNow,
     Riddles,
     Badges,
-    BadgeUnlock
+    BadgeUnlock,
+    SpecialFeatureText,
+    Obelisk
 }

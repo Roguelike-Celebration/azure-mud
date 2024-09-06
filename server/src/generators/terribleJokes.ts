@@ -2,8 +2,8 @@
 
 import tracery from 'tracery-grammar'
 
-export const actionString = (pickupLine: string) => {
-  return `${pickupLine}`
+export const actionString = (terribleJokes: string) => {
+  return `${terribleJokes}`
 }
 
 export const generate = () => {
@@ -12,8 +12,12 @@ export const generate = () => {
       '#bardIntro# "#pickupLine#"'
     ],
     bardIntro: [
-      'The bard clears their throat and says:',
-      'The bard puts on a cheesy grin and says: '
+      'Chad clears his throat and says:',
+      'Chad puts on #expression.a# grin and says: ',
+      'Chad looks directly at you and winks. ',
+      'Chad gives the crowd finger-guns while saying: ',
+      'Chad tunes his lute for a moment, then says: ',
+      'Chad eats up every bit of the polite applause before continuing. '
     ],
     pickupLine: [
       'Your RNG or mine?',
@@ -40,6 +44,13 @@ export const generate = () => {
       "We may be single ASCII characters, but I can picture us together.",
       "I found a hidden key! I hope it's the one to your heart.",
       "My inventory's almost full, but there's still room for your number."
+    ],
+    expression: [
+      'cheesy',
+      'shit-eating',
+      'ridiculous',
+      'silly',
+      'earnest'
     ]
   })
 
