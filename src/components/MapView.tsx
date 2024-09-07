@@ -294,7 +294,7 @@ const clickableAreas: ClickableArea[] = [
     roomId: 'tattooTruck',
     x: 32,
     y: 14,
-    width: 10,
+    width: 16,
     height: 4
   },
   {
@@ -306,7 +306,7 @@ const clickableAreas: ClickableArea[] = [
   },
   {
     roomId: 'fountain',
-    x: 48,
+    x: 57,
     y: 5,
     width: 15,
     height: 5
@@ -327,7 +327,7 @@ const clickableAreas: ClickableArea[] = [
   },
   {
     roomId: 'joust',
-    x: 48,
+    x: 57,
     y: 0,
     width: 15,
     height: 5
