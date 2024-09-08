@@ -507,6 +507,11 @@ export const UnlockableBadges: Badge[] = [
     emoji: '👁️',
     description: 'Found harmony',
     category: BadgeCategories.Year2023
+  },
+  {
+    emoji: '🎪',
+    description: 'Attended the 2024 preview event!',
+    category: BadgeCategories.Year2024
   }
 ]
 
