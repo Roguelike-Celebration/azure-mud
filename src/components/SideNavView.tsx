@@ -45,7 +45,7 @@ export default function SideNavView (props: Props) {
         <MenuItem title="Schedule" modal={Modal.Schedule} />
         <MenuItem title="Room List" modal={Modal.RoomList} />
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
-        <MenuItem title="Obelisk" modal={Modal.Obelisk} img='🔮' imgAlt='crystal ball'/>
+        {/* <MenuItem title="Obelisk" modal={Modal.Obelisk} img='🔮' imgAlt='crystal ball'/> */}
         {/* <a href="https://annarbortees.chipply.com/RoguelikeCelebration/" rel="noreferrer" target="_blank" style={{ color: 'var(--main-font)', textDecoration: 'none' }}><li><span role="img" aria-label="shirt">👕</span>Merch</li></a> */}
         <MenuItem title="Help" modal={Modal.Help} />
       </ul>
