@@ -1,10 +1,10 @@
-interface Endpoint {
+export interface EndpointOptions {
   authenticated?: boolean
   mod?: boolean
   audit?: boolean
 }
 
-type EndpointOrMethodSplitEndpoint = Endpoint | { [key in "GET"|"POST"|"PUT"|"DELETE"]?: Endpoint }
+type EndpointOrMethodSplitEndpoint = EndpointOptions | { [key in "GET"|"POST"|"PUT"|"DELETE"]?: EndpointOptions }
 
 
 
