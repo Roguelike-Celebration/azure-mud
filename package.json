@@ -4,7 +4,9 @@
   "description": "",
   "homepage": "https://lazerwalker.com/azure-mud",
   "scripts": {
-    "dev": "parcel *.html",
+    "dev:client": "parcel *.html",
+    "dev:server": "pushd ./server; npm run dev; popd",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "build": "parcel build *.html --public-url ./ --dist-dir ./dist; cp CNAME dist; rsync -r images dist",
     "deploy": "npm run build; cp CNAME dist; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
@@ -58,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^3.8.0",
     "@typescript-eslint/parser": "^3.8.0",
     "buffer": "^6.0.3",
+    "concurrently": "^9.0.0",
     "crypto-browserify": "^3.12.0",
     "eslint": "^7.6.0",
     "eslint-config-standard": "^14.1.1",
