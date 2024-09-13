@@ -1,8 +1,6 @@
 import { User, getFullUser, isMod } from './user'
 import { Context, HttpRequest } from '@azure/functions'
-import { v4 as uuid } from 'uuid'
-import { DB } from '../src/database'
-import * as admin from 'firebase-admin'
+import enp from 'easy-no-password'
 
 export interface AuthenticationOptions {
   audit?: boolean;
@@ -11,85 +9,20 @@ export interface AuthenticationOptions {
 
 /** This wraps an HTTP function and calls it with a hydrated authenticated user.
  * Returns true if execution should continue. */
-
-export async function getUserIdFromHeaders (
-  context: Context,
-  req: HttpRequest
-): Promise<string | undefined> {
-  // Apparently, the initialization persists across function calls (!?) which I didn't realize was something that
-  // could happen! Clearly I don't quite understand 'serverless' (gosh I resent that term! it's still on somebody's
-  // server!)
-  if (admin.apps.length === 0) {
-    admin.initializeApp({
-      credential: admin.credential.applicationDefault()
-    })
-  }
-
-  // Gah! One thing to note - server sees all headers as all lowercase.
-  if (!req.headers.authorization) {
-    context.log('Authorization header not found.')
-    return undefined
-  }
-
-  const authHeaderParts = req.headers.authorization.split(' ')
-  // I think 'Bearer' is technically OAuth 2.0 and I don't know if that's precisely what we're using
-  if (authHeaderParts.length !== 2 || authHeaderParts[0] !== 'Bearer') {
-    context.log(
-      'Error authenticating auth headers: ' +
-        req.headers.authorization +
-        ' - were not formatted as Bearer.'
-    )
-    return undefined
-  }
-
-  const clientIdToken = authHeaderParts[1]
-  var cachedUserId = await DB.userIdForFirebaseToken(clientIdToken)
-  if (cachedUserId) {
-    return cachedUserId
-  }
-
-  return await admin
-    .auth()
-    .verifyIdToken(clientIdToken)
-    .then(async (decoded) => {
-      const userId = decoded.uid
-
-      const userRecord = await admin.auth().getUser(userId)
-      const providers = userRecord.providerData
-      // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
-      // email address.
-      if (
-        providers.length === 1 &&
-        providers[0].providerId === 'password' &&
-        !userRecord.emailVerified
-      ) {
-        return undefined
-      }
-
-      await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
-      return userId
-    })
-    .catch((error) => {
-      context.log(
-        'Error authenticating token: ' + clientIdToken + ' error: ' + error
-      )
-      return undefined
-    })
-}
-
+// TODO: This is Azure-specific
 export default async function authenticate (
   context: Context,
   req: HttpRequest,
   options: AuthenticationOptions = {},
   handler: (user: User) => void
 ) {
-  const userId = await getUserIdFromHeaders(context, req)
+  const userId = await getUserIdFromHeaders(req.headers, context.log)
   if (!userId) {
     context.res = {
       status: 400,
-      body: 'You did not include a user ID'
+      body: 'You did not include a valid user ID and token'
     }
-    context.log('Failed to include a user ID')
+    context.log('Failed to include a user ID and token')
     return
   }
 
@@ -152,3 +85,51 @@ export default async function authenticate (
 
   return handled
 }
+
+/** This takes in a header object containing an OAuth2-like Bearer token and a userID, and returns either the userID of the valid user or undefined if the pair is invalid */
+export async function getUserIdFromHeaders (
+  headers: any,
+  log: Function,
+): Promise<string | undefined> {
+  // Gah! One thing to note - server sees all headers as all lowercase.
+  if (!headers.authorization) {
+    log('Authorization header not found.')
+    return undefined
+  }
+
+  const authHeaderParts = headers.authorization.split(' ')
+  // Using a Bearer header like this is an OAuth2 thing. We're not using OAuth.
+  // We can change this if need be, but it seems ~fine~.
+  if (authHeaderParts.length !== 2 || authHeaderParts[0] !== 'Bearer') {
+    log(
+      'Error authenticating auth headers: ' +
+        headers.authorization +
+        ' - were not formatted as Bearer.'
+    )
+    return undefined
+  }
+
+  if (!headers.userId) {
+    log('User ID header not found.')
+    return undefined
+  }
+
+  const clientIdToken = authHeaderParts[1]
+  var userId = headers.userId
+
+  return new Promise((resolve, reject) => {
+    enp.isValid(clientIdToken, userId, (err, isValid) => {
+      if (err) {
+        log('Error validating token:', err)
+        reject(err)
+      }
+      if (!isValid) {
+        log('Token is not valid.')
+        reject(undefined)
+      }
+
+      resolve(userId)
+    })
+  })
+}
+
