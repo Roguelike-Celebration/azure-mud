@@ -22,6 +22,20 @@ export async function azureWrap (
   fn: EndpointFunction,
   extraInputs: any = {}
 ) {
+  if (
+    extraInputs.audit &&
+    !context.bindingDefinitions.find((def) => def.name === 'tableBinding')
+  ) {
+    context.res = {
+      status: 501,
+      body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
+    }
+    context.log(
+      'Failed to configure audit endpoint with the proper tableBinding'
+    )
+    return
+  }
+
   const result = await fn(
     { ...((req && req.body) || {}), ...extraInputs },
     context.log
@@ -35,10 +49,36 @@ export async function authenticatedAzureWrap (
   fn: AuthenticatedEndpointFunction,
   opts: AuthenticationOptions = {}
 ) {
-  await authenticate(context, req, opts, async (user) => {
-    const result = await fn(user, req.body || {}, context.log)
+  if (
+    opts.audit &&
+    !context.bindingDefinitions.find((def) => def.name === 'tableBinding')
+  ) {
+    context.res = {
+      status: 501,
+      body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
+    }
+    context.log(
+      'Failed to configure audit endpoint with the proper tableBinding'
+    )
+    return
+  }
+
+  const authResult = await authenticate(req.headers, context.log, opts)
+  if (authResult.user) {
+    const result = await fn(authResult.user, req.body || {}, context.log)
     outputToAzure(context, req, result)
-  })
+  } else if (authResult.error) {
+    context.res = {
+      status: authResult.error.status,
+      body: authResult.error.body
+    }
+  } else {
+    context.res = {
+      status: 500,
+      body: 'An unknown error occurred'
+    }
+    context.log('Unknown error in authentication')
+  }
 }
 
 function outputToAzure (context: Context, req: HttpRequest, result: Result) {
