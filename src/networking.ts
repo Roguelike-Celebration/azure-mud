@@ -1,8 +1,6 @@
 import { v4 as uuid } from 'uuid'
 
 import axios from 'axios'
-import firebase from 'firebase/app'
-import 'firebase/auth'
 import { Dispatch } from 'react'
 import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
