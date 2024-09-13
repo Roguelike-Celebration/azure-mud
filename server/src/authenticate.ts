@@ -7,61 +7,40 @@ export interface AuthenticationOptions {
   mod?: boolean;
 }
 
-/** This wraps an HTTP function and calls it with a hydrated authenticated user.
- * Returns true if execution should continue. */
+/** This validates a header and set of authentication options, returning a hydrated user if successful.
+ * If it fails, also returns an HTTP status code and body to directly respond to the failed request */
 // TODO: This is Azure-specific
 export default async function authenticate (
-  context: Context,
-  req: HttpRequest,
+  headers: any,
+  log: Function,
   options: AuthenticationOptions = {},
-  handler: (user: User) => void
-) {
-  const userId = await getUserIdFromHeaders(req.headers, context.log)
+): Promise<{user?: User, error?: {status: number, body: string}}> {
+  const userId = await getUserIdFromHeaders(headers, log)
   if (!userId) {
-    context.res = {
-      status: 400,
-      body: 'You did not include a valid user ID and token'
+    log('Failed to include a user ID and token')
+    return {
+      error: { status: 400, body: 'You did not include a valid user ID and token' }
     }
-    context.log('Failed to include a user ID and token')
-    return
-  }
-
-  if (
-    options.audit &&
-    !context.bindingDefinitions.find((def) => def.name === 'tableBinding')
-  ) {
-    context.res = {
-      status: 501,
-      body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
-    }
-    context.log(
-      'Failed to configure audit endpoint with the proper tableBinding'
-    )
-    return
   }
 
   const user = await getFullUser(userId)
 
   if (options.mod) {
     if (!(await isMod(user.id))) {
-      context.res = {
-        status: 403,
-        body: { error: 'This action requires moderator privileges.' }
+      return {
+        error: {  status: 403, body: 'This action requires moderator privileges.' }
       }
-      return
     }
   }
 
   if (user.isBanned) {
-    context.res = {
-      status: 401,
-      body: 'You are banned!'
+    log('Banned user was blocked:', user.id, user.username)
+    return {
+      error: { status: 401, body: 'You are banned!' }
     }
-    context.log('Banned user was blocked:', user.id, user.username)
-    return
   }
 
-  const handled = await handler(user)
+  return {user}
 
   // TODO: Restore or trash
   // This is commented out because the upgrade from Functions 3 -> 4 broke something, somehow
@@ -82,8 +61,6 @@ export default async function authenticate (
   //     },
   //   ];
   // }
-
-  return handled
 }
 
 /** This takes in a header object containing an OAuth2-like Bearer token and a userID, and returns either the userID of the valid user or undefined if the pair is invalid */

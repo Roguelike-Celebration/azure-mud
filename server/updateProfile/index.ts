@@ -8,7 +8,7 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  const userId = await getUserIdFromHeaders(context, req)
+  const userId = await getUserIdFromHeaders(req.headers, context.log)
 
   await azureWrap(context, req, updateProfile, { userId: userId })
 
