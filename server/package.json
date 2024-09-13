@@ -2,6 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "engines" : {
+    "node" : ">=17.0.0 <18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsx --watch src/server.ts",
