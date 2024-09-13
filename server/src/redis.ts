@@ -4,10 +4,11 @@ import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './typ
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import Database from './database'
-console.log('HIII?')
+
 // eslint-disable-next-line import/first
 import redis from 'redis'
-console.log('redis', redis)
+import {v4 as uuid} from 'uuid'
+
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -41,15 +42,15 @@ interface RedisInternal extends Database {
 }
 
 const Redis: RedisInternal = {
-  async userIdForFirebaseToken (token: string): Promise<string | undefined> {
-    return await getCache(keyForFirebaseToken(token))
-  },
+  async getOrGenerateTokenSecret(): Promise<string> {
+    const secret = await getCache('tokenSecretKey')
+    if (secret) {
+      return secret
+    }
 
-  async addFirebaseTokenToCache (token: string, userId: string, expiry: number) {
-    // Expiry is set independently instead of using the 4-parameter setCache sig because I tried it and it seemed to
-    // silently fail without setting anything.
-    await setCache(keyForFirebaseToken(token), userId)
-    await expireAt(keyForFirebaseToken(token), expiry)
+    const newSecret = uuid()
+    await setCache('tokenSecretKey', newSecret)
+    return secret
   },
 
   async getActiveUsers (): Promise<string[]> {
@@ -400,6 +401,8 @@ const Redis: RedisInternal = {
   }
 }
 
+const tokenSecretKey = 'tokenSecret'
+
 const activeUsersKey = 'activeUsersList'
 
 const modListKey = 'mods'
@@ -425,10 +428,6 @@ function profileKeyForUser (userId: string): string {
 
 function userIdKeyForUsername (username: string): string {
   return `${username}Username`
-}
-
-function keyForFirebaseToken (token: string): string {
-  return `${token}FirebaseToken`
 }
 
 function heartbeatKeyForUser (user: string): string {
