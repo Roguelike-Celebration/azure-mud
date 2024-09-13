@@ -7,12 +7,9 @@ import { Room } from './rooms'
 
 interface Database {
   // -----------------------------------------------------------------
-  // FIREBASE TOKEN CACHE
+  // AUTHENTICATION
   // -----------------------------------------------------------------
-  // If the token is in the cache, but not current, this will return false and evict it
-  userIdForFirebaseToken(token: string): Promise<string | undefined>
-
-  addFirebaseTokenToCache(token: string, userId: string, expiry: number)
+  getOrGenerateTokenSecret(): Promise<string>;
 
   // -----------------------------------------------------------------
   // WORLD PRESENCE
