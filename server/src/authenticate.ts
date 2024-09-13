@@ -1,6 +1,5 @@
 import { User, getFullUser, isMod } from './user'
-import { Context, HttpRequest } from '@azure/functions'
-import enp from 'easy-no-password'
+import DB from './redis'
 
 export interface AuthenticationOptions {
   audit?: boolean;
@@ -19,7 +18,7 @@ export default async function authenticate (
   if (!userId) {
     log('Failed to include a user ID and token')
     return {
-      error: { status: 400, body: 'You did not include a valid user ID and token' }
+      error: { status: 401, body: 'You did not include a valid user ID and token' }
     }
   }
 
@@ -36,7 +35,7 @@ export default async function authenticate (
   if (user.isBanned) {
     log('Banned user was blocked:', user.id, user.username)
     return {
-      error: { status: 401, body: 'You are banned!' }
+      error: { status: 403, body: 'You are banned!' }
     }
   }
 
@@ -95,6 +94,7 @@ export async function getUserIdFromHeaders (
   var userId = headers.userId
 
   return new Promise((resolve, reject) => {
+    const enp = require("easy-no-password")(DB.getOrGenerateTokenSecret())
     enp.isValid(clientIdToken, userId, (err, isValid) => {
       if (err) {
         log('Error validating token:', err)
