@@ -53,6 +53,18 @@ const Redis: RedisInternal = {
     return secret
   },
 
+  async getOrGenerateUserIdForEmail(email: string): Promise<string> {
+    const userId = getCache(userIdKeyForEmail(email))
+    if (userId) {
+      return userId;
+    } else {
+      const newUserId = uuid()
+      await setCache(userIdKeyForEmail(email), newUserId)
+      return newUserId
+    }
+  },
+
+
   async getActiveUsers (): Promise<string[]> {
     return getSet(activeUsersKey) || []
   },
@@ -414,6 +426,10 @@ const allUserIdsKey = 'allUserIds'
 
 const roomIdsKey = 'roomIds'
 
+function userIdKeyForEmail (email: string): string {
+  return `userid_${email}`
+}
+
 function roomDataKey (roomId: string): string {
   return `room_${roomId}`
 }
@@ -449,7 +465,7 @@ function roomNotesKey (roomId: string): string {
 export function videoPresenceKey (roomId: string) {
   return `${roomId}PresenceVideo`
 }
-const userMapKey = 'userMap'
+
 const spaceAvailabilityKey = 'spaceIsClosed'
 
 export default Redis

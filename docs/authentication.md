@@ -9,11 +9,12 @@ We do not store tokens at all on the server (i.e. they're not in Redis), they ar
 They do have an expiration date, which we can set.
 
 ## A user ID
-User IDs are email addresses. We have non-email user IDs floating around the production database from legacy users; we will want to find a migration path.
+Since the client has access to the userIds of every logged-in user, we should not use emails as user IDs so as to avoid making email addresses more or less public. This is annoying, but such is software.
 
-This decision was purely made for convenience, as it greatly simplifies magic email logic if we don't need to translate between internal user IDs and email addresses. Since we do not have a concept of changing someone's email but persisting their account outside of migrating old user accounts, this is unlikely to lead to issues.
+When we generate a magic link, we check an email -> userId map in Redis to see if we've generated a user ID yet. If not, generate a GUID, store it, and use that in the magic link so that the client stores that userId when logging in.
 
-TODO: I'm not sure we're not actually better off generating unique UUIDs distinct from emails. Think about this more.
+We could instead use a one-way hash function to generate userIds. Generating UUIDs instead should make it easier to build a tool to manually associate old accounts with new accounts, since we can just create a mapping from an old user ID to an email address and it should just work.
+
 
 ## An authenticated network request
 A valid authenticated HTTP request is defined as having the following two headers:
