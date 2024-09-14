@@ -14,14 +14,15 @@ const sendMagicEmail: EndpointFunction = async (inputs: any, log: LogFn) => {
   }
 
   return new Promise((resolve, reject) => {
+    const userId = DB.getOrGenerateUserIdForEmail(email)
     const enp = require("easy-no-password")(DB.getOrGenerateTokenSecret())
-    enp.createToken(email, (err, token) => {
+    enp.createToken(userId, (err, token) => {
       if (err) {
         log("Token generation error: ", err);
         reject(err)
       } else {
         // TODO: Email
-        log("Token:", token);
+        log(`Email: '${email}', userId: '${userId}', token: '${token}'`);
         resolve(token);
       }
     });

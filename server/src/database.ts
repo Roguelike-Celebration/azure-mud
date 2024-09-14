@@ -9,7 +9,19 @@ interface Database {
   // -----------------------------------------------------------------
   // AUTHENTICATION
   // -----------------------------------------------------------------
+
+  // We generate a random long secret to use for token generation
+  // I considered having it be an env variable, but it's nice to not require
+  // prework and just grab/store a UUID if it doesn't exist
   getOrGenerateTokenSecret(): Promise<string>;
+
+  // We can't use email addresses as primary IDs for privacy resasons. 
+  // Instead, we generate GUIDs for each user. 
+  // Given an email, this returns its GUID, either creating/storing or fetching.
+  //
+  // Doing this instead of a one-way hash lets us more easily change a user's email address 
+  // (or do a one-time backfill from old accounts)
+  getOrGenerateUserIdForEmail(email: string): Promise<string>;
 
   // -----------------------------------------------------------------
   // WORLD PRESENCE
