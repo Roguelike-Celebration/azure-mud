@@ -98,7 +98,7 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
   ]
 
   log('Finished all of "connect"')
-  log(result)
+  // log(result)
 
   return result
 }

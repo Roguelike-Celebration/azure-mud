@@ -1,19 +1,28 @@
 import express from 'express'
 import ws from 'ws'
+import cors from 'cors'
+
 const session = require('express-session');
 
-// Not sure we need http AND express, but this is how their sample code handles attaching the WSS
-const http = require('http');
-
 import routeFns from './routeFns'
-import routeMetadata from './routeMetadata'
-import { userConnected, userDisconnected } from './websocketManager';
+import routeMetadata, { EndpointOptions } from './routeMetadata'
+import { processResultWebsockets, userConnected, userDisconnected } from './websocketManager';
+import authenticate, { getUserIdFromHeaders } from './authenticate';
+import { AuthenticatedEndpointFunction, EndpointFunction } from './endpoint';
+import updateProfile from './endpoints/updateProfile';
 
 const port = process.env.PORT || 3000
 
+// We use sessions because we need to pass a userId in when we create a WS connection,
+// and this is how we associate a HTTP user with a WS user.
+// I imagine in an ideal world *everything* might use session/cookie data instead of our custom headers,
+// but that doesn't work with Azure Functions and thus this would require different client codepaths.
+//
+// For now we're using a junk secret, which is fine since this is only local dev.
+// Server deployment would want to harden this.
 const sessionParser = session({
   saveUninitialized: false,
-  secret: '$eCuRiTy',
+  secret: 'thisisabadsecret',
   resave: false
 });
 
@@ -21,6 +30,27 @@ const sessionParser = session({
 const app = express()
 app.use(express.json())
 app.use(sessionParser);
+
+// This is fine as long as this is only for local dev
+var corsOptions = {
+  origin: 'http://localhost:1234',
+  credentials: true,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions))
+
+const server = app.listen(port, function () {
+  console.log('Listening on http://localhost:' + port);
+});
+
+console.log('restarted')
+
+// Will also need to be updated when not local
+app.get('/api/negotiatePubSub', (req, res) => {
+  res.json({
+    url: 'ws://localhost:3000'
+  }) 
+})
 
 // Programmatically load all of our routes
 Object.keys(routeFns).forEach((name) => {
@@ -32,21 +62,25 @@ Object.keys(routeFns).forEach((name) => {
   if ((route as any).post || (route as any).get) { // has method-specific calls
     const methods = Object.keys(route)
     methods.forEach((method) => {
-      const args = routeMetadata[name][method]
+      const metadata = routeMetadata[name][method]
       // Replace this raw call with one that injects the metadata
-      app[method](route, (req, res) => {
-        routeFns[name][method]();
+      app[method](`/api/${name}`, (req, res) => {
+        console.log('Calling', name, method, metadata)
+        wrappedFunction(routeFns[name][method], metadata)(req, res);
       })
     })
   } else {
-    const args = routeMetadata[name]
+    const metadata = routeMetadata[name] as EndpointOptions
     // Replace this raw call with one that injects the metadata
-    app.all(name, (req, res) => {
-      (routeFns[name] as Function)()
+    app.all(`/api/${name}`, (req, res) => {
+      console.log('Calling', name);
+      wrappedFunction((routeFns[name] as EndpointFunction), metadata)(req, res)
     })  }
 })
 
-const server = http.createServer(app);
+function onSocketError(e) {
+  console.log("WebSocket error: ", e);
+};
 
 //
 // Create a WebSocket server completely detached from the HTTP server.
@@ -92,10 +126,46 @@ wss.on('connection', function (ws, request) {
   });
 });
 
-//
-// Start the server.
-//
+function wrappedFunction(fn: EndpointFunction|AuthenticatedEndpointFunction, metadata: EndpointOptions): (req, res) => void {
+  // This is intended to be passed directly to express, so it can't be async itself
+  return (req, res) => {
+    (async () => {
+      // todo: handle metadata.audit
+      let result; 
+    
+      if (metadata.authenticated) {
+        try {
+          const authResult = await authenticate(req.headers, console.log, metadata)
+          if (authResult.user) {
+            result = await fn(authResult.user, req.body || {}, console.log)
+            req.session.authenticated = true;
+            req.session.userId = authResult.user.id;
+          }
+        } catch(e) {
+          res
+            .status(401)
+            .send(e)
+        }
+      } else {
+        console.log('not authenticated', req.body)
 
-server.listen(port, function () {
-  console.log('Listening on http://localhost:' + port);
-});
+        // updateProfile is weird in that we need to grab the validated userId from the headers, but don't require you have a complete user yet
+        // should we be relying on function-as-object equality? probably not.
+        if (fn === updateProfile) {
+          req.body.userId = await getUserIdFromHeaders(req.headers, console.log)
+        }
+
+        result = await (fn as EndpointFunction)(req.body, console.log)
+      }
+
+      if (!result) { return }
+      
+      // console.log(result)
+
+      processResultWebsockets(result)
+      if (result.httpResponse) {
+        res.status(result.httpResponse.status).send(result.httpResponse.body)
+      }
+    })()
+  }
+}

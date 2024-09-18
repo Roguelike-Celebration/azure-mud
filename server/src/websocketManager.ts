@@ -19,9 +19,9 @@ export function userDisconnected(userId: string) {
   })
 }
 
-export function processResult(result: Result) {
-  console.log('outputting to express')
-  console.log('result: ', JSON.stringify(result))
+export function processResultWebsockets(result: Result) {
+  console.log('processing websocket tasks')
+  // console.log('result: ', JSON.stringify(result))
   if (result.messages) {
     console.log('handling WS messages')
   }
@@ -30,7 +30,7 @@ export function processResult(result: Result) {
   // I assume we want to process group management tasks before messages,
   //but that might be incorrect.
 
-  result.groupManagementTasks.forEach((t) => {
+  result.groupManagementTasks?.forEach((t) => {
     if (!groups[t.groupId]) {
       groups[t.groupId] = new Set()
     }
@@ -44,21 +44,23 @@ export function processResult(result: Result) {
     }
   })
 
-  result.messages.forEach((m) => {
+  result.messages?.forEach((m) => {
     const actionJson = JSON.stringify({ type: m.target, value: m.arguments })
 
     if (isPrivateMessage(m)) {
+      console.log('sending to user', m.userId, actionJson)
       const user = users[m.userId]
-      user.send(JSON.stringify(actionJson))
+      user?.send(actionJson)
     } else if (isGroupMessage(m)) {
+      console.log('sending to group', m.groupId, actionJson)
       groups[m.groupId].forEach((userId) => {
         const user = users[userId]
-        user.send(JSON.stringify(actionJson))
+        user?.send(actionJson)
       })
     } else {
-      // send to all
+      console.log('sending to all', actionJson)
       Object.values(users).forEach((user) => {
-        user.send(JSON.stringify(actionJson))
+        user.send(actionJson)
       })
     }
   });
