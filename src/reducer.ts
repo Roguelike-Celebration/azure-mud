@@ -1,4 +1,3 @@
-import firebase from 'firebase/app'
 import { current, original, produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 import { Badge } from '../server/src/badges'
@@ -49,19 +48,19 @@ import { NoteWallData } from '../server/src/rooms'
 import { RoomNote } from '../server/src/roomNote'
 
 export interface State {
-  firebaseApp: firebase.app.App;
-  authenticated: boolean;
-  checkedAuthentication: boolean;
-  authenticationProvider?: string;
-  mustVerifyEmail?: boolean;
+  // TODO: Is this used?
   connected: Deferred<void>;
+
+  // The current user's ID. 
+  // If this is undefined, the user is not logged in.
+  userId?: string;
 
   hasDismissedAModal: boolean;
 
+  // True if the user has completed onboarding
   hasRegistered: boolean;
 
   roomId?: string;
-  userId?: string;
   userMap: { [userId: string]: MinimalUser };
   roomData: { [roomId: string]: Room };
 
@@ -124,11 +123,7 @@ export interface State {
   obeliskNotes: RoomNote[]
 }
 
-console.log(Config.FIREBASE_CONFIG)
 export const defaultState: State = {
-  firebaseApp: firebase.initializeApp(Config.FIREBASE_CONFIG),
-  authenticated: false,
-  checkedAuthentication: false,
   hasRegistered: false,
   connected: new Deferred(),
   chatReady: new Deferred(),
@@ -662,30 +657,18 @@ export default produce((draft: State, action: Action) => {
     draft.audioOnlyMode = action.value
   }
 
-  if (action.type === ActionType.Authenticate) {
-    draft.checkedAuthentication = true
-
-    draft.authenticationProvider = action.value.provider
-    draft.mustVerifyEmail = action.value.mustVerifyEmail
-
-    if (action.value.userId && action.value.name) {
-      draft.authenticated = true
-      draft.userId = action.value.userId
-
-      // If you haven't registered yet, we need to grab your username before
-      // we've pulled a server userMap
-      draft.userMap[action.value.userId] = {
-        id: action.value.userId,
-        username: action.value.name
-      }
-    } else {
-      draft.authenticated = undefined
-      draft.userId = undefined
-    }
+  if (action.type === ActionType.SetUserId) {
+    draft.userId = action.value
   }
 
   if (action.type === ActionType.IsRegistered) {
+    // We need to populate the userMap with yourself in order to load the sidebar, despite not having a userMap at load time.
+    // Once we have your username, that's enough for an initial load.
     draft.hasRegistered = true
+    draft.userMap[draft.userId] = {
+      id: draft.userId,
+      username: action.value
+    }
   }
 
   if (action.type === ActionType.BanToggle) {

@@ -4,7 +4,6 @@ import _ from 'lodash'
 import { IconContext } from 'react-icons/lib'
 import {
   Action,
-  AuthenticateAction,
   IsRegisteredAction,
   LoadMessageArchiveAction,
   PlayerBannedAction,
@@ -13,17 +12,16 @@ import {
   SetKeepCameraWhenMovingAction,
   SetNumberOfFacesAction,
   SetTextOnlyModeAction,
+  SetUserIdAction,
   SetUseSimpleNamesAction,
   ShowSideMenuAction,
   SpaceIsClosedAction
 } from './Actions'
-import { currentUser, onAuthenticationStateChange } from './authentication'
 import BadgesModalView from './components/BadgesModalView'
 import BadgeUnlockModal from './components/BadgeUnlockModal'
 import ClientDeployedModal from './components/ClientDeployedModal'
 import CodeOfConductView from './components/CodeOfConductView'
 import DisconnectModalView from './components/DisconnectModalView'
-import EmailVerifiedView from './components/EmailVerifiedView'
 import DullDoorModalView from './components/feature/DullDoorViews'
 import FullRoomIndexModalView from './components/feature/FullRoomIndexViews'
 import RainbowGateModalView from './components/feature/RainbowGateViews'
@@ -47,12 +45,11 @@ import ScheduleView from './components/ScheduleView'
 import ServerSettingsView from './components/ServerSettingsView'
 import SettingsView from './components/SettingsView'
 import SideNavView from './components/SideNavView'
-import VerifyEmailView from './components/VerifyEmailView'
 import { VirtualizationProvider } from './components/VirtualizationProvider'
 import WelcomeModalView from './components/WelcomeModalView'
 import YouAreBannedView from './components/YouAreBannedView'
 import { Modal } from './modals'
-import { checkIsRegistered, connect } from './networking'
+import { checkIsRegistered, configureNetworking, connect } from './networking'
 import reducer, { defaultState, State } from './reducer'
 import * as Storage from './storage'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
@@ -75,60 +72,77 @@ const App = () => {
     defaultState
   )
 
+  // The entire auth flow lives here
+  // We are either: 
+  // 1. Not able to automatically log in (no stored token)
+  // 2. Able to log in but not registered (stored token, isRegistered finds no user), or
+  // 3. A "full" user (a user exists on the server, and we have a token we assume is valid)
+  // Cases 1 and 2 set some state and exit early, case 3 sets up the full app
   useEffect(() => {
-    // TODO: This flow has a lot of confusing, potentially duplicated messages that I'm not sure are necessary
-    // I (Em) started a refactor at one point, but abandoned it since it became too irrelevant from my task
-    onAuthenticationStateChange(async (user) => {
-      if (!user) {
-        dispatch(
-          AuthenticateAction(undefined, undefined, undefined, undefined)
-        )
-      } else if (user.shouldVerifyEmail) {
-        const userId = user.id
-        const providerId = user.providerId
-        dispatch(AuthenticateAction(userId, userId, providerId, true))
-      } else {
-        const user = currentUser()
-        const userId = user.id
-        const providerId = user.providerId
+    (async () => {
+      // Check for presence of magic URL
+      let queryParams = new URLSearchParams(window.location.search);
+      const urlToken = queryParams.get('token');
+      const urlUserId = queryParams.get('userId');
+      if (urlToken && urlUserId) {
+        console.log("token exists, setting and reloading")
+        await Storage.setToken(urlUserId, urlToken);
 
-        const { registeredUsername, spaceIsClosed, isMod, isBanned } =
-          await checkIsRegistered()
-        if (!registeredUsername) {
-          // If email, use ID to not leak, otherwise use service's default display name (for Twitter, their handle)
-          const defaultDisplayName = user.email ? userId : user.displayName
-          dispatch(
-            AuthenticateAction(userId, defaultDisplayName, providerId, false)
-          )
+        // Triggers a page refresh and also wipes away the query params
+        window.location.search = ''
+      }
+
+      console.log("no token, checking storage")
+      const tokenObj = await Storage.getToken()
+      console.log('tokenobj', tokenObj)
+      console.log(tokenObj)
+      if (!tokenObj || !tokenObj.userId || !tokenObj.token) {
+        // logged out
+        console.log("no token found")
+        return
+      }
+
+      console.log("token found, checking registration")
+
+      const { userId, token } = tokenObj
+
+      console.log("about to set up networking")
+      dispatch(SetUserIdAction(userId));
+      configureNetworking(userId, token, dispatch)
+      
+      const { registeredUsername, spaceIsClosed, isMod, isBanned } = await checkIsRegistered(userId)
+
+      // User has logged in, but is not registered, show registration workflow
+      // (triggered automatically by state.isRegistered = false, which is the default)
+      if (!registeredUsername) { 
+        return
+      }
+
+      // We have a valid user! Let's double-check they should be allowed in
+      dispatch(IsRegisteredAction(registeredUsername))
+
+      if (isBanned) {
+        dispatch(
+          PlayerBannedAction({
+            id: userId,
+            username: registeredUsername,
+            isBanned: isBanned
+          })
+        )
+        return
+      }
+
+      if (spaceIsClosed) {
+        dispatch(SpaceIsClosedAction())
+
+        if (!isMod) {
+          // non-mods shouldn't subscribe to SignalR if the space is closed
           return
         }
+      }
 
-        // TODO: I thiiiink we want this to be in an 'else'
-        dispatch(
-          AuthenticateAction(userId, registeredUsername, providerId, false)
-        )
-
-        if (isBanned) {
-          dispatch(
-            PlayerBannedAction({
-              id: userId,
-              username: registeredUsername,
-              isBanned: isBanned
-            })
-          )
-          dispatch(IsRegisteredAction())
-          return
-        }
-
-        if (spaceIsClosed) {
-          dispatch(SpaceIsClosedAction())
-
-          if (!isMod) {
-            // non-mods shouldn't subscribe to SignalR if the space is closed
-            dispatch(IsRegisteredAction())
-            return
-          }
-        }
+      // Cool, the person can see the space, let's do generic loading stuff
+      // This all probably shouldn't live here, except for maybe the connect() call
 
         const messageArchive = await Storage.getMessages()
         // I'm styling it like a constant but it's just here; look it's late and the conf is in two days
@@ -151,10 +165,15 @@ const App = () => {
         const captionsEnabled = await Storage.getCaptionsEnabled()
         dispatch(SetCaptionsEnabledAction(captionsEnabled))
 
-        dispatch(IsRegisteredAction())
-        connect(userId, dispatch)
+        connect()
+    })()
+  }, [])
 
-        // WARNING: Prior to the "calculate number of faces for videochat" code,
+  // Set up automatic resizing
+  // I think this only exists for videochat, and can probably be killed?
+  // TODO: Try killing this after the rest of my auth refactor is done
+  useEffect(() => {
+    // WARNING: Prior to the "calculate number of faces for videochat" code,
         // there was a no-op resize handler here.
         // window.addEventListener('resize', () => {})
         // I frankly have no idea what this was doing,
@@ -185,8 +204,6 @@ const App = () => {
           'resize',
           _.throttle(onResize, 100, { trailing: true })
         )
-      }
-    })
   }, [])
 
   const isMobile = window.outerWidth < 500
@@ -197,25 +214,7 @@ const App = () => {
     ''
   )
 
-  // This is kind of janky!
-  if (
-    currentUser() &&
-    currentUser().isSignInWithEmailLink(window.location.href)
-  ) {
-    return <EmailVerifiedView />
-  }
-
-  if (!state.checkedAuthentication) {
-    return <div />
-  }
-
-  if (state.checkedAuthentication && state.mustVerifyEmail) {
-    return (
-      <VerifyEmailView userEmail={currentUser().email} dispatch={dispatch} />
-    )
-  }
-
-  if (state.checkedAuthentication && !state.authenticated) {
+  if ( !state.userId) {
     return <LoggedOutView />
   }
 
@@ -224,11 +223,7 @@ const App = () => {
     return (
       <ProfileEditView
         isFTUE={true}
-        defaultHandle={state.userMap[state.userId].username}
         user={state.profileData}
-        prepopulateTwitterWithDefaultHandle={
-          state.authenticationProvider === 'twitter'
-        }
       />
     )
   }
