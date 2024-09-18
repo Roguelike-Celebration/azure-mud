@@ -6,8 +6,8 @@ import { ShowModalAction } from '../Actions'
 import { DispatchContext, UserMapContext } from '../App'
 import { Modal } from '../modals'
 import { fetchProfile, openOrCloseSpace, disconnect } from '../networking'
-import { signOut } from '../authentication'
 import NameView from './NameView'
+import { clearToken } from '../storage'
 
 export default function MenuButtonView (props: { username: string, spaceIsClosed: boolean }) {
   const dispatch = useContext(DispatchContext)
@@ -22,9 +22,8 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
     // the same is true for banned users. Check on that.
     if (prompt) {
       disconnect(myId).then(() => {
-        signOut().then(() => {
-          window.location.reload()
-        })
+        clearToken().then(() => { window.location.reload() })
+
       }).catch((error) => {
         console.log('error signing out', error)
         window.location.reload()

@@ -57,15 +57,30 @@ import { Modal } from './modals'
 import { convertServerRoomData, Room } from './room'
 import { ThunkDispatch } from './useReducerWithThunk'
 import { State } from './reducer'
+import { clearToken } from './storage'
 
 let myUserId: string
+let myToken: string
 let myDispatch: ThunkDispatch<Action, State>
 
 const inMediaChat: boolean = false
 
+// This used to be part of the `connect` call, but that complicated the new user flow
+export function configureNetworking(userId: string, token: string, dispatch: ThunkDispatch<Action, State>) {
+  console.log("setting up auth", userId, token)
+  myUserId = userId
+  myToken = token
+  myDispatch = dispatch
+}
+
 // "Safe" functions (HTTP result not used)
 // Can immediately swap these out to use PubSub
 // ---------------------------------------
+
+export async function sendMagicEmail(email: string) {
+  await callAzureFunction('sendMagicEmail', { email })
+}
+
 
 export async function pickUpRandomItemFromList (listName: string) {
   await callAzureFunction('pickUpItem', { list: listName })
@@ -194,17 +209,11 @@ export async function connectRoomData (dispatch: ThunkDispatch<Action, State>) {
   }
 }
 
-export async function connect (
-  userId: string,
-  dispatch: ThunkDispatch<Action, State>
-) {
-  myUserId = userId
-  myDispatch = dispatch
-
+export async function connect () {
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(result)
-  dispatch(
+  myDispatch(
     ConnectAction(
       result.roomId,
       convertServerRoomData(result.roomData),
@@ -212,24 +221,24 @@ export async function connect (
       result.roomNotes
     )
   )
-  dispatch(UserMapAction(result.users))
+  myDispatch(UserMapAction(result.users))
 
   if (result.profile) {
-    dispatch(ReceivedMyProfileAction(result.profile))
+    myDispatch(ReceivedMyProfileAction(result.profile))
   }
 
   if (result.unlockableBadges) {
-    dispatch(UpdateUnlockableBadgesAction(result.unlockableBadges))
+    myDispatch(UpdateUnlockableBadgesAction(result.unlockableBadges))
   }
 
-  const eventMapping = generateEventMapping(userId, dispatch)
+  const eventMapping = generateEventMapping(myUserId, myDispatch)
   await connectPubSub(eventMapping)
 
   // "serverSettings" is a handled SignalR action
   // So we should just automatically send this down on `connect`
   // (This used to be a separate call, but it's only made right after `connect`)
   const settings: ServerSettings = await callAzureFunctionGet('serverSettings')
-  dispatch(ReceivedServerSettingsAction(settings))
+  myDispatch(ReceivedServerSettingsAction(settings))
 }
 
 export async function moveToRoom (roomId: string) {
@@ -378,13 +387,16 @@ export async function stopObservingObelisk () {
   }
 }
 
-export async function checkIsRegistered (): Promise<{
+/* Given a username, returns whether that username is registered, banned, etc. 
+Because our server auth flow assumes a full user, but this can be called with unregistered users,
+this is not an authenticated call. */
+export async function checkIsRegistered (userId: string): Promise<{
   registeredUsername: string;
   spaceIsClosed: boolean;
   isMod: string;
   isBanned: boolean;
 }> {
-  const result = await callAzureFunction('isRegistered')
+  const result = await callAzureFunction('isRegistered', {userId})
   return {
     registeredUsername: result.registered,
     spaceIsClosed: result.spaceIsClosed,
@@ -585,17 +597,6 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
 export async function connectPubSub (eventMapping: {
   [event: string]: Function;
 }) {
-  /*
-  const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
-      request.headers = {
-        ...request.headers,
-        userid: firebase.auth().currentUser.uid
-      }
-
-              Authorization: `Bearer ${firebaseToken}`,
-        userId: myUserId,
-
-  */
   // negotiate
   const result = await callAzureFunctionGet('negotiatePubSub')
   console.log('Connected pubsub', result)
@@ -624,38 +625,43 @@ export async function connectPubSub (eventMapping: {
 
 async function callAzureFunctionGet (endpoint: string): Promise<any> {
   try {
-    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
     const r = await axios.get(`${Config.SERVER_HOSTNAME}/api/${endpoint}`, {
       withCredentials: true,
       headers: {
-        Authorization: `Bearer ${firebaseToken}`,
+        Authorization: `Bearer ${myToken}`,
         userId: myUserId
       }
     })
     console.log(r)
     return r.data
   } catch (e) {
-    console.log('Error', e)
-    return undefined
+    if (e.response.status === 401 && myToken) {
+      console.log("Unauthorized, since we have a token let's assume it's stale. Logging out.")
+      clearToken().then(() => { window.location.reload() })
+    }
   }
 }
 
 async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
   try {
-    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
     const r = await axios.post(
       `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
       body,
       {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${firebaseToken}`
+          Authorization: `Bearer ${myToken}`,
+          userId: myUserId
         }
       }
     )
     console.log(r)
     return r.data
   } catch (e) {
+    if (e.response.status === 401 && myToken) {
+      console.log("Unauthorized, since we have a token let's assume it's stale. Logging out.")
+      clearToken().then(() => { window.location.reload() })
+    }
     console.log('Error', e)
     return undefined
   }

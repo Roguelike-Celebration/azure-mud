@@ -10,8 +10,7 @@ import config from '../config'
 
 interface Props {
   isFTUE: boolean;
-  defaultHandle?: string;
-  prepopulateTwitterWithDefaultHandle?: boolean
+  defaultHandle?: string; // Not currently ever provided, we don't have a sensible default with emails as only auth
   user?: PublicUser;
 }
 
@@ -29,7 +28,7 @@ function sanitizeUsername (s: string) : string {
 export default function ProfileEditView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
-  const { defaultHandle, user, prepopulateTwitterWithDefaultHandle } = props
+  const { defaultHandle, user } = props
 
   const [handle, setHandle] = useState(
     (user && user.username) || defaultHandle || ''
@@ -42,9 +41,7 @@ export default function ProfileEditView (props: Props) {
   const [askMeAbout, setAskMeAbout] = useState((user && user.askMeAbout) || '')
   const [url, setUrl] = useState((user && user.url) || '')
   const [twitter, setTwitter] = useState(
-    (user && user.twitterHandle) ||
-    (prepopulateTwitterWithDefaultHandle && defaultHandle) ||
-    '')
+    (user && user.twitterHandle) ||    '')
 
   const close = () => {
     dispatch(HideModalAction())
