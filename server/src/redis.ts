@@ -6,18 +6,30 @@ import { Room } from './rooms'
 import Database from './database'
 
 // eslint-disable-next-line import/first
-import redis from 'redis'
+import { createClient } from 'redis'
 import {v4 as uuid} from 'uuid'
 
+require('dotenv').config()
 
-const cache = redis.createClient(
-  parseInt(process.env.RedisPort),
-  process.env.RedisHostname,
-  {
+console.log('Connecting to Redis', process.env.RedisHostname, process.env.RedisPort)
+
+let redisOpts = {}
+if (process.env.RedisKey) {
+  redisOpts = { 
     auth_pass: process.env.RedisKey,
     tls: { servername: process.env.RedisHostname }
   }
+} 
+
+const cache = createClient(
+  parseInt(process.env.RedisPort),
+  process.env.RedisHostname,
+  redisOpts
 )
+
+setTimeout(() => {
+  console.log('Redis connected', cache.connected)
+}, 3000)
 
 const getCache = promisify(cache.get).bind(cache)
 const setCache = promisify(cache.set).bind(cache)
@@ -45,16 +57,18 @@ const Redis: RedisInternal = {
   async getOrGenerateTokenSecret(): Promise<string> {
     const secret = await getCache('tokenSecretKey')
     if (secret) {
+      console.log('Found secret', secret)
       return secret
     }
 
     const newSecret = uuid()
     await setCache('tokenSecretKey', newSecret)
+    console.log('Generated new secret', newSecret)
     return secret
   },
 
   async getOrGenerateUserIdForEmail(email: string): Promise<string> {
-    const userId = getCache(userIdKeyForEmail(email))
+    const userId = await getCache(userIdKeyForEmail(email))
     if (userId) {
       return userId;
     } else {

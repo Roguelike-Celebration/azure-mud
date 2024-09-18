@@ -84,17 +84,17 @@ export async function getUserIdFromHeaders (
     )
     return undefined
   }
-
-  if (!headers.userId) {
+  log('headers:', headers)
+  if (!headers.userid) {
     log('User ID header not found.')
     return undefined
   }
 
   const clientIdToken = authHeaderParts[1]
-  var userId = headers.userId
+  var userId = headers.userid
 
-  return new Promise((resolve, reject) => {
-    const enp = require("easy-no-password")(DB.getOrGenerateTokenSecret())
+  return new Promise(async (resolve, reject) => {
+    const enp = require("easy-no-password")(await DB.getOrGenerateTokenSecret())
     enp.isValid(clientIdToken, userId, (err, isValid) => {
       if (err) {
         log('Error validating token:', err)

@@ -32,6 +32,7 @@ import updateProfileColor from "./endpoints/updateProfileColor"
 import updateRoom from "./endpoints/updateRoom"
 import heartbeat from "./endpoints/heartbeat"
 import { getServerSettings, postServerSettings } from "./endpoints/serverSettings"
+import sendMagicEmail from "./endpoints/sendMagicEmail"
 
 // This verb list is obviously incomplete and may need augmenting
 type FunctionOrMethodSplitFunction = Function | { [key in "get"|"post"]?: Function }
@@ -72,6 +73,7 @@ const routes: {[key: string]: FunctionOrMethodSplitFunction} = {
   resetRoomData,
   sendCaption,
   sendChatMessage,
+  sendMagicEmail,
   serverSettings: {
     get: getServerSettings,
     post: postServerSettings

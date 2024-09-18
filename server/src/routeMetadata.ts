@@ -1,10 +1,12 @@
+import sendMagicEmail from "./endpoints/sendMagicEmail"
+
 export interface EndpointOptions {
   authenticated?: boolean
   mod?: boolean
   audit?: boolean
 }
 
-type EndpointOrMethodSplitEndpoint = EndpointOptions | { [key in "GET"|"POST"|"PUT"|"DELETE"]?: EndpointOptions }
+type EndpointOrMethodSplitEndpoint = EndpointOptions | { [key in "get"|"post"|"put"|"delete"]?: EndpointOptions }
 
 
 
@@ -38,9 +40,11 @@ const routes: {[key: string]: EndpointOrMethodSplitEndpoint} = {
   resetRoomData: { authenticated: true, mod: true },
   sendCaption: { authenticated: true, audit: true },
   sendChatMessage: { authenticated: true, audit: true },
+  sendMagicEmail: { audit: true },
   serverSettings: { 
-    GET: {}, 
-    POST: { authenticated: true, mod: true } },
+    get: {}, 
+    post: { authenticated: true, mod: true } 
+  },
   toggleModStatus: { authenticated: true, audit: true, mod: true },
   toggleSpeakerStatus: { authenticated: true, audit: true, mod: true },
   // twilioToken: {}, // TODO: Not wrapped, also not needed
