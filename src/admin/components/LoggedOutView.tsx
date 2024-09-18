@@ -1,6 +1,4 @@
 import React from 'react'
-import { sendMagicEmail } from '../../networking'
-import '../../../style/loggedOut.css'
 
 export default function LoggedOutView () {
   return (
