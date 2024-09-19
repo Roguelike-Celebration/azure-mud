@@ -1,0 +1,10 @@
+.logged-out {
+  margin: auto;
+  max-width: 1024px;
+  padding: 0px 20px;
+}
+
+.logged-out input {
+  margin: 1em 30px 1em 10px;
+  max-width: 400px;
+}
