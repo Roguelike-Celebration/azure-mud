@@ -1,5 +1,6 @@
 import React from 'react'
 import { sendMagicEmail } from '../networking'
+import '../../style/loggedOut.css'
 
 export default function LoggedOutView () {
   const [email, setEmail] = React.useState('')
@@ -12,10 +13,10 @@ export default function LoggedOutView () {
 
   return (
     <div>
-      <header role="banner">
+      <header role="banner" className="logged-out">
         <h1>Welcome to Roguelike Celebration 2024!</h1>
       </header>
-      <main role="main">
+      <main role="main" className="logged-out">
         <p>
           This is a social space for attendees of{' '}
           <a href='https://roguelike.club'>Roguelike Celebration</a>, a
@@ -26,12 +27,13 @@ export default function LoggedOutView () {
         </p>
         <p>After you enter your email address, we will email you a 'magic' link that will allow you to login, no password needed!</p>
         <div className="email">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email:</label>
             <input
               type="text"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.currentTarget.value)}
+              autoFocus
             />
             {/* TODO: wire up enter key */}
             <button onClick={sendEmail}>Send Login Link</button>
