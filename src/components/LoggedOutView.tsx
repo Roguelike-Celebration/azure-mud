@@ -4,12 +4,32 @@ import '../../style/loggedOut.css'
 
 export default function LoggedOutView () {
   const [email, setEmail] = React.useState('')
+  const [emailSent, setEmailSent] = React.useState(false)
 
   const sendEmail = () => {
     sendMagicEmail(email)
     console.log("Email sent to", email)
-    // TODO: Show a message that the email was sent 
+    setEmailSent(true)
   }
+
+  const emailInputView = (
+    <div className="email">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="text"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.currentTarget.value)}
+              autoFocus
+            />
+            {/* TODO: wire up enter key */}
+            <button onClick={sendEmail}>Send Login Link</button>
+          </div>  
+  )
+
+  const emailSentView = (
+    <div className='email-sent'>We sent a magic login link to <strong>{email}</strong>. Check your inbox!</div>
+  )
 
   return (
     <div>
@@ -25,20 +45,9 @@ export default function LoggedOutView () {
           game design. It&apos;s for fans, players, developers, scholars, and
           everyone else!
         </p>
-        <p>After you enter your email address, we will email you a 'magic' link that will allow you to login, no password needed!</p>
-        <div className="email">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="text"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
-              autoFocus
-            />
-            {/* TODO: wire up enter key */}
-            <button onClick={sendEmail}>Send Login Link</button>
-          </div>        
-          <p>
+        <p>After entering your email address, we will email you a 'magic' link to log you in, no password needed!</p>
+          {emailSent ? emailSentView : emailInputView}   
+        <p>
           <strong>We now only support logging in via email.</strong><br/>We&apos;re sorry if you used
           a third-party login in previous years. If you sign in using the same email you used for Google, you should still be able to log in as your previous account.
         </p>
