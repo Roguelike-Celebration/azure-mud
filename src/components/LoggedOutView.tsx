@@ -8,7 +8,6 @@ export default function LoggedOutView () {
 
   const sendEmail = () => {
     sendMagicEmail(email)
-    console.log("Email sent to", email)
     setEmailSent(true)
   }
 

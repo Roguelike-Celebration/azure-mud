@@ -5,13 +5,15 @@ import 'ace-builds/src-noconflict/mode-json'
 import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
-import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking'
+import { checkIsRegistered, configureNetworking, getRoomIds, updateRoom } from '../../networking'
 import reducer, { defaultState, State } from '../reducer'
 import { useReducerWithThunk } from '../../useReducerWithThunk'
 import { Action, LoggedInAction, UpdateRoomIds, UpdateAndShowRoomAction } from '../actions'
 import LoggedOutView from './LoggedOutView'
 import RoomList from './RoomList'
 import RoomOptionsView from './RoomOptionsView'
+
+import { getToken } from '../../storage'
 
 export const DispatchContext = createContext(null)
 
@@ -28,26 +30,29 @@ const App = function () {
     // Auth is simple: you log in, we check if you're a mod, and only set the 'logged in' flag if so
     // I don't think we (currently) care about knowing WHO you are, or connecting to SignalR infra
     // SignalR may change if we want to enable real-time collab, but WOOF.
-/*
-    onAuthenticationStateChange(async (user) => {
-      // The shouldVerifyEmail check shouldn't be necessary,
-      // but I'm not convinced we won't have an exploit where someone can make a new account with an existing admin email.
-      // This 20 characters is easier to type than manually testing.
-      if (!user || user.shouldVerifyEmail) {
+    //
+    // This is leaky in that you can see the editing tools if you simply spoof a valid userId, 
+    // but any edits you make will fail anyway, so shrug
+
+    (async () => {
+    const tokenObj = await getToken()
+      console.log(tokenObj)
+      if (!tokenObj || !tokenObj.userId || !tokenObj.token) {
+        // logged out
+        console.log("no token found")
         return
       }
 
-      const { isMod, isBanned } = await checkIsRegistered()
+      const { userId, token } = tokenObj
+
+      
+      const { isMod, isBanned } = await checkIsRegistered(userId)
 
       if (isMod && !isBanned) {
         dispatch(LoggedInAction())
-      } else {
-        alert("You shouldn't have access to this page.")
-        await signOut()
-        window.location.reload()
+        configureNetworking(userId, token, dispatch)
       }
-    })
-      */
+    })()
   }, [])
 
   // This could probably previously run in the login useEffect block--
