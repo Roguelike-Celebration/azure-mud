@@ -4,10 +4,11 @@
   "description": "",
   "homepage": "https://lazerwalker.com/azure-mud",
   "scripts": {
-    "dev:client": "parcel *.html",
+    "dev:client": "npm run build:images; parcel *.html",
     "dev:server": "pushd ./server; npm run dev; popd",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "build": "parcel build *.html --public-url ./ --dist-dir ./dist; cp CNAME dist; rsync -r images dist",
+    "build": "parcel build *.html --public-url ./ --dist-dir ./dist; cp CNAME dist; npm run build:images",
+    "build:images": "rsync -r images dist",
     "deploy": "npm run build; cp CNAME dist; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
     "typecheck": "tsc --noEmit",
