@@ -113,11 +113,11 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
     }
   ]
 
-  if (user.roomId === "theater" && message.startsWith("!")) {
-    console.log("Sending ! message to orb ponderer");
+  if (user.roomId === 'theater' && message.startsWith('!')) {
+    console.log('Sending ! message to orb ponderer')
     messages.push({
-      groupId: "orbMessages",
-      target: "chatMessage",
+      groupId: 'orbMessages',
+      target: 'chatMessage',
       arguments: [inputs.id, user.id, message]
     })
   }
