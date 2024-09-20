@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest, connection): Promise<void> {
-  if (req.headers.userId !== 'orbWizard') {
+  if (req.headers.userId !== process.env.ORB_PONDER_USER) {
     context.res = {
       status: 401,
       body: 'Unauthorized'
