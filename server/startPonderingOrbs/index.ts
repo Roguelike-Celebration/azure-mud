@@ -18,9 +18,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     userId: req.headers.userid,
     group: 'orbMessages'
   })
+  context.log('Set up action to add user to group')
+  context.log('connection', connection)
 
   context.res = { body: connection }
-  context.done()
 }
 
 export default httpTrigger
