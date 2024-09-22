@@ -1,4 +1,4 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 
 import { moveToRoom } from '../moveToRoom'
 import { whisper } from '../whisper'
@@ -105,7 +105,7 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
   }
 
   log(`Sending to ${user.roomId}: ${message} from ${user.id}`)
-  const messages = [
+  const messages: Message[] = [
     {
       groupId: user.roomId,
       target: 'chatMessage',
@@ -116,9 +116,9 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
   if (user.roomId === 'theater' && message.startsWith('!')) {
     console.log('Sending ! message to orb ponderer')
     messages.push({
-      groupId: 'orbMessages',
+      userId: process.env.ORB_PONDER_USER,
       target: 'chatMessage',
-      arguments: [inputs.id, user.id, message]
+      arguments: [message]
     })
   }
 

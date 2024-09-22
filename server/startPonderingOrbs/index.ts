@@ -10,16 +10,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     return
   }
 
-  context.log('got a real pondererr')
-  // This never gets undone, but the fact this group always exists is ~fine~
-  context.bindings.actions = [{
-    actionName: 'addUserToGroup',
-    userId: req.headers.userid,
-    group: 'orbMessages'
-  }]
-
-  context.log('Set up action to add user to group')
-  context.log('connection', connection)
+  context.log('valid orb ponderer')
 
   context.res = { body: connection }
 }
