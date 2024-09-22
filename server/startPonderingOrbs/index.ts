@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest, connection): Promise<void> {
-  if (req.headers.userId !== process.env.ORB_PONDER_USER) {
+  if (req.headers.userid !== process.env.ORB_PONDER_USER) {
     context.res = {
       status: 401,
       body: 'Unauthorized'
@@ -12,7 +12,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   // This never gets undone, but the fact this group always exists is ~fine~
   context.bindings.actions.push({
     actionName: 'addUserToGroup',
-    userId: req.headers.userId,
+    userId: req.headers.userid,
     group: 'orbMessages'
   })
 
