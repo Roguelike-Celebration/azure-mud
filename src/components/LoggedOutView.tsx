@@ -23,10 +23,12 @@ const uiConfig = {
 }
 
 export default function LoggedOutView () {
+  const thisYear: string = `${(new Date()).getFullYear()}`
+
   return (
     <div>
       <header role="banner">
-        <h1>Welcome to Roguelike Celebration 2024!</h1>
+        <h1>Welcome to Roguelike Celebration {thisYear}!</h1>
       </header>
       <main role="main">
         <p>
