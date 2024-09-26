@@ -43,6 +43,9 @@ export default function NameView (props: Props) {
   // userIsMod = the user who is logged in is a mod
   const userIsMod = userMap[myId].isMod
 
+  const thisYear: string = `${(new Date()).getFullYear()}`
+  const lastYear: string = `${(new Date()).getFullYear() - 1}`
+
   // This sometimes gets called before `connect` returns any users
   // That itself is a bug to fix, but this can at least guard against it.
   if (!user || (Object.keys(userMap).length === 1 && !isSelf)) {
@@ -80,15 +83,15 @@ export default function NameView (props: Props) {
     const doSpeaker = confirm(
       `Are you sure you would like to ${isSpeaker ? 'remove' : 'add'} the user '${
         data.username
-      }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
+      }' ${isSpeaker ? 'from' : 'to'} the current (${thisYear}) speaker list?`
     )
     if (doSpeaker) {
-      toggleUserSpeaker(data.id, '2024')
+      toggleUserSpeaker(data.id, thisYear)
     }
   }
 
   const handlePastSpeaker = (e, data) => {
-    toggleUserSpeaker(data.id, '2023')
+    toggleUserSpeaker(data.id, lastYear)
   }
 
   const pastSpeakerButton = userIsMod ? (
@@ -98,7 +101,7 @@ export default function NameView (props: Props) {
       }
       onClick={handlePastSpeaker}
     >
-    Make 2023 speaker
+    Make Previous (${lastYear}) Speaker
     </MenuItem>
   ) : (
     ''
