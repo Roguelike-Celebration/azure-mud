@@ -1,4 +1,4 @@
-interface SlashCommand {
+export interface SlashCommand {
     type: string;
     description: string;
     invocations: string[];
@@ -36,10 +36,13 @@ export const SlashCommands: SlashCommand[] = [
   SlashCommand(SlashCommandType.Interact, 'Interact with or get something in a room by referencing the name in the description - experiment as you explore!', ['/interact', '/get'], false)
 ]
 
-export function matchingSlashCommand (message: String): SlashCommand | undefined {
-  return SlashCommands.find((command) =>
-    command.invocations.find((invocation) =>
-      command.singleParameter ? message.startsWith(invocation) : message.startsWith(invocation + ' ')
-    )
-  )
+export function matchingSlashCommand (cmd: string, arg: string | undefined): SlashCommand | 'SlashCommandArgumentExpected' | 'UnregisteredSlashCommand' {
+  const found = SlashCommands.find((command) => command.invocations.find((inv) => cmd === inv))
+  if (found === undefined) {
+    return 'UnregisteredSlashCommand'
+  }
+  if (!found.singleParameter && arg === undefined) {
+    return 'SlashCommandArgumentExpected'
+  }
+  return found
 }
