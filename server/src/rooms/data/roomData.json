@@ -329,6 +329,13 @@
       "addNoteLinkText": "Add feedback",
       "addNotePrompt": "What feedback do you have about the social space itself?",
       "noteWallDescription": "Social Space Feedback"
-    }
+    },
+  "goblinWarren": {
+    "displayName": "Classic Goblin Warren",
+    "shortName": "goblinWarren",
+    "id": "goblinWarren",
+    "description": "You slip into an underground warren full of goblins. Stone walls and dirt floors shaped in a natural cave that stretches far into the distance and then further into tunnels in every direction. The main chamber you stand in is full of goblins, no different from those on the surface except for their fashion sense, which seems to adhere strictly to Cave Chic, as if intentionally coordinated by some group with absolute authority. As you look around, your eyes travel to a side cave where scraps of materials lie strewn across the floor like a blast zone around a group of [[Goblin Fashionistas]].</p> Near the Fashionistas, you see a few more industrial goblins creating other kinds of crafts, including a [[Goblin Tinkerer]] who appears to be furiously working on some grandiose contraption.</p> The rest of the warren's populace mills about, with the exception of one [[Dark Hallway]], which they appear to be avoiding.</p> Or you can head back to the [[Courtyard]].",
+    "roomId": "goblinWarren"
+  },
   }
 }
