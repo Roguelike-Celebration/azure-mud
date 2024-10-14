@@ -1,4 +1,12 @@
 {
+  "darkHallway": {
+    "displayName": "Dark Hallway",
+    "shortName": "darkHallway",
+    "id": "darkHallway",
+    "description": "You enter a dark hallway and begin to hear threatening noises echoing in the distance. Your immediate surroundings, however, are featureless stone hidden entirely by the unnatural darkness consuming everything here. The hair on the back of your neck raises as a chill wind blows from somewhere you cannot see, and you begin to feel a sense of unease as your steps slow down with caution before you can consider your next steps. </br></br> Do you: [[Cling To The Walls]] or [[Walk Boldly Down The Center]]",
+    "hidden": true,
+    "roomId": "darkHallway"
+  },
   "unconferencingHub": {
     "displayName": "Unconferencing Pavilion",
     "shortName": "Unconferencing Pavilion",
@@ -161,7 +169,7 @@
     "displayName": "Classic Goblin Warren",
     "shortName": "goblin warren",
     "id": "goblinWarren",
-    "description": "You slip into an underground warren full of goblins. Stone walls and dirt floors shaped in a natural cave that stretches far into the distance and then further into tunnels in every direction. The main chamber you stand in is full of goblins, no different from those on the surface except for their fashion sense, which seems to adhere strictly to Cave Chic, as if intentionally coordinated by some group with absolute authority. As you look around, your eyes travel to a side cave where scraps of materials lie strewn across the floor like a blast zone around a group of [[Goblin Fashionistas]].</br></br> Near the Fashionistas, you see a few more industrial goblins creating other kinds of crafts, including a [[Goblin Tinkerer]] who appears to be furiously working on some grandiose contraption.</br></br>The rest of the warren's populace mills about, with the exception of one[[ Dark Hallway]], which they appear to be avoiding.",
+    "description": "You slip into an underground warren full of goblins. Stone walls and dirt floors shaped in a natural cave that stretches far into the distance and then further into tunnels in every direction. The main chamber you stand in is full of goblins, no different from those on the surface except for their fashion sense, which seems to adhere strictly to Cave Chic, as if intentionally coordinated by some group with absolute authority. As you look around, your eyes travel to a side cave where scraps of materials lie strewn across the floor like a blast zone around a group of [[Goblin Fashionistas]].</br></br> Near the Fashionistas, you see a few more industrial goblins creating other kinds of crafts, including a [[Goblin Tinkerer]] who appears to be furiously working on some grandiose contraption.</br></br>The rest of the warren's populace mills about, with the exception of one [[Dark Hallway]], which they appear to be avoiding.",
     "hidden": true,
     "roomId": "goblinWarren"
   },
@@ -464,7 +472,7 @@
     "displayName": "Your Daughter",
     "shortName": "your daughter",
     "id": "yourDaughter",
-    "description": "You step into the memories and find yourself somewhere far beyond the goblin cave. You are in a simple home with a warm fire and the smell of fresh bread caresses you and makes you feel at peace. You look around at the family portraits on the wall, the photos from your wedding, and all the pictures of your friends. Something deep inside you understands that this is the life you built with your own two hands, that this is what you want. As that certainty crashes over you, you see [[your daughter]] looking up at you as if to ask you a question. You also see the work table before you, full of the toys that you are expected to finish [[by tomorrow]].",
+    "description": "Your daughter's loving eyes gaze up at you and you understand the meaning of this all for a moment. You know exactly why you toil as you do; It will all be worth it as long as you can see this smile. Your daughter tells you some story she made up about the toys she's been playing with, and you remember that you have to come up with something new [[by tomorrow]] or else you will lose your tenuous position. With an effort of will, you might be able to [[focus on the moment]] and listen to your daughter's story.",
     "hidden": true,
     "roomId": "yourDaughter"
   },
@@ -640,7 +648,7 @@
     "displayName": "Listen",
     "shortName": "listen",
     "id": "listen",
-    "description": "You open your arms and offer the warrior a hug. You embrace and the warrior relaxes for a moment in your arms. As they step back you hear the echo of a cheer from somewhere above ground at the festival. The warrior looks curious for a moment, but unsure what to do about that curiosity. You get the impression that they have not left this cave for quite some time. You feel the urge to ask if they would like to join you on the surface for the festival.</br></br>[[Ask!->ask]]</br>[[Hug!->hug2]]</br>[[Drink->drink6]]</br>[[Run]]",
+    "description": "You sit next to the goblin warrior and look at them eagerly. They begin to tell you of their troubles. They have been in this cave for quite some time, years and years of combating adventurers like yourself. The warrior speaks of how much they've enjoyed testing their skills against fierce opponents, some which they defeated, and others who bested them and helped them grow stronger. They tell stories that wrap you up in a world of strength and growth, of honor and self-improvement. You're not sure how long you're there with this goblin, but you realize they never once mention going to the surface. You feel an urge within you to ask if they want to visit the festival above.</br></br>[[Ask!->ask]]</br>[[Hug!->hug2]]</br>[[Drink->drink6]]</br>[[Run]]",
     "hidden": true,
     "roomId": "listen"
   },
