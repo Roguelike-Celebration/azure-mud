@@ -1,12 +1,4 @@
 {
-  "darkHallway": {
-    "displayName": "Dark Hallway",
-    "shortName": "darkHallway",
-    "id": "darkHallway",
-    "description": "You enter a dark hallway and begin to hear threatening noises echoing in the distance. Your immediate surroundings, however, are featureless stone hidden entirely by the unnatural darkness consuming everything here. The hair on the back of your neck raises as a chill wind blows from somewhere you cannot see, and you begin to feel a sense of unease as your steps slow down with caution before you can consider your next steps. </br></br> Do you: [[Cling To The Walls]] or [[Walk Boldly Down The Center]]",
-    "hidden": true,
-    "roomId": "darkHallway"
-  },
   "unconferencingHub": {
     "displayName": "Unconferencing Pavilion",
     "shortName": "Unconferencing Pavilion",
@@ -58,7 +50,7 @@
     "displayName": "Steam Sale",
     "shortName": "Steam Sale",
     "id": "steamSale",
-    "description": "You enter a makeshift store filled with shelves and colorful boxes in every direction. These shelves appear to be illegal knockoffs of games, made by the goblin merchants. A greasy goblin stands behind the counter, swearing to anyone who asks that his products are legit. You notice a table in the back corner of the space, devoted to actual video games, which you are free to peruse. <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">",
+    "description": "You enter a makeshift store filled with shelves and colorful boxes in every direction. These shelves appear to be illegal knockoffs of games, armor, weapons, and items, made by the goblin merchants. A greasy goblin stands behind the counter, swearing to anyone who asks that his products are legit. A wall to the side holds a progression of armors, the best of which is marked with a sign which reads 'Plate Mail Sold Out Due To High Demand'. You notice a table in the back corner of the space, devoted to actual video games, which you are free to peruse. <a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">",
     "roomId": "steamSale"
   },
   "swag": {
@@ -184,7 +176,7 @@
     "displayName": "Boba Truck",
     "shortName": "boba truck",
     "id": "bobaTruck",
-    "description": "A rotund man in a brilliant purple and gold outfit stands behind a counter, singing boisterously. His voice rattles the walls and echoes far into the distance. In front of him is a table arrayed with a selection of vibrant, chilled liquids. Next to them is a set of containers labeled with different kinds of boba that might be put into your drink, if you like. Or you can head back to the [[Night Market->nightMarket]]",
+    "description": "A food truck labelled as 'The Boba Ballad' sits and bounces gently with music. A rotund man in a brilliant purple and gold outfit stands behind a window, singing boisterously, and the truck's windows are struggling to maintain themselves against the power of his voice. In front of him is a table arrayed with a selection of vibrant, chilled liquids. Next to them is a set of containers labeled with different kinds of boba that might be put into your drink, [[if you like->boba]]. Or you can head back to the [[Night Market->nightMarket]]",
     "roomId": "bobaTruck"
   },
   "orbOfZot": {
@@ -217,7 +209,7 @@
     "displayName": "Kebab Truck",
     "shortName": "kebab truck",
     "id": "kebabTruck",
-    "description": "You step into a small shop with display tables and a long counter. Behind that counter stands a young man with stark white hair and a green bandana. On each of the display tables is a beautifully-appointed array of meats, each one labelled with the name of the local creature from which it was harvested. You can see swords, bags, and other adventuring equipment right behind the shopkeeper, and can only assume he must retrieve his goods himself. He stands ready at the desk, offering tiny sticks to turn these exotic meats into kebabs for you. Or you can head back to the [[Night Market->nightMarket]]",
+    "description": "You step up to a food truck surrounded with display tables, a long counter, and a banner on the side of the truck announcing 'Moonlit Meats'. Inside the truck stands a young man with stark white hair and a green bandana. On each of the display tables is a beautifully-appointed array of meats, each one labelled with the name of the local creature from which it was harvested. You can see swords, bags, and other adventuring equipment right behind the shopkeeper, and can only assume he must retrieve his goods himself. He stands ready at the window, offering tiny sticks to turn these exotic meats into kebabs for you. Or you can head back to the [[Night Market->nightMarket]]",
     "roomId": "kebabTruck"
   },
   "centralHall": {
@@ -270,15 +262,15 @@
     "displayName": "Vegan Truck",
     "shortName": "vegan truck",
     "id": "veganTruck",
-    "description": "You approach a food truck with a jaunty sign labelling it as \"Farm Fresh, Organic, Local, Monster-Alternative Bowls and Wraps\". As you peer into the truck, a shiver runs down your spine as you lock eyes with the entity running the operation. It wears richly-appointed black robes covered in golden coins, and its shadowed face is topped with a wide-brimmed hat. Its mouth leaks a chilling purple fog into the air. You may attempt to communicate with the entity, or you may simply take a food bowl. Or you can head back to the [[Night Market]]",
+    "description": "You approach a food truck with a jaunty sign labelling it as \"Chiron's Chickpeas. Farm Fresh, Organic, Local, Monster-Alternative Bowls and Wraps\". As you peer into the truck, a shiver runs down your spine as you lock eyes with the entity running the operation. It wears richly-appointed black robes covered in golden coins, and its shadowed face is topped with a wide-brimmed hat. Its mouth leaks a chilling purple fog into the air. You may attempt to communicate with the entity, or you may simply take a food bowl. Or you can head back to the [[Night Market]]",
     "roomId": "veganTruck"
   },
-  "bawdySingers": {
-    "displayName": "Bawdy Singers",
-    "shortName": "Bawdy Singers",
-    "id": "bawdySingers",
+  "goblinSingers": {
+    "displayName": "Goblin Singers",
+    "shortName": "Goblin Singers",
+    "id": "goblinSingers",
     "description": "You enter a ring of felled logs arrayed into seating before a stage manned by a troupe of colorful goblins of mixed gender. They are singing a raucous tavern song with wildly inappropriate lyrics, and managing to do so while mostly staying on-key. The audience appears to be in various stages of intoxication, and emits riotous laughter every few moments, regardless of the lyrics being sung on stage.<p>You can also head back to the [[theater]].</p>",
-    "roomId": "bawdySingers"
+    "roomId": "goblinSingers"
   },
   "pinVendor": {
     "displayName": "Pin Vendor",
@@ -361,6 +353,13 @@
     "description": "You walk among a quieter part of the night market where you find a collection of standing tables set aside for people to relax while they eat. The hustle and bustle of the night market stirs in the distance, but here you can find some sense of peace. You feel the cool breeze wafting the scents of delicious foods being prepared nearby as you take a moment to simply enjoy yourself in the night air. When you are ready, you may head back to the [[Night Market]]</p>",
     "roomId": "standingTables"
   },
+  "picnicGrounds": {
+    "displayName": "Picnic Grounds",
+    "shortName": "picnic grounds",
+    "id": "picnicGrounds",
+    "description": "You walk onto a quiet hillside which gently slopes to cradle the edge of the fair grounds. The breeze here is peaceful and it's almost quiet enough to forget all the goblins milling about in every other direction.</br></br>The wind carries a small slip of paper over to you, which lands in your hand and reads 'Adornments For Sale! 10g each!'. It must have fallen off someone's table in the market. </br></br> As you rest here you notice a dark line in the side of the hill, as if a hole had been covered up with a sheet of grass. You may attempt to [[Enter The Hole->Classic Goblin Warren]].",
+    "roomId": "picnicGrounds"
+  },
   "unconfWeaponsTraining": {
     "displayName": "Unconferencing: Weapons Training Field",
     "shortName": "training grounds",
@@ -372,7 +371,7 @@
     "displayName": "Obelisk",
     "shortName": "obelisk",
     "id": "obelisk",
-    "description": "You stand beneath a towering stone slab which glows faintly with layers upon layers of finely-carved runes sprawling across the surface in elaborate patterns. As you stare at the glowing runes, you feel your mind begin to connect with it. It demands information. A deep fear imbeds itself within your heart as you realize the stone is sentient. Feed it your most valuable links, or else you fear what may come to pass. </br></br> When you're done, you head back to the [[Courtyard]].</br></br>",
+    "description": "You stand beneath a towering stone slab which glows faintly with layers upon layers of finely-carved runes sprawling across the surface in elaborate patterns. As you stare at the glowing runes, you feel your mind begin to connect with it. It demands information. A deep fear imbeds itself within your heart as you realize the stone is sentient. Feed it your most valuable links, or else you fear what may come to pass.</br></br> At the foot of the obelisk you notice a potion bottle. It shifts between two forms, but the only tangible difference is the label which changes from 'Paralysis' to 'Hallucination'  </br></br> When you're done, you head back to the [[Courtyard]].</br></br>",
     "roomId": "obelisk",
     "hasNoteWall": true,
     "noteWallData": {
@@ -387,7 +386,7 @@
     "displayName": "Taco Truck",
     "shortName": "taco truck",
     "id": "tacoTruck",
-    "description": "An older man with a bushy white beard and wearing a prospector's outfit stands behind a table full of taco ingredients. Everything here appears to be freely up for grabs, but you can't help noticing the nearby shotgun. The old man stands neutrally in his thick apron, but you fear you see a glint of fury in his eyes. Or you can head back to the [[Night Market]]",
+    "description": "You approach a taco truck with a clear archaeological theming, and a banner announcing it as 'Sabor Espeleología'. An older man with a bushy white beard and wearing a prospector's outfit stands inside a window behind a table full of taco ingredients. Everything here appears to be freely up for grabs, but you can't help noticing the nearby shotgun. The old man stands neutrally in his thick apron, but you fear you see a glint of fury in his eyes. Or you can head back to the [[Night Market]]",
     "roomId": "tacoTruck"
   },
   "goofyItems": {
@@ -489,7 +488,7 @@
     "displayName": "Build A Toy",
     "shortName": "build a toy",
     "id": "buildAToy",
-    "description": "You create the princess toy for your daughter. You give the princess a powerful mount and surround her with mystic friends. Your daughter grows up knowing how powerful she is, and that you do this work for her. The two of you struggle, but this moment gives you each a touchstone to remind yourselves of the way things should be.</br></br>Before you, you suddenly find a table filled with toys. You understand, somehow, that these are not part of the memories here. These toys are real and you can take them with you.",
+    "description": "You create the princess toy for your daughter. You give the princess a powerful mount and surround her with mystic friends. Your daughter grows up knowing how powerful she is, and that you do this work for her. The two of you struggle, but this moment gives you each a touchstone to remind yourselves of the way things should be.</br></br>Before you, you suddenly find a table filled with toys. You understand, somehow, that these are not part of the memories here. These toys are real and you can take them with you.</br></br> You see three action figures on the table. [[Her-yell, Goblin Princess]], [[Mr Stabbums, Battle Kitty]], [[Ooze, Faithful Sidekick]]",
     "hidden": true,
     "roomId": "buildAToy"
   },

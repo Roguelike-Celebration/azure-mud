@@ -20,5 +20,8 @@ export default [
   'negasocks',
   'negalongbow',
   'healing scroll',
-  'negapuppy'
+  'negapuppy',
+  'Her-yell, Goblin Princess',
+  'Mr Stabbums, Battle Kitty',
+  'Ooze, Faithful Sidekick'
 ]
