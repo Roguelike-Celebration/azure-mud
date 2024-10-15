@@ -1,6 +1,6 @@
-import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
-import { isMod, User } from '../user'
-import DB from '../redis'
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../../endpoint'
+import { isMod, User } from '../../user'
+import DB from '../../redis'
 import { v4 as uuid } from 'uuid'
 
 const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
