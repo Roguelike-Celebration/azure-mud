@@ -24,5 +24,8 @@ export default [
   'Slap Bracelet of Zot',
   'Moon-Touched Bop-It',
   'Vorpal Tamagotchi',
-  'fake vampire fangs'
+  'fake vampire fangs',
+  'Her-yell, Goblin Princess',
+  'Mr Stabbums, Battle Kitty',
+  'Ooze, Faithful Sidekick'
 ]
