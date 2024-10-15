@@ -69,11 +69,6 @@ export async function moveToRoom (
     }
   }
 
-  // We send presence data as a SignalR message as part of this HTTP call
-  // HOWEVER! Our client isn't smart enough to merge things correctly
-  // if it gets that presence message BEFORE the HTTP request returns, which is likely
-  // There are potentially better ways to solve this, but making sure the HTTP response
-  // contains presence data is ~fine~
   to.users = await DB.roomOccupants(to.id)
 
   const awardedBadges = awardBadges(user, to.id)
@@ -91,18 +86,23 @@ export async function moveToRoom (
   const result: Result = {
     httpResponse: {
       status: 200,
-      body: response
+      // Instead of returning relevant data in the HTTP response, we use websockets.
+      // This helps dealing with desyncs.
+      // Unfortunately things like outgoing whispers/messages still encounter desyncs.
+      // 'least it's obvious!
+      body: undefined
     }
   }
 
   // If you're already in the room and try to 're-enter' the room,
   // nothing should happen: issue 162
   if (user.roomId !== to.id) {
+    // TODO: console.log doesn't work pass in the logFn
     console.log(`Moving from ${user.roomId} to ${to.id}`)
-    console.log(JSON.stringify(await globalPresenceMessage([user.roomId, to.id]), null, 2))
+    // This is to force the resolution of the unlocked badges
+    // TODO: Find a nicer way to do this
+    await DB.getUser(user.id)
     await DB.setCurrentRoomForUser(user, to.id)
-    console.log('After setting')
-    console.log(JSON.stringify(await globalPresenceMessage([user.roomId, to.id]), null, 2))
 
     result.messages = [
       {
@@ -115,12 +115,17 @@ export async function moveToRoom (
         target: 'playerEntered',
         arguments: [user.id, user.roomId, currentRoom.shortName]
       },
+      {
+        userId: user.id,
+        target: 'updatedCurrentRoom',
+        arguments: [response]
+      },
       await globalPresenceMessage([user.roomId, to.id])
     ]
 
     if (awardedBadges.length > 0) {
       result.messages.push({
-        groupId: user.id,
+        userId: user.id,
         target: 'unlockBadge',
         arguments: [awardedBadges]
       })
@@ -150,25 +155,42 @@ function awardBadges (user: User, roomId: string) {
   const tuples = [
     ['dockingBay', '🚀'],
     ['oxygenFarm', '🌱'],
-    ['transmute', '🧙‍♀️'],
+    ['experimentalBiology', '🧙‍♀️'],
     ['adventurersGuildHall', '⚔️'],
-    ['steam', '💾']
+    ['officeOfSteam', '💾'],
+    ['thesisDefense', 'golden_thesis'],
+    ['loversLake', 'phylactery'],
+    ['procedural', 'nega_ticket'],
+    ['underlab', 'undermuffin'],
+    // begin 2023
+    ['lockedDoor', '🔑'],
+    ['hotDogStand', '🌭'],
+    ['emptyStore', '🎃'],
+    ['orbOfZot', '🔮'],
+    ['coconut', '👁️']
   ]
 
   const unlockedEmoji: Badge[] = []
 
-  if (!includes(user.unlockedBadges, UnlockableBadgeMap['🐣']) &&
-    (new Date()).getMonth() === 8) {
-    awardUserBadge(user.id, UnlockableBadgeMap['🐣'])
-    // Not adding to unlockedEmoji because we don't want a modal dialog,
-    // We just want it to be quietly added.
+  // Unlock the "I attended!" badge for the current event
+  // This is gated on time, so you can update this for a future event.
+  // Just change the emoji, the month, and the year.
+  const currentEventBadge = UnlockableBadgeMap['🎪']
+  const today = new Date()
+  if (!includes(user.unlockedBadges, currentEventBadge) &&
+    today.getMonth() === 8 && // getMonth is 0-indexed, not 1-indexed
+    today.getFullYear() === 2024) {
+    // We handle this differently than others because we want it to be quietly added
+    // rather than popping a modal dialog
+    //
     // Note that this does mean someone will have to refresh the page after first pageload to apply it.
     // That's fine. Maybe eventually we can add a "silent" flag to the client unlock emoji action
+    awardUserBadge(user.id, currentEventBadge)
   }
 
   tuples.forEach(([room, emoji]) => {
     if (roomId === room &&
-    !includes(user.unlockedBadges, UnlockableBadgeMap[emoji])) {
+    !includes(user.unlockedBadges.map(b => b.emoji), emoji)) {
       console.log('Awarding badge', emoji, UnlockableBadgeMap[emoji])
       awardUserBadge(user.id, UnlockableBadgeMap[emoji])
       unlockedEmoji.push(UnlockableBadgeMap[emoji])

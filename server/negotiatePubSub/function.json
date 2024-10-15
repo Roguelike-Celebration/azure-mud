@@ -1,0 +1,24 @@
+{
+  "bindings": [
+      {
+        "authLevel": "anonymous",
+        "type": "httpTrigger",
+        "direction": "in",
+        "name": "req",
+        "methods": ["get", "post"]
+      },
+      {
+          "type": "http",
+          "direction": "out",
+          "name": "res"
+      },
+      {
+          "type": "webPubSubConnection",
+          "name": "connection",
+          "hub": "chat",
+          "userId": "{headers.userid}",
+          "direction": "in"
+      }
+  ],
+  "scriptFile": "../dist/negotiatePubSub/index.js"
+}

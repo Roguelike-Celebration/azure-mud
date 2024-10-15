@@ -1,42 +1,56 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React, { useContext, FunctionComponent, memo } from 'react'
-import ReactTooltip from 'react-tooltip'
+import React, { FunctionComponent, memo, useContext } from 'react'
 import Linkify from 'react-linkify'
+import ReactTooltip from 'react-tooltip'
 
-import { MenuItem, ContextMenuTrigger, ContextMenu } from 'react-contextmenu'
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
 
 import {
+  DispatchContext,
+  MessagesContext,
+  RoomDataContext,
+  UserMapContext
+} from '../App'
+import { renderCustomEmojiString } from '../emoji'
+import {
+  CaptionMessage,
+  ChatMessage,
+  CommandMessage,
+  ConnectedMessage,
+  DanceMessage,
+  DisconnectedMessage,
+  EmoteMessage,
+  EnteredMessage,
+  ErrorMessage,
+  LeftMessage,
   Message,
   MessageType,
-  ConnectedMessage,
-  DisconnectedMessage,
-  EnteredMessage,
-  LeftMessage,
+  ModMessage,
   MovedRoomMessage,
   SameRoomMessage,
-  ChatMessage,
-  WhisperMessage,
-  ErrorMessage,
   ShoutMessage,
-  EmoteMessage,
-  DanceMessage,
-  ModMessage,
-  CommandMessage,
-  CaptionMessage
+  WhisperMessage
 } from '../message'
-import NameView from './NameView'
-import { DispatchContext, UserMapContext, RoomDataContext } from '../App'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
-import { join, split } from 'lodash'
-import { renderCustomEmojiString } from '../emoji'
+import NameView from './NameView'
+import { MinimalUser } from '../../server/src/user'
 
-const formatter = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' })
+const formatter = new Intl.DateTimeFormat('en', {
+  hour: 'numeric',
+  minute: 'numeric'
+})
 
-export default memo(function MessageView (props: { message: Message, hideTimestamp: boolean, msgIndex: number }) {
+export default memo(function MessageView (props: {
+  message: Message;
+  hideTimestamp: boolean;
+  msgIndex: number;
+}) {
   const { message } = props
-  if (!message) { return <div/> }
+  if (!message) {
+    return <div />
+  }
 
   const messageMap = {
     [MessageType.Connected]: ConnectedMessageView,
@@ -62,7 +76,10 @@ export default memo(function MessageView (props: { message: Message, hideTimesta
     return <div />
   }
 
-  const date = (typeof message.timestamp === 'string' ? new Date(message.timestamp) : message.timestamp)
+  const date =
+    typeof message.timestamp === 'string'
+      ? new Date(message.timestamp)
+      : message.timestamp
   let className = 'message-wrapper'
   if (props.msgIndex % 2 === 0) {
     className += ' even-message'
@@ -70,23 +87,27 @@ export default memo(function MessageView (props: { message: Message, hideTimesta
 
   return (
     <div className={className}>
-      <div className={`time ${props.hideTimestamp ? 'show-on-hover' : null}`}>{formatter.format(date)}</div>
+      <div className={`time ${props.hideTimestamp ? 'show-on-hover' : null}`}>
+        {formatter.format(date)}
+      </div>
       {React.createElement(component, { ...message })}
     </div>
   )
 })
 
 const handleDeleteMessage = (e, data) => {
-  const doDelete = confirm(`Are you sure you would like to delete the message '${data.messageText}'?`)
+  const doDelete = confirm(
+    `Are you sure you would like to delete the message '${data.messageText}'?`
+  )
   if (doDelete) {
     deleteMessage(data.messageId)
   }
 }
 
 type DeletableMessageViewProps = {
-  messageId: string,
-  messageText: string
-}
+  messageId: string;
+  messageText: string;
+};
 
 const linkDecorator = (href, text, key) => (
   <a href={href} key={key} target="_blank" rel="noopener noreferrer">
@@ -94,12 +115,17 @@ const linkDecorator = (href, text, key) => (
   </a>
 )
 
-const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (props) => {
+const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
+  props
+) => {
   const { userMap, myId } = useContext(UserMapContext)
+
   const playerIsMod = userMap[myId] && userMap[myId].isMod
 
   if (!playerIsMod) {
-    return <Linkify componentDecorator={linkDecorator}>{props.children}</Linkify>
+    return (
+      <Linkify componentDecorator={linkDecorator}>{props.children}</Linkify>
+    )
   } else {
     const key: string = `${props.messageId}-name`
 
@@ -111,13 +137,16 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (prop
           </ContextMenuTrigger>
           <ContextMenu id={key}>
             <MenuItem
-              data={{ messageId: props.messageId, message: props.children, messageText: props.messageText }}
+              data={{
+                messageId: props.messageId,
+                message: props.children,
+                messageText: props.messageText
+              }}
               onClick={handleDeleteMessage}
             >
-              { 'Delete Message?' }
+              {'Delete Message?'}
             </MenuItem>
           </ContextMenu>
-          <ReactTooltip />
         </span>
       </Linkify>
     )
@@ -130,9 +159,7 @@ const ConnectedMessageView = (props: ConnectedMessage) => (
   </div>
 )
 
-const DisconnectedMessageView = (
-  props: DisconnectedMessage
-) => (
+const DisconnectedMessageView = (props: DisconnectedMessage) => (
   <div className="message">
     <NameView userId={props.userId} id={props.id} /> has disconnected.
   </div>
@@ -145,10 +172,17 @@ const EnteredView = (props: EnteredMessage) => {
   const roomData = useContext(RoomDataContext)
 
   if (roomData[props.fromId]) {
-    const fromButton: JSX.Element = roomData[props.fromId].hidden ? <text>somewhere...</text> : <button onClick={onClick} className='link-styled-button'>{props.fromName}.</button>
+    const fromButton: JSX.Element = roomData[props.fromId].hidden ? (
+      <text>somewhere...</text>
+    ) : (
+      <button onClick={onClick} className="link-styled-button">
+        {props.fromName}.
+      </button>
+    )
     return (
       <div className="message movement-message">
-        <NameView userId={props.userId} id={props.id}/> has entered from{' '}{fromButton}
+        <NameView userId={props.userId} id={props.id} /> has entered from{' '}
+        {fromButton}
       </div>
     )
   }
@@ -162,10 +196,17 @@ const LeftView = (props: LeftMessage) => {
   const roomData = useContext(RoomDataContext)
 
   if (roomData[props.toId]) {
-    const toButton: JSX.Element = roomData[props.toId].hidden ? <text>somewhere...</text> : <button onClick={onClick} className='link-styled-button'>{props.toName}.</button>
+    const toButton: JSX.Element = roomData[props.toId].hidden ? (
+      <text>somewhere...</text>
+    ) : (
+      <button onClick={onClick} className="link-styled-button">
+        {props.toName}.
+      </button>
+    )
     return (
       <div className="message movement-message">
-        <NameView id={props.id} userId={props.userId} /> has wandered off to{' '}{toButton}
+        <NameView id={props.id} userId={props.userId} /> has wandered off to{' '}
+        {toButton}
       </div>
     )
   }
@@ -197,50 +238,78 @@ const parseUserIdOrDisplay = (messageFragment): string => {
   return 'Malformed Mention'
 }
 
+function renderChatMessageWithUsernames (message: string, id: string, userMap: { [userId: string]: MinimalUser }) {
+  const splitMessage = message.split(/(@@.*?@@)/)
+  return splitMessage.reduce<JSX.Element>(
+    (acc, fragment, idx) => {
+      if (fragment.startsWith('@@') && fragment.endsWith('@@')) {
+        const userIdOrDisplay = parseUserIdOrDisplay(fragment)
+        const user = userMap[userIdOrDisplay]
+        if (user) {
+          return (
+            <>
+              {acc}{' '}
+              <NameView userId={user.id} id={`${id}-mention-${idx}`} />
+            </>
+          )
+        } else {
+          return (
+            <>
+              {acc} {userIdOrDisplay}
+            </>
+          )
+        }
+      } else {
+        const customEmojified = renderCustomEmojiString(fragment)
+
+        return (
+          <>
+            {acc} {customEmojified}
+          </>
+        )
+      }
+    },
+    <></>
+  )
+}
+
 const ChatMessageView = (props: ChatMessage) => {
   const { userMap } = useContext(UserMapContext)
-
-  const splitMessage = props.message.split(/(@@.*?@@)/)
-  const joinedMessage = splitMessage.reduce<JSX.Element>((acc, fragment, idx) => {
-    if (fragment.startsWith('@@') && fragment.endsWith('@@')) {
-      const userIdOrDisplay = parseUserIdOrDisplay(fragment)
-      const user = userMap[userIdOrDisplay]
-      if (user) {
-        return <>{acc} <NameView userId={user.id} id={`${props.id}-mention-${idx}`}/></>
-      } else {
-        return <>{acc} {userIdOrDisplay}</>
-      }
-    } else {
-      const customEmojified = renderCustomEmojiString(fragment)
-
-      return <>{acc} {customEmojified}</>
-    }
-  }, <></>)
+  const joinedMessage = renderChatMessageWithUsernames(props.message, props.id, userMap)
 
   return (
     <div className="message">
-      <NameView userId={props.userId} id={props.id} />: <DeletableMessageView messageId={props.id} messageText={props.message}>{joinedMessage}</DeletableMessageView>
+      <NameView userId={props.userId} id={props.id} />:{' '}
+      <DeletableMessageView messageId={props.id} messageText={props.message}>
+        {joinedMessage}
+      </DeletableMessageView>
     </div>
   )
 }
 
 const CaptionView = (props: CaptionMessage) => (
   <div className="message">
-    <NameView userId={props.userId} id={props.id} /> (spoken): <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView>
+    <NameView userId={props.userId} id={props.id} /> (spoken):{' '}
+    <DeletableMessageView messageId={props.id} messageText={props.message}>
+      {props.message}
+    </DeletableMessageView>
   </div>
 )
 
 const WhisperView = (props: WhisperMessage) => {
-  const dispatch = useContext(DispatchContext)
+  const { userMap } = useContext(UserMapContext)
+
   const openProfile = () => {
     fetchProfile(props.userId)
   }
+
+  const message = renderChatMessageWithUsernames(props.message, props.id, userMap)
 
   if (props.senderIsSelf) {
     return (
       <div className="whisper" onClick={openProfile}>
         You whisper to <NameView id={props.id} userId={props.userId} />:{' '}
-        {props.message}
+        {message}
       </div>
     )
   } else {
@@ -269,8 +338,14 @@ const ModMessageView = (props: ModMessage) => {
     return (
       <div className="message">
         <em>
-          <span role="img" aria-label="red exclamation point">❗</span><NameView userId={props.userId} id={props.id} /> says to the{' '}
-          <strong>mods</strong>:{props.message}<span role="img" aria-label="red exclamation point">❗</span>
+          <span role="img" aria-label="red exclamation point">
+            ❗
+          </span>
+          <NameView userId={props.userId} id={props.id} /> says to the{' '}
+          <strong>mods</strong>:{props.message}
+          <span role="img" aria-label="red exclamation point">
+            ❗
+          </span>
         </em>
       </div>
     )
@@ -280,15 +355,26 @@ const ModMessageView = (props: ModMessage) => {
 const ShoutView = (props: ShoutMessage) => {
   return (
     <div className="message">
-      <NameView userId={props.userId} id={props.id} /> shouts: <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView>
+      <NameView userId={props.userId} id={props.id} /> shouts:{' '}
+      <DeletableMessageView messageId={props.id} messageText={props.message}>
+        {props.message}
+      </DeletableMessageView>
     </div>
   )
 }
 
 const EmoteView = (props: EmoteMessage) => {
+  const { userMap } = useContext(UserMapContext)
+  const message = renderChatMessageWithUsernames(props.message, props.id, userMap)
+
   return (
     <div className="message">
-      <em><NameView userId={props.userId} id={props.id} /> <DeletableMessageView messageId={props.id} messageText={props.message}>{props.message}</DeletableMessageView></em>
+      <em>
+        <NameView userId={props.userId} id={props.id} />{' '}
+        <DeletableMessageView messageId={props.id} messageText={props.message}>
+          {message}
+        </DeletableMessageView>
+      </em>
     </div>
   )
 }
@@ -296,7 +382,10 @@ const EmoteView = (props: EmoteMessage) => {
 const DanceView = (props: DanceMessage) => {
   return (
     <div className="message">
-      <em><NameView userId={props.userId} id={props.id} /> <span dangerouslySetInnerHTML={ { __html: props.message } }></span></em>
+      <em>
+        <NameView userId={props.userId} id={props.id} />{' '}
+        <span dangerouslySetInnerHTML={{ __html: props.message }}></span>
+      </em>
     </div>
   )
 }
@@ -306,5 +395,11 @@ const ErrorView = (props: ErrorMessage) => {
 }
 
 const CommandView = (props: CommandMessage) => {
-  return <div className="message"><em><span dangerouslySetInnerHTML={ { __html: props.command } }></span></em></div>
+  return (
+    <div className="message">
+      <em>
+        <span dangerouslySetInnerHTML={{ __html: props.command }}></span>
+      </em>
+    </div>
+  )
 }

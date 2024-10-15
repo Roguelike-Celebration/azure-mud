@@ -8,15 +8,9 @@
       "methods": ["get", "post"]
     },
     {
-      "type": "signalR",
-      "name": "signalRMessages",
-      "hubName": "chat",
-      "direction": "out"
-    },
-    {
-      "type": "signalR",
-      "name": "signalRGroupActions",
-      "hubName": "chat",
+      "type": "webPubSub",
+      "name": "actions",
+      "hub": "chat",
       "direction": "out"
     },
     {

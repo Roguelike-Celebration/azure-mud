@@ -1,4 +1,4 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 
 import { moveToRoom } from '../moveToRoom'
 import { whisper } from '../whisper'
@@ -8,6 +8,7 @@ import { getUserIdForUsername, User } from '../user'
 import { MESSAGE_MAX_LENGTH } from '../config'
 import { dance } from '../dance'
 import { interact } from '../interact'
+import { sendToDiscord } from '../sendToDiscord'
 
 const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const message = inputs.text
@@ -68,6 +69,9 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
 
   const modMatch = /^\/(mod|mods|moderator|moderators) (.+)/.exec(message)
   if (modMatch) {
+    log(`Mod message received, user: ${user.username}, message: ${modMatch[2]} - sending to Discord.`)
+    sendToDiscord({ username: user.username, message: modMatch[2] }).catch((e) => log('sendToDiscord failed with error: ' + e))
+
     return {
       messages: [
       // Send to the mod-only group
@@ -101,15 +105,25 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
   }
 
   log(`Sending to ${user.roomId}: ${message} from ${user.id}`)
+  const messages: Message[] = [
+    {
+      groupId: user.roomId,
+      target: 'chatMessage',
+      arguments: [inputs.id, user.id, message]
+    }
+  ]
+
+  if (user.roomId === 'theater' && message.startsWith('!')) {
+    console.log('Sending ! message to orb ponderer')
+    messages.push({
+      userId: process.env.ORB_PONDER_USER,
+      target: 'chatMessage',
+      arguments: [message]
+    })
+  }
 
   return {
-    messages: [
-      {
-        groupId: user.roomId,
-        target: 'chatMessage',
-        arguments: [inputs.id, user.id, message]
-      }
-    ],
+    messages,
     httpResponse: { status: 200 }
   }
 }

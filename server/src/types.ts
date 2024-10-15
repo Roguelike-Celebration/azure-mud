@@ -85,3 +85,14 @@ export enum ValidFontRewards {
   Classic = 'Classic',
   Impactful = 'Impactful'
 }
+
+export enum BadgeCategories {
+  Default = 'DEFAULT',
+  Year2022 = 'YEAR_2022',
+  Talk2022 = 'TALK_2022',
+  Special = 'SPECIAL',
+  Year2023 = 'YEAR_2023',
+  Talk2023 = 'TALK_2023',
+  Year2024 = 'YEAR_2024',
+  Talk2024 = 'TALK_2024'
+}

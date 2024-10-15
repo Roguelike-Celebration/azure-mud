@@ -1,6 +1,9 @@
+server/firebase-admin.*.json
 node_modules
 dist
 .env
+.env.*
+!.env.sample
 .parcel-cache
 .cache
 .DS_Store

@@ -5,8 +5,8 @@ import { DB } from '../src/database'
 import * as admin from 'firebase-admin'
 
 export interface AuthenticationOptions {
-  audit?: boolean
-  mod?: boolean
+  audit?: boolean;
+  mod?: boolean;
 }
 
 /** This wraps an HTTP function and calls it with a hydrated authenticated user.
@@ -34,7 +34,11 @@ export async function getUserIdFromHeaders (
   const authHeaderParts = req.headers.authorization.split(' ')
   // I think 'Bearer' is technically OAuth 2.0 and I don't know if that's precisely what we're using
   if (authHeaderParts.length !== 2 || authHeaderParts[0] !== 'Bearer') {
-    context.log('Error authenticating auth headers: ' + req.headers.authorization + ' - were not formatted as Bearer.')
+    context.log(
+      'Error authenticating auth headers: ' +
+        req.headers.authorization +
+        ' - were not formatted as Bearer.'
+    )
     return undefined
   }
 
@@ -44,23 +48,33 @@ export async function getUserIdFromHeaders (
     return cachedUserId
   }
 
-  return await admin.auth().verifyIdToken(clientIdToken).then(async (decoded) => {
-    const userId = decoded.uid
+  return await admin
+    .auth()
+    .verifyIdToken(clientIdToken)
+    .then(async (decoded) => {
+      const userId = decoded.uid
 
-    const userRecord = await admin.auth().getUser(userId)
-    const providers = userRecord.providerData
-    // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
-    // email address.
-    if (providers.length === 1 && providers[0].providerId === 'password' && !userRecord.emailVerified) {
+      const userRecord = await admin.auth().getUser(userId)
+      const providers = userRecord.providerData
+      // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
+      // email address.
+      if (
+        providers.length === 1 &&
+        providers[0].providerId === 'password' &&
+        !userRecord.emailVerified
+      ) {
+        return undefined
+      }
+
+      await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
+      return userId
+    })
+    .catch((error) => {
+      context.log(
+        'Error authenticating token: ' + clientIdToken + ' error: ' + error
+      )
       return undefined
-    }
-
-    await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
-    return userId
-  }).catch((error) => {
-    context.log('Error authenticating token: ' + clientIdToken + ' error: ' + error)
-    return undefined
-  })
+    })
 }
 
 export default async function authenticate (
@@ -79,12 +93,17 @@ export default async function authenticate (
     return
   }
 
-  if (options.audit && !context.bindingDefinitions.find(def => def.name === 'tableBinding')) {
+  if (
+    options.audit &&
+    !context.bindingDefinitions.find((def) => def.name === 'tableBinding')
+  ) {
     context.res = {
       status: 501,
       body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
     }
-    context.log('Failed to configure audit endpoint with the proper tableBinding')
+    context.log(
+      'Failed to configure audit endpoint with the proper tableBinding'
+    )
     return
   }
 
@@ -111,17 +130,25 @@ export default async function authenticate (
 
   const handled = await handler(user)
 
-  if (options.audit) {
-    context.bindings.tableBinding = [{
-      PartitionKey: user.id,
-      RowKey: uuid(),
-      // The object comes loaded with a Timestamp by default as well
-      userId: user.id,
-      username: user.username,
-      endpoint: req.url.replace('https://' + process.env.WEBSITE_HOSTNAME, ''),
-      request: req.body // Assumes that all the relevant information will be in the body and not in, like...headers, or something
-    }]
-  }
+  // TODO: Restore or trash
+  // This is commented out because the upgrade from Functions 3 -> 4 broke something, somehow
+  // if (options.audit) {
+  //   context.log(`Auditing for user '${user.id}'`);
+  //   context.bindings.tableBinding = [
+  //     {
+  //       PartitionKey: user.id,
+  //       RowKey: uuid(),
+  //       // The object comes loaded with a Timestamp by default as well
+  //       userId: user.id,
+  //       username: user.username,
+  //       endpoint: req.url.replace(
+  //         "https://" + process.env.WEBSITE_HOSTNAME,
+  //         ""
+  //       ),
+  //       request: req.body, // Assumes that all the relevant information will be in the body and not in, like...headers, or something
+  //     },
+  //   ];
+  // }
 
   return handled
 }

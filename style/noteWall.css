@@ -3,9 +3,12 @@
 }
 
 .note {
+    border: 1px dashed var(--highlight-line);
+    border-radius: 0.25rem;
     display: inline-block;
-    max-width: 20rem;
-    margin: 30px;
+    width: 40%;
+    margin: 1.25rem;
+    padding: 0.5rem;
     vertical-align: top;
     word-wrap: break-word;
 }
@@ -26,4 +29,10 @@ button.note-delete {
 .like-button svg {
     vertical-align: top !important;
     margin-left: 4px;
+}
+
+@media (max-width: 600px) {
+    .note {
+        width: 90%;
+    }
 }

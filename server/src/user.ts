@@ -1,6 +1,7 @@
 import { DB } from './database'
 import { Badge, FreeBadges } from './badges'
 import { uniqWith } from 'lodash'
+import resetRoomData from './endpoints/resetRoomData'
 
 // TODO: If we have tooltip popups showing profile info,
 // the distinction between a 'full' and 'minimal' user is no longer useful
@@ -36,6 +37,7 @@ export interface PublicUser extends MinimalUser {
   askMeAbout?: string;
   twitterHandle?: string;
   url?: string;
+  unlockedBadges: Badge[]
 }
 
 // A private representation of the current user
@@ -48,9 +50,6 @@ export interface User extends PublicUser {
   hostname: string;
 
   heartbeat: number;
-
-  // Does this need to be in PublicUser?
-  unlockedBadges: Badge[]
 }
 
 export async function isMod (userId: string) {
@@ -122,7 +121,7 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   if (data.description) { data.description = sanitizeString(data.description, 200) }
   if (data.pronouns) { data.pronouns = sanitizeString(data.pronouns, 40) }
   if (data.url) { data.url = sanitizeString(data.url, 200) }
-  if (data.twitterHandle) { data.twitterHandle = sanitizeString(data.twitterHandle, 20) }
+  if (data.twitterHandle) { data.twitterHandle = sanitizeString(data.twitterHandle, 200) }
   if (data.askMeAbout) { data.askMeAbout = sanitizeString(data.askMeAbout, 200) }
 
   const newProfile: User = {
@@ -134,7 +133,22 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   } as User // TODO: Could use real validation here?
   console.log('New profile data', newProfile)
 
+  const allDbUsers = await DB.getAllUserIds()
+  const isFirstUser = allDbUsers.length === 0 || (allDbUsers.length === 1 && allDbUsers[0] === userId && !profile.isMod)
+
+  console.log('Is first DB user?', isFirstUser, allDbUsers)
+  if (isFirstUser) {
+    newProfile.isMod = true
+    await resetRoomData(newProfile, {}, console.log)
+  }
+
   const result = await DB.setUserProfile(userId, newProfile)
+
+  if (isFirstUser) {
+    console.log('First user, making them an admin')
+    await DB.setModStatus(userId, true)
+  }
+
   console.log('Update user result', result)
   return newProfile
 }
@@ -202,7 +216,8 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     isMod: user.isMod,
     isSpeaker: user.isSpeaker,
     fontReward: user.fontReward,
-    equippedBadges: user.equippedBadges
+    equippedBadges: user.equippedBadges,
+    pronouns: user.pronouns
   }
 
   return minimalUser

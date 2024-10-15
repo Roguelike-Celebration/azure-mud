@@ -5,7 +5,7 @@ import * as motivationPosters from './motivationPosters'
 import * as closedSigns from './closedSigns'
 import * as gameRecommendations from './gameRecs'
 import * as robots from './robots'
-import * as pickupLines from './pickupLines'
+import * as terribleJokes from './terribleJokes'
 import * as ubizaraTheBartender from './ubizaraTheBartender'
 import * as doctorHope from './doctorHope'
 import * as chadSilverbow from './chadSilverbow'
@@ -16,6 +16,15 @@ import * as drinkSkeletons from './drinkSkeletons'
 import * as drinkVessels from './drinkVessels'
 import * as drinkContents from './drinkContents'
 import * as drinkNames from './drinkNames'
+// begin 2023
+import * as craneGame from './craneGame'
+import * as bodyWorksCharacter from './bodyWorksCharacter'
+import * as seersCatalog from './seersCatalog'
+import * as zara from './zara'
+import * as hotDogGuy from './hotDogGuy'
+import * as ray from './ray'
+import * as loudRobert from './loudRobert'
+import * as tossARock from './chasm'
 
 interface Generator {
     generate(): string
@@ -30,7 +39,7 @@ const generators: {[name: string]: Generator} = {
   closedSigns,
   gameRecommendations,
   robots,
-  pickupLines,
+  terribleJokes,
   ubizaraTheBartender,
   doctorHope,
   chadSilverbow,
@@ -40,7 +49,15 @@ const generators: {[name: string]: Generator} = {
   drinkSkeletons,
   drinkVessels,
   drinkContents,
-  drinkNames
+  drinkNames,
+  craneGame,
+  bodyWorksCharacter,
+  seersCatalog,
+  zara,
+  hotDogGuy,
+  ray,
+  loudRobert,
+  tossARock
 }
 
 export default generators

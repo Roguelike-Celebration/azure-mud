@@ -12,10 +12,11 @@ export default function (props: {roomId: string, updateRoom: () => void, createR
   }
 
   const clickedDelete = async () => {
-    if (!confirm('Are you SURE you want to delete this? This will delete it from the server memory, and you will only be able to restore it if it is saved on disk.')) return
+    if (!confirm('Are you SURE you want to delete this? This will delete it from the server memory, and you will only be able to restore it if it is saved on disk. (Will also cause a page refresh)')) return
 
     await deleteRoom(props.roomId)
-    // TODO: Remove roomId from local list
+    // TODO: Remove roomId from local list in a less silly way
+    window.location.reload()
   }
 
   const clickedSave = () => {

@@ -5,7 +5,7 @@ import { Room } from '../room'
 import { moveToRoom } from '../networking'
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
-import { isUndefined } from 'lodash'
+import _, { head, isUndefined } from 'lodash'
 
 /**
  * This renders a clickable ASCII map!
@@ -55,8 +55,8 @@ export default function MapView (props: Props) {
     w = 8
     h = 13
   } else if (preWidth !== 0 && preHeight !== 0) {
-    w = preWidth / 110
-    h = preHeight / 41
+    w = preWidth / 121
+    h = preHeight / 37
   }
 
   // Scroll to make sure that the user's location is visible
@@ -132,7 +132,7 @@ export default function MapView (props: Props) {
     {clickableDivs}
     <pre
       id={`${props.isMiniMap ? 'minimap-' : ''}map-pre`}
-      style={{ letterSpacing: '2px', fontFamily: 'IBM Plex Mono', margin: '0px', width: 'fit-content' }}
+      style={{ letterSpacing: '2px', margin: '0px', width: 'fit-content' }}
     >
       <code>{map}</code>
     </pre>

@@ -45,6 +45,9 @@ export default function SideNavView (props: Props) {
         <MenuItem title="Schedule" modal={Modal.Schedule} />
         <MenuItem title="Room List" modal={Modal.RoomList} />
         <MenuItem title="Code of Conduct" modal={Modal.CodeOfConduct} />
+        {/* <MenuItem title="Obelisk" modal={Modal.Obelisk} img='🔮' imgAlt='crystal ball'/> */}
+        <a href="https://www.redbubble.com/people/Roguelike/shop" rel="noreferrer" target="_blank" style={{ color: 'var(--main-font)', textDecoration: 'none' }}><li><span role="img" aria-label="shirt">👕</span>Merch</li></a>
+        <a href="https://store.steampowered.com/sale/roguelikecelebration2024" rel="noreferrer" target="_blank" style={{ color: 'var(--main-font)', textDecoration: 'none' }}><li><span role="img" aria-label="shirt"></span>Steam Sale</li></a>
         <MenuItem title="Help" modal={Modal.Help} />
       </ul>
       {props.presenceData && props.currentRoomId
@@ -55,7 +58,7 @@ export default function SideNavView (props: Props) {
   )
 }
 
-const MenuItem = (props: {title: string, modal: Modal}) => {
+const MenuItem = (props: {title: string, modal: Modal, img?: string, imgAlt?: string}) => {
   const dispatch = useContext(DispatchContext)
 
   const handler = () => {
@@ -63,6 +66,9 @@ const MenuItem = (props: {title: string, modal: Modal}) => {
   }
   return (
     <li>
+      {props.img &&
+        <span role="img" aria-label={props.imgAlt}>{props.img}</span>
+      }
       <button className='nav-item' onClick={handler}>
         <strong>{props.title}</strong>
       </button>

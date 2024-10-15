@@ -17,7 +17,10 @@ export const generate = () => {
       'You notice a gleam in her immaculate, braided muttonchops. A feature she clearly devotes much of her time towards.',
       'She #expression#, but you cant help notice that behind her, within arms reach, is a twisted orc axe three times her size.',
       'She #expression#',
-      'Ubizara #expression#'
+      'Ubizara #expression#',
+      'You watch her taste test a cocktail, mixing in new and exciting ingredients until it meets her exacting standards.',
+      'You watch her untap a huge keg of dwarven ale. Did she just roll her eyes?',
+      'She presses an entire case of wine bottles above her head to put them gently on an overhead shelf.'
     ],
     expression: [
       'flashes you a smile',

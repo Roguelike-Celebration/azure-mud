@@ -1,0 +1,32 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "webPubSubConnection",
+      "name": "connection",
+      "hub": "chat",
+      "userId": "{headers.userid}",
+     "direction": "in"
+    },
+    {
+      "type": "webPubSub",
+      "name": "actions",
+      "hub": "chat",
+      "direction": "out"
+    }
+  ],
+  "scriptFile": "../dist/startPonderingOrbs/index.js"
+}
