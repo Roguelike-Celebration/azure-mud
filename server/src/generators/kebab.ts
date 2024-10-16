@@ -2,14 +2,14 @@
 
 import tracery from 'tracery-grammar'
 
-export const actionString = (tacos: string) => {
-  return `${tacos}`
+export const actionString = (kebabs: string) => {
+  return `${kebabs}`
 }
 
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      "#monster# #bodyPart# skewers"
+      "You devour some #monster# #bodyPart# skewers!"
     ],
     monster: [
       'Ice Giant',
@@ -27,7 +27,8 @@ export const generate = () => {
       'Quagga',
       'Rattlesnake',
       'Xeroc',
-      'Yeti'
+      'Yeti',
+      'Eel'
     ],
     bodyPart: [
       'Leg',

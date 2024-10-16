@@ -21,11 +21,10 @@ export default [
   'negalongbow',
   'healing scroll',
   'negapuppy',
-  'Slap Bracelet of Zot',
-  'Moon-Touched Bop-It',
-  'Vorpal Tamagotchi',
-  'fake vampire fangs',
-  'Her-yell, Goblin Princess',
+  'Her-yell, Goblin Knife-Princess',
   'Mr Stabbums, Battle Kitty',
-  'Ooze, Faithful Sidekick'
+  'Ooze, Faithful Sidekick',
+  'Roguelike Celebration Shower Curtain',
+  'a mystic dagger',
+  'a pet eel'
 ]

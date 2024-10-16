@@ -65,7 +65,7 @@
     "id": "swag",
     "displayName": "Swag Table",
     "shortName": "the swag table",
-    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as [[Roguelike Celebration socks->item]], [[a +1 longbow->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a tiny puppy->item]].<br/><br/>A clearing amidst the pile has been lovingly lined with plump helmet, with showcase pillars for real world shirts, socks, and enamel pins that you can <a href=\"https://www.redbubble.com/people/Roguelike/shop\" rel=\"noreferrer\" target=\"_blank\">purchase for yourself</a>.<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[Night Market]].",
+    "description": "A circular booth seems entirely packed with mismatched swag, spilling over the edge and forming messy piles of goods. At the top of the pile, you see items such as a [[Roguelike Celebration Shower Curtain->item]], [[a mystic dagger->item]], [[an unidentified scroll->item]], and (surprisingly!) [[a pet eel->item]].<br/><br/>A clearing amidst the pile has been lovingly lined with plump helmet, with showcase pillars for real world shirts, socks, and enamel pins that you can <a href=\"https://www.redbubble.com/people/Roguelike/shop\" rel=\"noreferrer\" target=\"_blank\">purchase for yourself</a>.<br/><br/>A plaque set into the floor here shows a list of <a href=\"https://github.com/lazerwalker/azure-mud/graphs/contributors \" target=\"_blank\" rel=\"noreferrer\">code contributors</a>.<br/><br/>From here, you can walk back to the rest of the [[Night Market]].",
     "roomId": "swag"
   },
   "unconfWoodShop": {
@@ -217,7 +217,7 @@
     "displayName": "Kebab Truck",
     "shortName": "kebab truck",
     "id": "kebabTruck",
-    "description": "You step up to a food truck surrounded with display tables, a long counter, and a banner on the side of the truck announcing 'Moonlit Meats'. Inside the truck stands a young man with stark white hair and a green bandana. On each of the display tables is a beautifully-appointed array of meats, each one labelled with the name of the local creature from which it was harvested. You can see swords, bags, and other adventuring equipment right behind the shopkeeper, and can only assume he must retrieve his goods himself. He stands ready at the window, offering tiny sticks to turn these exotic meats into kebabs for you. Or you can head back to the [[Night Market->nightMarket]]",
+    "description": "You step up to a food truck surrounded with display tables, a long counter, and a banner on the side of the truck announcing 'Moonlit Meats'. Inside the truck stands a young man with stark white hair and a green bandana. On each of the display tables is a beautifully-appointed array of meats, each one labelled with the name of the local creature from which it was harvested. You can see swords, bags, and other adventuring equipment right behind the shopkeeper, and can only assume he must retrieve his goods himself. He stands ready at the window, offering tiny sticks to turn these exotic meats into [[kebabs]] for you. Or you can head back to the [[Night Market->nightMarket]]",
     "roomId": "kebabTruck"
   },
   "centralHall": {
@@ -270,7 +270,7 @@
     "displayName": "Vegan Truck",
     "shortName": "vegan truck",
     "id": "veganTruck",
-    "description": "You approach a food truck with a jaunty sign labelling it as \"Chiron's Chickpeas. Farm Fresh, Organic, Local, Monster-Alternative Bowls and Wraps\". As you peer into the truck, a shiver runs down your spine as you lock eyes with the entity running the operation. It wears richly-appointed black robes covered in golden coins, and its shadowed face is topped with a wide-brimmed hat. Its mouth leaks a chilling purple fog into the air. You may attempt to communicate with the entity, or you may simply take a food bowl. Or you can head back to the [[Night Market]]",
+    "description": "You approach a food truck with a jaunty sign labelling it as \"Chiron's Chickpeas. Farm Fresh, Organic, Local, Monster-Alternative Bowls and Wraps\". As you peer into the truck, a shiver runs down your spine as you lock eyes with the entity running the operation. It wears richly-appointed black robes covered in golden coins, and its shadowed face is topped with a wide-brimmed hat. Its mouth leaks a chilling purple fog into the air. You may attempt to communicate with the entity, or you may simply [[take a food bowl->veganFood]]. Or you can head back to the [[Night Market]]",
     "roomId": "veganTruck"
   },
   "goblinSingers": {
@@ -365,7 +365,7 @@
     "displayName": "Picnic Grounds",
     "shortName": "picnic grounds",
     "id": "picnicGrounds",
-    "description": "You walk onto a quiet hillside which gently slopes to cradle the edge of the fair grounds. The breeze here is peaceful and it's almost quiet enough to forget all the goblins milling about in every other direction.</br></br>The wind carries a small slip of paper over to you, which lands in your hand and reads 'Adornments For Sale! 10g each!'. It must have fallen off someone's table in the market. </br></br> As you rest here you notice a dark line in the side of the hill, as if a hole had been covered up with a sheet of grass. You may attempt to [[Enter The Hole->Classic Goblin Warren]].",
+    "description": "You walk onto a quiet hillside which gently slopes to cradle the edge of the fair grounds. The breeze here is peaceful and it's almost quiet enough to forget all the goblins milling about in every other direction.</br></br>The wind carries a small slip of paper over to you, which lands in your hand and reads 'Adornments For Sale! 10g each!'. It must have fallen off someone's table in the market. </br></br> As you rest here you notice a dark line in the side of the hill, as if a hole had been covered up with a sheet of grass. You may attempt to [[Enter The Hole->goblinWarren]].",
     "roomId": "picnicGrounds"
   },
   "unconfWeaponsTraining": {
@@ -379,7 +379,7 @@
     "displayName": "Obelisk",
     "shortName": "obelisk",
     "id": "obelisk",
-    "description": "You stand beneath a towering stone slab which glows faintly with layers upon layers of finely-carved runes sprawling across the surface in elaborate patterns. As you stare at the glowing runes, you feel your mind begin to connect with it. It demands information. A deep fear imbeds itself within your heart as you realize the stone is sentient. Feed it your most valuable links, or else you fear what may come to pass.</br></br> At the foot of the obelisk you notice a potion bottle. It shifts between two forms, but the only tangible difference is the label which changes from 'Paralysis' to 'Hallucination'  </br></br> When you're done, you head back to the [[Courtyard]].</br></br>",
+    "description": "You stand beneath a towering stone slab which glows faintly with layers upon layers of finely-carved runes sprawling across the surface in elaborate patterns. As you stare at the glowing runes, you feel your mind begin to connect with it. It demands information. A deep fear imbeds itself within your heart as you realize the stone is sentient. Feed it your most valuable links, or else you fear what may come to pass.</br></br> At the foot of the obelisk you notice a potion bottle. It shifts between two forms, but the only tangible difference is the label which changes from 'Paralysis' to 'Hallucination'  </br></br> When you're done, you can head back to the [[Courtyard]].</br></br>",
     "roomId": "obelisk",
     "hasNoteWall": true,
     "noteWallData": {
@@ -394,7 +394,7 @@
     "displayName": "Taco Truck",
     "shortName": "taco truck",
     "id": "tacoTruck",
-    "description": "You approach a taco truck with a clear archaeological theming, and a banner announcing it as 'Sabor Espeleología'. An older man with a bushy white beard and wearing a prospector's outfit stands inside a window behind a table full of taco ingredients. Everything here appears to be freely up for grabs, but you can't help noticing the nearby shotgun. The old man stands neutrally in his thick apron, but you fear you see a glint of fury in his eyes. Or you can head back to the [[Night Market]]",
+    "description": "You approach a taco truck with a clear archaeological theming, and a banner announcing it as 'Sabor Espeleología'. An older man with a bushy white beard and wearing a prospector's outfit stands inside a window behind a table full of taco ingredients. Everything here appears to be freely [[up for grabs->tacos]], but you can't help noticing the nearby shotgun. The old man stands neutrally in his thick apron, but you fear you see a glint of fury in his eyes. Or you can head back to the [[Night Market]]",
     "roomId": "tacoTruck"
   },
   "goofyItems": {
@@ -488,7 +488,7 @@
     "displayName": "Focus On The Moment",
     "shortName": "focus on the moment",
     "id": "focus",
-    "description": "Your daughter tells you the story of a princess saving a gallant knight from the towering giant barbarian who threatened their warren. She tells you how the princess used her creativity to summon a horde of toys that the giant stepped on, causing him to trip and land in a pit she'd dug to keep him in. She describes the princess in detail, her magic wand and riding leathers, her faithful mount and darling friends made up of creatures from all over the world, each with their own special powers. You realize, as she talks, that this would all make a brilliant new line of toys! Not one new toy, but a whole set to collect.</br></br> This hopeful memory fades around the edges, and you understand that this was not the path you walked. You remember your deadline again, and put your head down to complete the task [[by tomorrow]].</br></br> With a last effort, you know you could also push this dream into being and [[build a toy for your daughter]].",
+    "description": "Your daughter tells you the story of a princess saving a gallant knight from the towering giant barbarian who threatened their warren. She tells you how the princess used her creativity to summon a horde of toys that the giant stepped on, causing him to trip and land in a pit she'd dug to keep him in. She describes the princess in detail, her magic wand and riding leathers, her faithful mount and darling friends made up of creatures from all over the world, each with their own special powers. You realize, as she talks, that this would all make a brilliant new line of toys! Not one new toy, but a whole set to collect.</br></br> This hopeful memory fades around the edges, and you understand that this was not the path you walked. You remember your deadline again, and put your head down to complete the task [[by tomorrow]].</br></br> With a last effort, you know you could also push this dream into being and [[build a toy for your daughter->buildAToy]].",
     "hidden": true,
     "roomId": "focus"
   },
@@ -496,7 +496,7 @@
     "displayName": "Build A Toy",
     "shortName": "build a toy",
     "id": "buildAToy",
-    "description": "You create the princess toy for your daughter. You give the princess a powerful mount and surround her with mystic friends. Your daughter grows up knowing how powerful she is, and that you do this work for her. The two of you struggle, but this moment gives you each a touchstone to remind yourselves of the way things should be.</br></br>Before you, you suddenly find a table filled with toys. You understand, somehow, that these are not part of the memories here. These toys are real and you can take them with you.</br></br> You see three action figures on the table. [[Her-yell, Goblin Princess]], [[Mr Stabbums, Battle Kitty]], [[Ooze, Faithful Sidekick]]",
+    "description": "You create the princess toy for your daughter. You give the princess a powerful mount and surround her with mystic friends. Your daughter grows up knowing how powerful she is, and that you do this work for her. The two of you struggle, but this moment gives you each a touchstone to remind yourselves of the way things should be.</br></br>Before you, you suddenly find a table filled with toys. You understand, somehow, that these are not part of the memories here. These toys are real and you can take them with you.</br></br> You see three action figures on the table. [[Her-yell, Goblin Knife-Princess->item]], [[Mr Stabbums, Battle Kitty->item]], [[Ooze, Faithful Sidekick->item]]",
     "hidden": true,
     "roomId": "buildAToy"
   },
