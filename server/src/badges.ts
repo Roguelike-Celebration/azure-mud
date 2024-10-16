@@ -512,6 +512,11 @@ export const UnlockableBadges: Badge[] = [
     emoji: '🎪',
     description: 'Attended the 2024 preview event!',
     category: BadgeCategories.Year2024
+  },
+  {
+    emoji: '9️⃣',
+    description: 'Attended the 9th Roguelike Celebration in 2024!',
+    category: BadgeCategories.Year2024
   }
 ]
 

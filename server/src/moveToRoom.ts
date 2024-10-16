@@ -152,7 +152,7 @@ function awardBadges (user: User, roomId: string) {
   // "If the user is in this room ID and
   // doesn't have the matching badge,
   // give them the badge with this emoji"
-  const tuples = [
+  const roomBadges = [
     ['dockingBay', '🚀'],
     ['oxygenFarm', '🌱'],
     ['experimentalBiology', '🧙‍♀️'],
@@ -167,7 +167,10 @@ function awardBadges (user: User, roomId: string) {
     ['hotDogStand', '🌭'],
     ['emptyStore', '🎃'],
     ['orbOfZot', '🔮'],
-    ['coconut', '👁️']
+    ['coconut', '👁️'],
+    ['tenGold', 'turkey_leg'],
+    ['buildAToy', 'goblin_barbie'],
+    ['ask', 'goblin_appreciation']
   ]
 
   const unlockedEmoji: Badge[] = []
@@ -175,10 +178,10 @@ function awardBadges (user: User, roomId: string) {
   // Unlock the "I attended!" badge for the current event
   // This is gated on time, so you can update this for a future event.
   // Just change the emoji, the month, and the year.
-  const currentEventBadge = UnlockableBadgeMap['🎪']
+  const currentEventBadge = UnlockableBadgeMap['9️⃣']
   const today = new Date()
   if (!includes(user.unlockedBadges, currentEventBadge) &&
-    today.getMonth() === 8 && // getMonth is 0-indexed, not 1-indexed
+    today.getMonth() === 9 && // getMonth is 0-indexed, not 1-indexed
     today.getFullYear() === 2024) {
     // We handle this differently than others because we want it to be quietly added
     // rather than popping a modal dialog
@@ -188,7 +191,7 @@ function awardBadges (user: User, roomId: string) {
     awardUserBadge(user.id, currentEventBadge)
   }
 
-  tuples.forEach(([room, emoji]) => {
+  roomBadges.forEach(([room, emoji]) => {
     if (roomId === room &&
     !includes(user.unlockedBadges.map(b => b.emoji), emoji)) {
       console.log('Awarding badge', emoji, UnlockableBadgeMap[emoji])
@@ -198,7 +201,7 @@ function awardBadges (user: User, roomId: string) {
   })
 
   if (unlockedEmoji.length > 0) {
-    if (every(tuples, ([_, emoji]) => {
+    if (every(roomBadges, ([_, emoji]) => {
       return includes(user.unlockedBadges, UnlockableBadgeMap[emoji])
     })) {
       awardUserBadge(user.id, UnlockableBadgeMap['🌎'])

@@ -9,7 +9,7 @@ export const actionString = (tacos: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-    "#monster# #bodyPart# skewers"
+      "#monster# #bodyPart# skewers"
     ],
     monster: [
       'Ice Giant',
