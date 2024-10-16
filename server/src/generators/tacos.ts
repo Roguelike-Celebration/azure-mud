@@ -9,7 +9,7 @@ export const actionString = (tacos: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-    "#monster# Taco with #bean#"
+    "You inhale a scrumptious taco with #monster# meat and #bean#."
     ],
     monster: [
       'Ice Giant',
@@ -27,7 +27,8 @@ export const generate = () => {
       'Quagga',
       'Rattlesnake',
       'Xeroc',
-      'Yeti'
+      'Yeti',
+      'Eel'
     ],
     bean: [
     'Black Beans',
