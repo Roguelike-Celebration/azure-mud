@@ -57,8 +57,8 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
     updateServerSettings(settingsCopy)
   }
 
-  const clickedMoveAllUsersToEntryway = async() => {
-    if (!confirm("Are you sure? This will move ALL users to the entryway, including users who are not logged in.")) return
+  const clickedMoveAllUsersToEntryway = async () => {
+    if (!confirm('Are you sure? This will move ALL users to the entryway, including users who are not logged in.')) return
     await moveAllToEntryway()
   }
 
