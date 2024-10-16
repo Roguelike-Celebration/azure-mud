@@ -9,7 +9,7 @@ export const actionString = (kebabs: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-    "You devour some #monster# #bodyPart# skewers!"
+      "You devour some #monster# #bodyPart# skewers!"
     ],
     monster: [
       'Ice Giant',

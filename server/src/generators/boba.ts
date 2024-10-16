@@ -9,7 +9,7 @@ export const actionString = (boba: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-    "You drink a refreshing #powerup# potion with #boba#."
+      "You drink a refreshing #powerup# potion with #boba#."
     ],
     powerup: [
       'blindness',
@@ -38,18 +38,18 @@ export const generate = () => {
       'orange'
     ],
     boba: [
-    'Tapioca Pearls',
-    'Mana Crystals',
-    'Health Crystals',
-    'Popping Crystals',
-    'Ponderous Orbs',
-    'Frog\'s Eyes',
-    'Newt\'s Eyes',
-    'Lychee Jelly',
-    'Stinky Durian Jelly',
-    'Dragonfruit Jelly',
-    'Strawberry Jelly',
-    'Eel Jelly'
+      'Tapioca Pearls',
+      'Mana Crystals',
+      'Health Crystals',
+      'Popping Crystals',
+      'Ponderous Orbs',
+      'Frog\'s Eyes',
+      'Newt\'s Eyes',
+      'Lychee Jelly',
+      'Stinky Durian Jelly',
+      'Dragonfruit Jelly',
+      'Strawberry Jelly',
+      'Eel Jelly'
     ]
   })
 

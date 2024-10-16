@@ -9,22 +9,22 @@ export const actionString = (veganFood: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-    "You eat a delicious bowl of #fruit# and #plant# with #powerup# sauce."
+      "You eat a delicious bowl of #fruit# and #plant# with #powerup# sauce."
     ],
     fruit: [
-    'Strawberry',
-    'Lemon',
-    'Lime',
-    'Orange',
-    'Dragonfruit',
-    'Stinky Durian',
-    'Lychee',
-    'Mango',
-    'Kumquats',
-    'Guava',
-    'Rambutan',
-    'Feijoa',
-    'Noni'
+      'Strawberry',
+      'Lemon',
+      'Lime',
+      'Orange',
+      'Dragonfruit',
+      'Stinky Durian',
+      'Lychee',
+      'Mango',
+      'Kumquats',
+      'Guava',
+      'Rambutan',
+      'Feijoa',
+      'Noni'
     ],
     powerup: [
       'blindness',
