@@ -301,6 +301,18 @@ export async function resetRoomData (isFromAdminPanel: boolean) {
   }
 }
 
+export async function moveAllToEntryway () {
+  const result = await callAzureFunction('moveAllToEntryway')
+  if (!result) {
+    return;
+  } else if (result.error) {
+    console.error('Error trying to move uers to entryway', result.erroc)
+  } else {
+    console.log(`Moved users to the entryway: numUsers=${result.numUsers}, numMoved=${result.numMoved}, : seconds=${result.seconds}.`)
+  }
+}
+
+
 export async function resetBadgeData () {
   const response = await callAzureFunction('resetBadgeData')
 
