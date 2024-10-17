@@ -27,7 +27,7 @@ import * as loudRobert from './loudRobert'
 import * as tossARock from './chasm'
 import * as boba from './boba'
 import * as tacos from './tacos'
-import * as kebabs from './kebabs'
+import * as kebabs from './kebab'
 import * as veganFood from './veganFood'
 
 interface Generator {
