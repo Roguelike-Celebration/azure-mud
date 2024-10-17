@@ -61,6 +61,7 @@ export interface State {
   roomId?: string;
   userId?: string;
   userMap: { [userId: string]: MinimalUser };
+  roomDataReady: Deferred<void>;
   roomData: { [roomId: string]: Room };
 
   // A count of the current number of users in there
@@ -138,6 +139,7 @@ export const defaultState: State = {
   visibleSpeakers: [],
   autoscrollChat: true,
   userMap: {},
+  roomDataReady: new Deferred(),
   roomData: {},
   presenceData: {},
   inMediaChat: false,
@@ -179,6 +181,8 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.UpdatedCurrentRoom) {
+    draft.roomDataReady.resolve()
+
     draft.roomId = action.value.roomId
     draft.roomData = { ...draft.roomData, ...action.value.roomData }
 
