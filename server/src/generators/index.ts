@@ -25,6 +25,10 @@ import * as hotDogGuy from './hotDogGuy'
 import * as ray from './ray'
 import * as loudRobert from './loudRobert'
 import * as tossARock from './chasm'
+import * as boba from './boba'
+import * as tacos from './tacos'
+import * as kebabs from './kebab'
+import * as veganFood from './veganFood'
 
 interface Generator {
     generate(): string
@@ -57,7 +61,11 @@ const generators: {[name: string]: Generator} = {
   hotDogGuy,
   ray,
   loudRobert,
-  tossARock
+  tossARock,
+  boba,
+  tacos,
+  kebabs,
+  veganFood
 }
 
 export default generators
