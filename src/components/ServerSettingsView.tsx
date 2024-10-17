@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { HappeningNowEntry, ServerSettings, toServerSettings } from '../../server/src/types'
-import { resetBadgeData, resetRoomData, updateServerSettings } from '../networking'
+import { moveAllUsersToEntryway, resetBadgeData, resetRoomData, updateServerSettings } from '../networking'
 import { Room } from '../room'
 
 export default function ServerSettingsView (props: { serverSettings: ServerSettings, roomData: { [roomId: string]: Room } }) {
@@ -57,6 +57,11 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
     updateServerSettings(settingsCopy)
   }
 
+  const clickedMoveAllUsersToEntryway = async () => {
+    if (!confirm('Are you sure? This will move ALL users to the entryway, including users who are not logged in.')) return
+    await moveAllUsersToEntryway()
+  }
+
   const clickedResetRoomData = async () => {
     if (!confirm("Are you sure you'd like to reset room data? This may cause irrevocable data loss.")) return
     await resetRoomData(false)
@@ -69,6 +74,7 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
 
   return (
     <div className='serverSettingsContainer'>
+      <button onClick={clickedMoveAllUsersToEntryway}>Move All Users To Entryway</button>
       <button onClick={clickedResetRoomData}>Reset Room Data</button>
       <button onClick={clickedResetBadges}>Reset My Badges</button>
       <h1>Happening Now Controls</h1>
