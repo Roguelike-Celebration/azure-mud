@@ -1,4 +1,4 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
+import { AuthenticatedEndpointFunction, GroupManagementTask, LogFn, Message } from '../endpoint'
 import { User } from '../user'
 import DB from '../redis'
 import { moveToRoom } from '../moveToRoom'
@@ -19,14 +19,26 @@ const moveAllUsersToEntryway: AuthenticatedEndpointFunction = async (user: User,
     }
   }
 
+  let allMessages: Message[] = []
+  let managementTasks: GroupManagementTask[] = []
   const allUsers = await DB.getAllUsers()
-  allUsers.forEach(u => moveToRoom(u, 'entryway'))
+  for (const user of allUsers) {
+    const tasks = await moveToRoom(user, 'entryway')
+    if (tasks && tasks.messages) {
+      allMessages = allMessages.concat(tasks.messages)
+    }
+    if (tasks && tasks.groupManagementTasks) {
+      managementTasks = managementTasks.concat(tasks.groupManagementTasks)
+    }
+  }
 
   return {
     httpResponse: {
       status: 200,
       body: { numUsers: allUsers.length, numMoved: allUsers.length, seconds: Math.round(Date.now() / 1000) - start }
-    }
+    },
+    messages: allMessages,
+    groupManagementTasks: managementTasks
   }
 }
 
