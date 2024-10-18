@@ -86,12 +86,13 @@ export const generate = () => {
     meat: [
       'chicken',
       'beef',
-      'pork', 
+      'pork',
       'turkey',
       'salmon',
       'tilapia',
       'Magikarp',
-      'eel'
+      'eel',
+      'minotaur'
     ]
   })
 

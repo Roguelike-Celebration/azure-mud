@@ -30,7 +30,7 @@ export const generate = () => {
       'peach',
       'elderberry',
       'haskap berry',
-      'almond', 
+      'almond',
       'cherry',
       'green tea',
       'chai',
