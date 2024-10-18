@@ -1,3 +1,7 @@
+import deleteObeliskNote from "./endpoints/obelisk/deleteObeliskNote"
+import likeObeliskNote from "./endpoints/obelisk/likeObeliskNote"
+import startObservingObelisk from "./endpoints/obelisk/startObservingObelisk"
+import stopObservingObelisk from "./endpoints/obelisk/stopObservingObelisk"
 import sendMagicEmail from "./endpoints/sendMagicEmail"
 
 export interface EndpointOptions {
@@ -12,12 +16,14 @@ type EndpointOrMethodSplitEndpoint = EndpointOptions | { [key in "get"|"post"|"p
 
 const routes: {[key: string]: EndpointOrMethodSplitEndpoint} = {
   addRoomNote: { authenticated: true, audit: true },
+  addObeliskNote: { authenticated: true, audit: true },
   banUser: { authenticated: true, mod: true, audit: true },
   clientDeployedWebhook: { },
   connect: { authenticated: true, audit: true },
   deleteMessage: { authenticated: true, mod: true, audit: true },
   deleteRoom: { authenticated: true, mod: true},
   deleteRoomNote: { authenticated: true, audit: true },
+  deleteObeliskNote: { authenticated: true, audit: true },
   disconnect: { authenticated: true, audit: true },
   displayMessage: { authenticated: true },
   equipBadge: { authenticated: true, audit: true },
@@ -29,6 +35,7 @@ const routes: {[key: string]: EndpointOrMethodSplitEndpoint} = {
   isRegistered: {},
   leaveVideoChat: { authenticated: true },
   likeRoomNote: { authenticated: true },
+  likeObeliskNote: { authenticated: true },
   moveRoom: { authenticated: true },
   // negotiate: {}, // TODO: Not wrapped / simple
   // negotiatePubSub: {}, //TODO: Not wrapped / simple
@@ -45,6 +52,8 @@ const routes: {[key: string]: EndpointOrMethodSplitEndpoint} = {
     get: {}, 
     post: { authenticated: true, mod: true } 
   },
+  startObservingObelisk: { authenticated: true, audit: true },
+  stopObservingObelisk: { authenticated: true, audit: true },
   toggleModStatus: { authenticated: true, audit: true, mod: true },
   toggleSpeakerStatus: { authenticated: true, audit: true, mod: true },
   // twilioToken: {}, // TODO: Not wrapped, also not needed

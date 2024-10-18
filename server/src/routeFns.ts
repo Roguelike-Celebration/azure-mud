@@ -10,6 +10,7 @@ import fetchProfile from "./endpoints/fetchProfile"
 import isRegistered from "./endpoints/isRegistered"
 import leaveVideoChat from "./endpoints/leaveVideoChat"
 import likeRoomNote from "./endpoints/roomNote/likeRoomNote"
+
 import moveRoom from "./endpoints/moveRoom"
 import getAllRooms from "./endpoints/getAllRooms"
 import getRoom from "./endpoints/getRoom"
@@ -33,6 +34,11 @@ import updateRoom from "./endpoints/updateRoom"
 import heartbeat from "./endpoints/heartbeat"
 import { getServerSettings, postServerSettings } from "./endpoints/serverSettings"
 import sendMagicEmail from "./endpoints/sendMagicEmail"
+import likeObeliskNote from "./endpoints/obelisk/likeObeliskNote"
+import addObeliskNote from "./endpoints/obelisk/addObeliskNote"
+import deleteObeliskNote from "./endpoints/obelisk/deleteObeliskNote"
+import startObservingObelisk from "./endpoints/obelisk/startObservingObelisk"
+import stopObservingObelisk from "./endpoints/obelisk/stopObservingObelisk"
 
 // This verb list is obviously incomplete and may need augmenting
 type FunctionOrMethodSplitFunction = Function | { [key in "get"|"post"]?: Function }
@@ -40,6 +46,7 @@ type FunctionOrMethodSplitFunction = Function | { [key in "get"|"post"]?: Functi
 
 const routes: {[key: string]: FunctionOrMethodSplitFunction} = {
   addRoomNote, // get or post
+  addObeliskNote,
   banUser, // get or post
   clientDeployedWebhook: {
     post: clientDeployedWebhook
@@ -50,6 +57,7 @@ const routes: {[key: string]: FunctionOrMethodSplitFunction} = {
   },
   deleteRoom,
   deleteRoomNote,
+  deleteObeliskNote,
   disconnect,
   displayMessage,
   equipBadge,
@@ -61,6 +69,7 @@ const routes: {[key: string]: FunctionOrMethodSplitFunction} = {
   isRegistered,
   leaveVideoChat,
   likeRoomNote,
+  likeObeliskNote,
   moveRoom,
   loser: () => {},
   // negotiate: {}, // TODO: Will need to be different locally. is POST
@@ -78,6 +87,8 @@ const routes: {[key: string]: FunctionOrMethodSplitFunction} = {
     get: getServerSettings,
     post: postServerSettings
   },
+  startObservingObelisk,
+  stopObservingObelisk,
   toggleModStatus,
   toggleSpeakerStatus,
   // twilioToken: {}, // TODO: Not wrapped, also not needed
