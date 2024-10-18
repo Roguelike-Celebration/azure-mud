@@ -49,7 +49,7 @@ export type Action =
   | ShowProfileAction
   | ShowModalAction
   | ShowModalWithOptionsAction
-  | AuthenticateAction
+  | SetUserIdAction
   | IsRegisteredAction
   | BanToggleAction
   | ModToggleAction
@@ -133,7 +133,7 @@ export enum ActionType {
   SetNumberOfFaces = 'SET_NUMBER_OF_FACES',
   SetCaptionsEnabled = 'SET_CAPTIONS_ENABLED',
   //
-  Authenticate = 'AUTHENTICATE',
+  SetUserId = 'SET_USER_ID',
   IsRegistered = 'IS_REGISTERED',
   BanToggle = 'BAN_TOGGLE',
   ModToggle = 'MOD_TOGGLE',
@@ -718,16 +718,6 @@ export const HideModalAction = (): HideModalAction => {
   return { type: ActionType.HideModalAction }
 }
 
-interface AuthenticateAction {
-  type: ActionType.Authenticate;
-  value: {
-    name: string;
-    userId: string;
-    provider: string;
-    mustVerifyEmail: boolean;
-  };
-}
-
 interface ShowSideMenuAction {
   type: ActionType.ShowSideMenu;
 }
@@ -841,24 +831,28 @@ export const SetNumberOfFacesAction = (num: number): SetNumberOfFacesAction => {
   }
 }
 
-export const AuthenticateAction = (
-  userId: string | undefined,
-  name: string | undefined,
-  provider: string | undefined,
-  mustVerifyEmail: boolean | undefined
-): AuthenticateAction => {
+interface SetUserIdAction {
+  type: ActionType.SetUserId;
+  value: string;
+}
+
+export const SetUserIdAction = (
+  userId: string,
+): SetUserIdAction => {
   return {
-    type: ActionType.Authenticate,
-    value: { userId, name, provider, mustVerifyEmail }
+    type: ActionType.SetUserId,
+    value: userId
   }
 }
 
+
 interface IsRegisteredAction {
   type: ActionType.IsRegistered;
+  value: string;
 }
 
-export const IsRegisteredAction = (): IsRegisteredAction => {
-  return { type: ActionType.IsRegistered }
+export const IsRegisteredAction = (username: string): IsRegisteredAction => {
+  return { type: ActionType.IsRegistered, value: username }
 }
 
 interface BanToggleAction {

@@ -1,0 +1,20 @@
+.logged-out {
+  margin: auto;
+  max-width: 1024px;
+  padding: 0px 20px;
+}
+
+.logged-out input {
+  margin: 0 30px 0 10px;
+  max-width: 400px;
+}
+
+.logged-out .email, .logged-out  .email-sent {
+  padding: 20px;
+  border: 1px solid var(--highlight-line);
+  background-color: var(--alternate-background);
+}
+
+.logged-out .email-sent {
+  padding: 30px 20px;
+}
