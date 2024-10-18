@@ -16,7 +16,7 @@ const addRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: an
 
   await DB.addRoomNote(user.roomId, { id, message, authorId: user.id })
 
-  return {
+  const result = {
     messages: [
       {
         groupId: user.roomId,
@@ -28,6 +28,18 @@ const addRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: an
       status: 200
     }
   }
+
+  // The sidebar obelisk and obelisk room share a noteWall, but have different pubsub groups to notify
+  // Adding an obelisk note from the sidebar is a different function, this is just the obelisk room case
+  if (user.roomId === 'obelisk') {
+    result.messages.push({
+      groupId: 'sidebar-obelisk',
+      target: 'obeliskNoteAdded',
+      arguments: [id, message, user.id]
+    })
+  }
+
+  return result
 }
 
 export default addRoomNote

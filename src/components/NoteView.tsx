@@ -6,10 +6,10 @@ import Linkify from 'react-linkify'
 import { RoomNote } from '../../server/src/roomNote'
 import { UserMapContext } from '../App'
 import { MinimalUser } from '../../server/src/user'
-import { deleteRoomNote, unlikeRoomNote, likeRoomNote } from '../networking'
+import { deleteRoomNote, unlikeRoomNote, unlikeObeliskNote, likeRoomNote, likeObeliskNote, deleteObeliskNote, deleteRoom } from '../networking'
 import NameView from './NameView'
 
-export function NoteView (props: { note: RoomNote }) {
+export function NoteView (props: { note: RoomNote, isObelisk?: boolean }) {
   const { userMap, myId } = useContext(UserMapContext)
   const n = props.note
   ReactTooltip.rebuild()
@@ -20,7 +20,8 @@ export function NoteView (props: { note: RoomNote }) {
 
   const onClickDelete = () => {
     if (confirm('Are you sure you would like to delete this?')) {
-      deleteRoomNote(n.id)
+      const fn = (props.isObelisk ? deleteObeliskNote : deleteRoomNote)
+      fn(n.id)
     }
   }
 
@@ -32,9 +33,11 @@ export function NoteView (props: { note: RoomNote }) {
   const onClickLike = () => {
     if (!canLike) return
     if (hasLiked) {
-      unlikeRoomNote(n.id)
+      const fn = (props.isObelisk ? unlikeObeliskNote : unlikeRoomNote)
+      fn(n.id)
     } else {
-      likeRoomNote(n.id)
+      const fn = (props.isObelisk ? likeObeliskNote : likeRoomNote)
+      fn(n.id)
     }
   }
 

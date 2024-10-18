@@ -21,14 +21,26 @@ const likeRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: a
     likes = await DB.unlikeRoomNote(user.roomId, noteId, user.id)
   }
 
+  const messages = [
+    {
+      groupId: user.roomId,
+      target: 'noteLikesUpdated',
+      arguments: [user.roomId, noteId, likes]
+    }
+  ]
+
+  // The sidebar obelisk and obelisk room share a noteWall, but have different pubsub groups to notify
+  // Liking an obelisk note from the sidebar is a different function, this is just the obelisk room case
+  if (user.roomId === 'obelisk') {
+    messages.push({
+      groupId: 'sidebar-obelisk',
+      target: 'obeliskNoteLikesUpdated',
+      arguments: [noteId, likes]
+    })
+  }
+
   return {
-    messages: [
-      {
-        groupId: user.roomId,
-        target: 'noteLikesUpdated',
-        arguments: [user.roomId, noteId, likes]
-      }
-    ],
+    messages,
     httpResponse: { status: 200 }
   }
 }
