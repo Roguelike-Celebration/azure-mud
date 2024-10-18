@@ -53,7 +53,7 @@ export function processResultWebsockets(result: Result) {
       user?.send(actionJson)
     } else if (isGroupMessage(m)) {
       console.log('sending to group', m.groupId, actionJson)
-      groups[m.groupId].forEach((userId) => {
+      groups[m.groupId]?.forEach((userId) => {
         const user = users[userId]
         user?.send(actionJson)
       })
