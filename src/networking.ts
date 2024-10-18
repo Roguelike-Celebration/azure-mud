@@ -29,6 +29,10 @@ import {
   NoteRemoveAction,
   NoteUpdateLikesAction,
   NoteUpdateRoomAction,
+  ObeliskNoteAddAction,
+  ObeliskNoteRemoveAction,
+  ObeliskNoteUpdateAction,
+  ObeliskNoteUpdateLikesAction,
   PlayerBannedAction,
   PlayerConnectedAction,
   PlayerDisconnectedAction,
@@ -111,6 +115,10 @@ export async function deleteRoomNote (noteId: string) {
   await callAzureFunction('deleteRoomNote', { noteId })
 }
 
+export async function deleteObeliskNote (noteId: string) {
+  await callAzureFunction('deleteObeliskNote', { noteId })
+}
+
 export async function likeRoomNote (noteId: string) {
   await callAzureFunction('likeRoomNote', { noteId, like: true })
 }
@@ -119,10 +127,25 @@ export async function unlikeRoomNote (noteId: string) {
   await callAzureFunction('likeRoomNote', { noteId, like: false })
 }
 
+export async function likeObeliskNote (noteId: string) {
+  await callAzureFunction('likeObeliskNote', { noteId, like: true })
+}
+
+export async function unlikeObeliskNote (noteId: string) {
+  await callAzureFunction('likeObeliskNote', { noteId, like: false })
+}
+
 export async function addNoteToWall (message: string) {
   if (message !== null && message.length > 0) {
     const id = uuid()
     await callAzureFunction('addRoomNote', { id, message })
+  }
+}
+
+export async function addNoteToObelisk (message: string) {
+  if (message !== null && message.length > 0) {
+    const id = uuid()
+    await callAzureFunction('addObeliskNote', { id, message })
   }
 }
 
@@ -337,6 +360,26 @@ export async function equipBadge (badge: Badge, index: number) {
   }
 }
 
+// Fetch current obelisk notes, and subscribe to new ones for the sidebar
+export async function startObservingObelisk () {
+  const result = await callAzureFunction('startObservingObelisk')
+  if (!result || !result.notes) {
+    console.log('ERROR: Failed to fetch sidebar obelisk notes')
+    return
+  }
+
+  console.log(result.notes)
+  myDispatch(ObeliskNoteUpdateAction(result.notes))
+}
+
+// Stop subscribing to sidebar obelisk note updates
+export async function stopObservingObelisk () {
+  const result = await callAzureFunction('stopObservingObelisk')
+  if (!result) {
+    console.log('ERROR: Failed to stop observing obelisk notes')
+  }
+}
+
 export async function checkIsRegistered (): Promise<{
   registeredUsername: string;
   spaceIsClosed: boolean;
@@ -512,6 +555,15 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
     },
     noteLikesUpdated: (roomId, noteId, likes) => {
       dispatch(NoteUpdateLikesAction(roomId, noteId, likes))
+    },
+    obeliskNoteAdded: (noteId, message, authorId) => {
+      dispatch(ObeliskNoteAddAction({ id: noteId, message, authorId }))
+    },
+    obeliskNoteRemoved: (noteId) => {
+      dispatch(ObeliskNoteRemoveAction(noteId))
+    },
+    obeliskNoteLikesUpdated: (noteId, likes) => {
+      dispatch(ObeliskNoteUpdateLikesAction(noteId, likes))
     },
     spaceOpenedOrClosed: (status) => {
       dispatch(SpaceOpenedOrClosedAction(status))

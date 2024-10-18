@@ -1,9 +1,9 @@
-import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
-import { isMod, User } from '../user'
-import DB from '../redis'
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../../endpoint'
+import { isMod, User } from '../../user'
+import DB from '../../redis'
 import { v4 as uuid } from 'uuid'
 
-const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
+const deleteObeliskNote: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const noteId = inputs.noteId
   if (!noteId) {
     return {
@@ -14,7 +14,7 @@ const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs:
     }
   }
 
-  const notes = await DB.getRoomNotes(user.roomId)
+  const notes = await DB.getRoomNotes('obelisk')
   const note = notes.find(n => n.id === noteId)
 
   if (note.authorId !== user.id && !(await isMod(user.id))) {
@@ -26,22 +26,26 @@ const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs:
     }
   }
 
-  await DB.deleteRoomNote(user.roomId, noteId)
+  await DB.deleteRoomNote('obelisk', noteId)
 
   const messages: Message[] = [
     {
-      groupId: user.roomId,
+      groupId: 'obelisk',
       target: 'noteRemoved',
-      arguments: [user.roomId, noteId]
+      arguments: ['obelisk', noteId]
+    },
+    {
+      groupId: 'sidebar-obelisk',
+      target: 'obeliskNoteRemoved',
+      arguments: [noteId]
     }
   ]
 
   if (note.authorId !== user.id) {
-    const room = await DB.getRoomData(user.roomId)
     messages.push({
       userId: note.authorId,
       target: 'emote',
-      arguments: [uuid(), user.id, `has removed a note of yours from ${room.shortName} wall`]
+      arguments: [uuid(), user.id, 'has removed a note of yours from the obelisk']
     })
   }
 
@@ -51,4 +55,4 @@ const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs:
   }
 }
 
-export default deleteRoomNote
+export default deleteObeliskNote

@@ -45,6 +45,8 @@ import { Room } from './room'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import * as Storage from './storage'
 import { EntityState } from './types'
+import { NoteWallData } from '../server/src/rooms'
+import { RoomNote } from '../server/src/roomNote'
 
 export interface State {
   firebaseApp: firebase.app.App;
@@ -118,6 +120,8 @@ export interface State {
 
   unlockableBadges: Badge[];
   justUnlockedBadge?: Badge;
+
+  obeliskNotes: RoomNote[]
 }
 
 console.log(Config.FIREBASE_CONFIG)
@@ -148,7 +152,8 @@ export const defaultState: State = {
   numberOfFaces: 5,
   captionsEnabled: false,
   hasDismissedAModal: false,
-  unlockableBadges: []
+  unlockableBadges: [],
+  obeliskNotes: []
 }
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
@@ -713,6 +718,27 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.LoadMessageArchiveEnd) {
     draft.messageArchiveLoaded.resolve()
     draft.autoscrollChat = true
+  }
+
+  // Obelisk notes
+  if (action.type === ActionType.ObeliskNoteUpdate) {
+    draft.obeliskNotes = action.value
+    console.log('Updating obelisk notes', action.value)
+  }
+
+  if (action.type === ActionType.ObeliskNoteAdd) {
+    draft.obeliskNotes.push(action.value)
+  }
+
+  if (action.type === ActionType.ObeliskNoteRemove) {
+    draft.obeliskNotes = draft.obeliskNotes.filter((n) => n.id !== action.value)
+  }
+
+  if (action.type === ActionType.ObeliskNoteUpdateLikes) {
+    const note = draft.obeliskNotes.find((n) => n.id === action.value.noteId)
+    if (note) {
+      note.likes = action.value.likes
+    }
   }
 
   // Notes
