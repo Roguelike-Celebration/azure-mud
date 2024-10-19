@@ -78,7 +78,12 @@ export function configureNetworking(userId: string, token: string, dispatch: Thu
 // ---------------------------------------
 
 export async function sendMagicEmail(email: string) {
-  await callAzureFunction('sendMagicEmail', { email })
+  const result = await callAzureFunction('sendMagicEmail', { email })
+  
+  // If NODE_ENV=development, the server will directly send you a
+  if (result) {
+    window.location = result
+  }
 }
 
 

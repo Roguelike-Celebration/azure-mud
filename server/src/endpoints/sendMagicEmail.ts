@@ -27,14 +27,27 @@ const sendMagicEmail: EndpointFunction = async (inputs: any, log: LogFn) => {
 
     const enp = require("easy-no-password")(secret, expiry)
     enp.createToken(userId, (err, token) => {
-      console.log('creAted token for ', userId)
+      console.log('created token for ', userId)
+      const url = `${process.env.ClientHostname}?userId=${userId}&token=${token}`
       if (err) {
         log("Token generation error: ", err);
         reject(err)
       } else {
+        log(`Email: '${email}', URL: ${url}`);
+        
+        if (process.env.NODE_ENV === 'development') {
+          console.log("development")
+          resolve({
+            httpResponse: { status: 200, body: url }
+          });
+  
+        } else {
+          resolve({
+            httpResponse: { status: 202 }
+          });
+        }
+
         // TODO: Email
-        log(`Email: '${email}', URL: http://localhost:1234?userId=${userId}&token=${token}`);
-        resolve(token);
       }
     });
   }); 
