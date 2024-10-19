@@ -113,7 +113,7 @@ export async function moveToRoom (
       {
         groupId: to.id,
         target: 'playerEntered',
-        arguments: [user.id, user.roomId, currentRoom.shortName]
+        arguments: [user.id, user.roomId, currentRoom.shortName || 'undefined']
       },
       {
         userId: user.id,
