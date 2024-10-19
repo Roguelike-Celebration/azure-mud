@@ -66,8 +66,8 @@ let myDispatch: ThunkDispatch<Action, State>
 const inMediaChat: boolean = false
 
 // This used to be part of the `connect` call, but that complicated the new user flow
-export function configureNetworking(userId: string, token: string, dispatch: ThunkDispatch<Action, State>) {
-  console.log("setting up auth", userId, token)
+export function configureNetworking (userId: string, token: string, dispatch: ThunkDispatch<Action, State>) {
+  console.log('setting up auth', userId, token)
   myUserId = userId
   myToken = token
   myDispatch = dispatch
@@ -77,15 +77,14 @@ export function configureNetworking(userId: string, token: string, dispatch: Thu
 // Can immediately swap these out to use PubSub
 // ---------------------------------------
 
-export async function sendMagicEmail(email: string) {
+export async function sendMagicEmail (email: string) {
   const result = await callAzureFunction('sendMagicEmail', { email })
-  
+
   // If NODE_ENV=development, the server will directly send you a
   if (result) {
     window.location = result
   }
 }
-
 
 export async function pickUpRandomItemFromList (listName: string) {
   await callAzureFunction('pickUpItem', { list: listName })
@@ -392,7 +391,7 @@ export async function stopObservingObelisk () {
   }
 }
 
-/* Given a username, returns whether that username is registered, banned, etc. 
+/* Given a username, returns whether that username is registered, banned, etc.
 Because our server auth flow assumes a full user, but this can be called with unregistered users,
 this is not an authenticated call. */
 export async function checkIsRegistered (userId: string): Promise<{
@@ -401,7 +400,7 @@ export async function checkIsRegistered (userId: string): Promise<{
   isMod: string;
   isBanned: boolean;
 }> {
-  const result = await callAzureFunction('isRegistered', {userId})
+  const result = await callAzureFunction('isRegistered', { userId })
   return {
     registeredUsername: result.registered,
     spaceIsClosed: result.spaceIsClosed,

@@ -7,7 +7,7 @@ import Database from './database'
 
 // eslint-disable-next-line import/first
 import { createClient } from 'redis'
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 require('dotenv').config()
 
@@ -15,11 +15,11 @@ console.log('Connecting to Redis', process.env.RedisHostname, process.env.RedisP
 
 let redisOpts = {}
 if (process.env.RedisKey) {
-  redisOpts = { 
+  redisOpts = {
     auth_pass: process.env.RedisKey,
     tls: { servername: process.env.RedisHostname }
   }
-} 
+}
 
 const cache = createClient(
   parseInt(process.env.RedisPort),
@@ -54,7 +54,7 @@ interface RedisInternal extends Database {
 }
 
 const Redis: RedisInternal = {
-  async getOrGenerateTokenSecret(): Promise<string> {
+  async getOrGenerateTokenSecret (): Promise<string> {
     const secret = await getCache('tokenSecretKey')
     if (secret) {
       console.log('Found secret', secret)
@@ -67,17 +67,16 @@ const Redis: RedisInternal = {
     return secret
   },
 
-  async getOrGenerateUserIdForEmail(email: string): Promise<string> {
+  async getOrGenerateUserIdForEmail (email: string): Promise<string> {
     const userId = await getCache(userIdKeyForEmail(email))
     if (userId) {
-      return userId;
+      return userId
     } else {
       const newUserId = uuid()
       await setCache(userIdKeyForEmail(email), newUserId)
       return newUserId
     }
   },
-
 
   async getActiveUsers (): Promise<string[]> {
     return getSet(activeUsersKey) || []

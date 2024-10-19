@@ -13,17 +13,16 @@ export default function LoggedOutView () {
 
   const emailInputView = (
     <div className="email">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="text"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
-              autoFocus
-            />
-            {/* TODO: wire up enter key */}
-            <button onClick={sendEmail}>Send Login Link</button>
-          </div>  
+      <label htmlFor="email">Email:</label>
+      <input
+        type="text"
+        id="email"
+        value={email}
+        onChange={(e) => setEmail(e.currentTarget.value)}
+      />
+      {/* TODO: wire up enter key */}
+      <button onClick={sendEmail}>Send Login Link</button>
+    </div>
   )
 
   const emailSentView = (
@@ -44,14 +43,14 @@ export default function LoggedOutView () {
           game design. It&apos;s for fans, players, developers, scholars, and
           everyone else!
         </p>
-        <p>After entering your email address, we will email you a 'magic' link to log you in, no password needed!</p>
-          {emailSent ? emailSentView : emailInputView}   
+        <p>After entering your email address, we will email you a &lsquo;magic&rsquo; link to log you in, no password needed!</p>
+        {emailSent ? emailSentView : emailInputView}
         <p>
           <strong>We now only support logging in via email.</strong><br/>We&apos;re sorry if you used
           a third-party login in previous years. If you sign in using the same email you used for Google, you should still be able to log in as your previous account.
         </p>
         <p>
-          If it's your first time here, after logging in, you will have the opportunity to pick whatever chat handle you would
+          If it&apos;s your first time here, after logging in, you will have the opportunity to pick whatever chat handle you would
           like before entering the space.
         </p>
         <p>

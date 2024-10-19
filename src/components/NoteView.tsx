@@ -16,8 +16,8 @@ export function NoteView (props: { note: RoomNote, isObelisk?: boolean }) {
 
   const me: MinimalUser = userMap[myId]
   const canDelete = me.isMod || n.authorId === myId
-  //const canLike = n.authorId !== myId
-  const canLike = true;
+  // const canLike = n.authorId !== myId
+  const canLike = true
 
   const onClickDelete = () => {
     if (confirm('Are you sure you would like to delete this?')) {

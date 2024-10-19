@@ -12,7 +12,7 @@ export interface AuthenticationOptions {
 export default async function authenticate (
   headers: any,
   log: Function,
-  options: AuthenticationOptions = {},
+  options: AuthenticationOptions = {}
 ): Promise<{user?: User, error?: {status: number, body: string}}> {
   const userId = await getUserIdFromHeaders(headers, log)
   if (!userId) {
@@ -27,7 +27,7 @@ export default async function authenticate (
   if (options.mod) {
     if (!(await isMod(user.id))) {
       return {
-        error: {  status: 403, body: 'This action requires moderator privileges.' }
+        error: { status: 403, body: 'This action requires moderator privileges.' }
       }
     }
   }
@@ -39,7 +39,7 @@ export default async function authenticate (
     }
   }
 
-  return {user}
+  return { user }
 
   // TODO: Restore or trash
   // This is commented out because the upgrade from Functions 3 -> 4 broke something, somehow
@@ -65,7 +65,7 @@ export default async function authenticate (
 /** This takes in a header object containing an OAuth2-like Bearer token and a userID, and returns either the userID of the valid user or undefined if the pair is invalid */
 export async function getUserIdFromHeaders (
   headers: any,
-  log: Function,
+  log: Function
 ): Promise<string | undefined> {
   // Gah! One thing to note - server sees all headers as all lowercase.
   if (!headers.authorization) {
@@ -93,8 +93,8 @@ export async function getUserIdFromHeaders (
   const clientIdToken = authHeaderParts[1]
   var userId = headers.userid
 
-  return new Promise(async (resolve, reject) => {
-    const enp = require("easy-no-password")(await DB.getOrGenerateTokenSecret())
+  const enp = require('easy-no-password')(await DB.getOrGenerateTokenSecret())
+  return new Promise((resolve, reject) => {
     enp.isValid(clientIdToken, userId, (err, isValid) => {
       if (err) {
         log('Error validating token:', err)
@@ -102,11 +102,10 @@ export async function getUserIdFromHeaders (
       }
       if (!isValid) {
         log('Token is not valid.')
-        reject(undefined)
+        reject(new Error('Token is not valid.'))
       }
 
       resolve(userId)
     })
   })
 }
-

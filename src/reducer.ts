@@ -51,7 +51,7 @@ export interface State {
   // TODO: Is this used?
   connected: Deferred<void>;
 
-  // The current user's ID. 
+  // The current user's ID.
   // If this is undefined, the user is not logged in.
   userId?: string;
 

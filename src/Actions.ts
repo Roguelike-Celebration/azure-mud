@@ -837,14 +837,13 @@ interface SetUserIdAction {
 }
 
 export const SetUserIdAction = (
-  userId: string,
+  userId: string
 ): SetUserIdAction => {
   return {
     type: ActionType.SetUserId,
     value: userId
   }
 }
-
 
 interface IsRegisteredAction {
   type: ActionType.IsRegistered;

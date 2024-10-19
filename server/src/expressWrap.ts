@@ -2,15 +2,15 @@ import Express from 'express'
 
 import {
   EndpointFunction,
-  Result,
+  Result
 } from './endpoint'
 import { EndpointOptions } from './routeMetadata'
 
-export async function expressWrap(
+export async function expressWrap (
   req: Express.Request,
   res: Express.Response,
   fn: EndpointFunction,
-  options: EndpointOptions 
+  options: EndpointOptions
 ) {
   const log = console.log // Can move this to the caller if needed
 
@@ -22,7 +22,7 @@ export async function expressWrap(
   output(res, result)
 }
 
-function output(res: Express.Response, result: Result) {
+function output (res: Express.Response, result: Result) {
   console.log('outputting to express')
   // console.log('context: ', JSON.stringify(context))
   console.log('result: ', JSON.stringify(result))

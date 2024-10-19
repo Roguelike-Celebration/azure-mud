@@ -30,7 +30,7 @@ const App = function () {
     // Auth is simple: you log in, we check if you're a mod, and only set the 'logged in' flag if so
     // I don't think we (currently) care about knowing WHO you are, or connecting to SignalR infra
     // SignalR may change if we want to enable real-time collab, but WOOF.
-/*
+    /*
     onAuthenticationStateChange(async (user) => {
       // The shouldVerifyEmail check shouldn't be necessary,
       // but I'm not convinced we won't have an exploit where someone can make a new account with an existing admin email.
@@ -41,7 +41,6 @@ const App = function () {
 
       const { userId, token } = tokenObj
 
-      
       const { isMod, isBanned } = await checkIsRegistered(userId)
 
       if (isMod && !isBanned) {

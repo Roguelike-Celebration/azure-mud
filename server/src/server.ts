@@ -2,14 +2,14 @@ import express from 'express'
 import ws from 'ws'
 import cors from 'cors'
 
-const session = require('express-session');
-
 import routeFns from './routeFns'
 import routeMetadata, { EndpointOptions } from './routeMetadata'
-import { processResultWebsockets, userConnected, userDisconnected } from './websocketManager';
-import authenticate, { getUserIdFromHeaders } from './authenticate';
-import { AuthenticatedEndpointFunction, EndpointFunction } from './endpoint';
-import updateProfile from './endpoints/updateProfile';
+import { processResultWebsockets, userConnected, userDisconnected } from './websocketManager'
+import authenticate, { getUserIdFromHeaders } from './authenticate'
+import { AuthenticatedEndpointFunction, EndpointFunction } from './endpoint'
+import updateProfile from './endpoints/updateProfile'
+
+const session = require('express-session')
 
 const port = process.env.PORT || 3000
 
@@ -24,12 +24,11 @@ const sessionParser = session({
   saveUninitialized: false,
   secret: 'thisisabadsecret',
   resave: false
-});
-
+})
 
 const app = express()
 app.use(express.json())
-app.use(sessionParser);
+app.use(sessionParser)
 
 // This is fine as long as this is only for local dev
 var corsOptions = {
@@ -40,8 +39,8 @@ var corsOptions = {
 app.use(cors(corsOptions))
 
 const server = app.listen(port, function () {
-  console.log('Listening on http://localhost:' + port);
-});
+  console.log('Listening on http://localhost:' + port)
+})
 
 console.log('restarted')
 
@@ -49,7 +48,7 @@ console.log('restarted')
 app.get('/api/negotiatePubSub', (req, res) => {
   res.json({
     url: 'ws://localhost:3000'
-  }) 
+  })
 })
 
 // Programmatically load all of our routes
@@ -66,82 +65,83 @@ Object.keys(routeFns).forEach((name) => {
       // Replace this raw call with one that injects the metadata
       app[method](`/api/${name}`, (req, res) => {
         console.log('Calling', name, method, metadata)
-        wrappedFunction(routeFns[name][method], metadata)(req, res);
+        wrappedFunction(routeFns[name][method], metadata)(req, res)
       })
     })
   } else {
     const metadata = routeMetadata[name] as EndpointOptions
     // Replace this raw call with one that injects the metadata
     app.all(`/api/${name}`, (req, res) => {
-      console.log('Calling', name);
+      console.log('Calling', name)
       wrappedFunction((routeFns[name] as EndpointFunction), metadata)(req, res)
-    })  }
+    })
+  }
 })
 
-function onSocketError(e) {
-  console.log("WebSocket error: ", e);
+function onSocketError (e) {
+  console.log('WebSocket error: ', e)
 };
 
 //
 // Create a WebSocket server completely detached from the HTTP server.
 //
-const wss = new ws.Server({ clientTracking: false, noServer: true });
+const wss = new ws.Server({ clientTracking: false, noServer: true })
 
 server.on('upgrade', function (request, socket, head) {
-  socket.on('error', onSocketError);
+  socket.on('error', onSocketError)
 
-  console.log('Parsing session from request...');
+  console.log('Parsing session from request...')
 
   sessionParser(request, {}, () => {
     if (!request.session.userId) {
-      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
-      socket.destroy();
-      return;
+      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n')
+      socket.destroy()
+      return
     }
 
-    console.log('Session is parsed!');
+    console.log('Session is parsed!')
 
-    socket.removeListener('error', onSocketError);
+    socket.removeListener('error', onSocketError)
 
     wss.handleUpgrade(request, socket, head, function (ws) {
-      wss.emit('connection', ws, request);
-    });
-  });
-});
+      wss.emit('connection', ws, request)
+    })
+  })
+})
 
 wss.on('connection', function (ws, request) {
-  const userId = request.session.userId;
+  const userId = request.session.userId
 
-  userConnected(userId, ws);
+  userConnected(userId, ws)
 
-  ws.on('error', console.error);
+  ws.on('error', console.error)
 
   ws.on('message', function (message) {
-    console.log(`Received message ${message} from user ${userId}`);
+    console.log(`Received message ${message} from user ${userId}`)
     // TODO: Pipe through to actual message handler
-  });
+  })
 
   ws.on('close', function () {
     userDisconnected(userId)
-  });
-});
+  })
+})
 
-function wrappedFunction(fn: EndpointFunction|AuthenticatedEndpointFunction, metadata: EndpointOptions): (req, res) => void {
+function wrappedFunction (fn: EndpointFunction|AuthenticatedEndpointFunction, metadata: EndpointOptions): (req, res) => void {
   // This is intended to be passed directly to express, so it can't be async itself
   return (req, res) => {
     (async () => {
       // todo: handle metadata.audit
-      let result; 
-    
+      let result
+
       if (metadata.authenticated) {
         try {
           const authResult = await authenticate(req.headers, console.log, metadata)
           if (authResult.user) {
             result = await fn(authResult.user, req.body || {}, console.log)
-            req.session.authenticated = true;
-            req.session.userId = authResult.user.id;
+            req.session.authenticated = true
+            req.session.userId = authResult.user.id
           }
-        } catch(e) {
+        } catch (e) {
           res
             .status(401)
             .send(e)
@@ -159,7 +159,7 @@ function wrappedFunction(fn: EndpointFunction|AuthenticatedEndpointFunction, met
       }
 
       if (!result) { return }
-      
+
       // console.log(result)
 
       processResultWebsockets(result)

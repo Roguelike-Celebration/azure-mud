@@ -73,7 +73,7 @@ const App = () => {
   )
 
   // The entire auth flow lives here
-  // We are either: 
+  // We are either:
   // 1. Not able to automatically log in (no stored token)
   // 2. Able to log in but not registered (stored token, isRegistered finds no user), or
   // 3. A "full" user (a user exists on the server, and we have a token we assume is valid)
@@ -81,40 +81,40 @@ const App = () => {
   useEffect(() => {
     (async () => {
       // Check for presence of magic URL
-      let queryParams = new URLSearchParams(window.location.search);
-      const urlToken = queryParams.get('token');
-      const urlUserId = queryParams.get('userId');
+      const queryParams = new URLSearchParams(window.location.search)
+      const urlToken = queryParams.get('token')
+      const urlUserId = queryParams.get('userId')
       if (urlToken && urlUserId) {
-        console.log("token exists, setting and reloading")
-        await Storage.setToken(urlUserId, urlToken);
+        console.log('token exists, setting and reloading')
+        await Storage.setToken(urlUserId, urlToken)
 
         // Triggers a page refresh and also wipes away the query params
         window.location.search = ''
       }
 
-      console.log("no token, checking storage")
+      console.log('no token, checking storage')
       const tokenObj = await Storage.getToken()
       console.log('tokenobj', tokenObj)
       console.log(tokenObj)
       if (!tokenObj || !tokenObj.userId || !tokenObj.token) {
         // logged out
-        console.log("no token found")
+        console.log('no token found')
         return
       }
 
-      console.log("token found, checking registration")
+      console.log('token found, checking registration')
 
       const { userId, token } = tokenObj
 
-      console.log("about to set up networking")
-      dispatch(SetUserIdAction(userId));
+      console.log('about to set up networking')
+      dispatch(SetUserIdAction(userId))
       configureNetworking(userId, token, dispatch)
-      
+
       const { registeredUsername, spaceIsClosed, isMod, isBanned } = await checkIsRegistered(userId)
 
       // User has logged in, but is not registered, show registration workflow
       // (triggered automatically by state.isRegistered = false, which is the default)
-      if (!registeredUsername) { 
+      if (!registeredUsername) {
         return
       }
 
@@ -144,28 +144,28 @@ const App = () => {
       // Cool, the person can see the space, let's do generic loading stuff
       // This all probably shouldn't live here, except for maybe the connect() call
 
-        const messageArchive = await Storage.getMessages()
-        // I'm styling it like a constant but it's just here; look it's late and the conf is in two days
-        const MAX_MESSAGES_TO_LOAD = 400
-        dispatch(
-          LoadMessageArchiveAction(
-            messageArchive
-              ? messageArchive.messages.slice(-MAX_MESSAGES_TO_LOAD)
-              : [],
-            messageArchive ? messageArchive.whispers : []
-          )
+      const messageArchive = await Storage.getMessages()
+      // I'm styling it like a constant but it's just here; look it's late and the conf is in two days
+      const MAX_MESSAGES_TO_LOAD = 400
+      dispatch(
+        LoadMessageArchiveAction(
+          messageArchive
+            ? messageArchive.messages.slice(-MAX_MESSAGES_TO_LOAD)
+            : [],
+          messageArchive ? messageArchive.whispers : []
         )
+      )
 
-        const useSimpleNames = await Storage.getUseSimpleNames()
-        dispatch(SetUseSimpleNamesAction(useSimpleNames))
-        const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
-        dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
-        const textOnlyMode = await Storage.getTextOnlyMode()
-        dispatch(SetTextOnlyModeAction(textOnlyMode, false))
-        const captionsEnabled = await Storage.getCaptionsEnabled()
-        dispatch(SetCaptionsEnabledAction(captionsEnabled))
+      const useSimpleNames = await Storage.getUseSimpleNames()
+      dispatch(SetUseSimpleNamesAction(useSimpleNames))
+      const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
+      dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
+      const textOnlyMode = await Storage.getTextOnlyMode()
+      dispatch(SetTextOnlyModeAction(textOnlyMode, false))
+      const captionsEnabled = await Storage.getCaptionsEnabled()
+      dispatch(SetCaptionsEnabledAction(captionsEnabled))
 
-        connect()
+      connect()
     })()
   }, [])
 
@@ -174,36 +174,36 @@ const App = () => {
   // TODO: Try killing this after the rest of my auth refactor is done
   useEffect(() => {
     // WARNING: Prior to the "calculate number of faces for videochat" code,
-        // there was a no-op resize handler here.
-        // window.addEventListener('resize', () => {})
-        // I frankly have no idea what this was doing,
-        // and worry my changes will cause unexpected errors
-        // -Em, 10/12/2021
-        window.addEventListener('resize', () => {})
-        const onResize = () => {
-          // It seems like a smell to do this in here and have to grab into #main,
-          // but I think it's fine?
-          const VideoWidth = 180
-          const $main = document.getElementById('main')
-          // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
-          if ($main) {
-            const numberOfFaces =
+    // there was a no-op resize handler here.
+    // window.addEventListener('resize', () => {})
+    // I frankly have no idea what this was doing,
+    // and worry my changes will cause unexpected errors
+    // -Em, 10/12/2021
+    window.addEventListener('resize', () => {})
+    const onResize = () => {
+      // It seems like a smell to do this in here and have to grab into #main,
+      // but I think it's fine?
+      const VideoWidth = 180
+      const $main = document.getElementById('main')
+      // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
+      if ($main) {
+        const numberOfFaces =
               Math.floor($main.clientWidth / VideoWidth) - 1
-            dispatch(SetNumberOfFacesAction(numberOfFaces))
-          } else {
-            console.warn(
-              "Attempted to call onResize when 'main' element was null; will default to show no faces"
-            )
-          }
-        }
-
-        // Our initial paint time is stupid slow
-        // but waiting a long time seems to ensure that #main exists
-        setTimeout(onResize, 2000)
-        window.addEventListener(
-          'resize',
-          _.throttle(onResize, 100, { trailing: true })
+        dispatch(SetNumberOfFacesAction(numberOfFaces))
+      } else {
+        console.warn(
+          "Attempted to call onResize when 'main' element was null; will default to show no faces"
         )
+      }
+    }
+
+    // Our initial paint time is stupid slow
+    // but waiting a long time seems to ensure that #main exists
+    setTimeout(onResize, 2000)
+    window.addEventListener(
+      'resize',
+      _.throttle(onResize, 100, { trailing: true })
+    )
   }, [])
 
   const isMobile = window.outerWidth < 500
@@ -214,7 +214,7 @@ const App = () => {
     ''
   )
 
-  if ( !state.userId) {
+  if (!state.userId) {
     return <LoggedOutView />
   }
 

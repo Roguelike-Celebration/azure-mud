@@ -41,7 +41,7 @@ export default function ProfileEditView (props: Props) {
   const [askMeAbout, setAskMeAbout] = useState((user && user.askMeAbout) || '')
   const [url, setUrl] = useState((user && user.url) || '')
   const [twitter, setTwitter] = useState(
-    (user && user.twitterHandle) ||    '')
+    (user && user.twitterHandle) || '')
 
   const close = () => {
     dispatch(HideModalAction())

@@ -30,20 +30,20 @@ export async function setWhispers (whispers: WhisperMessage[]) {
 }
 
 // Token store
-export async function setToken(userId: string, token: string) {
+export async function setToken (userId: string, token: string) {
   console.log('Setting token', userId, token)
   await localforage.setItem(userIdKey, userId)
   await localforage.setItem(tokenKey, token)
 }
 
-export async function clearToken() {
+export async function clearToken () {
   console.log('Clearing token')
   await localforage.removeItem(userIdKey)
   await localforage.removeItem(tokenKey)
   console.log('Cleared token')
 }
 
-export async function getToken(): Promise<{token: string, userId: string} | null> {
+export async function getToken (): Promise<{token: string, userId: string} | null> {
   const token = await localforage.getItem(tokenKey)
   const userId = await localforage.getItem(userIdKey)
   if (!token || !userId) {
@@ -133,4 +133,4 @@ const themeKey = 'UserSelectedTheme'
 const useSimpleNamesKey = 'UseSimpleNames'
 const keepCameraWhenMovingKey = 'KeepCameraWhenMoving'
 const textOnlyModeKey = 'TextOnlyMode'
-const captionsEnabledKey = 'CaptionsEnabled';
+const captionsEnabledKey = 'CaptionsEnabled'

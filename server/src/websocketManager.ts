@@ -1,4 +1,4 @@
-import { isGroupMessage, isPrivateMessage, Result } from "./endpoint";
+import { isGroupMessage, isPrivateMessage, Result } from './endpoint'
 
 // A stateful holder of websocket connections and group membership
 // There may be some auto-disconnect or similar logic we're not replicating,
@@ -8,27 +8,27 @@ import { isGroupMessage, isPrivateMessage, Result } from "./endpoint";
 const groups: { [groupId: string]: Set<string> } = {}
 const users: { [userId: string]: WebSocket } = {}
 
-export function userConnected(userId: string, ws: WebSocket) {
+export function userConnected (userId: string, ws: WebSocket) {
   users[userId] = ws
 }
 
-export function userDisconnected(userId: string) {
+export function userDisconnected (userId: string) {
   delete users[userId]
   Object.values(groups).forEach((group) => {
     group.delete(userId)
   })
 }
 
-export function processResultWebsockets(result: Result) {
+export function processResultWebsockets (result: Result) {
   console.log('processing websocket tasks')
   // console.log('result: ', JSON.stringify(result))
   if (result.messages) {
     console.log('handling WS messages')
   }
-  
+
   // Warning: with Azure, this is declarative, rather than imperative.
   // I assume we want to process group management tasks before messages,
-  //but that might be incorrect.
+  // but that might be incorrect.
 
   result.groupManagementTasks?.forEach((t) => {
     if (!groups[t.groupId]) {
@@ -63,5 +63,5 @@ export function processResultWebsockets(result: Result) {
         user.send(actionJson)
       })
     }
-  });
+  })
 }

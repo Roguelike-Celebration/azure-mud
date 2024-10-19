@@ -23,7 +23,6 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
     if (prompt) {
       disconnect(myId).then(() => {
         clearToken().then(() => { window.location.reload() })
-
       }).catch((error) => {
         console.log('error signing out', error)
         window.location.reload()

@@ -1,4 +1,4 @@
-import authenticate from "../src/authenticate"
+import authenticate from '../src/authenticate'
 
 module.exports = async function (context, req, connection) {
   // This is simple enough (and Azure-specific) that we don't use full-on AzureWrap
@@ -13,7 +13,7 @@ module.exports = async function (context, req, connection) {
   } else { // Unknown??
     context.res = {
       status: 500,
-      body: "An unknown error has occurred"
+      body: 'An unknown error has occurred'
     }
   }
 }
