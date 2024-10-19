@@ -18,14 +18,14 @@ export interface ScheduleEntry {
 }
 
 const PREVIEW_END = new Date('2024-09-10T15:30:00-07:00')
-const FIRST_DAY_END = new Date('2024-10-19T21:00:00-07:00')
-const SECOND_DAY_END = new Date('2024-10-20T21:00:00-07:00')
+const FIRST_DAY_END = new Date('2024-10-18T21:00:00-07:00')
+const SECOND_DAY_END = new Date('2024-10-19T21:00:00-07:00')
+const THIRD_DAY_END = new Date('2024-10-20T21:00:00-07:00')
 
 const dayPreview = (time) => new Date(`2024-09-08T${time}:00.000-07:00`)
-// Don't think we're doing a pre-party in 2024
-const dayOneDate = (time) => new Date(`2024-10-19T${time}:00.000-07:00`)
-const dayTwoDate = (time) => new Date(`2024-10-20T${time}:00.000-07:00`)
-const dayThreeDate = (time) => new Date(`2024-10-21T${time}:00.000-07:00`)
+const dayOneDate = (time) => new Date(`2024-10-18T${time}:00.000-07:00`)
+const dayTwoDate = (time) => new Date(`2024-10-19T${time}:00.000-07:00`)
+const dayThreeDate = (time) => new Date(`2024-10-20T${time}:00.000-07:00`)
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
   if (day === 0) {
@@ -62,23 +62,23 @@ export const ScheduleEntries: ScheduleEntry[] = [
 
   ScheduleEntry('09:00', 2, 'Doors Open'),
   ScheduleEntry('09:15', 2, 'Kickoff', ['theater']),
-  ScheduleEntry('09:30', 2, 'Aaron A. Reed: "Klingons, Hobbits, and the Oregon Trail: Procedural Generation in the First Decade of Text Games', ['theater'], 'screen1'),
-  ScheduleEntry('10:00', 2, 'Nic Tringali: Abstract Space Exploration in The Banished Vault', ['theater'], 'screen2'),
-  ScheduleEntry('10:30', 2, 'Linas Gabrielaitis: Fictions of Infinity in Geological Finitudes', ['theater'], 'screen3'),
-  ScheduleEntry('10:45', 2, 'Ludipe: Exploring Pacifist Roguelikes', ['theater'], 'screen4'),
+  ScheduleEntry('09:30', 2, 'Harry Solomons: Trampling on Ghosts: Hauntology and Permadeath', ['theater'], 'goblinSingers'),
+  ScheduleEntry('10:00', 2, 'Cezar Capacle: Enhancing Narrative Through Randomness and Complications', ['theater'], 'joust'),
+  ScheduleEntry('10:30', 2, 'Max Bottega: Keeping Art Direction ', ['theater'], 'whipShow'),
+  ScheduleEntry('10:45', 2, 'Stanley W. Baxton: Brining Real-World Occultism into Your Games Without Accidentally Being Racist', ['theater'], 'fountain'),
   ScheduleEntry('11:00', 2, SOCIAL_TIME),
-  ScheduleEntry('11:30', 2, 'Florence Smith Nicholls: Another Stupid Date: Love Island as a Roguelike', ['theater'], 'screen1'),
-  ScheduleEntry('11:45', 2, 'Kes: Hunting the Asphynx: Roguelikes, Provenance, and You', ['theater'], 'screen2'),
-  ScheduleEntry('12:00', 2, 'Mike Cook: Generating Procedures: Rule and System Generation for Roguelikes', ['theater'], 'screen3'),
+  ScheduleEntry('11:30', 2, 'Jeff Entmenn and Martin Austwick: Neutrinowatch - the podcast that plays itself ', ['theater'], 'goblinSingers'),
+  ScheduleEntry('12:00', 2, 'Nic Junius: Braided Narratives: Or How I Learned to Stop Worrying and Love Linear Stories', ['theater'], 'joust'),
   ScheduleEntry('12:30', 2, SOCIAL_TIME),
-  ScheduleEntry('13:30', 2, 'Scott Burger: The Data Science of Roguelikes', ['theater'], 'screen1'),
-  ScheduleEntry('14:00', 2, 'Nat Alison: In Defense of Hand-Crafted Sudoku', ['theater'], 'screen2'),
-  ScheduleEntry('14:30', 2, SOCIAL_TIME),
-  ScheduleEntry('15:00', 2, 'Eric Billingsley: Scoped-down design: Making a tiny roguelike', ['theater'], 'screen1'),
-  ScheduleEntry('15:30', 2, 'Elliot Trinidad: Touching Grass & Taking Names: Tuning the Blaseball Name Generator', ['theater'], 'screen2'),
-  ScheduleEntry('16:00', 2, SOCIAL_TIME),
-  ScheduleEntry('16:30', 2, 'Paul Hembree: Audible Geometry: Coordinate Systems as a Resource for Music Generation', ['theater'], 'screen1'),
-  ScheduleEntry('17:00', 2, 'Jurie Horneman: Why Dynamic Content Selection Is Hard', ['theater'], 'screen2'),
+  ScheduleEntry('13:30', 2, 'Pandamander: "Out of Book": The Psychology of Why Roguelikes Keep Us Playing', ['theater'], 'goblinSingers'),
+  ScheduleEntry('13:45', 2, 'Loren Schmidt: Inverse Terrain Solver', ['theater'], 'joust'),
+  ScheduleEntry('14:15', 2, 'Adrian: Probably Impossible: NecroDancer\'s network code', ['theater'], 'whipShow'),
+  ScheduleEntry('14:45', 2, SOCIAL_TIME),
+  ScheduleEntry('15:15', 2, 'John Harris: A Trip Through The Mystery Dungeons', ['theater'], 'goblinSingers'),
+  ScheduleEntry('15:45', 2, 'Marlowe Dobbe: A Swarm of Monsters is Hard To Build: Generating Visual Concepts for Enemies in Roguelikes', ['theater'], 'joust'),
+  ScheduleEntry('16:15', 2, SOCIAL_TIME),
+  ScheduleEntry('16:45', 2, 'John Bond: Doors? How Roguelike games take you places', ['theater'], 'goblinSingers'),
+  ScheduleEntry('17:00', 2, 'Dan Norder: Chase: The BASIC Language Proto-Roguelike', ['theater'], 'joust'),
   ScheduleEntry('17:30', 2, SOCIAL_TIME),
   ScheduleEntry('18:00', 2, 'Unconferencing', ['arcade']),
   ScheduleEntry('19:00', 2, 'Doors Close'),
@@ -126,6 +126,9 @@ export default function ScheduleView () {
   } else if (today <= SECOND_DAY_END) {
     day = 2
     dayText = 'Saturday'
+  } else if (today <= THIRD_DAY_END) {
+    day = 3
+    dayText = 'Sunday'
   }
   const entries = ScheduleEntries.filter(e => e.day === day)
 
