@@ -21,16 +21,28 @@ const moveAllUsersToEntryway: AuthenticatedEndpointFunction = async (user: User,
 
   let allMessages: Message[] = []
   let managementTasks: GroupManagementTask[] = []
+
   const allUsers = await DB.getAllUsers()
-  for (const user of allUsers) {
-    const tasks = await moveToRoom(user, 'entryway')
-    if (tasks && tasks.messages) {
-      allMessages = allMessages.concat(tasks.messages)
+
+  try {
+    for (const user of allUsers) {
+      const tasks = await moveToRoom(user, 'entryway')
+      if (tasks && tasks.messages) {
+        allMessages = allMessages.concat(tasks.messages)
+      }
+      if (tasks && tasks.groupManagementTasks) {
+        managementTasks = managementTasks.concat(tasks.groupManagementTasks)
+      }
     }
-    if (tasks && tasks.groupManagementTasks) {
-      managementTasks = managementTasks.concat(tasks.groupManagementTasks)
-    }
+  } catch (e) {
+    const err = e as Error
+    log("ERROR!")
+    log(err.message)
+    if (err.stack) { log(err.stack) }
   }
+
+  log(allMessages)
+  log(managementTasks)
 
   return {
     httpResponse: {
