@@ -36,7 +36,7 @@ const moveAllUsersToEntryway: AuthenticatedEndpointFunction = async (user: User,
     }
   } catch (e) {
     const err = e as Error
-    log("ERROR!")
+    log('ERROR!')
     log(err.message)
     if (err.stack) { log(err.stack) }
   }
