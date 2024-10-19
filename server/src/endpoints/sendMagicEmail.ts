@@ -1,5 +1,6 @@
 import { EndpointFunction, LogFn } from '../endpoint'
 import DB from '../redis'
+import sendEmail from '../sendEmail'
 
 const sendMagicEmail: EndpointFunction = async (inputs: any, log: LogFn) => {
   const email = inputs.email
@@ -26,9 +27,9 @@ const sendMagicEmail: EndpointFunction = async (inputs: any, log: LogFn) => {
     const expiry = oneDay * 3
 
     const enp = require('easy-no-password')(secret, expiry)
-    enp.createToken(userId, (err, token) => {
+    enp.createToken(userId, async (err, token) => {
       console.log('created token for ', userId)
-      const url = `${process.env.ClientHostname}?userId=${userId}&token=${token}`
+      const url = `${process.env.CLIENT_HOSTNAME}?userId=${userId}&token=${token}`
       if (err) {
         log('Token generation error: ', err)
         reject(err)
@@ -41,8 +42,10 @@ const sendMagicEmail: EndpointFunction = async (inputs: any, log: LogFn) => {
             httpResponse: { status: 200, body: url }
           })
         } else {
-          resolve({
-            httpResponse: { status: 202 }
+          sendEmail(email, url).then(() => {
+            resolve({
+              httpResponse: { status: 202 }
+            })
           })
         }
 
