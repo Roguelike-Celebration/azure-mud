@@ -33,18 +33,20 @@ export default function NameView (props: Props) {
 
   const isSelf = props.userId === myId
 
+  // This will fail if the user's client has the wrong year set,
+  // that shouldn't be a concern?
+  const thisYear: string = `${(new Date()).getFullYear()}`
+  const lastYear: string = `${(new Date()).getFullYear() - 1}`
+
   const user: User = userMap[props.userId]
   const username = user && user.username
   const isMod = user && user.isMod
-  const isSpeaker = user && user.isSpeaker
+  const isSpeaker = user && user.speakerYears?.includes(thisYear)
   const isBanned = user && user.isBanned
 
   // isMod = the user whose name being rendered is a mod
   // userIsMod = the user who is logged in is a mod
   const userIsMod = userMap[myId].isMod
-
-  const thisYear: string = `${(new Date()).getFullYear()}`
-  const lastYear: string = `${(new Date()).getFullYear() - 1}`
 
   // This sometimes gets called before `connect` returns any users
   // That itself is a bug to fix, but this can at least guard against it.
@@ -157,8 +159,7 @@ export default function NameView (props: Props) {
   const badges = (user.equippedBadges || [])
     .map((b, i) => <BadgeView key={`badge-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />)
 
-  // TODO: This is not yet being set anywhere
-  if (user.isSpeaker) {
+  if (isSpeaker) {
     badges.unshift(
       <BadgeView key='badge-speaker' isCustom={true} emoji='speaker' description='Speaker' />
     )
