@@ -13,19 +13,6 @@ export const generate = () => {
       "You eat a bowl of #plant# and #protein#. Yum!"
     ],
     fruit: [
-      'Strawberry',
-      'Lemon',
-      'Lime',
-      'Orange',
-      'Dragonfruit',
-      'Stinky Durian',
-      'Lychee',
-      'Mango',
-      'Kumquats',
-      'Guava',
-      'Rambutan',
-      'Feijoa',
-      'Noni',
       'apple',
       'kiwi',
       'grape',
@@ -52,7 +39,22 @@ export const generate = () => {
       'apricorn',
       'devil fruit',
       'killer tomato',
-      'ancient fruit'
+      'ancient fruit',
+      'strawberry',
+      'lemon',
+      'lime',
+      'orange',
+      'dragonfruit',
+      'stinky durian',
+      'lychee',
+      'mango',
+      'kumquat',
+      'guava',
+      'rambutan',
+      'feijoa',
+      'noni',
+      'choko',
+      'Gros Michel banana'
     ],
     powerup: [
       'blindness',
@@ -231,18 +233,6 @@ export const generate = () => {
       'creepypasta'
     ],
     plant: [
-      'Lemongrass',
-      'Quinoa',
-      'Chickpea',
-      'Burb Root',
-      'Moss of Mareilon',
-      'Spenseweed',
-      'Mandrake',
-      'Nopales',
-      'Yucca',
-      'Spinach',
-      'Kale',
-      'Seaweed',
       'pumpkin',
       'turnip',
       'rice',
@@ -294,8 +284,45 @@ export const generate = () => {
       'celery',
       'mixed Seed',
       'half moon grass',
-      'peacebloom'
-
+      'peacebloom',
+      'lemongrass',
+      'quinoa',
+      'chickpea',
+      'burb root',
+      'moss of mareilon',
+      'spenseweed',
+      'mandrake',
+      'nopales',
+      'yucca',
+      'spinach',
+      'kale',
+      'seaweed',
+      'slime mold',
+      'vinewafer',
+      'wild rice',
+      'meterlong beans',
+      'corn (or is it maize?)',
+      'maize (or is it corn?)'
+    ],
+    protein: [
+      'imitation #meat#',
+      'tofu',
+      'tempeh',
+      'turtle beans', // shoutout to one of the weirder balatro jokers - kawa
+      'sunflower seeds',
+      'delicately spiced #plant#'
+    ],
+    meat: [
+      'chicken',
+      'beef',
+      'pork',
+      'turkey',
+      'salmon',
+      'tilapia',
+      'Magikarp',
+      'eel',
+      'minotaur',
+      'human'
     ]
   })
 
