@@ -14,7 +14,6 @@ import {
 import { User } from '../server/src/user'
 import {
   Action,
-  CaptionMessageAction,
   ChatMessageAction,
   CommandMessageAction,
   ConnectAction,
@@ -279,30 +278,6 @@ export async function sendChatMessage (id: string, text: string) {
   }
 }
 
-export async function sendCaption (id: string, text: string) {
-  // TODO: This may or may not be problematic
-  if (text.length > MESSAGE_MAX_LENGTH) {
-    console.log(
-      `Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`
-    )
-    return
-  }
-
-  const result: RoomResponse | Error | any = await callAzureFunction(
-    'sendCaption',
-    {
-      id: id,
-      text: text
-    }
-  )
-
-  console.log(result)
-
-  if (result && result.error) {
-    myDispatch(ErrorAction(result.error))
-  }
-}
-
 export async function fetchProfile (userId: string) {
   const result = await callAzureFunction('fetchProfile', { userId })
   if (result.error) {
@@ -420,10 +395,6 @@ export async function getAllRooms (): Promise<{ [roomId: string]: Room }> {
 // "Real" HTTP Functions
 // used just as an HTTP request, do not refactor to WS
 // ---------------------------------------------------------------
-export async function fetchTwilioToken () {
-  return await callAzureFunction('twilioToken')
-}
-
 export async function fetchCognitiveServicesKey () {
   return await callAzureFunction('cognitiveServicesKey')
 }
@@ -485,13 +456,6 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
       if (otherId === userId) return
 
       dispatch(ChatMessageAction(messageId, otherId, message))
-    },
-    caption: (messageId, otherId, message) => {
-      console.log('Received caption', otherId, message)
-      console.log(otherId, message, userId)
-      if (otherId === userId) return
-
-      dispatch(CaptionMessageAction(messageId, otherId, message))
     },
     mods: (otherId, message) => {
       dispatch(ModMessageAction(otherId, message))
