@@ -79,7 +79,10 @@ You need to add the proper connection string to your functions app. This should 
 4. Hit save
 
 #### Adding email sending
-TODO: Document this, or ideally fold it into the ARM template
+1. Add a new application setting in the Azure Portal with key `CLIENT_HOSTNAME` whose value is the URL to your client app (e.g. `https://chat.roguelike.club`)
+2. Add a new application setting with key `POSTMARK_SERVER_TOKEN` containing a [Postmark](https://postmark.com) server token
+
+Server instances will send emails by default. If you would like to not actually send emails for test purposes, set `NODE_ENV=development` and the user will be automatically logged in with whatever email address they enter.
 
 #### Deployment: Setting up your own non-Roguelike Celebration instance
 
