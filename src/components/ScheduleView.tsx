@@ -18,8 +18,8 @@ export interface ScheduleEntry {
 }
 
 const PREVIEW_END = new Date('2024-09-10T15:30:00-07:00')
-const FIRST_DAY_END = new Date('2024-10-19T21:00:00-07:00')
-const SECOND_DAY_END = new Date('2024-10-20T21:00:00-07:00')
+const FIRST_DAY_END = new Date('2024-10-18T21:00:00-07:00')
+const SECOND_DAY_END = new Date('2024-10-19T21:00:00-07:00')
 
 const dayPreview = (time) => new Date(`2024-09-08T${time}:00.000-07:00`)
 // Don't think we're doing a pre-party in 2024
