@@ -517,6 +517,24 @@ export const UnlockableBadges: Badge[] = [
     emoji: '9️⃣',
     description: 'Attended the 9th Roguelike Celebration in 2024!',
     category: BadgeCategories.Year2024
+  },
+  {
+    emoji: 'turkey_leg',
+    description: 'Alarmingly large, but delicious!',
+    isCustom: true,
+    category: BadgeCategories.Year2024
+  },
+  {
+    emoji: 'goblin_barbie',
+    description: 'It comes with kung-fu grip!',
+    isCustom: true,
+    category: BadgeCategories.Year2024
+  },
+  {
+    emoji: 'goblin_appreciation',
+    description: 'The feeling of friendship',
+    isCustom: true,
+    category: BadgeCategories.Year2024
   }
 ]
 

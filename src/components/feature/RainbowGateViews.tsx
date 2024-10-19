@@ -41,10 +41,9 @@ export default function RainbowGateModalView () {
   // if (visits === 1) {
   return (
     <div>
-      <p>It&apos;s just as satisfying as you always imagined to hop over the lip of the fountain and let the spray engulf you. You could swear you hear brief rhythmic clapping over the mall&apos;s speakers and the start of an upbeat pop song.</p>
-      <p>Kicking your feet and letting loose, you become drenched head to toe in the colourful waters. You wipe your face and see a dwarven guard trying to get your attention, the clapping in fact being the clacking of their metal flashlight against the fountain.</p>
-      <p>You can&apos;t hear what they&apos;re saying over the spray of the water but you do seem them pointing insistently at a small yellow sign reading &quot;No Splashing.&quot; It&apos;s not exactly fun to just stand still in the middle of this thing, so you wade back to the edge and hop out.</p>
-      <p><em>Dyed water drips off you in tiny streams. Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></em>.</p>
+      <p>You sit down in the chair as a goblin artist fires up their device. It appears to be some kind of handheld machine shaped as if it should hold needles, but in place of that are glowing gemstones. As the tattoo artist hits the switch to activate their device, the glow burns brightly and your body resonates in kind, a slight tingling sensation rippling in its wake.</p>
+      <p>The tingling sensation begins to spread across your arm, your torso, and eventually covers all of you despite minimal movement from the goblin. When that is finished, a muscular goblin walks up and begins to massage your shoulder with the flowery lotion you saw before. Relaxation spreads through you entirely. </p>
+      <p>You wake up a few moments later at the gentle urgings of the artist, and look down to find yourself glowing an exciting new hue! Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></p>
     </div>
   )
   /* } else {
