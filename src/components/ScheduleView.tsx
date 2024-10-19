@@ -20,12 +20,12 @@ export interface ScheduleEntry {
 const PREVIEW_END = new Date('2024-09-10T15:30:00-07:00')
 const FIRST_DAY_END = new Date('2024-10-18T21:00:00-07:00')
 const SECOND_DAY_END = new Date('2024-10-19T21:00:00-07:00')
+const THIRD_DAY_END = new Date('2024-10-20T21:00:00-07:00')
 
 const dayPreview = (time) => new Date(`2024-09-08T${time}:00.000-07:00`)
-// Don't think we're doing a pre-party in 2024
-const dayOneDate = (time) => new Date(`2024-10-19T${time}:00.000-07:00`)
-const dayTwoDate = (time) => new Date(`2024-10-20T${time}:00.000-07:00`)
-const dayThreeDate = (time) => new Date(`2024-10-21T${time}:00.000-07:00`)
+const dayOneDate = (time) => new Date(`2024-10-18T${time}:00.000-07:00`)
+const dayTwoDate = (time) => new Date(`2024-10-19T${time}:00.000-07:00`)
+const dayThreeDate = (time) => new Date(`2024-10-20T${time}:00.000-07:00`)
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
   if (day === 0) {
@@ -126,6 +126,9 @@ export default function ScheduleView () {
   } else if (today <= SECOND_DAY_END) {
     day = 2
     dayText = 'Saturday'
+  } else if (today <= THIRD_DAY_END) {
+    day = 3
+    dayText = 'Sunday'
   }
   const entries = ScheduleEntries.filter(e => e.day === day)
 
