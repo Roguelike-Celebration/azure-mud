@@ -3,13 +3,13 @@
 import tracery from 'tracery-grammar'
 
 export const actionString = (boba: string) => {
-  return `${boba}`
+  return `You drink ${boba}.`
 }
 
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      "You drink #refreshing.a# #powerup# potion with #boba#."
+      "#refreshing.a# #powerup# potion with #boba#"
     ],
     refreshing: [
       'refreshing',
