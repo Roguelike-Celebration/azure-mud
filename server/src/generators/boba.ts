@@ -293,7 +293,7 @@ export const generate = () => {
       'Mango Jelly',
       'Eel Jelly',
       'Leather Scraps',
-      'Phoenix Down'
+      'Phoenix Down',
       '#flavor# bits',
       'whipped cream and #boba#'
     ]
