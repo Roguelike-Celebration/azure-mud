@@ -26,5 +26,6 @@ export default [
   'Ooze, Faithful Sidekick',
   'Roguelike Celebration Shower Curtain',
   'a mystic dagger',
-  'a pet eel'
+  'a pet eel',
+  'a turkey leg of Yendor'
 ]
