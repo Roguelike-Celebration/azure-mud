@@ -3,14 +3,14 @@
 import tracery from 'tracery-grammar'
 
 export const actionString = (veganFood: string) => {
-  return `${veganFood}`
+  return `You eat a ${veganFood}.`
 }
 
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      "You eat a delicious bowl of #fruit# and #plant# with #powerup# sauce.",
-      "You eat a bowl of #plant# and #protein#. Yum!"
+      "delicious bowl of #fruit# and #plant# with #powerup# sauce",
+      "bowl of #plant# and #protein#"
     ],
     fruit: [
       'apple',

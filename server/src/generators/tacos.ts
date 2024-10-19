@@ -3,13 +3,13 @@
 import tracery from 'tracery-grammar'
 
 export const actionString = (tacos: string) => {
-  return `${tacos}`
+  return `You inhale a scrumptious taco with ${tacos}.`
 }
 
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      "You inhale a scrumptious taco with #monster# meat and #bean#."
+      "#monster# meat and #bean#"
     ],
     monster: [
       'Ice Giant',
