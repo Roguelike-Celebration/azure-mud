@@ -5,7 +5,6 @@ import 'ace-builds/src-noconflict/mode-json'
 import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
-import { onAuthenticationStateChange, signOut } from '../../authentication'
 import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking'
 import reducer, { defaultState, State } from '../reducer'
 import { useReducerWithThunk } from '../../useReducerWithThunk'
@@ -13,6 +12,8 @@ import { Action, LoggedInAction, UpdateRoomIds, UpdateAndShowRoomAction } from '
 import LoggedOutView from './LoggedOutView'
 import RoomList from './RoomList'
 import RoomOptionsView from './RoomOptionsView'
+
+import { getToken } from '../../storage'
 
 export const DispatchContext = createContext(null)
 
@@ -29,7 +30,7 @@ const App = function () {
     // Auth is simple: you log in, we check if you're a mod, and only set the 'logged in' flag if so
     // I don't think we (currently) care about knowing WHO you are, or connecting to SignalR infra
     // SignalR may change if we want to enable real-time collab, but WOOF.
-
+    /*
     onAuthenticationStateChange(async (user) => {
       // The shouldVerifyEmail check shouldn't be necessary,
       // but I'm not convinced we won't have an exploit where someone can make a new account with an existing admin email.
@@ -38,16 +39,19 @@ const App = function () {
         return
       }
 
-      const { isMod, isBanned } = await checkIsRegistered()
+      const { userId, token } = tokenObj
+
+      const { isMod, isBanned } = await checkIsRegistered(userId)
 
       if (isMod && !isBanned) {
         dispatch(LoggedInAction())
-      } else {
-        alert("You shouldn't have access to this page.")
-        await signOut()
-        window.location.reload()
+        configureNetworking(userId, token, dispatch)
       }
+<<<<<<< HEAD
+    })()
+=======
     })
+      */
   }, [])
 
   // This could probably previously run in the login useEffect block--

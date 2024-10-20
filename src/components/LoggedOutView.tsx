@@ -1,34 +1,40 @@
-// Note - we're doing firebase 8 because the firebaseui stuff doesn't work with 9, big F
-import { currentUser, sendSignInLinkToEmail } from '../authentication'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import React from 'react'
-import firebase from 'firebase/app'
-import 'firebase/auth'
-
-const uiConfig = {
-  callbacks: {
-    // The documentation on the firebaseui README appears somewhat borked at time of writing; the structure of
-    // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
-    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      const user = currentUser()
-      if (user.shouldVerifyEmail) {
-        sendSignInLinkToEmail(user.email)
-      }
-      return true
-    }
-  },
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ]
-}
+import { sendMagicEmail } from '../networking'
+import '../../style/loggedOut.css'
 
 export default function LoggedOutView () {
+  const [email, setEmail] = React.useState('')
+  const [emailSent, setEmailSent] = React.useState(false)
+
+  const sendEmail = () => {
+    sendMagicEmail(email)
+    setEmailSent(true)
+  }
+
+  const emailInputView = (
+    <div className="email">
+      <label htmlFor="email">Email:</label>
+      <input
+        type="text"
+        id="email"
+        value={email}
+        onChange={(e) => setEmail(e.currentTarget.value)}
+      />
+      {/* TODO: wire up enter key */}
+      <button onClick={sendEmail}>Send Login Link</button>
+    </div>
+  )
+
+  const emailSentView = (
+    <div className='email-sent'>We sent a magic login link to <strong>{email}</strong>. Check your inbox!</div>
+  )
+
   return (
     <div>
-      <header role="banner">
+      <header role="banner" className="logged-out">
         <h1>Welcome to Roguelike Celebration 2024!</h1>
       </header>
-      <main role="main">
+      <main role="main" className="logged-out">
         <p>
           This is a social space for attendees of{' '}
           <a href='https://roguelike.club'>Roguelike Celebration</a>, a
@@ -37,18 +43,14 @@ export default function LoggedOutView () {
           game design. It&apos;s for fans, players, developers, scholars, and
           everyone else!
         </p>
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        <p>After entering your email address, we will email you a &lsquo;magic&rsquo; link to log you in, no password needed!</p>
+        {emailSent ? emailSentView : emailInputView}
         <p>
-          <strong>We no longer support signing in with any form other than email.</strong> We&apos;re sorry if you used
-          one of the third-party sign-ons in previous years. If you sign in using the same email you used for Twitter
-          or Google, you should be able to recover your account (it will ask you to reset your password) - otherwise,
-          please make a new account.
+          <strong>We now only support logging in via email.</strong><br/>We&apos;re sorry if you used
+          a third-party login in previous years. If you sign in using the same email you used for Google, you should still be able to log in as your previous account.
         </p>
         <p>
-          If you sign up for a new account, we will require you to verify that email address.
-        </p>
-        <p>
-          After logging in, you will have the opportunity to pick whatever chat handle you would
+          If it&apos;s your first time here, after logging in, you will have the opportunity to pick whatever chat handle you would
           like before entering the space.
         </p>
         <p>

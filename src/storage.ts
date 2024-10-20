@@ -2,7 +2,6 @@ import { Message, WhisperMessage } from './message'
 import localforage from 'localforage'
 
 // Message cache
-
 export async function getMessages (): Promise<{messages: Message[], whispers: WhisperMessage[]}|undefined> {
   try {
     const timestamp: Date = await localforage.getItem(messageTimestampKey)
@@ -28,6 +27,30 @@ export async function setMessages (messages: Message[], timestamp?: Date) {
 
 export async function setWhispers (whispers: WhisperMessage[]) {
   await localforage.setItem(whisperKey, whispers)
+}
+
+// Token store
+export async function setToken (userId: string, token: string) {
+  console.log('Setting token', userId, token)
+  await localforage.setItem(userIdKey, userId)
+  await localforage.setItem(tokenKey, token)
+}
+
+export async function clearToken () {
+  console.log('Clearing token')
+  await localforage.removeItem(userIdKey)
+  await localforage.removeItem(tokenKey)
+  console.log('Cleared token')
+}
+
+export async function getToken (): Promise<{token: string, userId: string} | null> {
+  const token = await localforage.getItem(tokenKey)
+  const userId = await localforage.getItem(userIdKey)
+  if (!token || !userId) {
+    return null
+  }
+
+  return { token: token as string, userId: userId as string }
 }
 
 // Rainbow gate
@@ -102,6 +125,8 @@ export async function getCaptionsEnabled (): Promise<boolean> {
 const messagesKey = 'messages'
 const messageTimestampKey = 'messageTimeStamp'
 const whisperKey = 'whispers'
+const tokenKey = 'authToken'
+const userIdKey = 'userId'
 const rainbowGateKey = 'FeatureRainbowGateVisited'
 const wasColoredEnteringKey = 'WasColoredEntering'
 const themeKey = 'UserSelectedTheme'

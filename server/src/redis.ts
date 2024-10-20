@@ -4,19 +4,32 @@ import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './typ
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import Database from './database'
-console.log('HIII?')
-// eslint-disable-next-line import/first
-import redis from 'redis'
-console.log('redis', redis)
 
-const cache = redis.createClient(
-  parseInt(process.env.RedisPort),
-  process.env.RedisHostname,
-  {
+// eslint-disable-next-line import/first
+import { createClient } from 'redis'
+import { v4 as uuid } from 'uuid'
+
+require('dotenv').config()
+
+console.log('Connecting to Redis', process.env.RedisHostname, process.env.RedisPort)
+
+let redisOpts = {}
+if (process.env.RedisKey) {
+  redisOpts = {
     auth_pass: process.env.RedisKey,
     tls: { servername: process.env.RedisHostname }
   }
+}
+
+const cache = createClient(
+  parseInt(process.env.RedisPort),
+  process.env.RedisHostname,
+  redisOpts
 )
+
+setTimeout(() => {
+  console.log('Redis connected', cache.connected)
+}, 3000)
 
 const getCache = promisify(cache.get).bind(cache)
 const setCache = promisify(cache.set).bind(cache)
@@ -41,15 +54,28 @@ interface RedisInternal extends Database {
 }
 
 const Redis: RedisInternal = {
-  async userIdForFirebaseToken (token: string): Promise<string | undefined> {
-    return await getCache(keyForFirebaseToken(token))
+  async getOrGenerateTokenSecret (): Promise<string> {
+    const secret = await getCache('tokenSecretKey')
+    if (secret) {
+      console.log('Found secret', secret)
+      return secret
+    }
+
+    const newSecret = uuid()
+    await setCache('tokenSecretKey', newSecret)
+    console.log('Generated new secret', newSecret)
+    return secret
   },
 
-  async addFirebaseTokenToCache (token: string, userId: string, expiry: number) {
-    // Expiry is set independently instead of using the 4-parameter setCache sig because I tried it and it seemed to
-    // silently fail without setting anything.
-    await setCache(keyForFirebaseToken(token), userId)
-    await expireAt(keyForFirebaseToken(token), expiry)
+  async getOrGenerateUserIdForEmail (email: string): Promise<string> {
+    const userId = await getCache(userIdKeyForEmail(email))
+    if (userId) {
+      return userId
+    } else {
+      const newUserId = uuid()
+      await setCache(userIdKeyForEmail(email), newUserId)
+      return newUserId
+    }
   },
 
   async getActiveUsers (): Promise<string[]> {
@@ -400,6 +426,8 @@ const Redis: RedisInternal = {
   }
 }
 
+const tokenSecretKey = 'tokenSecret'
+
 const activeUsersKey = 'activeUsersList'
 
 const modListKey = 'mods'
@@ -410,6 +438,10 @@ const serverSettingsKey = 'serverSettings'
 const allUserIdsKey = 'allUserIds'
 
 const roomIdsKey = 'roomIds'
+
+function userIdKeyForEmail (email: string): string {
+  return `userid_${email}`
+}
 
 function roomDataKey (roomId: string): string {
   return `room_${roomId}`
@@ -425,10 +457,6 @@ function profileKeyForUser (userId: string): string {
 
 function userIdKeyForUsername (username: string): string {
   return `${username}Username`
-}
-
-function keyForFirebaseToken (token: string): string {
-  return `${token}FirebaseToken`
 }
 
 function heartbeatKeyForUser (user: string): string {
@@ -450,7 +478,7 @@ function roomNotesKey (roomId: string): string {
 export function videoPresenceKey (roomId: string) {
   return `${roomId}PresenceVideo`
 }
-const userMapKey = 'userMap'
+
 const spaceAvailabilityKey = 'spaceIsClosed'
 
 export default Redis

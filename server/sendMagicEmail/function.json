@@ -16,5 +16,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/cognitiveServicesKey/index.js"
+  "scriptFile": "../dist/sendMagicEmail/index.js"
 }

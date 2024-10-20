@@ -4,7 +4,6 @@ import { Room } from '../room'
 import { Action, ActionType } from './actions'
 
 export interface State {
-  firebaseApp: firebase.app.App
   isLoggedIn: boolean
 
   roomIds?: string[]
@@ -14,7 +13,6 @@ export interface State {
 }
 
 export const defaultState: State = {
-  firebaseApp: firebase.initializeApp(Config.FIREBASE_CONFIG),
   isLoggedIn: false,
   roomData: {}
 }

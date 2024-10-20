@@ -1,13 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { azureWrap } from '../src/azureWrap'
-import isRegistered from '../src/endpoints/isRegistered'
-import { getUserIdFromHeaders } from '../src/authenticate'
+import sendMagicEmail from '../src/endpoints/sendMagicEmail'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
-): Promise<void> {
-  await azureWrap(context, req, isRegistered, { userId: req.body.userId })
+): Promise<any> {
+  await azureWrap(context, req, sendMagicEmail, { audit: true })
 }
 
 export default httpTrigger
