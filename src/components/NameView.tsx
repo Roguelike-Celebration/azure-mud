@@ -33,10 +33,15 @@ export default function NameView (props: Props) {
 
   const isSelf = props.userId === myId
 
+  // This will fail if the user's client has the wrong year set,
+  // that shouldn't be a concern?
+  const thisYear: string = `${(new Date()).getFullYear()}`
+  const lastYear: string = `${(new Date()).getFullYear() - 1}`
+
   const user: User = userMap[props.userId]
   const username = user && user.username
   const isMod = user && user.isMod
-  const isSpeaker = user && user.isSpeaker
+  const isSpeaker = user && user.speakerYears?.includes(thisYear)
   const isBanned = user && user.isBanned
 
   // isMod = the user whose name being rendered is a mod
@@ -80,15 +85,15 @@ export default function NameView (props: Props) {
     const doSpeaker = confirm(
       `Are you sure you would like to ${isSpeaker ? 'remove' : 'add'} the user '${
         data.username
-      }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
+      }' ${isSpeaker ? 'from' : 'to'} the current (${thisYear}) speaker list?`
     )
     if (doSpeaker) {
-      toggleUserSpeaker(data.id, '2024')
+      toggleUserSpeaker(data.id, thisYear)
     }
   }
 
   const handlePastSpeaker = (e, data) => {
-    toggleUserSpeaker(data.id, '2023')
+    toggleUserSpeaker(data.id, lastYear)
   }
 
   const pastSpeakerButton = userIsMod ? (
@@ -98,7 +103,7 @@ export default function NameView (props: Props) {
       }
       onClick={handlePastSpeaker}
     >
-    Make 2023 speaker
+    Make Previous (${lastYear}) Speaker
     </MenuItem>
   ) : (
     ''
@@ -154,8 +159,7 @@ export default function NameView (props: Props) {
   const badges = (user.equippedBadges || [])
     .map((b, i) => <BadgeView key={`badge-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />)
 
-  // TODO: This is not yet being set anywhere
-  if (user.isSpeaker) {
+  if (isSpeaker) {
     badges.unshift(
       <BadgeView key='badge-speaker' isCustom={true} emoji='speaker' description='Speaker' />
     )
