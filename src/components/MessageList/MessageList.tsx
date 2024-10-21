@@ -24,7 +24,7 @@ export const MessageList: FC<MessageListProps> = ({
   const shouldHideTimestamp = useShouldHideTimestamp()
 
   return (
-    <>
+    <div className="message-list-container">
       <ol
         className="message-list"
         ref={scrollContainerRef}
@@ -66,6 +66,6 @@ export const MessageList: FC<MessageListProps> = ({
           Loading {Math.floor(messagesLoadProgress * 100)}%
         </div>
       )}
-    </>
+    </div>
   )
 }
