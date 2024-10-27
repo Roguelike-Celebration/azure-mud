@@ -6,7 +6,7 @@ import routeFns from './routeFns'
 import routeMetadata, { EndpointOptions } from './routeMetadata'
 import { processResultWebsockets, userConnected, userDisconnected } from './websocketManager'
 import authenticate, { getUserIdFromHeaders } from './authenticate'
-import { AuthenticatedEndpointFunction, EndpointFunction } from './endpoint'
+import { AuthenticatedEndpointFunction, EndpointFunction, Result } from './endpoint'
 import updateProfile from './endpoints/updateProfile'
 
 const session = require('express-session')
@@ -126,46 +126,51 @@ wss.on('connection', function (ws, request) {
   })
 })
 
-function wrappedFunction (fn: EndpointFunction|AuthenticatedEndpointFunction, metadata: EndpointOptions): (req, res) => void {
-  // This is intended to be passed directly to express, so it can't be async itself
-  return (req, res) => {
-    (async () => {
-      // todo: handle metadata.audit
-      let result
+async function handle (
+  fn: EndpointFunction|AuthenticatedEndpointFunction,
+  metadata: EndpointOptions,
+  req: any // TODO type please
+): Promise<Result> {
+  if (!metadata.authenticated) {
+    console.log('not authenticated', req.body)
 
-      if (metadata.authenticated) {
-        try {
-          const authResult = await authenticate(req.headers, console.log, metadata)
-          if (authResult.user) {
-            result = await fn(authResult.user, req.body || {}, console.log)
-            req.session.authenticated = true
-            req.session.userId = authResult.user.id
-          }
-        } catch (e) {
-          res
-            .status(401)
-            .send(e)
-        }
-      } else {
-        console.log('not authenticated', req.body)
+    // updateProfile is weird in that we need to grab the validated userId from the headers, but don't require you have a complete user yet
+    // should we be relying on function-as-object equality? probably not.
+    if (fn === updateProfile) {
+      req.body.userId = await getUserIdFromHeaders(req.headers, console.log)
+    }
 
-        // updateProfile is weird in that we need to grab the validated userId from the headers, but don't require you have a complete user yet
-        // should we be relying on function-as-object equality? probably not.
-        if (fn === updateProfile) {
-          req.body.userId = await getUserIdFromHeaders(req.headers, console.log)
-        }
-
-        result = await (fn as EndpointFunction)(req.body, console.log)
+    return (fn as EndpointFunction)(req.body, console.log)
+  } else {
+    try {
+      const authResult = await authenticate(req.headers, console.log, metadata)
+      if (authResult.user) {
+        req.session.authenticated = true
+        req.session.userId = authResult.user.id
+        return fn(authResult.user, req.body || {}, console.log)
       }
-
-      if (!result) { return }
-
-      // console.log(result)
-
-      processResultWebsockets(result)
-      if (result.httpResponse) {
-        res.status(result.httpResponse.status).send(result.httpResponse.body)
-      }
-    })()
+    } catch (e) {
+      return { httpResponse: { status: 401, body: e } }
+    }
   }
+}
+
+function wrappedFunction (
+  fn: EndpointFunction|AuthenticatedEndpointFunction,
+  metadata: EndpointOptions
+): (req: any, res: any) => void {
+  // This is intended to be passed directly to express, so it can't be async itself
+  return (req, res) => (async () => {
+    // todo: handle metadata.audit
+    const result = await handle(fn, metadata, req)
+    // console.log(result)
+
+    processResultWebsockets(result)
+    if (result.httpResponse) {
+      const { status, body } = result.httpResponse
+      res.status(status).send(body)
+    }
+    // TODO else provide a default http response? 204? 500?
+  })()
+
 }
