@@ -1,3 +1,7 @@
+const {
+  SERVER_HOSTNAME = 'http://localhost:3000',
+} = process.env
+
 export default {
-  SERVER_HOSTNAME: process.env.SERVER_HOSTNAME
+  SERVER_HOSTNAME
 }
