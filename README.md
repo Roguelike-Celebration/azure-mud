@@ -34,7 +34,7 @@ There's no public docs yet for this editor tool, but hopefully it should be rela
 
 3. If you want to run the backend server locally (recommended), go into the `server` directory and run `npm install`.
 
-4. Rename `.env.sample` to `.env`. If you want to run a local server, you can leave it as is. If you're hoping to point your local frontend at an already-deployed backend, ask another Roguelike Celebration volunteer for the server endpoint to use.
+4. Copy `.env.sample` to `.env`. If you want to run a local server, you can leave it as is. If you're hoping to point your local frontend at an already-deployed backend, ask another Roguelike Celebration volunteer for the server endpoint to use.
 
 5. If planning to run the backend locally, download and install Redis using [the appropriate instructions for your platform](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/). Copy `server/.env.sample` to `server/.env`. It shouldn't require any changes, so long as you are running Redis locally on the default port. Ensure that Redis is running before attempting to run the server.
 
