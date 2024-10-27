@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
+    "extends": "@tsconfig/node18/tsconfig.json",
+    "strict": false,
     "outDir": "dist",
     "rootDir": ".",
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "strict": false,
-    "skipLibCheck": true
+    "sourceMap": true
   }
 }
