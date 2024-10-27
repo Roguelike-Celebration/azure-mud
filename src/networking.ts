@@ -666,7 +666,7 @@ async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
     console.log(r)
     return r.data
   } catch (e) {
-    if (e.response.status === 401 && myToken) {
+    if (e.response?.status === 401 && myToken) {
       console.log("Unauthorized, since we have a token let's assume it's stale. Logging out.")
       clearToken().then(() => { window.location.reload() })
     }
