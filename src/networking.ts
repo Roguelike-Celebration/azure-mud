@@ -59,6 +59,10 @@ import { ThunkDispatch } from './useReducerWithThunk'
 import { State } from './reducer'
 import { clearToken } from './storage'
 
+const {
+  SERVER_HOSTNAME: ServerHostname
+} = Config
+
 let myUserId: string
 let myToken: string
 let myDispatch: ThunkDispatch<Action, State>
@@ -627,9 +631,13 @@ export async function connectPubSub (eventMapping: {
   })
 }
 
+function azureEndpoint (endpoint: string) {
+  return `${ServerHostname}/api/${endpoint}`
+}
+
 async function callAzureFunctionGet (endpoint: string): Promise<any> {
   try {
-    const r = await axios.get(`${Config.SERVER_HOSTNAME}/api/${endpoint}`, {
+    const r = await axios.get(azureEndpoint(endpoint), {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${myToken}`,
@@ -648,17 +656,13 @@ async function callAzureFunctionGet (endpoint: string): Promise<any> {
 
 async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
   try {
-    const r = await axios.post(
-      `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
-      body,
-      {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${myToken}`,
-          userId: myUserId
-        }
+    const r = await axios.post(azureEndpoint(endpoint), body, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${myToken}`,
+        userId: myUserId
       }
-    )
+    })
     console.log(r)
     return r.data
   } catch (e) {
