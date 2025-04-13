@@ -148,7 +148,7 @@ After this succeeds, both your frontend and backend services should be live. You
 
 #### Deploying New Changes via VS Code
 
-If you use VS Code as an IDE, the Azure Functions extension makes it extremely easy to deploy directly from there. Check out [this tutorial](https://docs.microsoft.com/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-javascript&WT.mc_id=spatial-8206-emwalker) for more info.
+If you use VS Code as an IDE, the Azure Functions extension makes it extremely easy to deploy directly from there. Check out [this tutorial](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-typescript?pivots=nodejs-model-v4) for more info.
 
 VS Code will likely get confused if your active project is the root of your fork repo – we recommend explicilty opening the `server` directory in VS Code and deploying from there.
 
@@ -156,7 +156,7 @@ You will also need to make sure there is a `firebase-admin.json` file in the `se
 
 #### Deploying New Changes via CLI
 
-If you have the [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local&WT.mc_id=spatial-8206-emwalker) installed, you can run `func azure functionapp publish [project name]` to deploy directly from the CLI.
+If you have the [Azure Functions Core Tools](https://learn.microsoft.com/en-us/azure/azure-functions/functions-core-tools-reference?tabs=v2) installed, you can run `func azure functionapp publish [project name]` to deploy directly from the CLI.
 
 You will also need to make sure there is a `firebase-admin.json` file in the `server` directory.
 
@@ -172,7 +172,7 @@ Other than managing SignalR units, you won't need to worry about adjusting capac
 
 If you would prefer to not use the ARM template above, here is how you can manually configure a set of Azure resources to run this project.
 
-1. Deploy the project to a new Azure Function App instance you control. I recommend using VS Code and the VS Code Azure Functions extension. See the "Publish the project to Azure" section of [this tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-javascript?WT.mc_id=spatial-8206-emwalker) for details. You can also use the Azure CLI or any other method.
+1. Deploy the project to a new Azure Function App instance you control. I recommend using VS Code and the VS Code Azure Functions extension. See the "Publish the project to Azure" section of [this tutorial](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-typescript?pivots=nodejs-model-v4) for details. You can also use the Azure CLI or any other method.
 
 2) In the Azure Portal, sign up for a new [Azure SignalR Service](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview?WT.mc_id=spatial-8206-emwalker) instance. For development purposes, you can probably start with the free tier.
 
@@ -188,7 +188,7 @@ If you would prefer to not use the ARM template above, here is how you can manua
 
 ## Deployment and CI/CD via GitHub Actions
 
-In addition to the production/staging deploys (which, as mentioned, run manually and on main push, respectively, the "lint" workflow runs on every open PR and on every commit to main. It checks (a) whether the code passes a TypeScript compilation/typecheck step, (b) whether all your room description links are valid (see below), and (c) whether the frontend code passes accessibility best standards (via [axe linter](https://axe-linter.deque.com/)).
+In addition to the production/staging deploys (which, as mentioned, run manually and on main push, respectively, the "lint" workflow runs on every open PR and on every commit to main. It checks (a) whether the code passes a TypeScript compilation/typecheck step, (b) whether all your room description links are valid (see below), and (c) whether the frontend code passes accessibility best standards (via [axe linter](https://www.deque.com/axe/devtools/linter/)).
 
 You can naturally disable this if you'd prefer.
 
@@ -213,7 +213,7 @@ Right now, because room descriptions are part of the server codebase, changing r
 
 ## Editing the Map
 
-TODO: These instructions are slightly out-of-date. The map used for Roguelike Celebration 2021 was drawn using Playscii, but the thing that really needs to be documented is the supplemental data you need to add to inject active room counts and set up click/scroll targets. Check out `src/components/MapView.tsx` for more info until this is properly documented.
+TODO: These instructions are slightly out-of-date. The map used for Roguelike Celebration 2021 was drawn using [Playscii](http://vectorpoem.com/playscii/), but the thing that really needs to be documented is the supplemental data you need to add to inject active room counts and set up click/scroll targets. Check out `src/components/MapView.tsx` for more info until this is properly documented.
 
 Outdated info: The ASCII map was created with [Monodraw](https://monodraw.helftone.com), a Mac-only ASCII art tool. You'll want to open the `map.monopic` file in that, export your changes, paste the ASCII string into `src/components/MapView.tsx`, and then update any changes to the two datasets of persistence identifiers and clickable areas.
 
