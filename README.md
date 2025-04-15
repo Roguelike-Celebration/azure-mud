@@ -211,6 +211,8 @@ Outdated info: The ASCII map was created with [MonoDraw](https://monodraw.helfto
 
 ## Adding a Mod
 
+> *"You don't need a superuser. Any mod can make another mod. I'll prove it."*
+
 A moderator has the ability to make any other user a mod by clicking their username and choosing the appropriate option in the space. By default, the first user who creates a user account will become a mod. However, if something gets messed up and you need to do this manually, here's how to add a mod directly to the database:
 
 1. Find the user ID of the user you want to make a mod. In the space, if you open your browser's development tools and go to the network inspector, and then click their name (including your own name in the top-left corner if you want to mod your own user) and "view profile", you will see a HTTP request to `/fetchProfile` that contains the userId in JSON as the request payload.
