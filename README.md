@@ -223,6 +223,10 @@ A moderator has the ability to make any other user a mod by clicking their usern
 
 If that user reloads the space, they will now be a mod and have the ability to add other mods.
 
+## License
+
+The contents of this repo are licensed under the MIT License. See the `LICENSE` file for details.
+
 ## Contributions
 
 If you're looking to get involved: awesome! There's a "Good First Issue" tag in this repo's GitHub Issues that may point you towards something. If you want to work on something, it might be nice to comment that you're looking into it in case others are already working on it or were thinking about it.
