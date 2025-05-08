@@ -535,6 +535,16 @@ export const UnlockableBadges: Badge[] = [
     description: 'The feeling of friendship',
     isCustom: true,
     category: BadgeCategories.Year2024
+  },
+  {
+    emoji: '🎪', // emoji from 2024 reused as placeholder -apj
+    description: 'Attended the 2025 preview event!',
+    category: BadgeCategories.Year2025
+  },
+  {
+    emoji: '🔟',
+    description: 'Attended the 10th Roguelike Celebration in 2025!',
+    category: BadgeCategories.Year2025
   }
 ]
 

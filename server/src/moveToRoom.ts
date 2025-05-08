@@ -171,6 +171,7 @@ function awardBadges (user: User, roomId: string) {
     ['tenGold', 'turkey_leg'],
     ['buildAToy', 'goblin_barbie'],
     ['ask', 'goblin_appreciation']
+    // begin 2025
   ]
 
   const unlockedEmoji: Badge[] = []
@@ -182,7 +183,7 @@ function awardBadges (user: User, roomId: string) {
   const today = new Date()
   if (!includes(user.unlockedBadges, currentEventBadge) &&
     today.getMonth() === 9 && // getMonth is 0-indexed, not 1-indexed
-    today.getFullYear() === 2024) {
+    today.getFullYear() === 2025) {
     // We handle this differently than others because we want it to be quietly added
     // rather than popping a modal dialog
     //
