@@ -69,16 +69,16 @@ After completing ARM template deployment, there are still a few things you need 
 You need to add the proper connection string to your functions app. This should probably be in the template, but for now, follow these steps:
 
 1. Go into your WebPubSub resource in the Azure portal and get the connection string from WebPubSub service "Keys" on the left.
-2. Go to your functions app in the Azure portal and hit "Configuration" -> "New application setting".
-3. Add a new key with "WebPubSubConnectionString" with that value.
-4. Hit save.
+2. Go to your functions app in the Azure portal and hit "Settings" -> "Environment variables" -> "App settings".
+3. Add a new key with name "WebPubSubConnectionString" and the string from step 1 as its value.
+4. Hit Apply and Confirm.
 
 #### Deployment: If you're a Roguelike Celebration volunteer
 
 If you are a volunteer working on the core Roguelike Celebration space, you can use our development Firebase account. If you do not plan to deploy your frontend anywhere (i.e., you will just access it at `localhost`), you do not need to do steps beyond 2.
 
 1. In the shared password manager, find the entry for "Dev Firebase".
-2. In your GitHub repo, add Repository Secrets (Settings -> Secrets -> New Repository Secret) containing each field from the password manager entry. You should name these Secrets `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`, and `FIREBASE_SERVER_JSON`, the latter of which should contain the entire text of the attached JSON file.
+2. In your GitHub repo, add Repository Secrets (Settings -> Security -> Secrets and variables -> Actions -> New repository secret) containing each field from the password manager entry. You should name these Secrets `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`, and `FIREBASE_SERVER_JSON`, the latter of which should contain the entire text of the attached JSON file.
 3. If you'd like to test your frontend locally via `localhost`, you need to add this locally via a `.env` file. In a local copy of the repo, copy `.env.sample` to `.env` and replace the dummy values with the appropriate real data.
 4. Go to the Firebase Console (<https://console.firebase.google.com/>), logging in as the shared account.
 5. Create one more GitHub Actions repository secret, called `SERVER_HOSTNAME/`, containing the URL to your own Function App instance (the Azure URL for your backend – typically `https://your-project.azurewebsite.net`, where `your-project` is the project name you entered when deploying the Azure ARM template). Do the same thing to your local `.env` file as appropriate.
@@ -124,7 +124,7 @@ By default, when someone goes into the GitHub Actions tab of the main azure-mud 
 
 2. Go to the "Actions" tab of your repo, and click the button to enable the preexisting forked Actions in your project.
 
-3. Optionally, the GitHub Action workflow will send a webhook to the server when a new deployment has completed, which allows us to notify connected clients that a new browser app has been deployed and they should refresh the page. To enable this, create a random string to use as a token. (We recommend running `uuidgen` on a Mac or a Linux machine.) Store it as a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) under the key `DEPLOY_WEBHOOK_KEY`. Also store it as an ENV variable in the Azure Functions App (while viewing the Function App in the Portal, Configuration -> New Application Setting) under the key `DEPLOY_WEBHOOK_KEY`. Now, if you have your frontend open when you deploy via GitHub Actions, you should see a pop-up in the frontend instructing you to refresh.
+3. Optionally, the GitHub Action workflow will send a webhook to the server when a new deployment has completed, which allows us to notify connected clients that a new browser app has been deployed and they should refresh the page. To enable this, create a random string to use as a token. (We recommend running `uuidgen` on a Mac or a Linux machine.) Store it as a GitHub Repository Secret (Settings -> Secrets and variables -> Actions -> Add Repository Secret) under the key `DEPLOY_WEBHOOK_KEY`. Also store it as an ENV variable in the Azure Functions App (while viewing the Function App in the Portal, Settings -> Environment variables -> App settings > "+ Add") under the key `DEPLOY_WEBHOOK_KEY`. Now, if you have your frontend open when you deploy via GitHub Actions, you should see a pop-up in the frontend instructing you to refresh.
 
 If you select the "Production Build and Deploy" workflow in your Actions tab, you can then click "Run Workflow" and start a new deploy. If you refresh the page, you can click on the new run to see real-time progress.
 
