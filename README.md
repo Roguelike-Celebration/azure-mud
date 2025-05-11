@@ -60,7 +60,11 @@ If you don't already have an Azure account/subscription, you'll get a few hundre
 
 The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json) will allow you to deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
 
+As a prerequisite, you will need the resource provider for Application Insights registered for your Azure subscription. The ARM template does not do this part for you. To register it, in the Azure Portal, go to Subscriptions and select your subscription. Then select Settings > Resource providers, find `Microsoft.OperationalInsights` in the provider list, select it, and click the Register button at the top of the list. You may also need to do the same for `Microsoft.AlertsManagement`, or you may have deployment failures for "failure anomalies smart detector alert rule" resources.
+
 This ARM template asks you to plug in a GitHub Personal Access Token (PAT), which you can generate by going to <https://github.com/settings/tokens> while logged into GitHub. You want to create a "classic" token, with access to all "repo" and "workflow" permissions. I recommend making it short-lived (e.g., only valid for 7 days), as you will not need it after initial deployment.
+
+Note: You must use a resource group that is in a region that supports Azure Static Web Apps, and most regions don't. This ARM template deploys things to the region that your selected resource group is in, and ignores the Region field. Only a few Azure regions support ASWA. Currently, those are Central US, East Asia, East US 2,  West Europe, and West US 2. If your resource group isn't in one of those regions, you'll get a validation failure when trying to deploy from the ARM template.
 
 After completing ARM template deployment, there are still a few things you need to manually configure before the app will function.
 
