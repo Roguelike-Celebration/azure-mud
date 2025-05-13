@@ -45,9 +45,6 @@ function outputToAzure (context: Context, req: HttpRequest, result: Result) {
   context.log('outputting to azure')
   context.log('context: ', JSON.stringify(context))
   context.log('result: ', JSON.stringify(result))
-
-  context.bindings.actions = []
-  /*
   if (result.messages) {
     context.bindings.actions = result.messages.map((m) => {
       const actionJson = JSON.stringify({ type: m.target, value: m.arguments })
@@ -98,7 +95,6 @@ function outputToAzure (context: Context, req: HttpRequest, result: Result) {
   }
 
   console.log('actions', JSON.stringify(context.bindings.actions))
-  */
 
   // TimerTriggers don't have a res obj. This seems like an okay, if imperfect, guard.
   if (context.res) {

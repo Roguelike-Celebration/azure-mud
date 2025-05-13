@@ -203,6 +203,10 @@ export async function connect (
   myUserId = userId
   myDispatch = dispatch
 
+  // connectPubSub must be called before AFA connect/, because it auto-creates the PubSub
+  // user that connect/ and other azureWrap-ed functions depend on.
+  const eventMapping = generateEventMapping(userId, dispatch)
+  await connectPubSub(eventMapping)
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(result)
@@ -223,9 +227,6 @@ export async function connect (
   if (result.unlockableBadges) {
     dispatch(UpdateUnlockableBadgesAction(result.unlockableBadges))
   }
-
-  const eventMapping = generateEventMapping(userId, dispatch)
-  await connectPubSub(eventMapping)
 
   // "serverSettings" is a handled SignalR action
   // So we should just automatically send this down on `connect`
