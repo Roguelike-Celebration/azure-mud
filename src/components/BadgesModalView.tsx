@@ -274,6 +274,8 @@ export default function BadgesModalView (props: Props) {
         <section className="all">
           <h2>Default</h2>
           {defaultBadges}
+          <BadgeCategoryView title="2025 Space Badges" badgeCategory={BadgeCategories.Year2025} />
+          <BadgeCategoryView title="2025 Talk Badges" badgeCategory={BadgeCategories.Talk2025} />
           <BadgeCategoryView title="2024 Space Badges" badgeCategory={BadgeCategories.Year2024} />
           <BadgeCategoryView title="2024 Talk Badges" badgeCategory={BadgeCategories.Talk2024} />
           <BadgeCategoryView title="2023 Space Badges" badgeCategory={BadgeCategories.Year2023} />

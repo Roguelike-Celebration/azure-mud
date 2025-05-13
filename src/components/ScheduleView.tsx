@@ -17,15 +17,16 @@ export interface ScheduleEntry {
   day: number
 }
 
-const PREVIEW_END = new Date('2024-09-10T15:30:00-07:00')
-const FIRST_DAY_END = new Date('2024-10-18T21:00:00-07:00')
-const SECOND_DAY_END = new Date('2024-10-19T21:00:00-07:00')
-const THIRD_DAY_END = new Date('2024-10-20T21:00:00-07:00')
+const PREVIEW_END = new Date('2025-09-10T15:30:00-07:00')
+const FIRST_DAY_END = new Date('2025-10-24T21:00:00-07:00')
+const SECOND_DAY_END = new Date('2025-10-25T21:00:00-07:00')
+const THIRD_DAY_END = new Date('2025-10-26T21:00:00-07:00')
 
-const dayPreview = (time) => new Date(`2024-09-08T${time}:00.000-07:00`)
-const dayOneDate = (time) => new Date(`2024-10-18T${time}:00.000-07:00`)
-const dayTwoDate = (time) => new Date(`2024-10-19T${time}:00.000-07:00`)
-const dayThreeDate = (time) => new Date(`2024-10-20T${time}:00.000-07:00`)
+// Just guessing at the preview time for 2025; haven't set it yet as of 5/8/25? -apj
+const dayPreview = (time) => new Date(`2025-09-08T${time}:00.000-07:00`)
+const dayOneDate = (time) => new Date(`2025-10-24T${time}:00.000-07:00`)
+const dayTwoDate = (time) => new Date(`2025-10-25T${time}:00.000-07:00`)
+const dayThreeDate = (time) => new Date(`2025-10-26T${time}:00.000-07:00`)
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
   if (day === 0) {
@@ -49,6 +50,7 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
   }
 }
 
+// This is still last year 2024's schedule. Leaving in place as example data for now. -apj 5/8/25
 export const ScheduleEntries: ScheduleEntry[] = [
   ScheduleEntry('12:45', 0, 'Doors Open'),
   ScheduleEntry('13:00', 0, 'James Cartlidge: The Rise of the Roguelite: Inside a Gaming Phenomenon', ['theater']),
