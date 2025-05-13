@@ -75,12 +75,12 @@ interface Database {
 
   setModStatus(userId: string, isMod: boolean)
 
-  setSpeakerStatus(userId: string, isSpeaker: boolean)
+  setSpeakerStatus(userId: string, year: string, isSpeaker: boolean)
 
   banUser(user: User, isBanned: boolean)
 
   modList(): Promise<string[]>
-  speakerList(): Promise<string[]>
+  speakerListForYear(year: string): Promise<string[]>
 
   // -----------------------------------------------------------------
   // SETTINGS DATA

@@ -18,7 +18,7 @@ export interface MinimalUser {
   username: string;
   pronouns?: string;
   isMod?: boolean;
-  isSpeaker?: boolean // TODO: Currently never set
+  speakerYears?: string[]
   isBanned?: boolean;
   // From https://www.w3schools.com/colors/colors_names.asp
   nameColor?: string;
@@ -57,9 +57,14 @@ export async function isMod (userId: string) {
   return modList.includes(userId)
 }
 
-export async function isSpeaker (userId: string) {
-  const speakerList = await DB.speakerList()
+export async function isSpeakerForYear (userId: string, year: string) {
+  const speakerList = await DB.speakerListForYear(year)
   return speakerList.includes(userId)
+}
+
+export async function isSpeaker (userId: string) {
+  const thisYear: string = `${(new Date()).getFullYear()}`
+  return await isSpeakerForYear(userId, thisYear)
 }
 
 export async function updateModStatus (userId: string) {
@@ -214,7 +219,7 @@ export function minimizeUser (user: User | PublicUser): MinimalUser {
     item: user.item,
     polymorph: user.polymorph,
     isMod: user.isMod,
-    isSpeaker: user.isSpeaker,
+    speakerYears: user.speakerYears,
     fontReward: user.fontReward,
     equippedBadges: user.equippedBadges,
     pronouns: user.pronouns

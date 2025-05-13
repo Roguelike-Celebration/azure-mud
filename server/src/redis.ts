@@ -36,8 +36,8 @@ interface RedisInternal extends Database {
   addMod (userId: string)
   removeMod (userId: string)
 
-  addSpeaker (userId: string)
-  removeSpeaker (userId: string)
+  addSpeakerForYear (userId: string, year: string)
+  removeSpeakerForYear (userId: string, year: string)
 }
 
 const Redis: RedisInternal = {
@@ -213,8 +213,8 @@ const Redis: RedisInternal = {
     return await getSet(modListKey) || []
   },
 
-  async speakerList (): Promise<string[]> {
-    return await getSet(speakerListKey) || []
+  async speakerListForYear (year: string): Promise<string[]> {
+    return await getSet(speakerListKey(year)) || []
   },
 
   async setModStatus (userId: string, isMod: boolean) {
@@ -236,24 +236,30 @@ const Redis: RedisInternal = {
     await removeFromSet(modListKey, userId)
   },
 
-  async setSpeakerStatus (userId: string, isSpeaker: boolean) {
-    if (isSpeaker) {
-      await Redis.addSpeaker(userId)
-    } else {
-      await Redis.removeSpeaker(userId)
-    }
+  async setSpeakerStatus (userId: string, year: string, isSpeaker: boolean) {
     const profile = await Redis.getUser(userId)
-    profile.isSpeaker = isSpeaker
+    if (!profile.speakerYears) profile.speakerYears = []
+
+    if (isSpeaker) {
+      await Redis.addSpeakerForYear(userId, year)
+      if (!profile.speakerYears.includes(year)) {
+        profile.speakerYears.push(year)
+      }
+    } else {
+      await Redis.removeSpeakerForYear(userId, year)
+      profile.speakerYears = profile.speakerYears.filter(y => y !== year)
+    }
+
     await Redis.setUserProfile(userId, profile)
     return profile
   },
 
-  async addSpeaker (userId: string) {
-    await addToSet(speakerListKey, userId)
+  async addSpeakerForYear (userId: string, year: string) {
+    await addToSet(speakerListKey(year), userId)
   },
 
-  async removeSpeaker (userId: string) {
-    await removeFromSet(speakerListKey, userId)
+  async removeSpeakerForYear (userId: string, year: string) {
+    await removeFromSet(speakerListKey(year), userId)
   },
 
   // Server settings
@@ -403,13 +409,16 @@ const Redis: RedisInternal = {
 const activeUsersKey = 'activeUsersList'
 
 const modListKey = 'mods'
-const speakerListKey = 'speakers'
 
 const serverSettingsKey = 'serverSettings'
 
 const allUserIdsKey = 'allUserIds'
 
 const roomIdsKey = 'roomIds'
+
+function speakerListKey (year: string): string {
+  return `speakers_${year}`
+}
 
 function roomDataKey (roomId: string): string {
   return `room_${roomId}`

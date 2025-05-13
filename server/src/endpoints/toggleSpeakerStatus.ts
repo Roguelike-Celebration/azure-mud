@@ -1,11 +1,13 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { awardUserBadge, isSpeaker, minimizeUser, User } from '../user'
+import { awardUserBadge, isSpeaker, isSpeakerForYear, minimizeUser, User } from '../user'
 import { DB } from '../database'
 import { UnlockableBadgeMap } from '../badges'
 
 const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const userIdToToggle: string = inputs.userId
-  const isForPastYear = inputs.year !== '2024'
+  const year: string = inputs.year
+  const thisYear: string = `${(new Date()).getFullYear()}`
+  const isForPastYear = year !== thisYear
 
   if (!userIdToToggle) {
     return {
@@ -18,27 +20,26 @@ const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, in
 
   let toggledUser: User
 
-  /* toggle past speaker */
-  if (isForPastYear) {
-    const pastSpeakerBadge = UnlockableBadgeMap['🎙️']
-
-    const profile = await DB.getUser(userIdToToggle)
-
-    if (profile.unlockedBadges.includes(pastSpeakerBadge)) {
-      const remainingUnlockedBadges = profile.unlockedBadges.filter(badge => badge !== pastSpeakerBadge)
-      toggledUser = await DB.setPartialUserProfile(userIdToToggle, { unlockedBadges: remainingUnlockedBadges })
-    } else {
-      toggledUser = await awardUserBadge(userIdToToggle, pastSpeakerBadge)
-    }
-  /* toggle current speaker */
+  // Set their database status (which will give them the special badge if current year)
+  if (await isSpeakerForYear(userIdToToggle, year)) {
+    log(`[MOD] Setting user ${userIdToToggle} to speaker=false for ${year}`)
+    toggledUser = await DB.setSpeakerStatus(userIdToToggle, year, false)
   } else {
-    if (await isSpeaker(userIdToToggle)) {
-      log(`[MOD] Setting user ${userIdToToggle} to speaker=false`)
-      toggledUser = await DB.setSpeakerStatus(userIdToToggle, false)
-    } else {
-      log(`[MOD] Setting user ${userIdToToggle} to speaker=true`)
-      toggledUser = await DB.setSpeakerStatus(userIdToToggle, true)
-    }
+    log(`[MOD] Setting user ${userIdToToggle} to speaker=true for ${year}`)
+    toggledUser = await DB.setSpeakerStatus(userIdToToggle, year, true)
+  }
+
+  // Assign them the 'past speaker' badge
+  // (We don't currently have per-year speakers, that would be a reasonable improvement)
+  const pastSpeakerBadge = UnlockableBadgeMap['🎙️']
+
+  const profile = await DB.getUser(userIdToToggle)
+
+  if (profile.unlockedBadges.includes(pastSpeakerBadge)) {
+    const remainingUnlockedBadges = profile.unlockedBadges.filter(badge => badge !== pastSpeakerBadge)
+    toggledUser = await DB.setPartialUserProfile(userIdToToggle, { unlockedBadges: remainingUnlockedBadges })
+  } else {
+    toggledUser = await awardUserBadge(userIdToToggle, pastSpeakerBadge)
   }
 
   return {
