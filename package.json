@@ -2,7 +2,7 @@
   "name": "azure-mud",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://lazerwalker.com/azure-mud",
+  "homepage": "https://github.com/Roguelike-Celebration/azure-mud",
   "scripts": {
     "dev": "parcel *.html",
     "build": "parcel build *.html --public-url ./ --dist-dir ./dist; cp CNAME dist; rsync -r images dist",
@@ -35,7 +35,7 @@
     "node-emoji": "^1.10.0",
     "react": "^17",
     "react-ace": "^10.1.0",
-    "react-contextmenu": "git://github.com/roguelike-celebration/react-contextmenu#master",
+    "react-contextmenu": "git://github.com/Roguelike-Celebration/react-contextmenu#master",
     "react-dom": "^17",
     "react-firebaseui": "^5.0.2",
     "react-icons": "^3.10.0",

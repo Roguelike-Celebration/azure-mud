@@ -1,6 +1,6 @@
 # Yet Another Browser Mud
 
-![Linting and Validation Checks](https://github.com/lazerwalker/azure-mud/workflows/Linting%20and%20Validation%20Checks/badge.svg) [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com?WT.mc_id=spatial-8206-emwalker/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
+![Linting and Validation Checks](https://github.com/Roguelike-Celebration/azure-mud/workflows/Linting%20and%20Validation%20Checks/badge.svg) [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com?WT.mc_id=spatial-8206-emwalker/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
 
 This is a playful text-based online social chat space. You can think of it as a hybrid between communication apps like Slack and Discord and traditional text-based online game spaces such as MUDs and MOOs.
 
@@ -56,9 +56,9 @@ If you don't already have an Azure account/subscription, you'll get a few hundre
 
 ### Deploying via ARM Template
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/?WT.mc_id=spatial-8206-emwalker#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/?WT.mc_id=spatial-8206-emwalker#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
 
-The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](https://portal.azure.com/?WT.mc_id=spatial-8206-emwalker#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flazerwalker%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json) will allow you to deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
+The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](https://portal.azure.com/?WT.mc_id=spatial-8206-emwalker#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json) will allow you to deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
 
 This ARM template asks you to plug in a GitHub Personal Access Token (PAT), which you can generate by going to <https://github.com/settings/tokens> while logged into GitHub. You want to create a "classic" token, with access to all "repo" and "workflow" permissions. I recommend making it short-lived (e.g., only valid for 7 days), as you will not need it after initial deployment.
 
