@@ -6,7 +6,6 @@ import {
 } from '../networking'
 import { DispatchContext } from '../App'
 import {
-  StopVideoChatAction,
   ShowModalAction
 } from '../Actions'
 import { FaChevronDown, FaChevronUp, FaCog } from 'react-icons/fa'
@@ -19,30 +18,17 @@ import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
 import { linkActions } from '../linkActions'
 import { useState } from 'react'
-import { useMediaChatContext } from '../videochat/mediaChatContext'
-import PresenceView from './PresenceView'
-
-const VIDEO_CHAT_MAX_SIZE = 8
 
 interface Props {
   room: Room;
   userId: string;
   roomData: { [roomId: string]: Room };
   presenceData: { [roomId: string]: number };
-  inMediaChat: boolean;
-  keepCameraWhenMoving: boolean;
-  textOnlyMode: boolean;
-  mediaChatView?: React.ReactElement
   hasDismissedAModal: boolean
 }
 
 export default function RoomView (props: Props) {
   const dispatch = React.useContext(DispatchContext)
-  const {
-    prepareForMediaChat,
-    joinCall,
-    unpublishMedia
-  } = useMediaChatContext()
   const { room } = props
 
   const [fullDescriptionVisible, setFullDescriptionVisible] =
@@ -80,24 +66,6 @@ export default function RoomView (props: Props) {
 
   const toggleRoomDescriptionClick = (e) => {
     setFullDescriptionVisible(!fullDescriptionVisible)
-  }
-
-  React.useEffect(() => {
-    if (room && room.mediaChat && !props.textOnlyMode && props.hasDismissedAModal) {
-      // HACK ALERT: This call is necessary to properly set the state variables related to leaving video chat, since
-      // our Twilio state isn't quite synchronized with our react state. We never publish if we don't want to (due to
-      // passing keepCameraWhenMoving into joinCall) so we aren't publishing and unpublishing. We still need to sync.
-      if (!props.keepCameraWhenMoving) {
-        leaveVideoChat()
-      }
-      prepareForMediaChat()
-      joinCall(props.room.id, props.keepCameraWhenMoving)
-    }
-  }, [props.room.id, props.hasDismissedAModal])
-
-  const leaveVideoChat = () => {
-    dispatch(StopVideoChatAction())
-    unpublishMedia()
   }
 
   const showNoteWall = () => {
@@ -204,16 +172,6 @@ export default function RoomView (props: Props) {
         )}
         {noteWallView}
       </div>
-      {room ? (
-        <PresenceView
-          users={room.users}
-          userId={props.userId}
-          roomId={room.id}
-        />
-      ) : (
-        ''
-      )}
-      {props.mediaChatView || ''}
     </div>
   )
 }
