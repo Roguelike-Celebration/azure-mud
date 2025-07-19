@@ -35,12 +35,13 @@ const RoomListItem = (props: { room: Room }) => {
     moveToRoom(room.id)
   }
   const userCount = room.users ? `(${room.users.length})` : ''
-  const videoIcon = room.videoUsers && room.videoUsers.length > 0 ? <FaVideo /> : ''
+  // Leaving this in in case we eventually get Zoom support
+  // const videoIcon = room.videoUsers && room.videoUsers.length > 0 ? <FaVideo /> : ''
 
   return (
     <li style={{ listStyle: 'none' }}>
       <button onClick={onClick} className="link-styled-button">
-        <strong>{room.hidden ? '(hidden) ' : ''}{room.displayName}</strong> {userCount} {videoIcon}
+        <strong>{room.hidden ? '(hidden) ' : ''}{room.displayName}</strong> {userCount} {/* videoIcon */}
       </button>
     </li>
   )
