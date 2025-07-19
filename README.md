@@ -1,6 +1,6 @@
 # Yet Another Browser Mud
 
-![Linting and Validation Checks](https://github.com/Roguelike-Celebration/azure-mud/workflows/Linting%20and%20Validation%20Checks/badge.svg) [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com?WT.mc_id=spatial-8206-emwalker/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
+![Linting and Validation Checks](https://github.com/Roguelike-Celebration/azure-mud/workflows/Linting%20and%20Validation%20Checks/badge.svg) [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
 
 This is a playful text-based online social chat space. You can think of it as a hybrid between communication apps like Slack and Discord and traditional text-based online game spaces such as MUDs and MOOs.
 
@@ -48,7 +48,7 @@ However, you cannot actually run the backend locally. You'll need to deploy your
 
 ## Deploying This Project
 
-Currently, this project only runs on Azure. This requires your own [Azure subscription](https://azure.com/free/?WT.mc_id=spatial-8206-emwalker).
+Currently, this project only runs on Azure. This requires your own [Azure subscription](https://azure.com/free).
 
 If you don't already have an Azure account/subscription, you'll get a few hundred bucks of credits to use your first month, but if that's not the case you will want to keep an eye on the fact that **running this backend will cost you actual money**.
 
@@ -56,9 +56,9 @@ If you don't already have an Azure account/subscription, you'll get a few hundre
 
 ### Deploying via ARM Template
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/?WT.mc_id=spatial-8206-emwalker#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json)
 
-The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](https://portal.azure.com/?WT.mc_id=spatial-8206-emwalker#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json) will allow you to deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
+The easiest way to deploy a backend is to use the template we have prepared. Going to [this link](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FRoguelike-Celebration%2Fazure-mud%2Fmain%2Fserver%2Ftemplate.json) will allow you to deploy a server backend to an Azure resource group you specify that will have everything configured, but won't actually contain code yet.
 
 This ARM template asks you to plug in a GitHub Personal Access Token (PAT), which you can generate by going to <https://github.com/settings/tokens> while logged into GitHub. You want to create a "classic" token, with access to all "repo" and "workflow" permissions. I recommend making it short-lived (e.g., only valid for 7 days), as you will not need it after initial deployment.
 
@@ -120,7 +120,7 @@ From here, you will still need to deploy your backend server code, and likely de
 
 By default, when someone goes into the GitHub Actions tab of the main azure-mud repo and runs the "Production build and deploy" action, it builds and deploys the frontend and backend. It's very little work to configure this same behavior to make your GitHub fork deploy to your dev instance (and you should do this if you're a Roguelike volunteer).
 
-1. Add a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?WT.mc_id=spatial-8206-emwalker) to generate a publish profile and add that as a GH Secret titled `AZURE_FUNCTIONAPP_PUBLISH_PROFILE`.
+1. Add a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions) to generate a publish profile and add that as a GH Secret titled `AZURE_FUNCTIONAPP_PUBLISH_PROFILE`.
 
 2. Go to the "Actions" tab of your repo, and click the button to enable the preexisting forked Actions in your project.
 
@@ -174,11 +174,11 @@ If you would prefer to not use the ARM template above, here is how you can manua
 
 1. Deploy the project to a new Azure Function App instance you control. I recommend using VS Code and the VS Code Azure Functions extension. See the "Publish the project to Azure" section of [this tutorial](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-typescript?pivots=nodejs-model-v4) for details. You can also use the Azure CLI or any other method.
 
-2) In the Azure Portal, sign up for a new [Azure SignalR Service](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview?WT.mc_id=spatial-8206-emwalker) instance. For development purposes, you can probably start with the free tier.
+2) In the Azure Portal, sign up for a new [Azure SignalR Service](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview) instance. For development purposes, you can probably start with the free tier.
 
 3) Grab the connection string from your Azure SignalR Service instance. Back in the settings for your Function App, go to the Configuration tab and add an Application Setting with the key `AzureSignalRConnectionString`.
 
-4) Set up an [Azure Cache for Redis](https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview?WT.mc_id=spatial-8206-emwalker) instance. Again, the cheapest tier is likely acceptable for testing purposes. You could theoretically use an alternative Redis provider, as nothing about our use is Azure-specific, but I have not tried this.
+4) Set up an [Azure Cache for Redis](https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview) instance. Again, the cheapest tier is likely acceptable for testing purposes. You could theoretically use an alternative Redis provider, as nothing about our use is Azure-specific, but I have not tried this.
 
 5) As above, you want to take your Redis access key, the hostname, and the port, and add them as Application settings to the Function App with the keys `RedisKey`, `RedisHostname`, and `RedisPort`.
 
