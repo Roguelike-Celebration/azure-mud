@@ -42,7 +42,7 @@ import {
   updateProfileColor
 } from './networking'
 import { Room } from './room'
-import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
+import { matchingSlashCommand, SlashCommand, SlashCommandType } from './SlashCommands'
 import * as Storage from './storage'
 import { EntityState } from './types'
 import { NoteWallData } from '../server/src/rooms'
@@ -175,9 +175,9 @@ export default produce((draft: State, action: Action) => {
 
     if (
       original(draft).serverSettings.movementMessagesHideRoomIds !==
-        current(draft).serverSettings.movementMessagesHideRoomIds ||
+      current(draft).serverSettings.movementMessagesHideRoomIds ||
       original(draft).serverSettings.movementMessagesHideThreshold !==
-        current(draft).serverSettings.movementMessagesHideThreshold
+      current(draft).serverSettings.movementMessagesHideThreshold
     ) {
       draft.messages.ids = filteredMessageIds(draft)
     }
@@ -501,10 +501,7 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.SendMessage) {
     const messageId: string = uuidv4()
     const trimmedMessage = action.value.trim()
-    const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
-    const matching = beginsWithSlash
-      ? matchingSlashCommand(trimmedMessage)
-      : undefined
+    const slashCommandTokens = /^(\/\w+)(?:\s+(.+))?/.exec(trimmedMessage)
 
     if (trimmedMessage.length > MESSAGE_MAX_LENGTH) {
       addMessage(
@@ -513,59 +510,68 @@ export default produce((draft: State, action: Action) => {
           'Your message is too long! Please try to keep it under ~600 characters!'
         )
       )
-    } else if (beginsWithSlash && matching === undefined) {
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
-      addMessage(
-        draft,
-        createErrorMessage(
-          `Your command ${
-            commandStr ? commandStr[1] : action.value
-          } is not a registered slash command!`
-        )
-      )
-    } else if (beginsWithSlash && matching.type === SlashCommandType.Whisper) {
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
-      const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
+    } else if (slashCommandTokens !== null) {
+      // Handle server commands
+      const cmdToken = slashCommandTokens[1]
+      const cmdArg = slashCommandTokens.length > 1 ? slashCommandTokens[2] : undefined
+      const cmd = matchingSlashCommand(cmdToken, cmdArg)
 
-      if (!parsedUsernameMessage) {
+      if (cmd === 'UnregisteredSlashCommand') {
         addMessage(
           draft,
-          createErrorMessage(`Your whisper to ${commandStr[2]} had no message!`)
+          createErrorMessage(`Your command ${cmdToken} is not a registered slash command!`)
+        )
+      } else if (cmd === 'SlashCommandArgumentExpected') {
+        addMessage(
+          draft,
+          createErrorMessage(`Your command ${cmdToken} expected an argument!`)
         )
       } else {
-        sendChatMessage(messageId, trimmedMessage)
+        const sc = cmd as SlashCommand
 
-        const [_, username, message] = parsedUsernameMessage
-        const user = Object.values(draft.userMap).find(
-          (u) => u.username === username
-        )
-        const userId = user && user.id
-        if (userId) {
-          const whisperMessage = createWhisperMessage(userId, message, true)
-          addMessage(draft, whisperMessage)
-          saveWhisper(draft, whisperMessage)
+        if (sc.type === SlashCommandType.Whisper) {
+          const parsedUsernameMessage = /^(\w+)\s+(.+)/.exec(cmdArg)
+          if (!parsedUsernameMessage) {
+            addMessage(
+              draft,
+              createErrorMessage(`Your whisper to ${cmdArg} had no message!`)
+            )
+          } else {
+            sendChatMessage(messageId, trimmedMessage)
+
+            const [_, username, message] = parsedUsernameMessage
+            const user = Object.values(draft.userMap).find(
+              (u) => u.username === username
+            )
+            const userId = user && user.id
+            if (userId) {
+              const whisperMessage = createWhisperMessage(userId, message, true)
+              addMessage(draft, whisperMessage)
+              saveWhisper(draft, whisperMessage)
+            }
+          }
+        } else if (sc.type === SlashCommandType.Help) {
+          draft.activeModal = Modal.Help
+          addMessage(
+            draft,
+            createCommandMessage(
+              'You consult the help docs. (You can also find them in sidebar!)'
+            )
+          )
+        } else if (sc.type === SlashCommandType.Look) {
+          addMessage(
+            draft,
+            createCommandMessage(
+              `You attempt to examine ${cmdArg}. (You can also click on their username and select Profile!)`
+            )
+          )
+          sendChatMessage(messageId, trimmedMessage)
+        } else {
+          sendChatMessage(messageId, trimmedMessage)
         }
       }
-    } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
-      draft.activeModal = Modal.Help
-      addMessage(
-        draft,
-        createCommandMessage(
-          'You consult the help docs. (You can also find them in sidebar!)'
-        )
-      )
-    } else if (beginsWithSlash && matching.type === SlashCommandType.Look) {
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
-      addMessage(
-        draft,
-        createCommandMessage(
-          `You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`
-        )
-      )
-      sendChatMessage(messageId, trimmedMessage)
-    } else if (beginsWithSlash) {
-      sendChatMessage(messageId, trimmedMessage)
     } else {
+      // Handle an ordinary chat message
       sendChatMessage(messageId, action.value)
       addMessage(
         draft,
