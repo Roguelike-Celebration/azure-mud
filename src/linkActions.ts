@@ -91,6 +91,18 @@ export const linkActions = {
   },
   tossARock: () => {
     displayMessageFromList('tossARock')
+  },
+  boba: () => {
+    pickUpRandomItemFromList('boba')
+  },
+  veganFood: () => {
+    pickUpRandomItemFromList('veganFood')
+  },
+  tacos: () => {
+    pickUpRandomItemFromList('tacos')
+  },
+  kebabs: () => {
+    pickUpRandomItemFromList('kebabs')
   }
 }
 

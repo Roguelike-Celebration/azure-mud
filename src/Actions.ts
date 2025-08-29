@@ -57,6 +57,10 @@ export type Action =
   | NoteRemoveAction
   | NoteUpdateLikesAction
   | NoteUpdateRoomAction
+  | ObeliskNoteAddAction
+  | ObeliskNoteRemoveAction
+  | ObeliskNoteUpdateLikesAction
+  | ObeliskNoteUpdateAction
   | HideModalAction
   | HideProfileAction
   | ShowSideMenuAction
@@ -142,6 +146,13 @@ export enum ActionType {
   NoteRemove = 'NOTE_REMOVE',
   NoteUpdateLikes = 'NOTE_UPDATE_LIKES',
   NoteUpdateRoom = 'NOTE_UPDATE_ROOM',
+
+  // Sidebar obelisk
+  ObeliskNoteAdd = 'OBELISK_NOTE_ADD', // Add a single note
+  ObeliskNoteUpdate = 'OBELISK_NOTE_UPDATE', // Bulk update notes
+  ObeliskNoteRemove = 'OBELISK_NOTE_REMOVE',
+  ObeliskNoteUpdateLikes = 'OBELISK_NOTE_UPDATE_LIKES',
+
   HideModalAction = 'HIDE_MODAL',
 
   SpaceIsClosed = 'SPACE_IS_CLOSED',
@@ -988,6 +999,54 @@ export const NoteUpdateRoomAction = (
 ): NoteUpdateRoomAction => {
   return { type: ActionType.NoteUpdateRoom, value: { roomId, notes } }
 }
+
+//
+
+interface ObeliskNoteUpdateAction {
+  type: ActionType.ObeliskNoteUpdate;
+  value: RoomNote[];
+}
+
+export const ObeliskNoteUpdateAction = (
+  notes: RoomNote[]
+): ObeliskNoteUpdateAction => {
+  return { type: ActionType.ObeliskNoteUpdate, value: notes }
+}
+interface ObeliskNoteAddAction {
+  type: ActionType.ObeliskNoteAdd;
+  value: RoomNote;
+}
+
+export const ObeliskNoteAddAction = (
+  note: RoomNote
+): ObeliskNoteAddAction => {
+  return { type: ActionType.ObeliskNoteAdd, value: note }
+}
+
+interface ObeliskNoteRemoveAction {
+  type: ActionType.ObeliskNoteRemove;
+  value: string; // noteId
+}
+
+export const ObeliskNoteRemoveAction = (
+  noteId: string
+): ObeliskNoteRemoveAction => {
+  return { type: ActionType.ObeliskNoteRemove, value: noteId }
+}
+
+interface ObeliskNoteUpdateLikesAction {
+  type: ActionType.ObeliskNoteUpdateLikes;
+  value: { noteId: string; likes: string[] };
+}
+
+export const ObeliskNoteUpdateLikesAction = (
+  noteId: string,
+  likes: string[]
+): ObeliskNoteUpdateLikesAction => {
+  return { type: ActionType.ObeliskNoteUpdateLikes, value: { noteId, likes } }
+}
+
+//
 
 interface SpaceIsClosedAction {
   type: ActionType.SpaceIsClosed;
