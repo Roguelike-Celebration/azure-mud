@@ -73,6 +73,8 @@ function outputToAzure (context: Context, req: HttpRequest, result: Result) {
   }
 
   if (result.groupManagementTasks) {
+    if (!context.bindings.actions) { context.bindings.actions = [] }
+
     context.bindings.actions.push(
       ...result.groupManagementTasks.map((t) => {
         // PubSub has a 'RemoveUserFromAllGroups' action we can eventually use here

@@ -59,6 +59,7 @@ import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
 import SpecialTextModalView from './components/SpecialTextModalView'
 import ReactTooltip from 'react-tooltip'
+import { ObeliskView } from './components/ObeliskView'
 
 export const DispatchContext =
   createContext<ThunkDispatch<Action, State>>(null)
@@ -413,15 +414,7 @@ const App = () => {
       break
     }
     case Modal.Obelisk: {
-      const room = state.roomData.obelisk
-      innerModalView = <NoteWallView
-        roomDisplayName="obelisk"
-        notes={room.notes}
-        noteWallData={room.noteWallData}
-        roomData={state.roomData}
-        user={state.profileData}
-        serverSettings={state.serverSettings}
-      />
+      innerModalView = <ObeliskView notes={state.obeliskNotes} user={state.profileData} />
     }
   }
 

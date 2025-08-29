@@ -29,6 +29,10 @@ import {
   NoteRemoveAction,
   NoteUpdateLikesAction,
   NoteUpdateRoomAction,
+  ObeliskNoteAddAction,
+  ObeliskNoteRemoveAction,
+  ObeliskNoteUpdateAction,
+  ObeliskNoteUpdateLikesAction,
   PlayerBannedAction,
   PlayerConnectedAction,
   PlayerDisconnectedAction,
@@ -111,6 +115,10 @@ export async function deleteRoomNote (noteId: string) {
   await callAzureFunction('deleteRoomNote', { noteId })
 }
 
+export async function deleteObeliskNote (noteId: string) {
+  await callAzureFunction('deleteObeliskNote', { noteId })
+}
+
 export async function likeRoomNote (noteId: string) {
   await callAzureFunction('likeRoomNote', { noteId, like: true })
 }
@@ -119,10 +127,25 @@ export async function unlikeRoomNote (noteId: string) {
   await callAzureFunction('likeRoomNote', { noteId, like: false })
 }
 
+export async function likeObeliskNote (noteId: string) {
+  await callAzureFunction('likeObeliskNote', { noteId, like: true })
+}
+
+export async function unlikeObeliskNote (noteId: string) {
+  await callAzureFunction('likeObeliskNote', { noteId, like: false })
+}
+
 export async function addNoteToWall (message: string) {
   if (message !== null && message.length > 0) {
     const id = uuid()
     await callAzureFunction('addRoomNote', { id, message })
+  }
+}
+
+export async function addNoteToObelisk (message: string) {
+  if (message !== null && message.length > 0) {
+    const id = uuid()
+    await callAzureFunction('addObeliskNote', { id, message })
   }
 }
 
@@ -180,6 +203,10 @@ export async function connect (
   myUserId = userId
   myDispatch = dispatch
 
+  // connectPubSub must be called before AFA connect/, because it auto-creates the PubSub
+  // user that connect/ and other azureWrap-ed functions depend on.
+  const eventMapping = generateEventMapping(userId, dispatch)
+  await connectPubSub(eventMapping)
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(result)
@@ -201,9 +228,6 @@ export async function connect (
     dispatch(UpdateUnlockableBadgesAction(result.unlockableBadges))
   }
 
-  const eventMapping = generateEventMapping(userId, dispatch)
-  await connectPubSub(eventMapping)
-
   // "serverSettings" is a handled SignalR action
   // So we should just automatically send this down on `connect`
   // (This used to be a separate call, but it's only made right after `connect`)
@@ -220,6 +244,7 @@ export async function moveToRoom (roomId: string) {
       to: roomId
     }
   )
+  window.location.reload()
 }
 
 export async function sendChatMessage (id: string, text: string) {
@@ -301,6 +326,16 @@ export async function resetRoomData (isFromAdminPanel: boolean) {
   }
 }
 
+export async function moveAllUsersToEntryway () {
+  const result = await callAzureFunction('moveAllUsersToEntryway')
+
+  if (result && result.error) {
+    console.error('Error trying to move uers to entryway', result.erroc)
+  } else if (result) {
+    console.log(`Moved users to the entryway: numUsers=${result.numUsers}, numMoved=${result.numMoved}, : seconds=${result.seconds}.`)
+  }
+}
+
 export async function resetBadgeData () {
   const response = await callAzureFunction('resetBadgeData')
 
@@ -324,6 +359,26 @@ export async function equipBadge (badge: Badge, index: number) {
   console.log(result.badges)
   for (let i = 0; i < result.badges.length; i++) {
     myDispatch(EquipBadgeAction(result.badges[i], i))
+  }
+}
+
+// Fetch current obelisk notes, and subscribe to new ones for the sidebar
+export async function startObservingObelisk () {
+  const result = await callAzureFunction('startObservingObelisk')
+  if (!result || !result.notes) {
+    console.log('ERROR: Failed to fetch sidebar obelisk notes')
+    return
+  }
+
+  console.log(result.notes)
+  myDispatch(ObeliskNoteUpdateAction(result.notes))
+}
+
+// Stop subscribing to sidebar obelisk note updates
+export async function stopObservingObelisk () {
+  const result = await callAzureFunction('stopObservingObelisk')
+  if (!result) {
+    console.log('ERROR: Failed to stop observing obelisk notes')
   }
 }
 
@@ -502,6 +557,15 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
     },
     noteLikesUpdated: (roomId, noteId, likes) => {
       dispatch(NoteUpdateLikesAction(roomId, noteId, likes))
+    },
+    obeliskNoteAdded: (noteId, message, authorId) => {
+      dispatch(ObeliskNoteAddAction({ id: noteId, message, authorId }))
+    },
+    obeliskNoteRemoved: (noteId) => {
+      dispatch(ObeliskNoteRemoveAction(noteId))
+    },
+    obeliskNoteLikesUpdated: (noteId, likes) => {
+      dispatch(ObeliskNoteUpdateLikesAction(noteId, likes))
     },
     spaceOpenedOrClosed: (status) => {
       dispatch(SpaceOpenedOrClosedAction(status))
