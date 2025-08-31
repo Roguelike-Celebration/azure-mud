@@ -269,9 +269,14 @@ export async function sendChatMessage (id: string, text: string, currentRoomId: 
   // and the server thinks you're in a different room than you are. This may be one of the reasons there are issues
   // with users being unable to hear messages while still being able to send messages. We force a move in those
   // situations, forcing the server to shift to this room.
+  //
+  // You can reproduce by having one user account logged in on two computers, adding a delay into the server, then
+  // having it switch rooms & cutting the internet on one, so that only one gets the websockets move. After you go back
+  // online type something. Until you do that, it won't be able to see any messages.
   if (result && result.roomId && !result.moved && result.roomId !== currentRoomId) {
     console.error(`Client/server room desync! Client roomId: ${currentRoomId} - Server roomId: ${result.roomId}.`)
-    await moveToRoom(currentRoomId)
+    await moveToRoom(currentRoomId) // Sync the server
+    window.location.reload() // Unless you do this, the client can't see chat - I'm not sure on the exact reason.
   }
 
   // Other non-message actions
