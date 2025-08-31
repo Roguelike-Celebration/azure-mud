@@ -55,10 +55,10 @@ export default function MapView (props: Props) {
     w = 8
     h = 13
   } else if (preWidth !== 0 && preHeight !== 0) {
-    // These must be set to match the size of the map from mapText below. If the map size changes,
-    // these must be updated to match. The width value is the length of the longest line in mapText.
-    w = preWidth / 114
-    h = preHeight / 35
+    const mapLines = mapText.split('\n')
+    const maxLineLen = Math.max(...(mapLines.map(el => el.length)))
+    w = preWidth / maxLineLen
+    h = preHeight / mapLines.length
   }
 
   // Scroll to make sure that the user's location is visible
