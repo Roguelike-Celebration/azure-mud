@@ -29,11 +29,11 @@ import _, { head, isUndefined } from 'lodash'
  * The ASCII map is 0-indexed.
  */
 
- interface Props {
+interface Props {
   presenceData: { [roomId: string]: number };
   currentRoomId: string
   isMiniMap?: boolean
- }
+}
 
   interface ClickableArea {
     x: number,
@@ -49,14 +49,16 @@ export default function MapView (props: Props) {
   const [preHeight, setPreHeight] = useState(0)
   const { presenceData, currentRoomId } = props
 
-  // Pixel size of one ASCII character
+  // Pixel size of one ASCII character in the rendered map
   let w; let h = 0
   if (props.isMiniMap) {
     w = 8
     h = 13
   } else if (preWidth !== 0 && preHeight !== 0) {
-    w = preWidth / 121
-    h = preHeight / 37
+    // These must be set to match the size of the map from mapText below. If the map size changes,
+    // these must be updated to match. The width value is the length of the longest line in mapText.
+    w = preWidth / 114
+    h = preHeight / 35
   }
 
   // Scroll to make sure that the user's location is visible
@@ -196,11 +198,9 @@ const presenceMapping = [
   'propsCloset',
   'breakRoom',
   'underTheStage'
-
 ]
 
 const clickableAreas: ClickableArea[] = [
-
   {
     roomId: 'pavilion',
     x: 47,
