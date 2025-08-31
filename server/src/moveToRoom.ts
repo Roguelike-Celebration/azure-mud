@@ -86,11 +86,10 @@ export async function moveToRoom (
   const result: Result = {
     httpResponse: {
       status: 200,
-      // Instead of returning relevant data in the HTTP response, we use websockets.
-      // This helps dealing with desyncs.
-      // Unfortunately things like outgoing whispers/messages still encounter desyncs.
-      // 'least it's obvious!
-      body: undefined
+      // We want to use the HTTP return as little as possible, and use websockets more - this helps dealing with
+      // desyncs. However, we want to return the roomId to allow for integrity checking on the client side.
+      // Unfortunately things like outgoing whispers/messages still encounter desyncs. That's on the to-do list.
+      body: { roomId: to.id, moved: true }
     }
   }
 

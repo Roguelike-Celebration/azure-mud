@@ -246,7 +246,7 @@ export async function moveToRoom (roomId: string) {
   )
 }
 
-export async function sendChatMessage (id: string, text: string) {
+export async function sendChatMessage (id: string, text: string, currentRoomId: string) {
   // If it's over the character limit
   if (text.length > MESSAGE_MAX_LENGTH) {
     console.log(
@@ -265,15 +265,17 @@ export async function sendChatMessage (id: string, text: string) {
 
   console.log(result)
 
-  // If it's a /move command
-  if (result && result.roomId) {
-    myDispatch(
-      UpdatedCurrentRoomAction(
-        result.roomId,
-        convertServerRoomData(result.roomData)
-      )
-    )
-  } else if (result && result.user) {
+  // If the user's expected roomId is not the roomId we get back from the server, that means the client is out of sync
+  // and the server thinks you're in a different room than you are. This may be one of the reasons there are issues
+  // with users being unable to hear messages while still being able to send messages. We force a move in those
+  // situations, forcing the server to shift to this room.
+  if (result && result.roomId && !result.moved && result.roomId !== currentRoomId) {
+    console.error(`Client/server room desync! Client roomId: ${currentRoomId} - Server roomId: ${result.roomId}.`)
+    await moveToRoom(currentRoomId)
+  }
+
+  // Other non-message actions
+  if (result && result.user) {
     myDispatch(ShowProfileAction(result.user))
   } else if (result && result.error) {
     myDispatch(ErrorAction(result.error))

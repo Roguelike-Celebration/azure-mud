@@ -533,7 +533,7 @@ export default produce((draft: State, action: Action) => {
           createErrorMessage(`Your whisper to ${commandStr[2]} had no message!`)
         )
       } else {
-        sendChatMessage(messageId, trimmedMessage)
+        sendChatMessage(messageId, trimmedMessage, draft.roomId)
 
         const [_, username, message] = parsedUsernameMessage
         const user = Object.values(draft.userMap).find(
@@ -562,11 +562,11 @@ export default produce((draft: State, action: Action) => {
           `You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`
         )
       )
-      sendChatMessage(messageId, trimmedMessage)
+      sendChatMessage(messageId, trimmedMessage, draft.roomId)
     } else if (beginsWithSlash) {
-      sendChatMessage(messageId, trimmedMessage)
+      sendChatMessage(messageId, trimmedMessage, draft.roomId)
     } else {
-      sendChatMessage(messageId, action.value)
+      sendChatMessage(messageId, action.value, draft.roomId)
       addMessage(
         draft,
         createChatMessage(messageId, draft.userId, action.value)
