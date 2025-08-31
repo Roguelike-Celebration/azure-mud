@@ -244,7 +244,6 @@ export async function moveToRoom (roomId: string) {
       to: roomId
     }
   )
-  window.location.reload()
 }
 
 export async function sendChatMessage (id: string, text: string) {
