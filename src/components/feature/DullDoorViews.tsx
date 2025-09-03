@@ -18,7 +18,7 @@ export const DullDoorRoomView = () => {
   }
 
   return <div id="dull-door-div" className="feature-room-view">
-    <p><button id="dull-door-button" className='link-styled-button' onClick={pullTheCleanRope}>Remove your regrets</button></p>
+    <p><button id="dull-door-button" className='link-styled-button' onClick={pullTheCleanRope}>Touch a Reset Crystal</button></p>
   </div>
 }
 
@@ -52,9 +52,7 @@ export default function DullDoorModalView () {
   } else { */
   return (
     <div>
-      <p>There&apos;s enough soap in this jug to last years, so nobody is going to notice if you help yourself.</p>
-      <p>After all, the mall ownership likely doesn&apos;t appreciate those multi-coloured footprints you&apos;ve been leaving!</p>
-      <p>With a generous pump of soap and some vigorous scrubbing, you&apos;re left dye-free and smelling vaguely of lemons.</p>
+      <p>You reach for a crystal that smells strangely of soap. Touching this leaves you feeling fresh and new, smelling vaguely of citrus.</p>
     </div>
   )
   // }
