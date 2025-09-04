@@ -19,7 +19,7 @@ export const generate = () => {
       'You see the flicker of Tam’s third eyelid as a puff of dust blows through the booth.',
       'The way his long lashes rest against his furred cheek reminds you of something you can’t quite name, but it tastes like a burst of fresh water in a salt-parched mouth.',
       'Tam glares at you blankly while chewing something that smells of mint.',
-      'The perfect hump of fat on his back, large and handsome though it is, is still humbled in comparison to the sheer enormity of the gigantic Obelisk hat perched upon his long head.',
+      'The perfect hump of fat on his back, large and handsome though it is, is still humble in comparison to the sheer enormity of the gigantic Obelisk hat perched upon his long head.',
       'He calls out a greeting to another passing circus-goer, slow and formal.',
       'He lifts one of the #obeliskmerch#, proffering it for you to admire.',
       'A sudden eye blinks down at you from the huge Obelisk hat. Tam seems not to notice.',
@@ -60,7 +60,7 @@ oddity: [
   'slime mold',
   'tiny frog bum',
   'inappropriate camel anatomy',
-  'orb of zot'
+  'Orb of Zot'
 ]
 
 
