@@ -41,8 +41,8 @@ export default function RainbowGateModalView () {
   // if (visits === 1) {
   return (
     <div>
-      <p>You reach out to one of the crystals. Just as you feel your hand about to grab it the entire room disappears and you find yourself floating in an endless void. Images flash before your eyes of people you\'ve known and those you don\'t yet. You see eyes filled with anger, sadness, love, and everything between.</p>
-      <p>The smell of these memories you\'ve not made yet overwhelms your mind and you feel your body drift aimlessly through them. Earthy aromas move in sync with the images of eyes and the feeling of every hug you\'ve ever been given. </p>
+      <p>You reach out to one of the crystals. Just as you feel your hand about to grab it the entire room disappears and you find yourself floating in an endless void. Images flash before your eyes of people you&apos;ve known and those you don&apos;t yet. You see eyes filled with anger, sadness, love, and everything between.</p>
+      <p>The smell of these memories you&apos;ve not made yet overwhelms your mind and you feel your body drift aimlessly through them. Earthy aromas move in sync with the images of eyes and the feeling of every hug you&apos;ve ever been given. </p>
       <p>You wake up in the instant you realize you had fallen unconscious. You are standing where you were moments ago, before you reached for the crystal. Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></p>
     </div>
   )
