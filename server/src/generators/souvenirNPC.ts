@@ -22,9 +22,8 @@ export const generate = () => {
       'The perfect hump of fat on his back, large and handsome though it is, is still humble in comparison to the sheer enormity of the gigantic Obelisk hat perched upon his long head.',
       'He calls out a greeting to another passing circus-goer, slow and formal.',
       'He lifts one of the #obeliskmerch#, proffering it for you to admire.',
-      'A sudden eye blinks down at you from the huge Obelisk hat. Tam seems not to notice.',
+      'A sudden eye blinks down at you from the huge Obelisk hat. Tam seems not to notice.'
     ],
-
 
     obeliskmerch: [
       'Obelisk-scented candles',
