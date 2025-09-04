@@ -22,48 +22,46 @@ export const generate = () => {
       'The perfect hump of fat on his back, large and handsome though it is, is still humbled in comparison to the sheer enormity of the gigantic Obelisk hat perched upon his long head.',
       'He calls out a greeting to another passing circus-goer, slow and formal.',
       'He lifts one of the #obeliskmerch#, proffering it for you to admire.',
-      'A sudden eye blinks down at you from the huge Obelisk hat. Tam seems not to notice.',
+      'A sudden eye blinks down at you from the huge Obelisk hat. Tam seems not to notice.'
+    ],
 
+    obeliskmerch: [
+      'Obelisk-scented candles',
+      'Obelisk balloons',
+      'giant Obelisk plushies',
+      'Obelisk plushies',
+      'mini Obelisk plushies',
+      'Obelisk costumes',
+      'Obelisk soaps',
+      'Obelisk keyrings',
+      'Obelisk spice shakers',
+      'Obelisk board games',
+      'Obelisk chess sets',
+      'Obelisk flavor ramen noodles',
+      'Obelisk flavor soda pop',
+      'Obelisk juggling sets (for beginners)',
+      'Obelisk juggling sets (advanced)',
+      'Obelisk portal summoning kits',
+      'Obelisk earrings',
+      'Obelisk-patterned scarves',
+      'suspicious Obelisk lollipops'
+    ],
 
-obeliskmerch: [
-  'Obelisk-scented candles',
-  'Obelisk balloons',
-  'giant Obelisk plushies',
-  'Obelisk plushies',
-  'mini Obelisk plushies',
-  'Obelisk costumes',
-  'Obelisk soaps',
-  'Obelisk keyrings',
-  'Obelisk spice shakers',
-  'Obelisk board games',
-  'Obelisk chess sets',
-  'Obelisk flavor ramen noodles',
-  'Obelisk flavor soda pop',
-  'Obelisk juggling sets (for beginners)',
-  'Obelisk juggling sets (advanced)',
-  'Obelisk portal summoning kits',
-  'Obelisk earrings',
-  'Obelisk-patterned scarves',
-  'suspicious Obelisk lollipops'
-]
-
-oddity: [
-  'clown-repelling charm',
-  'amulet of Rodney',
-  'vinewafer',
-  'dram of honey',
-  'frayed mustache',
-  'vorpal sword',
-  'chunk of obsidian',
-  'brightly-colored egg',
-  'circus peanut',
-  'slime mold',
-  'tiny frog bum',
-  'inappropriate camel anatomy',
-  'orb of zot'
-]
-
-
+    oddity: [
+      'clown-repelling charm',
+      'amulet of Rodney',
+      'vinewafer',
+      'dram of honey',
+      'frayed mustache',
+      'vorpal sword',
+      'chunk of obsidian',
+      'brightly-colored egg',
+      'circus peanut',
+      'slime mold',
+      'tiny frog bum',
+      'inappropriate camel anatomy',
+      'orb of zot'
+    ]
   })
 
   grammar.addModifiers(tracery.baseEngModifiers)
