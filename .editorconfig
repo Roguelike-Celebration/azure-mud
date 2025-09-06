@@ -1,0 +1,22 @@
+# Root .editorconfig for RLC MUD project
+
+# EditorConfig is awesome: https://EditorConfig.org
+
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+end_of_line = lf
+insert_final_newline = true
+
+[*.ts,*.json,*.html]
+indent_size = 2
+tab_width = 2
+
+[*.md]
+indent_size = 4
+tab_width = 4
+
+[Makefile]
+indent_style = tab
