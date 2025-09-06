@@ -224,38 +224,33 @@ function parseDescription (
   roomData: { [roomId: string]: Room },
   presenceData: { [roomId: string]: number }
 ): string {
+  // This code used to get room = roomData[roomId], but now that room data is JIT, it
+  // is normal for that to be absent. The links don't actually use data from roomData, so
+  // that is now skipped.
+
+  // Complex "[[text->target]]" links
   // eslint-disable-next-line no-useless-escape
   const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
-  const simpleLinkRegex = /\[\[(.+?)\]\]/g
-
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    const room = roomData[roomId]
     const userCount = presenceData[roomId]
     if (roomId === 'item') {
       return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
     } else if (roomId === 'showModal') {
       return `<a class='room-link' href='#' data-modal='${roomId}'>${text}</a>`
-    } else if (room) {
-      const userCountString = userCount > 0 ? ` (${userCount})` : ''
-      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCountString}</a>`
     } else if (linkActions[roomId]) {
       return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`
     } else {
-      // TODO: This warning is now expected, with room data being JIT
-      console.log(
-        `Dev warning: tried to link to room ${roomId}, which doesn't exist`
-      )
+      // With room data being JIT, it's now expected that roomData[roomId] might be empty,
+      // even for valid rooms. So, assume that any roomId that isn't a match for some other
+      // sort of link target is indeed a room ID.
+      const userCountString = userCount > 0 ? ` (${userCount})` : ''
+      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCountString}</a>`
     }
   })
 
+  // Simple "[[roomId]]" links
+  const simpleLinkRegex = /\[\[(.+?)\]\]/g
   description = description.replace(simpleLinkRegex, (match, roomId) => {
-    const room = roomData[roomId]
-    if (!room) {
-      // TODO: This warning is now expected, with room data being JIT
-      console.log(
-        `Dev warning: tried to link to room ${roomId}, which doesn't exist`
-      )
-    }
     const userCount = presenceData[roomId]
     const userCountString = userCount > 0 ? ` (${userCount})` : ''
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCountString}</a>`
