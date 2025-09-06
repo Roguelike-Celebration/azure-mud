@@ -14,13 +14,13 @@
       "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
     }
   },  
-  "ticketBooth": {
+  "entryway": {
     "displayName": "Ticket Booth",
     "shortName": "ticket booth",
-    "id": "ticketBooth",
+    "id": "entryway",
     "description": "You appear suddenly in an open field. The wind blows softly, rustling the grass. Before you is a brightly colored explosion of sound and light labelled with a sign that announces that you have arrived at Roguelike Celebration 2025! <br/><br/>A smaller sign reads 'Welcome to our 10th anniversary event!' and an even smaller one next to that reads 'Thanks for coming!' with an enthusiastic scrawl. <br/><br/> A set of instructions informs you that you can click on links in the text to travel to places like the [[Pavilion]], and that you can also do the same by typing '/go pavilion' if you prefer. The instructions tell you to keep your eyes peeled for mysterious links to rooms not listed on the map, or strange objects that seem out of place, for they might be clues to some optional content of some kind. This wordy sign's text has slowly dwindled in size and from here on is completely illegible. You wish someone had done a better tutorial, but you feel the sign silently agreeing with you.",
 	"hidden": true,
-    "roomId": "ticketBooth"
+    "roomId": "entryway"
   },  
   "pavilion": {
     "displayName": "Pavilion",
@@ -54,15 +54,15 @@
     "displayName": "Tam's Souvenirs",
     "shortName": "souvenirs",
     "id": "souvenirs",
-    "description": "You approach a colorful, L-shaped booth with a jaunty sign over one side and vibrant triangular streamers dangling over the other. Both sides of the booth are completely covered in merchandise--low wooden risers of [[Obelisk-Scented Candles->item]], bouquets of [[Obelisk Balloons->item]], a full tabletop of [[Giant Obelisk Plushies->item]], and further multitudes of shelves, trays, and racks of every sort of Obelisk item one could ever desire.<br/><br/>Behind the table stands [[Tam, Dromad Merchant->dromadTam]]. He is wearing an enormous Obelisk hat that stretches nearly twice again his own height, though such a thing is not visibly for sale here.<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "You approach a colorful, L-shaped booth with a jaunty sign over one side and vibrant triangular streamers dangling over the other. Both sides of the booth are completely covered in merchandise--low wooden risers of [[Obelisk-Scented Candles->item]], bouquets of [[Obelisk Balloons->item]], a full tabletop of [[Giant Obelisk Plushies->item]], and further multitudes of shelves, trays, and racks of every sort of Obelisk item one could ever desire.<br/><br/>Behind the table stands [[Tam, Dromad Merchant->dromadTam]]. He is wearing an enormous Obelisk hat that stretches nearly twice again his own height, though such a thing is not visibly for sale here. You see another small obelisk labeled Not For Sale that you have an insatiable urge to [[touch->drinkPolymorph]].<br/><br/>You can also return to the [[Pavilion]].",
 	"hidden": false,
     "roomId": "souvenirs"
   },  
-  "bigTop": {
+  "theater": {
     "displayName": "The Big Top",
     "shortName": "big top",
-    "id": "bigTop",
-    "description": "You enter the central tent to find a massive stage. Performers circle the edges, and even more strangely the attention of everyone in the room appears to be focused on people who are just standing in the center. Talking. You decide to sit and listen for a while.<br/><br/>You can return to the [[Pavilion]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Dressing Room]], [[Props Closet]], [[Break Room]], [[Under The Stage]]. (Check the 'Happening Now' button on the left for speaker room assignments!)",
+    "id": "theater",
+    "description": "You enter the central tent to find a massive stage. Performers circle the edges, and even more strangely the attention of everyone in the room appears to be focused on people who are just standing in the center. Talking. You decide to sit and listen for a while.<br/><br/>You can return to the [[Pavilion]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Dressing Rooms]], [[Props Closet]], [[Break Room]], [[Under The Stage]]. (Check the 'Happening Now' button on the left for speaker room assignments!)",
 	"hidden": false,
 	"hasNoteWall": true,
     "noteWallData": {
@@ -72,7 +72,7 @@
       "addNotePrompt": "What would you like to ask?",
       "noteWallDescription": "Questions for the current speaker, ranked by upvotes."
     },
-    "roomId": "bigTop"
+    "roomId": "theater"
   },  
   "unconferencingHub": {
     "displayName": "Unconferencing Menagerie",
@@ -126,7 +126,7 @@
     "displayName": "Carnival Games",
     "shortName": "carnival games",
     "id": "carnivalGames",
-    "description": "The sounds around you shift into the cacophony of ringing bells and victory fanfare accompanied by flashing lights. Machines of every size and shape line the path, each one begging for your attention as you pass. You see a massive hammer waiting to be smashed into a pillar with a bell at the top, several small ramps with heavy balls waiting to be rolled, and any number of things waiting to be shot with metal beads, water, or foam projectiles.<br/><br/>Nearby you can see [[The Magic Castle]], a [[Merry Go Round]], [[Ol' Flecto's Hall of Mirrors]], and a back alleyway leading to some [[Game Tables]]<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "The sounds around you shift into the cacophony of ringing bells and victory fanfare accompanied by flashing lights. Machines of every size and shape line the path, each one begging for your attention as you pass. You see a massive hammer waiting to be smashed into a pillar with a bell at the top, several small ramps with heavy balls waiting to be rolled, and any number of things waiting to be shot with metal beads, water, or foam projectiles.<br/><br/>Nearby you can see [[The Magic Castle]], a [[Merry Go Round]], [[Ol' Flecto's Hall of Mirrors->hallOfMirrors]], and a back alleyway leading to some [[Game Tables]]<br/><br/>You can also return to the [[Pavilion]].",
 	"hidden": false,
 	"hasNoteWall": true,
     "noteWallData": {
@@ -146,13 +146,13 @@
 	"hidden": false,
     "roomId": "magicCastle"
   },   
-  "shellGames": {
+  "gameTables": {
     "displayName": "Game Tables",
-    "shortName": "shell games",
-    "id": "shellGames",
-    "description": "You enter a seedy back alleyway where shifty-eyed people in trenchcoats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure. [Visit the Steam Sale]<br/><br/>You can also return to the [[Carnival Games]].",
+    "shortName": "game tables",
+    "id": "gameTables",
+    "description": "You enter a seedy back alleyway where shifty-eyed people in trenchcoats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure.<a href=\"https://store.steampowered.com/sale/roguelikecelebration2022 \" target=\"_blank\">",<br/><br/>You can also return to the [[Carnival Games]].",
 	"hidden": false,
-    "roomId": "shellGames"
+    "roomId": "gameTables"
   },   
   "merryGoRound": {
     "displayName": "Merry-Go-Round",

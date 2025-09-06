@@ -24,7 +24,7 @@ export async function polymorph (user: User, messageId: string): Promise<Result>
       {
         groupId: user.roomId,
         target: 'emote',
-        arguments: [messageId, user.id, 'is awarded a shiny new camp pin!']
+        arguments: [messageId, user.id, 'has their material essence shifted!']
       },
       {
         userId: user.id,
@@ -48,12 +48,12 @@ export async function cancellation (user: User, messageId: string): Promise<Resu
       {
         groupId: user.roomId,
         target: 'emote',
-        arguments: [messageId, user.id, 'puts their pin back into the bucket.']
+        arguments: [messageId, user.id, 'returns to their original essence.']
       },
       {
         userId: user.id,
         target: 'privateCommand',
-        arguments: ['You put your pin back in the bucket.']
+        arguments: ['You return to your original essence.']
       },
       {
         target: 'usernameMap',
