@@ -66,6 +66,12 @@ export const linkActions = {
   talkToFlower: () => {
     displayMessageFromList('flower')
   },
+  dromadTam: () => {
+    displayMessageFromList('dromadTam')
+  },
+  madamChrysalia: () => {
+    displayMessageFromList('madamChrysalia')
+  },
   orderNewDrink: () => {
     orderNewDrink()
   },
