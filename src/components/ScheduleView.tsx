@@ -17,7 +17,7 @@ export interface ScheduleEntry {
   day: number
 }
 
-const PREVIEW_END = new Date('2025-09-10T15:30:00-07:00')
+const PREVIEW_END = new Date('2025-09-10T17:30:00-07:00')
 const FIRST_DAY_END = new Date('2025-10-24T21:00:00-07:00')
 const SECOND_DAY_END = new Date('2025-10-25T21:00:00-07:00')
 const THIRD_DAY_END = new Date('2025-10-26T21:00:00-07:00')
@@ -52,12 +52,13 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
 
 // This is still last year 2024's schedule. Leaving in place as example data for now. -apj 5/8/25
 export const ScheduleEntries: ScheduleEntry[] = [
-  ScheduleEntry('12:45', 0, 'Doors Open'),
-  ScheduleEntry('13:00', 0, 'James Cartlidge: The Rise of the Roguelite: Inside a Gaming Phenomenon', ['theater']),
-  ScheduleEntry('13:45', 0, 'Andrew Cedotal: Literary Origins of the Rogue Archetype', ['theater']),
-  ScheduleEntry('14:15', 0, 'Gavin Verhey: Fireside Chat About Randomness in Magic: The Gathering', ['theater']),
-  ScheduleEntry('15:00', 0, SOCIAL_TIME),
-  ScheduleEntry('15:30', 0, 'Doors Close'),
+  ScheduleEntry('14:45', 0, 'Doors Open'),
+  ScheduleEntry('15:10', 0, 'Kickoff'),
+  ScheduleEntry('15:15', 0, 'Jon Perry: Fireside chat with Jon Perry (UFO 50)', ['theater']),
+  ScheduleEntry('16:00', 0, 'Ezra Szanton: Building Synergy Networks for better Roguelike Deckbuilders', ['theater']),
+  ScheduleEntry('16:30', 0, 'Alexei Pepers: Designing for System Suspense', ['theater']),
+  ScheduleEntry('17:15', 0, 'Hang Out & Explore!'),
+  ScheduleEntry('17:30', 0, 'Doors Close'),
 
   ScheduleEntry('18:00', 1, 'Doors Open'),
   ScheduleEntry('20:00', 1, 'Doors Close'),
