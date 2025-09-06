@@ -3,7 +3,7 @@
     "displayName": "Obelisk",
     "shortName": "obelisk",
     "id": "obelisk",
-    "description": "An ominous hum fills the air, shaking you to your very core. The rhythmic pulsing comes from an enormous stone obelisk hovering in place at the exact center of the circus grounds. You feel gravity obeying new laws here, tents drawn upwards without the need of support, ropes attached to nothing but taught all the same. <br/><br/>At the base of the obelisk you see cultists swaying in time with the pulsing, creating some other worldly dance that fills you with the need to share knowledge. The cultists move from person to person throughout the crowd, handing out pencils and scraps of paper, and then reverently collecting them and pinning them to the obelisk in positions of honor.<br/><br/> You can also return to the [[Pavilion]] or continue to the [[Big Top]].",
+    "description": "An ominous hum fills the air, shaking you to your very core. A rhythmic pulsing comes from an enormous stone obelisk hovering in place at the exact center of the circus grounds. You feel gravity obeying new laws here, tents drawn upwards without the need of support, ropes attached to nothing but taut all the same. <br/><br/>At the base of the obelisk you see cultists swaying in time with the pulsing, creating some otherworldly dance that fills you with the need to share knowledge. The cultists move from person to person throughout the crowd, handing out pencils and scraps of paper, and then reverently collecting them and pinning them to the obelisk in positions of honor. <br/><br/> You can also return to the [[Pavilion]] or continue to the [[Big Top]].",
     "roomId": "obelisk",
     "hasNoteWall": true,
     "noteWallData": {
@@ -62,7 +62,7 @@
     "displayName": "The Big Top",
     "shortName": "big top",
     "id": "bigTop",
-    "description": "You enter the central tent to find a massive stage. Performers circle the edges, and even more strangely the attention of everyone in the room appears to be focused on people who are just standing in the center. Talking. You decide to sit and listen for a while.<br/><br/>You can return to the [[Pavilion]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Dressing Room]], [[Props Closet]], [[Break Room]], [[Under The Stage]]. (Check the 'Happening Now' button on the left for speaker room assignments!)",
+    "description": "You enter the central tent to find a massive stage. Performers circle the edges, and even more strangely the attention of everyone in the room appears to be focused on people who are just standing in the center. Talking. You decide to sit and listen for a while. <br/><br/>You can return to the [[Pavilion]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Dressing Room]], [[Props Closet]], [[Break Room]], [[Under The Stage]]. (Check the 'Happening Now' button on the left for speaker room assignments!)",
 	"hidden": false,
 	"hasNoteWall": true,
     "noteWallData": {
@@ -78,7 +78,7 @@
     "displayName": "Unconferencing Menagerie",
     "shortName": "menagerie",
     "id": "unconferencingHub",
-    "description": "You step into the eastern wing of the circus, labelled as the Unconferencing Menagerie. This tent is split into 4 smaller tents that are each claimed by a collection of weirdos proclaiming their particular interests. It would appear that this wing of the circus is devoted to lively discussions of assorted topics, though it seems those discussions happen in some questionable locations. You see tents labelled [[Weird Lil Guy Petting Zoo]], [[Strong Man Tower]], [[Clown Containment Pit]], and [[The Red Velvet]].<br/><br/>You see a tent pole in the center, displaying the current topics of discussion and their room assignments. Just above that list of topics is a sign that reads 'Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each unconferencing block, moderators will assign the top four topics to rooms. Have fun!'<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "You step into the eastern wing of the circus, labelled as the Unconferencing Menagerie. This tent is split into 4 smaller tents that are each claimed by a collection of weirdos proclaiming their particular interests. It would appear that this wing of the circus is devoted to lively discussions of assorted topics, though it seems those discussions happen in some questionable locations. You see tents labelled [[Weird Lil Guys Petting Zoo]], [[Strong Man Tower]], [[Clown Containment Pit]], and [[The Red Velvet]].<br/><br/>You see a tent pole in the center, displaying the current topics of discussion and their room assignments. Just above that list of topics is a sign that reads 'Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each unconferencing block, moderators will assign the top four topics to rooms. Have fun!'<br/><br/>You can also return to the [[Pavilion]].",
 	"hidden": false,
 	"hasNoteWall": true,
     "noteWallData": {
@@ -94,7 +94,7 @@
     "displayName": "Weird Lil Guys Petting Zoo",
     "shortName": "lil guys zoo",
     "id": "unconfLilGuys",
-    "description": "You enter the oddly-named 'Weird Lil Guy Petting Zoo' and find yourself face to face with a number of short, stocky people with mustaches who approach you and offer their heads to you. Some of these people appear to be human while others appear to be oddly-shaped blobs of flesh with any number of appendages in place of arms. All of them have well-oiled mustaches, even those who otherwise present as feminine. The attention of this bizarre crowd is somewhat unsettling, but they do not appear to be in any way hostile. They respect your personal space, keeping a few feet back, but just within reach so that should you stretch our your arm to offer a pet, they might lean forward to accept. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
+    "description": "You enter the oddly-named 'Weird Lil Guys Petting Zoo' and find yourself face to face with a number of short, stocky people with mustaches who approach you and offer their heads to you. Some of these people appear to be human while others appear to be oddly-shaped blobs of flesh with any number of appendages in place of arms. All of them have well-oiled mustaches, even those who otherwise present as feminine. The attention of this bizarre crowd is somewhat unsettling, but they do not appear to be in any way hostile. They respect your personal space, keeping a few feet back, but just within reach so that should you stretch out your arm to offer a pet, they might lean forward to accept. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
 	"hidden": false,
     "roomId": "unconfLilGuys"
   },  
@@ -126,7 +126,7 @@
     "displayName": "Carnival Games",
     "shortName": "carnival games",
     "id": "carnivalGames",
-    "description": "The sounds around you shift into the cacophony of ringing bells and victory fanfare accompanied by flashing lights. Machines of every size and shape line the path, each one begging for your attention as you pass. You see a massive hammer waiting to be smashed into a pillar with a bell at the top, several small ramps with heavy balls waiting to be rolled, and any number of things waiting to be shot with metal beads, water, or foam projectiles.<br/><br/>Nearby you can see [[The Magic Castle]], a [[Merry Go Round]], [[Ol' Flecto's Hall of Mirrors]], and a back alleyway leading to some [[Game Tables]]<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "The sounds around you shift into a cacophony of ringing bells and victory fanfare accompanied by flashing lights. Machines of every size and shape line the path, each one begging for your attention as you pass. You see a massive hammer waiting to be smashed into a pillar with a bell at the top, several small ramps with heavy balls waiting to be rolled, and any number of things waiting to be shot with metal beads, water, or foam projectiles.<br/><br/>Nearby you can see [[The Magic Castle]], a [[Merry Go Round]], [[Ol' Flecto's Hall of Mirrors]], and a back alleyway leading to some [[Game Tables]]. <br/><br/>You can also return to the [[Pavilion]].",
 	"hidden": false,
 	"hasNoteWall": true,
     "noteWallData": {
@@ -150,7 +150,7 @@
     "displayName": "Game Tables",
     "shortName": "shell games",
     "id": "shellGames",
-    "description": "You enter a seedy back alleyway where shifty-eyed people in trenchcoats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure. [Visit the Steam Sale]<br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You enter a seedy back alleyway where shifty-eyed people in trench coats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure. [Visit the Steam Sale] <br/><br/>You can also return to the [[Carnival Games]].",
 	"hidden": false,
     "roomId": "shellGames"
   },   
@@ -158,7 +158,7 @@
     "displayName": "Merry-Go-Round",
     "shortName": "merry go round",
     "id": "merryGoRound",
-    "description": "You approach a massive, spinning machine styled after a merry-go-round, but where you might expect there to be large poles attached to floor and ceiling suspending a statue of an animal, you instead just see free-roaming beasts and an assortments of seats. Those seats are designed not for human proportions, but for these beasts. Indeed, you see that each beast appears to draw the eye of a potential rider, and then brings them dutifully to its chosen nest. The beast then waits to be sat upon by the rider. The ride has no one managing it, the creatures seem to be in charge of themselves, and are quite insistent on this riding-based relationship.<br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You approach a massive, spinning machine styled after a merry-go-round, but where you might expect there to be large poles attached to floor and ceiling suspending a statue of an animal, you instead just see free-roaming beasts and an assortments of seats. Those seats are designed not for human proportions, but for these beasts. Indeed, you see that each beast appears to draw the eye of a potential rider, and then brings them dutifully to its chosen nest. The beast then waits to be sat upon by the rider. The ride has no one managing it, the creatures seem to be in charge of themselves, and are quite insistent on this riding-based relationship. <br/><br/>You can also return to the [[Carnival Games]].",
 	"hidden": false,
     "roomId": "merryGoRound"
   },   
@@ -166,7 +166,7 @@
     "displayName": "Ol' Flecto's Hall of Mirrors",
     "shortName": "hall of mirrors",
     "id": "hallOfMirrors",
-    "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surfaces. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting its proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black absence of light, nestled behind the silvery surface of an armoire. You feel like you could step inside. <br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surface. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting their proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black absence of light, nestled behind the silvery surface of an armoire. You feel like you could step inside. <br/><br/>You can also return to the [[Carnival Games]].",
 	"hidden": false,
     "roomId": "hallOfMirrors"
   },   
@@ -174,7 +174,7 @@
     "displayName": "Dressing Rooms",
     "shortName": "dressing rooms",
     "id": "dressingRooms",
-    "description": "You enter a vibrant cacophony of fabric that once was usable as dressings rooms. All that remains of that optimistic dream are the blasted wastes of costume changes past. Adrift among the sea of scarves and tangled wigs you see a number of chairs, tabletops, and even a few well-lit mirrors. Metal clothes racks jut out from the fabric ocean like the ribs of a slain seamstress. You hope the circus leadership doesn't see what's become of this space, but you assume that if they checked this room it would not have gotten into this state.<br/><br/>You can also return to the [[Big Top]].",
+    "description": "You enter a vibrant cacophony of fabric that once was usable as dressings rooms. All that remains of that optimistic dream are the blasted wastes of costume changes past. Adrift among the sea of scarves and tangled wigs you see a number of chairs, tabletops, and even a few well-lit mirrors. Metal clothes racks jut out from the fabric ocean like the ribs of a slain seamstress. You hope the circus leadership doesn't see what's become of this space, but you assume that if they checked this room it would not have gotten into this state. <br/><br/>You can also return to the [[Big Top]].",
 	"hidden": false,
     "roomId": "dressingRooms"
   },     
@@ -182,7 +182,7 @@
     "displayName": "The Props Closet",
     "shortName": "props closet",
     "id": "propsCloset",
-    "description": "A pristine wall of objects stands before you, each one laid out precisely to catch the light. These strange objects should blend into another just through overwhelming variety, but somehow your mind registers each and every one for its own distinct personality.  Not a single speck of dust is present in this room, nor a single scrap or trash outside of a hand-made trash bin made to look like the mouth of some fanciful creature. Even that trash can is immaculately cared for. The air in this place feels somehow holy, like a church established to worship the arts. <br/><br/>You can also return to the [[Big Top]].",
+    "description": "A pristine wall of objects stands before you, each one laid out precisely to catch the light. These strange objects should blend into one another just through overwhelming variety, but somehow your mind registers each and every one for its own distinct personality. Not a single speck of dust is present in this room, nor a single scrap of trash outside of a handmade trash bin made to look like the mouth of some fanciful creature. Even that trash can is immaculately cared for. The air in this place feels somehow holy, like a church established to worship the arts. <br/><br/>You can also return to the [[Big Top]].",
 	"hidden": false,
     "roomId": "propsCloset"
   },     
@@ -190,7 +190,7 @@
     "displayName": "Break Room",
     "shortName": "break room",
     "id": "breakRoom",
-    "description": "You enter a room labelled Break Room and find a 3x3 cube of unmarked concrete with a small shelf attached to one wall that desperately clings to life while holding a sign announcing 'free donuts!'. You do not see these donuts and are fairly certain there is nowhere here for them to hide. A plaque to your left displays a series of 438 rules and regulations that must be obeyed on threat of violent retribution from upper management. The only other thing present here is a lingering scent of crushed dreams, but even that slowly fades as you stand around.<br/><br/>You can also return to the [[Big Top]].",
+    "description": "You enter a room labelled Break Room and find a 3x3 cube of unmarked concrete with a small shelf attached to one wall that desperately clings to life while holding a sign announcing 'free donuts!'. You do not see these donuts and are fairly certain there is nowhere here for them to hide. A plaque to your left displays a series of 438 rules and regulations that must be obeyed on threat of violent retribution from upper management. The only other thing present here is a lingering scent of crushed dreams, but even that slowly fades as you stand around. <br/><br/>You can also return to the [[Big Top]].",
 	"hidden": false,
     "roomId": "breakRoom"
   },     
@@ -198,7 +198,7 @@
     "displayName": "Under The Stage",
     "shortName": "under stage",
     "id": "underTheStage",
-    "description": "You duck below the stage and find yourself standing before a grand and glorious castle made of dust. Its spires reach up into the air far higher than your mind believes should be possible and elevators ride up and down those spires delivering people and objects onto the stage to surprise and delight the audience.  The dusty thoroughfair here is packed with people and craftsmen offering costume repairs, face paint touch-ups, or any other service the show might need to continue. <br/><br/>You can also return to the [[Big Top]].",
+    "description": "You duck below the stage and find yourself standing before a grand and glorious castle made of dust. Its spires reach up into the air far higher than your mind believes should be possible, and elevators ride up and down those spires delivering people and objects onto the stage to surprise and delight the audience. The dusty thoroughfare here is packed with people and craftsmen offering costume repairs, face paint touch-ups, or any other service the show might need to continue. <br/><br/>You can also return to the [[Big Top]].",
 	"hidden": false,
     "roomId": "underTheStage"
   }

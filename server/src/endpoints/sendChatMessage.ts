@@ -124,7 +124,10 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
 
   return {
     messages,
-    httpResponse: { status: 200 }
+    httpResponse: {
+      status: 200,
+      body: { roomId: user.roomId }
+    }
   }
 }
 
