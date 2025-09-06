@@ -22,7 +22,7 @@ export const RainbowGateRoomView = () => {
   }
 
   return <div id="rainbow-gate-div" className="feature-room-view">
-    <p><button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Get a tattoo?</button></p>
+    <p><button id="rainbow-gate-button" className='link-styled-button' onClick={jumpThroughGate}>Touch a crystal?</button></p>
   </div>
 }
 
@@ -41,9 +41,9 @@ export default function RainbowGateModalView () {
   // if (visits === 1) {
   return (
     <div>
-      <p>You sit down in the chair as a goblin artist fires up their device. It appears to be some kind of handheld machine shaped as if it should hold needles, but in place of that are glowing gemstones. As the tattoo artist hits the switch to activate their device, the glow burns brightly and your body resonates in kind, a slight tingling sensation rippling in its wake.</p>
-      <p>The tingling sensation begins to spread across your arm, your torso, and eventually covers all of you despite minimal movement from the goblin. When that is finished, a muscular goblin walks up and begins to massage your shoulder with the flowery lotion you saw before. Relaxation spreads through you entirely. </p>
-      <p>You wake up a few moments later at the gentle urgings of the artist, and look down to find yourself glowing an exciting new hue! Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></p>
+      <p>You reach out to one of the crystals. Just as you feel your hand about to grab it the entire room disappears and you find yourself floating in an endless void. Images flash before your eyes of people you&apos;ve known and those you don&apos;t yet. You see eyes filled with anger, sadness, love, and everything between.</p>
+      <p>The smell of these memories you&apos;ve not made yet overwhelms your mind and you feel your body drift aimlessly through them. Earthy aromas move in sync with the images of eyes and the feeling of every hug you&apos;ve ever been given. </p>
+      <p>You wake up in the instant you realize you had fallen unconscious. You are standing where you were moments ago, before you reached for the crystal. Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span></p>
     </div>
   )
   /* } else {
