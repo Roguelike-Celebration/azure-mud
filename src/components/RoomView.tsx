@@ -229,8 +229,7 @@ function parseDescription (
   // that is now skipped.
 
   // Complex "[[text->target]]" links
-  // eslint-disable-next-line no-useless-escape
-  const complexLinkRegex = /\[\[([^\]]*?)\-\>([^\]]*?)\]\]/g
+  const complexLinkRegex = /\[\[([^\]]*?)->([^\]]*?)\]\]/g
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     const userCount = presenceData[roomId]
     if (roomId === 'item') {
