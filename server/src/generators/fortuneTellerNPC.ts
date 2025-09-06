@@ -20,7 +20,7 @@ export const generate = () => {
       'Her compound gaze never wavers. How does she blink?',
       'The giant pile of scents and silks behind her quivers slightly, and you catch a quick glimpse of the white fluff beneath before she tugs a silken panel patterned with #pattern# back into place.',
       'You think you see something like a giant white pearl beneath the heap of silks, but Madam Chrysalia whisks a beautiful scarf under your nose, showing you the #pattern# decorating the silk. It smells like #scent#.',
-      'Her doubled hands are always moving, but her body stays quite still, never separating from the scented silken stack. You notice #pattern# in the pile.',
+      'Her doubled hands are always moving, but her body stays quite still, never separating from the scented silken stack. You notice #pattern# in the pile.'
     ],
 
     scent: [
