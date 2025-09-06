@@ -3,7 +3,7 @@
     "displayName": "Obelisk",
     "shortName": "obelisk",
     "id": "obelisk",
-    "description": "An ominous hum fills the air, shaking you to your very core. The rhythmic pulsing comes from an enormous stone obelisk hovering in place at the exact center of the circus grounds. You feel gravity obeying new laws here, tents drawn upwards without the need of support, ropes attached to nothing but taught all the same. <br/><br/>At the base of the obelisk you see cultists swaying in time with the pulsing, creating some other worldly dance that fills you with the need to share knowledge. The cultists move from person to person throughout the crowd, handing out pencils and scraps of paper, and then reverently collecting them and pinning them to the obelisk in positions of honor.<br/><br/> You can also return to the [[Pavilion]] or continue to the [[Big Top]].",
+    "description": "An ominous hum fills the air, shaking you to your very core. A rhythmic pulsing comes from an enormous stone obelisk hovering in place at the exact center of the circus grounds. You feel gravity obeying new laws here, tents drawn upwards without the need of support, ropes attached to nothing but taut all the same. <br/><br/>At the base of the obelisk you see cultists swaying in time with the pulsing, creating some otherworldly dance that fills you with the need to share knowledge. The cultists move from person to person throughout the crowd, handing out pencils and scraps of paper, and then reverently collecting them and pinning them to the obelisk in positions of honor.<br/><br/> You can also return to the [[Pavilion]] or continue to the [[Big Top]].",
     "roomId": "obelisk",
     "hasNoteWall": true,
     "noteWallData": {
@@ -126,7 +126,7 @@
     "displayName": "Carnival Games",
     "shortName": "carnival games",
     "id": "carnivalGames",
-    "description": "The sounds around you shift into the cacophony of ringing bells and victory fanfare accompanied by flashing lights. Machines of every size and shape line the path, each one begging for your attention as you pass. You see a massive hammer waiting to be smashed into a pillar with a bell at the top, several small ramps with heavy balls waiting to be rolled, and any number of things waiting to be shot with metal beads, water, or foam projectiles.<br/><br/>Nearby you can see [[The Magic Castle]], a [[Merry Go Round]], [[Ol' Flecto's Hall of Mirrors->hallOfMirrors]], and a back alleyway leading to some [[Game Tables]]<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "The sounds around you shift into the cacophony of ringing bells and victory fanfare accompanied by flashing lights. Machines of every size and shape line the path, each one begging for your attention as you pass. You see a massive hammer waiting to be smashed into a pillar with a bell at the top, several small ramps with heavy balls waiting to be rolled, and any number of things waiting to be shot with metal beads, water, or foam projectiles.<br/><br/>Nearby you can see [[The Magic Castle]], a [[Merry Go Round]], [[Ol' Flecto's Hall of Mirrors->hallOfMirrors]], and a back alleyway leading to some [[Game Tables]].<br/><br/>You can also return to the [[Pavilion]].",
   	"hidden": false,
   	"hasNoteWall": true,
     "noteWallData": {
@@ -150,7 +150,7 @@
     "displayName": "Game Tables",
     "shortName": "game tables",
     "id": "gameTables",
-    "description": "You enter a seedy back alleyway where shifty-eyed people in trenchcoats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure.<a href=\"https://store.steampowered.com/sale/roguelikecelebration2025 \" target=\"_blank\">Visit the Steam Sale!</a><br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You enter a seedy back alleyway where shifty-eyed people in trench coats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure.<a href=\"https://store.steampowered.com/sale/roguelikecelebration2025 \" target=\"_blank\">Visit the Steam Sale!</a><br/><br/>You can also return to the [[Carnival Games]].",
 	"hidden": false,
     "roomId": "gameTables"
   },   
@@ -166,8 +166,8 @@
     "displayName": "Ol' Flecto's Hall of Mirrors",
     "shortName": "hall of mirrors",
     "id": "hallOfMirrors",
-    "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surfaces. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting its proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black absence of light, nestled behind the silvery surface of an armoire. You feel like you could step inside. <br/><br/>You can also return to the [[Carnival Games]].",
-	  "hidden": false,
+    "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surface. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting their proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black absence of light, nestled behind the silvery surface of an armoire. You feel like you could step inside. <br/><br/>You can also return to the [[Carnival Games]].",
+    "hidden": false,
     "roomId": "hallOfMirrors"
   },   
   "dressingRooms": {
