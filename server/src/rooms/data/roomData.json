@@ -130,7 +130,7 @@
   	"hidden": false,
   	"hasNoteWall": true,
     "noteWallData": {
-      "roomWallDescription": "Among the finished games you see a book penned by those who create such things. \"Procedural Generation Surprises\" is written on the cover and there are some pens are nearby for you to add your own stories.",
+      "roomWallDescription": "Among the finished games you see a book penned by those who create such things. \"Procedural Generation Surprises\" is written on the cover and there are some pens nearby for you to add your own stories.",
       "noteWallButton": "Contribute",
       "addNoteLinkText": "Contribute",
       "addNotePrompt": "Tell us of a time a procedural generator has surprised or delighted you!",
