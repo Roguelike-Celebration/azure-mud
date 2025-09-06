@@ -68,7 +68,8 @@ export default function RoomView (props: Props) {
     const actionName =
       e.target && e.target.getAttribute && e.target.getAttribute('data-action')
     if (actionName) {
-      linkActions[actionName]()
+      // roomId is required because some of these send messages to the server
+      linkActions[actionName](roomId)
     }
 
     const showModal =

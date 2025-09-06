@@ -11,14 +11,15 @@ export const linkActions = {
   pickUpPuppy: () => {
     pickUpItem('a tiny puppy')
   },
-  drinkPolymorph: () => { // Listen. Is this the correct way? No. Does it save me needing to write a new httpTrigger? Yes.
-    sendChatMessage(uuidv4(), '/get colourful potion')
+  // Ideally we would not have variable signatures in these functions.
+  drinkPolymorph: (roomId: string) => { // Listen. Is this the correct way? No. Does it save me needing to write a new httpTrigger? Yes.
+    sendChatMessage(uuidv4(), '/get colourful potion', roomId)
   },
-  drinkCancellation: () => {
-    sendChatMessage(uuidv4(), '/get clear potion')
+  drinkCancellation: (roomId: string) => {
+    sendChatMessage(uuidv4(), '/get clear potion', roomId)
   },
-  getFortune: () => {
-    sendChatMessage(uuidv4(), '/get fortune cookie')
+  getFortune: (roomId: string) => {
+    sendChatMessage(uuidv4(), '/get fortune cookie', roomId)
   },
   readPoster: () => {
     displayMessageFromList('motivationPosters')
@@ -29,17 +30,17 @@ export const linkActions = {
   getGameRec: () => {
     displayMessageFromList('gameRecommendations')
   },
-  pentagramHighTech: () => {
-    pentagramAction('Impactful')
+  pentagramHighTech: (roomId: string) => {
+    pentagramAction('Impactful', roomId)
   },
-  pentagramMinimalist: () => {
-    pentagramAction('Classic')
+  pentagramMinimalist: (roomId: string) => {
+    pentagramAction('Classic', roomId)
   },
-  pentagramComical: () => {
-    pentagramAction('Comic')
+  pentagramComical: (roomId: string) => {
+    pentagramAction('Comic', roomId)
   },
-  pentagramNormal: () => {
-    pentagramAction('')
+  pentagramNormal: (roomId: string) => {
+    pentagramAction('', roomId)
   },
   hearTerribleJoke: () => {
     displayMessageFromList('terribleJokes')
@@ -106,9 +107,9 @@ export const linkActions = {
   }
 }
 
-const pentagramAction = function (font: string) {
+const pentagramAction = function (font: string, roomId: string) {
   updateFontReward(uuidv4(), font)
-  sendChatMessage(uuidv4(), '/go ASCII')
+  sendChatMessage(uuidv4(), '/go ASCII', roomId)
   displayMessage('You feel changed by your journey through the pentagram...')
 }
 

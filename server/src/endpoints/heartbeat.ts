@@ -58,6 +58,8 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
   }
 
   return {
+    // Maybe we should put the roomId in here, so that we can forcibly sync the user to rooms if the client has old or
+    // bad data.
     messages: [
       {
         target: 'ping',
