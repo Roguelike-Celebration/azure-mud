@@ -6,7 +6,7 @@
       "type": "string",
       "defaultValue": "your-app-name",
       "metadata": {
-        "description": "The name of the function app that you wish to create."
+        "description": "The name of the Function App that you wish to create. This name is used as the base or prefix for the other resource names."
       }
     },
     "clientUrl": {
@@ -46,9 +46,9 @@
     "storageAccountName": "[concat(take(concat(variables('storageAccountPrefixSafe'), uniquestring(resourceGroup().id, deployment().name)), 20), 'fcns')]",
     "signalRName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-signalr')]",
     "redisCacheName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-redis')]",
-    "appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-ai')]",
+    "appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-appi')]",
     "aswaName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-aswa')]",
-    "pubsubName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-pubsub')]"
+    "pubsubName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-wps')]"
   },
   "resources": [{
       "type": "Microsoft.Storage/storageAccounts",
@@ -266,7 +266,6 @@
         }
       }
     },
-
     {
       "type": "Microsoft.SignalRService/webPubSub",
       "name": "[variables('pubsubName')]",
