@@ -14,7 +14,7 @@
     "lint-rooms": "ts-node lintLinks.ts"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "engines": {
     "node": ">=16.0.0",
