@@ -17,13 +17,13 @@ export interface ScheduleEntry {
   day: number
 }
 
-const PREVIEW_END = new Date('2025-09-10T17:30:00-07:00')
+const PREVIEW_END = new Date('2025-09-07T18:00:00-07:00')
 const FIRST_DAY_END = new Date('2025-10-24T21:00:00-07:00')
 const SECOND_DAY_END = new Date('2025-10-25T21:00:00-07:00')
 const THIRD_DAY_END = new Date('2025-10-26T21:00:00-07:00')
 
 // Just guessing at the preview time for 2025; haven't set it yet as of 5/8/25? -apj
-const dayPreview = (time) => new Date(`2025-09-08T${time}:00.000-07:00`)
+const dayPreview = (time) => new Date(`2025-09-07T${time}:00.000-07:00`)
 const dayOneDate = (time) => new Date(`2025-10-24T${time}:00.000-07:00`)
 const dayTwoDate = (time) => new Date(`2025-10-25T${time}:00.000-07:00`)
 const dayThreeDate = (time) => new Date(`2025-10-26T${time}:00.000-07:00`)
