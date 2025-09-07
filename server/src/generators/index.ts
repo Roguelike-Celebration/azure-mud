@@ -1,5 +1,6 @@
 import * as madamChrysalia from './fortuneTellerNPC'
 import * as dromadTam from './souvenirNPC'
+import * as polymorph from './polymorph'
 
 interface Generator {
   generate(): string
@@ -8,7 +9,8 @@ interface Generator {
 
 const generators: {[name: string]: Generator} = {
   madamChrysalia,
-  dromadTam
+  dromadTam,
+  polymorph
 }
 
 export default generators
