@@ -69,34 +69,6 @@ export async function getUseSimpleNames (): Promise<boolean> {
   return await localforage.getItem(useSimpleNamesKey) || false
 }
 
-// Video chat settings
-export async function setKeepCameraWhenMoving (keepCameraWhenMoving: boolean) {
-  await localforage.setItem(keepCameraWhenMovingKey, keepCameraWhenMoving)
-}
-
-export async function getKeepCameraWhenMoving (): Promise<boolean> {
-  const keepCameraWhenMoving: boolean = await localforage.getItem(keepCameraWhenMovingKey)
-  return keepCameraWhenMoving === null ? false : keepCameraWhenMoving
-}
-
-export async function setTextOnlyMode (textOnlyMode: boolean) {
-  await localforage.setItem(textOnlyModeKey, textOnlyMode)
-}
-
-export async function getTextOnlyMode (): Promise<boolean> {
-  const textOnlyMode: boolean = await localforage.getItem(textOnlyModeKey)
-  return textOnlyMode == null ? false : textOnlyMode
-}
-
-export async function setCaptionsEnabled (enabled: boolean) {
-  await localforage.setItem(captionsEnabledKey, enabled)
-}
-
-export async function getCaptionsEnabled (): Promise<boolean> {
-  const captionsEnabled: boolean = await localforage.getItem(captionsEnabledKey)
-  return captionsEnabled == null ? false : captionsEnabled
-}
-
 // Keys
 
 const messagesKey = 'messages'
@@ -106,6 +78,3 @@ const rainbowGateKey = 'FeatureRainbowGateVisited'
 const wasColoredEnteringKey = 'WasColoredEntering'
 const themeKey = 'UserSelectedTheme'
 const useSimpleNamesKey = 'UseSimpleNames'
-const keepCameraWhenMovingKey = 'KeepCameraWhenMoving'
-const textOnlyModeKey = 'TextOnlyMode'
-const captionsEnabledKey = 'CaptionsEnabled'

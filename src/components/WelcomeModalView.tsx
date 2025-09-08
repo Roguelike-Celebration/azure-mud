@@ -13,10 +13,6 @@ export default function WelcomeModalView (props: {}) {
         people.
       </p>
       <p>
-        You may see or hear others on videochat, but they can&apos;t see or hear you
-        unless you explicitly turn on your audio or video.
-      </p>
-      <p>
         Our hope is to facilitate smaller group conversations, to capture the feel of an in-person conference, and to give
         you a fun and playful space to explore with your fellow attendees.
       </p>
