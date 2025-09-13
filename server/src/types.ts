@@ -73,6 +73,8 @@ export enum ValidColors {
   Blue = 'Blue',
   Cyan = 'Cyan',
   Green = 'Green',
+  Lime = 'Lime',
+  Olive = 'Olive',
   Magenta = 'Magenta',
   Orange = 'Orange',
   Red = 'Red',
