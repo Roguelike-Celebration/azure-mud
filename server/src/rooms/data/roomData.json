@@ -3,7 +3,7 @@
     "displayName": "Obelisk",
     "shortName": "obelisk",
     "id": "obelisk",
-    "description": "An ominous hum fills the air, shaking you to your very core. A rhythmic pulsing comes from an enormous stone obelisk hovering in place at the exact center of the circus grounds. You feel gravity obeying new laws here, tents drawn upwards without the need of support, ropes attached to nothing but taut all the same. <br/><br/>At the base of the obelisk you see cultists swaying in time with the pulsing, creating some otherworldly dance that fills you with the need to share knowledge. The cultists move from person to person throughout the crowd, handing out pencils and scraps of paper, and then reverently collecting them and pinning them to the obelisk in positions of honor.<br/><br/> You can also return to the [[Pavilion]] or continue to the [[Big Top]].",
+    "description": "An ominous hum fills the air, shaking you to your very core. A rhythMic pulsing comes from an enormous stone obelisk hovering in place at the exact center of the circus grounds. You feel gravity obeying new laws here, tents drawn upwards without the need of support, ropes attached to nothing but taut all the same. <br/><br/>At the base of the obelisk you see cultists swaying in time with the pulsing, creating some otherworldly dance that fills you with the need to share knowledge. The cultists move from person to person throughout the crowd, handing out pencils and scraps of paper, and then reverently collecting them and pinning them to the obelisk in positions of honor.<br/><br/> You can also return to the [[Pavilion]] or continue to the [[Big Top]].",
     "roomId": "obelisk",
     "hasNoteWall": true,
     "noteWallData": {
@@ -26,7 +26,7 @@
     "displayName": "Pavilion",
     "shortName": "pavilion",
     "id": "pavilion",
-    "description": "You enter the circus pavilion, a vibrant place suffuse with life as people move from tent to tent to see the curiosities and performances. You see humans and goblins, centaurs and nymphs, and even a group of vacationing Barathrumites. Balloons of every shape and color hover over the heads of small children who dash around haphazardly between one attraction or the next. <br/><br/>The path before you circles a bonfire whose flame glows a brilliant white. Just behind that you see the [[Obelisk]]. To the right you see a [[Tam's Souvenirs->souvenirs]], and past that you see the [[Unconferencing Menagerie]]. To the left you see [[Madam Chrysalia's Future Hut->futureHut]], and just past that is a sign announcing entrance into the [[Carnival Games]] alley.<br/><br/>You can also continue forward to the [[Big Top]].",
+    "description": "You enter the circus pavilion, a vibrant place suffuse with life as people move from tent to tent to see the curiosities and performances. You see humans and goblins, centaurs and nymphs, and even a group of vacationing Barathrumites. Balloons of every shape and color hover over the heads of small children who dash around haphazardly between one attraction or the next. <br/><br/>The path before you circles a bOnfire whose flame glows a brilliant white. Just behind that you see the [[Obelisk]]. To the right you see a [[Tam's Souvenirs->souvenirs]], and past that you see the [[Unconferencing Menagerie]]. To the left you see [[Madam Chrysalia's Future Hut->futureHut]], and just past that is a sign announcing entrance into the [[Carnival Games]] alley.<br/><br/>You can also continue forward to the [[Big Top]].",
     "hidden": false,
     "roomId": "pavilion",
     "hasNoteWall": true,
@@ -42,7 +42,7 @@
     "displayName": "Madam Chrysalia's Future Hut",
     "shortName": "future hut",
     "id": "futureHut",
-    "description": "You enter a cocoon of colorful silks and earthy scents. Crystals and herbs line the flat surfaces with mindful abandon, each one allowed to exist in its own right, but carefully organized by broader category. This controlled chaos extends to the shop owner, who stands to one side of the room among an explosion of painted cards, raucous patterns, and a mismatched pile of scents and silks that nonetheless somehow manage to create a feeling of comfort and homeliness. [[Madam Chrysalia->madamChrysalia]] greets you with a warm smile, welcoming you forward with a wave of one of her four silk-draped, white-furred arms. On the table in front of her lies a stack of cards. She offers to pull a card for you.<br/><br/>To the side of the room you approach the table full of crystals. You may not immediately know what each crystal does, but you can see them clearly labelled as “Color Changing”. You suppose you could just grab one and see what happens. Or you could instead grab a crystal labeled “Reset”.",
+    "description": "You enter a cocoon of colorful silks and earthy scents. Crystals and herbs line the flat surfaces with mindful abandon, each one allOwed to exist in its own right, but carefully organized by broader category. This controlled chaos extends to the shop owner, who stands to one side of the room among an explosion of painted cards, raucous patterns, and a mismatched pile of scents and silks that nonetheless somehow manage to create a feeling of comfort and homeliness. [[Madam Chrysalia->madamChrysalia]] greets you with a warm smile, welcoming you forward with a wave of one of her four silk-draped, white-furred arms. On the table in front of her lies a stack of cards. She offers to pull a card for you.<br/><br/>To the side of the room you approach the table full of crystals. You may not immediately know what each crystal does, but you can see them clearly labelled as “Color Changing”. You suppose you could just grab one and see what happens. Or you could instead grab a crystal labeled “Reset”.",
     "specialFeatures": [
       "RAINBOW_DOOR",
       "DULL_DOOR"
@@ -54,7 +54,7 @@
     "displayName": "Tam's Souvenirs",
     "shortName": "souvenirs",
     "id": "souvenirs",
-    "description": "You approach a colorful, L-shaped booth with a jaunty sign over one side and vibrant triangular streamers dangling over the other. Both sides of the booth are completely covered in merchandise--low wooden risers of [[Obelisk-Scented Candles->item]], bouquets of [[Obelisk Balloons->item]], a full tabletop of [[Giant Obelisk Plushies->item]], and further multitudes of shelves, trays, and racks of every sort of Obelisk item one could ever desire.<br/><br/>Behind the table stands [[Tam, Dromad Merchant->dromadTam]]. He is wearing an enormous Obelisk hat that stretches nearly twice again his own height, though such a thing is not visibly for sale here. You see another small obelisk labeled Not For Sale that you have an insatiable urge to [[touch->drinkPolymorph]].<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "You approach a colorful, L-shaped booth with a jaunty sign over one side and vibrant triangular streamers dangling over the other. Both sides of the booth are completely covered in meRchandise--low wooden risers of [[Obelisk-Scented Candles->item]], bouquets of [[Obelisk Balloons->item]], a full tabletop of [[Giant Obelisk Plushies->item]], and further multitudes of shelves, trays, and racks of every sort of Obelisk item one could ever desire.<br/><br/>Behind the table stands [[Tam, Dromad Merchant->dromadTam]]. He is wearing an enormous Obelisk hat that stretches nearly twice again his own height, though such a thing is not visibly for sale here. You see another small obelisk labeled Not For Sale that you have an insatiable urge to [[touch->drinkPolymorph]].<br/><br/>You can also return to the [[Pavilion]].",
 	  "hidden": false,
     "roomId": "souvenirs"
   },  
@@ -78,11 +78,11 @@
     "displayName": "Unconferencing Menagerie",
     "shortName": "menagerie",
     "id": "unconferencingHub",
-    "description": "You step into the eastern wing of the circus, labelled as the Unconferencing Menagerie. This tent is split into 4 smaller tents that are each claimed by a collection of weirdos proclaiming their particular interests. It would appear that this wing of the circus is devoted to lively discussions of assorted topics, though it seems those discussions happen in some questionable locations. You see tents labelled [[Weird Lil Guys Petting Zoo]], [[Strong Man Tower]], [[Clown Containment Pit]], and [[The Red Velvet]].<br/><br/>You see a tent pole in the center, displaying the current topics of discussion and their room assignments. Just above that list of topics is a sign that reads 'Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each unconferencing block, moderators will assign the top four topics to rooms. Have fun!'<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "You step into the eastern wing of the circus, labelled as the UnconFerencing Menagerie. This tent is split into 4 smaller tents that are each claimed by a collection of weirdos proclaiming their particular interests. It would appear that this wing of the circus is devoted to lively discussions of assorted topics, though it seems those discussions happen in some questionable locations. You see tents labelled [[Weird Lil Guys Petting Zoo]], [[Strong Man Tower]], [[Clown Containment Pit]], and [[The Red Velvet]].<br/><br/>You see a tent pole in the center, displaying the current topics of discussion and their room assignments. Just above that list of topics is a sign that reads 'Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each unconferencing block, moderators will assign the top four topics to rooms. Have fun!'<br/><br/>You can also return to the [[Pavilion]].",
     "hidden": false,
     "hasNoteWall": true,
     "noteWallData": {
-      "roomWallDescription": "Nearby, an off-duty strong man holds a sign whose text reads \"UNCONFERENCE TOPIC SUGGESTIONS!\" A smaller sign nailed at a jaunty angle clarifies \"Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each uncoferencing block, moderators will assign the top four topics to rooms. Have fun!\"",
+      "roomWallDescription": "Nearby, an off-duty strong man holds a sign whose text reads \"UNCONFERENCE TOPIC SUGGESTIONS! Write what you want to chat with others about, and upvote topics you find interesting. Five minutes into each uncoferencing block, moderators will assign the top four topics to rooms. Have fun!\"",
       "noteWallButton": "Inspect the topics",
       "addNoteLinkText": "suggest a topic",
       "addNotePrompt": "What would you like to suggest?",
@@ -94,7 +94,7 @@
     "displayName": "Weird Lil Guys Petting Zoo",
     "shortName": "lil guys zoo",
     "id": "unconfLilGuys",
-    "description": "You enter the oddly-named 'Weird Lil Guys Petting Zoo' and find yourself face to face with a number of short, stocky people with mustaches who approach you and offer their heads to you. Some of these people appear to be human while others appear to be oddly-shaped blobs of flesh with any number of appendages in place of arms. All of them have well-oiled mustaches, even those who otherwise present as feminine. The attention of this bizarre crowd is somewhat unsettling, but they do not appear to be in any way hostile. They respect your personal space, keeping a few feet back, but just within reach so that should you stretch out your arm to offer a pet, they might lean forward to accept. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
+    "description": "You enter the oddly-named 'Weird Lil Guys Petting Zoo' and find yourself face to face with a number of short, stocky people with mustaches who approach you and offer their heads to you. Some of these people appear to be human while others appear to be oddly-shaped blobs of flesh with any number of appendages in place of arms. All of them have well-oiled mustaches, even thOse who otherwise present as feminine. The attention of this bizarre crowd is somewhat unsettling, but they do not appear to be in any way hostile. They respect your personal space, keeping a few feet back, but just within reach so that should you stretch out your arm to offer a pet, they might lean forward to accept. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
     "hidden": false,
     "roomId": "unconfLilGuys"
   },  
@@ -102,7 +102,7 @@
     "displayName": "Strong Man Tower",
     "shortName": "strong man",
     "id": "unconfStrongMan",
-    "description": "You walk into Strong Man Tower, a space named after not a fabricated tower made of stone, but of men clasping strongly to one another in support. Each man grips his fellows tightly to maintain the integrity of the construction, but also their friendship. This tower cycles as its members grow tired, but it is currently 12 layers tall, each layer of men standing atop their compatriots, and shuffling as members climb up and down to replace or be replaced. Over time the style of construction of this 'tent' shifts to match its members' personal taste and flexibility. It is currently in a baroque style. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
+    "description": "You walk into Strong Man Tower, a space named after not a fabricated tower made of stone, but of men clasping stRongly to one another in support. Each man grips his fellows tightly to maintain the integrity of the construction, but also their friendship. This tower cycles as its members grow tired, but it is currently 12 layers tall, each layer of men standing atop their compatriots, and shuffling as members climb up and down to replace or be replaced. Over time the style of construction of this 'tent' shifts to match its members' personal taste and flexibility. It is currently in a baroque style. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
     "hidden": false,
     "roomId": "unconfStrongMan"
   },   
@@ -110,7 +110,7 @@
     "displayName": "Clown Containment Pit",
     "shortName": "clown pit",
     "id": "unconfClownPit",
-    "description": "The grass beneath your feet turns to barren ash as you approach a wide pit dozens of feet deep and surrounded with warning signs and tape. Within that pit you feel the weight of glowing red eyes and a palpable malevolence. Shivers run up your spine as your senses alert you that danger is present. A foul wind blows the smell of death into your lungs as an ominous honk splits the air and goes suddenly quiet. Too quiet. You know this is listed as a meeting place, but cannot help be concerned about spending too much time here. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
+    "description": "The grass beneath your feet turns to barren ash as you approach a wide pit dozens of feet deep and surrounded with warning signs and tape. Within that pit you feel the weight of glowing red eyes and a palpable malevolence. Shivers run up your spine as your senses alert you that danger is present. A foul wind blows the smell of death into your lungs as an ominous honk splits the air and goes suddenly quiet. Too quiet. You know this is lisTed as a meeting place, but cannot help be concerned about spending too much time here. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
     "hidden": false,
     "roomId": "unconfClownPit"
   },   
@@ -118,7 +118,7 @@
     "displayName": "The Red Velvet",
     "shortName": "red velvet",
     "id": "unconfRedVelvet",
-    "description": "You enter a dimly lit space that surrounds a dancing stage occupied with the oiled bodies of extremely attractive individuals wearing nothing but thin strips of leather and lace. The dancers perform improbable feats of strength, suspending themselves sideways or upside down with nothing but their own bodies for support. Music thumps in rhythm with their movements, and you feel that pulling your eyes away from the awesome performance before you gets only more difficult with time. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
+    "description": "You enter a dimly lit space that surrounds a dancing stage occupied with the oiled bodies of extremely attractive individuals wearing nothing but thin strips of leather and lace. The dancers perform improbable feats of strength, suspending themselves sideways or upside down with nothing but their own bodies for support. Music thumps in rhYthm with their movements, and you feel that pulling your eyes away from the awesome performance before you gets only more difficult with time. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
     "hidden": false,
     "roomId": "unconfRedVelvet"
   },   
@@ -126,11 +126,11 @@
     "displayName": "Carnival Games",
     "shortName": "carnival games",
     "id": "carnivalGames",
-    "description": "The sounds around you shift into the cacophony of ringing bells and victory fanfare accompanied by flashing lights. Machines of every size and shape line the path, each one begging for your attention as you pass. You see a massive hammer waiting to be smashed into a pillar with a bell at the top, several small ramps with heavy balls waiting to be rolled, and any number of things waiting to be shot with metal beads, water, or foam projectiles.<br/><br/>Nearby you can see [[The Magic Castle]], a [[Merry Go Round]], [[Ol' Flecto's Hall of Mirrors->hallOfMirrors]], and a back alleyway leading to some [[Game Tables]].<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "The sounds around you shift into the cacophony of ringing bells and victory fanfare accompanied by flashing lights. Machines of every size and shape line the path, each one begging for your attEntion as you pass. You see a massive hammer waiting to be smashed into a pillar with a bell at the top, several small ramps with heavy balls waiting to be rolled, and any number of things waiting to be shot with metal beads, water, or foam projectiles.<br/><br/>Nearby you can see [[The Magic Castle]], a [[Merry Go Round]], [[Ol' Flecto's Hall of Mirrors->hallOfMirrors]], and a back alleyway leading to some [[Game Tables]].<br/><br/>You can also return to the [[Pavilion]].",
   	"hidden": false,
   	"hasNoteWall": true,
     "noteWallData": {
-      "roomWallDescription": "Among the finished games you see a book penned by those who create such things. \"Procedural Generation Surprises\" is written on the cover and there are some pens nearby for you to add your own stories.",
+      "roomWallDescription": "Among the carnival games you see a book penned by those who create such things. \"Procedural Generation Surprises\" is written on the cover and there are some pens nearby for you to add your own stories.",
       "noteWallButton": "Contribute",
       "addNoteLinkText": "Contribute",
       "addNotePrompt": "Tell us of a time a procedural generator has surprised or delighted you!",
@@ -142,7 +142,7 @@
     "displayName": "The Magic Castle",
     "shortName": "magic castle",
     "id": "magicCastle",
-    "description": "You enter a dark room whose walls seep with the cloying scent of axe body spray. Middle-aged balding men are everywhere, offering to do card tricks at you when you least expect. They beg and plead for you to watch their show that they swear will blow your mind. Colorful cloths are pulled from pockets belonging to confused passersby, and several different magicians are swearing that a rabbit will be next, though you thankfully have not seen such an event happening. <br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You enter a dark room whose walls seep with the cloying scent of axe body spray. Middle-aged balding men are everywhere, offering to do card tricks at you when you least expect. They beg and plead for you to watch their show that they swEar will blow your mind. Colorful cloths are pulled from pockets belonging to confused passersby, and several different magicians are swearing that a rabbit will be next, though you thankfully have not seen such an event happening. <br/><br/>You can also return to the [[Carnival Games]].",
     "hidden": false,
     "roomId": "magicCastle"
   },   
@@ -150,7 +150,7 @@
     "displayName": "Game Tables",
     "shortName": "game tables",
     "id": "gameTables",
-    "description": "You enter a seedy back alleyway where shifty-eyed people in trench coats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure.<a href=\"https://store.steampowered.com/sale/roguelikecelebration2025 \" target=\"_blank\">Visit the Steam Sale!</a><br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You enter a seedy back alleyway where shifty-eyed people in trench coats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running theSe tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure.<a href=\"https://store.steampowered.com/sale/roguelikecelebration2025 \" target=\"_blank\">Visit the Steam Sale!</a><br/><br/>You can also return to the [[Carnival Games]].",
 	"hidden": false,
     "roomId": "gameTables"
   },   
@@ -158,7 +158,7 @@
     "displayName": "Merry-Go-Round",
     "shortName": "merry go round",
     "id": "merryGoRound",
-    "description": "You approach a massive, spinning machine styled after a merry-go-round, but where you might expect there to be large poles attached to floor and ceiling suspending a statue of an animal, you instead just see free-roaming beasts and an assortments of seats. Those seats are designed not for human proportions, but for these beasts. Indeed, you see that each beast appears to draw the eye of a potential rider, and then brings them dutifully to its chosen nest. The beast then waits to be sat upon by the rider. The ride has no one managing it, the creatures seem to be in charge of themselves, and are quite insistent on this riding-based relationship.<br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You approach a massive, spinning machine styled after a merry-go-round, but where you might expect there to be large poles attached to floor and ceiling suspending a statue of an animal, you instead just see free-roaming beasts and an assortments of seats. Those seats are designed not for human proportions, but for these beasts. Indeed, you see that each beast appears to draw the eye of a potential rider, and then brings them dutifully to its chosen nest. The beast then waits to be sat upon by the rider. The ride has no one managing it, the creatures seem to be in charge of themselVes, and are quite insistent on this riding-based relationship.<br/><br/>You can also return to the [[Carnival Games]].",
 	  "hidden": false,
     "roomId": "merryGoRound"
   },   
@@ -166,9 +166,25 @@
     "displayName": "Ol' Flecto's Hall of Mirrors",
     "shortName": "hall of mirrors",
     "id": "hallOfMirrors",
-    "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surface. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting their proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black absence of light, nestled behind the silvery surface of an armoire. You feel like you could step inside. <br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surface. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting their proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black abseNce of light, nestled behind the silvery surface of an armoire. You feel like you could [[step inside->hallOfMirrors2]]. <br/><br/>You can also return to the [[Carnival Games]].",
     "hidden": false,
     "roomId": "hallOfMirrors"
+  },      
+  "hallOfMirrors2": {
+    "displayName": "Ol' Flecto's Hall of Mirrors",
+    "shortName": "hall of mirrors",
+    "id": "hallOfMirrors2",
+    "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surface. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting their proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black abseNce of light, nestled behind the silvery surface of an armoire. You feel like you could [[step inside->hallOfMirrors3]]. <br/><br/>You can also return to the [[Carnival Games]].",
+    "hidden": false,
+    "roomId": "hallOfMirrors2"
+  },      
+  "hallOfMirrors3": {
+    "displayName": "Ol' Flecto's Hall of Mirrors",
+    "shortName": "hall of mirrors",
+    "id": "hallOfMirrors3",
+    "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surface. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting their proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black abseNce of light, nestled behind the silvery surface of an armoire. You feel like you could [[step inside->mirrorLand]]. <br/><br/>You can also return to the [[Carnival Games]].",
+    "hidden": false,
+    "roomId": "hallOfMirrors3"
   },   
   "dressingRooms": {
     "displayName": "Dressing Rooms",
@@ -201,5 +217,101 @@
     "description": "You duck below the stage and find yourself standing before a grand and glorious castle made of dust. Its spires reach up into the air far higher than your mind believes should be possible, and elevators ride up and down those spires delivering people and objects onto the stage to surprise and delight the audience. The dusty thoroughfare here is packed with people and craftsmen offering costume repairs, face paint touch-ups, or any other service the show might need to continue. <br/><br/>You can also return to the [[Big Top]].",
     "hidden": false,
     "roomId": "underTheStage"
+	},     
+  "mirrorLand": {
+    "displayName": "Mirror Land",
+    "shortName": "mirror land",
+    "id": "mirrorLand",
+    "description": "You appear into a strange space with no walls where the ground is split into hexagons of different colors and textures. As you walk around you come into contact with blue hexes that appear to create three mirror images in a triangle around you. Touching pink hexes appears to create six of these mirror images one tile away from where you stand. These mirror images quickly drift away into the hyperbolic geometry of this strange land you now find yourself in. <br/><br/>You look into the distance and find two points of interest among the mirrored landscape. To to west you see a [[Ship of Books]] and to the east you see the [[Temple of the Black and White Flame]].",
+    "hidden": true,
+    "roomId": "mirrorLand"
+	},     
+  "shipOfBooks": {
+    "displayName": "Ship of Books",
+    "shortName": "ship of books",
+    "id": "shipOfBooks",
+    "description": "You blink and find yourself suddenly standing on the deck of a ship made of books, its sails thousands of overlapping pages, and the sea below made of dark black ink. A soft but steady breeze carries the ship across the obsidian ocean and swirls the scents of dusty pages and rich ink. As the ship moves, pages fall from the overhead sails like leaves drifting slowly to become part of the deck you stand atop. You see no clear destination ahead, but for the moment just standing here among the wind sets your mind free.<br/><br/>To the north you see [[Mirror Land]] and to the south, high above the waves, a towering [[Cloud Maze]].",
+    "hidden": true,
+    "roomId": "shipOfBooks"
+  },     
+  "cloudMaze": {
+    "displayName": "Cloud Maze",
+    "shortName": "cloud maze",
+    "id": "cloudMaze",
+    "description": "You step into a three-dimensional puzzle of non-euclidean walkways made entirely of translucent white clouds. Fluffy steps ascend shifting staircases that blow gently in the breeze, slowly dancing from one position to the next. Diving boards and flying trapeze stand watch from above and you see people moving through the air around them, diving into, over, and around the clouds that make up this space. <br/><br/>To the east you see [[Tumblr Girls Clown Husbandry]] and to the north you find the [[Ship of Books]].",
+    "hidden": true,
+    "roomId": "cloudMaze"
+  },     
+  "tumblrGirls": {
+    "displayName": "Tumblr Girls Clown Husbandry",
+    "shortName": "tumblr girls",
+    "id": "tumblrGirls",
+    "description": "Feral clowns hiss and bite within the caring hands of equally feral Tumblr girls who are determined to rehabilitate them. Young women in colorful cardigans stand gathered around in a circle discussing breeds and training techniques while nearby their pets play together, some with confused or concerned looks on their face. Every breed of clown and mime are being handled here equally, their particular needs catered for with treats or toys as appropriate, and any conflict that might arise from the hostilities between the two factions are immediately addressed with spray bottles to the face. <br/><br/>To the west from here you see a beautiful [[Cloud Maze]] and to the east you see a cavern wall that tapers into the [[Bottom of the Clown Pit]].",
+    "hidden": true,
+    "roomId": "tumblrGirls"
+  },     
+  "pitBottom": {
+    "displayName": "Bottom of the Clown Pit",
+    "shortName": "pit bottom",
+    "id": "pitBottom",
+    "description": "You look up into the distance and notice what appeared to be the sun is actually just a skylight at the top of what you realize now is a massive system of caverns that reach up impossibly high. The plains end here in a terminus among high rock walls and enormous boulders. Among the stones are eyes seething with malice. Colorful tufts of hair jut out at strange angles, shifting with your every move. <br/><br/>To the north you see [[The Frontlines]] of an active war. To the west you find a small tunnel in the rock wall with a sign labelling it [[Tumblr Girls Clown Husbandry]].",
+    "hidden": true,
+    "roomId": "pitBottom"
+  },     
+  "frontlines": {
+    "displayName": "The Front Lines",
+    "shortName": "front lines",
+    "id": "frontlines",
+    "description": "You enter the frontlines of a massive conflict being fought by thousands upon thousands of clowns and mimes. The mimes stand on one side holding invisible weaponry spraying invisible bullets into the charging forces of tiny clown tanks. On the other side of the battlefield, colorful troops stand holding flowers that spray their own watery projectiles. Troops on both sides fall to the ground bloodlessly. Both sides of this battle appear to be going through the motions of the conflict without clear direction, and upon further inspection you don't seem to see a command tent present on either side. <br/><br/>To the north you see the [[Mime Warren]] in the distance. To the south, at a similar distance, you see the [[Bottom of the Clown Pit]].",
+    "hidden": true,
+    "roomId": "frontlines"
+  },     
+  "mimeWarren": {
+    "displayName": "Mime Warren",
+    "shortName": "mime warren",
+    "id": "mimeWarren",
+    "description": "Silence overwhelms you as you step into a canyon made of stratefied stone of alternating dark and light coloration. The canyon walls and oppressive silence amplify even the slightest rustling of cloth into a cacophonous assault on the senses, creating an unsettling atmosphere. Adding to that feeling are hundreds upon hundreds of monocromatic people standing along the edges with their hands up creating impassable walls. Some stand and move in tandem as if in conversation, others perform elaborately emotional routines depicting stories of invisible children or pets, others leap about in rapturous, but silent, joy. <br/><br/>Looking to the west you see the [[Temple of the Black and White Flame]]. On the other side of the canyon's curve it opens up to a flattened plains where you find [[The Front Lines]] of a war.",
+    "hidden": true,
+    "roomId": "mimeWarren"
+  },     
+  "flameTemple": {
+    "displayName": "Temple of the Black and White Flame",
+    "shortName": "flame temple",
+    "id": "flameTemple",
+    "description": "You walk into a sacred space of silence where a brilliant white fire burns in a central brazier. The flame is the purest white, but streaks of black move through it sporadically, as if echoing the beating of some distant heart. Behind that flame stands the dancing image of two lovers, standing entwined but neither one existing quite in time with each other or the room around them. They shift into and out of perception, little more than a heat shimmer behind the flame. You somehow feel their presence all throughout this place. You do not know who they are, but you get the sense that they are responsible for watching over this circus. <br/><br/>To the west you see the otherworldly [[Mirror Land]] and to the east you see the monochromatic [[Mime Warren]].",
+    "hidden": true,
+    "roomId": "flameTemple"
+  },     
+  "golgotha": {
+    "displayName": "Golgotha",
+    "shortName": "golgotha",
+    "id": "golgotha",
+    "description": "You find yourself in the bottom room of a subterranean bunker within a room that appears to be the collection space for the run-off sludge from every floor above it. The room is full of industrial equipment rusted and corroded with time and exposure to hazardous materials, but still somehow functional despite the wear. As you examine the space, you notice a series of trash chutes in the walls, and a chittering sound coming from those chutes. At the center of the room is a deep pool of noxious fluid that you must take extreme care not to allow to touch any exposed skin. In the center of that pool you see a being who appears to be either the source of much of this sludge, or perhaps just made from similar material. The being looks at you and introduces itself as Chad of The Cloaca.<br/><br/>You notice a hole in a wall to the south that you think you can [[step through -> rebellion]]",
+    "hidden": true,
+    "roomId": "golgotha"
+  },     
+  "rebellion": {
+    "displayName": "Elephant Rebellion HQ",
+    "shortName": "elephant rebellion",
+    "id": "rebellion",
+    "description": "You step into a large underground cavern that extends dozens of feet up and out, offering a massive empty space with slightly curved floors and rocks arranged intentionally to allow comfortable movement. Moving around this space are a collection of bipedal elephants dressed in a mixture of circus attire and military garb. As you walk through you hear mutterings of discontent about circuses as a whole and you begin to realize the circus attire is worn by active spies investigating and infiltrating the nearby event for signs of animal abuse. You see medical tents and comfortable living arrangements set aside nearby, but all of it seems to be empty. Either they have not yet done their liberation mission, or there was no abuse happening and they returned blessedly empty-handed.<br/><br/>As you explore the eastern side of the camp, a fog rises around you and you suddenly appear in the middle of a [[Cloud Maze]].",
+    "hidden": true,
+    "roomId": "rebellion"
+  },     
+  "fortySeven": {
+    "displayName": "Room Forty Seven",
+    "shortName": "room forty seven",
+    "id": "fortySeven",
+    "description": "You enter a royal chamber beset with fine gold, colorful gemstones, and rainbow decor that gives the feeling of flamboyant opulence most people would be terrified to display. At the center of this visual cacophony you find a man who stands in stark contrast to the explosive colors of the room. The [[King of the Mimes]] is seated with an imposing posture that begs no question as to his authority. On his lap rests a colorful crown that matches the room more than the person.<br/><br/>You look around and see no entrances or exits along the walls of this space. You know how you got in, but perhaps he might know a way out.",
+    "hidden": true,
+    "roomId": "fortySeven"
+  },
+  "eraja": {
+    "displayName": "Eraja",
+    "shortName": "eraja",
+    "id": "eraja",
+    "description": "You step into the streets of a city lined with purple flags and artfully-crafted buildings featuring beautiful detailing with elaborate filligree. The people here clearly care deeply about the beauty of the space in which they live. You suddenly realize that you were not simply dropped into the streets, but specifically in front of a particular man. His hair is brightly-colored in a rainbow pattern, but slicked back into a more professional style, and his nose is paler than the rest of his face, as if it has been covered until very recently. Though his bearing is relaxed, you smile into the face of the King of Clowns. He nods at you knowingly, but continues on his way down the street. You simply watch him go.",
+    "hidden": true,
+    "roomId": "eraja"
   }
 }
