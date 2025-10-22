@@ -545,6 +545,30 @@ export const UnlockableBadges: Badge[] = [
     emoji: '🔟',
     description: 'Attended the 10th Roguelike Celebration in 2025!',
     category: BadgeCategories.Year2025
+  },
+  {
+    emoji: 'mimeCrown',
+    description: 'Met the king of mimes',
+    isCustom: true,
+    category: BadgeCategories.Year2025
+  },
+  {
+    emoji: 'rainbowCrown',
+    description: 'Met the king of clowns',
+    isCustom: true,
+    category: BadgeCategories.Year2025
+  },
+  {
+    emoji: 'mirror',
+    description: 'Reached the other side',
+    isCustom: true,
+    category: BadgeCategories.Year2025
+  },
+  {
+    emoji: 'chadOfCloaca',
+    description: 'Met Chad of the Cloaca',
+    isCustom: true,
+    category: BadgeCategories.Year2025
   }
 ]
 
