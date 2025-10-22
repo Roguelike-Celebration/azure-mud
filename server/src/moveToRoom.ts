@@ -174,7 +174,7 @@ function awardBadges (user: User, roomId: string) {
     ['golgotha', 'chadOfCloaca'],
     ['fortySeven', 'mimeCrown'],
     ['eraja', 'rainbowCrown'],
-    ['mirrorLand', 'mirror']	
+    ['mirrorLand', 'mirror']
   ]
 
   const unlockedEmoji: Badge[] = []
