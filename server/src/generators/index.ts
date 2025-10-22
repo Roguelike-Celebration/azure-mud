@@ -10,7 +10,15 @@ interface Generator {
 const generators: {[name: string]: Generator} = {
   madamChrysalia,
   dromadTam,
-  polymorph
+  polymorph,
+  balloonAnimals,
+  popcorn,
+  snowCone,
+  deepFriedSnacks,
+  obeliskSouvenirs,
+  barathrumites,
+  mimeKing,
+  tarotPull
 }
 
 export default generators

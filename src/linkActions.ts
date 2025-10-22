@@ -5,6 +5,9 @@ export const linkActions = {
   generateFood: () => {
     pickUpRandomItemFromList('vendingMachineFood')
   },
+  generateBalloon: () => {
+    pickUpRandomItemFromList('balloonAnimals')
+  },
   playCraneGame: () => {
     pickUpRandomItemFromList('craneGame')
   },
