@@ -33,7 +33,7 @@ export const generate = () => {
     card: [
       'the Fool. An oddly familiar figure strolls through an open field, chasing a butterfly. #card0#',
       'the Magician. A man lifts a brush to the canvas of his bald head, creating a horned white rabbit leaning down to paint; the rabbit lowers its own brush to the curve of the man\'s cheek. Together, they paint themselves into being. #card1#',
-      'the High Priestess. Madam Chrysalia herself watches from the image, holding a single card out to you. #card2#', 
+      'the High Priestess. Madam Chrysalia herself watches from the image, holding a single card out to you. #card2#',
       'the Chariot. Two quartz Sphinxes brace a circus cannon between their great paws, proud eyes glittering. The barrel is empty, waiting for a new challenger. #card7#',
       'Strength. A Lion-woman, surrounded by a rising ring of fire, offers an armful of wildflowers. A whip lies broken on the ground. #card8#',
       'the Hermit. An ancient, stooped Cebinae monk cranks the handle of a barrel organ with long, agile fingers, his furred face wistful as old memories hang like music in the empty street. #card9#',

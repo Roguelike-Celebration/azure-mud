@@ -10,7 +10,7 @@ export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
       'Find the other king. His colors will tell you his origins. /go there.',
-      'Ask the Blue Prince for your destination\'s name.',	  
+      'Ask the Blue Prince for your destination\'s name.'
     ]
   })
 

@@ -51,9 +51,7 @@ export const generate = () => {
       ' Portal Summoning Kit',
       ' Earrings',
       '-patterned Scarves',
-      ' Lollipop (Suspicious)',
-
-	  
+      ' Lollipop (Suspicious)'
     ]
   })
 
