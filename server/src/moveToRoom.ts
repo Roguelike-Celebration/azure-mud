@@ -171,6 +171,10 @@ function awardBadges (user: User, roomId: string) {
     ['buildAToy', 'goblin_barbie'],
     ['ask', 'goblin_appreciation']
     // begin 2025
+    ['golgotha', 'chadOfCloaca'],
+    ['fortySeven', 'mimeCrown'],
+    ['eraja', 'rainbowCrown'],
+    ['mirrorLand', 'mirror']	
   ]
 
   const unlockedEmoji: Badge[] = []
