@@ -164,7 +164,7 @@ export const generate = () => {
     ],
 
     card17: [
-      'Fall or fly, your moment awaits.'
+      'Fall or fly, your moment awaits.',
       'You hear the rush of wings.',
       'You are filled with hope.',
       'Tiny lights sparkle beneath your skin.',
@@ -203,7 +203,7 @@ export const generate = () => {
       '8',
       '10',
       '27',
-      '42,'
+      '42',
       '67',
       '69',
       '201',
