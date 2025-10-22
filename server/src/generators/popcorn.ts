@@ -41,7 +41,7 @@ export const generate = () => {
       'Banana Ketchup',
       'Matcha',
       'Smoked Salt',
-      'Angostura',',
+      'Angostura',
       'Guacamole',
       'Tajin',
       'Mangonada',

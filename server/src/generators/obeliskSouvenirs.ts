@@ -26,7 +26,7 @@ export const generate = () => {
       ' Incorporated Brochure',
       ' Sock Puppet',
       ' Brand Gum',
-      ' Brand Mints',',
+      ' Brand Mints',
       ' Brand Lozenges',
       ' Brand Cough Drops',
       ' Brand Steak Sauce',
