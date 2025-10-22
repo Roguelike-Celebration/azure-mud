@@ -169,7 +169,7 @@ function awardBadges (user: User, roomId: string) {
     ['coconut', '👁️'],
     ['tenGold', 'turkey_leg'],
     ['buildAToy', 'goblin_barbie'],
-    ['ask', 'goblin_appreciation']
+    ['ask', 'goblin_appreciation'],
     // begin 2025
     ['golgotha', 'chadOfCloaca'],
     ['fortySeven', 'mimeCrown'],
