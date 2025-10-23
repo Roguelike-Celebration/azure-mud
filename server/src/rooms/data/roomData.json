@@ -26,7 +26,7 @@
     "displayName": "Pavilion",
     "shortName": "pavilion",
     "id": "pavilion",
-    "description": "You enter the circus pavilion, a vibrant place suffuse with life as people move from tent to tent to see the curiosities and performances. You see humans and goblins, centaurs and nymphs, and even a group of vacationing [[Barathrumites]]. Balloons of every shape and color hover over the heads of small children who dash around haphazardly between one attraction or the next, and you see a friendly acrobat handing out [[more balloons->generateBalloon]] . <br/><br/>The path before you circles a bOnfire whose flame glows a brilliant white. Just behind that you see the [[Obelisk]]. To the right you see a [[Tam's Souvenirs->souvenirs]], and past that you see the [[Unconferencing Menagerie]]. To the left you see [[Madam Chrysalia's Future Hut->futureHut]], and just past that is a sign announcing entrance into the [[Carnival Games]] alley.<br/><br/>You can also continue forward to the [[Big Top]].",
+    "description": "You enter the circus pavilion, a vibrant place suffuse with life as people move from tent to tent to see the curiosities and performances. You see humans and goblins, centaurs and nymphs, and even a group of vacationing [[Barathrumites->barathrumites]]. Balloons of every shape and color hover over the heads of small children who dash around haphazardly between one attraction or the next, and you see a friendly acrobat handing out [[more balloons->generateBalloon]]. <br/><br/>The path before you circles a bOnfire whose flame glows a brilliant white. Just behind that you see the [[Obelisk]]. To the right you see a [[Tam's Souvenirs->souvenirs]], and past that you see the [[Unconferencing Menagerie]]. To the left you see [[Madam Chrysalia's Future Hut->futureHut]], and just past that is a sign announcing entrance into the [[Carnival Games]] alley.<br/><br/>You can also continue forward to the [[Big Top]].",
     "hidden": false,
     "roomId": "pavilion",
     "hasNoteWall": true,
@@ -175,7 +175,7 @@
     "shortName": "hall of mirrors",
     "id": "hallOfMirrors2",
     "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surface. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting their proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black abseNce of light, nestled behind the silvery surface of an armoire. You feel like you could [[step inside->hallOfMirrors3]]. <br/><br/>You can also return to the [[Carnival Games]].",
-    "hidden": false,
+    "hidden": true,
     "roomId": "hallOfMirrors2"
   },      
   "hallOfMirrors3": {
@@ -183,7 +183,7 @@
     "shortName": "hall of mirrors",
     "id": "hallOfMirrors3",
     "description": "You enter a disorienting labyrinth of self reflections, your own face echoing back to you from every wall, floor, ceiling, or otherwise flat surface. The room itself appears to be crafted to resemble a living room, but every object is brilliantly reflective and angled to catch a guest's face as they wander. Your own eyes stare back at you from every direction, each surface altering their size and shape, some distorting their proportions to the point you barely recognize them. Among the infinite reflections you see a single spot of the black abseNce of light, nestled behind the silvery surface of an armoire. You feel like you could [[step inside->mirrorLand]]. <br/><br/>You can also return to the [[Carnival Games]].",
-    "hidden": false,
+    "hidden": true,
     "roomId": "hallOfMirrors3"
   },   
   "dressingRooms": {
@@ -254,7 +254,7 @@
     "displayName": "Bottom of the Clown Pit",
     "shortName": "pit bottom",
     "id": "pitBottom",
-    "description": "You look up into the distance and notice what appeared to be the sun is actually just a skylight at the top of what you realize now is a massive system of caverns that reach up impossibly high. The plains end here in a terminus among high rock walls and enormous boulders. Among the stones are eyes seething with malice. Colorful tufts of hair jut out at strange angles, shifting with your every move. <br/><br/>To the north you see [[The Frontlines]] of an active war. To the west you find a small tunnel in the rock wall with a sign labelling it [[Tumblr Girls Clown Husbandry]].",
+    "description": "You look up into the distance and notice what appeared to be the sun is actually just a skylight at the top of what you realize now is a massive system of caverns that reach up impossibly high. The plains end here in a terminus among high rock walls and enormous boulders. Among the stones are eyes seething with malice. Colorful tufts of hair jut out at strange angles, shifting with your every move. <br/><br/>To the north you see [[The Front Lines]] of an active war. To the west you find a small tunnel in the rock wall with a sign labelling it [[Tumblr Girls Clown Husbandry]].",
     "hidden": true,
     "roomId": "pitBottom"
   },     
@@ -302,7 +302,7 @@
     "displayName": "Room Forty Seven",
     "shortName": "room forty seven",
     "id": "fortySeven",
-    "description": "You enter a royal chamber beset with fine gold, colorful gemstones, and rainbow decor that gives the feeling of flamboyant opulence most people would be terrified to display. At the center of this visual cacophony you find a man who stands in stark contrast to the explosive colors of the room. The [[King of the Mimes]] is seated with an imposing posture that begs no question as to his authority. On his lap rests a colorful crown that matches the room more than the person.<br/><br/>You look around and see no entrances or exits along the walls of this space. You know how you got in, but perhaps he might know a way out.",
+    "description": "You enter a royal chamber beset with fine gold, colorful gemstones, and rainbow decor that gives the feeling of flamboyant opulence most people would be terrified to display. At the center of this visual cacophony you find a man who stands in stark contrast to the explosive colors of the room. The [[King of the Mimes->mimeKing]] is seated with an imposing posture that begs no question as to his authority. On his lap rests a colorful crown that matches the room more than the person.<br/><br/>You look around and see no entrances or exits along the walls of this space. You know how you got in, but perhaps he might know a way out.",
     "hidden": true,
     "roomId": "fortySeven"
   },
