@@ -2,7 +2,7 @@ import { pickUpRandomItemFromList, pickUpItem, sendChatMessage, displayMessageFr
 import { v4 as uuidv4 } from 'uuid'
 
 export const linkActions = {
-//-------------------------------------------PICK UP ITEMS-------------------------------------------
+  //-------------------------------------------PICK UP ITEMS-------------------------------------------
   generateFood: () => {
     pickUpRandomItemFromList('vendingMachineFood')
   },
@@ -42,7 +42,7 @@ export const linkActions = {
   deepFriedSnacks: () => {
     pickUpRandomItemFromList('deepFriedSnacks')
   },
-//-------------------------------------------SEND CHAT MESSAGE SECTION-------------------------------------------
+  //-------------------------------------------SEND CHAT MESSAGE SECTION-------------------------------------------
   // Ideally we would not have variable signatures in these functions.
   drinkPolymorph: (roomId: string) => { // Listen. Is this the correct way? No. Does it save me needing to write a new httpTrigger? Yes.
     sendChatMessage(uuidv4(), '/get colourful potion', roomId)
@@ -54,7 +54,7 @@ export const linkActions = {
     sendChatMessage(uuidv4(), '/get fortune cookie', roomId)
   },
 
-//-------------------------------------------DISPLAY MESSAGE SECTION-------------------------------------------
+  //-------------------------------------------DISPLAY MESSAGE SECTION-------------------------------------------
   readPoster: () => {
     displayMessageFromList('motivationPosters')
   },
@@ -121,7 +121,7 @@ export const linkActions = {
   barathrumites: () => {
     displayMessageFromList('barathrumites')
   },
-//-------------------------------------------MISC ACTION SECTION-------------------------------------------
+  //-------------------------------------------MISC ACTION SECTION-------------------------------------------
   pentagramHighTech: (roomId: string) => {
     pentagramAction('Impactful', roomId)
   },
