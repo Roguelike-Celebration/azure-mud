@@ -139,7 +139,7 @@ export const linkActions = {
   },
   spinAround: () => {
     spinTheRoom()
-  },
+  }
 }
 
 const pentagramAction = function (font: string, roomId: string) {
