@@ -62,7 +62,7 @@
     "displayName": "The Big Top",
     "shortName": "big top",
     "id": "theater",
-    "description": "You enter the central tent to find a massive stage. Performers circle the edges, and even more strangely the attention of everyone in the room appears to be focused on people who are just standing in the center. Talking. You decide to sit and listen for a while.<br/><br/>You can return to the [[Pavilion]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Dressing Rooms]], [[Props Closet]], [[Break Room]], [[Under The Stage]]. (Check the 'Happening Now' button on the left for speaker room assignments!)",
+    "description": "You enter the central tent to find a massive stage suffuse with the smell of unseen fried snacks. Performers circle the edges, and even more strangely the attention of everyone in the room appears to be focused on people who are just standing in the center. Talking. You decide to sit and listen for a while.<br/><br/>You can return to the [[Pavilion]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Dressing Rooms]], [[Props Closet]], [[Break Room]], [[Under The Stage]]. (Check the 'Happening Now' button on the left for speaker room assignments!)",
 	  "hidden": false,
 	  "hasNoteWall": true,
     "noteWallData": {
@@ -214,7 +214,7 @@
     "displayName": "Under The Stage",
     "shortName": "under stage",
     "id": "underTheStage",
-    "description": "You duck below the stage and find yourself standing before a grand and glorious castle made of dust. Its spires reach up into the air far higher than your mind believes should be possible, and elevators ride up and down those spires delivering people and objects onto the stage to surprise and delight the audience. The dusty thoroughfare here is packed with people and craftsmen offering costume repairs, face paint touch-ups, or any other service the show might need to continue. <br/><br/>You can also return to the [[Big Top]].",
+    "description": "You duck below the stage and find yourself standing before a grand and glorious castle made of dust. Its spires reach up into the air far higher than your mind believes should be possible, and elevators ride up and down those spires delivering people and objects onto the stage to surprise and delight the audience. The dusty thoroughfare here is packed with people and craftsmen offering costume repairs, face paint touch-ups, or any other service the show might need to continue. One of them stares directly (and intensely) at you from behind a cart offering [[fried snacks->deepFriedSnacks]] <br/><br/>You can also return to the [[Big Top]].",
     "hidden": false,
     "roomId": "underTheStage"
 	},     

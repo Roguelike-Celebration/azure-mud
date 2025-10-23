@@ -9,7 +9,7 @@ export const actionString = (tarotPull: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      'Madam Chrysalia gathers the cards, #shuffle# before lifting the top card, #card#.'
+      'Madam Chrysalia gathers the cards, #shuffle# before lifting the top card, #card#'
     ],
 
     shuffle: [
