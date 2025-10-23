@@ -39,6 +39,12 @@ export default function LoggedOutView () {
         </p>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <p>
+          <strong>Sign-in or password reset problems?</strong> If you&apos;re having trouble signing in to the MUD using this
+          page, please email us at <a href="mailto:contact@roguelike.club">contact@roguelike.club</a> for support. Including
+          if you tried doing a &quot;recover your account&quot; using the above form, and you didn&quot;t receive a password reset email.
+          That&apos;s a known problem for some users. Sorry for the inconvenience.
+        </p>
+        <p>
           <strong>We no longer support signing in with any form other than email.</strong> We&apos;re sorry if you used
           one of the third-party sign-ons in previous years. If you sign in using the same email you used for Twitter
           or Google, you should be able to recover your account (it will ask you to reset your password) - otherwise,
