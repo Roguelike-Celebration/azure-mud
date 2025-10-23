@@ -105,7 +105,7 @@ export const linkActions = {
   },
   talkToZara: () => {
     displayMessageFromList('zara')
-  }
+  },
   dromadTam: () => {
     displayMessageFromList('dromadTam')
   },
@@ -133,13 +133,13 @@ export const linkActions = {
   },
   pentagramNormal: (roomId: string) => {
     pentagramAction('', roomId)
-  }
+  },
   orderNewDrink: () => {
     orderNewDrink()
   },
   spinAround: () => {
     spinTheRoom()
-  }
+  },
 }
 
 const pentagramAction = function (font: string, roomId: string) {
