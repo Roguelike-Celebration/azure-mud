@@ -2,11 +2,9 @@ import { pickUpRandomItemFromList, pickUpItem, sendChatMessage, displayMessageFr
 import { v4 as uuidv4 } from 'uuid'
 
 export const linkActions = {
+//-------------------------------------------PICK UP ITEMS-------------------------------------------
   generateFood: () => {
     pickUpRandomItemFromList('vendingMachineFood')
-  },
-  generateBalloon: () => {
-    pickUpRandomItemFromList('balloonAnimals')
   },
   playCraneGame: () => {
     pickUpRandomItemFromList('craneGame')
@@ -14,6 +12,37 @@ export const linkActions = {
   pickUpPuppy: () => {
     pickUpItem('a tiny puppy')
   },
+  readCatalog: () => {
+    pickUpRandomItemFromList('seersCatalog')
+  },
+  boba: () => {
+    pickUpRandomItemFromList('boba')
+  },
+  veganFood: () => {
+    pickUpRandomItemFromList('veganFood')
+  },
+  tacos: () => {
+    pickUpRandomItemFromList('tacos')
+  },
+  kebabs: () => {
+    pickUpRandomItemFromList('kebabs')
+  },
+  generateBalloon: () => {
+    pickUpRandomItemFromList('balloonAnimals')
+  },
+  snowCone: () => {
+    pickUpRandomItemFromList('snowCone')
+  },
+  popcorn: () => {
+    pickUpRandomItemFromList('popcorn')
+  },
+  obeliskSouvenirs: () => {
+    pickUpRandomItemFromList('obeliskSouvenirs')
+  },
+  deepFriedSnacks: () => {
+    pickUpRandomItemFromList('deepFriedSnacks')
+  },
+//-------------------------------------------SEND CHAT MESSAGE SECTION-------------------------------------------
   // Ideally we would not have variable signatures in these functions.
   drinkPolymorph: (roomId: string) => { // Listen. Is this the correct way? No. Does it save me needing to write a new httpTrigger? Yes.
     sendChatMessage(uuidv4(), '/get colourful potion', roomId)
@@ -24,6 +53,8 @@ export const linkActions = {
   getFortune: (roomId: string) => {
     sendChatMessage(uuidv4(), '/get fortune cookie', roomId)
   },
+
+//-------------------------------------------DISPLAY MESSAGE SECTION-------------------------------------------
   readPoster: () => {
     displayMessageFromList('motivationPosters')
   },
@@ -32,18 +63,6 @@ export const linkActions = {
   },
   getGameRec: () => {
     displayMessageFromList('gameRecommendations')
-  },
-  pentagramHighTech: (roomId: string) => {
-    pentagramAction('Impactful', roomId)
-  },
-  pentagramMinimalist: (roomId: string) => {
-    pentagramAction('Classic', roomId)
-  },
-  pentagramComical: (roomId: string) => {
-    pentagramAction('Comic', roomId)
-  },
-  pentagramNormal: (roomId: string) => {
-    pentagramAction('', roomId)
   },
   hearTerribleJoke: () => {
     displayMessageFromList('terribleJokes')
@@ -69,26 +88,8 @@ export const linkActions = {
   talkToFlower: () => {
     displayMessageFromList('flower')
   },
-  dromadTam: () => {
-    displayMessageFromList('dromadTam')
-  },
-  madamChrysalia: () => {
-    displayMessageFromList('madamChrysalia')
-  },
-  orderNewDrink: () => {
-    orderNewDrink()
-  },
-  spinAround: () => {
-    spinTheRoom()
-  },
   talkToBodyWorksCharacter: () => {
     displayMessageFromList('bodyWorksCharacter')
-  },
-  readCatalog: () => {
-    pickUpRandomItemFromList('seersCatalog')
-  },
-  talkToZara: () => {
-    displayMessageFromList('zara')
   },
   talkToHotDogGuy: () => {
     displayMessageFromList('hotDogGuy')
@@ -102,17 +103,42 @@ export const linkActions = {
   tossARock: () => {
     displayMessageFromList('tossARock')
   },
-  boba: () => {
-    pickUpRandomItemFromList('boba')
+  talkToZara: () => {
+    displayMessageFromList('zara')
+  }
+  dromadTam: () => {
+    displayMessageFromList('dromadTam')
   },
-  veganFood: () => {
-    pickUpRandomItemFromList('veganFood')
+  madamChrysalia: () => {
+    displayMessageFromList('madamChrysalia')
   },
-  tacos: () => {
-    pickUpRandomItemFromList('tacos')
+  tarotPull: () => {
+    displayMessageFromList('tarotPull')
   },
-  kebabs: () => {
-    pickUpRandomItemFromList('kebabs')
+  mimeKing: () => {
+    displayMessageFromList('mimeKing')
+  },
+  barathrumites: () => {
+    displayMessageFromList('barathrumites')
+  },
+//-------------------------------------------MISC ACTION SECTION-------------------------------------------
+  pentagramHighTech: (roomId: string) => {
+    pentagramAction('Impactful', roomId)
+  },
+  pentagramMinimalist: (roomId: string) => {
+    pentagramAction('Classic', roomId)
+  },
+  pentagramComical: (roomId: string) => {
+    pentagramAction('Comic', roomId)
+  },
+  pentagramNormal: (roomId: string) => {
+    pentagramAction('', roomId)
+  }
+  orderNewDrink: () => {
+    orderNewDrink()
+  },
+  spinAround: () => {
+    spinTheRoom()
   }
 }
 
