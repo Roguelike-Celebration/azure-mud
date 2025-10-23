@@ -9,7 +9,7 @@ export const actionString = (balloonAnimal: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      "#descriptor# balloon #monster#"
+      "#descriptor# Balloon #monster#"
     ],
     monster: [
       'Ice Giant',
