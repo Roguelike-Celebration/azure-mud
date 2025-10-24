@@ -9,7 +9,6 @@ export const actionString = (madamChrysalia: string) => {
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      'She #expression#, and you are enraptured by her enormous fangs and braided muttonchops.',
       'She brushes an imaginary dust mote from one of her feathery antennae, the movement quick but precise.',
       'The dark facets of her multi-lensed eyes seem to hold every color of the circus outside.',
       'One of her hands busily grooms her fluffy antennae, but the other three still hover over the cards, waiting.',
