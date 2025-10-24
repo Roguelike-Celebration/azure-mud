@@ -54,7 +54,7 @@
     "displayName": "Tam's Souvenirs",
     "shortName": "souvenirs",
     "id": "souvenirs",
-    "description": "You approach a colorful, L-shaped booth with a jaunty sign over one side and vibrant triangular streamers dangling over the other. Both sides of the booth are completely covered in meRchandise--low wooden risers of [[Obelisk-Scented Candles->item]], bouquets of [[Obelisk Balloons->item]], a full tabletop of [[Giant Obelisk Plushies->item]], and further multitudes of shelves, trays, and racks of every sort of [[Obelisk item->obeliskSouvenirs]] one could ever desire.<br/><br/>Behind the table stands [[Tam, Dromad Merchant->dromadTam]]. He is wearing an enormous Obelisk hat that stretches nearly twice again his own height, though such a thing is not visibly for sale here. You see another small obelisk labeled Not For Sale that you have an insatiable urge to [[touch->drinkPolymorph]].<br/><br/>You can also return to the [[Pavilion]].",
+    "description": "You approach a bright yellow, L-shaped booth with a jaunty sign over one side and vibrant yellow streamers dangling over the other. Both sides of the booth are completely covered in meRchandise--low wooden risers of [[Obelisk-Scented Candles->item]], bouquets of [[Obelisk Balloons->item]], a full tabletop of [[Giant Obelisk Plushies->item]], and further multitudes of shelves, trays, and racks of every sort of [[Obelisk item->obeliskSouvenirs]] one could ever desire.<br/><br/>Behind the table stands [[Tam, Dromad Merchant->dromadTam]]. He is wearing an enormous yellow obelisk hat that stretches nearly twice again his own height, though such a thing is not visibly for sale here. You see another small obelisk labeled Not For Sale that you have an insatiable urge to [[touch->drinkPolymorph]].<br/><br/>On the side of his table of wares you find a Bishop.<br/><br/>You can also return to the [[Pavilion]].",
 	  "hidden": false,
     "roomId": "souvenirs"
   },  
@@ -110,7 +110,7 @@
     "displayName": "Clown Containment Pit",
     "shortName": "clown pit",
     "id": "unconfClownPit",
-    "description": "The grass beneath your feet turns to barren ash as you approach a wide pit dozens of feet deep and surrounded with warning signs and tape. Within that pit you feel the weight of glowing red eyes and a palpable malevolence. Shivers run up your spine as your senses alert you that danger is present. A foul wind blows the smell of death into your lungs as an ominous honk splits the air and goes suddenly quiet. Too quiet. You know this is lisTed as a meeting place, but cannot help be concerned about spending too much time here. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
+    "description": "The grass beneath your feet turns to barren ash as you approach a wide pit dozens of feet deep and surrounded with bright red warning signs and tape. Within that pit you feel the weight of glowing crimson eyes and a palpable malevolence. Shivers run up your spine as your senses alert you that danger is present. A foul wind blows the smell of death into your lungs as an ominous honk splits the air and goes suddenly quiet. Too quiet. You know this is lisTed as a meeting place, but cannot help be concerned about spending too much time here.<br/><br/>Near the edges of the pit you find a Rook. <br/><br/>You can also return to the [[Unconferencing Menagerie]].",
     "hidden": false,
     "roomId": "unconfClownPit"
   },   
@@ -150,7 +150,7 @@
     "displayName": "Game Tables",
     "shortName": "game tables",
     "id": "gameTables",
-    "description": "You enter a seedy back alleyway where shifty-eyed people in trench coats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing colored balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure.<a href=\"https://store.steampowered.com/curator/41222044/sale/RoguelikeCelebration2025 \" target=\"_blank\">Visit the Steam Sale!</a><br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You enter a seedy back alleyway where shifty-eyed people in navy blue trench coats all try to swindle those foolish enough to participate in their visibly-rigged games of chance. Several of the people running these tables are very obviously removing cerulean balls from under cups and pulling extra cards from their sleeves. Every time someone does this, the crowd claps in glee, clearly amused by what's happening. You're not sure you understand, but they seem to be enjoying it. <br/><br/>Fortunately, you see a bright blue table of legitimate games that you do understand. These are at a table labelled 'Steam Sale', and you can peruse them at your leisure.<a href=\"https://store.steampowered.com/curator/41222044/sale/RoguelikeCelebration2025 \" target=\"_blank\">Visit the Steam Sale!</a><br/><br/>On an empty side table nearby rests a Knight.<br/><br/>You can also return to the [[Carnival Games]].",
 	"hidden": false,
     "roomId": "gameTables"
   },   
@@ -158,7 +158,7 @@
     "displayName": "Merry-Go-Round",
     "shortName": "merry go round",
     "id": "merryGoRound",
-    "description": "You approach a massive, spinning machine styled after a merry-go-round, but where you might expect there to be large poles attached to floor and ceiling suspending a statue of an animal, you instead just see free-roaming beasts and an assortments of seats. Those seats are designed not for human proportions, but for these beasts. Indeed, you see that each beast appears to draw the eye of a potential rider, and then brings them dutifully to its chosen nest. The beast then waits to be sat upon by the rider. The ride has no one managing it, the creatures seem to be in charge of themselVes, and are quite insistent on this riding-based relationship.<br/><br/>You can also return to the [[Carnival Games]].",
+    "description": "You approach a massive, spinning machine styled after a merry-go-round. Where you might expect there to be large poles attached to the floor and ceiling suspending a statue of an animal, you instead just see free-roaming beasts and an assortment of bright green seats. Those seats are designed not for human proportions, but for these beasts. Indeed, you see that each beast appears to draw the eye of a potential rider, and then brings them dutifully to its chosen nest. The beast then waits to be sat upon by the rider, an emerald saddle on its back. The ride has no one managing it, the creatures seem to be in charge of themselVes, and are quite insistent on this riding-based relationship.<br/><br/>In the place of one of the seats, you instead find an oversized pawn.<br/><br/>You can also return to the [[Carnival Games]].",
 	  "hidden": false,
     "roomId": "merryGoRound"
   },   
@@ -190,7 +190,7 @@
     "displayName": "Dressing Rooms",
     "shortName": "dressing rooms",
     "id": "dressingRooms",
-    "description": "You enter a vibrant cacophony of fabric that once was usable as dressings rooms. All that remains of that optimistic dream are the blasted wastes of costume changes past. Adrift among the sea of scarves and tangled wigs you see a number of chairs, tabletops, and even a few well-lit mirrors. Metal clothes racks jut out from the fabric ocean like the ribs of a slain seamstress. You hope the circus leadership doesn't see what's become of this space, but you assume that if they checked this room it would not have gotten into this state. <br/><br/>You can also return to the [[Big Top]].",
+    "description": "You enter a vibrant cacophony of fabric that once was usable as dressings rooms. All that remains of that optimistic dream are the blasted wastes of costume changes past. Adrift among the sea of violet scarves and tangled wigs you see a number of chairs, tabletops, and even a few well-lit mirrors. Metal clothes racks jut out from the fabric ocean like the ribs of a slain seamstress, its purple entrails strewn across the floor. You hope the circus leadership doesn't see what's become of this space, but you assume that if they checked this room it would not have gotten into this state.<br/><br/>You see a King in the corner, atop a pile of cloth.<br/><br/>You can also return to the [[Big Top]].",
     "hidden": false,
     "roomId": "dressingRooms"
   },     
@@ -214,7 +214,7 @@
     "displayName": "Under The Stage",
     "shortName": "under stage",
     "id": "underTheStage",
-    "description": "You duck below the stage and find yourself standing before a grand and glorious castle made of dust. Its spires reach up into the air far higher than your mind believes should be possible, and elevators ride up and down those spires delivering people and objects onto the stage to surprise and delight the audience. The dusty thoroughfare here is packed with people and craftsmen offering costume repairs, face paint touch-ups, or any other service the show might need to continue. One of them stares directly (and intensely) at you from behind a cart offering [[fried snacks->deepFriedSnacks]] <br/><br/>You can also return to the [[Big Top]].",
+    "description": "You duck below the stage and find yourself standing before a grand and glorious castle made of orange dust. Its spires reach up into the air far higher than your mind believes should be possible, and elevators ride up and down those spires delivering people and objects onto the stage to surprise and delight the audience. Vibrant orange banners stream from the parapets in a gentle breeze. The dusty thoroughfare here is packed with people and craftsmen wearing orange construction garb offering costume repairs, face paint touch-ups, or any other service the show might need to continue. One of them stares directly (and intensely) at you from behind a cart offering [[fried snacks->deepFriedSnacks]].<br/><br/>In an alley leading towards the castle you find a stately Queen.<br/><br/>You can also return to the [[Big Top]].",
     "hidden": false,
     "roomId": "underTheStage"
 	},     
