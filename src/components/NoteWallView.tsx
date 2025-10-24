@@ -16,7 +16,7 @@ import { sortBy } from 'lodash'
 // This is silly, and we almost missed this in 2022 AND 2023.
 // Fortunately I found this comment in 2024. But we should fix this to be auto (to e.g. an 'unconference' flag in the room data?)
 // Anyways just rolling this note over for 2025...
-const UNCONFERENCING_ROOM_IDS = ['unconfArchery', 'unconfWeaponsTraining', 'unconfDocks', 'unconfWoodShop']
+const UNCONFERENCING_ROOM_IDS = ['unconfLilGuys', 'unconfStrongMan', 'unconfClownPit', 'unconfRedVelvet']
 
 function numLikes (roomNote: RoomNote) {
   return !roomNote.likes ? 0 : roomNote.likes.length
