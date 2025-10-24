@@ -3,7 +3,7 @@
 import tracery from 'tracery-grammar'
 
 export const actionString = (popcorn: string) => {
-  return `You eat a bag of ${popcorn}!`
+  return `You are given a bag of ${popcorn}!`
 }
 
 export const generate = () => {

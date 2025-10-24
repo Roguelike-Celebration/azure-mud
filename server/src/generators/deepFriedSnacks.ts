@@ -3,7 +3,7 @@
 import tracery from 'tracery-grammar'
 
 export const actionString = (deepFriedSnacks: string) => {
-  return `You devour some ${deepFriedSnacks}!`
+  return `You get some ${deepFriedSnacks}!`
 }
 
 export const generate = () => {
