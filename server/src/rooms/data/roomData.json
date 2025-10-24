@@ -26,7 +26,7 @@
     "displayName": "Pavilion",
     "shortName": "pavilion",
     "id": "pavilion",
-    "description": "You enter the circus pavilion, a vibrant place suffuse with life as people move from tent to tent to see the curiosities and performances. You see humans and goblins, centaurs and nymphs, and even a group of vacationing [[Barathrumites->barathrumites]]. Balloons of every shape and color hover over the heads of small children who dash around haphazardly between one attraction or the next, and you see a friendly acrobat handing out [[more balloons->generateBalloon]]. <br/><br/>The path before you circles a bOnfire whose flame glows a brilliant white. Just behind that you see the [[Obelisk]]. To the right you see a [[Tam's Souvenirs->souvenirs]], and past that you see the [[Unconferencing Menagerie]]. To the left you see [[Madam Chrysalia's Future Hut->futureHut]], and just past that is a sign announcing entrance into the [[Carnival Games]] alley.<br/><br/>You can also continue forward to the [[Big Top]].",
+    "description": "You enter the circus pavilion, a vibrant place suffused with life as people move from tent to tent to see the curiosities and performances. You see humans and goblins, centaurs and nymphs, and even a group of vacationing [[Barathrumites->barathrumites]]. Balloons of every shape and color hover over the heads of small children who dash around haphazardly between one attraction or the next, and you see a friendly acrobat handing out [[more balloons->generateBalloon]]. <br/><br/>The path before you circles a bOnfire whose flame glows a brilliant white. Just behind that you see the [[Obelisk]]. To the right you see a [[Tam's Souvenirs->souvenirs]], and past that you see the [[Unconferencing Menagerie]]. To the left you see [[Madam Chrysalia's Future Hut->futureHut]], and just past that is a sign announcing entrance into the [[Carnival Games]] alley.<br/><br/>You can also continue forward to the [[Big Top]].",
     "hidden": false,
     "roomId": "pavilion",
     "hasNoteWall": true,
@@ -62,7 +62,7 @@
     "displayName": "The Big Top",
     "shortName": "big top",
     "id": "theater",
-    "description": "You enter the central tent to find a massive stage suffuse with the smell of unseen fried snacks. Performers circle the edges, and even more strangely the attention of everyone in the room appears to be focused on people who are just standing in the center. Talking. You decide to sit and listen for a while.<br/><br/>You can return to the [[Pavilion]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Dressing Rooms]], [[Props Closet]], [[Break Room]], [[Under The Stage]]. (Check the 'Happening Now' button on the left for speaker room assignments!)",
+    "description": "You enter the central tent to find a massive stage suffused with the smell of unseen fried snacks. Performers circle the edges, and even more strangely the attention of everyone in the room appears to be focused on people who are just standing in the center. Talking. You decide to sit and listen for a while.<br/><br/>You can return to the [[Pavilion]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[Dressing Rooms]], [[Props Closet]], [[Break Room]], [[Under The Stage]]. (Check the 'Happening Now' button on the left for speaker room assignments!)",
 	  "hidden": false,
 	  "hasNoteWall": true,
     "noteWallData": {
