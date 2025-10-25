@@ -1,42 +1,54 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
+  "contentVersion": "1.0.1.0",
   "parameters": {
     "appName": {
       "type": "string",
       "defaultValue": "your-app-name",
       "metadata": {
-        "description": "The name of the function app that you wish to create."
+        "description": "The name of the Function App that you wish to create. This name is used as the base or prefix for the other resource names."
       }
     },
-    "clientHostname": {
+    "clientUrl": {
       "type": "string",
       "defaultValue": "https://chat.roguelike.club",
       "metadata": {
-        "description": "The hostname for where your frontend will be hosted. This must be served over HTTPS. You can leave this as the default if you don't plan to set up a custom domain (but it can't be empty because computers)"
+        "description": "The URL for where your frontend will be hosted. This must be served over HTTPS. You can leave this as the default if you don't plan to set up a custom domain (but it can't be empty because computers)."
       }
     },
     "repositoryToken": {
-      "type": "string",
+      "type": "secureString",
       "metadata": {
-        "description": "The GitHub personal access token used to access your repository. See https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+        "description": "The GitHub personal access token used to access your repository. See GitHub's [Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) documentation."
       }
     },
     "repositoryUrl": {
       "type": "string",
       "metadata": {
-        "description": "The URL of the GitHub repository for your azure-mud fork"
+        "description": "The URL of the GitHub repository for your azure-mud fork."
+      }
+    },
+    "signalRTier": {
+      "type": "string",
+      "allowedValues": [
+        "Free",
+        "Standard"
+      ],
+      "defaultValue": "Free",
+      "metadata": {
+        "description": "The tier of the SignalR service to deploy. Free will save you money. Standard will match the tier used by the actual Roguelike Celebration instance. The Free tier does not support network ACLs, which we define, so using the Free tier may not exactly match the behavior of the real MUD instance."
       }
     }
   },
   "variables": {
     "functionAppName": "[parameters('appName')]",
-    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'functions')]",
+    "storageAccountPrefixSafe": "[replace(replace(replace(parameters('appName'), '-', ''), '_', ''), '.', '')]",
+    "storageAccountName": "[concat(take(concat(variables('storageAccountPrefixSafe'), uniquestring(resourceGroup().id, deployment().name)), 20), 'fcns')]",
     "signalRName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-signalr')]",
     "redisCacheName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-redis')]",
-    "appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-ai')]",
+    "appInsightsName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-appi')]",
     "aswaName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-aswa')]",
-    "pubsubName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-pubsub')]"
+    "pubsubName": "[concat(parameters('appName'), '-', uniquestring(resourceGroup().id), '-wps')]"
   },
   "resources": [{
       "type": "Microsoft.Storage/storageAccounts",
@@ -49,9 +61,9 @@
       }
     },
     {
-      "apiVersion": "2018-11-01",
       "type": "Microsoft.Web/sites",
       "name": "[variables('functionAppName')]",
+      "apiVersion": "2018-11-01",
       "location": "[resourceGroup().location]",
       "kind": "functionapp",
       "dependsOn": [
@@ -68,7 +80,7 @@
           "cors": {
             "allowedOrigins": [
               "http://localhost:1234",
-              "[parameters('clientHostname')]",
+              "[parameters('clientUrl')]",
               "[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
             ],
             "supportCredentials": true
@@ -129,9 +141,9 @@
         }
       },
       "resources": [{
+        "type": "config",
         "name": "authsettings",
         "apiVersion": "2016-08-01",
-        "type": "config",
         "location": "[resourceGroup().location]",
         "dependsOn": [
           "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]",
@@ -142,10 +154,9 @@
           "unauthenticatedClientAction": "AllowAnonymous",
           "tokenStoreEnabled": true,
           "defaultProvider": "Twitter",
-
           "allowedExternalRedirectUrls": [
             "http://localhost:1234",
-            "[parameters('clientHostname')]",
+            "[parameters('clientUrl')]",
             "[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
           ]
         }
@@ -153,32 +164,33 @@
     },
     {
       "type": "Microsoft.Cache/Redis",
-      "apiVersion": "2020-06-01",
       "name": "[variables('redisCacheName')]",
+      "apiVersion": "2020-06-01",
       "location": "[resourceGroup().location]",
       "properties": {
-        "enableNonSslPort": "false",
+        "enableNonSslPort": false,
         "minimumTlsVersion": "1.2",
         "sku": {
-          "capacity": "0",
+          "capacity": 0,
           "family": "C",
           "name": "Basic"
         }
       }
     },
     {
-      "apiVersion": "2014-04-01",
-      "name": "[variables('appInsightsName')]",
       "type": "Microsoft.Insights/components",
+      "name": "[variables('appInsightsName')]",
+      "apiVersion": "2020-02-02",
       "location": "[resourceGroup().location]",
       "properties": {
+        "Application_Type": "web",
         "applicationId": "[variables('appInsightsName')]"
       }
     },
     {
-      "apiVersion": "2021-01-15",
-      "name": "[variables('aswaName')]",
       "type": "Microsoft.Web/staticSites",
+      "name": "[variables('aswaName')]",
+      "apiVersion": "2021-01-15",
       "location": "[resourceGroup().location]",
       "properties": {
         "repositoryUrl": "[parameters('repositoryUrl')]",
@@ -196,12 +208,12 @@
     },
     {
       "type": "Microsoft.SignalRService/SignalR",
-      "apiVersion": "2020-07-01-preview",
       "name": "[variables('signalRName')]",
+      "apiVersion": "2020-07-01-preview",
       "location": "[resourceGroup().location]",
       "sku": {
-        "capacity": "1",
-        "name": "Free_F1"
+        "capacity": 1,
+        "name": "[if(equals(parameters('signalRTier'), 'Free'), 'Free_F1', 'Standard_S1')]"
       },
       "kind": "SignalR",
       "dependsOn": [
@@ -225,7 +237,7 @@
         "cors": {
           "allowedOrigins": [
             "http://localhost:1234",
-            "[parameters('clientHostname')]",
+            "[parameters('clientUrl')]",
             "[concat('https://', reference(resourceId('Microsoft.Web/staticSites', variables('aswaName')), '2021-01-15').defaultHostName)]"
           ],
           "supportCredentials": true
@@ -254,16 +266,14 @@
         }
       }
     },
-
     {
       "type": "Microsoft.SignalRService/webPubSub",
-      "apiVersion": "2021-10-01",
       "name": "[variables('pubsubName')]",
+      "apiVersion": "2021-10-01",
       "location": "[resourceGroup().location]",
       "sku": {
         "capacity": 1,
-        "name": "Free_F1",
-        "tier": "Free"
+        "name": "[if(equals(parameters('signalRTier'), 'Free'), 'Free_F1', 'Standard_S1')]"
       },
       "identity": {
         "type": "None"
