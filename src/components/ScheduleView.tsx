@@ -22,7 +22,6 @@ const FIRST_DAY_END = new Date('2025-10-24T21:00:00-07:00')
 const SECOND_DAY_END = new Date('2025-10-25T21:00:00-07:00')
 const THIRD_DAY_END = new Date('2025-10-26T21:00:00-07:00')
 
-// Just guessing at the preview time for 2025; haven't set it yet as of 5/8/25? -apj
 const dayPreview = (time) => new Date(`2025-09-07T${time}:00.000-07:00`)
 const dayOneDate = (time) => new Date(`2025-10-24T${time}:00.000-07:00`)
 const dayTwoDate = (time) => new Date(`2025-10-25T${time}:00.000-07:00`)
@@ -50,7 +49,6 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
   }
 }
 
-// This is still last year 2024's schedule. Leaving in place as example data for now. -apj 5/8/25
 export const ScheduleEntries: ScheduleEntry[] = [
   ScheduleEntry('14:45', 0, 'Doors Open'),
   ScheduleEntry('15:10', 0, 'Kickoff'),
@@ -60,55 +58,57 @@ export const ScheduleEntries: ScheduleEntry[] = [
   ScheduleEntry('17:15', 0, 'Hang Out & Explore!'),
   ScheduleEntry('17:30', 0, 'Doors Close'),
 
+  // Day "1" (Friday) for RLC 2025 wasn't really announced. But leaving this in for testing,
+  // and consistency of date numbers with previous years
   ScheduleEntry('18:00', 1, 'Doors Open'),
   ScheduleEntry('20:00', 1, 'Doors Close'),
 
   ScheduleEntry('09:00', 2, 'Doors Open'),
   ScheduleEntry('09:15', 2, 'Kickoff', ['theater']),
-  ScheduleEntry('09:30', 2, 'Harry Solomons: Trampling on Ghosts: Hauntology and Permadeath', ['theater'], 'goblinSingers'),
-  ScheduleEntry('10:00', 2, 'Cezar Capacle: Enhancing Narrative Through Randomness and Complications', ['theater'], 'joust'),
-  ScheduleEntry('10:30', 2, 'Max Bottega: Keeping Art Direction ', ['theater'], 'whipShow'),
-  ScheduleEntry('10:45', 2, 'Stanley W. Baxton: Brining Real-World Occultism into Your Games Without Accidentally Being Racist', ['theater'], 'fountain'),
+  ScheduleEntry('09:30', 2, 'Michael Brough: The Roots of Roguelikes in Fantasy Fiction', ['theater']),
+  ScheduleEntry('10:00', 2, 'Sebastien "deepnight" Benard: Mixing hand-crafted content with procgen to achieve quality', ['theater']),
+  ScheduleEntry('10:30', 2, 'Max Sahin: Stuff: the behavioral science of inventory', ['theater']),
+  ScheduleEntry('10:45', 2, 'Florence Smith Nicholls: Roll for Reminiscence: Procedural Keepsake Games', ['theater']),
   ScheduleEntry('11:00', 2, SOCIAL_TIME),
-  ScheduleEntry('11:30', 2, 'Jeff Entmenn and Martin Austwick: Neutrinowatch - the podcast that plays itself ', ['theater'], 'goblinSingers'),
-  ScheduleEntry('12:00', 2, 'Nic Junius: Braided Narratives: Or How I Learned to Stop Worrying and Love Linear Stories', ['theater'], 'joust'),
-  ScheduleEntry('12:30', 2, SOCIAL_TIME),
-  ScheduleEntry('13:30', 2, 'Pandamander: "Out of Book": The Psychology of Why Roguelikes Keep Us Playing', ['theater'], 'goblinSingers'),
-  ScheduleEntry('13:45', 2, 'Loren Schmidt: Inverse Terrain Solver', ['theater'], 'joust'),
-  ScheduleEntry('14:15', 2, 'Adrian: Probably Impossible: NecroDancer\'s network code', ['theater'], 'whipShow'),
-  ScheduleEntry('14:45', 2, SOCIAL_TIME),
-  ScheduleEntry('15:15', 2, 'John Harris: A Trip Through The Mystery Dungeons', ['theater'], 'goblinSingers'),
-  ScheduleEntry('15:45', 2, 'Marlowe Dobbe: A Swarm of Monsters is Hard To Build: Generating Visual Concepts for Enemies in Roguelikes', ['theater'], 'joust'),
-  ScheduleEntry('16:15', 2, SOCIAL_TIME),
-  ScheduleEntry('16:45', 2, 'John Bond: Doors? How Roguelike games take you places', ['theater'], 'goblinSingers'),
-  ScheduleEntry('17:00', 2, 'Dan Norder: Chase: The BASIC Language Proto-Roguelike', ['theater'], 'joust'),
+  ScheduleEntry('11:30', 2, 'Alexander Birke and Sofie Kjær Schmidt: Hoist the colours! Art direction and tech art in Sea Of Rifts, a naval story generation RPG', ['theater']),
+  ScheduleEntry('12:00', 2, 'bleeptrack: From Code to Craft: Procedural Generation for the Physical World', ['theater']),
+  ScheduleEntry('12:30', 2, 'Zeno Rogue: The best genre for a non-Euclidean game', ['theater']),
+  ScheduleEntry('13:00', 2, SOCIAL_TIME),
+  ScheduleEntry('13:30', 2, 'Cole Wehrle: Play as Procedural Generation: Oath as a Roguelike Strategy Game', ['theater']),
+  ScheduleEntry('14:00', 2, 'Jeff Lait: Teaching Long Term Consequences in Games', ['theater']),
+  ScheduleEntry('14:30', 2, SOCIAL_TIME),
+  ScheduleEntry('15:00', 2, 'Ray: A Mythopoetic Interface Reading of Caves of Qud', ['theater']),
+  ScheduleEntry('15:15', 2, 'Jonathan Pagnutti: Wait, No, Hear Me Out: Simulating Encounter AI in Slay the Spire with SQL', ['theater']),
+  ScheduleEntry('15:30', 2, 'Jamie Brew: Robot Karaoke Goes Electric', ['theater']),
+  ScheduleEntry('16:00', 2, SOCIAL_TIME),
+  ScheduleEntry('16:30', 2, 'Stephen G. Ware: Planning and Replanning Structured Adaptive Stories: 25 Years of History', ['theater']),
+  ScheduleEntry('17:00', 2, 'Tyriq Plummer: Scrubbin\' Trubble: The Journey to Multiplayer Roguelikery', ['theater']),
+  ScheduleEntry('17:15', 2, 'Andrew Doull: Roguelike Radio 2011-present', ['theater']),
   ScheduleEntry('17:30', 2, SOCIAL_TIME),
   ScheduleEntry('18:00', 2, 'Unconferencing', ['unconferencingHub']),
   ScheduleEntry('19:00', 2, 'Doors Close'),
 
   ScheduleEntry('09:00', 3, 'Doors Open'),
-  ScheduleEntry('09:15', 3, 'Kickoff', ['theater']),
-  ScheduleEntry('09:30', 3, 'Yong Zhen Zhou: Who Controls the Controller? Thinking about physical player interactions outside a digital game', ['theater'], 'goblinSingers'),
-  ScheduleEntry('09:45', 3, 'Tabea Iseli: Animal Crossing meets Roguelite Dungeon Crawler: The surprising genre mixture behind Grimoire Groves', ['theater'], 'joust'),
-  ScheduleEntry('10:00', 3, 'Philomena Schwab: 100\'000 wishlists in 3 months - Weird roguelikes are taking over the world', ['theater'], 'whipShow'),
-  ScheduleEntry('10:15', 3, 'Kaysa Konopljak: Going legit with DotA: How to transform a thousand authors into four', ['theater'], 'fountain'),
-  ScheduleEntry('10:45', 3, 'Alexander Birke: Practical procedural world and story generation in Sea Of Rifts, a naval roguelike RPG', ['theater'], 'theater'),
-  ScheduleEntry('11:15', 3, SOCIAL_TIME),
-  ScheduleEntry('11:45', 3, 'Unconferencing', ['unconferencingHub']),
-  ScheduleEntry('12:45', 3, SOCIAL_TIME),
-  ScheduleEntry('13:30', 3, 'Robin Mendoza: The Use of Knowledge in the Labyrinth: The price mechanism as a storytelling device', ['theater'], 'goblinSingers'),
-  ScheduleEntry('13:45', 3, 'Oliver Withington: The Right Variety: Understanding and Visualising the Output Diversity of Your Generators', ['theater'], 'joust'),
-  ScheduleEntry('14:00', 3, 'Eiríkr Åsheim: Uxn: Permacomputing & Roguelikes', ['theater'], 'whipShow'),
-  ScheduleEntry('14:15', 3, 'Brian Cronin: Black Box Sim for Roguelikes', ['theater'], 'fountain'),
+  ScheduleEntry('09:30', 3, 'Kickoff', ['theater']),
+  ScheduleEntry('09:45', 3, 'Ada Null: Dyke sex and ennui: Generating unending narrative in \'Kiss Garden\'', ['theater']),
+  ScheduleEntry('10:00', 3, 'Younès Rabii: We Are Maxwell\'s Demons: The Thermodynamics of Procedural Generators', ['theater']),
+  ScheduleEntry('10:30', 3, 'Dennis Greger: The Procedurality of Reality TV Design - An Overview', ['theater']),
+  ScheduleEntry('10:45', 3, SOCIAL_TIME),
+  ScheduleEntry('11:15', 3, 'Unconferencing', ['unconferencingHub']),
+  ScheduleEntry('12:15', 3, SOCIAL_TIME),
+  ScheduleEntry('13:15', 3, 'Paul Dean: Picking up the Pieces: building story in a roguelike world', ['theater']),
+  ScheduleEntry('13:45', 3, 'Patrick Belanger and Jackson Wagner: Hand-Crafted Randomness: Storytelling in Wildermyth\'s Proc-Gen World', ['theater']),
+  ScheduleEntry('14:15', 3, 'Nifflas: Music algorithm showcase', ['theater']),
   ScheduleEntry('14:45', 3, SOCIAL_TIME),
-  ScheduleEntry('15:15', 3, 'Isaac Io Schankler: Orb Pondering Simulator LIVE!', ['theater'], 'goblinSingers'),
-  ScheduleEntry('16:00', 3, 'Emily Halina: New Levels from a Single Example via Tree-based Reconstructive Partitioning (TRP)', ['theater'], 'joust'),
-  ScheduleEntry('16:30', 3, 'Courtney: Cheating the System (By Design!) for Epic Combos', ['theater'], 'whipShow'),
-  ScheduleEntry('16:45', 3, SOCIAL_TIME),
-  ScheduleEntry('17:15', 3, 'Joe: Magic in Game Design: (Mis)Directing the Player\'s Attention', ['theater'], 'goblinSingers'),
-  ScheduleEntry('17:30', 3, 'Tyler Coleman: Finding your 80/20 Rule with Proc-Gen', ['theater'], 'joust'),
-  ScheduleEntry('18:00', 3, 'Nat: Procedurality and the Primes', ['theater'], 'whipShow'),
-  ScheduleEntry('18:30', 3, SOCIAL_TIME),
+  ScheduleEntry('15:15', 3, 'Seth Cooper: Building a Roguelike with a Tile Rewrite Language', ['theater']),
+  ScheduleEntry('15:30', 3, 'Quinten Konyn: Anatomy of a Morgue File', ['theater']),
+  ScheduleEntry('15:45', 3, 'Alexander King: Don\'t Pick Just One: Set-Based Card Mechanics in Roguelike-Deckbuilders', ['theater']),
+  ScheduleEntry('16:00', 3, 'Brian Cronin: Playtesting Process for Ultra Small Teams', ['theater']),
+  ScheduleEntry('16:30', 3, SOCIAL_TIME),
+  ScheduleEntry('17:00', 3, 'Mark Gritter: Sol LeWitt, Combinatorial Enumeration, and Rogue', ['theater']),
+  ScheduleEntry('17:15', 3, 'Dan Dilorio: Luck be a Landlord - 10 Lessons Learned', ['theater']),
+  ScheduleEntry('17:45', 3, 'Liza Knipscher: The Form and Function of Weird Li\'l Guys: Procedural Organism Generation in a Simulated Ecosystem', ['theater']),
+  ScheduleEntry('18:15', 3, SOCIAL_TIME),
   ScheduleEntry('19:00', 3, 'Doors Close')
 ]
 
