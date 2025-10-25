@@ -271,6 +271,7 @@ export function StreamEmbed () {
         src="https://www.youtube.com/embed/kBfytrnK4NM"
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        referrerpolicy="strict-origin-when-cross-origin"
         allowFullScreen
       ></iframe>
       <iframe
