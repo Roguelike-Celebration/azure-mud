@@ -106,7 +106,7 @@ export const ScheduleEntries: ScheduleEntry[] = [
   ScheduleEntry('16:00', 3, 'Brian Cronin: Playtesting Process for Ultra Small Teams', ['theater'], 'underTheStage'),
   ScheduleEntry('16:30', 3, SOCIAL_TIME),
   ScheduleEntry('17:00', 3, 'Mark Gritter: Sol LeWitt, Combinatorial Enumeration, and Rogue', ['theater'], 'dressingRooms'),
-  ScheduleEntry('17:15', 3, 'Dan Dilorio: Luck be a Landlord - 10 Lessons Learned', ['theater'], 'propsCloset'),
+  ScheduleEntry('17:15', 3, 'Dan DiIorio: Luck be a Landlord - 10 Lessons Learned', ['theater'], 'propsCloset'),
   ScheduleEntry('17:45', 3, 'Liza Knipscher: The Form and Function of Weird Li\'l Guys: Procedural Organism Generation in a Simulated Ecosystem', ['theater'], 'unconfLilGuys'),
   ScheduleEntry('18:15', 3, SOCIAL_TIME),
   ScheduleEntry('19:00', 3, 'Doors Close')
