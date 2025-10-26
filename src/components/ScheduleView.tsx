@@ -82,6 +82,7 @@ export const ScheduleEntries: ScheduleEntry[] = [
   ScheduleEntry('15:30', 2, 'Jamie Brew: Robot Karaoke Goes Electric', ['theater'], 'breakRoom'),
   ScheduleEntry('16:00', 2, SOCIAL_TIME),
   ScheduleEntry('16:30', 2, 'Stephen G. Ware: Planning and Replanning Structured Adaptive Stories: 25 Years of History', ['theater'], 'dressingRooms'),
+  ScheduleEntry('17:00', 2, 'Tyriq: Scrubbin\' Trubble: The Journey to Multiplayer Roguelikery', ['theater'], 'propsCloset'),
   ScheduleEntry('17:15', 2, 'Andrew Doull: Roguelike Radio 2011-present', ['theater'], 'breakRoom'),
   ScheduleEntry('17:30', 2, SOCIAL_TIME),
   ScheduleEntry('18:00', 2, 'Unconferencing', ['unconferencingHub']),
