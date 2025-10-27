@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
@@ -25,6 +26,6 @@
     "@azure/functions": "^1.0.2-beta2",
     "@types/redis": "^2.8.24",
     "recursive-readdir": "^2.2.2",
-    "typescript": "^3.3.3"
+    "typescript": "^4.7"
   }
 }
