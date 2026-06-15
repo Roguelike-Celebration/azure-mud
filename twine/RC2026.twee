@@ -1,0 +1,122 @@
+:: StoryTitle
+RC2026
+
+
+:: StoryData
+{
+  "ifid": "B4E1772F-1A40-4FC6-B511-BE5274F7353E",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "The Streets",
+  "zoom": 1
+}
+
+
+:: Chez Nathan's {"position":"300,100","size":"100,100"}
+
+
+
+:: Church Of The Sacred Gamer LEDs {"position":"100,450","size":"100,100"}
+
+
+
+:: Concessions Stadium {"position":"200,300","size":"100,100"}
+[[Soda Fountain]]
+
+[[Orville's]]
+
+[[Chez Nathan's]]
+
+
+:: Gift Shop {"position":"700,400","size":"100,100"}
+
+
+
+:: Irrepressible Feelings Zone {"position":"900,100","size":"100,100"}
+ROOM CLAIMED BY NATHAN
+
+
+:: Jersey Assignment {"position":"400,400","size":"100,100"}
+[[The Penalty Box]]
+
+[[Church Of The Sacred Gamer LEDs]]
+
+
+:: Orville's {"position":"100,100","size":"100,100"}
+
+
+
+:: Practice Fields {"position":"1100,300","size":"100,100"}
+
+
+
+:: Press Box {"position":"500,0","size":"100,100"}
+
+
+
+:: Scalper's Alley {"position":"1100,200","size":"100,100"}
+
+
+
+:: Soda Fountain {"position":"100,200","size":"100,100"}
+
+
+
+:: Stadium Theater {"position":"550,200","size":"100,100"}
+ROOM CLAIMED BY NATHAN
+
+[[The Dugout]]
+
+[[Press Box]]
+
+[[VIP Seats]]
+
+[[Waterboy Lounge]]
+
+
+:: Tailgaters' Union Office {"position":"1000,400","size":"100,100"}
+
+
+
+:: The Dugout {"position":"400,100","size":"100,100"}
+
+
+
+:: The Obelisk {"position":"550,400","size":"100,100"}
+ROOM CLAIMED BY NATHAN
+
+[[Gift Shop]]
+
+[[Jersey Assignment]]
+
+
+:: The Penalty Box {"position":"100,600","size":"100,100"}
+
+
+
+:: The Streets {"position":"550,600","size":"100,100"}
+[[The Obelisk]]
+
+[[Stadium Theater]]
+
+[[Unconferencing Parking Lot]]
+
+[[Concessions Stadium]]
+
+
+:: Unconferencing Parking Lot {"position":"900,300","size":"100,100"}
+[[Irrepressible Feelings Zone]]
+
+[[Scalper's Alley]]
+
+[[Practice Fields]]
+
+[[Tailgaters' Union Office]]
+
+
+:: VIP Seats {"position":"600,0","size":"100,100"}
+
+
+
+:: Waterboy Lounge {"position":"700,100","size":"100,100"}
+
