@@ -33,7 +33,9 @@ RC2026
 
 
 :: Irrepressible Feelings Zone {"position":"900,100","size":"100,100"}
-ROOM CLAIMED BY NATHAN
+You step into what looks like the blasted remains of a parking lot. Overturned cars smolder in the distance and large men with colorfully-painted skin scream at one another, arguing over which player was the MVP of the most recent game. Each of these men appears to be quietly followed by another person wearing a soft cardigan and holding a notebook. As the colorful men throw and break things, the cardigan-clad person asks them questions in a soft voice. There appears to be a consistent flow of movement where the men will churn through the back parking lot, flipping cars or tearing down infrastructure until such time as their assigned cardigan brings them inexorably towards the exit and back into society.
+
+Or you could walk back to the [[Unconferencing Parking Lot]].
 
 
 :: Jersey Assignment {"position":"400,400","size":"100,100"}
@@ -63,15 +65,9 @@ ROOM CLAIMED BY NATHAN
 
 
 :: Stadium Theater {"position":"550,200","size":"100,100"}
-ROOM CLAIMED BY NATHAN
+You step out of the concrete hallways and into the Stadium Theater. In front of you lies the field, a neatly-trimmed green space surrounded by bleachers on all sides. The scent of stale popcorn and fresh hotdogs waft through the breeze with an undercurrent of animal scent. Just as that strikes you as odd, you notice Ted The Ten Foot Armadillo resting lazily in the outfield.
 
-[[The Dugout]]
-
-[[Press Box]]
-
-[[VIP Seats]]
-
-[[Waterboy Lounge]]
+You can return to [[The Streets]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[The Dugout]], [[Press Box]], [[VIP Seats]],[[Waterboy Lounge]]. (Check the 'Happening Now!' button on the left for speaker room assignments!)
 
 
 :: Tailgaters' Union Office {"position":"1000,400","size":"100,100"}
@@ -83,11 +79,11 @@ ROOM CLAIMED BY NATHAN
 
 
 :: The Obelisk {"position":"550,400","size":"100,100"}
-ROOM CLAIMED BY NATHAN
+The ground vibrates beneath your feet with the unstoppable force of some unknowable reality. Before you hovers something that once was a change machine, but has now absorbed power beyond comprehension, transforming it into a 20-foot-tall metal obelisk. Its surface shudders as if the power within is barely contained, or perhaps barely containing some other force. The scent of freshly minted money subtly lingers here, even though you’ve not seen any other sign that capitalism still exists.
 
-[[Gift Shop]]
+You can also return to [[The Streets]] or continue to [[Stadium Theater]]. You also see the [[Gift Shop]] and a building labelled [[Jersey Assignment]]
 
-[[Jersey Assignment]]
+The exterior surface of the change obelisk is covered in helpful graffiti. You are compelled to share your own.
 
 
 :: The Penalty Box {"position":"100,600","size":"100,100"}
