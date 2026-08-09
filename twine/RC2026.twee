@@ -12,24 +12,58 @@ RC2026
 }
 
 
-:: Chez Nathan's {"position":"300,100","size":"100,100"}
+:: Capitalism Dimension {"position":"700,900","size":"100,100"}
+You enter a universe that reeks of the smell of freshly printed dollar bills. Middle aged men in sloppy t-shirts and pressed business suits stand beneath every shady tree or sit atop every cushion. Many of these men are hoarding comfortable surfaces beyond what they could possibly use for themselves, apparently just to deny comfort to others. You follow the sound of clanking metal and find an unfathomably large pile of metal coins. Men in business suits dive into the coins from a diving board as if the coins were some kind of swimming pool. Their bodies break against the unfeeling gold.
 
+
+:: Chez Nathan's {"position":"300,100","size":"100,100"}
+Stepping into Chez Nathan's is like stepping into a gold-encrusted shrine to the exuberant joy of childhood flavor palettes. The decor here is whimsical and made to be climbed on or sprinted around, but it's all scaled for full adults and finely accented. The air here smells of meat and oil with an undercurrent so unhinged you couldn't begin to guess at what other flavors these hotdogs must be offered in. Looking at the menu confirms your concerns as the largest text visible reads "Just ask, we serve it".
+
+You can have them make you a hotdog.
+
+or you can head back to the [[Concessions Stadium]].
 
 
 :: Church Of The Sacred Gamer LEDs {"position":"100,450","size":"100,100"}
+You step into a cathedral with high ceilings and filled with the scent of musky incense. Brightly-colored fans spin beneath stained glass windows depicting images of people of every variety sitting in front of computers of every style and size. A robed priest stands behind an altar, cleaning his hands in sanctified Mountain Dew, offering a blessed Dorito to each faithful. 
 
+A small room to the right of the central altar is attended by priests holding strips of LEDs. They look to you and offer you a blessing of their order.
+
+From here you can walk south to [[The Penalty Box]]. 
+
+To the east you can head to [[Jersey Assignment]].
+
+To the north you could reach the [[Concessions Stadium]].
 
 
 :: Concessions Stadium {"position":"200,300","size":"100,100"}
-[[Soda Fountain]]
+You walk into an ostentatious foyer adorned with gilding on every surface. The hallway is lined with a literal red carpet which splits to direct visitors towards the restaurants on offer here. 
 
-[[Orville's]]
+To the left you see the [[Soda Fountain]].
 
-[[Chez Nathan's]]
+Straight ahead leads into [[Orville's]].
+
+Turning to the right the hall leads to [[Chez Nathan's]].
+
+Or you can head back to [[The Streets]].
+
+
+:: Dire Goats Lair {"position":"800,1400","size":"100,100"}
+Having spoken the password, you appear in a cramped studio apartment in the inner city. Standing in front of you is a goat wearing a blue baseball cap and designer shades. He bleats at you "Whoa! Not cool to just barge in, I'm off the clock, bro."
+
+Despite his protests,  he doesn't immediately kick you out. 
+
+A nearby table is marked "Souvenirs" and contains several objects. You see [Admission Ticket to Delaware], [Potion of Liking Baseball], and [Fae Court's Tax Form].
 
 
 :: Gift Shop {"position":"700,400","size":"100,100"}
+You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. "seems to be" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don't see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. 
 
+Peruse The Antiques
+
+You can continue east to the [[Unconferencing Parking Lot]].
+
+Or you can return to [[The Streets]].
 
 
 :: Irrepressible Feelings Zone {"position":"900,100","size":"100,100"}
@@ -38,30 +72,55 @@ You step into what looks like the blasted remains of a parking lot. Overturned c
 Or you could walk back to the [[Unconferencing Parking Lot]].
 
 
-:: Jersey Assignment {"position":"400,400","size":"100,100"}
-[[The Penalty Box]]
 
-[[Church Of The Sacred Gamer LEDs]]
+:: Jersey Assignment {"position":"400,400","size":"100,100"}
+You walk into a shop featuring jerseys for every popular team in the league. The walls are lined meticulously and at a glance you believe they are ordered by their rankings in the current season. The person responsible stands wearing a referree uniform and a name badge, neither of which exactly matches regulation, presumably in an attempt to keep themselves distinct. 
+
+The referree walks up and offers to find a jersey for you.
+
+To the east you see [[The Obelisk]] 
+
+To the west you see [[The Penalty Box]] and the [[Church Of The Sacred Gamer LEDs]]
 
 
 :: Orville's {"position":"100,100","size":"100,100"}
+You enter a space full of the raucous sound of thousands of tiny explosions happening at once. Each wall here is made of glass and within that glass is a towering wall of popped corn. You watch as mechanisms move each section of wall's product through a series of elaborate stations that sift the dry seeds, heat them until they pop, and then dip them in liquids ranging from butter to caramel, from chocolate to mysterious liquids you can't discern. The resulting snack arrives at a station set aside for that particular flavor, people wearing striped red and white uniforms handing out similarly-colored paper boxes filled with the treat. 
 
+You can ask the counter for some popcorn.
+
+Or you can head back to the [[Concessions Stadium]] 
 
 
 :: Practice Fields {"position":"1100,300","size":"100,100"}
+You step onto a wide open field full of people running about and performing various feats of athletic prowess. Each player appears to be practicing for something wildly different from every other player present in this space. Standing among the chaos is a referree who holds a massive tome gilt with gold. He offers you a reading of the holy rules [Calvin Ball Rule Generator].
 
+Or you can head back to the [[Unconferencing Parking Lot]].
 
 
 :: Press Box {"position":"500,0","size":"100,100"}
+You find yourself standing beneath a massive tower reaching far into the heavens. Lining that tower are reporters calling out raucously, describing the game to viewers all over the earth. Each person on the tower is speaking in their native tongue, ensuring the ability for as many viewers as possible to enjoy this great and holy passtime. You gaze in awe at the massive tower, wondering at the strength of man to build such a thing. 
 
+Or you can head back to [[Stadium Theater]].
+
+
+:: Queen's Chambers {"position":"800,1250","size":"100,100"}
+You enter a richly-appointed bed chamber of what could not be anything other than the queen of this court. All around the room lie sconces lit with too-bright flames, giving the entire space an oppressive heat. At the far wall, you see a woman with strong, regal bearing leaning casually over the balcony, smoking a cigarette.
+
+The woman leans over to you, blows out a puff of smoke, and says "What? You want out? Or just deeper? The goats run the toll booth. First three letters of each of their rooms will bring you to their place. Maybe you'll have better luck convincing them. No promises, though, you might just get souveniers like I did... At least the baseball here is good..." 
 
 
 :: Scalper's Alley {"position":"1100,200","size":"100,100"}
+You walk into a dark alleyway visibly decorated with a theatrical approximation of an ancient city street in need of cleaning services. Cartoonish piles of "trash" sit artfully against garbage bins that have been artificially weathered to appear old and worn. Actors stand in costume, offering you tickets for extreme discounts (even though the real tickets are, of course, free). There's even a fire that's been lit as if to give the impression of danger, but you're pretty sure you can see a fire marshall's badge under the worn out rags of a nearby vagrant. 
 
+Or you can head back to [[Unconferencing Parking Lot]].
 
 
 :: Soda Fountain {"position":"100,200","size":"100,100"}
+A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly covered overalls and foppish hats. Each nozel of the fountain is a different color and the smell of sugar wafts through the air as the fountain's colorful attendants hold out curved glasses filled with carbonated fluid of various flavor. 
 
+You can have them dispense a drink for you.
+
+Or you can return to the [[Concessions Stadium]].
 
 
 :: Stadium Theater {"position":"550,200","size":"100,100"}
@@ -71,11 +130,33 @@ You can return to [[The Streets]]. Or if you'd like to speak to one of our speak
 
 
 :: Tailgaters' Union Office {"position":"1000,400","size":"100,100"}
+You step into an immaculately cleaned office building dedicated to tailgating, including an active grill where a young woman in a business suit is handing out hotdogs. Most of the occupants of this building sit behind desks taking calls or filing paperwork, but a small staff is dedicated to ensuring that guests have a perfect tailgating experience. There is also a desk dedicated to anyone running their own tailgate services in any of the nearby parking areas. You see pamphlets offering health & safety advice, worker's union standards, and tips for maximizing the positive social impact of your tailgate. 
 
+Or you can head back to the [[Unconferencing Parking Lot]].
+
+
+:: Temple of Play {"position":"400,900","size":"100,100"}
+You enter a quiet church decorated with massive stone pillars strung together with ropes and nets, its floor cushioned to prevent harm. The quiet here is punctuated with the sound of vibrant laughter. This space is visibly sacred but so are these joyful utterances. Worshippers do not sit in long wooden benches, but dangle from hanging ropes or swing from the rafters. A robed man wearing a miter hat gleefully blesses people with holy water balloons. 
+
+
+
+
+:: The Ball Pit {"position":"550,900","size":"100,100"}
+You enter a realm that appears to be mostly balls of every shape and size. You stand upon a black strip of obsidian stone beneath a black sky with a black sun glowing ethereally. Beneath you is an endless ocean of spheres with every size, shape, and texture imaginable. Baseballs, basketballs, strange glass orbs holding gemstones filled with a stormy light, even some which appear to contain unearthly fire. 
+
+You can reach out and claim a ball from the pit, or you can continue walking along the path to see where you end up.
+
+
+:: The Castle {"position":"800,1100","size":"100,100"}
+Suddenly you find yourself at the entrance gates to a fae castle. Crenelated stone walls rise high above you with towers at each corner of the massive fortification. Surrounding the castle are patchwork squares of wheat fields, forests, mountains, and lakes. This patchwork ocassionally shifts as if the hand of god were playing a match 3 game with them. 
+
+In front of you is the gate itself. A man in casual clothes stands before it holding a STOP sign. You are compelled by the sign, and some strange magic, unable to proceed. 
 
 
 :: The Dugout {"position":"400,100","size":"100,100"}
+You step into a patch of earth that has been completely overgrown by sunflowers. Behind the stalks you see the eyes of disgruntled players doing their best to watch the game from behind the overgrowth. As you watch, one player spits a sunflower seed into the nearby dirt and you gain an understanding of the cycle of life happening here. Nearby, more intrepid players spend their downtime cultivating the sunflowers, harvesting and drying their seeds for future snacking. 
 
+Or you can head back to [[Stadium Theater]].
 
 
 :: The Obelisk {"position":"550,400","size":"100,100"}
@@ -86,33 +167,49 @@ You can also return to [[The Streets]] or continue to [[Stadium Theater]]. You a
 The exterior surface of the change obelisk is covered in helpful graffiti. You are compelled to share your own.
 
 
-:: The Penalty Box {"position":"100,600","size":"100,100"}
 
+:: The Penalty Box {"position":"100,600","size":"100,100"}
+You're encased in a small room of darkened, unbreakable plexiglass that muddies the sounds of celebration around you.  Strips of neon lighting glimmer along the walls, giving an ethereal feeling to the otherwise normal bar.  Looking up you see the current time shown in an old LCD panel, the red-segmented display indicating that the next match is nearly ready to begin.  A dour jelly with a set of wispy mutton chops glares at you from behind the bar, waiting for you to make a selection.  A nearby whiteboard lists out the choices: [Tap Water], [Sparkling Water], [Beer of Indeterminate Origin™], [Pan-Galactic Gargle Blaster].  
+
+If you're not thirsty you can always return to [[The Streets]].
 
 
 :: The Streets {"position":"550,600","size":"100,100"}
-[[The Obelisk]]
+You walk onto the city streets of a techno-organic utopia. Green plants cover every surface and those surfaces are brutalist slabs of bio-engineered concrete porous enough to accept and protect the roots of those plants, creating a harmonious symbiosis. The streets here orbit a massive [[Stadium Theater]], every part of this society built around attending the games held there. 
 
-[[Stadium Theater]]
+Bolted onto the side of the stadium itself is a second [[Concessions Stadium]]
 
-[[Unconferencing Parking Lot]]
+A short distance in front of the entrance to the stadium sits [[The Obelisk]]
 
-[[Concessions Stadium]]
+To the east you see the [[Unconferencing Parking Lot]]
+
+And to the west you see the [[Jersey Assignment]] 
+
+
+:: Titanium Court Puzzle {"position":"600,1250","size":"100,100"}
+Various rooms that are clearly connected to the castle but with a fae guard blocking your way with a stop sign. 
+
+When you finally do get inside, you meet the queen. She's smoking a cigarette and surrounded by fire. She talks about how much she's come to like baseball.
+
+
+POSSIBLE: Players have to look around for signs of the three goats. The 3 goat room names offer the key to a completely secret room where you meet the goat elder. 
 
 
 :: Unconferencing Parking Lot {"position":"900,300","size":"100,100"}
-[[Irrepressible Feelings Zone]]
+You step onto a large, featureless slab. The ground here is black rubber painted with yellow lines demarking some kind of territory or perhaps organizational rule. Streetlamps rise on poles and cast over the area a dim, reddish glow that is easy on the eyes. It strikes you as odd that such a large space has been cleared for nothing of value, but you suppose it must serve a ritual purpose of some kind. 
 
-[[Scalper's Alley]]
+To the north you see the [[Irrepressible Feelings Zone]]. To the east you see [[Scalper's Alley]] and the [[Practice Fields]]. Just south of that is the [[Tailgaters' Union Office]].
 
-[[Practice Fields]]
-
-[[Tailgaters' Union Office]]
+Or you can return to [[The Streets]].
 
 
 :: VIP Seats {"position":"600,0","size":"100,100"}
+You enter a room made with gold walls etched with a bas relief depicting the great moments in sports history. Each seat is a plush throne and a massive table fills one entire wall with plates full of piles of decadent fruit, nuts, sliced meat, and cheese. The air here is chilled to a perfect level of comfort and massive tv screens fill the wall so that no matter where your head may turn, the game will never be out of your sights. 
 
+Or you can head back to [[Stadium Theater]].
 
 
 :: Waterboy Lounge {"position":"700,100","size":"100,100"}
+You walk into a room styled after victorian decor with a wood floor and patterned wallpaper, all of which looks rather dingey and old in a way that makes it all feel somehow more refined. On one side of this room stands a large tank of crystalline water that is occupied by an alarmingly handsome fish man. A sign labels this tank as "The Water Boy" and you see a stack of large orange coolers being filled with this crystalline water, but only after visual approval from the fish man, who gives an uncomfortably sultry wink when the water passes his quality requirements. 
 
+Or you can head back to [[Stadium Theater]].
