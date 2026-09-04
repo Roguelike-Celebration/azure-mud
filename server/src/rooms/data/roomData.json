@@ -19,7 +19,7 @@
     "shortName": "ticket booth",
     "id": "entryway",
     "description": "You appear suddenly in an open field. The wind blows softly, rustling the grass. Before you is a brightly colored explosion of sound and light labelled with a sign that announces that you have arrived at Roguelike Celebration 2025! <br/><br/>A smaller sign reads 'Welcome to our 10th anniversary event!' and an even smaller one next to that reads 'Thanks for coming!' with an enthusiastic scrawl. <br/><br/> A set of instructions informs you that you can click on links in the text to travel to places like the [[Pavilion]], and that you can also do the same by typing '/go pavilion' if you prefer. The instructions tell you to keep your eyes peeled for mysterious links to rooms not listed on the map, or strange objects that seem out of place, for they might be clues to some optional content of some kind. This wordy sign's text has slowly dwindled in size and from here on is completely illegible. You wish someone had done a better tutorial, but you feel the sign silently agreeing with you.",
-	  "hidden": true,
+    "hidden": true,
     "roomId": "entryway"
   },  
   "streets": {
@@ -55,7 +55,7 @@
     "shortName": "gift shop",
     "id": "giftShop",
     "description": "You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. \"seems to be\" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don't see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. <br/><br/>[[Peruse The Antiques->obesliskSouvenirs]].<br/><br/>You can continue east to the [[Unconferencing Parking Lot]].<br/><br/>Or you can return to [[The Streets]].",
-	  "hidden": false,
+    "hidden": false,
     "roomId": "giftShop"
   },  
   "theater": {
@@ -63,8 +63,8 @@
     "shortName": "theater",
     "id": "theater",
     "description": "You step out of the concrete hallways and into the Stadium Theater. In front of you lies the field, a neatly-trimmed green space surrounded by bleachers on all sides. The scent of stale popcorn and fresh hotdogs waft through the breeze with an undercurrent of animal scent. Just as that strikes you as odd, you notice Ted The Ten Foot Armadillo resting lazily in the outfield.<br/><br/>You can return to [[The Streets]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[The Dugout]], [[Press Box]], [[VIP Seats]],[[Waterboy Lounge]].<br/><br/> (Check the 'Happening Now!' button on the left for speaker room assignments!) <a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
-	  "hidden": false,
-	  "hasNoteWall": true,
+    "hidden": false,
+    "hasNoteWall": true,
     "noteWallData": {
       "roomWallDescription": "There is a whiteboard set up to the side with \"SPEAKER QUESTIONS\" written at the top. \"Questions for speakers not questions from speakers!\" is hastily scrawled below it.",
       "noteWallButton": "Write a question",
@@ -127,8 +127,8 @@
     "shortName": "concessions",
     "id": "concessions",
     "description": "You walk into an ostentatious foyer adorned with gilding on every surface. The hallway is lined with a literal red carpet which splits to direct visitors towards the restaurants on offer here.<br/><br/>To the left you see the [[Soda Fountain]].<br/><br/>Straight ahead leads into [[Orville's]].<br/><br/>Turning to the right the hall leads to [[Chez Nathan's]].<br/><br/>Or you can head back to [[The Streets]].<br/><br/>",
-  	"hidden": false,
-  	"hasNoteWall": true,
+    "hidden": false,
+    "hasNoteWall": true,
     "noteWallData": {
       "roomWallDescription": "You see a book penned by those who create such things. \"Procedural Generation Surprises\" is written on the cover and there are some pens nearby for you to add your own stories.",
       "noteWallButton": "Contribute",
@@ -150,8 +150,8 @@
     "displayName": "Orville's",
     "shortName": "orville's",
     "id": "orville",
-  "description": "You enter a space full of the raucous sound of thousands of tiny explosions happening at once. Each wall here is made of glass and within that glass is a towering wall of popped corn. You watch as mechanisms move each section of wall's product through a series of elaborate stations that sift the dry seeds, heat them until they pop, and then dip them in liquids ranging from butter to caramel, from chocolate to mysterious liquids you can't discern. The resulting snack arrives at a station set aside for that particular flavor, people wearing striped red and white uniforms handing out similarly-colored paper boxes filled with the treat.<br/><br/>You can ask the counter for some popcorn.<br/><br/>Or you can head back to the [[Concessions Stadium]]",
-	"hidden": false,
+    "description": "You enter a space full of the raucous sound of thousands of tiny explosions happening at once. Each wall here is made of glass and within that glass is a towering wall of popped corn. You watch as mechanisms move each section of wall's product through a series of elaborate stations that sift the dry seeds, heat them until they pop, and then dip them in liquids ranging from butter to caramel, from chocolate to mysterious liquids you can't discern. The resulting snack arrives at a station set aside for that particular flavor, people wearing striped red and white uniforms handing out similarly-colored paper boxes filled with the treat.<br/><br/>You can ask the counter for some popcorn.<br/><br/>Or you can head back to the [[Concessions Stadium]]",
+    "hidden": false,
     "roomId": "orville"
   },   
   "sodaFountain": {
@@ -159,7 +159,7 @@
     "shortName": "soda fountain",
     "id": "sodaFountain",
     "description": "A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly covered overalls and foppish hats. Each nozel of the fountain is a different color and the smell of sugar wafts through the air as the fountain's colorful attendants hold out curved glasses filled with carbonated fluid of various flavor.<br/><br/>You can have them dispense a drink for you.<br/><br/>Or you can return to the [[Concessions Stadium]].",
-	  "hidden": false,
+    "hidden": false,
     "roomId": "sodaFountain"
   },   
   "churchOfGamers": {
