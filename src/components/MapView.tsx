@@ -179,7 +179,7 @@ const mapText = `
                                                                                                                 `
 
 const presenceMapping = [  
-	'entryWay',
+    'entryWay',
     'streets',
     'obelisk',
     'jerseys',
