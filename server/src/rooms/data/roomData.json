@@ -13,7 +13,7 @@
       "addNotePrompt": "What would you like to link to",
       "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
     }
-  },  
+  },
   "entryway": {
     "displayName": "Subway Station",
     "shortName": "subway",
@@ -21,7 +21,7 @@
     "description": "You awaken suddenly beneath the ground in a dingy subway terminal. Memory floods back into you that you came here for Roguelike Celebration 2026, the grandest sports tournament in all the verse! You reach into your pocket and find your ticket for the event, which remind you that you can click on links to travel to places like [[The Streets]], and that you can also do the same by typing '/go the streets' if you prefer.",
     "hidden": true,
     "roomId": "entryway"
-  },  
+  },
   "streets": {
     "displayName": "The Streets",
     "shortName": "streets",
@@ -37,7 +37,7 @@
       "addNotePrompt": "What feedback do you have about the social space itself?",
       "noteWallDescription": "Social Space Feedback"
     },
-  },  
+  },
   "jerseys": {
     "displayName": "Jersey Assignment",
     "shortName": "jersey assignment",
@@ -49,7 +49,7 @@
     ],
     "hidden": false,
     "roomId": "jerseys"
-  },  
+  },
   "giftShop": {
     "displayName": "Gift Shop",
     "shortName": "gift shop",
@@ -57,7 +57,7 @@
     "description": "You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. \"seems to be\" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don't see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. <br/><br/>[[Peruse The Antiques->obesliskSouvenirs]].<br/><br/>You can continue east to the [[Unconferencing Parking Lot]].<br/><br/>Or you can return to [[The Streets]].",
     "hidden": false,
     "roomId": "giftShop"
-  },  
+  },
   "theater": {
     "displayName": "Stadium Theater",
     "shortName": "theater",
@@ -73,7 +73,7 @@
       "noteWallDescription": "Questions for the current speaker, ranked by upvotes."
     },
     "roomId": "theater"
-  },  
+  },
   "unconferencingHub": {
     "displayName": "Unconferencing Parking Lot",
     "shortName": "unconferencing",
@@ -89,7 +89,7 @@
       "noteWallDescription": "Topics for unconferencing discussion, ranked by upvotes."
     },
     "roomId": "unconferencingHub"
-  },  
+  },
   "unconfFeelings": {
     "displayName": "Irrepressible Feelings Zone",
     "shortName": "feelings zone",
@@ -97,7 +97,7 @@
     "description": "You step into what looks like the blasted remains of a parking lot. Overturned cars smolder in the distance and large men with colorfully-painted skin scream at one another, arguing over which player was the MVP of the most recent game. Each of these men appears to be quietly followed by another person wearing a soft cardigan and holding a notebook. As the colorful men throw and break things, the cardigan-clad person asks them questions in a soft voice. There appears to be a consistent flow of movement where the men will churn through the back parking lot, flipping cars or tearing down infrastructure until such time as their assigned cardigan brings them inexorably towards the exit and back into society.<br/><br/>Or you could walk back to the [[Unconferencing Parking Lot]].. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/82167343360?pwd=X6RUbo76jCObW7FGvpiNOxkUhxTiBb.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference.</p>",
     "hidden": false,
     "roomId": "unconfFeelings"
-  },  
+  },
   "unconfScalpers": {
     "displayName": "Scalper's Alley",
     "shortName": "scalper alley",
@@ -105,7 +105,7 @@
     "description": "You walk into a dark alleyway visibly decorated with a theatrical approximation of an ancient city street in need of cleaning services. Cartoonish piles of \"trash\" sit artfully against garbage bins that have been artificially weathered to appear old and worn. Actors stand in costume, offering you tickets for extreme discounts (even though the real tickets are, of course, free). There's even a fire that's been lit as if to give the impression of danger, but you're pretty sure you can see a fire marshall's badge under the worn out rags of a nearby vagrant. <br/><br/>Or you can head back to [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/83920586473?pwd=wYjp0EfLVAWNDDqvDMnYXxIJWCd1eK.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference.</p>",
     "hidden": false,
     "roomId": "unconfScalpers"
-  },   
+  },
   "unconfPractice": {
     "displayName": "Practice Fields",
     "shortName": "practice fields",
@@ -113,7 +113,7 @@
     "description": "You step onto a wide open field full of people running about and performing various feats of athletic prowess. Each player appears to be practicing for something wildly different from every other player present in this space. Standing among the chaos is a referree who holds a massive tome gilt with gold. He offers you a reading of the holy rules [Calvin Ball Rule Generator].<br/><br/>Or you can head back to the [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/83450610749?pwd=D1bHnTXy7pLfwCrzEfSzcKOLHEw7pq.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference.</p>",
     "hidden": false,
     "roomId": "unconfPractice"
-  },   
+  },
   "unconfTailgate": {
     "displayName": "Tailgaters' Union Office",
     "shortName": "tailgaters union",
@@ -121,7 +121,7 @@
     "description": "You step into an immaculately cleaned office building dedicated to tailgating, including an active grill where a young woman in a business suit is handing out hotdogs. Most of the occupants of this building sit behind desks taking calls or filing paperwork, but a small staff is dedicated to ensuring that guests have a perfect tailgating experience. There is also a desk dedicated to anyone running their own tailgate services in any of the nearby parking areas. You see pamphlets offering health & safety advice, worker's union standards, and tips for maximizing the positive social impact of your tailgate. <br/><br/>Or you can head back to the [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/89004450840?pwd=u5Y6VgvBEVnVrxigw8deNxEh9AbqaQ.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference.</p>",
     "hidden": false,
     "roomId": "unconfTailgate"
-  },   
+  },
   "concessions": {
     "displayName": "Concessions Stadium",
     "shortName": "concessions",
@@ -137,7 +137,7 @@
       "noteWallDescription": "Tales of strange, delightful emergent results from procedural generators."
     },
     "roomId": "concessions"
-  },   
+  },
   "chezNathan": {
     "displayName": "Chez Nathan's",
     "shortName": "chez nathan's",
@@ -145,7 +145,7 @@
     "description": "Stepping into Chez Nathan's is like stepping into a gold-encrusted shrine to the exuberant joy of childhood flavor palettes. The decor here is whimsical and made to be climbed on or sprinted around, but it's all scaled for full adults and finely accented. The air here smells of meat and oil with an undercurrent so unhinged you couldn't begin to guess at what other flavors these hotdogs must be offered in. Looking at the menu confirms your concerns as the largest text visible reads \"Just ask, we serve it\".<br/><br/>You can have them make you a hotdog.<br/><br/>or you can head back to the [[Concessions Stadium]].",
     "hidden": false,
     "roomId": "chezNathan"
-  },   
+  },
   "orville": {
     "displayName": "Orville's",
     "shortName": "orville's",
@@ -153,7 +153,7 @@
     "description": "You enter a space full of the raucous sound of thousands of tiny explosions happening at once. Each wall here is made of glass and within that glass is a towering wall of popped corn. You watch as mechanisms move each section of wall's product through a series of elaborate stations that sift the dry seeds, heat them until they pop, and then dip them in liquids ranging from butter to caramel, from chocolate to mysterious liquids you can't discern. The resulting snack arrives at a station set aside for that particular flavor, people wearing striped red and white uniforms handing out similarly-colored paper boxes filled with the treat.<br/><br/>You can ask the counter for some popcorn.<br/><br/>Or you can head back to the [[Concessions Stadium]]",
     "hidden": false,
     "roomId": "orville"
-  },   
+  },
   "sodaFountain": {
     "displayName": "Soda Fountain",
     "shortName": "soda fountain",
@@ -161,7 +161,7 @@
     "description": "A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly covered overalls and foppish hats. Each nozzle of the fountain is a different color and the smell of sugar wafts through the air as the fountain's colorful attendants hold out curved glasses filled with carbonated fluid of various flavor.<br/><br/>You can have them dispense a drink for you.<br/><br/>Or you can return to the [[Concessions Stadium]].",
     "hidden": false,
     "roomId": "sodaFountain"
-  },   
+  },
   "churchOfGamers": {
     "displayName": "Church of the Sacred Gamer LEDs",
     "shortName": "church of gamers",
@@ -169,7 +169,7 @@
     "description": "You step into a cathedral with high ceilings and filled with the scent of musky incense. Brightly-colored fans spin beneath stained glass windows depicting images of people of every variety sitting in front of computers of every style and size. A robed priest stands behind an altar, cleaning his hands in sanctified Mountain Dew, offering a blessed Dorito to each faithful.<br/><br/>A small room to the right of the central altar is attended by priests holding strips of LEDs. They stand behind an altar marked \"Steam Sale\" and urge you to approach. <a href=\"https://store.steampowered.com/curator/41222044/sale/RoguelikeCelebration2025 \" target=\"_blank\">Visit the Steam Sale!</a><br/><br/>From here you can walk south to [[The Penalty Box]].<br/><br/>To the east you can head to [[Jersey Assignment]].<br/><br/>To the north you could reach the [[Concessions Stadium]].",
     "hidden": false,
     "roomId": "churchOfGamers"
-  },      
+  },
   "penaltyBox": {
     "displayName": "The Penalty Box",
     "shortName": "penalty box",
@@ -177,7 +177,7 @@
     "description": "You're encased in a small room of darkened, unbreakable plexiglass that muddies the sounds of celebration around you.  Strips of neon lighting glimmer along the walls, giving an ethereal feeling to the otherwise normal bar.  Looking up you see the current time shown in an old LCD panel, the red-segmented display indicating that the next match is nearly ready to begin.  A dour jelly with a set of wispy mutton chops glares at you from behind the bar, waiting for you to make a selection.  A nearby whiteboard lists out the choices: [Tap Water], [Sparkling Water], [Beer of Indeterminate Origin™], [Pan-Galactic Gargle Blaster].<br/><br/>If you're not thirsty you can always return to [[The Streets]].",
     "hidden": true,
     "roomId": "penaltyBox"
-  },      
+  },
   "dugout": {
     "displayName": "The Dugout",
     "shortName": "dugout",
@@ -185,7 +185,7 @@
     "description": "You step into a patch of earth that has been completely overgrown by sunflowers. Behind the stalks you see the eyes of disgruntled players doing their best to watch the game from behind the overgrowth. As you watch, one player spits a sunflower seed into the nearby dirt and you gain an understanding of the cycle of life happening here. Nearby, more intrepid players spend their downtime cultivating the sunflowers, harvesting and drying their seeds for future snacking.<br/><br/>Or you can head back to [[Stadium Theater]].",
     "hidden": true,
     "roomId": "dugout"
-  },   
+  },
   "pressbox": {
     "displayName": "Press Box",
     "shortName": "press box",
@@ -193,7 +193,7 @@
     "description": "You find yourself standing beneath a massive tower reaching far into the heavens. Lining that tower are reporters calling out raucously, describing the game to viewers all over the earth. Each person on the tower is speaking in their native tongue, ensuring the ability for as many viewers as possible to enjoy this great and holy passtime. You gaze in awe at the massive tower, wondering at the strength of man to build such a thing.<br/><br/>Or you can head back to [[Stadium Theater]].",
     "hidden": false,
     "roomId": "pressbox"
-  },     
+  },
   "vipSeats": {
     "displayName": "VIP Seats",
     "shortName": "vip seats",
@@ -201,7 +201,7 @@
     "description": "You enter a room made with gold walls etched with a bas relief depicting the great moments in sports history. Each seat is a plush throne and a massive table fills one entire wall with plates full of piles of decadent fruit, nuts, sliced meat, and cheese. The air here is chilled to a perfect level of comfort and massive tv screens fill the wall so that no matter where your head may turn, the game will never be out of your sights.<br/><br/>Or you can head back to [[Stadium Theater]].",
     "hidden": false,
     "roomId": "vipSeats"
-  },     
+  },
   "waterboy": {
     "displayName": "Waterboy Lounge",
     "shortName": "water boy lounge",
