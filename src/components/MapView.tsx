@@ -344,4 +344,3 @@ const clickableAreas: ClickableArea[] = [
     height: 4
   }
 ]
-]
