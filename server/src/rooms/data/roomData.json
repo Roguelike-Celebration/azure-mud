@@ -26,7 +26,7 @@
     "displayName": "The Streets",
     "shortName": "streets",
     "id": "streets",
-    "description": "You walk onto the city streets of a techno-organic utopia. Green plants cover every surface and those surfaces are brutalist slabs of bio-engineered concrete porous enough to accept and protect the roots of those plants, creating a harmonious symbiosis. The streets here orbit a massive [[Stadium Theater]], every part of this society built around attending the games held there.<br/><br/>Bolted onto the side of the stadium itself is a second [[Concessions Stadium]].<br/><br/>A short distance in front of the entrance to the stadium sits [[The Obelisk]].<br/><br/>To the east you see the [[Unconferencing Parking Lot]].<br/><br/>And to the west you see the [[Jersey Assignment]].",
+    "description": "You walk onto the city streets of a techno-organic utopia. Green plants cover every surface and those surfaces are brutalist slabs of bio-engineered concrete porous enough to accept and protect the roots of those plants, creating a harmonious symbiosis. The streets here orbit a massive [[Stadium Theater]], every part of this society built around attending the games held there.<br/><br/>Bolted onto the side of the stadium itself is a second [[Concessions Stadium]].<br/><br/>A short distance in front of the entrance to the stadium sits the [[Obelisk]].<br/><br/>To the east you see the [[Unconferencing Parking Lot]].<br/><br/>And to the west you see the [[Jersey Assignment]], [[Church Of The Sacred Gamer LEDs]], and [[The Penalty Box]].<br/><br/>",
     "hidden": false,
     "roomId": "streets",
     "hasNoteWall": true,
@@ -42,7 +42,7 @@
     "displayName": "Jersey Assignment",
     "shortName": "jersey assignment",
     "id": "jerseys",
-    "description": "You walk into a shop featuring jerseys for every popular team in the league. The walls are lined meticulously and at a glance you believe they are ordered by their rankings in the current season. The person responsible stands wearing a referree uniform and a name badge, neither of which exactly matches regulation, presumably in an attempt to keep themselves distinct.<br/><br/>The referree also holds up a bucket of face paint and offers to [[douse you->drinkPolymorph].<br/><br/>The referree walks up and offers to find a jersey for you.",
+    "description": "You walk into a shop featuring jerseys for every popular team in the league. The walls are lined meticulously and at a glance you believe they are ordered by their rankings in the current season. The person responsible stands wearing a referree uniform and a name badge, neither of which exactly matches regulation, presumably in an attempt to keep themselves distinct.<br/><br/>From here, you can head to [[The Streets]], the [[Obelisk]], [[Concessions Stadium]], or [[Stadium Theater]].<br/><br/>The referree also holds up a bucket of face paint and offers to [[douse you->drinkPolymorph]].<br/><br/>The referree walks up and offers to find a jersey for you.",
     "specialFeatures": [
       "RAINBOW_DOOR",
       "DULL_DOOR"
@@ -78,7 +78,7 @@
     "displayName": "Unconferencing Parking Lot",
     "shortName": "unconferencing",
     "id": "unconferencingHub",
-    "description": "You step onto a large, featureless slab. The ground here is black rubber painted with yellow lines demarking some kind of territory or perhaps organizational rule. Streetlamps rise on poles and cast over the area a dim, reddish glow that is easy on the eyes. It strikes you as odd that such a large space has been cleared for nothing of value, but you suppose it must serve a ritual purpose of some kind. <br/><br/>To the north you see the [[Irrepressible Feelings Zone]]. To the east you see [[Scalper's Alley]] and the [[Practice Fields]]. Just south of that is the [[Tailgaters' Union Office]].<br/><br/>Or you can return to [[The Streets]].<br/><br/>",
+    "description": "You step onto a large, featureless slab. The ground here is black rubber painted with yellow lines demarking some kind of territory or perhaps organizational rule. Streetlamps rise on poles and cast over the area a dim, reddish glow that is easy on the eyes. It strikes you as odd that such a large space has been cleared for nothing of value, but you suppose it must serve a ritual purpose of some kind. <br/><br/>To the north you see the [[Irrepressible Feelings Zone]]. To the east you see [[Scalper's Alley->unconfScalpers]] and the [[Practice Fields]]. Just south of that is the [[Tailgaters' Union Office->unconfTailgate]].<br/><br/>Or you can return to [[The Streets]].<br/><br/>",
     "hidden": false,
     "hasNoteWall": true,
     "noteWallData": {
@@ -123,7 +123,7 @@
     "roomId": "unconfTailgate"
   },   
   "concessions": {
-    "displayName": "Concession Stadium",
+    "displayName": "Concessions Stadium",
     "shortName": "concessions",
     "id": "concessions",
     "description": "You walk into an ostentatious foyer adorned with gilding on every surface. The hallway is lined with a literal red carpet which splits to direct visitors towards the restaurants on offer here.<br/><br/>To the left you see the [[Soda Fountain]].<br/><br/>Straight ahead leads into [[Orville's]].<br/><br/>Turning to the right the hall leads to [[Chez Nathan's]].<br/><br/>Or you can head back to [[The Streets]].<br/><br/>",
@@ -158,7 +158,7 @@
     "displayName": "Soda Fountain",
     "shortName": "soda fountain",
     "id": "sodaFountain",
-    "description": "A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly covered overalls and foppish hats. Each nozel of the fountain is a different color and the smell of sugar wafts through the air as the fountain's colorful attendants hold out curved glasses filled with carbonated fluid of various flavor.<br/><br/>You can have them dispense a drink for you.<br/><br/>Or you can return to the [[Concessions Stadium]].",
+    "description": "A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly covered overalls and foppish hats. Each nozzle of the fountain is a different color and the smell of sugar wafts through the air as the fountain's colorful attendants hold out curved glasses filled with carbonated fluid of various flavor.<br/><br/>You can have them dispense a drink for you.<br/><br/>Or you can return to the [[Concessions Stadium]].",
     "hidden": false,
     "roomId": "sodaFountain"
   },   
@@ -203,11 +203,11 @@
     "roomId": "vipSeats"
   },     
   "waterboy": {
-    "displayName": "Break Room",
-    "shortName": "break room",
-    "id": "breakRoom",
+    "displayName": "Waterboy Lounge",
+    "shortName": "water boy lounge",
+    "id": "waterboy",
     "description": "You walk into a room styled after victorian decor with a wood floor and patterned wallpaper, all of which looks rather dingey and old in a way that makes it all feel somehow more refined. On one side of this room stands a large tank of crystalline water that is occupied by an alarmingly handsome fish man. A sign labels this tank as \"The Water Boy\" and you see a stack of large orange coolers being filled with this crystalline water, but only after visual approval from the fish man, who gives an uncomfortably sultry wink when the water passes his quality requirements.<br/><br/>Or you can head back to [[Stadium Theater]].",
     "hidden": false,
-    "roomId": "breakRoom"
+    "roomId": "waterboy"
   }
 }
