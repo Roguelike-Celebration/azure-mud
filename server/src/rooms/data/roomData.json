@@ -15,10 +15,10 @@
     }
   },  
   "entryway": {
-    "displayName": "Ticket Booth",
-    "shortName": "ticket booth",
+    "displayName": "Subway Station",
+    "shortName": "subway",
     "id": "entryway",
-    "description": "You appear suddenly in an open field. The wind blows softly, rustling the grass. Before you is a brightly colored explosion of sound and light labelled with a sign that announces that you have arrived at Roguelike Celebration 2025! <br/><br/>A smaller sign reads 'Welcome to our 10th anniversary event!' and an even smaller one next to that reads 'Thanks for coming!' with an enthusiastic scrawl. <br/><br/> A set of instructions informs you that you can click on links in the text to travel to places like the [[Pavilion]], and that you can also do the same by typing '/go pavilion' if you prefer. The instructions tell you to keep your eyes peeled for mysterious links to rooms not listed on the map, or strange objects that seem out of place, for they might be clues to some optional content of some kind. This wordy sign's text has slowly dwindled in size and from here on is completely illegible. You wish someone had done a better tutorial, but you feel the sign silently agreeing with you.",
+    "description": "You awaken suddenly beneath the ground in a dingy subway terminal. Memory floods back into you that you came here for Roguelike Celebration 2026, the grandest sports tournament in all the verse! You reach into your pocket and find your ticket for the event, which remind you that you can click on links to travel to places like [[The Streets]], and that you can also do the same by typing '/go the streets' if you prefer.",
     "hidden": true,
     "roomId": "entryway"
   },  
