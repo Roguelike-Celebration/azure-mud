@@ -179,165 +179,165 @@ const mapText = `
                                                                                                                 `
 
 const presenceMapping = [  
-    'entryWay',
-    'streets',
-    'obelisk',
-    'jerseys',
-    'giftShop',
-    'theater',
-    'unconferencingHub',
-    'unconfFeelings',
-    'unconfScalpers',
-    'unconfPractice',
-    'unconfTailgate',
-    'concessions',
-    'chezNathan',
-    'orville',
-    'sodaFountain',
-    'churchOfGamers',
-    'penaltyBox',
-    'dugout',
-    'pressbox',
-    'vipSeats',
-    'waterboy'
+  'entryWay',
+  'streets',
+  'obelisk',
+  'jerseys',
+  'giftShop',
+  'theater',
+  'unconferencingHub',
+  'unconfFeelings',
+  'unconfScalpers',
+  'unconfPractice',
+  'unconfTailgate',
+  'concessions',
+  'chezNathan',
+  'orville',
+  'sodaFountain',
+  'churchOfGamers',
+  'penaltyBox',
+  'dugout',
+  'pressbox',
+  'vipSeats',
+  'waterboy'
 ]
 
 const clickableAreas: ClickableArea[] = [
   {
-    roomId: "streets",
+    roomId: 'streets',
     x: 37,
     y: 30,
     width: 19,
     height: 5
   },
   {
-    roomId: "obelisk",
+    roomId: 'obelisk',
     x: 37,
     y: 24,
     width: 19,
     height: 5
   },
   {
-    roomId: "theater",
+    roomId: 'theater',
     x: 54,
     y: 19,
     width: 10,
     height: 5
   },
   {
-    roomId: "jerseys",
+    roomId: 'jerseys',
     x: 27,
     y: 19,
     width: 14,
     height: 5
   },
   {
-    roomId: "theater",
+    roomId: 'theater',
     x: 38,
     y: 6,
     width: 16,
     height: 11
   },
   {
-    roomId: "unconferencingHub",
+    roomId: 'unconferencingHub',
     x: 66,
     y: 12,
     width: 18,
     height: 12
   },
   {
-    roomId: "unconfFeelings",
+    roomId: 'unconfFeelings',
     x: 66,
     y: 5,
     width: 18,
     height: 6
   },
   {
-    roomId: "unconfScalpers",
+    roomId: 'unconfScalpers',
     x: 86,
     y: 4,
     width: 22,
     height: 5
   },
   {
-    roomId: "unconfPractice",
+    roomId: 'unconfPractice',
     x: 85,
     y: 11,
     width: 22,
     height: 10
   },
   {
-    roomId: "unconfTailgate",
+    roomId: 'unconfTailgate',
     x: 85,
     y: 21,
     width: 14,
     height: 7
   },
   {
-    roomId: "concessions",
+    roomId: 'concessions',
     x: 14,
     y: 7,
     width: 14,
     height: 10
   },
   {
-    roomId: "chezNathan",
+    roomId: 'chezNathan',
     x: 16,
     y: 1,
     width: 12,
     height: 5
   },
   {
-    roomId: "orville",
+    roomId: 'orville',
     x: 2,
     y: 1,
     width: 12,
     height: 8
   },
   {
-    roomId: "sodaFountain",
+    roomId: 'sodaFountain',
     x: 2,
     y: 9,
     width: 12,
     height: 9
   },
   {
-    roomId: "churchOfGamers",
+    roomId: 'churchOfGamers',
     x: 0,
     y: 18,
     width: 13,
     height: 6
   },
   {
-    roomId: "penaltyBox",
+    roomId: 'penaltyBox',
     x: 0,
     y: 25,
     width: 13,
     height: 6
   },
   {
-    roomId: "dugout",
+    roomId: 'dugout',
     x: 28,
     y: 6,
     width: 10,
     height: 4
   },
   {
-    roomId: "pressbox",
+    roomId: 'pressbox',
     x: 28,
     y: 1,
     width: 17,
     height: 5
   },
   {
-    roomId: "vipSeats",
+    roomId: 'vipSeats',
     x: 45,
     y: 1,
     width: 19,
     height: 5
   },
   {
-    roomId: "waterboy",
+    roomId: 'waterboy',
     x: 54,
     y: 6,
     width: 10,
