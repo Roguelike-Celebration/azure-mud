@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid'
 import { MessageType } from './enums'
 import {
   BaseMessage,
-  CaptionMessage,
   ChatMessage,
   CommandMessage,
   ConnectedMessage,
@@ -35,8 +34,7 @@ const deletableMessageTypes = [
   MessageType.Chat,
   MessageType.Emote,
   MessageType.Shout,
-  MessageType.Dance,
-  MessageType.Caption
+  MessageType.Dance
 ]
 
 export const isDeletableMessage = (
@@ -60,9 +58,6 @@ const movementMessageTypes = [
 export const isMovementMessage = (
   message: Message
 ): message is AnyMovementMessage => movementMessageTypes.includes(message.type)
-
-export const isCaptionMessage = (message: Message): message is CaptionMessage =>
-  message.type === MessageType.Caption
 
 /**
  * message creators
@@ -146,16 +141,6 @@ export const createChatMessage = (
   message: string
 ): ChatMessage => ({
   ...createBaseMessage(MessageType.Chat, id),
-  userId,
-  message
-})
-
-export const createCaptionMessage = (
-  id: string,
-  userId: string,
-  message: string
-): CaptionMessage => ({
-  ...createBaseMessage(MessageType.Caption, id),
   userId,
   message
 })

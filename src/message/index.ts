@@ -1,6 +1,5 @@
 export { MessageType } from './enums'
 export {
-  CaptionMessage,
   ChatMessage,
   CommandMessage,
   ConnectedMessage,
@@ -18,7 +17,6 @@ export {
   WhisperMessage
 } from './types'
 export {
-  createCaptionMessage,
   createChatMessage,
   createCommandMessage,
   createConnectedMessage,
@@ -33,7 +31,6 @@ export {
   createSameRoomMessage,
   createShoutMessage,
   createWhisperMessage,
-  isCaptionMessage,
   isDeletableMessage,
   isMovementMessage
 } from './utils'

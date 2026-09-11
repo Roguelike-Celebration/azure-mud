@@ -15,7 +15,6 @@ export type Message =
   | ModMessage
   | ErrorMessage
   | CommandMessage
-  | CaptionMessage;
 
 export interface BaseMessage<T extends MessageType> {
   type: T;
@@ -67,11 +66,6 @@ export interface SameRoomMessage extends BaseMessage<MessageType.SameRoom> {
 }
 
 export interface ChatMessage extends BaseMessage<MessageType.Chat> {
-  userId: string;
-  message: string;
-}
-
-export interface CaptionMessage extends BaseMessage<MessageType.Caption> {
   userId: string;
   message: string;
 }
