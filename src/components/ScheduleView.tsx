@@ -17,15 +17,15 @@ export interface ScheduleEntry {
   day: number
 }
 
-const PREVIEW_END = new Date('2025-09-07T18:00:00-07:00')
-const FIRST_DAY_END = new Date('2025-10-24T21:00:00-07:00')
-const SECOND_DAY_END = new Date('2025-10-25T21:00:00-07:00')
-const THIRD_DAY_END = new Date('2025-10-26T21:00:00-07:00')
+const PREVIEW_END = new Date('2026-09-13T17:00:00-07:00')
+const FIRST_DAY_END = new Date('2026-10-16T21:00:00-07:00')
+const SECOND_DAY_END = new Date('2026-10-17T21:00:00-07:00')
+const THIRD_DAY_END = new Date('2026-10-18T21:00:00-07:00')
 
-const dayPreview = (time) => new Date(`2025-09-07T${time}:00.000-07:00`)
-const dayOneDate = (time) => new Date(`2025-10-24T${time}:00.000-07:00`)
-const dayTwoDate = (time) => new Date(`2025-10-25T${time}:00.000-07:00`)
-const dayThreeDate = (time) => new Date(`2025-10-26T${time}:00.000-07:00`)
+const dayPreview = (time) => new Date(`2026-09-13T${time}:00.000-07:00`)
+const dayOneDate = (time) => new Date(`2026-10-16T${time}:00.000-07:00`)
+const dayTwoDate = (time) => new Date(`2026-10-17T${time}:00.000-07:00`)
+const dayThreeDate = (time) => new Date(`2026-10-18T${time}:00.000-07:00`)
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
   if (day === 0) {
@@ -50,66 +50,13 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
 }
 
 export const ScheduleEntries: ScheduleEntry[] = [
-  ScheduleEntry('14:45', 0, 'Doors Open'),
-  ScheduleEntry('15:10', 0, 'Kickoff'),
-  ScheduleEntry('15:15', 0, 'Jon Perry: Fireside chat with Jon Perry (UFO 50)', ['theater']),
-  ScheduleEntry('16:00', 0, 'Ezra Szanton: Building Synergy Networks for better Roguelike Deckbuilders', ['theater']),
-  ScheduleEntry('16:30', 0, 'Alexei Pepers: Designing for System Suspense', ['theater']),
-  ScheduleEntry('17:15', 0, 'Hang Out & Explore!'),
-  ScheduleEntry('17:30', 0, 'Doors Close'),
-
-  // Day "1" (Friday) for RLC 2025 wasn't really announced. But leaving this in for testing,
-  // and consistency of date numbers with previous years
-  ScheduleEntry('18:00', 1, 'Doors Open'),
-  ScheduleEntry('20:00', 1, 'Doors Close'),
-
-  ScheduleEntry('09:00', 2, 'Doors Open'),
-  ScheduleEntry('09:15', 2, 'Kickoff', ['theater']),
-  ScheduleEntry('09:30', 2, 'Michael Brough: The Roots of Roguelikes in Fantasy Fiction', ['theater'], 'underTheStage'),
-  ScheduleEntry('10:00', 2, 'Sebastien "deepnight" Benard: Mixing hand-crafted content with procgen to achieve quality', ['theater'], 'dressingRooms'),
-  ScheduleEntry('10:30', 2, 'Max Sahin: Stuff: the behavioral science of inventory', ['theater'], 'propsCloset'),
-  ScheduleEntry('10:45', 2, 'Florence Smith Nicholls: Roll for Reminiscence: Procedural Keepsake Games', ['theater'], 'breakRoom'),
-  ScheduleEntry('11:00', 2, SOCIAL_TIME),
-  ScheduleEntry('11:30', 2, 'Alexander Birke and Sofie Kjær Schmidt: Hoist the colours! Art direction and tech art in Sea Of Rifts, a naval story generation RPG', ['theater'], 'dressingRooms'),
-  ScheduleEntry('12:00', 2, 'bleeptrack: From Code to Craft: Procedural Generation for the Physical World', ['theater'], 'propsCloset'),
-  ScheduleEntry('12:30', 2, 'Zeno Rogue: The best genre for a non-Euclidean game', ['theater'], 'breakRoom'),
-  ScheduleEntry('13:00', 2, SOCIAL_TIME),
-  ScheduleEntry('13:30', 2, 'Cole Wehrle: Play as Procedural Generation: Oath as a Roguelike Strategy Game', ['theater'], 'dressingRooms'),
-  ScheduleEntry('14:00', 2, 'Jeff Lait: Teaching Long Term Consequences in Games', ['theater'], 'propsCloset'),
-  ScheduleEntry('14:30', 2, SOCIAL_TIME),
-  ScheduleEntry('15:00', 2, 'Ray: A Mythopoetic Interface Reading of Caves of Qud', ['theater'], 'dressingRooms'),
-  ScheduleEntry('15:15', 2, 'Jonathan Pagnutti: Wait, No, Hear Me Out: Simulating Encounter AI in Slay the Spire with SQL', ['theater'], 'propsCloset'),
-  ScheduleEntry('15:30', 2, 'Jamie Brew: Robot Karaoke Goes Electric', ['theater'], 'breakRoom'),
-  ScheduleEntry('16:00', 2, SOCIAL_TIME),
-  ScheduleEntry('16:30', 2, 'Stephen G. Ware: Planning and Replanning Structured Adaptive Stories: 25 Years of History', ['theater'], 'dressingRooms'),
-  ScheduleEntry('17:00', 2, 'Tyriq: Scrubbin\' Trubble: The Journey to Multiplayer Roguelikery', ['theater'], 'propsCloset'),
-  ScheduleEntry('17:15', 2, 'Andrew Doull: Roguelike Radio 2011-present', ['theater'], 'breakRoom'),
-  ScheduleEntry('17:30', 2, SOCIAL_TIME),
-  ScheduleEntry('18:00', 2, 'Unconferencing', ['unconferencingHub']),
-  ScheduleEntry('19:00', 2, 'Doors Close'),
-
-  ScheduleEntry('09:00', 3, 'Doors Open'),
-  ScheduleEntry('09:30', 3, 'Kickoff', ['theater']),
-  ScheduleEntry('09:45', 3, 'Ada Null: Dyke sex and ennui: Generating unending narrative in \'Kiss Garden\'', ['theater'], 'dressingRooms'),
-  ScheduleEntry('10:00', 3, 'Younès Rabii: We Are Maxwell\'s Demons: The Thermodynamics of Procedural Generators', ['theater'], 'propsCloset'),
-  ScheduleEntry('10:30', 3, 'Dennis Greger: The Procedurality of Reality TV Design - An Overview', ['theater'], 'breakRoom'),
-  ScheduleEntry('10:45', 3, SOCIAL_TIME),
-  ScheduleEntry('11:15', 3, 'Unconferencing', ['unconferencingHub']),
-  ScheduleEntry('12:15', 3, SOCIAL_TIME),
-  ScheduleEntry('13:15', 3, 'Paul Dean: Picking up the Pieces: building story in a roguelike world', ['theater'], 'dressingRooms'),
-  ScheduleEntry('13:45', 3, 'Patrick Belanger and Jackson Wagner: Hand-Crafted Randomness: Storytelling in Wildermyth\'s Proc-Gen World', ['theater'], 'propsCloset'),
-  ScheduleEntry('14:15', 3, 'Nifflas: Music algorithm showcase', ['theater'], 'breakRoom'),
-  ScheduleEntry('14:45', 3, SOCIAL_TIME),
-  ScheduleEntry('15:15', 3, 'Seth Cooper: Building a Roguelike with a Tile Rewrite Language', ['theater'], 'dressingRooms'),
-  ScheduleEntry('15:30', 3, 'Quinten Konyn: Anatomy of a Morgue File', ['theater'], 'propsCloset'),
-  ScheduleEntry('15:45', 3, 'Alexander King: Don\'t Pick Just One: Set-Based Card Mechanics in Roguelike-Deckbuilders', ['theater'], 'breakRoom'),
-  ScheduleEntry('16:00', 3, 'Brian Cronin: Playtesting Process for Ultra Small Teams', ['theater'], 'underTheStage'),
-  ScheduleEntry('16:30', 3, SOCIAL_TIME),
-  ScheduleEntry('17:00', 3, 'Mark Gritter: Sol LeWitt, Combinatorial Enumeration, and Rogue', ['theater'], 'dressingRooms'),
-  ScheduleEntry('17:15', 3, 'Dan DiIorio: Luck be a Landlord - 10 Lessons Learned', ['theater'], 'propsCloset'),
-  ScheduleEntry('17:45', 3, 'Liza Knipscher: The Form and Function of Weird Li\'l Guys: Procedural Organism Generation in a Simulated Ecosystem', ['theater'], 'unconfLilGuys'),
-  ScheduleEntry('18:15', 3, SOCIAL_TIME),
-  ScheduleEntry('19:00', 3, 'Doors Close')
+  ScheduleEntry('13:45', 0, 'Doors Open'),
+  ScheduleEntry('14:00', 0, 'Kickoff'),
+  ScheduleEntry('14:15', 0, 'Martin Pichlmair: Ancient Roguelikes: The Pre-History of Roguelike Games', ['theater']),
+  ScheduleEntry('14:45', 0, 'Greg L: Bitwise Black Magic: How to Computer, Better Faster Stronger', ['theater']),
+  ScheduleEntry('15:15', 0, 'Jamie Brittain: Don\'t Save The @: What Roguelikes Teach Us About Story Structure', ['theater']),
+  ScheduleEntry('15:45', 0, SOCIAL_TIME),
+  ScheduleEntry('16:30', 0, 'Doors Close')
 ]
 
 export default function ScheduleView () {
