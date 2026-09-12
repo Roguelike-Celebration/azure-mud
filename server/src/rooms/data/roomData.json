@@ -3,14 +3,14 @@
     "displayName": "Obelisk",
     "shortName": "obelisk",
     "id": "obelisk",
-    "description": "The ground vibrates beneath your feet with the unstoppable force of some unknowable reality. Before you hovers something that once was a change machine, but has now absorbed power beyond comprehension, transforming it into a 20-foot-tall metal obelisk. Its surface shudders as if the power within is barely contained, or perhaps barely containing some other force. The scent of freshly minted money subtly lingers here, even though you’ve not seen any other sign that capitalism still exists.<br/><br/>You can also return to [[The Streets]] or continue to [[Stadium Theater]]. You also see the [[Gift Shop]] and a building labelled [[Jersey Assignment]].<br/><br/>The exterior surface of the change obelisk is covered in helpful graffiti. You are compelled to share your own.",
+    "description": "The ground vibrates beneath your feet with the unstoppable force of some unknowable reality. Before you hovers something that once was a change machine, but has now absorbed power beyond comprehension, transforming it into a 20-foot-tall metal obelisk. Its surface shudders as if the power within is barely contained, or perhaps barely containing some other force. The scent of freshly minted money subtly lingers here, even though you’ve not seen any other sign that capitalism still exists.<br/><br/>You can also return to [[The Streets]] or continue to [[Stadium Theater]]. You also see the [[Gift Shop]] and a building labeled [[Jersey Assignment]].<br/><br/>The exterior surface of the change obelisk is covered in helpful graffiti. You are compelled to share your own.",
     "roomId": "obelisk",
     "hasNoteWall": true,
     "noteWallData": {
       "roomWallDescription": "Much wisdom is collected here. You are compelled to share your own.",
       "noteWallButton": "Write A Note",
       "addNoteLinkText": "write a note",
-      "addNotePrompt": "What would you like to link to",
+      "addNotePrompt": "What would you like to link to?",
       "noteWallDescription": "Contributions of links to slides, videos, and articles of interest."
     }
   },
@@ -36,13 +36,13 @@
       "addNoteLinkText": "Add feedback",
       "addNotePrompt": "What feedback do you have about the social space itself?",
       "noteWallDescription": "Social Space Feedback"
-    },
+    }
   },
   "jerseys": {
     "displayName": "Jersey Assignment",
     "shortName": "jersey assignment",
     "id": "jerseys",
-    "description": "You walk into a shop featuring jerseys for every popular team in the league. The walls are lined meticulously and at a glance you believe they are ordered by their rankings in the current season. The person responsible stands wearing a referree uniform and a name badge, neither of which exactly matches regulation, presumably in an attempt to keep themselves distinct.<br/><br/>From here, you can head to [[The Streets]], the [[Obelisk]], [[Concessions Stadium]], or [[Stadium Theater]].<br/><br/>The referree also holds up a bucket of face paint and offers to [[douse you->drinkPolymorph]].<br/><br/>The referree walks up and offers to find a jersey for you.",
+    "description": "You walk into a shop featuring jerseys for every popular team in the league. The walls are lined meticulously and at a glance you believe they are ordered by their rankings in the current season. The person responsible stands wearing a referee uniform and a name badge, neither of which exactly matches regulation, presumably in an attempt to keep themselves distinct.<br/><br/>From here, you can head to [[The Streets]], the [[Obelisk]], [[Concessions Stadium]], or [[Stadium Theater]].<br/><br/>The referee also holds up a bucket of face paint and offers to [[douse you->drinkPolymorph]].<br/><br/>The referee walks up and offers to find a jersey for you.",
     "specialFeatures": [
       "RAINBOW_DOOR",
       "DULL_DOOR"
@@ -54,7 +54,7 @@
     "displayName": "Gift Shop",
     "shortName": "gift shop",
     "id": "giftShop",
-    "description": "You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. \"seems to be\" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don't see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. <br/><br/>[[Peruse The Antiques->obesliskSouvenirs]].<br/><br/>You can continue east to the [[Unconferencing Parking Lot]].<br/><br/>Or you can return to [[The Streets]].",
+    "description": "You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. \"seems to be\" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don't see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. <br/><br/>[[Peruse The Antiques->obeliskSouvenirs]].<br/><br/>You can continue east to the [[Unconferencing Parking Lot]].<br/><br/>Or you can return to [[The Streets]] or the [[Obelisk]].",
     "hidden": false,
     "roomId": "giftShop"
   },
@@ -62,7 +62,7 @@
     "displayName": "Stadium Theater",
     "shortName": "theater",
     "id": "theater",
-    "description": "You step out of the concrete hallways and into the Stadium Theater. In front of you lies the field, a neatly-trimmed green space surrounded by bleachers on all sides. The scent of stale popcorn and fresh hotdogs waft through the breeze with an undercurrent of animal scent. Just as that strikes you as odd, you notice Ted The Ten Foot Armadillo resting lazily in the outfield.<br/><br/>You can return to [[The Streets]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[The Dugout]], [[Press Box]], [[VIP Seats]],[[Waterboy Lounge]].<br/><br/> (Check the 'Happening Now!' button on the left for speaker room assignments!) <a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
+    "description": "You step out of the concrete hallways and into the Stadium Theater. In front of you lies the field, a neatly-trimmed green space surrounded by bleachers on all sides. The scent of stale popcorn and fresh hotdogs waft through the breeze with an undercurrent of animal scent. Just as that strikes you as odd, you notice Ted The Ten Foot Armadillo resting lazily in the outfield.<br/><br/>You can return to [[The Streets]]. Or if you'd like to speak to one of our speakers after their talk, you can head to breakout rooms: [[The Dugout]], [[Press Box]], [[VIP Seats]], [[Waterboy Lounge]].<br/><br/> (Check the 'Happening Now!' button on the left for speaker room assignments!) <a href=\"stream.html\" onClick=\"window.open('stream.html#' + window.getComputedStyle(document.body).getPropertyValue('background-color'), 'stream', 'width=560,height=460'); return false\">Pop Out Stream</a>. <a href=\"https://www.streamtext.net/player?event=RoguelikeCelebration \" target=\"_blank\">Pop Out Live Captions</a>.<br/>",
     "hidden": false,
     "hasNoteWall": true,
     "noteWallData": {
@@ -110,7 +110,7 @@
     "displayName": "Practice Fields",
     "shortName": "practice fields",
     "id": "unconfPractice",
-    "description": "You step onto a wide open field full of people running about and performing various feats of athletic prowess. Each player appears to be practicing for something wildly different from every other player present in this space. Standing among the chaos is a referree who holds a massive tome gilt with gold. He offers you a reading of the holy rules [Calvin Ball Rule Generator].<br/><br/>Or you can head back to the [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/83450610749?pwd=D1bHnTXy7pLfwCrzEfSzcKOLHEw7pq.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference.</p>",
+    "description": "You step onto a wide open field full of people running about and performing various feats of athletic prowess. Each player appears to be practicing for something wildly different from every other player present in this space. Standing among the chaos is a referee who holds a massive tome gilt with gold. He offers you a reading of the holy rules [Calvin Ball Rule Generator].<br/><br/>Or you can head back to the [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/83450610749?pwd=D1bHnTXy7pLfwCrzEfSzcKOLHEw7pq.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference.</p>",
     "hidden": false,
     "roomId": "unconfPractice"
   },
