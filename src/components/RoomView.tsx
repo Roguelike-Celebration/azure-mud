@@ -257,6 +257,7 @@ function parseDescription (
   return description
 }
 
+// The youtube embed needs to be updated each event after the upcoming live youtube stream is created. The captions shouldn't need changing.
 export function StreamEmbed () {
   const streamRef = React.useRef<HTMLIFrameElement>(null)
   const captionsRef = React.useRef<HTMLIFrameElement>(null)
@@ -268,7 +269,7 @@ export function StreamEmbed () {
         title="stream"
         ref={streamRef}
         height="315"
-        src="https://www.youtube.com/embed/D1XmLqzHYG0"
+        src="https://www.youtube.com/embed/M6v2CnTJKrE"
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         referrerPolicy="strict-origin-when-cross-origin"
