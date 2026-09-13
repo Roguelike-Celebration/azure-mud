@@ -174,7 +174,7 @@
     "displayName": "The Penalty Box",
     "shortName": "penalty box",
     "id": "penaltyBox",
-    "description": "You’re encased in a small room of darkened, unbreakable plexiglass that muddies the sounds of celebration around you.  Strips of neon lighting glimmer along the walls, giving an ethereal feeling to the otherwise normal bar.  Looking up you see the current time shown in an old LCD panel, the red-segmented display indicating that the next match is nearly ready to begin.  A dour jelly with a set of wispy mutton chops glares at you from behind the bar, waiting for you to make a selection.  A nearby whiteboard lists out the choices: [Tap Water], [Sparkling Water], [Beer of Indeterminate Origin™], [Pan-Galactic Gargle Blaster].<br/><br/>If you're not thirsty you can always return to [[The Streets]].",
+    "description": "You’re encased in a small room of darkened, unbreakable plexiglass that muddies the sounds of celebration around you.  Strips of neon lighting glimmer along the walls, giving an ethereal feeling to the otherwise normal bar.  Looking up you see the current time shown in an old LCD panel, the red-segmented display indicating that the next match is nearly ready to begin.  A dour jelly with a set of wispy mutton chops glares at you from behind the bar, waiting for you to make a selection.  A nearby whiteboard lists out the choices: [Tap Water], [Sparkling Water], [Beer of Indeterminate Origin™], [Pan-Galactic Gargle Blaster].<br/><br/>If you're not thirsty you can always return to [[The Streets]], or head north to the [[Church Of The Sacred Gamer LEDs]].",
     "hidden": false,
     "roomId": "penaltyBox"
   },
