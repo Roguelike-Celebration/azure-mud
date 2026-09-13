@@ -21,7 +21,7 @@ import _, { head, isUndefined } from 'lodash'
  * 1. To make rooms clickable, there is an array of ClickableArea objects
  * that define clickable squares that move to a given roomId.
  * Coordinates are given using ASCII character coordinates, not pixels.
- * 
+ *
  * For convenience, you may use the Room Authoring Tool at the following link:
  * https://roguelike-celebration.github.io/mud-room-authoring-tool/
  *
