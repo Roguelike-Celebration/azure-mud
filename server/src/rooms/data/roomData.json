@@ -54,7 +54,7 @@
     "displayName": "Gift Shop",
     "shortName": "gift shop",
     "id": "giftShop",
-    "description": "You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. \"seems to be\" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don't see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. <br/><br/>[[Peruse The Antiques->obeliskSouvenirs]].<br/><br/>You can continue east to the [[Unconferencing Parking Lot]].<br/><br/>Or you can return to [[The Streets]] or the [[Obelisk]].",
+    "description": "You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. \"Seems to be\" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don’t see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. <br/><br/>[[Peruse The Antiques->obeliskSouvenirs]].<br/><br/>While searching the shelves you notice a strange Red Bubble which seems to contain this year’s merch. <a href=\"https://www.redbubble.com/shop/ap/183741623 \" target=\"_blank\">Visit Red Bubble</a>.<br/><br/>You can continue east to the [[Unconferencing Parking Lot]].<br/><br/>Or you can return to [[The Streets]] or the [[Obelisk]].",
     "hidden": false,
     "roomId": "giftShop"
   },
