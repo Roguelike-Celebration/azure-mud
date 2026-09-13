@@ -6,10 +6,10 @@ import { Room } from '../room'
 
 import MapView from './MapView'
 
- interface Props {
+interface Props {
   presenceData: { [roomId: string]: number };
   currentRoomId: string
- }
+}
 
 export default function MiniMapView (props: Props) {
   const dispatch = useContext(DispatchContext)
