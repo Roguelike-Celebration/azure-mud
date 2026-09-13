@@ -175,7 +175,7 @@
     "shortName": "penalty box",
     "id": "penaltyBox",
     "description": "You're encased in a small room of darkened, unbreakable plexiglass that muddies the sounds of celebration around you.  Strips of neon lighting glimmer along the walls, giving an ethereal feeling to the otherwise normal bar.  Looking up you see the current time shown in an old LCD panel, the red-segmented display indicating that the next match is nearly ready to begin.  A dour jelly with a set of wispy mutton chops glares at you from behind the bar, waiting for you to make a selection.  A nearby whiteboard lists out the choices: [Tap Water], [Sparkling Water], [Beer of Indeterminate Origin™], [Pan-Galactic Gargle Blaster].<br/><br/>If you're not thirsty you can always return to [[The Streets]].",
-    "hidden": true,
+    "hidden": false,
     "roomId": "penaltyBox"
   },
   "dugout": {
@@ -183,7 +183,7 @@
     "shortName": "dugout",
     "id": "dugout",
     "description": "You step into a patch of earth that has been completely overgrown by sunflowers. Behind the stalks you see the eyes of disgruntled players doing their best to watch the game from behind the overgrowth. As you watch, one player spits a sunflower seed into the nearby dirt and you gain an understanding of the cycle of life happening here. Nearby, more intrepid players spend their downtime cultivating the sunflowers, harvesting and drying their seeds for future snacking.<br/><br/>Or you can head back to [[Stadium Theater]].",
-    "hidden": true,
+    "hidden": false,
     "roomId": "dugout"
   },
   "pressbox": {
