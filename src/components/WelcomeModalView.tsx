@@ -9,8 +9,7 @@ export default function WelcomeModalView (props: {}) {
         messages <strong>in the chat room you are currently in</strong>.
       </p>
       <p>
-        You can move from virtual room to virtual room to talk to different
-        people.
+        You can move from virtual room to virtual room to talk to different people.
       </p>
       <p>
         Our hope is to facilitate smaller group conversations, to capture the feel of an in-person conference, and to give
@@ -18,7 +17,7 @@ export default function WelcomeModalView (props: {}) {
       </p>
       <p>
         Happy wandering, and be wary of reading scrolls without identifying them
-        first ;)
+        first! ;)
       </p>
       <p>-The Roguelike Celebration team</p>
     </div>
