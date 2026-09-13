@@ -12,7 +12,6 @@ export interface Room {
   id: string;
   description: string;
   users?: string[];
-  videoUsers?: string[];
   mediaChat?: boolean;
   hidden?: boolean;
   hasNoteWall?: boolean;
