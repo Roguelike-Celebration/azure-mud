@@ -122,7 +122,7 @@ From here, you will still need to deploy your backend server code, and likely de
 
 ### Deploying New Changes via GitHub Actions
 
-By default, when someone goes into the GitHub Actions tab of the main azure-mud repo and runs the "Production build and deploy" action, it builds and deploys the frontend and backend. It's very little work to configure this same behavior to make your GitHub fork deploy to your dev instance (and you should do this if you're a Roguelike volunteer).
+By default, when someone goes into the GitHub Actions tab of the main azure-mud repo and runs the "Build and Deploy - Production" action, it builds and deploys the frontend and backend. It's very little work to configure this same behavior to make your GitHub fork deploy to your dev instance (and you should do this if you're a Roguelike volunteer).
 
 1. Add a GitHub Repository Secret (Settings -> Secrets -> Add Repository Secret) with the key `AZURE_FUNCTION_APP_NAME` whose value is your Azure app name. Follow [these instructions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions) to generate a publish profile and add that as a GH Secret titled `AZURE_FUNCTIONAPP_PUBLISH_PROFILE`.
 
@@ -130,7 +130,7 @@ By default, when someone goes into the GitHub Actions tab of the main azure-mud 
 
 3. Optionally, the GitHub Action workflow will send a webhook to the server when a new deployment has completed, which allows us to notify connected clients that a new browser app has been deployed and they should refresh the page. To enable this, create a random string to use as a token. (We recommend running `uuidgen` on a Mac or a Linux machine.) Store it as a GitHub Repository Secret (Settings -> Secrets and variables -> Actions -> Add Repository Secret) under the key `DEPLOY_WEBHOOK_KEY`. Also store it as an ENV variable in the Azure Functions App (while viewing the Function App in the Portal, Settings -> Environment variables -> App settings > "+ Add") under the key `DEPLOY_WEBHOOK_KEY`. Now, if you have your frontend open when you deploy via GitHub Actions, you should see a pop-up in the frontend instructing you to refresh.
 
-If you select the "Production Build and Deploy" workflow in your Actions tab, you can then click "Run Workflow" and start a new deploy. If you refresh the page, you can click on the new run to see real-time progress.
+If you select the "Build and Deploy - Production" workflow in your Actions tab, you can then click "Run Workflow" and start a new deploy. If you refresh the page, you can click on the new run to see real-time progress.
 
 After this succeeds, both your frontend and backend services should be live. You can find the URL for your frontend by finding your Azure Static Web Apps resource within the created resource group in the Azure Portal. You will also need to either set up a custom domain for Azure Static Web Apps, or if this is the URL you will use, go into Firebase and add this URL as an Authorized Domain for auth ("Build" and then "Authentication" from the left-side menu, then "Settings" and "Authorized domains" from the main pane).
 
