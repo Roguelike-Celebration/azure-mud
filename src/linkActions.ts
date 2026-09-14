@@ -23,9 +23,6 @@ export const linkActions = {
   drinkCancellation: (roomId: string) => {
     sendChatMessage(uuidv4(), '/get clear potion', roomId)
   },
-  getFortune: (roomId: string) => {
-    sendChatMessage(uuidv4(), '/get fortune cookie', roomId)
-  },
 
   // ------------------------------------------- DISPLAY MESSAGE SECTION -------------------------------------------
   readPoster: () => {
