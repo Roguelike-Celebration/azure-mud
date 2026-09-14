@@ -1,38 +1,38 @@
 .note-wall-description {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
 .note {
-    border: 1px dashed var(--highlight-line);
-    border-radius: 0.25rem;
-    display: inline-block;
-    width: 40%;
-    margin: 1.25rem;
-    padding: 0.5rem;
-    vertical-align: top;
-    word-wrap: break-word;
+  border: 1px dashed var(--highlight-line);
+  border-radius: 0.25rem;
+  display: inline-block;
+  width: 40%;
+  margin: 1.25rem;
+  padding: 0.5rem;
+  vertical-align: top;
+  word-wrap: break-word;
 }
 
 button.note-delete {
-    color: var(--pink);
-    float: right;
-    margin-left: 10px;
+  color: var(--pink);
+  float: right;
+  margin-left: 10px;
 }
 
 .like-button {
-    color: var(--blue);
-    float: right;
-    padding-left: 20px;
-    padding-right: 15px;
+  color: var(--blue);
+  float: right;
+  padding-left: 20px;
+  padding-right: 15px;
 }
 
 .like-button svg {
-    vertical-align: top !important;
-    margin-left: 4px;
+  vertical-align: top !important;
+  margin-left: 4px;
 }
 
 @media (max-width: 600px) {
-    .note {
-        width: 90%;
-    }
+  .note {
+    width: 90%;
+  }
 }

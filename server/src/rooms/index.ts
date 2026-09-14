@@ -59,7 +59,7 @@ export interface MinimalRoom {
   displayName: string;
   shortName: string;
   hidden: boolean;
- }
+}
 
 function minimizeRoom (room: Room): MinimalRoom {
   return {

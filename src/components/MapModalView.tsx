@@ -5,10 +5,10 @@ import { Modal } from '../modals'
 import { Room } from '../room'
 import MapView from './MapView'
 
- interface Props {
+interface Props {
   presenceData: { [roomId: string]: number };
   currentRoomId: string
- }
+}
 
 export default function MapModalView (props: Props) {
   const dispatch = useContext(DispatchContext)
