@@ -37,9 +37,6 @@ export const linkActions = {
   hearTerribleJoke: () => {
     displayMessageFromList('terribleJokes')
   },
-  watchRobot: () => {
-    displayMessageFromList('robots')
-  },
   tossARock: () => {
     displayMessageFromList('tossARock')
   },
