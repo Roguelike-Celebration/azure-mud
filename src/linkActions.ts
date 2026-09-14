@@ -37,9 +37,6 @@ export const linkActions = {
   hearTerribleJoke: () => {
     displayMessageFromList('terribleJokes')
   },
-  tossARock: () => {
-    displayMessageFromList('tossARock')
-  },
   // ------------------------------------------- MISC ACTION SECTION -------------------------------------------
   pentagramHighTech: (roomId: string) => {
     pentagramAction('Impactful', roomId)
