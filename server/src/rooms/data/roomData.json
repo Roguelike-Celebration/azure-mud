@@ -150,7 +150,7 @@
     "displayName": "Orville's",
     "shortName": "orville's",
     "id": "orville",
-    "description": "You enter a space full of the raucous sound of thousands of tiny explosions happening at once. Each wall here is made of glass and within that glass is a towering wall of popped corn. You watch as mechanisms move each section of wall’s product through a series of elaborate stations that sift the dry seeds, heat them until they pop, and then dip them in liquids ranging from butter to caramel, from chocolate to mysterious liquids you can’t discern. The resulting snack arrives at a station set aside for that particular flavor, people wearing striped red and white uniforms handing out similarly-colored paper boxes filled with the treat.<br/><br/>You can ask the counter for some popcorn.<br/><br/>Or you can head back to the [[Concessions Stadium]].",
+    "description": "You enter a space full of the raucous sound of thousands of tiny explosions happening at once. Each wall here is made of glass and within that glass is a towering wall of popped corn. You watch as mechanisms move each section of wall’s product through a series of elaborate stations that sift the dry seeds, heat them until they pop, and then dip them in liquids ranging from butter to caramel, from chocolate to mysterious liquids you can’t discern. The resulting snack arrives at a station set aside for that particular flavor, people wearing striped red and white uniforms handing out similarly-colored paper boxes filled with the treat.<br/><br/>You can ask the counter for some [[popcorn->popcorn]].<br/><br/>Or you can head back to the [[Concessions Stadium]].",
     "hidden": false,
     "roomId": "orville"
   },
