@@ -6,33 +6,6 @@ export const linkActions = {
   generateFood: () => {
     pickUpRandomItemFromList('vendingMachineFood')
   },
-  playCraneGame: () => {
-    pickUpRandomItemFromList('craneGame')
-  },
-  pickUpPuppy: () => {
-    pickUpItem('a tiny puppy')
-  },
-  readCatalog: () => {
-    pickUpRandomItemFromList('seersCatalog')
-  },
-  boba: () => {
-    pickUpRandomItemFromList('boba')
-  },
-  veganFood: () => {
-    pickUpRandomItemFromList('veganFood')
-  },
-  tacos: () => {
-    pickUpRandomItemFromList('tacos')
-  },
-  kebabs: () => {
-    pickUpRandomItemFromList('kebabs')
-  },
-  generateBalloon: () => {
-    pickUpRandomItemFromList('balloonAnimals')
-  },
-  snowCone: () => {
-    pickUpRandomItemFromList('snowCone')
-  },
   popcorn: () => {
     pickUpRandomItemFromList('popcorn')
   },
@@ -70,56 +43,8 @@ export const linkActions = {
   watchRobot: () => {
     displayMessageFromList('robots')
   },
-  talkToUbizara: () => {
-    displayMessageFromList('ubizaraTheBartender')
-  },
-  talkToDrHope: () => {
-    displayMessageFromList('doctorHope')
-  },
-  talkToChadSilverbow: () => {
-    displayMessageFromList('chadSilverbow')
-  },
-  talkToZeroCrash: () => {
-    displayMessageFromList('zeroCrash')
-  },
-  talkToRandorTheTwisted: () => {
-    displayMessageFromList('randorTheTwisted')
-  },
-  talkToFlower: () => {
-    displayMessageFromList('flower')
-  },
-  talkToBodyWorksCharacter: () => {
-    displayMessageFromList('bodyWorksCharacter')
-  },
-  talkToHotDogGuy: () => {
-    displayMessageFromList('hotDogGuy')
-  },
-  talkToRay: () => {
-    displayMessageFromList('ray')
-  },
-  talkToLoudRobert: () => {
-    displayMessageFromList('loudRobert')
-  },
   tossARock: () => {
     displayMessageFromList('tossARock')
-  },
-  talkToZara: () => {
-    displayMessageFromList('zara')
-  },
-  dromadTam: () => {
-    displayMessageFromList('dromadTam')
-  },
-  madamChrysalia: () => {
-    displayMessageFromList('madamChrysalia')
-  },
-  tarotPull: () => {
-    displayMessageFromList('tarotPull')
-  },
-  mimeKing: () => {
-    displayMessageFromList('mimeKing')
-  },
-  barathrumites: () => {
-    displayMessageFromList('barathrumites')
   },
   // ------------------------------------------- MISC ACTION SECTION -------------------------------------------
   pentagramHighTech: (roomId: string) => {
