@@ -11,10 +11,14 @@ export async function getHeartbeatData (): Promise<{
   [userId: string]: number;
 }> {
   const activeUserIds: string[] = await DB.getActiveUsers()
+
+  const allRoomOccupants: { [roomId: string]: string[] } = await DB.allRoomOccupants()
+  const roomOccupantIds: string[] = Object.values(allRoomOccupants).flat()
+
+  const userIds: Set<string> = new Set<string>([...activeUserIds, ...roomOccupantIds])
   const data: { [userId: string]: number } = {}
 
-  for (let i = 0; i < activeUserIds.length; i++) {
-    const userId = activeUserIds[i]
+  for (const userId of userIds) {
     const date = await DB.getUserHeartbeat(userId)
     data[userId] = date
   }
