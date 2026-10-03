@@ -69,7 +69,7 @@ export default function MapView (props: Props) {
   // This ensures it only scrolls on load, not every time new presence data comes in
   React.useEffect(() => {
     // console.log('Attempting to scroll', `${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}`)
-    const location = document.getElementById(`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}`)
+    const location = document.querySelector(`[id^="${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}"]`)
     if (location) {
       // console.log(location)
       location.scrollIntoView({ block: 'center', inline: 'center' })
@@ -116,7 +116,8 @@ export default function MapView (props: Props) {
 
   let clickableDivs = []
   if (w !== 0 && h !== 0) {
-    clickableDivs = clickableAreas.map(a => {
+    clickableDivs = clickableAreas.map((a, idx) => {
+      const uniqueAreaId = `${a.roomId}-${idx}`
       return <div
         style={{
           position: 'absolute',
@@ -126,10 +127,10 @@ export default function MapView (props: Props) {
           height: `${a.height * h}px`,
           cursor: 'pointer'
         }}
-        key={a.roomId}
+        key={uniqueAreaId}
         onClick={handleClick}
         data-room={a.roomId}
-        id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${a.roomId}`} />
+        id={`${props.isMiniMap ? 'minimap-' : ''}clickable-room-${uniqueAreaId}`} />
     })
   }
 
@@ -220,6 +221,13 @@ const clickableAreas: ClickableArea[] = [
     height: 5
   },
   {
+    roomId: 'obelisk',
+    x: 42,
+    y: 19,
+    width: 10,
+    height: 5
+  },
+  {
     roomId: 'giftShop',
     x: 54,
     y: 19,
@@ -239,6 +247,20 @@ const clickableAreas: ClickableArea[] = [
     y: 6,
     width: 16,
     height: 11
+  },
+  {
+    roomId: 'theater',
+    x: 28,
+    y: 10,
+    width: 10,
+    height: 7
+  },
+  {
+    roomId: 'theater',
+    x: 54,
+    y: 10,
+    width: 10,
+    height: 7
   },
   {
     roomId: 'unconferencingHub',
