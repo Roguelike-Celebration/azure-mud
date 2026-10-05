@@ -19,7 +19,7 @@
       "name": "connection",
       "hub": "chat",
       "userId": "{headers.userid}",
-     "direction": "in"
+      "direction": "in"
     },
     {
       "type": "webPubSub",

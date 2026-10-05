@@ -10,7 +10,7 @@ indent_style = space
 end_of_line = lf
 insert_final_newline = true
 
-[*.ts,*.json,*.html]
+[*.{ts,tsx,cjs,json,yml,html,css,py}]
 indent_size = 2
 tab_width = 2
 

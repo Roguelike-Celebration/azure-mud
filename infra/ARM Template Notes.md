@@ -38,11 +38,11 @@ https://portal.azure.com#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubu
 
 After `raw.githubusercontent.com`, the parts are:
 
-* `Roguelike-Celebration` = GitHub user or org name that's the repo owner
-* `azure-mud` = repo name
-* `main` = branch name
-  * If using a branch besides `main`, it needs to be specified as `refs/heads/<branch>`.
-  * Slashes need to be URL-escaped as `%2F`.
+- `Roguelike-Celebration` = GitHub user or org name that's the repo owner
+- `azure-mud` = repo name
+- `main` = branch name
+    - If using a branch besides `main`, it needs to be specified as `refs/heads/<branch>`.
+    - Slashes need to be URL-escaped as `%2F`.
 
 Substitute those as appropriate. For example, to deploy from Andrew's `apjanke/rlc-azure-mud` repo, on the `apj/ARM-deployment-stuff` branch, you'd get:
 

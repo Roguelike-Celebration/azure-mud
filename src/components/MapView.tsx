@@ -22,6 +22,9 @@ import _, { head, isUndefined } from 'lodash'
  * that define clickable squares that move to a given roomId.
  * Coordinates are given using ASCII character coordinates, not pixels.
  *
+ * For convenience, you may use the Room Authoring Tool at the following link:
+ * https://roguelike-celebration.github.io/mud-room-authoring-tool/
+ *
  * 2. To add real-time presence numbers to rooms, there's an array of roomIds
  * that correspond to the number in parenthesis that lives in the ASCII map itself
  * This number is monotonically increasing. To add a new room, add its name to the
@@ -217,7 +220,7 @@ const clickableAreas: ClickableArea[] = [
     height: 5
   },
   {
-    roomId: 'theater',
+    roomId: 'giftShop',
     x: 54,
     y: 19,
     width: 10,
