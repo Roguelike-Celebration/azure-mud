@@ -1,3 +1,7 @@
+.message-list-container {
+  position: relative;
+}
+
 .message-list {
   border: 1px solid var(--fbc-white);
   border-radius: 4px;
@@ -24,6 +28,7 @@
   justify-content: center;
 
   position: absolute;
+  top: 0;
 }
 
 .sentinel {
