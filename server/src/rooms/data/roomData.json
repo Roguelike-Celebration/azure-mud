@@ -158,7 +158,7 @@
     "displayName": "Soda Fountain",
     "shortName": "soda fountain",
     "id": "sodaFountain",
-    "description": "A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly covered overalls and foppish hats. Each nozzle of the fountain is a different color and the smell of sugar wafts through the air as the fountain’s colorful attendants hold out curved glasses filled with carbonated fluid of various flavor.<br/><br/>You can have them dispense a drink for you.<br/><br/>There's also a strange lever nearby. You have the urge to [[pull it->wheatField]].<br/><br/>Or you can return to the [[Concessions Stadium]].",
+    "description": "A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly colored overalls and foppish hats. Each nozzle of the fountain is a different color and the smell of sugar wafts through the air as the fountain’s colorful attendants hold out curved glasses filled with carbonated fluid of various flavor.<br/><br/>You can have them dispense a drink for you.<br/><br/>There's also a strange lever nearby. You have the urge to [[pull it->wheatField]].<br/><br/>Or you can return to the [[Concessions Stadium]].",
     "hidden": false,
     "roomId": "sodaFountain"
   },
@@ -175,7 +175,7 @@
     "shortName": "penalty box",
     "id": "penaltyBox",
     "description": "You’re encased in a small room of darkened, unbreakable plexiglass that muddies the sounds of celebration around you.  Strips of neon lighting glimmer along the walls, giving an ethereal feeling to the otherwise normal bar.  Looking up you see the current time shown in an old LCD panel, the red-segmented display indicating that the next match is nearly ready to begin.  A dour jelly with a set of wispy mutton chops glares at you from behind the bar, waiting for you to make a selection. Behind the jelly, three goats stare ominously into your soul. A nearby whiteboard lists out the choices: [Tap Water], [Sparkling Water], [Beer of Indeterminate Origin™], [Pan-Galactic Gargle Blaster].<br/><br/>If you're not thirsty you can always return to [[The Streets]].",
-    "hidden": true,
+    "hidden": false,
     "roomId": "penaltyBox"
   },
   "dugout": {
