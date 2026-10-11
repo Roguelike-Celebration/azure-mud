@@ -1,0 +1,117 @@
+/* eslint-disable quotes */
+
+import tracery from 'tracery-grammar'
+
+export const actionString = (ball: string) => {
+  return `You pull out a ${ball}!`
+}
+
+export const generate = () => {
+  var grammar = tracery.createGrammar({
+    origin: [
+      "#ball#"
+    ],
+    monster: [
+      'Baseball',
+      'Basketball',
+      'Golf Ball',
+      'Super Bouncy Ball',
+      'Extremely Bouncy Ball',
+      'Iron Ball',
+      'Stone Ball',
+      'Lightning Ball',
+      'Ballzilla',
+      'Not Very Bouncy Ball',
+      'Eight Ball',
+      'One Eighth Ball',
+      'Orb of Disintegration',
+      'Orb of Futuresight',
+      'Spherical Cow',
+      'Spherical Bird',
+      'Spherical Manatee',
+      'Spherical Seal',
+      'Spherical Cat',
+      'One Spherical Eel',
+      'Ball of Eels',
+      'Scale Model of Earth',
+      '+1 Ball',
+      'Ball of Holding',
+      'Crystal Ball',
+      'Magic 8 Ball',
+      'Venom Ball',
+      'Armageddon Ball',
+      'Assassin Ball',
+      'Banished Flame Ball',
+      'Banshee Ball',
+      'Black Hole Ball',
+      'Blizzard Ball',
+      'Bomb Ball',
+      'Brimstone Ball',
+      'Catapult Ball',
+      'Drill Ball',
+      'Elemental Ball',
+      'Erosion Ball',
+      'Fireworks Ball',
+      'Flash Ball',
+      'Flesh Ball',
+      'Flicker Ball',
+      'Freeze Ray Ball',
+      'Frozen Flame Ball',
+      'Glacier Ball',
+      'Heart Swallower Ball',
+      'Hemorrage Ball',
+      'Holy Laser Ball',
+      'Incubus Ball',
+      'Inferno Ball',
+      'Landslide Ball',
+      'Laser Beam Ball',
+      'Laser Cutter Ball',
+      'Leech Ball',
+      'Lightning Bug Ball',
+      'Lightning Rod Ball',
+      'Lovestruck Ball',
+      'Maggot Ball',
+      'Magma Ball',
+      'Mosquito King Ball',
+      'Mosquito Kingdom Ball',
+      'Mosquito Swarm Ball',
+      'Nosferatu Ball',
+      'Noxious Ball',
+      'Nuclear Ball',
+      'Offspring Ball',
+      'Overgrowth Ball',
+      'Petrify Ball',
+      'Phantom Ball',
+      'Radiation Beam Ball',
+      'Reaper Ball',
+      'Sacrifice Ball',
+      'Sandstorm Ball',
+      'Satan Ball',
+      'Shotgun Ball',
+      'Sniper Ball',
+      'Soul Sucker Ball',
+      'Spider Queen Ball',
+      'Steel Ball',
+      'Storm Ball',
+      'Succubus Ball',
+      'Sun Ball',
+      'Swamp Ball',
+      'Time Bomb Ball',
+      'TimeStop Ball',
+      'Tumor Ball',
+      'Vampire Lord Ball',
+      'Venom Ball',
+      'Virus Ball',
+      'Voluptuous Egg Sac',
+      'Warp Ball',
+      'Wraith Ball',
+      'X Ray Ball',
+	  'Zombie Ball'
+
+    ]
+  })
+
+  grammar.addModifiers(tracery.baseEngModifiers)
+  return grammar.flatten('#origin#')
+}
+/* eslint-enable quotes */
