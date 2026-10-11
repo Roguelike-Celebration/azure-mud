@@ -54,7 +54,7 @@
     "displayName": "Gift Shop",
     "shortName": "gift shop",
     "id": "giftShop",
-    "description": "You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. \"Seems to be\" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don’t see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. <br/><br/>[[Peruse The Antiques->obeliskSouvenirs]].<br/><br/>While searching the shelves you notice a strange Red Bubble which seems to contain this year’s merch. <a href=\"https://www.redbubble.com/shop/ap/183741623 \" target=\"_blank\">Visit Red Bubble</a>.<br/><br/>You can continue east to the [[Unconferencing Parking Lot]].<br/><br/>Or you can return to [[The Streets]] or the [[Obelisk]].",
+    "description": "You enter a screaming cacophony of miscellaneous items haphazardly strewn about a room that seems to be decorated in a mid-1800s style. \"Seems to be\" because the surfaces are so overrun by Things that it's hard to discern any details through it all.  As you look around you don’t see a single, cohesive set of anything. In fact, every single item here appears to be some kind of unique. <br/><br/>[[Peruse The Antiques->artifacts]].<br/><br/>While searching the shelves you notice a strange Red Bubble which seems to contain this year’s merch. <a href=\"https://www.redbubble.com/shop/ap/183741623 \" target=\"_blank\">Visit Red Bubble</a>.<br/><br/>You can continue east to the [[Unconferencing Parking Lot]].<br/><br/>Or you can return to [[The Streets]] or the [[Obelisk]].",
     "hidden": false,
     "roomId": "giftShop"
   },
@@ -110,7 +110,7 @@
     "displayName": "Practice Fields",
     "shortName": "practice fields",
     "id": "unconfPractice",
-    "description": "You step onto a wide open field full of people running about and performing various feats of athletic prowess. Each player appears to be practicing for something wildly different from every other player present in this space. Standing among the chaos is a referee who holds a massive tome gilt with gold. He offers you a reading of the holy rules [Calvin Ball Rule Generator].<br/><br/>Or you can head back to the [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/83450610749?pwd=D1bHnTXy7pLfwCrzEfSzcKOLHEw7pq.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference.</p>",
+    "description": "You step onto a wide open field full of people running about and performing various feats of athletic prowess. Each player appears to be practicing for something wildly different from every other player present in this space. Standing among the chaos is a referee who holds a massive tome gilt with gold. He offers you a reading of the [holy rules->rules].<br/><br/>Or you can head back to the [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/83450610749?pwd=D1bHnTXy7pLfwCrzEfSzcKOLHEw7pq.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference.</p>",
     "hidden": false,
     "roomId": "unconfPractice"
   },
@@ -142,7 +142,7 @@
     "displayName": "Chez Nathan's",
     "shortName": "chez nathan's",
     "id": "chezNathan",
-    "description": "Stepping into Chez Nathan’s is like stepping into a gold-encrusted shrine to the exuberant joy of childhood flavor palettes. The decor here is whimsical and made to be climbed on or sprinted around, but it’s all scaled for full adults and finely accented. The air here smells of meat and oil with an undercurrent so unhinged you couldn’t begin to guess at what other flavors these hot dogs must be offered in. Looking at the menu confirms your concerns as the largest text visible reads \"Just ask, we serve it\".<br/><br/>You can have them make you a hot dog.<br/><br/>Or you can head back to the [[Concessions Stadium]].",
+    "description": "Stepping into Chez Nathan’s is like stepping into a gold-encrusted shrine to the exuberant joy of childhood flavor palettes. The decor here is whimsical and made to be climbed on or sprinted around, but it’s all scaled for full adults and finely accented. The air here smells of meat and oil with an undercurrent so unhinged you couldn’t begin to guess at what other flavors these hot dogs must be offered in. Looking at the menu confirms your concerns as the largest text visible reads \"Just ask, we serve it\".<br/><br/>You can have them make you [[a hot dog->hotDog]].<br/><br/>Or you can head back to the [[Concessions Stadium]].",
     "hidden": false,
     "roomId": "chezNathan"
   },
@@ -158,7 +158,7 @@
     "displayName": "Soda Fountain",
     "shortName": "soda fountain",
     "id": "sodaFountain",
-    "description": "A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly colored overalls and foppish hats. Each nozzle of the fountain is a different color and the smell of sugar wafts through the air as the fountain’s colorful attendants hold out curved glasses filled with carbonated fluid of various flavor.<br/><br/>You can have them dispense a drink for you.<br/><br/>There's also a strange lever nearby. You have the urge to [[pull it->wheatField]].<br/><br/>Or you can return to the [[Concessions Stadium]].",
+    "description": "A towering fountain looms over a bar attended by people dressed in an ancient clothing style from the 1950s, including brightly covered overalls and foppish hats. Each nozzle of the fountain is a different color and the smell of sugar wafts through the air as the fountain’s colorful attendants hold out curved glasses filled with carbonated fluid of various flavor.<br/><br/>You can have them dispense a [[drink for you->boba]].<br/><br/>There's also a strange lever nearby. You have the urge to [[pull it->wheatField]].<br/><br/>Or you can return to the [[Concessions Stadium]].",
     "hidden": false,
     "roomId": "sodaFountain"
   },
@@ -222,7 +222,7 @@
     "displayName": "The Ball X Pit",
     "shortName": "ball pit",
     "id": "ballPit",
-    "description": "You enter a realm that appears to be mostly balls of every shape and size. You stand upon a black strip of obsidian stone beneath a black sky with a black sun glowing ethereally. The world here appears to be in a neutral state for now, awaiting to transform upon activation. Beneath you is an endless ocean of spheres with every size, shape, and texture imaginable. Baseballs, basketballs, balls made of spiders, lightning, or even love.<br/><br/>A nozzel sticks up from the pit, labelled Random Ball Generator. You may reach into it and [[claim one for yourself->randomBallGenerator]]. <br/><br/>Or you can return to the [[Practice Field]]",
+    "description": "You enter a realm that appears to be mostly balls of every shape and size. You stand upon a black strip of obsidian stone beneath a black sky with a black sun glowing ethereally. The world here appears to be in a neutral state for now, awaiting to transform upon activation. Beneath you is an endless ocean of spheres with every size, shape, and texture imaginable. Baseballs, basketballs, balls made of spiders, lightning, or even love.<br/><br/>A nozzel sticks up from the pit, labelled Random Ball Generator. You may reach into it and [[claim one for yourself->balls]]. <br/><br/>Or you can return to the [[Practice Field]]",
     "hidden": true,
     "roomId": "ballPit"
   },
