@@ -315,7 +315,7 @@ export const generate = () => {
       'Light Up Straw',
       'LED Ice Cubes',
       'Extra Bubbles',
-	  'Not Enough Bubbles',
+      'Not Enough Bubbles',
       'Mushroom Alternative',
       '#flavor# bits',
       'Whipped Cream and #boba#',

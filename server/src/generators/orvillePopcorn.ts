@@ -80,8 +80,6 @@ export const generate = () => {
       'Tony Chachere’s',
       'Slap Ya Mama Hot Sauce',
       'Buttered Eel'
-
-
     ]
   })
 

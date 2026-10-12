@@ -255,10 +255,9 @@ export const generate = () => {
       'Furikake',
       'Li Hing Powder',
       'Cajun Seasoning',
-      'Tony Chachere\’s',
+      'Tony Chachere’s',
       'Slap Ya Mama Hot Sauce',
       'Buttered Eel'
-
     ]
   })
 

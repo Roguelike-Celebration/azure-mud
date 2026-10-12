@@ -32,8 +32,6 @@ export const generate = () => {
       'Get a KDR of 5:1',
       'Catch a live eel',
       'Catch a live chicken'
-
-
     ],
     restriction: [
       'while in a burlap sack',
@@ -72,9 +70,7 @@ export const generate = () => {
       'without using your hands',
       'without using your feet',
       'while holding your breath',
-      'while covered in eels',
-
-
+      'while covered in eels'
     ]
   })
 
