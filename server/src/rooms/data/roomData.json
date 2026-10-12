@@ -42,7 +42,7 @@
     "displayName": "Jersey Assignment",
     "shortName": "jersey assignment",
     "id": "jerseys",
-    "description": "You walk into a shop featuring jerseys for every popular team in the league. The walls are lined meticulously and at a glance you believe they are ordered by their rankings in the current season. The person responsible stands wearing a referee uniform and a name badge, neither of which exactly matches regulation, presumably in an attempt to keep themselves distinct.<br/><br/>From here, you can head to [[The Streets]], the [[Obelisk]], [[Concessions Stadium]], or [[Stadium Theater]].<br/><br/>The referee also holds up a bucket of face paint and offers to [[douse you->drinkPolymorph]].<br/><br/>The referee walks up and offers to find a jersey for you.",
+    "description": "You walk into a shop featuring jerseys for every popular team in the league. The walls are lined meticulously and at a glance you believe they are ordered by their rankings in the current season. The person responsible stands wearing a referee uniform and a name badge, neither of which exactly matches regulation, presumably in an attempt to keep themselves distinct.<br/><br/>From here, you can head to [[The Streets]], the [[Obelisk]], [[Concessions Stadium]], or [[Stadium Theater]].<br/><br/>The referee offers to assign you a new team, and their [[associated jersey->drinkPolymorph]].<br/><br/>The referee also stands ready with a couple of coolers full of liquid.",
     "specialFeatures": [
       "RAINBOW_DOOR",
       "DULL_DOOR"
