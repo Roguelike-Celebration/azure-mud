@@ -36,11 +36,20 @@ export const linkActions = {
   popcorn: () => {
     pickUpRandomItemFromList('popcorn')
   },
+  hotDog: () => {
+    pickUpRandomItemFromList('hotDog')
+  },
   obeliskSouvenirs: () => {
     pickUpRandomItemFromList('obeliskSouvenirs')
   },
   deepFriedSnacks: () => {
     pickUpRandomItemFromList('deepFriedSnacks')
+  },
+  balls: () => {
+    pickUpRandomItemFromList('balls')
+  },
+  artifacts: () => {
+    pickUpRandomItemFromList('artifacts')
   },
   // ------------------------------------------- SEND CHAT MESSAGE SECTION -------------------------------------------
   // Ideally we would not have variable signatures in these functions.
@@ -120,6 +129,9 @@ export const linkActions = {
   },
   barathrumites: () => {
     displayMessageFromList('barathrumites')
+  },
+  rules: () => {
+    displayMessageFromList('rules')
   },
   // ------------------------------------------- MISC ACTION SECTION -------------------------------------------
   pentagramHighTech: (roomId: string) => {
