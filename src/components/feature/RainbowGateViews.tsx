@@ -41,7 +41,7 @@ export default function RainbowGateModalView () {
   // if (visits === 1) {
   return (
     <div>
-      <p>The referree walks over to you and unceremoniously dumps a cooler filled with vibrant paint all over you.</p>
+      <p>The referee walks over to you and unceremoniously dumps a cooler filled with vibrant paint all over you.</p>
       <p> Your chat name color is now <span className={`name ${userMap[myId].nameColor}`}>{userMap[myId].nameColor}</span>.</p>
     </div>
   )
