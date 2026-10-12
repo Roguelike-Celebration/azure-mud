@@ -59,7 +59,7 @@ export const generate = () => {
       'golden',
       'titanium',
       'eelskin'
-      ],
+    ],
     item: [
       'Eel',
       'Eel Statuette',
@@ -97,10 +97,6 @@ export const generate = () => {
       'Staff',
       'Sword',
       'Mace'
-
-    ]
-
-
     ]
   })
 
