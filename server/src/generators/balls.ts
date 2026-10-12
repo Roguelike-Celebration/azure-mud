@@ -106,8 +106,7 @@ export const generate = () => {
       'Warp Ball',
       'Wraith Ball',
       'X Ray Ball',
-	  'Zombie Ball'
-
+      'Zombie Ball'
     ]
   })
 
