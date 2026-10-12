@@ -3,7 +3,7 @@
 import tracery from 'tracery-grammar'
 
 export const actionString = (boba: string) => {
-  return `You drink a ${boba}.`
+  return `You drink ${boba}.`
 }
 
 export const generate = () => {
