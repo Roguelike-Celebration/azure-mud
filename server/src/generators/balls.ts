@@ -11,7 +11,7 @@ export const generate = () => {
     origin: [
       "#ball#"
     ],
-    monster: [
+    ball: [
       'Baseball',
       'Basketball',
       'Golf Ball',
