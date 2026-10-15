@@ -5,6 +5,7 @@ import * as balls from './balls'
 import * as artifacts from './artifacts'
 import * as boba from './boba'
 import * as rules from './calvinBallRules'
+import * as transcendenceItems from './transcendenceItems'
 
 interface Generator {
   generate(): string
@@ -18,7 +19,8 @@ const generators: {[name: string]: Generator} = {
   balls,
   artifacts,
   boba,
-  rules
+  rules,
+  transcendenceItems
 }
 
 export default generators

@@ -270,7 +270,7 @@
     "displayName": "Transcendence Battle Arena",
     "shortName": "transcendence arena",
     "id": "transcendence",
-    "description": "You step into a Transcendence-branded battle arena built by this year's sponsor! In the center of a grand arena are massive holoprojectors recreating a fierce battle happening somewhere far overhead as gladiators in starships duke it out to prove who is the strongest.<br/><br/>A gift shop sits near the entrance offering a Transcendence Foam Finger, a Trascendence Stuffed Starship, or you could reach into the bucket and pull out a random item from the game!<br/><br/>On the side of the gift shop is a table with copies of the game. <a href=\"https://store.steampowered.com/app/364510/ \" target=\"_blank\">Grab The Game!</a>",
+    "description": "You step into a Transcendence-branded battle arena built by this year's sponsor! In the center of a grand arena are massive holoprojectors recreating a fierce battle happening somewhere far overhead as gladiators in starships duke it out to prove who is the strongest.<br/><br/>A gift shop sits near the entrance offering a Transcendence Foam Finger, a Trascendence Stuffed Starship, or you could reach into the bucket and pull out [[a random item from the game->transcendenceItems]]!<br/><br/>On the side of the gift shop is a table with copies of the game. <a href=\"https://store.steampowered.com/app/364510/ \" target=\"_blank\">Grab The Game!</a>",
     "hidden": false,
     "roomId": "transcendence"
   }
