@@ -13,10 +13,12 @@ insert_final_newline = true
 [*.{ts,tsx,cjs,json,yml,html,css,py}]
 indent_size = 2
 tab_width = 2
+trim_trailing_whitespace = true
 
 [*.md]
 indent_size = 4
 tab_width = 4
+trim_trailing_whitespace = true
 
 [Makefile]
 indent_style = tab
