@@ -2,16 +2,16 @@
 
 import tracery from 'tracery-grammar'
 
-export const actionString = (ball: string) => {
-  return `You pull out a ${ball}!`
+export const actionString = (balls: string) => {
+  return `You pull out a ${balls}!`
 }
 
 export const generate = () => {
   var grammar = tracery.createGrammar({
     origin: [
-      "#ball#"
+      "#balls#"
     ],
-    ball: [
+    balls: [
       'Baseball',
       'Basketball',
       'Golf Ball',
