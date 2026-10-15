@@ -51,6 +51,9 @@ export const linkActions = {
   artifacts: () => {
     pickUpRandomItemFromList('artifacts')
   },
+  transcendenceItems: () => {
+    pickUpRandomItemFromList('transcendenceItems')
+  },
   // ------------------------------------------- SEND CHAT MESSAGE SECTION -------------------------------------------
   // Ideally we would not have variable signatures in these functions.
   drinkPolymorph: (roomId: string) => { // Listen. Is this the correct way? No. Does it save me needing to write a new httpTrigger? Yes.
