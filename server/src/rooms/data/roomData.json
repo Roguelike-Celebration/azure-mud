@@ -110,7 +110,7 @@
     "displayName": "Practice Fields",
     "shortName": "practice fields",
     "id": "unconfPractice",
-    "description": "You step onto a wide open field full of people running about and performing various feats of athletic prowess. Each player appears to be practicing for something wildly different from every other player present in this space. Standing among the chaos is a referee who holds a massive tome gilt with gold. He offers you a reading of the [[holy rules->rules]].<br/><br/>In the center of the practice field there sits a pitching machine launching balls at those standing near the distant mound. A darkness gathers at the base of the pitching machine, and you feel a distant urge to [[reach into the darkness ->ballPit]].<br/><br/>Or you can head back to the [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/85227743541?pwd=BFyF9iQQVSCGPBckizTz5pxh2b5eoK.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (If needed, the password is 326233.)</p>",
+    "description": "You step onto a wide open field full of people running about and performing various feats of athletic prowess. Each player appears to be practicing for something wildly different from every other player present in this space. Standing among the chaos is a referee who holds a massive tome gilt with gold. He offers you a reading of the [[holy rules->rules]].<br/><br/>In the center of the practice field there sits a pitching machine launching balls at those standing near the distant mound. A darkness gathers at the base of the pitching machine, and you feel a distant urge to [[reach into the darkness->ballPit]].<br/><br/>Or you can head back to the [[Unconferencing Parking Lot]]. <br/><br/> <p>(This is an unconferencing room.)</p><p>We encourage you to use this space to talk \"face-to-face\" using <a href=\"https://us05web.zoom.us/j/85227743541?pwd=BFyF9iQQVSCGPBckizTz5pxh2b5eoK.1\" target=\"_blank\">the Zoom meeting for this room</a>, which you can access at any time during the conference. (If needed, the password is 326233.)</p>",
     "hidden": false,
     "roomId": "unconfPractice"
   },
@@ -222,7 +222,7 @@
     "displayName": "The Ball X Pit",
     "shortName": "ball pit",
     "id": "ballPit",
-    "description": "You enter a realm that appears to be mostly balls of every shape and size. You stand upon a black strip of obsidian stone beneath a black sky with a black sun glowing ethereally. The world here appears to be in a neutral state for now, awaiting to transform upon activation. Beneath you is an endless ocean of spheres with every size, shape, and texture imaginable. Baseballs, basketballs, balls made of spiders, lightning, or even love.<br/><br/>A nozzel sticks up from the pit, labelled Random Ball Generator. You may reach into it and [[claim one for yourself->balls]]. <br/><br/> In the distance you hear the sound of metal on metal and smell greed on the wind. You may [[walk towards it->capitalism]], or you can return to the [[Practice Field]]",
+    "description": "You enter a realm that appears to be mostly balls of every shape and size. You stand upon a black strip of obsidian stone beneath a black sky with a black sun glowing ethereally. The world here appears to be in a neutral state for now, awaiting to transform upon activation. Beneath you is an endless ocean of spheres with every size, shape, and texture imaginable. Baseballs, basketballs, balls made of spiders, lightning, or even love.<br/><br/>A nozzle sticks up from the pit, labelled Random Ball Generator. You may reach into it and [[claim one for yourself->balls]]. <br/><br/> In the distance you hear the sound of metal on metal and smell greed on the wind. You may [[walk towards it->capitalism]], or you can return to the [[Practice Field]].",
     "hidden": true,
     "roomId": "ballPit"
   },
@@ -238,7 +238,7 @@
     "displayName": "A Wheat Field",
     "shortName": "wheat field",
     "id": "wheatField",
-    "description": "You pull the lever on the soda fountain and suddenly appear in a wheat field. The field stretches equal distances in all 4 directions, it appears to be a perfectly square patch. Soldiers march through this field on their way to fight off forces of centaurs, harpies, and other hostile forces. A burnt smell wafts through the air and you fear if you stick around too long a dragon may appear.<br/><br/>A goat stands at one side of the field, watching your every move. Unblinkingly.<br/><br/>You don't see a way back to the soda fountain, but to the south you see [[The Castle]].",
+    "description": "You pull the lever on the soda fountain and suddenly appear in a wheat field. The field stretches equal distances in all 4 directions, it appears to be a perfectly square patch. Soldiers march through this field on their way to fight off hordes of centaurs, harpies, and other hostile forces. A burnt smell wafts through the air and you fear if you stick around too long a dragon may appear.<br/><br/>A goat stands at one side of the field, watching your every move. Unblinkingly.<br/><br/>You don't see a way back to the soda fountain, but to the south you see [[The Castle]].",
     "hidden": true,
     "roomId": "wheatField"
   },
@@ -254,7 +254,7 @@
     "displayName": "Queen's Chambers",
     "shortName": "queen chambers",
     "id": "sign",
-    "description": "You enter a richly-appointed bed chamber of what could not be anything other than the queen of this court. All around the room lie sconces lit with too-bright flames, giving the entire space an oppressive heat. At the far wall, you see a woman with strong, regal bearing leaning casually over the balcony, smoking a cigarette.<br/><br/>The woman leans over to you, blows out a puff of smoke, and says \"What? You want out? Or deeper? The goats run the toll booth. First three letters of each of their rooms will bring you to their place. Maybe you'll have better luck convincing them. No promises, though, you might just get souveniers like I did... At least the baseball is good around here...\"",
+    "description": "You enter a richly-appointed bed chamber of what could not be anything other than the queen of this court. All around the room lie sconces lit with too-bright flames, giving the entire space an oppressive heat. At the far wall, you see a woman with strong, regal bearing leaning casually over the balcony, smoking a cigarette.<br/><br/>The woman leans over to you, blows out a puff of smoke, and says \"What? You want out? Or deeper? The goats run the toll booth. First three letters of each of their rooms will bring you to their place. Maybe you'll have better luck convincing them. No promises, though, you might just get souvenirs like I did... At least the baseball is good around here...\"",
     "hidden": true,
     "roomId": "sign"
   },
