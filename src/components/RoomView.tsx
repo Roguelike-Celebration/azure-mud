@@ -53,35 +53,34 @@ export default function RoomView (props: Props) {
   // Since we're manually setting raw HTML, we can't get refs to add proper click handlers
   // Instead, we just hijack ALL clicks in the description, and check if they're for a link
   // TODO: Eventually change this to return React elements instead.
-  const descriptionClick = (e) => {
-    const roomId =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-room')
+  const descriptionClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!(e.target instanceof HTMLElement)) {
+      return
+    }
+    const roomId = e.target.getAttribute('data-room')
     if (roomId) {
       moveToRoom(roomId)
       return
     }
 
-    const itemName =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-item')
+    const itemName = e.target.getAttribute('data-item')
     if (itemName) {
       pickUpItem(itemName)
     }
 
-    const actionName =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-action')
+    const actionName = e.target.getAttribute('data-action')
     if (actionName) {
       // roomId is required because some of these send messages to the server
       linkActions[actionName](roomId)
     }
 
-    const showModal =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-modal')
+    const showModal = e.target.getAttribute('data-modal')
     if (showModal) {
       dispatch(ShowModalAction(Modal.SpecialFeatureText))
     }
   }
 
-  const toggleRoomDescriptionClick = (e) => {
+  const toggleRoomDescriptionClick = () => {
     setFullDescriptionVisible(!fullDescriptionVisible)
   }
 
@@ -111,7 +110,7 @@ export default function RoomView (props: Props) {
     dispatch(ShowModalAction(Modal.Riddles))
   }
 
-  let noteWallView
+  let noteWallView: React.ReactElement | undefined
   if (room && room.hasNoteWall) {
     if (room.noteWallData) {
       noteWallView = (
