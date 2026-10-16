@@ -1,6 +1,7 @@
 server/firebase-admin.*.json
 node_modules
 dist
+src/**/*.js
 .env
 .env.*
 !.env.sample
