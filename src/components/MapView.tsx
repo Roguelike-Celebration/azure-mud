@@ -92,17 +92,25 @@ export default function MapView (props: Props) {
 
   let map = mapText
 
+  // Two-step replacement using '[]' first and then converting to '()' to avoid spurious hits
+  // after a placeholder has been replaced with a count that matches a room index.
   presenceMapping.forEach((roomId, idx) => {
+    // String should be padded with the room's background character. In 2026, that's mostly ' ', so that's
+    // the fallback.
+    const keyString = `(${idx.toString().padStart(2, '0')})`
+    const idxInMap = map.indexOf(keyString)
+    let padChar = ' '
+    if (idxInMap > -1) {
+      padChar = map[idxInMap - 1]
+    }
     let replaceString = '[0]'
-
     // Because 0 is falsy, we need to explicitly use isUndefined
-    if (presenceData[roomId] && !isUndefined(presenceData[roomId])) {
+    if (!isUndefined(presenceData[roomId])) {
       replaceString = `[${presenceData[roomId]}]`
     }
-    replaceString = replaceString.padEnd(4, '.')
-    map = map.replace(`(${idx.toString().padStart(2, '0')})`, replaceString)
+    replaceString = replaceString.padEnd(4, padChar)
+    map = map.replace(keyString, replaceString)
   })
-
   map = map.replace(/\[([0-9]*)\]/g, '($1)')
 
   const handleClick = (e) => {
