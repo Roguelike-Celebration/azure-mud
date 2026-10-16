@@ -1,4 +1,3 @@
-server/firebase-admin.*.json
 node_modules
 dist
 src/**/*.js
