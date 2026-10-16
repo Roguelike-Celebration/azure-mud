@@ -22,10 +22,10 @@ const FIRST_DAY_END = new Date('2026-10-16T21:00:00-07:00')
 const SECOND_DAY_END = new Date('2026-10-17T21:00:00-07:00')
 const THIRD_DAY_END = new Date('2026-10-18T21:00:00-07:00')
 
-const dayPreview = (time) => new Date(`2026-09-13T${time}:00.000-07:00`)
-const dayOneDate = (time) => new Date(`2026-10-16T${time}:00.000-07:00`)
-const dayTwoDate = (time) => new Date(`2026-10-17T${time}:00.000-07:00`)
-const dayThreeDate = (time) => new Date(`2026-10-18T${time}:00.000-07:00`)
+const dayPreview = (time: string) => new Date(`2026-09-13T${time}:00.000-07:00`)
+const dayOneDate = (time: string) => new Date(`2026-10-16T${time}:00.000-07:00`)
+const dayTwoDate = (time: string) => new Date(`2026-10-17T${time}:00.000-07:00`)
+const dayThreeDate = (time: string) => new Date(`2026-10-18T${time}:00.000-07:00`)
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
   if (day === 0) {
