@@ -82,12 +82,19 @@ const Redis: RedisInternal = {
     return data
   },
 
-  async getUserHeartbeat (userId: string): Promise<number> {
-    return await getCache(heartbeatKeyForUser(userId))
+  async getUserHeartbeat (userId: string): Promise<number | undefined> {
+    // Redis stores everything as strings (even if you pass it a number at the JS redis library
+    // level), so we need to convert the stringified Unix timestamp number back to a TS number.
+    const raw = await getCache(heartbeatKeyForUser(userId))
+    if (raw === null || raw === undefined) return undefined
+    const timestamp = Number(raw)
+    if (isNaN(timestamp)) return undefined
+    return timestamp
   },
 
   async setUserHeartbeat (user: User) {
-    await setCache(heartbeatKeyForUser(user.id), new Date().valueOf())
+    // Redis always stores strings. Stringify explicitly instead of letting the JS redis library convert it.
+    await setCache(heartbeatKeyForUser(user.id), String(new Date().valueOf()))
   },
 
   async setUserAsActive (user: User, isActive: boolean = true) {
