@@ -1,13 +1,12 @@
 import { getFullUser } from '../user'
 import { DB } from '../database'
 import { getHeartbeatData } from '../heartbeat'
-import { EndpointFunction, LogFn } from '../endpoint'
+import { EndpointFunction, GroupManagementTask, LogFn } from '../endpoint'
 
 const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
   const thresholdSeconds = 90
 
-  var timeStamp = new Date().toISOString()
-
+  const timeStamp = new Date().toISOString()
   log('Timer function ran!', timeStamp)
 
   const data = await getHeartbeatData()
@@ -16,8 +15,8 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
   const now = new Date()
   const nowValue = now.valueOf()
 
-  const activeUsers = []
-  const usersToRemove = []
+  const activeUsers: string[] = []
+  const usersToRemove: string[] = []
   Object.keys(data).forEach((user) => {
     const time = data[user]
     // Treat an active user with no heartbeat record as stale, and remove them.
@@ -35,7 +34,7 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
 
   log(usersToRemove)
 
-  const groupManagementTasks = []
+  const groupManagementTasks: GroupManagementTask[] = []
   for (let i = 0; i < usersToRemove.length; i++) {
     log('Trying to index into usersToRemove', i)
     log(usersToRemove[i])

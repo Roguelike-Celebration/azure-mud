@@ -1,5 +1,6 @@
 import { DB } from './database'
 import { Message } from './endpoint'
+import { PresenceListMap } from './types'
 
 /** Fetches presence data for a set of rooms and returns a SignalR message
  * to broadcast current presence data to all users */
@@ -8,7 +9,7 @@ export async function globalPresenceMessage (roomIds: string[]): Promise<Message
   // However, we currently call this primarily with 1 room, and only once with 2
   // so this optimization is relatively low-priority for now.
 
-  const data: { [roomId: string]: string[] } = {}
+  const data: PresenceListMap = {}
 
   console.log(roomIds)
   await Promise.all(

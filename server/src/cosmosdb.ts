@@ -6,7 +6,7 @@ import { getServerSettings } from './endpoints/serverSettings'
 
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
-import { DEFAULT_SERVER_SETTINGS, ServerSettings } from './types'
+import { DEFAULT_SERVER_SETTINGS, PresenceListMap, RoomDataMap, ServerSettings } from './types'
 import { User } from './user'
 
 const partitionKey = 'https://roguelikecelebration-mud.azurewebsites.net'
@@ -85,13 +85,13 @@ const CosmosDB = {
     }
   },
 
-  async allRoomOccupants (): Promise<{[roomId: string]: string[]}> {
+  async allRoomOccupants (): Promise<PresenceListMap> {
     console.log('Attempting to fetch all roomOccupants')
     try {
       const container = getContainer('users')
       const { resources: users } = await container.items.query('select c.id, c.roomId from c where c.isActive = true', { partitionKey }).fetchAll()
 
-      const result = {}
+      const result: PresenceListMap = {}
       users.forEach(u => {
         if (!result[u.roomId]) result[u.roomId] = []
         result[u.roomId].push(u.id)
@@ -139,7 +139,7 @@ const CosmosDB = {
 
   // WARNING: This is currently broken.
   // Needs to be updated to return a string list of all userIds in the user's current room
-  async updateVideoPresenceForUser (user: User, isActive: boolean) {
+  async updateVideoPresenceForUser (user: User, isActive: boolean): Promise<string[]> {
     const data = { ...user, isInVideoChat: isActive }
 
     try {
@@ -243,11 +243,11 @@ const CosmosDB = {
 
   //   async getRoomNotes(roomId: string) {
 
-  async getRoomData (): Promise<{[name: string]: Room}> {
+  async getRoomData (): Promise<RoomDataMap> {
     const container = await getContainer('rooms')
     const { resources: rooms } = await container.items.readAll().fetchAll()
 
-    const result: {[name: string]: Room} = {};
+    const result: RoomDataMap = {};
 
     (rooms as unknown as Room[])
       .forEach((r) => { result[r.id] = r })
