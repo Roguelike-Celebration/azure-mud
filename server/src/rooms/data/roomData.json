@@ -222,7 +222,7 @@
     "displayName": "The Ball X Pit",
     "shortName": "ball pit",
     "id": "ballPit",
-    "description": "You enter a realm that appears to be mostly balls of every shape and size. You stand upon a black strip of obsidian stone beneath a black sky with a black sun glowing ethereally. The world here appears to be in a neutral state for now, awaiting to transform upon activation. Beneath you is an endless ocean of spheres with every size, shape, and texture imaginable. Baseballs, basketballs, balls made of spiders, lightning, or even love.<br/><br/>A nozzle sticks up from the pit, labelled Random Ball Generator. You may reach into it and [[claim one for yourself->balls]]. <br/><br/> In the distance you hear the sound of metal on metal and smell greed on the wind. You may [[walk towards it->capitalism]], or you can return to the [[Practice Field]].",
+    "description": "You enter a realm that appears to be mostly balls of every shape and size. You stand upon a black strip of obsidian stone beneath a black sky with a black sun glowing ethereally. The world here appears to be in a neutral state for now, awaiting to transform upon activation. Beneath you is an endless ocean of spheres with every size, shape, and texture imaginable. Baseballs, basketballs, balls made of spiders, lightning, or even love.<br/><br/>A nozzle sticks up from the pit, labelled Random Ball Generator. You may reach into it and [[claim one for yourself->balls]]. <br/><br/> In the distance you hear the sound of metal on metal and smell greed on the wind. You may [[walk towards it->capitalism]], or you can return to the [[Practice Fields]].",
     "hidden": true,
     "roomId": "ballPit"
   },
