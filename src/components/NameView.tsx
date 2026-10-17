@@ -8,7 +8,7 @@ import {
   ModToggleAction,
   ShowModalAction
 } from '../Actions'
-import { User } from '../../server/src/user'
+import { MinimalUser } from '../../server/src/user'
 
 import '../../style/nameView.css'
 import { fetchProfile, toggleUserSpeaker } from '../networking'
@@ -18,12 +18,12 @@ import BadgeView from './BadgeView'
 interface Props {
   userId: string
   nowrap?: boolean
-
   /* A contextMenu ID */
   id: string
   /* If true, don't render a clickable menu */
   skipMenu?: boolean
 }
+
 export default function NameView (props: Props) {
   const dispatch = useContext(DispatchContext)
   const { useSimpleNames } = useContext(SettingsContext)
@@ -33,7 +33,7 @@ export default function NameView (props: Props) {
 
   const isSelf = props.userId === myId
 
-  const user: User = userMap[props.userId]
+  const user: MinimalUser = userMap[props.userId]
   const username = user && user.username
   const isMod = user && user.isMod
   const isSpeaker = user && user.isSpeaker

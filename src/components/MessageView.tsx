@@ -35,7 +35,7 @@ import {
 } from '../message'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
 import NameView from './NameView'
-import { MinimalUser } from '../../server/src/user'
+import { UserMap } from '../reducer'
 
 const formatter = new Intl.DateTimeFormat('en', {
   hour: 'numeric',
@@ -238,7 +238,7 @@ const parseUserIdOrDisplay = (messageFragment): string => {
   return 'Malformed Mention'
 }
 
-function renderChatMessageWithUsernames (message: string, id: string, userMap: { [userId: string]: MinimalUser }) {
+function renderChatMessageWithUsernames (message: string, id: string, userMap: UserMap) {
   const splitMessage = message.split(/(@@.*?@@)/)
   return splitMessage.reduce<JSX.Element>(
     (acc, fragment, idx) => {

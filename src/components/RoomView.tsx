@@ -22,14 +22,15 @@ import { useState } from 'react'
 import _ from 'lodash'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import PresenceView from './PresenceView'
+import { PresenceCountMap, RoomDataMap } from '../reducer'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
 interface Props {
   room: Room;
   userId: string;
-  roomData: { [roomId: string]: Room };
-  presenceData: { [roomId: string]: number };
+  roomData: RoomDataMap;
+  presenceData: PresenceCountMap;
   inMediaChat: boolean;
   keepCameraWhenMoving: boolean;
   textOnlyMode: boolean;
@@ -222,8 +223,8 @@ export default function RoomView (props: Props) {
 
 function parseDescription (
   description: string,
-  roomData: { [roomId: string]: Room },
-  presenceData: { [roomId: string]: number }
+  roomData: RoomDataMap,
+  presenceData: PresenceCountMap
 ): string {
   // This code used to get room = roomData[roomId], but now that room data is JIT, it
   // is normal for that to be absent. The links don't actually use data from roomData, so

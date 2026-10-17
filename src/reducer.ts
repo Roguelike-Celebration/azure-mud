@@ -45,7 +45,6 @@ import { Room } from './room'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import * as Storage from './storage'
 import { EntityState } from './types'
-import { NoteWallData } from '../server/src/rooms'
 import { RoomNote } from '../server/src/roomNote'
 
 export interface State {
@@ -62,12 +61,10 @@ export interface State {
 
   roomId?: string;
   userId?: string;
-  userMap: { [userId: string]: MinimalUser };
-  roomData: { [roomId: string]: Room };
-
-  // A count of the current number of users in there
-  // Each specific roomData entry maintains a `users` array with usernames
-  presenceData: { [roomId: string]: number };
+  userMap: UserMap;
+  roomData: RoomDataMap;
+  // A count of the current number of users in there. To get full users list, look in roomData instead.
+  presenceData: PresenceCountMap;
 
   profileData?: User;
 
@@ -124,7 +121,16 @@ export interface State {
   obeliskNotes: RoomNote[]
 }
 
+export type UserMap = { [userId: string]: MinimalUser }
+
+export type RoomDataMap = { [roomId: string]: Room }
+
+export type PresenceCountMap = { [roomId: string]: number }
+
+export type PresenceListMap = { [roomId: string]: string[] }
+
 console.log(Config.FIREBASE_CONFIG)
+
 export const defaultState: State = {
   firebaseApp: firebase.initializeApp(Config.FIREBASE_CONFIG),
   authenticated: false,
