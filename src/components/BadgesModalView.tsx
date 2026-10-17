@@ -22,27 +22,28 @@ export default function BadgesModalView (props: Props) {
   const [selectedEquippedIndex, setSelectedEquippedIndex] = useState<number|undefined>(undefined)
   const [selectedBadge, setSelectedBadge] = useState<Badge|undefined>(undefined)
 
-  const initialState = {}
-  Object.values(BadgeCategories).forEach(category => {
-    initialState[category] = true
-  })
-
+  const initialState = Object.fromEntries(
+    Object.values(BadgeCategories).map(c => [c, true])
+  )
   const localReducer = (state, action) => {
     switch (action.type) {
       case 'hide':
         return { ...state, [action.category]: false }
       case 'show':
         return { ...state, [action.category]: true }
+      default:
+        return state
     }
   }
-
   const [localState, localDispatch] = useReducer(localReducer, initialState)
 
   const dispatch = React.useContext(DispatchContext)
 
-  const dragStart = (e) => {
-    const index = e.target.closest('[data-index]').dataset.index
+  const dragStart = (e: React.DragEvent<HTMLSpanElement>) => {
+    const index = parseInt(e.currentTarget.dataset.index ?? '')
     const badge = props.unlockedBadges[index]
+    if (!badge) return
+
     e.dataTransfer.setData('text/plain', JSON.stringify(badge))
     e.dataTransfer.dropEffect = 'copy'
 
@@ -50,16 +51,18 @@ export default function BadgesModalView (props: Props) {
     // In our case, the tooltip messes with the size and it looks weird.
     // This gives us a drag preview element that is *just* the emoji
     const emoji = document.querySelector(`#badges .badge-text-${badge.emoji}`)
-    e.dataTransfer.setDragImage(emoji, 0, 0)
+    if (emoji) {
+      e.dataTransfer.setDragImage(emoji, 0, 0)
+    }
   }
 
   // Without the dragover event being prevented, the drop event won't fire
-  const dragOver = (e) => {
+  const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
   }
 
-  const drop = (e) => {
-    let data: string
+  const drop = (e: React.DragEvent<HTMLDivElement>) => {
+    let data: string | undefined
     try {
       data = e.dataTransfer.getData('text/plain')
       const badge = JSON.parse(data)
@@ -77,7 +80,7 @@ export default function BadgesModalView (props: Props) {
     }
   }
 
-  const selectEquippedBadge = (e) => {
+  const selectEquippedBadge = (e: React.SyntheticEvent<HTMLDivElement>) => {
     const index = parseInt(e.currentTarget.dataset.index)
     if (selectedEquippedIndex === index) {
       setSelectedEquippedIndex(undefined)
@@ -94,7 +97,7 @@ export default function BadgesModalView (props: Props) {
     }
   }
 
-  const rightClickUnequipBadge = (e) => {
+  const rightClickUnequipBadge = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     const index = parseInt(e.currentTarget.dataset.index)
     setSelectedEquippedIndex(undefined)
@@ -107,7 +110,7 @@ export default function BadgesModalView (props: Props) {
     }
   }
 
-  const selectUnlockedBadge = (e) => {
+  const selectUnlockedBadge = (e: React.SyntheticEvent<HTMLSpanElement>) => {
     const index = parseInt(e.currentTarget.dataset.index)
     const badge = props.unlockedBadges[index]
 
@@ -126,7 +129,7 @@ export default function BadgesModalView (props: Props) {
     }
   }
 
-  const keyDownOnEquipped = (e) => {
+  const keyDownOnEquipped = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
       selectEquippedBadge(e)
     } else if ((e.key === 'Backspace' || e.key === 'Delete') && isNumber(selectedEquippedIndex)) {
@@ -135,7 +138,7 @@ export default function BadgesModalView (props: Props) {
     }
   }
 
-  const keyDownOnUnlocked = (e) => {
+  const keyDownOnUnlocked = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
       selectUnlockedBadge(e)
     }
@@ -240,8 +243,8 @@ export default function BadgesModalView (props: Props) {
       }
     }
 
-    const keyboardToggle = (e) => {
-      if (e.code !== 'Tab') {
+    const keyboardToggle = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key !== 'Tab') {
         toggle()
       }
     }
