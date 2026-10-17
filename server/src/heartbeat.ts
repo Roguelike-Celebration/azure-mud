@@ -21,7 +21,7 @@ export async function getHeartbeatData (): Promise<HeartbeatMap> {
   return data
 }
 
-export async function userHeartbeatReceived (user: User) {
+export async function userHeartbeatReceived (user: User): Promise<void> {
   console.log(`userHeartbeatReceived. user = ${user.id}`)
   await DB.setUserHeartbeat(user)
   console.log(`Did setUserHeartbeat. user = ${user.id}`)
