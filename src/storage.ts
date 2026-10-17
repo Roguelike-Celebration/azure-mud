@@ -3,7 +3,7 @@ import localforage from 'localforage'
 
 // Message cache
 
-export async function getMessages (): Promise<{messages: Message[], whispers: WhisperMessage[]}|undefined> {
+export async function getMessages (): Promise<{messages: Message[], whispers: WhisperMessage[]} | undefined> {
   try {
     const timestamp: Date = await localforage.getItem(messageTimestampKey)
     const messages: Message[] = await localforage.getItem(messagesKey)

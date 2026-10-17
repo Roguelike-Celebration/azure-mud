@@ -11,7 +11,7 @@ import {
   RoomResponse,
   ServerSettings
 } from '../server/src/types'
-import { User } from '../server/src/user'
+import { MinimalUser, User } from '../server/src/user'
 import {
   Action,
   CaptionMessageAction,
@@ -56,9 +56,10 @@ import {
 } from './Actions'
 import Config from './config'
 import { Modal } from './modals'
-import { convertServerRoomData, Room } from './room'
+import { convertServerRoomData, Room, ServerRoomDataMap } from './room'
 import { ThunkDispatch } from './useReducerWithThunk'
-import { RoomDataMap, State } from './reducer'
+import { PresenceListMap, RoomDataMap, State, UserMap } from './reducer'
+import { RoomNote } from '../server/src/roomNote'
 
 let myUserId: string
 let myDispatch: ThunkDispatch<Action, State>
@@ -149,7 +150,7 @@ export async function addNoteToObelisk (message: string) {
   }
 }
 
-export async function openOrCloseSpace (spaceIsClosed) {
+export async function openOrCloseSpace (spaceIsClosed: boolean) {
   await callAzureFunction('openOrCloseSpace', { spaceIsClosed })
 }
 
@@ -162,10 +163,7 @@ export async function toggleUserMod (userId: string) {
 }
 
 export async function toggleUserSpeaker (userId: string, year: string) {
-  await callAzureFunction('toggleSpeakerStatus', {
-    userId,
-    year
-  })
+  await callAzureFunction('toggleSpeakerStatus', { userId, year })
 }
 
 export async function deleteMessage (messageId: string) {
@@ -388,12 +386,7 @@ export async function stopObservingObelisk () {
   }
 }
 
-export async function checkIsRegistered (): Promise<{
-  registeredUsername: string;
-  spaceIsClosed: boolean;
-  isMod: string;
-  isBanned: boolean;
-}> {
+export async function checkIsRegistered (): Promise<UserRegistrationStatus> {
   const result = await callAzureFunction('isRegistered')
   return {
     registeredUsername: result.registered,
@@ -401,6 +394,13 @@ export async function checkIsRegistered (): Promise<{
     isMod: result.isMod,
     isBanned: result.isBanned
   }
+}
+
+interface UserRegistrationStatus {
+  registeredUsername: string | false | undefined;
+  spaceIsClosed: boolean;
+  isMod: boolean;
+  isBanned: boolean;
 }
 
 // These 3 functions are only used by admin.
@@ -463,30 +463,29 @@ export async function updateServerSettings (serverSettings: ServerSettings) {
 
 function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
   return {
-    playerConnected: (user) => {
+    playerConnected: (user: MinimalUser) => {
       console.log('Player joined!', user)
       dispatch(PlayerConnectedAction(user))
     },
-    playerDisconnected: (otherId) => {
+    playerDisconnected: (otherId: string) => {
       console.log('Player left!', otherId)
       dispatch(PlayerDisconnectedAction(otherId))
     },
-    updatedCurrentRoom: (data) => {
+    updatedCurrentRoom: (data: { roomId: string; roomData: ServerRoomDataMap; roomNotes?: RoomNote[]; }) => {
       myDispatch(
         UpdatedCurrentRoomAction(
           data.roomId,
           convertServerRoomData(data.roomData)
         )
       )
-
       if (data.roomNotes) {
         myDispatch(NoteUpdateRoomAction(data.roomId, data.roomNotes))
       }
     },
-    presenceData: (data) => {
+    presenceData: (data: PresenceListMap) => {
       dispatch(UpdatedPresenceAction(data))
     },
-    chatMessage: (messageId, otherId, message) => {
+    chatMessage: (messageId: string, otherId: string, message: string) => {
       // We use otherId/name basically interchangably here.
       console.log('Received chat', otherId, message)
       console.log(otherId, message, userId)
@@ -494,93 +493,93 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
 
       dispatch(ChatMessageAction(messageId, otherId, message))
     },
-    caption: (messageId, otherId, message) => {
+    caption: (messageId: string, otherId: string, message: string) => {
       console.log('Received caption', otherId, message)
       console.log(otherId, message, userId)
       if (otherId === userId) return
 
       dispatch(CaptionMessageAction(messageId, otherId, message))
     },
-    mods: (otherId, message) => {
+    mods: (otherId: string, message: string) => {
       dispatch(ModMessageAction(otherId, message))
     },
-    deleteMessage: (modId, targetMessageId) => {
+    deleteMessage: (modId: string, targetMessageId: string) => {
       dispatch(DeleteMessageAction(modId, targetMessageId))
     },
-    playerEntered: (name, fromId, fromName) => {
+    playerEntered: (name: string, fromId: string, fromName: string) => {
       if (name === userId) return
       dispatch(PlayerEnteredAction(name, fromId, fromName))
     },
-    myProfile: (profile) => {
+    myProfile: (profile: User) => {
       dispatch(ReceivedMyProfileAction(profile))
     },
-    serverSettings: (serverSettings) => {
+    serverSettings: (serverSettings: ServerSettings) => {
       dispatch(ReceivedServerSettingsAction(serverSettings))
     },
-    whisper: (otherId, message) => {
+    whisper: (otherId: string, message: string) => {
       dispatch(WhisperAction(otherId, message))
     },
-    privateCommand: (message) => {
+    privateCommand: (message: string) => {
       dispatch(CommandMessageAction(message))
     },
-    privateItemPickup: (message) => {
+    privateItemPickup: (message: string) => {
       dispatch(CommandMessageAction(message))
     },
-    playerLeft: (name, toId, toName) => {
+    playerLeft: (name: string, toId: string, toName: string) => {
       if (name === userId) return
       dispatch(PlayerLeftAction(name, toId, toName))
     },
-    usernameMap: (map) => {
+    usernameMap: (map: UserMap) => {
       console.log('Received map', map)
       dispatch(UserMapAction(map))
     },
-    playerBanned: (user) => {
+    playerBanned: (user: MinimalUser) => {
       dispatch(PlayerBannedAction(user))
     },
-    playerUnbanned: (user) => {
+    playerUnbanned: (user: MinimalUser) => {
       dispatch(PlayerUnbannedAction(user))
     },
     clientDeployed: () => {
       dispatch(ShowModalAction(Modal.ClientDeployed))
     },
-    shout: (messageId, name, message) => {
+    shout: (messageId: string, name: string, message: string) => {
       // We don't gate on your own userId here.
       // Because shouting can fail at the server level, we don't show it preemptively.
       dispatch(ShoutAction(messageId, name, message))
     },
-    emote: (messageId, name, message) => {
+    emote: (messageId: string, name: string, message: string) => {
       dispatch(EmoteAction(messageId, name, message))
     },
-    dance: (messageId, name, message) => {
+    dance: (messageId: string, name: string, message: string) => {
       dispatch(DanceAction(messageId, name, message))
     },
-    noteAdded: (roomId, noteId, message, authorId) => {
+    noteAdded: (roomId: string, noteId: string, message: string, authorId: string) => {
       // Post-It Note Wall
       dispatch(NoteAddAction(roomId, { id: noteId, message, authorId }))
     },
-    noteRemoved: (roomId, noteId) => {
+    noteRemoved: (roomId: string, noteId: string) => {
       dispatch(NoteRemoveAction(roomId, noteId))
     },
-    noteLikesUpdated: (roomId, noteId, likes) => {
+    noteLikesUpdated: (roomId: string, noteId: string, likes: string[]) => {
       dispatch(NoteUpdateLikesAction(roomId, noteId, likes))
     },
-    obeliskNoteAdded: (noteId, message, authorId) => {
+    obeliskNoteAdded: (noteId: string, message: string, authorId: string) => {
       dispatch(ObeliskNoteAddAction({ id: noteId, message, authorId }))
     },
-    obeliskNoteRemoved: (noteId) => {
+    obeliskNoteRemoved: (noteId: string) => {
       dispatch(ObeliskNoteRemoveAction(noteId))
     },
-    obeliskNoteLikesUpdated: (noteId, likes) => {
+    obeliskNoteLikesUpdated: (noteId: string, likes: string[]) => {
       dispatch(ObeliskNoteUpdateLikesAction(noteId, likes))
     },
-    spaceOpenedOrClosed: (status) => {
+    spaceOpenedOrClosed: (status: boolean) => {
       dispatch(SpaceOpenedOrClosedAction(status))
     },
     ping: () => {
       console.log('Received heartbeat ping')
       callAzureFunction('pong')
     },
-    unlockBadge: (badge) => {
+    unlockBadge: (badge: Badge[]) => {
       if (badge.length !== 1) {
         console.log(
           'ERROR: Expected one badge to unlock, got multiple:',
@@ -592,9 +591,12 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
   }
 }
 
-export async function connectPubSub (eventMapping: {
-  [event: string]: Function;
-}) {
+type PubSubEventHandler = (...args: any[]) => void
+type PubSubEventMapping = { [event: string]: PubSubEventHandler }
+// Fancy alternate form we might switch to in some cases:
+// type PubSubEventMapping = ReturnType<typeof generateEventMapping>
+
+export async function connectPubSub (eventMapping: PubSubEventMapping) {
   /*
   const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
       request.headers = {
