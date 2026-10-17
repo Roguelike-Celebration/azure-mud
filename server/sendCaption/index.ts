@@ -5,7 +5,7 @@ import sendCaption from '../src/endpoints/sendCaption'
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
-): Promise<any> {
+): Promise<void> {
   await authenticatedAzureWrap(context, req, sendCaption, { audit: true })
 }
 
