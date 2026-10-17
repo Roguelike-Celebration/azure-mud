@@ -1,6 +1,6 @@
 import { User } from './user'
 import { RoomNote } from './roomNote'
-import { ServerSettings } from './types'
+import { PresenceListMap, ServerSettings } from './types'
 
 import Redis from './redis'
 import { Room } from './rooms'
@@ -10,9 +10,9 @@ interface Database {
   // FIREBASE TOKEN CACHE
   // -----------------------------------------------------------------
   // If the token is in the cache, but not current, this will return false and evict it
-  userIdForFirebaseToken(token: string): Promise<string | undefined>
+  userIdForFirebaseToken(token: string): Promise<string | undefined>;
 
-  addFirebaseTokenToCache(token: string, userId: string, expiry: number)
+  addFirebaseTokenToCache(token: string, userId: string, expiry: number): Promise<void>;
 
   // -----------------------------------------------------------------
   // WORLD PRESENCE
@@ -28,17 +28,17 @@ interface Database {
   getAllUsers(): Promise<User[]>;
 
   /** Returns a mapping from room IDs to the user IDs of each user in there */
-  allRoomOccupants(): Promise<{[roomId: string]: string[]}>;
+  allRoomOccupants(): Promise<PresenceListMap>;
 
   /** Adds a user to the current list of logged-in users */
-  setUserAsActive(user: User, active: boolean);
+  setUserAsActive(user: User, active: boolean): Promise<void>;
 
   /** Sets the current Unix timestamp for a user pinging in */
-  setUserHeartbeat(user: User);
+  setUserHeartbeat(user: User): Promise<void>;
 
-  getUserHeartbeat (user: string): Promise<number>
+  getUserHeartbeat (user: string): Promise<number>;
 
-  getUserIdForUsername(username: string, onlineUsersOnly: boolean)
+  getUserIdForUsername(username: string, onlineUsersOnly: boolean): Promise<string | undefined>;
 
   // -----------------------------------------------------------------
   // ROOM PRESENCE
@@ -48,7 +48,7 @@ interface Database {
   roomOccupants(roomId: string): Promise<string[]>;
 
   /** Removes a user from their current room, and adds them to a new room */
-  setCurrentRoomForUser(user: User, roomId: string);
+  setCurrentRoomForUser(user: User, roomId: string): Promise<void>;
 
   /** Updates the status and returns an array of userIds with active video in the given user's room */
   updateVideoPresenceForUser (user: User, isActive: boolean): Promise<string[]>;
@@ -69,15 +69,15 @@ interface Database {
   setPartialUserProfile (userId: string, user: Partial<User>): Promise<User>
 
   /** Sets that the user shouted right now */
-  userJustShouted(user: User);
+  userJustShouted(user: User): Promise<void>;
 
-  lastShoutedForUser (userId: string)
+  lastShoutedForUser (userId: string): Promise<Date | undefined>;
 
-  setModStatus(userId: string, isMod: boolean)
+  setModStatus(userId: string, isMod: boolean): Promise<void>;
 
-  setSpeakerStatus(userId: string, isSpeaker: boolean)
+  setSpeakerStatus(userId: string, isSpeaker: boolean): Promise<User>;
 
-  banUser(user: User, isBanned: boolean)
+  banUser(user: User, isBanned: boolean): Promise<void>;
 
   modList(): Promise<string[]>
   speakerList(): Promise<string[]>
@@ -95,37 +95,36 @@ interface Database {
   // -----------------------------------------------------------------
   // POST-IT NOTES
   // -----------------------------------------------------------------
-  addRoomNote(roomId: string, note: RoomNote)
-  deleteRoomNote(roomId: string, noteId: string)
+  addRoomNote(roomId: string, note: RoomNote): Promise<void>;
+  deleteRoomNote(roomId: string, noteId: string): Promise<void>;
 
-  likeRoomNote(roomId: string, noteId: string, userId: string): Promise<string[]>
-  unlikeRoomNote(roomId: string, noteId: string, userId: string): Promise<string[]>
+  likeRoomNote(roomId: string, noteId: string, userId: string): Promise<string[]>;
+  unlikeRoomNote(roomId: string, noteId: string, userId: string): Promise<string[]>;
 
-  getRoomNotes(roomId: string): Promise<RoomNote[]>
+  getRoomNotes(roomId: string): Promise<RoomNote[]>;
 
   // -----------------------------------------------------------------
   // AVAILABILITY
   // -----------------------------------------------------------------
-  isSpaceClosed(): Promise<boolean>
-  setSpaceAvailability(open: boolean)
+  isSpaceClosed(): Promise<boolean>;
+  setSpaceAvailability(open: boolean): Promise<void>;
 
   // If you want to notify clients a new build has been deployed,
   // you need to include the key that's hardcoded into Redis
-  webhookDeployKey()
-
-  setWebhookDeployKey(key: string)
+  webhookDeployKey(): Promise<string | undefined>;
+  setWebhookDeployKey(key: string): Promise<void>;
 
   // -----------------------------------------------------------------
   // ROOM DATA
   // -----------------------------------------------------------------
-  setRoomData(room: Room)
-  deleteRoomData(roomId: string): Promise<void>
-  getRoomData(roomId: string): Promise<Room>
-  getRoomIds(): Promise<string[]>
+  setRoomData(room: Room): Promise<void>;
+  deleteRoomData(roomId: string): Promise<void>;
+  getRoomData(roomId: string): Promise<Room>;
+  getRoomIds(): Promise<string[]>;
 
   // When someone types /move [room], we generously try to interpret that
   // however we can. This uses a special cache for possible terms.
-  getRoomIdFromFuzzySearch (search: string): Promise<string|undefined>
+  getRoomIdFromFuzzySearch (search: string): Promise<string | undefined>;
 }
 
 // eslint-disable-next-line no-undef
