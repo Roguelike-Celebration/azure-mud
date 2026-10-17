@@ -19,6 +19,7 @@ import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
 import { linkActions } from '../linkActions'
 import { useState } from 'react'
+import _ from 'lodash'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import PresenceView from './PresenceView'
 
@@ -51,6 +52,7 @@ export default function RoomView (props: Props) {
   // This is very silly.
   // Since we're manually setting raw HTML, we can't get refs to add proper click handlers
   // Instead, we just hijack ALL clicks in the description, and check if they're for a link
+  // TODO: Eventually change this to return React elements instead.
   const descriptionClick = (e) => {
     const roomId =
       e.target && e.target.getAttribute && e.target.getAttribute('data-room')
@@ -232,22 +234,26 @@ function parseDescription (
   const complexLinkRegex = /\[\[([^\]]*?)->([^\]]*?)\]\]/g
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     const userCount = presenceData[roomId]
+    const textEsc = _.escape(text)
+    const roomIdEsc = _.escape(roomId)
     if (roomId === 'item') {
-      return `<a class='room-link' href='#' data-item='${text}'>${text}</a>`
+      return `<a class='room-link' href='#' data-item='${textEsc}'>${textEsc}</a>`
     } else if (roomId === 'showModal') {
-      return `<a class='room-link' href='#' data-modal='${roomId}'>${text}</a>`
+      return `<a class='room-link' href='#' data-modal='${roomId}'>${textEsc}</a>`
     } else if (linkActions[roomId]) {
-      return `<a class='room-link' href='#' data-action='${roomId}'>${text}</a>`
+      return `<a class='room-link' href='#' data-action='${roomId}'>${textEsc}</a>`
     } else {
       // With room data being JIT, it's now expected that roomData[roomId] might be empty,
       // even for valid rooms. So, assume that any roomId that isn't a match for some other
       // sort of link target is indeed a room ID.
       const userCountString = userCount > 0 ? ` (${userCount})` : ''
-      return `<a class='room-link' href='#' data-room='${roomId}'>${text}${userCountString}</a>`
+      return `<a class='room-link' href='#' data-room='${roomIdEsc}'>${textEsc}${userCountString}</a>`
     }
   })
 
   // Simple "[[roomId]]" links
+  // TODO: Escape roomId here, but be careful about doing it! Some of our links currently (2026)
+  // might only work due to accidents of the truncation of unescaped room long-names matching the roomId.
   const simpleLinkRegex = /\[\[(.+?)\]\]/g
   description = description.replace(simpleLinkRegex, (match, roomId) => {
     const userCount = presenceData[roomId]
