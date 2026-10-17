@@ -1,4 +1,4 @@
-import React, { FC, ReactNodeArray, useContext } from 'react'
+import React, { FC, ReactNode, useContext } from 'react'
 import { MessagesContext } from '../../App'
 import { MessageItem } from '../MessageItem'
 import { VirtualizationContext } from '../VirtualizationProvider'
@@ -30,7 +30,7 @@ export const MessageList: FC<MessageListProps> = ({
         ref={scrollContainerRef}
         onScroll={toggleAutoscroll}
       >
-        {ids.reduce<ReactNodeArray>((acc, id, i) => {
+        {ids.reduce<ReactNode[]>((acc, id, i) => {
           if (!scrollContainerRef.current) {
             return acc
           }
