@@ -16,16 +16,19 @@ const cache = redis.createClient(
   }
 )
 
-const getCache = promisify(cache.get).bind(cache)
-const setCache = promisify(cache.set).bind(cache)
-const expireAt = promisify(cache.expireat).bind(cache)
-const del = promisify(cache.del).bind(cache)
+// Note: The types on these functions are assertions, not checked and verified by the compiler
+// against the underlying library types. I think they are correct, but tsc isn't enforcing that.
+// - apj 2026-10
+const getCache: (key: string) => Promise<string | null> = promisify(cache.get).bind(cache)
+const setCache: (key: string, value: string) => Promise<string> = promisify(cache.set).bind(cache)
+const expireAt: (key: string, timestamp: number) => Promise<number> = promisify(cache.expireat).bind(cache)
+const del: (key: string) => Promise<number> = promisify(cache.del).bind(cache)
 
-const addToSet = promisify(cache.sadd).bind(cache)
-const removeFromSet: (key: string, member: string) => void = promisify(cache.srem).bind(cache)
-const getSet = promisify(cache.smembers).bind(cache)
+const addToSet: (key: string, member: string) => Promise<number> = promisify(cache.sadd).bind(cache)
+const removeFromSet: (key: string, member: string) => Promise<number> = promisify(cache.srem).bind(cache)
+const getSet: (key: string) => Promise<string[]> = promisify(cache.smembers).bind(cache)
 
-const redisKeys = promisify(cache.keys).bind(cache)
+const redisKeys: (pattern: string) => Promise<string[]> = promisify(cache.keys).bind(cache)
 
 interface RedisInternal extends Database {
   addOccupantToRoom (roomId: string, userId: string): Promise<void>
@@ -97,10 +100,10 @@ const Redis: RedisInternal = {
 
   async setUserAsActive (user: User, isActive: boolean = true) {
     if (isActive) {
-      return await addToSet(activeUsersKey, user.id)
+      await addToSet(activeUsersKey, user.id)
     } else {
       await Redis.removeOccupantFromRoom(user.roomId, user.id)
-      return await removeFromSet(activeUsersKey, user.id)
+      await removeFromSet(activeUsersKey, user.id)
     }
   },
 
@@ -126,7 +129,7 @@ const Redis: RedisInternal = {
     await Redis.setPartialUserProfile(userId, { roomId })
 
     const presenceKey = roomPresenceKey(roomId)
-    return await addToSet(presenceKey, userId)
+    await addToSet(presenceKey, userId)
   },
 
   async removeOccupantFromRoom (roomId: string, userId: string) {
@@ -138,7 +141,7 @@ const Redis: RedisInternal = {
     // so that we can remember where they are.
     // TODO: Fetching presence data should just filter by active users instead.
     const presenceKey = roomPresenceKey(roomId)
-    return await removeFromSet(presenceKey, userId)
+    await removeFromSet(presenceKey, userId)
   },
 
   async setCurrentRoomForUser (user: User, roomId: string) {
@@ -362,7 +365,7 @@ const Redis: RedisInternal = {
   },
 
   async setWebhookDeployKey (key: string) {
-    return await setCache('deployWebhookKey', key)
+    await setCache('deployWebhookKey', key)
   },
 
   //
@@ -375,7 +378,7 @@ const Redis: RedisInternal = {
     await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
 
     await addToSet(roomIdsKey, room.id)
-    return await setCache(roomDataKey(room.id), JSON.stringify(room))
+    await setCache(roomDataKey(room.id), JSON.stringify(room))
   },
 
   async getRoomData (roomId: string): Promise<Room> {
@@ -389,7 +392,7 @@ const Redis: RedisInternal = {
 
   async deleteRoomData (roomId: string): Promise<void> {
     await removeFromSet(roomIdsKey, roomId)
-    return await del(roomDataKey(roomId))
+    await del(roomDataKey(roomId))
   },
 
   async getRoomIds (): Promise<string[]> {
