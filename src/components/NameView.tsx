@@ -16,11 +16,12 @@ import { Modal } from '../modals'
 import BadgeView from './BadgeView'
 
 interface Props {
+  /** Id of the user being viewed (not necessarily the user of this session viewing it). */
   userId: string
   nowrap?: boolean
-  /* A contextMenu ID */
+  /** A contextMenu ID */
   id: string
-  /* If true, don't render a clickable menu */
+  /** If true, don't render a clickable menu */
   skipMenu?: boolean
 }
 
