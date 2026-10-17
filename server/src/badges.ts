@@ -602,7 +602,6 @@ export const UnlockableBadges: Badge[] = [
     isCustom: true,
     category: BadgeCategories.Year2026
   }
-  
 ]
 
 /* This results in an object of the form
