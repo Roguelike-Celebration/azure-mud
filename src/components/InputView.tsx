@@ -17,7 +17,7 @@ export default function InputView (props: {
 
   const SUGGESTIONS_LIMIT = 10
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: { target: { value: string } }) => {
     if (e.target.value === '\n') {
       return
     }
@@ -25,13 +25,13 @@ export default function InputView (props: {
     setInput(result)
   }
 
-  const checkEnter = (e) => {
+  const checkEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      onClick()
+      sendInput()
     }
   }
 
-  const onClick = () => {
+  const sendInput = () => {
     if (input.trim() !== '') {
       props.sendMessage(input)
     }
@@ -102,7 +102,7 @@ export default function InputView (props: {
           }}
         />
       </MentionsInput>
-      <button id="send" onClick={onClick}>
+      <button id="send" onClick={sendInput}>
         Send
       </button>
     </div>

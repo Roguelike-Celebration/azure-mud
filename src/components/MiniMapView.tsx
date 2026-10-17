@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { ShowModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { Modal } from '../modals'
-import { Room } from '../room'
 
 import MapView from './MapView'
 import { PresenceCountMap } from '../reducer'
@@ -15,7 +14,7 @@ interface Props {
 export default function MiniMapView (props: Props) {
   const dispatch = useContext(DispatchContext)
 
-  const handleClickCapture = (e) => {
+  const handleClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
     dispatch(ShowModalAction(Modal.Map))
     e.stopPropagation()
   }
