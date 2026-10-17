@@ -30,6 +30,8 @@ export interface MinimalRoom {
   id: string;
 }
 
+export type ServerRoomDataMap = { [roomId: string]: Server.Room }
+
 export function convertServerRoom (room: Server.Room): Room {
   return {
     displayName: room.displayName,
@@ -47,9 +49,7 @@ export function convertServerRoom (room: Server.Room): Room {
   }
 }
 
-export function convertServerRoomData (roomData: {
-  [roomId: string]: Server.Room;
-}): RoomDataMap {
+export function convertServerRoomData (roomData: ServerRoomDataMap): RoomDataMap {
   const newObj: RoomDataMap = {}
 
   Object.keys(roomData).forEach((k) => {
