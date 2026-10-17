@@ -5,7 +5,7 @@ import moveRoom from '../src/endpoints/moveRoom'
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
-): Promise<any> {
+): Promise<void> {
   await authenticatedAzureWrap(context, req, moveRoom)
 }
 
