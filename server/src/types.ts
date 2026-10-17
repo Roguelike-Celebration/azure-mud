@@ -1,5 +1,5 @@
 import { MinimalRoom, Room } from './rooms'
-import { User, MinimalUser, PublicUser } from './user'
+import { User, MinimalUser } from './user'
 import { RoomNote } from './roomNote'
 import { Badge } from './badges'
 
@@ -51,11 +51,23 @@ export function toServerSettings (obj: Partial<ServerSettings>): ServerSettings 
   }
 }
 
+/** Room ID to user IDs of users in that room. */
+export type PresenceListMap = { [roomId: string]: string[] }
+
+export type MinimalUserMap = { [userId: string]: MinimalUser }
+
+export type RoomDataMap = { [roomId: string]: Room }
+
+export type MinimalRoomDataMap = { [roomId: string]: MinimalRoom }
+
+/** User ID to last heartbeat time as Unix timestamp. `undefined` means an active user with no heartbeat record. */
+export type HeartbeatMap = { [userId: string]: number | undefined }
+
 export interface RoomResponse {
   roomId: string;
-  presenceData?: { [roomId: string]: string[] };
-  users?: { [userId: string]: MinimalUser };
-  roomData?: { [roomId: string]: Room };
+  presenceData?: PresenceListMap;
+  users?: MinimalUserMap;
+  roomData?: RoomDataMap;
   profile?: User;
   roomNotes?: RoomNote[]
   unlockableBadges?: Badge[]

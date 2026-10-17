@@ -1,12 +1,12 @@
 import { globalPresenceMessage } from '../globalPresenceMessage'
 import { userHeartbeatReceived } from '../heartbeat'
 import setUpRoomsForUser from '../setUpRoomsForUser'
-import { RoomResponse } from '../types'
+import { RoomDataMap, RoomResponse, MinimalUserMap } from '../types'
 import { User, isMod, minimizeUser } from '../user'
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
 import DB from '../redis'
 import { UnlockableBadges } from '../badges'
-import { minimalRoomData, Room } from '../rooms'
+import { minimalRoomData } from '../rooms'
 
 // TODO: We are currently including all static room data in this initial request
 // That may not be eventually what we want
@@ -28,7 +28,7 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
   await userHeartbeatReceived(user)
 
   const users = await DB.getAllUsers()
-  const userMap = {}
+  const userMap: MinimalUserMap = {}
   users.forEach(u => {
     userMap[u.id] = minimizeUser(u)
   })
@@ -38,12 +38,13 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     presenceData: await DB.allRoomOccupants(),
     users: userMap,
 
-    // WARNING: How we're fetching minimalRoomData may be inefficient
+    // WARNING: How we're fetching minimalRoomData may be inefficient.
     // DOUBLE WARNING: The way we're currently storing both MinimalRoom and Room data
     // in the same object is extremely un-TypeScript-y. Refactoring things to be correct
     // would be a lot of work, so for the sake of "the event is in a few days" we're just
-    // hand-waving the definitions and pretending MinimalRoom data doesn't exist
-    roomData: { ...(await minimalRoomData() as {[id: string]: Room}), [user.roomId]: room },
+    // hand-waving the definitions and pretending MinimalRoom data doesn't exist.
+    // TODO: Fix this up.
+    roomData: { ...(await minimalRoomData() as RoomDataMap), [user.roomId]: room },
 
     profile: user,
     unlockableBadges: UnlockableBadges

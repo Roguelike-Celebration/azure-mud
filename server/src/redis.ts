@@ -1,13 +1,11 @@
 import { promisify } from 'util'
 import { User, isMod } from './user'
-import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
+import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings, PresenceListMap } from './types'
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import Database from './database'
-console.log('HIII?')
 // eslint-disable-next-line import/first
 import redis from 'redis'
-console.log('redis', redis)
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -30,14 +28,14 @@ const getSet = promisify(cache.smembers).bind(cache)
 const redisKeys = promisify(cache.keys).bind(cache)
 
 interface RedisInternal extends Database {
-  addOccupantToRoom (roomId: string, userId: string),
-  removeOccupantFromRoom (roomId: string, userId: string)
+  addOccupantToRoom (roomId: string, userId: string): Promise<void>
+  removeOccupantFromRoom (roomId: string, userId: string): Promise<void>
 
-  addMod (userId: string)
-  removeMod (userId: string)
+  addMod (userId: string): Promise<void>
+  removeMod (userId: string): Promise<void>
 
-  addSpeaker (userId: string)
-  removeSpeaker (userId: string)
+  addSpeaker (userId: string): Promise<void>
+  removeSpeaker (userId: string): Promise<void>
 }
 
 const Redis: RedisInternal = {
@@ -71,10 +69,10 @@ const Redis: RedisInternal = {
     }))
   },
 
-  async allRoomOccupants (): Promise<{[roomId: string]: string[]}> {
+  async allRoomOccupants (): Promise<PresenceListMap> {
     // TODO: Run "KEYS room_ to get all dynamic rooms"
     const allRoomIds = await Redis.getRoomIds()
-    const data = {}
+    const data: PresenceListMap = {}
     await Promise.all(allRoomIds.map(async id => {
       const occupants = await Redis.roomOccupants(id)
       data[id] = occupants

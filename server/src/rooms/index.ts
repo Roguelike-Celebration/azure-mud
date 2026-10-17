@@ -1,48 +1,46 @@
 import json from './data/roomData.json'
 import DB from '../redis'
+import type { MinimalRoomDataMap, RoomDataMap } from '../types'
 
-export const staticRoomData: {[name: string]: Room} = json
+export const staticRoomData: RoomDataMap = json
 
 export interface Room {
-  // e.g. "kitchen"
+  /** String room id, e.g. "kitchen" */
   id: string
-
-  // e.g. "GitHub HQ: Kitchen"
+  /** Long display name, e.g. "GitHub HQ: Kitchen" */
   displayName: string
-
-  // e.g. "the kitchen"
+  /** Short display name, e.g. "the kitchen" */
   shortName: string
-
   description: string
 
-  // If true, webRTC audio/video chat is enabled
+  /** If true, webRTC audio/video chat is enabled */
   mediaChat?: boolean
 
-  // Indicates whether the room should let users place post-it notes
   // As we add more pieces of one-off functionality,
   // having a bunch of ad-hoc flags like this will probably get frustrating quickly.
   // We may want to eventually refactor to something resembling an ECS.
+  /** Whether the room should let users place post-it notes */
   hasNoteWall?: boolean
   noteWallData?: NoteWallData
 
-  // If true, don't show the room in the side list
+  /** If true, don't show the room in the side list (except to mods) */
   hidden?: boolean
 
   // TODO: Put this in JSON schema
-  specialFeatures?: string[]
   // 'RAINBOW_DOOR'|'DULL_DOOR'|'FULL_ROOM_INDEX'|'VENDING_MACHINE'
+  specialFeatures?: string[]
 
-  // The GUID for a corresponding ACS videochat room
   // This should hopefully eventually be auto-generated and mandatory
   // but hand-coding for testing purposes now
+  /** GUID for a corresponding ACS videochat room */
   chatGuid?: string
 
   riddles?: string[]
 
-  // Array of users currently in this room
+  /** Ids of users currently in this room */
   users?: string[]
 
-  // text for a modal accessed by clicking a special link in the room description
+  /** Text for a modal accessed by clicking a special link in the room description */
   specialFeatureText?: string
 }
 
@@ -70,9 +68,9 @@ function minimizeRoom (room: Room): MinimalRoom {
   }
 }
 
-export async function minimalRoomData (): Promise<{[roomId: string]: MinimalRoom}> {
+export async function minimalRoomData (): Promise<MinimalRoomDataMap> {
   const roomIds = await DB.getRoomIds()
-  const roomData = {};
+  const roomData: MinimalRoomDataMap = {};
   (await Promise.all(roomIds.map(DB.getRoomData)))
     .map(minimizeRoom)
     .forEach((r) => {

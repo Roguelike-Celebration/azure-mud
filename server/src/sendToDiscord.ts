@@ -1,6 +1,11 @@
 import fetch from 'node-fetch'
 
-export async function sendToDiscord ({ message, username }) {
+interface DiscordMessageRequest {
+  message: string
+  username: string
+}
+
+export async function sendToDiscord ({ message, username }: DiscordMessageRequest) {
   const msg = {
     content: `${username}: ${message}`
   }
