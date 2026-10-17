@@ -23,5 +23,9 @@
   "mimeCrown": "images/badges/RC25_MimeCrown.png",
   "rainbowCrown": "images/badges/RC25_RainbowCrown.png",
   "mirror": "images/badges/RC25_Mirror.png",
-  "chadOfCloaca": "images/badges/RC25_ChadOfCloaca.png"
+  "chadOfCloaca": "images/badges/RC25_ChadOfCloaca.png",
+  "torch2": "images/badges/torch2.png",
+  "enter_temple": "images/badges/enter_temple.png",
+  "globe_of_annihilation_tar1": "images/badges/globe_of_annihilation_tar1.png",
+  "death_yak": "images/badges/death_yak.png"
 }
