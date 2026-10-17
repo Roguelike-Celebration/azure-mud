@@ -174,7 +174,12 @@ function awardBadges (user: User, roomId: string) {
     ['golgotha', 'chadOfCloaca'],
     ['fortySeven', 'mimeCrown'],
     ['eraja', 'rainbowCrown'],
-    ['mirrorLand', 'mirror']
+    ['mirrorLand', 'mirror'],
+    // begin 2026
+    ['whetempen', 'death_yak'],
+    ['ballPit', 'globe_of_annihilation_tar1'],
+    ['sign', 'torch2'],
+    ['templeOfPlay', 'enter_temple'],
   ]
 
   const unlockedEmoji: Badge[] = []
