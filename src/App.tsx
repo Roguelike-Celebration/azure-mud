@@ -53,7 +53,7 @@ import WelcomeModalView from './components/WelcomeModalView'
 import YouAreBannedView from './components/YouAreBannedView'
 import { Modal } from './modals'
 import { checkIsRegistered, connect } from './networking'
-import reducer, { defaultState, State } from './reducer'
+import reducer, { defaultState, State, UserMap } from './reducer'
 import * as Storage from './storage'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
@@ -61,10 +61,14 @@ import SpecialTextModalView from './components/SpecialTextModalView'
 import ReactTooltip from 'react-tooltip'
 import { ObeliskView } from './components/ObeliskView'
 
-export const DispatchContext =
-  createContext<ThunkDispatch<Action, State>>(null)
+interface UserMapContextValue {
+  userMap: UserMap
+  myId: string
+}
+
+export const DispatchContext = createContext<ThunkDispatch<Action, State>>(null)
 export const MessagesContext = createContext<State['messages']>(null)
-export const UserMapContext = createContext(null)
+export const UserMapContext = createContext<UserMapContextValue>(null)
 export const SettingsContext = createContext(null)
 export const IsMobileContext = createContext(null)
 export const RoomDataContext = createContext(null)

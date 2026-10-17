@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { HappeningNowEntry, ServerSettings, toServerSettings } from '../../server/src/types'
 import { moveAllUsersToEntryway, resetBadgeData, resetRoomData, updateServerSettings } from '../networking'
 import { Room } from '../room'
+import { RoomDataMap } from '../reducer'
 
-export default function ServerSettingsView (props: { serverSettings: ServerSettings, roomData: { [roomId: string]: Room } }) {
+export default function ServerSettingsView (props: { serverSettings: ServerSettings, roomData: RoomDataMap }) {
   const [newSettings, setNewSettings] = useState(JSON.stringify(props.serverSettings, null, 2))
 
   const [addHappeningNowText, setAddHappeningNowText] = useState('')

@@ -58,7 +58,7 @@ import Config from './config'
 import { Modal } from './modals'
 import { convertServerRoomData, Room } from './room'
 import { ThunkDispatch } from './useReducerWithThunk'
-import { State } from './reducer'
+import { RoomDataMap, State } from './reducer'
 
 let myUserId: string
 let myDispatch: ThunkDispatch<Action, State>
@@ -418,7 +418,7 @@ export async function getRoom (roomId: string): Promise<Room> {
   }
 }
 
-export async function getAllRooms (): Promise<{ [roomId: string]: Room }> {
+export async function getAllRooms (): Promise<RoomDataMap> {
   const result = await callAzureFunction('getAllRooms')
   if (result.roomData) {
     return result.roomData

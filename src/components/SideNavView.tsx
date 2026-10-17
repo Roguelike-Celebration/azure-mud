@@ -7,9 +7,10 @@ import { IsMobileContext, DispatchContext } from '../App'
 import { HideSideMenuAction, ShowModalAction } from '../Actions'
 import { Modal } from '../modals'
 import MiniMapView from './MiniMapView'
+import { PresenceCountMap } from '../reducer'
 
 interface Props {
-  presenceData: { [roomId: string]: number };
+  presenceData: PresenceCountMap;
   currentRoomId: string
   username: string;
   spaceIsClosed?: boolean;

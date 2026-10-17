@@ -6,6 +6,7 @@ import { moveToRoom } from '../networking'
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import _, { head, isUndefined } from 'lodash'
+import { PresenceCountMap } from '../reducer'
 
 /**
  * This renders a clickable ASCII map!
@@ -33,7 +34,7 @@ import _, { head, isUndefined } from 'lodash'
  */
 
 interface Props {
-  presenceData: { [roomId: string]: number };
+  presenceData: PresenceCountMap;
   currentRoomId: string
   isMiniMap?: boolean
 }
