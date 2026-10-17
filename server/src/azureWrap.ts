@@ -21,7 +21,7 @@ export async function azureWrap (
   req: HttpRequest | undefined,
   fn: EndpointFunction,
   extraInputs: any = {}
-) {
+): Promise<void> {
   const result = await fn(
     { ...((req && req.body) || {}), ...extraInputs },
     context.log
@@ -34,14 +34,14 @@ export async function authenticatedAzureWrap (
   req: HttpRequest,
   fn: AuthenticatedEndpointFunction,
   opts: AuthenticationOptions = {}
-) {
+): Promise<void> {
   await authenticate(context, req, opts, async (user) => {
     const result = await fn(user, req.body || {}, context.log)
     outputToAzure(context, req, result)
   })
 }
 
-function outputToAzure (context: Context, req: HttpRequest, result: Result) {
+function outputToAzure (context: Context, req: HttpRequest, result: Result): void {
   context.log('outputting to azure')
   context.log('context: ', JSON.stringify(context))
   context.log('result: ', JSON.stringify(result))
