@@ -179,7 +179,7 @@ function awardBadges (user: User, roomId: string) {
     ['whetempen', 'death_yak'],
     ['ballPit', 'globe_of_annihilation_tar1'],
     ['sign', 'torch2'],
-    ['templeOfPlay', 'enter_temple'],
+    ['templeOfPlay', 'enter_temple']
   ]
 
   const unlockedEmoji: Badge[] = []
