@@ -572,7 +572,32 @@ export const UnlockableBadges: Badge[] = [
     description: 'Met Chad of the Cloaca',
     isCustom: true,
     category: BadgeCategories.Year2025
+  },
+  {
+    emoji: 'torch2',
+    description: 'Met the Queen',
+    isCustom: true,
+    category: BadgeCategories.Year2025
+  },
+  {
+    emoji: 'enter_temple',
+    description: 'Found the Temple',
+    isCustom: true,
+    category: BadgeCategories.Year2025
+  },
+  {
+    emoji: 'globe_of_annihilation_tar1',
+    description: 'Found the Ball Pit',
+    isCustom: true,
+    category: BadgeCategories.Year2025
+  },
+  {
+    emoji: 'death_yak',
+    description: 'Met the Dire Goat',
+    isCustom: true,
+    category: BadgeCategories.Year2025
   }
+  
 ]
 
 /* This results in an object of the form
