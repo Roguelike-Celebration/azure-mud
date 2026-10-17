@@ -13,10 +13,10 @@ import { PublicUser } from '../../server/src/user'
 import { sortBy } from 'lodash'
 
 // TODO: We hardcode room names for the 'auto-assign topics to unconference rooms' feature
-// This is silly, and we almost missed this in 2022 AND 2023.
+// This is silly, and we almost missed this in 2022 AND 2023. AND 2026.
 // Fortunately I found this comment in 2024. But we should fix this to be auto (to e.g. an 'unconference' flag in the room data?)
-// Anyways just rolling this note over for 2025...
-const UNCONFERENCING_ROOM_IDS = ['unconfLilGuys', 'unconfStrongMan', 'unconfClownPit', 'unconfRedVelvet']
+// Anyways just rolling this note over for 2025... and 2026...
+const UNCONFERENCING_ROOM_IDS = ['unconfFeelings', 'unconfScalpers', 'unconfPractice', 'unconfTailgate']
 
 function numLikes (roomNote: RoomNote) {
   return !roomNote.likes ? 0 : roomNote.likes.length
