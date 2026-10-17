@@ -5,7 +5,7 @@ import updateRoom from '../src/endpoints/updateRoom'
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
-): Promise<any> {
+): Promise<void> {
   // This doesn't *need* to be mod-only,
   // but as long as we're only calling it in the editor, why not
   await authenticatedAzureWrap(context, req, updateRoom, { mod: true })
