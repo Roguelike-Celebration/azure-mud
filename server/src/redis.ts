@@ -358,14 +358,6 @@ const Redis: RedisInternal = {
     return notes
   },
 
-  async isSpaceClosed (): Promise<boolean> {
-    return JSON.parse(await getCache(spaceAvailabilityKey))
-  },
-
-  async setSpaceAvailability (open: boolean) {
-    await setCache(spaceAvailabilityKey, String(open))
-  },
-
   //
 
   async webhookDeployKey () {
@@ -461,6 +453,5 @@ export function videoPresenceKey (roomId: string) {
   return `${roomId}PresenceVideo`
 }
 const userMapKey = 'userMap'
-const spaceAvailabilityKey = 'spaceIsClosed'
 
 export default Redis
