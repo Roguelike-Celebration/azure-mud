@@ -20,6 +20,11 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
   const usersToRemove = []
   Object.keys(data).forEach((user) => {
     const time = data[user]
+    // Treat an active user with no heartbeat record as stale, and remove them.
+    if (time === undefined) {
+      usersToRemove.push(user)
+      return
+    }
     const diff = nowValue - time
     if (Math.floor(diff / 1000) > thresholdSeconds) {
       usersToRemove.push(user)
