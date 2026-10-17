@@ -5,11 +5,12 @@ import { DispatchContext } from '../App'
 import { moveToRoom } from '../networking'
 import { Room } from '../room'
 import { nowDate, ScheduleEntries } from './ScheduleView'
+import { RoomDataMap } from '../reducer'
 
 // Apparently reverse() does an actual reversal! WELL. All right then, Javascript.
 const ReversedScheduleEntries = [...ScheduleEntries].reverse()
 
-export default function HappeningNowView (props: { roomData: { [roomId: string]: Room }, entries: HappeningNowEntry[] }) {
+export default function HappeningNowView (props: { roomData: RoomDataMap, entries: HappeningNowEntry[] }) {
   const dispatch = useContext(DispatchContext)
 
   const now = nowDate()
@@ -37,11 +38,11 @@ export default function HappeningNowView (props: { roomData: { [roomId: string]:
     </ul>
   }
 
-  let currentlyScheduledElement
+  let currentlyScheduledElement: React.ReactElement
   if (currentlyScheduled) {
     if (currentlyScheduled.text === 'Social Time') {
-      var i = currentlyScheduledIdx + 1
-      const socialTimeOptions = []
+      let i = currentlyScheduledIdx + 1
+      const socialTimeOptions: React.ReactElement[] = []
       while (ReversedScheduleEntries[i] && ReversedScheduleEntries[i].breakoutRoomId) {
         const breakoutEntry = ReversedScheduleEntries[i]
         const breakoutRoomId = breakoutEntry.breakoutRoomId

@@ -11,6 +11,7 @@ import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
 import { sortBy } from 'lodash'
+import { RoomDataMap } from '../reducer'
 
 // TODO: We hardcode room names for the 'auto-assign topics to unconference rooms' feature
 // This is silly, and we almost missed this in 2022 AND 2023. AND 2026.
@@ -28,7 +29,7 @@ interface Props {
   noteWallData?: NoteWallData,
   user: PublicUser,
   serverSettings: ServerSettings,
-  roomData: { [roomId: string]: Room }
+  roomData: RoomDataMap
 }
 
 export function NoteWallView (props: Props) {
