@@ -18,14 +18,21 @@ interface Props {
   unlockableBadges?: Badge[]
 }
 
+type CategoryVisibility = Record<BadgeCategories, boolean>
+
+interface VisibilityAction {
+  type: 'hide' | 'show'
+  category: BadgeCategories
+}
+
 export default function BadgesModalView (props: Props) {
   const [selectedEquippedIndex, setSelectedEquippedIndex] = useState<number|undefined>(undefined)
   const [selectedBadge, setSelectedBadge] = useState<Badge|undefined>(undefined)
 
   const initialState = Object.fromEntries(
     Object.values(BadgeCategories).map(c => [c, true])
-  )
-  const localReducer = (state, action) => {
+  ) as CategoryVisibility
+  const localReducer = (state: CategoryVisibility, action: VisibilityAction) => {
     switch (action.type) {
       case 'hide':
         return { ...state, [action.category]: false }
@@ -234,7 +241,7 @@ export default function BadgesModalView (props: Props) {
   // I dunno, I don't know React, I do servers.
   const defaultBadges = unlockedBadgesByCategory.get(BadgeCategories.Default)
 
-  const ToggleVisible = ({ category }) => {
+  const ToggleVisible = ({ category }: { category: BadgeCategories }) => {
     const toggle = () => {
       if (localState[category]) {
         localDispatch({ type: 'hide', category: category })
@@ -252,7 +259,7 @@ export default function BadgesModalView (props: Props) {
     return (<button className="toggle-badge-category" onClick={toggle} onKeyDown={keyboardToggle}>{localState[category] ? '(hide)' : '(show)'}</button>)
   }
 
-  const BadgeCategoryView = ({ title, badgeCategory }) => {
+  const BadgeCategoryView = ({ title, badgeCategory }: { title: string, badgeCategory: BadgeCategories}) => {
     return (<section>
       <h2>{title} <ToggleVisible category={badgeCategory} /></h2>
       {localState[badgeCategory] &&

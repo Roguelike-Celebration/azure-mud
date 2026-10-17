@@ -16,18 +16,17 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
   const dispatch = useContext(DispatchContext)
 
   useEffect(() => {
-    function keyListener (e) {
-      if (e.keyCode === 27 && !props.unclosable) {
+    function keyListener (e: KeyboardEvent) {
+      if (e.key === 'Escape' && !props.unclosable) {
         dispatch(HideModalAction())
       }
     }
-
     document.addEventListener('keydown', keyListener)
-
     return () => document.removeEventListener('keydown', keyListener)
   })
 
-  const close = (e) => {
+  const close = (e: React.MouseEvent<HTMLElement>) => {
+    if (!(e.target instanceof HTMLElement)) return
     if (!props.unclosable && (e.target.id === 'modal-wrapper' || e.target.id === 'close-button')) {
       dispatch(HideModalAction())
     }
