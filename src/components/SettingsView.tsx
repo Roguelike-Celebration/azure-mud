@@ -41,7 +41,7 @@ export default function SettingsView (props: Props) {
     dispatch(SetUseSimpleNamesAction(simple))
   }
 
-  const handleCaptionChoice = (e) => {
+  const handleCaptionChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === 'captions-enabled') {
       dispatch(SetCaptionsEnabledAction(true))
     } else if (e.target.value === 'captions-disabled') {

@@ -54,7 +54,7 @@ export default function MapView (props: Props) {
   const { presenceData, currentRoomId } = props
 
   // Pixel size of one ASCII character in the rendered map
-  let w; let h = 0
+  let w: number; let h: number
   if (props.isMiniMap) {
     w = 8
     h = 13
@@ -114,9 +114,8 @@ export default function MapView (props: Props) {
   })
   map = map.replace(/\[([0-9]*)\]/g, '($1)')
 
-  const handleClick = (e) => {
-    const roomId =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-room')
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const roomId = e.currentTarget.getAttribute('data-room')
     if (roomId) {
       moveToRoom(roomId)
       dispatch(HideModalAction())
