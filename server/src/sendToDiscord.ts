@@ -5,7 +5,7 @@ interface DiscordMessageRequest {
   username: string
 }
 
-export async function sendToDiscord ({ message, username }: DiscordMessageRequest) {
+export async function sendToDiscord ({ message, username }: DiscordMessageRequest): Promise<void> {
   const msg = {
     content: `${username}: ${message}`
   }

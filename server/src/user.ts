@@ -52,17 +52,17 @@ export interface User extends PublicUser {
   heartbeat: number;
 }
 
-export async function isMod (userId: string) {
+export async function isMod (userId: string): Promise<boolean> {
   const modList = await DB.modList()
   return modList.includes(userId)
 }
 
-export async function isSpeaker (userId: string) {
+export async function isSpeaker (userId: string): Promise<boolean> {
   const speakerList = await DB.speakerList()
   return speakerList.includes(userId)
 }
 
-export async function updateModStatus (userId: string) {
+export async function updateModStatus (userId: string): Promise<void> {
   const userIsMod = await isMod(userId)
 
   const profile = await DB.getUser(userId)
@@ -75,14 +75,14 @@ export async function updateModStatus (userId: string) {
   await DB.setUserProfile(userId, { ...profile, isMod: userIsMod })
 }
 
-export async function getUserIdForOnlineUsername (username: string) {
+export async function getUserIdForOnlineUsername (username: string): Promise<string | undefined> {
   // This currently only checks active users, by intention
   // If we used all users, that would mistakenly let you e.g. send messages to offline users
   // (who would never get the message)
   return DB.getUserIdForUsername(username, true)
 }
 
-export async function getUserIdForUsername (username: string) {
+export async function getUserIdForUsername (username: string): Promise<string | undefined> {
   return DB.getUserIdForUsername(username, false)
 }
 
@@ -95,11 +95,11 @@ function sanitizeString (s: string, maxLength: number): string {
 }
 
 // Copy/pasted from ProfileEditView.tsx in the client
-function sanitizeUsername (s: string) : string {
+function sanitizeUsername (s: string): string {
   return sanitizeString(s.replace(' ', '-'), 40)
 }
 
-export async function updateUserProfile (userId: string, data: Partial<User>, isNew: boolean = false) {
+export async function updateUserProfile (userId: string, data: Partial<User>, isNew: boolean = false): Promise<User> {
   console.log('In updateUserProfile', data, isNew)
 
   const profile: Partial<User> = (await DB.getUser(userId)) || {}
@@ -153,17 +153,16 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   return newProfile
 }
 
-export async function awardUserBadge (userId: string, badge: Badge) {
+export async function awardUserBadge (userId: string, badge: Badge): Promise<User> {
   // TODO: This will need to notify the player
   // And maybe has to happen at the caller instead of in here
   const profile: User = await DB.getUser(userId)
   const newBadgeList = (profile.unlockedBadges || []).concat(badge)
   profile.unlockedBadges = uniqWith(newBadgeList, (a, b) => a.emoji === b.emoji)
-
   return await DB.setUserProfile(userId, profile)
 }
 
-export async function equipBadge (userId: string, badge: Badge, index: number) {
+export async function equipBadge (userId: string, badge: Badge, index: number): Promise<User> {
   const profile: User = await DB.getUser(userId)
   profile.equippedBadges = (profile.equippedBadges || [])
   profile.equippedBadges[index] = badge
@@ -174,7 +173,6 @@ export async function updateUserProfileColor (userId: string, color: string): Pr
   const profile: User = await DB.getUser(userId)
   profile.nameColor = color
   await DB.setUserProfile(userId, profile)
-
   return minimizeUser(profile)
 }
 
@@ -182,7 +180,6 @@ export async function updateUserFontReward (userId: string, font: string): Promi
   const profile: User = await DB.getUser(userId)
   profile.fontReward = font
   await DB.setUserProfile(userId, profile)
-
   return minimizeUser(profile)
 }
 
