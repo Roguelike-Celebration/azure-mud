@@ -187,11 +187,11 @@ function awardBadges (user: User, roomId: string) {
   // Unlock the "I attended!" badge for the current event
   // This is gated on time, so you can update this for a future event.
   // Just change the emoji, the month, and the year.
-  const currentEventBadge = UnlockableBadgeMap['🔟'] // "10" = Year2025 badge
+  const currentEventBadge = UnlockableBadgeMap['⏸️'] // "11" = Year2026 badge
   const today = new Date()
   if (!includes(user.unlockedBadges, currentEventBadge) &&
     today.getMonth() === 9 && // getMonth is 0-indexed, not 1-indexed
-    today.getFullYear() === 2025) {
+    today.getFullYear() === 2026) {
     // We handle this differently than others because we want it to be quietly added
     // rather than popping a modal dialog
     //
