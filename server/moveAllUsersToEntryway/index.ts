@@ -5,7 +5,7 @@ import moveAllUsersToEntryway from '../src/endpoints/moveAllUsersToEntryway'
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
-): Promise<any> {
+): Promise<void> {
   await authenticatedAzureWrap(context, req, moveAllUsersToEntryway)
 }
 

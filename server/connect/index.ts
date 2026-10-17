@@ -5,7 +5,7 @@ import connect from '../src/endpoints/connect'
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
-): Promise<any> {
+): Promise<void> {
   context.log('In connect')
   await authenticatedAzureWrap(context, req, connect, { audit: true })
 }
