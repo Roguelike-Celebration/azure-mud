@@ -379,6 +379,8 @@ const Redis: RedisInternal = {
 
     await addToSet(roomIdsKey, room.id)
     await setCache(roomDataKey(room.id), JSON.stringify(room))
+
+    return room
   },
 
   async getRoomData (roomId: string): Promise<Room> {
