@@ -50,8 +50,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.158",
-    "@types/react": "^16.9.43",
-    "@types/react-dom": "^16.9.8",
+    "@types/react": "^17",
+    "@types/react-dom": "^17",
     "@types/redis": "^2.8.25",
     "@types/tracery-grammar": "^2.7.4",
     "@types/twilio-video": "^2.7.3",
