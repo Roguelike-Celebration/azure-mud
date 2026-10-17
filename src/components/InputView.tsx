@@ -25,7 +25,7 @@ export default function InputView (props: {
     setInput(result)
   }
 
-  const checkEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const checkEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       sendInput()
     }
