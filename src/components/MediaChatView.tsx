@@ -1,4 +1,4 @@
-import React, { useEffect, VideoHTMLAttributes, useRef, useState } from 'react'
+import React, { useEffect, VideoHTMLAttributes, useRef } from 'react'
 import LocalMediaView from './LocalMediaView'
 
 import '../../style/videoChat.css'

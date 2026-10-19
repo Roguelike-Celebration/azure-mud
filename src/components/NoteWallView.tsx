@@ -5,7 +5,6 @@ import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networki
 import { NoteView } from './NoteView'
 import ReactTooltip from 'react-tooltip'
 import { UserMapContext } from '../App'
-import { Room } from '../room'
 
 import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'

@@ -1,10 +1,7 @@
 import { CosmosClient } from '@azure/cosmos'
-import Database from './database'
-import { getServerSettings } from './endpoints/serverSettings'
 
 // TODO: Partition key issues
 
-import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import { DEFAULT_SERVER_SETTINGS, PresenceListMap, RoomDataMap, ServerSettings } from './types'
 import { User } from './user'

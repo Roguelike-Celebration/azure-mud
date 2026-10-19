@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React, { useContext, useEffect } from 'react'
 import { DispatchContext } from '../App'
-import { HideModalAction, StartVideoChatAction } from '../Actions'
+import { HideModalAction } from '../Actions'
 import LocalMediaView from './LocalMediaView'
 import { DeviceInfo, useMediaChatContext } from '../videochat/mediaChatContext'
 import VideoAudioSettingsView from './VideoAudioSettingsView'
