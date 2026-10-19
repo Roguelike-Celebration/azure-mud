@@ -1,8 +1,4 @@
 import React from 'react'
-import useTrack from './useTrack'
-import AudioTrack from './AudioTrack'
-import VideoTrack from './VideoTrack'
-
 import {
   AudioTrack as IAudioTrack,
   LocalTrackPublication,
@@ -11,6 +7,10 @@ import {
   RemoteVideoTrack,
   Track
 } from 'twilio-video'
+
+import AudioTrack from './AudioTrack'
+import useTrack from './useTrack'
+import VideoTrack from './VideoTrack'
 
 interface PublicationProps {
   publication: LocalTrackPublication | RemoteTrackPublication;

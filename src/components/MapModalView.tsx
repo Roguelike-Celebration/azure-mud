@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
+
 import { ShowModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { Modal } from '../modals'
-import MapView from './MapView'
 import { PresenceCountMap } from '../reducer'
+
+import MapView from './MapView'
 
 interface Props {
   presenceData: PresenceCountMap;

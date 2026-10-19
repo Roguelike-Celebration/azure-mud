@@ -1,6 +1,7 @@
 
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { LocalVideoTrack, RemoteVideoTrack, Track } from 'twilio-video'
+
 import useMediaStreamTrack from './useMediaStreamTrack'
 import useVideoTrackDimensions from './useVideoTrackDimensions'
 

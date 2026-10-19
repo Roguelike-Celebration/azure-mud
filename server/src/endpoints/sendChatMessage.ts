@@ -1,14 +1,14 @@
-import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 
-import { moveToRoom } from '../moveToRoom'
-import { whisper } from '../whisper'
-import { shout } from '../shout'
-import { look } from '../look'
-import { getUserIdForUsername, User } from '../user'
 import { MESSAGE_MAX_LENGTH } from '../config'
 import { dance } from '../dance'
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
 import { interact } from '../interact'
+import { look } from '../look'
+import { moveToRoom } from '../moveToRoom'
 import { sendToDiscord } from '../sendToDiscord'
+import { shout } from '../shout'
+import { getUserIdForUsername, User } from '../user'
+import { whisper } from '../whisper'
 
 const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const message = inputs.text

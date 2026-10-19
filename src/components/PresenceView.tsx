@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { FaVideo, FaVolumeUp } from 'react-icons/fa'
+
 import { UserMapContext } from '../App'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
+
 import HeldItemView from './HeldItemView'
 import NameView from './NameView'
 

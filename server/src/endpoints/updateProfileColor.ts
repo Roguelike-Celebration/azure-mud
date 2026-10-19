@@ -1,6 +1,6 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { updateUserProfileColor, User } from '../user'
 import { ValidColors } from '../types'
+import { updateUserProfileColor, User } from '../user'
 
 const updateProfileColor: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const color = inputs.color

@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { DispatchContext, UserMapContext } from '../../App'
+
 import { ValidColors } from '../../../server/src/types'
-import { UpdateProfileColorAction, ShowModalAction } from '../../Actions'
+import { ShowModalAction, UpdateProfileColorAction } from '../../Actions'
+import { DispatchContext, UserMapContext } from '../../App'
 import { Modal } from '../../modals'
 import { getGateVisits, incrementGateVisits } from '../../storage'
 

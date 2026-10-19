@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { FaCog, FaVolumeUp, FaVolumeMute, FaVideo, FaVideoSlash, FaUser } from 'react-icons/fa'
+import { FaCog, FaUser, FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from 'react-icons/fa'
 
-import { DispatchContext } from '../App'
 import { ShowModalAction } from '../Actions'
+import { DispatchContext } from '../App'
 import { Modal } from '../modals'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 

@@ -1,6 +1,7 @@
-import { DB } from './database'
-import { Badge, FreeBadges } from './badges'
 import { uniqWith } from 'lodash'
+
+import { Badge, FreeBadges } from './badges'
+import { DB } from './database'
 import resetRoomData from './endpoints/resetRoomData'
 
 // TODO: If we have tooltip popups showing profile info,

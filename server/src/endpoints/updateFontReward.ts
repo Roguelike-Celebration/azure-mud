@@ -1,6 +1,6 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { updateUserFontReward, User } from '../user'
 import { ValidFontRewards } from '../types'
+import { updateUserFontReward, User } from '../user'
 
 const updateFontReward: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const font = inputs.font

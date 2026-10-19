@@ -1,10 +1,10 @@
 import * as sdk from 'microsoft-cognitiveservices-speech-sdk'
-
 import {
-  ResultReason,
-  CancellationReason
+  CancellationReason,
+  ResultReason
 } from 'microsoft-cognitiveservices-speech-sdk'
 import { Dispatch } from 'react'
+
 import { Action, SendCaptionAction } from './Actions'
 import { fetchCognitiveServicesKey } from './networking'
 

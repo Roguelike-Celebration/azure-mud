@@ -2,6 +2,7 @@ import { Badge } from '../server/src/badges'
 import { RoomNote } from '../server/src/roomNote'
 import { ServerSettings } from '../server/src/types'
 import { MinimalUser, PublicUser, User } from '../server/src/user'
+
 import { Message, WhisperMessage } from './message'
 import { Modal } from './modals'
 import { connectRoomData } from './networking'

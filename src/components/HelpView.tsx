@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { SlashCommands } from '../SlashCommands'
 
 export default function HelpView () {

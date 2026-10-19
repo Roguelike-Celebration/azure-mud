@@ -1,4 +1,5 @@
 import { isNumber } from 'lodash'
+
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { equipBadge, minimizeUser, User } from '../user'
 

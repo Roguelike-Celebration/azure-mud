@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid'
 
-import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
-import { minimizeUser, updateUserProfile, User } from '../user'
-import generators from '../generators'
 import allowedItems from '../allowedItems'
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
+import generators from '../generators'
+import { minimizeUser, updateUserProfile, User } from '../user'
 
 const pickUpItem: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   let item: string

@@ -1,9 +1,8 @@
-import { User } from './user'
-import { RoomNote } from './roomNote'
-import { PresenceListMap, ServerSettings } from './types'
-
 import Redis from './redis'
+import { RoomNote } from './roomNote'
 import { Room } from './rooms'
+import { PresenceListMap, ServerSettings } from './types'
+import { User } from './user'
 
 interface Database {
   // -----------------------------------------------------------------

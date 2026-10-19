@@ -1,6 +1,6 @@
+import { AuthenticatedEndpointFunction, LogFn } from '../../endpoint'
 import DB from '../../redis'
 import { User } from '../../user'
-import { AuthenticatedEndpointFunction, LogFn } from '../../endpoint'
 
 const addObeliskNote: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const message = inputs.message

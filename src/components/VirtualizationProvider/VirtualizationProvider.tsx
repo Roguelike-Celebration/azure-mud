@@ -9,6 +9,7 @@ import React, {
   StrictMode,
   useReducer
 } from 'react'
+
 import '../../../style/chat.css'
 import { Message } from '../../message'
 import { PayloadAction } from '../../types'

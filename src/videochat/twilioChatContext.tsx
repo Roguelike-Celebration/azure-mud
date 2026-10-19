@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { useState, useEffect, useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import * as Twilio from 'twilio-video'
+
 import { HideModalAction, MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
-
 import { DispatchContext } from '../App'
-
 import { fetchTwilioToken } from '../networking'
 import { setUpSpeechRecognizer, stopSpeechRecognizer } from '../speechRecognizer'
+
 import { DeviceInfo, MediaChatContext } from './mediaChatContext'
 import ParticipantTracks from './twilio/ParticipantTracks'
 import VideoTrack from './twilio/VideoTrack'

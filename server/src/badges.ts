@@ -1,4 +1,5 @@
 import { keyBy } from 'lodash'
+
 import { BadgeCategories } from './types'
 
 // See server/src/moveToRoom.ts for the badge-awarding logic, including the setting for

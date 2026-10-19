@@ -1,7 +1,7 @@
+import { UnlockableBadgeMap } from '../badges'
+import { DB } from '../database'
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { awardUserBadge, isSpeaker, minimizeUser, User } from '../user'
-import { DB } from '../database'
-import { UnlockableBadgeMap } from '../badges'
 
 const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const userIdToToggle: string = inputs.userId

@@ -1,12 +1,14 @@
-import React, { useEffect, VideoHTMLAttributes, useRef } from 'react'
-import LocalMediaView from './LocalMediaView'
+import React, { useEffect, useRef, VideoHTMLAttributes } from 'react'
 
-import { useMediaChatContext } from '../videochat/mediaChatContext'
-import ParticipantChatView from './ParticipantChatView'
-import MediaChatButtonView from './MediaChatButtonView'
+import { MinimalUser } from '../../server/src/user'
 import { SetTextOnlyModeAction } from '../Actions'
 import { DispatchContext } from '../App'
-import { MinimalUser } from '../../server/src/user'
+import { useMediaChatContext } from '../videochat/mediaChatContext'
+
+import LocalMediaView from './LocalMediaView'
+import MediaChatButtonView from './MediaChatButtonView'
+import ParticipantChatView from './ParticipantChatView'
+
 import '../../style/videoChat.css'
 
 interface MediaProps {
