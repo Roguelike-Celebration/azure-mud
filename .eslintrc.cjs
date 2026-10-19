@@ -14,7 +14,9 @@ module.exports = {
       jsx: true
     },
     ecmaVersion: 11,
-    sourceType: 'module'
+    sourceType: 'module',
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.json', './server/tsconfig.json']
   },
   plugins: [
     'react',
@@ -23,7 +25,8 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 0,
-    'react/prop-types': 0
+    'react/prop-types': 0,
+    '@typescript-eslint/await-thenable': 'error'
   },
   // use override to exempt React components; v3 of the rule can't exempt React per se
   overrides: [
