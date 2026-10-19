@@ -81,7 +81,7 @@ export default async function authenticate (
   context: Context,
   req: HttpRequest,
   options: AuthenticationOptions = {},
-  handler: (user: User) => void
+  handler: (user: User) => Promise<void>
 ): Promise<void> {
   const userId = await getUserIdFromHeaders(context, req)
   if (!userId) {
