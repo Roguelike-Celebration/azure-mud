@@ -7,7 +7,6 @@
     "dev": "parcel *.html",
     "build": "parcel build *.html --public-url ./ --dist-dir ./dist; rsync -r images dist",
     "deploy": "echo \"ERROR: 'npm run deploy' is retired. (It used the old GH Pages deployment.) Use GitHub Actions instead now.\"; exit 1",
-    "deploy-server": "pushd ./functions; npm run deploy; popd",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\"",
     "lint-fix": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" --fix",
