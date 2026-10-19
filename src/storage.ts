@@ -19,6 +19,7 @@ export async function getMessages (): Promise<{messages: Message[], whispers: Wh
   } catch (err) {
     console.log('Storage error', err)
   }
+  return undefined
 }
 
 export async function setMessages (messages: Message[], timestamp?: Date): Promise<void> {

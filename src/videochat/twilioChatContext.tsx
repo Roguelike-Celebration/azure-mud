@@ -46,7 +46,7 @@ export const TwilioChatContextProvider = (props: {
 
   const fetchLocalAudioTrack = async () => {
     if (localAudioTrack) {
-      return localAudioTrack
+      return
     }
 
     const options: Twilio.CreateLocalTrackOptions = {}
