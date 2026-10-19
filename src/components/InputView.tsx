@@ -2,9 +2,10 @@ import React, { useContext, useState, useEffect } from 'react'
 import { MentionsInput, Mention } from 'react-mentions'
 import { UserMapContext } from '../App'
 
-import '../../style/input.css'
 import { MinimalUser } from '../../server/src/user'
 import { emojiMentionsData } from '../emoji'
+import '../../style/input.css'
+
 const emojifier = require('node-emoji')
 
 export default function InputView (props: {

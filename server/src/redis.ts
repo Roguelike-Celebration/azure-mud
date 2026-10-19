@@ -4,7 +4,6 @@ import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings, PresenceList
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import Database from './database'
-// eslint-disable-next-line import/first
 import redis from 'redis'
 
 const cache = redis.createClient(
