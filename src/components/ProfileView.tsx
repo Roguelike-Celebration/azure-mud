@@ -42,17 +42,15 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
   const dispatch = useContext(DispatchContext)
 
   React.useEffect(() => {
-    const lastMessage = document.querySelector(
+    const lastMessage = document.querySelector<HTMLElement>(
       '#chat .whisper-message:last-of-type'
     )
-    if (!lastMessage) return
+    const container = lastMessage?.parentElement
+    if (!lastMessage || !container) return
 
-    // I was using lastMessage.scrollIntoView()
-    // But I was seeing odd behavior when there was only one message on-screen.
-    // This very TS-unfriendly code fixes taht.
-    (lastMessage.parentNode as Element).scrollTop =
-      (lastMessage as any).offsetTop -
-      (lastMessage.parentNode as any).offsetTop
+    // I was using lastMessage.scrollIntoView(). But I was seeing odd behavior when there
+    // was only one message on-screen. This fixes that.
+    container.scrollTop = lastMessage.offsetTop - container.offsetTop
   })
 
   const whisperMessages = (whispers || []).filter((m, _) => m.userId === user.id) as Array<WhisperMessage>

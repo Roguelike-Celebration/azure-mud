@@ -171,11 +171,11 @@ export async function deleteMessage (messageId: string): Promise<void> {
   await callAzureFunction('deleteMessage', { messageId })
 }
 
-export async function deleteRoom (roomId: string): Promise<any> {
+export async function deleteRoom (roomId: string): Promise<void> {
   await callAzureFunction('deleteRoom', { roomId })
 }
 
-export async function updateRoom (roomId: string, roomData: Room): Promise<any> {
+export async function updateRoom (roomId: string, roomData: Room): Promise<void> {
   await callAzureFunction('updateRoom', { roomId, roomData })
 }
 
