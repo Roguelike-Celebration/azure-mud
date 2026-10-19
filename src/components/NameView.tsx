@@ -180,7 +180,7 @@ export default function NameView (props: Props) {
   }
 
   // TODO: should be best handled via css
-  const customStyle = { ['whiteSpace' as any]: props.nowrap ? 'nowrap' : undefined }
+  const customStyle: React.CSSProperties = { whiteSpace: props.nowrap ? 'nowrap' : undefined }
 
   const nameEl = (
     <strong data-tip={!useSimpleNames && (user?.pronouns ?? '')} className={isMod ? 'mod' : ''}>
