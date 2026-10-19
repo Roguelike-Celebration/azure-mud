@@ -6,6 +6,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "deploy": "func azure functionapp publish roguelike-celebration-mud",
+    "typecheck": "tsc --noEmit",
     "prestart": "npm run build",
     "start": "func start",
     "test": "echo \"No tests yet...\""
