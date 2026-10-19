@@ -14,13 +14,12 @@ export default function useMediaStreamTrack (track?: AudioTrack | VideoTrack): M
 
   useEffect(() => {
     setMediaStreamTrack(track?.mediaStreamTrack)
+    if (!track) return undefined
 
-    if (track) {
-      const handleStarted = () => { console.log('Set media stream track!'); setMediaStreamTrack(track.mediaStreamTrack) }
-      track.on('started', handleStarted)
-      return () => {
-        track.off('started', handleStarted)
-      }
+    const handleStarted = () => { console.log('Set media stream track!'); setMediaStreamTrack(track.mediaStreamTrack) }
+    track.on('started', handleStarted)
+    return () => {
+      track.off('started', handleStarted)
     }
   }, [track])
 

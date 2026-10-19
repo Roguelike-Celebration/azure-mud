@@ -201,6 +201,7 @@ const Redis: RedisInternal = {
     if (date) {
       return new Date(JSON.parse(date))
     }
+    return undefined
   },
 
   async userJustShouted (user: User) {

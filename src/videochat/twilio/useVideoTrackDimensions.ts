@@ -9,16 +9,15 @@ export default function useVideoTrackDimensions (track?: TrackType): VideoTrack.
 
   useEffect(() => {
     setDimensions(track?.dimensions)
+    if (!track) return undefined
 
-    if (track) {
-      const handleDimensionsChanged = (track: TrackType) => setDimensions({
-        width: track.dimensions.width,
-        height: track.dimensions.height
-      })
-      track.on('dimensionsChanged', handleDimensionsChanged)
-      return () => {
-        track.off('dimensionsChanged', handleDimensionsChanged)
-      }
+    const handleDimensionsChanged = (track: TrackType) => setDimensions({
+      width: track.dimensions.width,
+      height: track.dimensions.height
+    })
+    track.on('dimensionsChanged', handleDimensionsChanged)
+    return () => {
+      track.off('dimensionsChanged', handleDimensionsChanged)
     }
   }, [track])
 

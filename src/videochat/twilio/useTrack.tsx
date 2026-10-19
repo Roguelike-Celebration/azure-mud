@@ -9,16 +9,14 @@ export default function useTrack (publication: LocalTrackPublication | RemoteTra
   useEffect(() => {
     // Reset the track when the 'publication' variable changes.
     setTrack(publication && publication.track)
+    if (!publication) return undefined
 
-    if (publication) {
-      const removeTrack = () => setTrack(null)
-
-      publication.on('subscribed', setTrack)
-      publication.on('unsubscribed', removeTrack)
-      return () => {
-        publication.off('subscribed', setTrack)
-        publication.off('unsubscribed', removeTrack)
-      }
+    const removeTrack = () => setTrack(null)
+    publication.on('subscribed', setTrack)
+    publication.on('unsubscribed', removeTrack)
+    return () => {
+      publication.off('subscribed', setTrack)
+      publication.off('unsubscribed', removeTrack)
     }
   }, [publication])
 
