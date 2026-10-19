@@ -12,6 +12,7 @@
     "noImplicitThis": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
+    "noImplicitReturns": true,
     "alwaysStrict": true,
     "skipLibCheck": true
   }
