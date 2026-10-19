@@ -11,13 +11,23 @@ import { fetchCognitiveServicesKey } from './networking'
 let recognizer: sdk.SpeechRecognizer | undefined
 let speechConfig: sdk.SpeechConfig | undefined
 
+function stopRecognition (r: sdk.SpeechRecognizer): Promise<void> {
+  return new Promise((resolve, reject) => {
+    r.stopContinuousRecognitionAsync(resolve, (e) => reject(new Error(e)))
+  })
+}
+
 export async function setUpSpeechRecognizer (
   deviceId: string,
   dispatch: Dispatch<Action>
 ): Promise<void> {
   console.log('Starting recognition')
   if (recognizer) {
-    await recognizer.stopContinuousRecognitionAsync()
+    try {
+      await stopRecognition(recognizer)
+    } catch (e) {
+      console.log('Error stopping existing speech recognizer', e)
+    }
   }
 
   if (!speechConfig) {
@@ -66,5 +76,5 @@ export async function setUpSpeechRecognizer (
 }
 
 export async function stopSpeechRecognizer (): Promise<void> {
-  await recognizer.stopContinuousRecognitionAsync()
+  await stopRecognition(recognizer)
 }

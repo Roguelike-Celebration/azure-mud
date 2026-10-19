@@ -31,7 +31,7 @@ const getContainer = (containerId: string) => {
 const CosmosDB = {
   // TODO: I think I'm only using this for the equivalent of minimalProfileMap. I could just make a minimalProfileMap fn?
   async getAllUsers (): Promise<User[]> {
-    const container = await getContainer('users')
+    const container = getContainer('users')
     const { resources: users } = await container.items.readAll().fetchAll()
     return (users as unknown as User[])
   },
@@ -154,7 +154,7 @@ const CosmosDB = {
 
   // TODO: Should this be shoved into roomOccupants?
   async getVideoPresenceForRoom (roomId: string) {
-    const container = await getContainer('users')
+    const container = getContainer('users')
     const query = {
       query: 'select c.id from c where c.videoRoomId = @roomId and c.isActive = true',
       parameters: [{
@@ -167,7 +167,7 @@ const CosmosDB = {
   },
 
   async getPublicUser (userId: string) {
-    const container = await getContainer('users')
+    const container = getContainer('users')
     const result = await container.item(userId, partitionKey).read()
     return result.resource as User
   },
@@ -185,7 +185,7 @@ const CosmosDB = {
   },
 
   async userJustShouted (user: User) {
-    const container = await getContainer('users')
+    const container = getContainer('users')
     try {
       await container.item(user.id, partitionKey).replace({ ...user, lastShouted: new Date().valueOf() })
     } catch (e) {
@@ -195,7 +195,7 @@ const CosmosDB = {
 
   async banUser (user: User, isBanned: boolean) {
     try {
-      const container = await getContainer('users')
+      const container = getContainer('users')
       await container.item(user.id, partitionKey).replace({ ...user, isBanned })
     } catch (e) {
       console.log('ERROR: Could not update user ban status', user.id, e)
@@ -204,7 +204,7 @@ const CosmosDB = {
 
   async setModStatus (user: User, isMod: boolean) {
     try {
-      const container = await getContainer('users')
+      const container = getContainer('users')
       await container.item(user.id, partitionKey).replace({ ...user, isMod })
     } catch (e) {
       console.log('ERROR: Could not update user mod status', user.id, e)
@@ -242,7 +242,7 @@ const CosmosDB = {
   //   async getRoomNotes(roomId: string) {
 
   async getRoomData (): Promise<RoomDataMap> {
-    const container = await getContainer('rooms')
+    const container = getContainer('rooms')
     const { resources: rooms } = await container.items.readAll().fetchAll()
 
     const result: RoomDataMap = {};
