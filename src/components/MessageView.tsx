@@ -37,6 +37,8 @@ import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
 import NameView from './NameView'
 import { UserMap } from '../reducer'
 
+type MenuItemEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>
+
 const formatter = new Intl.DateTimeFormat('en', {
   hour: 'numeric',
   minute: 'numeric'
@@ -95,7 +97,12 @@ export default memo(function MessageView (props: {
   )
 })
 
-const handleDeleteMessage = (e, data) => {
+interface DeleteMessageMenuData {
+  messageId: string
+  messageText: string
+}
+
+const handleDeleteMessage = (e: MenuItemEvent, data: DeleteMessageMenuData) => {
   const doDelete = confirm(
     `Are you sure you would like to delete the message '${data.messageText}'?`
   )
@@ -109,7 +116,7 @@ type DeletableMessageViewProps = {
   messageText: string;
 };
 
-const linkDecorator = (href, text, key) => (
+const linkDecorator = (href: string, text: string, key: number): React.ReactElement => (
   <a href={href} key={key} target="_blank" rel="noopener noreferrer">
     {text}
   </a>
@@ -221,7 +228,7 @@ const SameView = (props: SameRoomMessage) => (
   <div className="message">You are already in {props.roomId}.</div>
 )
 
-const parseUserIdOrDisplay = (messageFragment): string => {
+const parseUserIdOrDisplay = (messageFragment: string): string => {
   const userId = messageFragment.match(/``(.*?)``/)
 
   if (!userId) {

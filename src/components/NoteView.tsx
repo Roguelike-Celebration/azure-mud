@@ -41,7 +41,7 @@ export function NoteView (props: { note: RoomNote, isObelisk?: boolean }) {
     }
   }
 
-  const linkDecorator = (href, text, key) => (
+  const linkDecorator = (href: string, text: string, key: number): React.ReactElement => (
     <a href={href} key={key} target="_blank" rel="noopener noreferrer">
       {text}
     </a>

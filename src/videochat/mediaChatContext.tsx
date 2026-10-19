@@ -91,4 +91,4 @@ export type DeviceInfo = {
     name: string
 }
 
-export const useMediaChatContext = () => useContext(MediaChatContext)
+export const useMediaChatContext = (): MediaChatContextProps => useContext(MediaChatContext)
