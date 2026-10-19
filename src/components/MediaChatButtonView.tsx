@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaCog } from 'react-icons/fa'
+
 import { SetAudioOnlyModeAction, SetTextOnlyModeAction, ShowModalAction, ShowModalWithOptionsAction, StopVideoChatAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { Modal } from '../modals'

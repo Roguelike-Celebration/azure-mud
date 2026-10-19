@@ -1,5 +1,5 @@
-import { User } from './user'
 import { Result } from './endpoint'
+import { User } from './user'
 
 const danceList = [
   'drops to the floor to do the Purple Worm',

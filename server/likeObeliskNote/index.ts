@@ -1,4 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+
 import { authenticatedAzureWrap } from '../src/azureWrap'
 import likeObeliskNote from '../src/endpoints/obelisk/likeObeliskNote'
 

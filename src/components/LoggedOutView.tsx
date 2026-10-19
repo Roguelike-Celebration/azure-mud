@@ -1,9 +1,10 @@
 // Note - we're doing firebase 8 because the firebaseui stuff doesn't work with 9, big F
-import { currentUser, sendSignInLinkToEmail } from '../authentication'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import React from 'react'
 import firebase from 'firebase/app'
 import type firebaseui from 'firebaseui'
+import React from 'react'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+
+import { currentUser, sendSignInLinkToEmail } from '../authentication'
 import 'firebase/auth'
 
 const uiConfig: firebaseui.auth.Config = {

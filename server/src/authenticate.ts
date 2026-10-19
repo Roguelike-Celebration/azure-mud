@@ -1,7 +1,9 @@
-import { User, getFullUser, isMod } from './user'
 import { Context, HttpRequest } from '@azure/functions'
-import { DB } from '../src/database'
 import * as admin from 'firebase-admin'
+
+import { DB } from '../src/database'
+
+import { getFullUser, isMod, User } from './user'
 
 export interface AuthenticationOptions {
   audit?: boolean;

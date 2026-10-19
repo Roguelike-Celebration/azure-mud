@@ -1,7 +1,9 @@
 import firebase from 'firebase/app'
+
 import Config from '../config'
-import { Action, ActionType } from './actions'
 import { RoomDataMap } from '../reducer'
+
+import { Action, ActionType } from './actions'
 
 export interface State {
   firebaseApp: firebase.app.App

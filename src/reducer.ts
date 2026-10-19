@@ -1,10 +1,13 @@
 import firebase from 'firebase/app'
 import { current, original, produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
+
 import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
+import { RoomNote } from '../server/src/roomNote'
 import { DEFAULT_SERVER_SETTINGS, ServerSettings } from '../server/src/types'
 import { MinimalUser, PublicUser, User } from '../server/src/user'
+
 import { Action, ActionType } from './Actions'
 import Config from './config'
 import { Deferred } from './Deferred'
@@ -44,7 +47,6 @@ import { Room } from './room'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
 import * as Storage from './storage'
 import { EntityState } from './types'
-import { RoomNote } from '../server/src/roomNote'
 
 export interface State {
   firebaseApp: firebase.app.App;

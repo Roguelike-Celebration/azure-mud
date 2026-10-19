@@ -1,27 +1,29 @@
+import _ from 'lodash'
 import * as React from 'react'
-import { Room } from '../room'
+import { useState } from 'react'
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+
+import {
+  ShowModalAction,
+  StopVideoChatAction
+} from '../Actions'
+import { DispatchContext } from '../App'
+import { linkActions } from '../linkActions'
+import { Modal } from '../modals'
 import {
   moveToRoom,
   pickUpItem
 } from '../networking'
-import { DispatchContext } from '../App'
-import {
-  StopVideoChatAction,
-  ShowModalAction
-} from '../Actions'
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import { PresenceCountMap, RoomDataMap } from '../reducer'
+import { Room } from '../room'
+import { useMediaChatContext } from '../videochat/mediaChatContext'
 
-import { Modal } from '../modals'
 import { ConfettiRoomView } from './feature/ConfettiRoomView'
-import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import { DullDoorRoomView } from './feature/DullDoorViews'
 import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
-import { linkActions } from '../linkActions'
-import { useState } from 'react'
-import _ from 'lodash'
-import { useMediaChatContext } from '../videochat/mediaChatContext'
+import { RainbowGateRoomView } from './feature/RainbowGateViews'
 import PresenceView from './PresenceView'
-import { PresenceCountMap, RoomDataMap } from '../reducer'
+
 import '../../style/room.css'
 
 const VIDEO_CHAT_MAX_SIZE = 8

@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState, useContext } from 'react'
-import { updateProfile } from '../networking'
-import { PublicUser } from '../../server/src/user'
+import React, { useContext, useState } from 'react'
 
-import { DispatchContext } from '../App'
+import { PublicUser } from '../../server/src/user'
 import { HideModalAction } from '../Actions'
+import { DispatchContext } from '../App'
 import config from '../config'
+import { updateProfile } from '../networking'
 import '../../style/profileEditView.css'
 
 interface Props {

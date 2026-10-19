@@ -1,6 +1,7 @@
 import React from 'react'
-import { DispatchContext } from '../../App'
+
 import { ShowModalAction } from '../../Actions'
+import { DispatchContext } from '../../App'
 import { Modal } from '../../modals'
 import { Room } from '../../room'
 

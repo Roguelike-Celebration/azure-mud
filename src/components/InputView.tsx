@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { MentionsInput, Mention } from 'react-mentions'
-import { UserMapContext } from '../App'
+import React, { useContext, useEffect, useState } from 'react'
+import { Mention, MentionsInput } from 'react-mentions'
 
 import { MinimalUser } from '../../server/src/user'
+import { UserMapContext } from '../App'
 import { emojiMentionsData } from '../emoji'
 import '../../style/input.css'
 

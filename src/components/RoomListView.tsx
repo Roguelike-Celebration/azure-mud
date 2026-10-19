@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { FaVideo } from 'react-icons/fa'
+
 import { UserMapContext } from '../App'
 import { moveToRoom } from '../networking'
-
 import { Room } from '../room'
 
 interface Props {
