@@ -3,8 +3,8 @@ import { currentUser, sendSignInLinkToEmail } from '../authentication'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import React from 'react'
 import firebase from 'firebase/app'
-import 'firebase/auth'
 import type firebaseui from 'firebaseui'
+import 'firebase/auth'
 
 const uiConfig: firebaseui.auth.Config = {
   callbacks: {

@@ -1,8 +1,6 @@
 import React, { useLayoutEffect, useState, useReducer } from 'react'
 import { DispatchContext } from '../App'
 
-import '../../style/badges.css'
-
 import BadgeView from './BadgeView'
 
 import { Badge } from '../../server/src/badges'
@@ -11,6 +9,7 @@ import { equipBadge } from '../networking'
 import { isNumber, uniq } from 'lodash'
 import ReactTooltip from 'react-tooltip'
 import { BadgeCategories } from '../../server/src/types'
+import '../../style/badges.css'
 
 interface Props {
   unlockedBadges: Badge[]

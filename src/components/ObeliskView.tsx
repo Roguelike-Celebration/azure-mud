@@ -5,9 +5,9 @@ import { NoteView } from './NoteView'
 import ReactTooltip from 'react-tooltip'
 import { UserMapContext } from '../App'
 
-import '../../style/noteWall.css'
 import { PublicUser } from '../../server/src/user'
 import { sortBy } from 'lodash'
+import '../../style/noteWall.css'
 
 function numLikes (roomNote: RoomNote) {
   return !roomNote.likes ? 0 : roomNote.likes.length

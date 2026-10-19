@@ -10,10 +10,10 @@ import {
 } from '../Actions'
 import { MinimalUser } from '../../server/src/user'
 
-import '../../style/nameView.css'
 import { fetchProfile, toggleUserSpeaker } from '../networking'
 import { Modal } from '../modals'
 import BadgeView from './BadgeView'
+import '../../style/nameView.css'
 
 // TODO: In this code, "user" might refer to the user whose name we clicked on to get a menu (the
 // target user), or the operating user who did the clicking (like in the case of `userIsMod`). Would

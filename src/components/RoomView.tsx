@@ -11,7 +11,6 @@ import {
 } from '../Actions'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 
-import '../../style/room.css'
 import { Modal } from '../modals'
 import { ConfettiRoomView } from './feature/ConfettiRoomView'
 import { RainbowGateRoomView } from './feature/RainbowGateViews'
@@ -23,6 +22,7 @@ import _ from 'lodash'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import PresenceView from './PresenceView'
 import { PresenceCountMap, RoomDataMap } from '../reducer'
+import '../../style/room.css'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
