@@ -7,7 +7,7 @@ interface AudioTrackProps {
 
 // TODO: Figure out what's up with activeSinkId
 
-export default function AudioTrack ({ track }: AudioTrackProps) {
+export default function AudioTrack ({ track }: AudioTrackProps): null {
 //   const { activeSinkId } = useAppState()
   const audioEl = useRef<HTMLAudioElement>()
 
