@@ -1,4 +1,4 @@
-import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { User } from '../user'
 import { DB } from '../database'
 import { globalPresenceMessage } from '../globalPresenceMessage'

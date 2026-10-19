@@ -1,6 +1,5 @@
 import { User, getFullUser, isMod } from './user'
 import { Context, HttpRequest } from '@azure/functions'
-import { v4 as uuid } from 'uuid'
 import { DB } from '../src/database'
 import * as admin from 'firebase-admin'
 

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { Room } from '../room'
 import MenuButtonView from './MenuButtonView'
 
 import '../../style/nav.css'

@@ -3,13 +3,10 @@
 
 import React, { FunctionComponent, memo, useContext } from 'react'
 import Linkify from 'react-linkify'
-import ReactTooltip from 'react-tooltip'
 
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
 
 import {
-  DispatchContext,
-  MessagesContext,
   RoomDataContext,
   UserMapContext
 } from '../App'

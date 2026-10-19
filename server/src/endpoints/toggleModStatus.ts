@@ -1,5 +1,5 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { isMod, minimizeUser, updateModStatus, User } from '../user'
+import { isMod, minimizeUser, User } from '../user'
 import { DB } from '../database'
 
 const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {

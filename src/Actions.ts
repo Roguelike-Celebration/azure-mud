@@ -6,7 +6,6 @@ import { Message, WhisperMessage } from './message'
 import { Modal } from './modals'
 import { connectRoomData } from './networking'
 import { ModalOptions, PresenceListMap, RoomDataMap, State, UserMap } from './reducer'
-import { Room } from './room'
 import { Thunk } from './useReducerWithThunk'
 import { fps } from './utils'
 
