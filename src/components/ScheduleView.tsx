@@ -5,7 +5,7 @@ const SOCIAL_TIME = 'Social Time'
 // Generate the current date for both the schedule and "happening now"
 // If you want to test functionality, stub in a fake date here
 // (this only exists to allow that testing functionality)
-export function nowDate () {
+export function nowDate (): Date {
   return new Date()
 }
 

@@ -249,7 +249,7 @@ const App = () => {
 
   // It's slightly weird we now construct this here and pass it as a prop to
   // RoomView instead of constructing it there. Shrug, the conf is in 2 days.
-  let videoChatView
+  let videoChatView: React.ReactElement | undefined
   if (
     state.roomData &&
     state.roomId &&
@@ -269,7 +269,8 @@ const App = () => {
     )
   }
 
-  let innerModalView, modalView
+  let innerModalView: React.ReactElement | undefined
+  let modalView: React.ReactElement | undefined
 
   // TODO: If we get more modal options than just a size boolean, make this an options object.
   let modalIsFullScreen = false

@@ -232,7 +232,7 @@ function parseDescription (
 
   // Complex "[[text->target]]" links
   const complexLinkRegex = /\[\[([^\]]*?)->([^\]]*?)\]\]/g
-  description = description.replace(complexLinkRegex, (match, text, roomId) => {
+  description = description.replace(complexLinkRegex, (match: string, text: string, roomId: string) => {
     const userCount = presenceData[roomId]
     const textEsc = _.escape(text)
     const roomIdEsc = _.escape(roomId)
@@ -255,7 +255,7 @@ function parseDescription (
   // TODO: Escape roomId here, but be careful about doing it! Some of our links currently (2026)
   // might only work due to accidents of the truncation of unescaped room long-names matching the roomId.
   const simpleLinkRegex = /\[\[(.+?)\]\]/g
-  description = description.replace(simpleLinkRegex, (match, roomId) => {
+  description = description.replace(simpleLinkRegex, (match: string, roomId: string) => {
     const userCount = presenceData[roomId]
     const userCountString = userCount > 0 ? ` (${userCount})` : ''
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCountString}</a>`

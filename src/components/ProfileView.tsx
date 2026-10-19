@@ -96,7 +96,7 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     null
   )
 
-  const linkDecorator = (href, text, key) => (
+  const linkDecorator = (href: string, text: string, key: number): React.ReactElement => (
     <a href={href} key={key} target="_blank" rel="noopener noreferrer">
       {text}
     </a>

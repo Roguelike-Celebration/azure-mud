@@ -57,11 +57,11 @@ export default function MediaSelectorView (props: Props) {
 
   // TODO: These audio/video changes immediately affect your outgoing stream.
   // Eventually, they shouldn't.
-  const onVideoChange = (e) => {
+  const onVideoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentCamera(e.target.value)
   }
 
-  const onAudioChange = (e) => {
+  const onAudioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentMic(e.target.value)
   }
 
@@ -69,7 +69,7 @@ export default function MediaSelectorView (props: Props) {
     dispatch(HideModalAction())
   }
 
-  let video
+  let video: React.ReactElement | undefined
   if (!props.hideVideo) {
     video = (
       <><label htmlFor="#video-select">Webcam</label><select

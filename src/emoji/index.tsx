@@ -1,8 +1,15 @@
 import React from 'react'
 
-import customEmojiMap from './customEmojiMap.json'
+import customEmojiMapJson from './customEmojiMap.json'
+import reservedEmojiMapJson from './reservedEmojiMap.json'
 
-export function renderCustomEmojiString (string: string) {
+/** Maps emoji id (the "id" in ":id:") to its image file relative path */
+type EmojiMap = { [emojiId: string]: string | undefined }
+
+export const customEmojiMap: EmojiMap = customEmojiMapJson
+export const reservedEmojiMap: EmojiMap = reservedEmojiMapJson
+
+export function renderCustomEmojiString (string: string): JSX.Element {
   const stringParts = string.split(/(:.*?:)/)
   const emojiComponent = stringParts.reduce<JSX.Element>((newComponent, stringPart) => {
     if (stringPart.startsWith(':') && stringPart.endsWith(':')) {

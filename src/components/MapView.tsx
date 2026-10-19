@@ -122,7 +122,7 @@ export default function MapView (props: Props) {
     }
   }
 
-  let clickableDivs = []
+  let clickableDivs: React.ReactElement[] = []
   if (w !== 0 && h !== 0) {
     clickableDivs = clickableAreas.map((a, idx) => {
       const uniqueAreaId = `${a.roomId}-${idx}`
