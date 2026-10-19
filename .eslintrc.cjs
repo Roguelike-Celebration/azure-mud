@@ -31,7 +31,8 @@ module.exports = {
       'newlines-between': 'always',
       alphabetize: { order: 'asc', caseInsensitive: true }
     }],
-    'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: true }]
+    'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: true }],
+    'linebreak-style': ['error', 'unix']
   },
   // use override to exempt React components; v3 of the rule can't exempt React per se
   overrides: [
