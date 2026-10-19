@@ -8,7 +8,9 @@
     "build": "parcel build *.html --public-url ./ --dist-dir ./dist; cp CNAME dist; rsync -r images dist",
     "deploy": "npm run build; cp CNAME dist; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "rc=0; npm run typecheck-frontend || rc=1; npm run typecheck-server || rc=1; exit $rc",
+    "typecheck-frontend": "tsc --noEmit",
+    "typecheck-server": "tsc --noEmit -p server",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\"",
     "lint-fix": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" --fix",
     "lint-rooms": "ts-node lintLinks.ts"
