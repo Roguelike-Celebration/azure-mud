@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
-import MenuButtonView from './MenuButtonView'
 
-import { IsMobileContext, DispatchContext } from '../App'
 import { HideSideMenuAction, ShowModalAction } from '../Actions'
+import { DispatchContext, IsMobileContext } from '../App'
 import { Modal } from '../modals'
-import MiniMapView from './MiniMapView'
 import { PresenceCountMap } from '../reducer'
+
+import MenuButtonView from './MenuButtonView'
+import MiniMapView from './MiniMapView'
 import '../../style/nav.css'
 
 interface Props {

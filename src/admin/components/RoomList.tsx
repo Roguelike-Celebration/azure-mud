@@ -2,9 +2,10 @@
 import _ from 'lodash'
 import React, { useContext } from 'react'
 
-import { DispatchContext } from './App'
 import { getAllRooms, getRoom, resetRoomData } from '../../networking'
 import { UpdateAndShowRoomAction } from '../actions'
+
+import { DispatchContext } from './App'
 
 export default function (props: {roomIds: string[]}) {
   const dispatch = useContext(DispatchContext)

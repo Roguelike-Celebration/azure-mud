@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { customEmojiMap, reservedEmojiMap } from '../emoji'
 
 interface Props {

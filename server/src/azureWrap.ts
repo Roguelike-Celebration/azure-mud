@@ -1,11 +1,12 @@
 import { Context, HttpRequest } from '@azure/functions'
+
 import authenticate, { AuthenticationOptions } from './authenticate'
 import {
-  EndpointFunction,
   AuthenticatedEndpointFunction,
-  Result,
+  EndpointFunction,
   isGroupMessage,
-  isPrivateMessage
+  isPrivateMessage,
+  Result
 } from './endpoint'
 
 /**

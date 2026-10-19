@@ -1,6 +1,6 @@
 import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
-import { User } from '../user'
 import generators from '../generators'
+import { User } from '../user'
 
 const displayMessage: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   let displayMessage: string

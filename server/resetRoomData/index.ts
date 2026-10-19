@@ -1,6 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import resetRoomData from '../src/endpoints/resetRoomData'
+
 import { authenticatedAzureWrap } from '../src/azureWrap'
+import resetRoomData from '../src/endpoints/resetRoomData'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

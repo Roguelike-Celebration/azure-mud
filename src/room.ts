@@ -4,8 +4,9 @@
 // (although this file will probably still exist to be the single point of importing
 // the Server room and just exporting a 'clean' definition)
 
-import * as Server from '../server/src/rooms'
 import { RoomNote } from '../server/src/roomNote'
+import * as Server from '../server/src/rooms'
+
 import type { RoomDataMap } from './reducer'
 
 export interface Room {

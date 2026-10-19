@@ -1,7 +1,7 @@
-import { MinimalRoom, Room } from './rooms'
-import { User, MinimalUser } from './user'
-import { RoomNote } from './roomNote'
 import { Badge } from './badges'
+import { RoomNote } from './roomNote'
+import { MinimalRoom, Room } from './rooms'
+import { MinimalUser, User } from './user'
 
 export interface HappeningNowEntry {
   text: string,

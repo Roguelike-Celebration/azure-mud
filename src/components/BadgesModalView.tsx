@@ -1,14 +1,15 @@
-import React, { useLayoutEffect, useState, useReducer } from 'react'
+import { isNumber, uniq } from 'lodash'
+import React, { useLayoutEffect, useReducer, useState } from 'react'
+import ReactTooltip from 'react-tooltip'
+
+import { Badge } from '../../server/src/badges'
+import { BadgeCategories } from '../../server/src/types'
+import { EquipBadgeAction } from '../Actions'
 import { DispatchContext } from '../App'
+import { equipBadge } from '../networking'
 
 import BadgeView from './BadgeView'
 
-import { Badge } from '../../server/src/badges'
-import { EquipBadgeAction } from '../Actions'
-import { equipBadge } from '../networking'
-import { isNumber, uniq } from 'lodash'
-import ReactTooltip from 'react-tooltip'
-import { BadgeCategories } from '../../server/src/types'
 import '../../style/badges.css'
 
 interface Props {

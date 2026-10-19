@@ -1,7 +1,7 @@
+import { DB } from '../database'
 import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
 import { globalPresenceMessage } from '../globalPresenceMessage'
-import { User, getFullUser, minimizeUser } from '../user'
-import { DB } from '../database'
+import { getFullUser, minimizeUser, User } from '../user'
 
 const banUser: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const targetId = inputs.userId

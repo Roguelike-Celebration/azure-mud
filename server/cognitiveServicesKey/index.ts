@@ -1,4 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+
 import { getUserIdFromHeaders } from '../src/authenticate'
 import { CognitiveServicesKeyResponse } from '../src/types'
 
