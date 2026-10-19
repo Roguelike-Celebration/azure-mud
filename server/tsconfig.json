@@ -9,6 +9,9 @@
     "sourceMap": true,
     "strict": false,
     "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "alwaysStrict": true,
     "skipLibCheck": true
   }
 }
