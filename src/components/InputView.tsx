@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { MentionsInput, Mention } from 'react-mentions'
-import { DispatchContext, UserMapContext } from '../App'
+import { UserMapContext } from '../App'
 
 import '../../style/input.css'
-import { MinimalUser, PublicUser } from '../../server/src/user'
+import { MinimalUser } from '../../server/src/user'
 import { emojiMentionsData } from '../emoji'
 const emojifier = require('node-emoji')
 

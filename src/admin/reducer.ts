@@ -1,6 +1,5 @@
 import firebase from 'firebase/app'
 import Config from '../config'
-import { Room } from '../room'
 import { Action, ActionType } from './actions'
 import { RoomDataMap } from '../reducer'
 

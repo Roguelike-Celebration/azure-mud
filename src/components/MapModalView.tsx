@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { ShowModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { Modal } from '../modals'
-import { Room } from '../room'
 import MapView from './MapView'
 import { PresenceCountMap } from '../reducer'
 

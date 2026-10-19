@@ -9,7 +9,7 @@ import {
   StopVideoChatAction,
   ShowModalAction
 } from '../Actions'
-import { FaChevronDown, FaChevronUp, FaCog } from 'react-icons/fa'
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 
 import '../../style/room.css'
 import { Modal } from '../modals'
