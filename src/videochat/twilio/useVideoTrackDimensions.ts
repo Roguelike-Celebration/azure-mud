@@ -1,10 +1,10 @@
 
 import { useState, useEffect } from 'react'
-import { LocalVideoTrack, RemoteVideoTrack } from 'twilio-video'
+import { LocalVideoTrack, RemoteVideoTrack, VideoTrack } from 'twilio-video'
 
 type TrackType = LocalVideoTrack | RemoteVideoTrack;
 
-export default function useVideoTrackDimensions (track?: TrackType) {
+export default function useVideoTrackDimensions (track?: TrackType): VideoTrack.Dimensions | undefined {
   const [dimensions, setDimensions] = useState(track?.dimensions)
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { getUserIdFromHeaders } from '../src/authenticate'
+import { CognitiveServicesKeyResponse } from '../src/types'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   const userId = await getUserIdFromHeaders(context, req)
@@ -12,12 +13,11 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     return
   }
 
-  context.res = {
-    body: {
-      cognitiveServicesKey: process.env.COGNITIVE_SERVICES_KEY,
-      cognitiveServicesRegion: process.env.COGNITIVE_SERVICES_REGION
-    }
+  const body: CognitiveServicesKeyResponse = {
+    cognitiveServicesKey: process.env.COGNITIVE_SERVICES_KEY,
+    cognitiveServicesRegion: process.env.COGNITIVE_SERVICES_REGION
   }
+  context.res = { body }
 }
 
 export default httpTrigger
