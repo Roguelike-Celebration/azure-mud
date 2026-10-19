@@ -16,10 +16,7 @@ const cache = redis.createClient(
   }
 )
 
-// Note: The types on these functions are assertions, not checked and verified by the compiler
-// against the underlying library types. I think they are correct, but tsc isn't enforcing that.
-// Enabling strictBindCallApply would get some checking here.
-// - apj 2026-10
+// Types on these helper functions are checked because strictBindCallApply is enabled.
 const getCache: (key: string) => Promise<string | null> = promisify(cache.get).bind(cache)
 const setCache: (key: string, value: string) => Promise<'OK'> = promisify<string, string, 'OK'>(cache.set).bind(cache)
 const expireAt: (key: string, timestamp: number) => Promise<number> = promisify(cache.expireat).bind(cache)
