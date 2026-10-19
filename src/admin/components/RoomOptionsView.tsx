@@ -5,10 +5,10 @@ import React from 'react'
 import { deleteRoom } from '../../networking'
 
 export default function (props: {roomId: string, updateRoom: () => void, createRoom: (name: string) => void}) {
-  const clickedNew = async () => {
+  const clickedNew = () => {
     const name = prompt('What would you like the room to be called?')
     if (!name) return
-    await props.createRoom(name)
+    props.createRoom(name)
   }
 
   const clickedDelete = async () => {
