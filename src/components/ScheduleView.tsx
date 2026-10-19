@@ -51,7 +51,7 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
       time: dayAfterparty(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId, day
     }
   } else {
-    console.error('Your static data is messed up, somehow.')
+    throw new Error(`Your static data is messed up, somehow. day=${day}`)
   }
 }
 

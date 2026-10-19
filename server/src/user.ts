@@ -185,7 +185,7 @@ export async function updateUserFontReward (userId: string, font: string): Promi
 
 export async function getFullUser (userId: string): Promise<User | undefined> {
   const profile = await DB.getUser(userId)
-  if (!profile) return
+  if (!profile) return undefined
 
   if (!profile.roomId) {
     profile.roomId = 'entryway'
