@@ -1,10 +1,10 @@
 import { CosmosClient } from '@azure/cosmos'
 
-// TODO: Partition key issues
-
 import { Room } from './rooms'
 import { DEFAULT_SERVER_SETTINGS, PresenceListMap, RoomDataMap, ServerSettings } from './types'
 import { User } from './user'
+
+// TODO: Partition key issues
 
 const partitionKey = 'https://roguelikecelebration-mud.azurewebsites.net'
 

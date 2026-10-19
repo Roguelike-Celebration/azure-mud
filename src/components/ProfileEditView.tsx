@@ -3,10 +3,10 @@ import React, { useState, useContext } from 'react'
 import { updateProfile } from '../networking'
 import { PublicUser } from '../../server/src/user'
 
-import '../../style/profileEditView.css'
 import { DispatchContext } from '../App'
 import { HideModalAction } from '../Actions'
 import config from '../config'
+import '../../style/profileEditView.css'
 
 interface Props {
   isFTUE: boolean;

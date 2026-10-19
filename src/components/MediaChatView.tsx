@@ -1,13 +1,13 @@
 import React, { useEffect, VideoHTMLAttributes, useRef } from 'react'
 import LocalMediaView from './LocalMediaView'
 
-import '../../style/videoChat.css'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import ParticipantChatView from './ParticipantChatView'
 import MediaChatButtonView from './MediaChatButtonView'
 import { SetTextOnlyModeAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { MinimalUser } from '../../server/src/user'
+import '../../style/videoChat.css'
 
 interface MediaProps {
   visibleSpeakers: [string, Date][]

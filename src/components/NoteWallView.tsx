@@ -6,11 +6,11 @@ import { NoteView } from './NoteView'
 import ReactTooltip from 'react-tooltip'
 import { UserMapContext } from '../App'
 
-import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
 import { sortBy } from 'lodash'
 import { RoomDataMap } from '../reducer'
+import '../../style/noteWall.css'
 
 // TODO: We hardcode room names for the 'auto-assign topics to unconference rooms' feature
 // This is silly, and we almost missed this in 2022 AND 2023. AND 2026.
