@@ -104,11 +104,8 @@ interface Database {
   getRoomNotes(roomId: string): Promise<RoomNote[]>
 
   // -----------------------------------------------------------------
-  // AVAILABILITY
+  // DEPLOY WEBHOOK
   // -----------------------------------------------------------------
-  isSpaceClosed(): Promise<boolean>
-  setSpaceAvailability(open: boolean)
-
   // If you want to notify clients a new build has been deployed,
   // you need to include the key that's hardcoded into Redis
   webhookDeployKey()
