@@ -8,7 +8,7 @@ import * as Storage from '../../storage'
 // When you pass through the rainbow door enough times, you get a randomly colored username.
 // This undoes that.
 export const DullDoorRoomView = () => {
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
   const { userMap, myId } = useContext(UserMapContext)
 
   const user = userMap[myId]
@@ -24,7 +24,7 @@ export const DullDoorRoomView = () => {
 }
 
 export default function DullDoorModalView () {
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
 
   const [wasColoredEntering, setWasColoredEntering] = useState(false)
 

@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { connect } from '../networking'
 
 export default function DisconnectModalView (props: { userId: string }) {
-  const [reconnecting, setReconnecting] = React.useState(false)
-  const [secondsToReconnect, setsecondsToReconnect] = React.useState(1)
-  const [nextSecondsToReconnect, setNextSecondsToReconnect] = React.useState(2)
+  const [reconnecting, setReconnecting] = useState(false)
+  const [secondsToReconnect, setsecondsToReconnect] = useState(1)
+  const [nextSecondsToReconnect, setNextSecondsToReconnect] = useState(2)
 
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
 
   useEffect(() => {
     // This actually sets & clears the timer every second anew.
