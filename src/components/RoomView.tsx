@@ -1,6 +1,5 @@
 import _ from 'lodash'
-import * as React from 'react'
-import { useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 
 import {
@@ -41,7 +40,7 @@ interface Props {
 }
 
 export default function RoomView (props: Props) {
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
   const {
     prepareForMediaChat,
     joinCall,
@@ -87,7 +86,7 @@ export default function RoomView (props: Props) {
     setFullDescriptionVisible(!fullDescriptionVisible)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (room && room.mediaChat && !props.textOnlyMode && props.hasDismissedAModal) {
       // HACK ALERT: This call is necessary to properly set the state variables related to leaving video chat, since
       // our Twilio state isn't quite synchronized with our react state. We never publish if we don't want to (due to
@@ -267,8 +266,8 @@ function parseDescription (
 
 // The youtube embed needs to be updated each event after the upcoming live youtube stream is created. The captions shouldn't need changing.
 export function StreamEmbed () {
-  const streamRef = React.useRef<HTMLIFrameElement>(null)
-  const captionsRef = React.useRef<HTMLIFrameElement>(null)
+  const streamRef = useRef<HTMLIFrameElement>(null)
+  const captionsRef = useRef<HTMLIFrameElement>(null)
 
   return (
     <div id="iframes" style={{ margin: 'auto' }}>

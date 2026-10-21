@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import * as Twilio from 'twilio-video'
 
 import { HideModalAction, MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaCog } from 'react-icons/fa'
 
 import { SetAudioOnlyModeAction, SetTextOnlyModeAction, ShowModalAction, ShowModalWithOptionsAction, StopVideoChatAction } from '../Actions'
@@ -26,7 +26,7 @@ const MediaChatButtonView = (props: Props) => {
     unpublishMedia
   } = useMediaChatContext()
 
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
 
   const leaveVideoChat = () => {
     dispatch(StopVideoChatAction())

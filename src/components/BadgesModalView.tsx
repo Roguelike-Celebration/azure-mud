@@ -1,5 +1,5 @@
 import { isNumber, uniq } from 'lodash'
-import React, { useLayoutEffect, useReducer, useState } from 'react'
+import React, { useContext, useLayoutEffect, useReducer, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 
 import { Badge } from '../../server/src/badges'
@@ -44,7 +44,7 @@ export default function BadgesModalView (props: Props) {
   }
   const [localState, localDispatch] = useReducer(localReducer, initialState)
 
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
 
   const dragStart = (e: React.DragEvent<HTMLSpanElement>) => {
     const index = parseInt(e.currentTarget.dataset.index ?? '')
