@@ -36,7 +36,7 @@ interface Database {
   /** Sets the current Unix timestamp for a user pinging in */
   setUserHeartbeat(user: User);
 
-  getUserHeartbeat (user: string): Promise<number>
+  getUserHeartbeat (user: string): Promise<number | undefined>;
 
   getUserIdForUsername(username: string, onlineUsersOnly: boolean)
 
