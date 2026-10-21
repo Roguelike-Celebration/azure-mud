@@ -9,12 +9,14 @@ export function nowDate (): Date {
   return new Date()
 }
 
+export type ScheduleDayIndex = 0 | 1 | 2 | 3 | 4
+
 export interface ScheduleEntry {
   time: Date,
   text: string,
   roomIds: string[]
   breakoutRoomId?: string,
-  day: number
+  day: ScheduleDayIndex
 }
 
 const PREVIEW_END = new Date('2026-09-13T17:00:00-07:00')
@@ -29,7 +31,7 @@ const dayTwoDate = (time: string) => new Date(`2026-10-17T${time}:00.000-07:00`)
 const dayThreeDate = (time: string) => new Date(`2026-10-18T${time}:00.000-07:00`)
 const dayAfterparty = (time: string) => new Date(`2026-10-21T${time}:00.000-07:00`)
 
-function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
+function ScheduleEntry (time: string, day: ScheduleDayIndex, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
   if (day === 0) {
     return {
       time: dayPreview(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId, day
@@ -126,7 +128,7 @@ export default function ScheduleView () {
 
   const today = nowDate()
 
-  let day = 4
+  let day: ScheduleDayIndex = 4
   let dayText = 'Sunday'
   if (today <= PREVIEW_END) {
     day = 0
