@@ -65,6 +65,11 @@ video.speaking {
 
 /** Selector modal */
 
+#media-selector {
+  display: flex;
+  flex-direction: column;
+}
+
 #media-selector .videoAudioSettingsContainer  {
   margin-top: 2em;
 }
@@ -112,7 +117,7 @@ video.speaking {
 }
 
 #media-chat-buttons {
-  margin-bottom: 1em; 
+  margin-bottom: 1em;
   margin-top: 1em;
 }
 
