@@ -576,6 +576,8 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
   }
 }
 
+// Can't do narrower than `any[]` here, bc the args come from JSON.parse(), so it's the
+// only rest type every handler matches.
 type PubSubEventHandler = (...args: any[]) => void
 type PubSubEventMapping = { [event: string]: PubSubEventHandler }
 // Fancy alternate form we might switch to in some cases:
