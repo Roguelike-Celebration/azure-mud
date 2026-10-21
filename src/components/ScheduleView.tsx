@@ -21,11 +21,13 @@ const PREVIEW_END = new Date('2026-09-13T17:00:00-07:00')
 const FIRST_DAY_END = new Date('2026-10-16T21:00:00-07:00')
 const SECOND_DAY_END = new Date('2026-10-17T21:00:00-07:00')
 const THIRD_DAY_END = new Date('2026-10-18T21:00:00-07:00')
+const AFTERPARTY_END = new Date('2026-10-21T19:00:00-07:00')
 
 const dayPreview = (time) => new Date(`2026-09-13T${time}:00.000-07:00`)
 const dayOneDate = (time) => new Date(`2026-10-16T${time}:00.000-07:00`)
 const dayTwoDate = (time) => new Date(`2026-10-17T${time}:00.000-07:00`)
 const dayThreeDate = (time) => new Date(`2026-10-18T${time}:00.000-07:00`)
+const dayAfterparty = (time) => new Date(`2026-10-21T${time}:00.000-07:00`)
 
 function ScheduleEntry (time: string, day: number, text: string, roomIds?: string[], breakoutRoomId?: string): ScheduleEntry {
   if (day === 0) {
@@ -43,6 +45,10 @@ function ScheduleEntry (time: string, day: number, text: string, roomIds?: strin
   } else if (day === 3) {
     return {
       time: dayThreeDate(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId, day
+    }
+  } else if (day === 4) {
+    return {
+      time: dayAfterparty(time), text: text, roomIds: roomIds, breakoutRoomId: breakoutRoomId, day
     }
   } else {
     console.error('Your static data is messed up, somehow.')
@@ -106,7 +112,12 @@ export const ScheduleEntries: ScheduleEntry[] = [
   ScheduleEntry('17:45', 3, 'The Art of the Long-form Roguelike Run: The Nuzlocke', ['theater'], 'vipSeats'),
   ScheduleEntry('18:00', 3, 'The Decades-Long Design Experiment That Escapes Permadeath and Finds a New Form Every Run', ['theater'], 'waterboy'),
   ScheduleEntry('18:15', 3, SOCIAL_TIME),
-  ScheduleEntry('19:00', 3, 'Doors Close')
+  ScheduleEntry('19:00', 3, 'Doors Close'),
+
+  ScheduleEntry('09:00', 4, 'Mods cleaning up the space for after-party'),
+  ScheduleEntry('17:00', 4, 'Doors Open'),
+  ScheduleEntry('17:01', 4, 'After-Party: private MUD tour for speakers'),
+  ScheduleEntry('18:30', 4, 'Doors Close')
 ]
 
 export default function ScheduleView () {
@@ -115,7 +126,7 @@ export default function ScheduleView () {
 
   const today = nowDate()
 
-  let day = 3
+  let day = 4
   let dayText = 'Sunday'
   if (today <= PREVIEW_END) {
     day = 0
@@ -129,6 +140,9 @@ export default function ScheduleView () {
   } else if (today <= THIRD_DAY_END) {
     day = 3
     dayText = 'Sunday'
+  } else if (today <= AFTERPARTY_END) {
+    day = 4
+    dayText = 'After-Party'
   }
   const entries = ScheduleEntries.filter(e => e.day === day)
 
