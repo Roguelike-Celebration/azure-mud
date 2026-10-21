@@ -1,4 +1,5 @@
 import { AzureFunction, Context } from '@azure/functions'
+
 import { azureWrap } from '../src/azureWrap'
 import heartbeat from '../src/endpoints/heartbeat'
 

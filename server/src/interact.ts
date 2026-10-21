@@ -1,7 +1,8 @@
-import { User } from './user'
 import { cookie } from '../src/cookie'
-import { polymorph, cancellation } from '../src/polymorph'
+import { cancellation, polymorph } from '../src/polymorph'
+
 import { Result } from './endpoint'
+import { User } from './user'
 
 export async function interact (user: User, messageId: string, inspectedObject: string): Promise<Result> {
   if (user.roomId === 'oracle' && (inspectedObject.includes('cookie') || inspectedObject.includes('fortune'))) {

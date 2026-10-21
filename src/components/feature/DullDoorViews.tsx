@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
+
+import { HideModalAction, ShowModalAction, UpdateProfileColorAction } from '../../Actions'
 import { DispatchContext, UserMapContext } from '../../App'
-import { UpdateProfileColorAction, ShowModalAction, HideModalAction } from '../../Actions'
 import { Modal } from '../../modals'
 import * as Storage from '../../storage'
 

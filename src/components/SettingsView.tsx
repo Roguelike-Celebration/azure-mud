@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 
 import '../../style/profileEditView.css'
-import { SetUseSimpleNamesAction, SetCaptionsEnabledAction } from '../Actions'
-import { DispatchContext, SettingsContext } from '../App'
 import { Badge } from '../../server/src/badges'
-
+import { SetCaptionsEnabledAction, SetUseSimpleNamesAction } from '../Actions'
+import { DispatchContext, SettingsContext } from '../App'
 import { currentTheme, setTheme } from '../storage'
+
 import VideoAudioSettingsView from './VideoAudioSettingsView'
 
 interface Props {

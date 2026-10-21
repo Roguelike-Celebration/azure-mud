@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext, useRef, useState } from 'react'
-import { Room } from '../room'
-import { moveToRoom } from '../networking'
+import _, { isUndefined } from 'lodash'
+import React, { useContext, useState } from 'react'
+
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
-import _, { head, isUndefined } from 'lodash'
+import { moveToRoom } from '../networking'
 import { PresenceCountMap } from '../reducer'
 
 /**

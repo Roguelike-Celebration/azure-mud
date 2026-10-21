@@ -1,6 +1,5 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-
 import { MESSAGE_MAX_LENGTH } from '../config'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { User } from '../user'
 
 const sendCaption: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {

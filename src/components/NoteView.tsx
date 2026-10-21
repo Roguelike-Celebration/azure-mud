@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { FaThumbsUp, FaRegThumbsUp } from 'react-icons/fa'
-import ReactTooltip from 'react-tooltip'
+import React, { useContext } from 'react'
+import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
 import Linkify from 'react-linkify'
+import ReactTooltip from 'react-tooltip'
 
 import { RoomNote } from '../../server/src/roomNote'
-import { UserMapContext } from '../App'
 import { MinimalUser } from '../../server/src/user'
-import { deleteRoomNote, unlikeRoomNote, unlikeObeliskNote, likeRoomNote, likeObeliskNote, deleteObeliskNote, deleteRoom } from '../networking'
+import { UserMapContext } from '../App'
+import { deleteObeliskNote, deleteRoomNote, likeObeliskNote, likeRoomNote, unlikeObeliskNote, unlikeRoomNote } from '../networking'
+
 import NameView from './NameView'
 
 export function NoteView (props: { note: RoomNote, isObelisk?: boolean }) {

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import { nie } from '../utils'
 import * as Twilio from 'twilio-video'
+
+import { nie } from '../utils'
 
 export const MediaChatContext = React.createContext<MediaChatContextProps>({
   prepareForMediaChat: async () => console.log('Not implemented'),

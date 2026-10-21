@@ -1,7 +1,8 @@
-import React, { createContext, useEffect } from 'react'
-
 import _ from 'lodash'
+import React, { createContext, useEffect } from 'react'
 import { IconContext } from 'react-icons/lib'
+import ReactTooltip from 'react-tooltip'
+
 import {
   Action,
   AuthenticateAction,
@@ -38,6 +39,7 @@ import MediaSelectorView from './components/MediaSelectorView'
 import { MessageList } from './components/MessageList'
 import { ModalView } from './components/ModalView'
 import { NoteWallView } from './components/NoteWallView'
+import { ObeliskView } from './components/ObeliskView'
 import ProfileEditView from './components/ProfileEditView'
 import ProfileView from './components/ProfileView'
 import RiddleModalView from './components/RiddleModal'
@@ -47,6 +49,7 @@ import ScheduleView from './components/ScheduleView'
 import ServerSettingsView from './components/ServerSettingsView'
 import SettingsView from './components/SettingsView'
 import SideNavView from './components/SideNavView'
+import SpecialTextModalView from './components/SpecialTextModalView'
 import VerifyEmailView from './components/VerifyEmailView'
 import { VirtualizationProvider } from './components/VirtualizationProvider'
 import WelcomeModalView from './components/WelcomeModalView'
@@ -57,9 +60,6 @@ import reducer, { defaultState, RoomDataMap, State, UserMap } from './reducer'
 import * as Storage from './storage'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
-import SpecialTextModalView from './components/SpecialTextModalView'
-import ReactTooltip from 'react-tooltip'
-import { ObeliskView } from './components/ObeliskView'
 
 interface UserMapContextValue {
   userMap: UserMap
