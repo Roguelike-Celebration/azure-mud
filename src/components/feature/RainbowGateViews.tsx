@@ -14,7 +14,7 @@ export const RainbowGateRoomView = () => {
     return enumValues[randomIndex]
   }
 
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
 
   const jumpThroughGate = async () => {
     const newVisits = await incrementGateVisits()

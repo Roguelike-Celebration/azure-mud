@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Linkify from 'react-linkify'
 import ReactTooltip from 'react-tooltip'
 
@@ -43,7 +43,7 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
   const { user, whispers } = props
   const dispatch = useContext(DispatchContext)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const lastMessage = document.querySelector<HTMLElement>(
       '#chat .whisper-message:last-of-type'
     )

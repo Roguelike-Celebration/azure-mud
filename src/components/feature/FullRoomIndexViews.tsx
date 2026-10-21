@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { ShowModalAction } from '../../Actions'
 import { DispatchContext } from '../../App'
@@ -6,7 +6,7 @@ import { Modal } from '../../modals'
 import { Room } from '../../room'
 
 export const FullRoomIndexRoomView = () => {
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
 
   const handleClick = () => {
     dispatch(ShowModalAction(Modal.FeatureFullRoomIndex))

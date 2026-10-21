@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaVideo, FaVolumeUp } from 'react-icons/fa'
 
 import { UserMapContext } from '../App'
@@ -32,7 +32,7 @@ const PresenceView = (props: {
   userId?: string;
   roomId: string;
 }) => {
-  const { userMap } = React.useContext(UserMapContext)
+  const { userMap } = useContext(UserMapContext)
   let { users, userId } = props
   const { callParticipants } = useMediaChatContext()
   const [summarizeUsersInRoom, setSummarizeUsersInRoom] = useState(false)
