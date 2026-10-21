@@ -72,7 +72,7 @@ export default function MediaSelectorView (props: Props) {
   let video
   if (!props.hideVideo) {
     video = (
-      <><label htmlFor="#video-select">Webcam</label><select
+      <><label htmlFor="video-select">Webcam</label><select
         name="Video"
         id="video-select"
         onChange={onVideoChange}
@@ -83,20 +83,13 @@ export default function MediaSelectorView (props: Props) {
     )
   }
 
-  // HACK ALERT: Here because I couldn't figure out the CSS. Somebody who knows css please help, my code is dying. I
-  // think it's in videoChat.css that this should be put.
-  const mediaSelectorStyle = {
-    display: 'flex',
-    'flex-direction': 'column'
-  }
-
   return (
-    <div id='media-selector' style={mediaSelectorStyle}>
+    <div id='media-selector'>
       <div>
         {props.hideVideo ? '' : <LocalMediaView speaking={props.userIsSpeaking} hideUI={true}/>}
         <div className='selects'>
           {video}
-          <label htmlFor="#audio-select">Audio</label>
+          <label htmlFor="audio-select">Audio</label>
           <select
             name="Audio"
             id="audio-select"
