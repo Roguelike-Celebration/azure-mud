@@ -16,15 +16,15 @@ export class Deferred<T> {
     })
   }
 
-  public get promise () {
+  public get promise (): Promise<T> {
     return this._promise
   }
 
-  public get resolve () {
+  public get resolve (): (value: T | PromiseLike<T>) => void {
     return this._resolve
   }
 
-  public get reject () {
+  public get reject (): (reason?: any) => void {
     return this._reject
   }
 }

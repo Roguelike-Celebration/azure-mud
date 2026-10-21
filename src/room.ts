@@ -6,6 +6,8 @@
 
 import * as Server from '../server/src/rooms'
 import { RoomNote } from '../server/src/roomNote'
+import type { RoomDataMap } from './reducer'
+
 export interface Room {
   displayName: string;
   shortName: string;
@@ -28,6 +30,8 @@ export interface MinimalRoom {
   id: string;
 }
 
+export type ServerRoomDataMap = { [roomId: string]: Server.Room }
+
 export function convertServerRoom (room: Server.Room): Room {
   return {
     displayName: room.displayName,
@@ -45,10 +49,8 @@ export function convertServerRoom (room: Server.Room): Room {
   }
 }
 
-export function convertServerRoomData (roomData: {
-  [roomId: string]: Server.Room;
-}): { [roomId: string]: Room } {
-  const newObj = {}
+export function convertServerRoomData (roomData: ServerRoomDataMap): RoomDataMap {
+  const newObj: RoomDataMap = {}
 
   Object.keys(roomData).forEach((k) => {
     const room = roomData[k]

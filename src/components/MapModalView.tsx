@@ -4,9 +4,10 @@ import { DispatchContext } from '../App'
 import { Modal } from '../modals'
 import { Room } from '../room'
 import MapView from './MapView'
+import { PresenceCountMap } from '../reducer'
 
 interface Props {
-  presenceData: { [roomId: string]: number };
+  presenceData: PresenceCountMap;
   currentRoomId: string
 }
 

@@ -5,7 +5,7 @@ import { MinimalUser, PublicUser, User } from '../server/src/user'
 import { Message, WhisperMessage } from './message'
 import { Modal } from './modals'
 import { connectRoomData } from './networking'
-import { ModalOptions, State } from './reducer'
+import { ModalOptions, PresenceListMap, RoomDataMap, State, UserMap } from './reducer'
 import { Room } from './room'
 import { Thunk } from './useReducerWithThunk'
 import { fps } from './utils'
@@ -198,13 +198,13 @@ interface UpdatedCurrentRoomAction {
   type: ActionType.UpdatedCurrentRoom;
   value: {
     roomId: string;
-    roomData: { [roomId: string]: Room };
+    roomData: RoomDataMap;
   };
 }
 
 export const UpdatedCurrentRoomAction = (
   roomId: string,
-  roomData: { [roomId: string]: Room }
+  roomData: RoomDataMap
 ): UpdatedCurrentRoomAction => ({
   type: ActionType.UpdatedCurrentRoom,
   value: { roomId, roomData }
@@ -229,8 +229,8 @@ export const ChatReadyAction = (): ChatReadyAction => ({
 export const ConnectAction =
   (
     roomId: string,
-    roomData: { [roomId: string]: Room },
-    presenceData?: { [roomId: string]: string[] },
+    roomData: RoomDataMap,
+    presenceData?: PresenceListMap,
     roomNotes?: RoomNote[]
   ): Thunk<Action, State> =>
     async (dispatch, getState) => {
@@ -247,12 +247,10 @@ export const ConnectAction =
 
 interface UpdatedRoomDataAction {
   type: ActionType.UpdatedRoomData;
-  value: { [roomId: string]: Room };
+  value: RoomDataMap;
 }
 
-export const UpdatedRoomDataAction = (roomData: {
-  [roomId: string]: Room;
-}): UpdatedRoomDataAction => {
+export const UpdatedRoomDataAction = (roomData: RoomDataMap): UpdatedRoomDataAction => {
   return {
     type: ActionType.UpdatedRoomData,
     value: roomData
@@ -261,12 +259,10 @@ export const UpdatedRoomDataAction = (roomData: {
 
 interface UpdatedPresenceAction {
   type: ActionType.UpdatedPresence;
-  value: { [roomId: string]: string[] };
+  value: PresenceListMap;
 }
 
-export const UpdatedPresenceAction = (data: {
-  [roomId: string]: string[];
-}): UpdatedPresenceAction => {
+export const UpdatedPresenceAction = (data: PresenceListMap): UpdatedPresenceAction => {
   return {
     type: ActionType.UpdatedPresence,
     value: data
@@ -494,12 +490,10 @@ export const PlayerLeftAction = (
 
 interface UserMapAction {
   type: ActionType.UserMap;
-  value: { [userId: string]: MinimalUser };
+  value: UserMap;
 }
 
-export const UserMapAction = (map: {
-  [userId: string]: MinimalUser;
-}): UserMapAction => {
+export const UserMapAction = (map: UserMap): UserMapAction => {
   return {
     type: ActionType.UserMap,
     value: map

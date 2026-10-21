@@ -22,14 +22,15 @@ import { useState } from 'react'
 import _ from 'lodash'
 import { useMediaChatContext } from '../videochat/mediaChatContext'
 import PresenceView from './PresenceView'
+import { PresenceCountMap, RoomDataMap } from '../reducer'
 
 const VIDEO_CHAT_MAX_SIZE = 8
 
 interface Props {
   room: Room;
   userId: string;
-  roomData: { [roomId: string]: Room };
-  presenceData: { [roomId: string]: number };
+  roomData: RoomDataMap;
+  presenceData: PresenceCountMap;
   inMediaChat: boolean;
   keepCameraWhenMoving: boolean;
   textOnlyMode: boolean;
@@ -53,35 +54,34 @@ export default function RoomView (props: Props) {
   // Since we're manually setting raw HTML, we can't get refs to add proper click handlers
   // Instead, we just hijack ALL clicks in the description, and check if they're for a link
   // TODO: Eventually change this to return React elements instead.
-  const descriptionClick = (e) => {
-    const roomId =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-room')
+  const descriptionClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!(e.target instanceof HTMLElement)) {
+      return
+    }
+    const roomId = e.target.getAttribute('data-room')
     if (roomId) {
       moveToRoom(roomId)
       return
     }
 
-    const itemName =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-item')
+    const itemName = e.target.getAttribute('data-item')
     if (itemName) {
       pickUpItem(itemName)
     }
 
-    const actionName =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-action')
+    const actionName = e.target.getAttribute('data-action')
     if (actionName) {
       // roomId is required because some of these send messages to the server
       linkActions[actionName](roomId)
     }
 
-    const showModal =
-      e.target && e.target.getAttribute && e.target.getAttribute('data-modal')
+    const showModal = e.target.getAttribute('data-modal')
     if (showModal) {
       dispatch(ShowModalAction(Modal.SpecialFeatureText))
     }
   }
 
-  const toggleRoomDescriptionClick = (e) => {
+  const toggleRoomDescriptionClick = () => {
     setFullDescriptionVisible(!fullDescriptionVisible)
   }
 
@@ -111,7 +111,7 @@ export default function RoomView (props: Props) {
     dispatch(ShowModalAction(Modal.Riddles))
   }
 
-  let noteWallView
+  let noteWallView: React.ReactElement | undefined
   if (room && room.hasNoteWall) {
     if (room.noteWallData) {
       noteWallView = (
@@ -223,8 +223,8 @@ export default function RoomView (props: Props) {
 
 function parseDescription (
   description: string,
-  roomData: { [roomId: string]: Room },
-  presenceData: { [roomId: string]: number }
+  roomData: RoomDataMap,
+  presenceData: PresenceCountMap
 ): string {
   // This code used to get room = roomData[roomId], but now that room data is JIT, it
   // is normal for that to be absent. The links don't actually use data from roomData, so
@@ -232,7 +232,7 @@ function parseDescription (
 
   // Complex "[[text->target]]" links
   const complexLinkRegex = /\[\[([^\]]*?)->([^\]]*?)\]\]/g
-  description = description.replace(complexLinkRegex, (match, text, roomId) => {
+  description = description.replace(complexLinkRegex, (match: string, text: string, roomId: string) => {
     const userCount = presenceData[roomId]
     const textEsc = _.escape(text)
     const roomIdEsc = _.escape(roomId)
@@ -255,7 +255,7 @@ function parseDescription (
   // TODO: Escape roomId here, but be careful about doing it! Some of our links currently (2026)
   // might only work due to accidents of the truncation of unescaped room long-names matching the roomId.
   const simpleLinkRegex = /\[\[(.+?)\]\]/g
-  description = description.replace(simpleLinkRegex, (match, roomId) => {
+  description = description.replace(simpleLinkRegex, (match: string, roomId: string) => {
     const userCount = presenceData[roomId]
     const userCountString = userCount > 0 ? ` (${userCount})` : ''
     return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCountString}</a>`

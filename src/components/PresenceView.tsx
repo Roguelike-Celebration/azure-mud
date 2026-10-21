@@ -12,7 +12,7 @@ import NameView from './NameView'
  * > _([1,2,3]).intersperse(0)
  * [1,0,2,0,3]
  */
-function intersperse (arr, sep) {
+function intersperse<T> (arr: T[], sep: T): T[] {
   if (arr.length === 0) {
     return []
   }
@@ -35,7 +35,8 @@ const PresenceView = (props: {
   const { callParticipants } = useMediaChatContext()
   const [summarizeUsersInRoom, setSummarizeUsersInRoom] = useState(false)
 
-  let audioUsers, videoUsers
+  let audioUsers: string[] = []
+  let videoUsers: string[] = []
   if (callParticipants) {
     const mediaUsers = Array.from(callParticipants.values())
     audioUsers = mediaUsers.filter(p => p.audioTracks.size > 0).map(p => p.identity)
@@ -49,7 +50,7 @@ const PresenceView = (props: {
 
   if (users) {
     // TODO: This should happen in the reducer
-    let names
+    let names: React.ReactElement
 
     if (users.length === 0) {
       return (
@@ -107,7 +108,7 @@ const PresenceView = (props: {
     } else {
       names = (
         <span>
-          {intersperse(userViews.slice(0, users.length - 1), ', ')}, and{' '}
+          {intersperse<React.ReactNode>(userViews.slice(0, users.length - 1), ', ')}, and{' '}
           {userViews[userViews.length - 1]}
         </span>
       )

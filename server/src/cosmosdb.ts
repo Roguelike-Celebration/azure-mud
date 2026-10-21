@@ -6,7 +6,7 @@ import { getServerSettings } from './endpoints/serverSettings'
 
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
-import { DEFAULT_SERVER_SETTINGS, ServerSettings } from './types'
+import { DEFAULT_SERVER_SETTINGS, PresenceListMap, RoomDataMap, ServerSettings } from './types'
 import { User } from './user'
 
 const partitionKey = 'https://roguelikecelebration-mud.azurewebsites.net'
@@ -68,7 +68,7 @@ const CosmosDB = {
     const container = getContainer('users')
     console.log('Trying to set user as active?', user.id, isActive)
     try {
-      return container.item(user.id, partitionKey).replace({ ...user, isActive })
+      await container.item(user.id, partitionKey).replace({ ...user, isActive })
     } catch (e) {
       console.log('ERROR: Could not set user active state', user.id, e)
     }
@@ -77,21 +77,21 @@ const CosmosDB = {
   async setUserHeartbeat (user: User) {
     console.log('Setting heartbeat', user.id)
     const container = getContainer('users')
-    // TBD: Does it accept date objects?
+    // TODO: TBD: Does it accept date objects?
     try {
-      return container.item(user.id, partitionKey).replace({ ...user, heartbeat: new Date().valueOf() })
+      await container.item(user.id, partitionKey).replace({ ...user, heartbeat: new Date().valueOf() })
     } catch (e) {
       console.log('ERROR: Could not update user heartbeat', user.id, e)
     }
   },
 
-  async allRoomOccupants (): Promise<{[roomId: string]: string[]}> {
+  async allRoomOccupants (): Promise<PresenceListMap> {
     console.log('Attempting to fetch all roomOccupants')
     try {
       const container = getContainer('users')
       const { resources: users } = await container.items.query('select c.id, c.roomId from c where c.isActive = true', { partitionKey }).fetchAll()
 
-      const result = {}
+      const result: PresenceListMap = {}
       users.forEach(u => {
         if (!result[u.roomId]) result[u.roomId] = []
         result[u.roomId].push(u.id)
@@ -131,7 +131,7 @@ const CosmosDB = {
 
     try {
       const container = getContainer('users')
-      return await container.item(user.id, partitionKey).replace(data)
+      await container.item(user.id, partitionKey).replace(data)
     } catch (e) {
       console.log('ERROR: Could not update user', user.id, roomId, e)
     }
@@ -139,7 +139,7 @@ const CosmosDB = {
 
   // WARNING: This is currently broken.
   // Needs to be updated to return a string list of all userIds in the user's current room
-  async updateVideoPresenceForUser (user: User, isActive: boolean) {
+  async updateVideoPresenceForUser (user: User, isActive: boolean): Promise<string[]> {
     const data = { ...user, isInVideoChat: isActive }
 
     try {
@@ -148,6 +148,7 @@ const CosmosDB = {
       return []
     } catch (e) {
       console.log('ERROR: Could not update user video presence', user.id, isActive, e)
+      return []
     }
   },
 
@@ -186,8 +187,7 @@ const CosmosDB = {
   async userJustShouted (user: User) {
     const container = await getContainer('users')
     try {
-      const { resource: u } = await container.item(user.id, partitionKey).replace({ ...user, lastShouted: new Date().valueOf() })
-      return u
+      await container.item(user.id, partitionKey).replace({ ...user, lastShouted: new Date().valueOf() })
     } catch (e) {
       console.log('ERROR: Could not update user shout timestamp', user.id, e)
     }
@@ -196,8 +196,7 @@ const CosmosDB = {
   async banUser (user: User, isBanned: boolean) {
     try {
       const container = await getContainer('users')
-      const { resource: u } = await container.item(user.id, partitionKey).replace({ ...user, isBanned })
-      return u
+      await container.item(user.id, partitionKey).replace({ ...user, isBanned })
     } catch (e) {
       console.log('ERROR: Could not update user ban status', user.id, e)
     }
@@ -206,8 +205,7 @@ const CosmosDB = {
   async setModStatus (user: User, isMod: boolean) {
     try {
       const container = await getContainer('users')
-      const { resource: u } = await container.item(user.id, partitionKey).replace({ ...user, isMod })
-      return u
+      await container.item(user.id, partitionKey).replace({ ...user, isMod })
     } catch (e) {
       console.log('ERROR: Could not update user mod status', user.id, e)
     }
@@ -243,11 +241,11 @@ const CosmosDB = {
 
   //   async getRoomNotes(roomId: string) {
 
-  async getRoomData (): Promise<{[name: string]: Room}> {
+  async getRoomData (): Promise<RoomDataMap> {
     const container = await getContainer('rooms')
     const { resources: rooms } = await container.items.readAll().fetchAll()
 
-    const result: {[name: string]: Room} = {};
+    const result: RoomDataMap = {};
 
     (rooms as unknown as Room[])
       .forEach((r) => { result[r.id] = r })
