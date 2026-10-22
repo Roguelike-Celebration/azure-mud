@@ -10,10 +10,6 @@ import { addNoteToObelisk, deleteRoomNote, startObservingObelisk, stopObservingO
 import { NoteView } from './NoteView'
 import '../../style/noteWall.css'
 
-function numLikes (roomNote: RoomNote) {
-  return !roomNote.likes ? 0 : roomNote.likes.length
-}
-
 interface Props {
   notes: RoomNote[],
   user: PublicUser,

@@ -27,8 +27,6 @@ const addToSet: (key: string, member: string) => Promise<number> = promisify(cac
 const removeFromSet: (key: string, member: string) => Promise<number> = promisify(cache.srem).bind(cache)
 const getSet: (key: string) => Promise<string[]> = promisify(cache.smembers).bind(cache)
 
-const redisKeys: (pattern: string) => Promise<string[]> = promisify(cache.keys).bind(cache)
-
 interface RedisInternal extends Database {
   addOccupantToRoom (roomId: string, userId: string): Promise<void>
   removeOccupantFromRoom (roomId: string, userId: string): Promise<void>
@@ -452,6 +450,5 @@ function roomNotesKey (roomId: string): string {
 export function videoPresenceKey (roomId: string) {
   return `${roomId}PresenceVideo`
 }
-const userMapKey = 'userMap'
 
 export default Redis

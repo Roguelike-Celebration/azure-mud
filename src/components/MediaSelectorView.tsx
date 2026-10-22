@@ -23,7 +23,7 @@ interface Props {
 
 export default function MediaSelectorView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { prepareMediaDevices, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, publishMedia, publishAudio, publishingCamera, publishingMic, unpublishMedia } = useMediaChatContext()
+  const { prepareMediaDevices, cameras, mics, currentMic, setCurrentMic, currentCamera, setCurrentCamera, publishingCamera, publishingMic, unpublishMedia } = useMediaChatContext()
 
   useEffect(() => {
     const run = async () => {

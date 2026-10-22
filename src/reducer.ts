@@ -542,7 +542,7 @@ export default produce((draft: State, action: Action) => {
       } else {
         sendChatMessage(messageId, trimmedMessage, draft.roomId)
 
-        const [_, username, message] = parsedUsernameMessage
+        const [, username, message] = parsedUsernameMessage
         const user = Object.values(draft.userMap).find(
           (u) => u.username === username
         )

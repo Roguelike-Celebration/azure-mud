@@ -1,5 +1,4 @@
 /* eslint-disable react/display-name */
-import _ from 'lodash'
 import React from 'react'
 
 import { deleteRoom } from '../../networking'
