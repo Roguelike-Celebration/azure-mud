@@ -1,10 +1,10 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { ValidFontRewards } from '../types'
+import { ValidFontReward } from '../types'
 import { updateUserFontReward, User } from '../user'
 
 const updateFontReward: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const font = inputs.font
-  if (font && !(font in ValidFontRewards)) {
+  if (font && !(font in ValidFontReward)) {
     return {
       httpResponse: {
         status: 400,
