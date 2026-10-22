@@ -4,7 +4,12 @@ import { Message, WhisperMessage } from './message'
 
 // Message cache
 
-export async function getMessages (): Promise<{messages: Message[], whispers: WhisperMessage[]} | undefined> {
+export interface MessageArchiveData {
+  messages: Message[]
+  whispers: WhisperMessage[]
+}
+
+export async function getMessages (): Promise<MessageArchiveData | undefined> {
   try {
     const timestamp: Date = await localforage.getItem(messageTimestampKey)
     const messages: Message[] = await localforage.getItem(messagesKey)
