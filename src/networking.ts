@@ -106,7 +106,7 @@ export async function updateFontReward (userId: string, font: string): Promise<v
   })
 }
 
-export async function disconnect (userId: string): Promise<void> {
+export async function disconnect (): Promise<void> {
   await callAzureFunction('disconnect')
 }
 
