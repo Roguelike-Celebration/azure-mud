@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { ValidColors } from '../../../server/src/types'
+import { ValidColor } from '../../../server/src/types'
 import { ShowModalAction, UpdateProfileColorAction } from '../../Actions'
 import { DispatchContext, UserMapContext } from '../../App'
 import { Modal } from '../../modals'
@@ -18,7 +18,7 @@ export const RainbowGateRoomView = () => {
 
   const jumpThroughGate = async () => {
     const newVisits = await incrementGateVisits()
-    dispatch(UpdateProfileColorAction(randomEnum(ValidColors)))
+    dispatch(UpdateProfileColorAction(randomEnum(ValidColor)))
     dispatch(ShowModalAction(Modal.FeatureRainbowGate))
   }
 
