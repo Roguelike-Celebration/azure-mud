@@ -81,7 +81,7 @@ export interface ProfileResponse {
   user: User;
 }
 
-export enum ValidColors {
+export enum ValidColor {
   Blue = 'Blue',
   Cyan = 'Cyan',
   Green = 'Green',
@@ -92,13 +92,13 @@ export enum ValidColors {
   Yellow = 'Yellow'
 }
 
-export enum ValidFontRewards {
+export enum ValidFontReward {
   Comic = 'Comic',
   Classic = 'Classic',
   Impactful = 'Impactful'
 }
 
-export enum BadgeCategories {
+export enum BadgeCategory {
   Default = 'DEFAULT',
   Year2022 = 'YEAR_2022',
   Talk2022 = 'TALK_2022',
