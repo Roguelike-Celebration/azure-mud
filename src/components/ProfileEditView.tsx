@@ -1,9 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
 import { PublicUser } from '../../server/src/user'
-import { HideModalAction } from '../Actions'
-import { DispatchContext } from '../App'
 import config from '../config'
 import { updateProfile } from '../networking'
 import '../../style/profileEditView.css'
@@ -27,8 +25,6 @@ function sanitizeUsername (s: string) : string {
 }
 
 export default function ProfileEditView (props: Props) {
-  const dispatch = useContext(DispatchContext)
-
   const { defaultHandle, user, prepopulateTwitterWithDefaultHandle } = props
 
   const [handle, setHandle] = useState(
@@ -45,10 +41,6 @@ export default function ProfileEditView (props: Props) {
     (user && user.twitterHandle) ||
     (prepopulateTwitterWithDefaultHandle && defaultHandle) ||
     '')
-
-  const close = () => {
-    dispatch(HideModalAction())
-  }
 
   const submit = () => {
     updateProfile({

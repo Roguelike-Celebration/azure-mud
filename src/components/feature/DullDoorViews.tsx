@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { HideModalAction, ShowModalAction, UpdateProfileColorAction } from '../../Actions'
-import { DispatchContext, UserMapContext } from '../../App'
+import { ShowModalAction, UpdateProfileColorAction } from '../../Actions'
+import { DispatchContext } from '../../App'
 import { Modal } from '../../modals'
 import * as Storage from '../../storage'
 
@@ -9,9 +9,6 @@ import * as Storage from '../../storage'
 // This undoes that.
 export const DullDoorRoomView = () => {
   const dispatch = useContext(DispatchContext)
-  const { userMap, myId } = useContext(UserMapContext)
-
-  const user = userMap[myId]
 
   const pullTheCleanRope = () => {
     dispatch(UpdateProfileColorAction(null))
@@ -24,8 +21,7 @@ export const DullDoorRoomView = () => {
 }
 
 export default function DullDoorModalView () {
-  const dispatch = useContext(DispatchContext)
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- used by commented-out code below
   const [wasColoredEntering, setWasColoredEntering] = useState(false)
 
   useEffect(() => {
@@ -33,14 +29,6 @@ export default function DullDoorModalView () {
       setWasColoredEntering(await Storage.getWasColoredEntering())
     })()
   }, [])
-
-  const giveColor = () => {
-    dispatch(UpdateProfileColorAction(null))
-    dispatch(HideModalAction())
-  }
-  const leave = () => {
-    dispatch(HideModalAction())
-  }
 
   // This flag doesn't seem to be working, it's always false. Disabling for now since it's fine to just have the same message each time.
   /* if (!wasColoredEntering) {
