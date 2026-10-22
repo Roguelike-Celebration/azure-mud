@@ -1,10 +1,10 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { ValidColors } from '../types'
+import { ValidColor } from '../types'
 import { updateUserProfileColor, User } from '../user'
 
 const updateProfileColor: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const color = inputs.color
-  if (color && !(color in ValidColors)) {
+  if (color && !(color in ValidColor)) {
     return {
       httpResponse: {
         status: 400,
