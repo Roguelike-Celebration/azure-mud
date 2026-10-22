@@ -3,7 +3,7 @@ import React, { useContext, useLayoutEffect, useReducer, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 
 import { Badge } from '../../server/src/badges'
-import { BadgeCategories } from '../../server/src/types'
+import { BadgeCategory } from '../../server/src/types'
 import { EquipBadgeAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { equipBadge } from '../networking'
@@ -18,11 +18,11 @@ interface Props {
   unlockableBadges?: Badge[]
 }
 
-type CategoryVisibility = Record<BadgeCategories, boolean>
+type CategoryVisibility = Record<BadgeCategory, boolean>
 
 interface VisibilityAction {
   type: 'hide' | 'show'
-  category: BadgeCategories
+  category: BadgeCategory
 }
 
 export default function BadgesModalView (props: Props) {
@@ -30,7 +30,7 @@ export default function BadgesModalView (props: Props) {
   const [selectedBadge, setSelectedBadge] = useState<Badge|undefined>(undefined)
 
   const initialState = Object.fromEntries(
-    Object.values(BadgeCategories).map(c => [c, true])
+    Object.values(BadgeCategory).map(c => [c, true])
   ) as CategoryVisibility
   const localReducer = (state: CategoryVisibility, action: VisibilityAction) => {
     switch (action.type) {
@@ -179,7 +179,7 @@ export default function BadgesModalView (props: Props) {
 
   const unlockedBadgesSet = new Set<string>()
 
-  const unlockedBadgesByCategory = new Map<BadgeCategories, JSX.Element[]>()
+  const unlockedBadgesByCategory = new Map<BadgeCategory, JSX.Element[]>()
   props.unlockedBadges.forEach((b, i) => {
     if (!unlockedBadgesByCategory.has(b.category)) {
       unlockedBadgesByCategory.set(b.category, [])
@@ -206,7 +206,7 @@ export default function BadgesModalView (props: Props) {
   })
 
   // TODO: Can you see description with screen reader?
-  const lockedBadgesByCategory = new Map<BadgeCategories, JSX.Element[]>()
+  const lockedBadgesByCategory = new Map<BadgeCategory, JSX.Element[]>()
   uniq(props.unlockableBadges || []).filter(b => {
     return !unlockedBadgesSet.has(b.emoji)
   }).forEach((b) => {
@@ -239,9 +239,9 @@ export default function BadgesModalView (props: Props) {
   // If you don't assign this as a const, the useLayoutEffect causes an exception after loading.
   // I guess React lazy-evaluates the code going into the element? Or something like that?
   // I dunno, I don't know React, I do servers.
-  const defaultBadges = unlockedBadgesByCategory.get(BadgeCategories.Default)
+  const defaultBadges = unlockedBadgesByCategory.get(BadgeCategory.Default)
 
-  const ToggleVisible = ({ category }: { category: BadgeCategories }) => {
+  const ToggleVisible = ({ category }: { category: BadgeCategory }) => {
     const toggle = () => {
       if (localState[category]) {
         localDispatch({ type: 'hide', category: category })
@@ -259,7 +259,7 @@ export default function BadgesModalView (props: Props) {
     return (<button className="toggle-badge-category" onClick={toggle} onKeyDown={keyboardToggle}>{localState[category] ? '(hide)' : '(show)'}</button>)
   }
 
-  const BadgeCategoryView = ({ title, badgeCategory }: { title: string, badgeCategory: BadgeCategories}) => {
+  const BadgeCategoryView = ({ title, badgeCategory }: { title: string, badgeCategory: BadgeCategory}) => {
     return (<section>
       <h2>{title} <ToggleVisible category={badgeCategory} /></h2>
       {localState[badgeCategory] &&
@@ -284,17 +284,17 @@ export default function BadgesModalView (props: Props) {
         <section className="all">
           <h2>Default</h2>
           {defaultBadges}
-          <BadgeCategoryView title="2026 Space Badges" badgeCategory={BadgeCategories.Year2026} />
-          <BadgeCategoryView title="2026 Talk Badges" badgeCategory={BadgeCategories.Talk2026} />
-          <BadgeCategoryView title="2025 Space Badges" badgeCategory={BadgeCategories.Year2025} />
-          <BadgeCategoryView title="2025 Talk Badges" badgeCategory={BadgeCategories.Talk2025} />
-          <BadgeCategoryView title="2024 Space Badges" badgeCategory={BadgeCategories.Year2024} />
-          <BadgeCategoryView title="2024 Talk Badges" badgeCategory={BadgeCategories.Talk2024} />
-          <BadgeCategoryView title="2023 Space Badges" badgeCategory={BadgeCategories.Year2023} />
-          <BadgeCategoryView title="2023 Talk Badges" badgeCategory={BadgeCategories.Talk2023} />
-          <BadgeCategoryView title="Special" badgeCategory={BadgeCategories.Special} />
-          <BadgeCategoryView title="2022 Space Badges" badgeCategory={BadgeCategories.Year2022} />
-          <BadgeCategoryView title="2022 Talk Badges" badgeCategory={BadgeCategories.Talk2022} />
+          <BadgeCategoryView title="2026 Space Badges" badgeCategory={BadgeCategory.Year2026} />
+          <BadgeCategoryView title="2026 Talk Badges" badgeCategory={BadgeCategory.Talk2026} />
+          <BadgeCategoryView title="2025 Space Badges" badgeCategory={BadgeCategory.Year2025} />
+          <BadgeCategoryView title="2025 Talk Badges" badgeCategory={BadgeCategory.Talk2025} />
+          <BadgeCategoryView title="2024 Space Badges" badgeCategory={BadgeCategory.Year2024} />
+          <BadgeCategoryView title="2024 Talk Badges" badgeCategory={BadgeCategory.Talk2024} />
+          <BadgeCategoryView title="2023 Space Badges" badgeCategory={BadgeCategory.Year2023} />
+          <BadgeCategoryView title="2023 Talk Badges" badgeCategory={BadgeCategory.Talk2023} />
+          <BadgeCategoryView title="Special" badgeCategory={BadgeCategory.Special} />
+          <BadgeCategoryView title="2022 Space Badges" badgeCategory={BadgeCategory.Year2022} />
+          <BadgeCategoryView title="2022 Talk Badges" badgeCategory={BadgeCategory.Talk2022} />
         </section>
       </div>
     </div>
