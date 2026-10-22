@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import _, { isUndefined } from 'lodash'
+import { isUndefined } from 'lodash'
 import React, { useContext, useEffect, useState } from 'react'
 
 import { HideModalAction } from '../Actions'

@@ -17,7 +17,7 @@ export const RainbowGateRoomView = () => {
   const dispatch = useContext(DispatchContext)
 
   const jumpThroughGate = async () => {
-    const newVisits = await incrementGateVisits()
+    await incrementGateVisits()
     dispatch(UpdateProfileColorAction(randomEnum(ValidColor)))
     dispatch(ShowModalAction(Modal.FeatureRainbowGate))
   }
@@ -30,6 +30,7 @@ export const RainbowGateRoomView = () => {
 export default function RainbowGateModalView () {
   const { userMap, myId } = useContext(UserMapContext)
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- used by commented-out code below
   const [visits, setVisits] = useState(0)
 
   useEffect(() => {
