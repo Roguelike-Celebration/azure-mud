@@ -1,0 +1,95 @@
+#!/bin/bash
+#
+# findd - "FIND, Discriminating" - with same dir & file exclusions as grin
+#
+# See grin and grin-excludes.sh for the related grin command and the excludes configuration.
+
+# This code is Bash 3.x, for compatibility with macOS's system /bin/bash, which is stuck on
+# the old Bash 3.x for licensing reasons.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ ${TRACE:-0} == "1" ]]; then set -o xtrace; fi
+
+# Load RLC bash lib
+_tools_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+source "${_tools_dir}/lib/bash/lib-rlc.sh"
+# Load grin-specific shared definitions
+source "${_tools_dir}/lib/bash/grin-excludes.sh"
+
+
+function main {
+  if [[ $# -eq 0  ]]; then
+    rlc::die 'findd: must supply at least 1 argument, and first arg must be a path'
+  fi
+
+  local -a args1=() args2=()
+  local a path_seen=0 in_expr=0
+  for a in "$@"; do
+    if [[ $in_expr == 1 ]]; then
+      args2+=( "$a" )
+    elif [[ $path_seen == 1 && ( $a == -* || $a == '!' || $a == '(' ) ]]; then
+      in_expr=1; args2+=( "$a" )
+    else
+      args1+=( "$a" )
+      [[ $a == -* ]] || path_seen=1
+    fi
+  done
+
+  # Have to build the arg list manually-ish bc of find's syntax
+  local d f first=1
+  local -a excl_dirs excl_files
+  rlc::strsplit excl_dirs  "${RLC_GRIN_EXCLUDE_DIRS:-}"
+  rlc::strsplit excl_files "${RLC_GRIN_EXCLUDE_FILES:-}"
+
+  # Each clause is conditional: find rejects an empty "( )" group with "empty inner
+  # expression", and an empty exclusion list is a thing a user can now set.
+  local -a prune_expr=()
+  if [[ ${#excl_dirs[@]} -gt 0 ]]; then
+    prune_expr+=( -type d '(' )
+    for d in "${excl_dirs[@]}"; do
+      if [[ $first -eq 0 ]]; then prune_expr+=( -or ); fi
+      prune_expr+=( -name "$d" )
+      first=0
+    done
+    prune_expr+=( ')' -prune )
+  fi
+  for f in ${excl_files[@]+"${excl_files[@]}"}; do
+    if [[ ${#prune_expr[@]} -gt 0 ]]; then prune_expr+=( -or ); fi
+    prune_expr+=( -name "$f" )
+  done
+
+  # Without an explicit action here, find's implicit default -print applies to the
+  # -prune branch too, so excluded dirs still show up in the output themselves. But if the
+  # caller already passed an action of their own, adding -print on top double-prints.
+  local has_action=0
+  for a in ${args2[@]+"${args2[@]}"}; do
+    case "$a" in
+      -print | -print0 | -printf | -fprint | -fprint0 | -fprintf \
+          | -ls | -fls | -exec | -execdir | -ok | -okdir | -delete | -quit)
+        has_action=1; break ;;
+    esac
+  done
+  # Use parenthesization to make sure our -print applies to the caller's whole expression, not
+  # just the last branch of an -or disjunction.
+  local -a tail_expr=()
+  if [[ $has_action == 1 ]]; then
+    tail_expr=( "${args2[@]}" )
+  elif [[ ${#args2[@]} -gt 0 ]]; then
+    tail_expr=( '(' "${args2[@]}" ')' -print )
+  else
+    # Bare -print when there's no expression, bc you can't have an empty '( )'
+    tail_expr=( -print )
+  fi
+  if [[ ${#prune_expr[@]} -gt 0 ]]; then
+    find "${args1[@]}" \( "${prune_expr[@]}" \) -or \( "${tail_expr[@]}" \)
+  else
+    find "${args1[@]}" "${tail_expr[@]}"
+  fi
+}
+
+
+# ========== Main script ==========
+
+main "$@"
