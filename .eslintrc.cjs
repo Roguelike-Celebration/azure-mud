@@ -40,7 +40,8 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: false, typedefs: false }],
     // These core rules aren't TS-aware; tsc covers them
     'no-redeclare': 'off',
-    'no-undef': 'off'
+    'no-undef': 'off',
+    '@typescript-eslint/no-shadow': 'error'
   },
   // use override to exempt React components; v3 of the rule can't exempt React per se
   overrides: [
