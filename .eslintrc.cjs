@@ -33,7 +33,14 @@ module.exports = {
       alphabetize: { order: 'asc', caseInsensitive: true }
     }],
     'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: true }],
-    'linebreak-style': ['error', 'unix']
+    'linebreak-style': ['error', 'unix'],
+    '@typescript-eslint/no-redeclare': 'off',
+    'no-use-before-define': 'off',
+    // no-use-before-define typedefs off so we can use same-named interfaces in forward references
+    '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: false, typedefs: false }],
+    // These core rules aren't TS-aware; tsc covers them
+    'no-redeclare': 'off',
+    'no-undef': 'off'
   },
   // use override to exempt React components; v3 of the rule can't exempt React per se
   overrides: [
