@@ -8,24 +8,72 @@ import { Room } from './rooms'
 import { DEFAULT_SERVER_SETTINGS, PresenceListMap, ServerSettings, toServerSettings } from './types'
 import { isMod, User } from './user'
 
-const cache = redis.createClient(
-  parseInt(process.env.RedisPort),
-  process.env.RedisHostname,
-  {
-    auth_pass: process.env.RedisKey,
-    tls: { servername: process.env.RedisHostname }
+// Use TLS port by default; that's what our Azure Redis uses
+const DEFAULT_REDIS_PORT = 6380
+
+/** Async-style adapter object for the callback-style client from the redis library. */
+class AsyncRedisClient {
+  // Field initializers run in order - keep client at the top so promisify can use it
+  private readonly client = connectRedisCallbackClient()
+
+  // Types on these adapter methods are checked because strictBindCallApply is enabled.
+  readonly getCache: (key: string) => Promise<string | null> = promisify(this.client.get).bind(this.client)
+  readonly setCache: (key: string, value: string) => Promise<'OK'> = promisify<string, string, 'OK'>(this.client.set).bind(this.client)
+  readonly expireAt: (key: string, timestamp: number) => Promise<number> = promisify(this.client.expireat).bind(this.client)
+  readonly del: (key: string) => Promise<number> = promisify(this.client.del).bind(this.client)
+
+  readonly addToSet: (key: string, member: string) => Promise<number> = promisify(this.client.sadd).bind(this.client)
+  readonly removeFromSet: (key: string, member: string) => Promise<number> = promisify(this.client.srem).bind(this.client)
+  readonly getSet: (key: string) => Promise<string[]> = promisify(this.client.smembers).bind(this.client)
+
+  constructor () {
+    // Log any errors to the console using event listener; absent this they'd crash process due
+    // to unhandled errors.
+    this.client.on('error', (err) => {
+      console.error('Redis client error:', err)
+    })
   }
-)
+}
 
-// Types on these helper functions are checked because strictBindCallApply is enabled.
-const getCache: (key: string) => Promise<string | null> = promisify(cache.get).bind(cache)
-const setCache: (key: string, value: string) => Promise<'OK'> = promisify<string, string, 'OK'>(cache.set).bind(cache)
-const expireAt: (key: string, timestamp: number) => Promise<number> = promisify(cache.expireat).bind(cache)
-const del: (key: string) => Promise<number> = promisify(cache.del).bind(cache)
+function connectRedisCallbackClient (): redis.RedisClient {
+  const host = requiredEnvVarSetting('RedisHostname')
+  const portStr = process.env.RedisPort?.trim()
+  const key = requiredEnvVarSetting('RedisKey')
+  // Use Number() instead of parseInt() for strict parsing, e.g. failing on '6380bogus'
+  const port = portStr ? Number(portStr) : DEFAULT_REDIS_PORT
+  if (!Number.isInteger(port)) {
+    throw new Error(`Invalid RedisPort env var: '${portStr}' is not an integer.`)
+  }
 
-const addToSet: (key: string, member: string) => Promise<number> = promisify(cache.sadd).bind(cache)
-const removeFromSet: (key: string, member: string) => Promise<number> = promisify(cache.srem).bind(cache)
-const getSet: (key: string) => Promise<string[]> = promisify(cache.smembers).bind(cache)
+  return redis.createClient(port, host, { auth_pass: key, tls: { servername: host } })
+}
+
+function requiredEnvVarSetting (name: string): string {
+  const val = process.env[name]?.trim()
+  if (!val) {
+    throw new Error(`Missing env var for Redis: ${name}. Set that in the Function App or ` +
+      'local.settings.json for local dev work.')
+  }
+  return val
+}
+
+let client: AsyncRedisClient | undefined
+
+function getClient (): AsyncRedisClient {
+  if (client === undefined) {
+    client = new AsyncRedisClient()
+  }
+  return client
+}
+
+const getCache = (key: string) => getClient().getCache(key)
+const setCache = (key: string, value: string) => getClient().setCache(key, value)
+const expireAt = (key: string, timestamp: number) => getClient().expireAt(key, timestamp)
+const del = (key: string) => getClient().del(key)
+
+const addToSet = (key: string, member: string) => getClient().addToSet(key, member)
+const removeFromSet = (key: string, member: string) => getClient().removeFromSet(key, member)
+const getSet = (key: string) => getClient().getSet(key)
 
 interface RedisInternal extends Database {
   addOccupantToRoom (roomId: string, userId: string): Promise<void>
