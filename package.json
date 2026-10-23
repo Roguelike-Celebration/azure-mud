@@ -77,13 +77,17 @@
     "events": "^3.3.0",
     "gh-pages": "^3.1.0",
     "https-browserify": "^1.0.0",
-    "parcel": "^2.7",
+    "parcel": "2.12.0",
     "process": "^0.11.10",
+    "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "typescript": "5.3.3",
     "url": "^0.11.0",
     "util": "^0.12.4"
+  },
+  "overrides": {
+    "node-releases": "2.0.44"
   }
 }
