@@ -1,5 +1,5 @@
 import allowedItems from './server/src/allowedItems'
-import { includes } from 'lodash'
+import _ from 'lodash'
 import { linkActions } from './src/linkActions'
 import { staticRoomData } from './server/src/rooms'
 
@@ -19,7 +19,7 @@ Object.values(staticRoomData).forEach(async (room) => {
   // These should use regex matching functions instead of replacing
   // but shrug, copy/pasting from RoomView.tsx is fine.
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
-    if (includes(roomIds, roomId)) {
+    if (_.includes(roomIds, roomId)) {
     } else if (roomId === 'item' && allowedItems.includes(text)) {
     } else if (linkActions[roomId]) {
     } else {
@@ -28,8 +28,8 @@ Object.values(staticRoomData).forEach(async (room) => {
     return 'handled'
   })
 
-  description = description.replace(simpleLinkRegex, (match, roomId, _) => {
-    if (!includes(roomIds, roomId)) {
+  description = description.replace(simpleLinkRegex, (match, roomId) => {
+    if (!_.includes(roomIds, roomId)) {
       failures.push([room.id, match])
     }
     return 'handled'
