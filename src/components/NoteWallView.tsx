@@ -1,4 +1,4 @@
-import { sortBy } from 'lodash'
+import _ from 'lodash'
 import React, { useContext } from 'react'
 import ReactTooltip from 'react-tooltip'
 
@@ -92,7 +92,7 @@ export function NoteWallView (props: Props) {
     }
   }
 
-  const sortedNotes = sortBy(props.notes || [], (note) => {
+  const sortedNotes = _.sortBy(props.notes || [], (note) => {
     // Lodash sortBy is always ascending, so we negative it out to get descending
     return note.likes ? -note.likes.length : 0
   })
