@@ -1,7 +1,8 @@
-import allowedItems from './server/src/allowedItems'
 import _ from 'lodash'
-import { linkActions } from './src/linkActions'
+
+import allowedItems from './server/src/allowedItems'
 import { staticRoomData } from './server/src/rooms'
+import { linkActions } from './src/linkActions'
 
 const failures: string[][] = []
 Object.values(staticRoomData).forEach(async (room) => {
@@ -28,7 +29,7 @@ Object.values(staticRoomData).forEach(async (room) => {
     return 'handled'
   })
 
-  description = description.replace(simpleLinkRegex, (match, roomId) => {
+  description.replace(simpleLinkRegex, (match, roomId) => {
     if (!_.includes(roomIds, roomId)) {
       failures.push([room.id, match])
     }
@@ -43,6 +44,5 @@ if (failures.length === 0) {
   failures.forEach(f => {
     console.log(`${f[0]}: ${f[1]}`)
   })
-
   process.exit(1)
 }
