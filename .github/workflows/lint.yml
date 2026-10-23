@@ -15,13 +15,13 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
-      - run: npm install
+      - run: npm ci
 
       # This produces compiled.json, which needs to exist for lint-rooms to work
       - name: server build
         run: |
           cd server
-          npm install
+          npm ci
           npm run build
 
       - name: build
@@ -34,4 +34,4 @@ jobs:
       #   run: npm run lint-rooms
 
       - name: typecheck
-        run: cd server && npm install && cd ..; npm run typecheck
+        run: cd server && npm ci && cd ..; npm run typecheck
