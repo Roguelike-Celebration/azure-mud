@@ -195,7 +195,7 @@ export const TwilioChatContextProvider = (props: {
   async function prepareForMediaChat () {
     if (token) return
     return fetchTwilioToken()
-      .then((token) => { setToken(token) })
+      .then((tok) => { setToken(tok) })
   }
 
   async function prepareMediaDevices () {
@@ -216,20 +216,18 @@ export const TwilioChatContextProvider = (props: {
         .then((devices) => {
           console.log('[TWILIO] Fetched devices')
 
-          const cameras = devices
+          const newCameras = devices
             .filter(d => d.kind === 'videoinput')
             .map(mapToDeviceInfo)
-
-          const mics = devices
+          const newMics = devices
             .filter(d => d.kind === 'audioinput')
             .map(mapToDeviceInfo)
 
-          setCameras(cameras)
-          setMics(mics)
-
-          console.log('[TWILIO] Setting current camera', cameras[0])
-          setCurrentCameraInternal(cameras[0])
-          setCurrentMicInternal(mics[0])
+          setCameras(newCameras)
+          setMics(newMics)
+          console.log('[TWILIO] Setting current camera', newCameras[0])
+          setCurrentCameraInternal(newCameras[0])
+          setCurrentMicInternal(newMics[0])
         })
     } catch (e) {
       console.log('[TWILIO] Error fetching media devices', e)
@@ -238,28 +236,28 @@ export const TwilioChatContextProvider = (props: {
     }
   }
 
-  async function joinCall (roomId: string, shouldPublishTracks: boolean) {
+  async function joinCall (newRoomId: string, shouldPublishTracks: boolean) {
     if (!props.active) {
       console.warn('joinCall was called while text-only mode was on')
       return
     }
     // A useEffect hook will re-call this once the token exists
     if (!token) {
-      setRoomId(roomId)
+      setRoomId(newRoomId)
       return
     }
 
     // We're real sloppy re: calling this multiple times
-    if (room && room.name === roomId) return
+    if (room && room.name === newRoomId) return
 
-    if (room && room.name !== roomId) {
+    if (room && room.name !== newRoomId) {
       // Remove from previous room
       room.disconnect()
     }
 
     try {
       const opts: Twilio.ConnectOptions = {
-        name: roomId,
+        name: newRoomId,
         tracks: [],
         maxAudioBitrate: 16000, // For music remove this line
         bandwidthProfile: {

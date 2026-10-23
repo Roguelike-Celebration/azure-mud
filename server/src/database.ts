@@ -72,7 +72,7 @@ interface Database {
 
   lastShoutedForUser (userId: string): Promise<Date | undefined>;
 
-  setModStatus(userId: string, isMod: boolean): Promise<void>;
+  setModStatus(userId: string, newModness: boolean): Promise<void>;
 
   setSpeakerStatus(userId: string, isSpeaker: boolean): Promise<User>;
 

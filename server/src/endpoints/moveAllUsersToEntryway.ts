@@ -25,8 +25,8 @@ const moveAllUsersToEntryway: AuthenticatedEndpointFunction = async (user: User,
   const allUsers = await DB.getAllUsers()
 
   try {
-    for (const user of allUsers) {
-      const tasks = await moveToRoom(user, 'entryway')
+    for (const aUser of allUsers) {
+      const tasks = await moveToRoom(aUser, 'entryway')
       if (tasks && tasks.messages) {
         allMessages = allMessages.concat(tasks.messages)
       }
