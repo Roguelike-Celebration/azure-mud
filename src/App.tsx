@@ -96,7 +96,6 @@ const App = () => {
         const providerId = user.providerId
         dispatch(AuthenticateAction(userId, userId, providerId, true))
       } else {
-        const user = currentUser()
         const userId = user.id
         const providerId = user.providerId
 

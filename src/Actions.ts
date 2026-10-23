@@ -103,6 +103,7 @@ export enum ActionType {
   PlayerEntered = 'PLAYER_ENTERED',
   PlayerLeft = 'PLAYER_LEFT',
   Error = 'ERROR',
+  // eslint-disable-next-line @typescript-eslint/no-shadow -- it's an enum member, not a var
   UserMap = 'USER_MAP',
   PlayerBanned = 'PLAYER_BANNED',
   PlayerUnbanned = 'PLAYER_UNBANNED',
