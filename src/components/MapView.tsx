@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { isUndefined } from 'lodash'
+import _ from 'lodash'
 import React, { useContext, useEffect, useState } from 'react'
 
 import { HideModalAction } from '../Actions'
@@ -106,7 +106,7 @@ export default function MapView (props: Props) {
     }
     let replaceString = '[0]'
     // Because 0 is falsy, we need to explicitly use isUndefined
-    if (!isUndefined(presenceData[roomId])) {
+    if (!_.isUndefined(presenceData[roomId])) {
       replaceString = `[${presenceData[roomId]}]`
     }
     replaceString = replaceString.padEnd(4, padChar)
