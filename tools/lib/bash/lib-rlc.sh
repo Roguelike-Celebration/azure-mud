@@ -36,17 +36,34 @@ function rlc::is_verbose() { [[ ${_RLC_VERBOSE:-${RLC_VERBOSE:-${VERBOSE:-0}}} !
 function rlc::is_debug()   { [[ ${_RLC_DEBUG:-${RLC_DEBUG:-${DEBUG:-0}}}       != 0 ]]; }
 function rlc::is_dry_run() { [[ ${_RLC_DRY_RUN:-0} != 0 ]]; }
 
+# ========== Input handling ==========
+
+# rlc::need_env_var VAR_NAME
+#
+# Validate an input env var: require that it's set and nonempty, and is an exported env var
+# and not just a shell variable. Dies if it is not.
+function rlc::need_env_var() {
+  local var="$1"
+  if [[ -z "${!var:-}" ]]; then
+    rlc::die "Environment variable ${var} is required"
+  fi
+  # compgen works with bash 3.x for checking exportedness
+  if [[ -z $(compgen -e -X '!'"${var}" ) ]]; then
+    rlc::die "Variable ${var} must be an environment variable, not just a shell variable"
+  fi
+}
+
 
 # ========== Misc utilities ==========
 
+# rlc::strjoin DELIM [STR...] -- join arguments with DELIM, to stdout.
+#
+# `IFS=x; "${arr[*]}"` does this natively, but only for a single-character
+# delimiter, only from an array, and only by touching IFS.
+#
+# Not the ${out:+${out}$delim} accumulator idiom: that reads an empty accumulator as
+# unset, so a leading empty argument loses its delimiter.
 function rlc::strjoin() {
-  # rlc::strjoin DELIM [STR...] -- join arguments with DELIM, to stdout.
-  #
-  # `IFS=x; "${arr[*]}"` does this natively, but only for a single-character
-  # delimiter, only from an array, and only by touching IFS.
-  #
-  # Not the ${out:+${out}$delim} accumulator idiom: that reads an empty accumulator as
-  # unset, so a leading empty argument loses its delimiter.
   local _rlc_strjoin_delim="$1"; shift
   local _rlc_strjoin_out='' _rlc_strjoin_s _rlc_strjoin_first=1
 
