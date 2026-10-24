@@ -154,6 +154,7 @@ export enum ActionType {
   ObeliskNoteRemove = 'OBELISK_NOTE_REMOVE',
   ObeliskNoteUpdateLikes = 'OBELISK_NOTE_UPDATE_LIKES',
 
+  // eslint-disable-next-line @typescript-eslint/no-shadow -- it's an enum member, not a var
   HideModalAction = 'HIDE_MODAL',
 
   SpaceIsClosed = 'SPACE_IS_CLOSED',
