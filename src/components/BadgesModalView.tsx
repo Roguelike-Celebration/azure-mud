@@ -82,8 +82,7 @@ export default function BadgesModalView (props: Props) {
     } catch (err) {
       // I wasn't able to repro the error, but it sounded like for some reason the getData was coming back empty.
       // This will at least help us debug if it pops up again
-      console.log(err)
-      console.log('tried to parse: ' + data)
+      console.error('Error in BadgesModalView drop action', err, 'Tried to parse:', data)
     }
   }
 

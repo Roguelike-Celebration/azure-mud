@@ -202,7 +202,7 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
   await connectPubSub(eventMapping)
   const result: RoomResponse = await callAzureFunction('connect')
 
-  console.log(result)
+  console.log(`Called connect() AzFn for userId=${userId}. Result:`, result)
   dispatch(
     ConnectAction(
       result.roomId,
@@ -235,18 +235,15 @@ export async function moveToRoom (roomId: string): Promise<void> {
 }
 
 export async function sendChatMessage (id: string, text: string, currentRoomId: string): Promise<void> {
-  // If it's over the character limit
   if (text.length > MESSAGE_MAX_LENGTH) {
-    console.log(
-      `Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`
-    )
+    console.error(tooLongMsgLogMsg(text.length, MESSAGE_MAX_LENGTH, 'chat'))
     return
   }
 
   const result: RoomResponse | Error | any = await callAzureFunction(
     'sendChatMessage', { id: id, text: text }
   )
-  console.log(result)
+  console.log('Sent message. Result:', result)
 
   // If the user's expected roomId is not the roomId we get back from the server, that means the client is out of sync
   // and the server thinks you're in a different room than you are. This may be one of the reasons there are issues
@@ -273,9 +270,7 @@ export async function sendChatMessage (id: string, text: string, currentRoomId: 
 export async function sendCaption (id: string, text: string): Promise<void> {
   // TODO: This may or may not be problematic
   if (text.length > MESSAGE_MAX_LENGTH) {
-    console.log(
-      `Sorry, can't send messages over ${MESSAGE_MAX_LENGTH} characters!`
-    )
+    console.error(tooLongMsgLogMsg(text.length, MESSAGE_MAX_LENGTH, 'caption'))
     return
   }
 
@@ -287,17 +282,19 @@ export async function sendCaption (id: string, text: string): Promise<void> {
     }
   )
 
-  console.log(result)
-
   if (result && result.error) {
     myDispatch(ErrorAction(result.error))
   }
 }
 
+function tooLongMsgLogMsg (msgLen: number, maxLen: number, msgType: string): string {
+  return `Sorry, can't send ${msgType} messages over ${maxLen} characters. Msg length: ${msgLen} chars.`
+}
+
 export async function fetchProfile (userId: string): Promise<void> {
   const result = await callAzureFunction('fetchProfile', { userId })
   if (result.error) {
-    console.log('Could not fetch profile', result.erroc)
+    console.error('Could not fetch profile', result.error)
   } else {
     myDispatch(ShowProfileAction(result.user))
   }
@@ -319,7 +316,7 @@ export async function moveAllUsersToEntryway (): Promise<void> {
   const result = await callAzureFunction('moveAllUsersToEntryway')
 
   if (result && result.error) {
-    console.error('Error trying to move uers to entryway', result.erroc)
+    console.error('Error trying to move users to entryway', result.error)
   } else if (result) {
     console.log(`Moved users to the entryway: numUsers=${result.numUsers}, numMoved=${result.numMoved}, : seconds=${result.seconds}.`)
   }
@@ -342,10 +339,10 @@ export async function resetBadgeData (): Promise<void> {
 export async function equipBadge (badge: Badge, index: number): Promise<void> {
   const result = await callAzureFunction('equipBadge', { badge, index })
   if (!result || !result.badges) {
-    console.log('ERROR: Server did not return badges from an equipBadge call')
+    console.error('Server did not return badges from an equipBadge call')
     return
   }
-  console.log(result.badges)
+  console.log('equipBadge result:', result.badges)
   for (let i = 0; i < result.badges.length; i++) {
     myDispatch(EquipBadgeAction(result.badges[i], i))
   }
@@ -355,11 +352,11 @@ export async function equipBadge (badge: Badge, index: number): Promise<void> {
 export async function startObservingObelisk (): Promise<void> {
   const result = await callAzureFunction('startObservingObelisk')
   if (!result || !result.notes) {
-    console.log('ERROR: Failed to fetch sidebar obelisk notes')
+    console.error('Failed to fetch sidebar obelisk notes')
     return
   }
 
-  console.log(result.notes)
+  console.log('startObservingObelisk result:', result.notes)
   myDispatch(ObeliskNoteUpdateAction(result.notes))
 }
 
@@ -367,7 +364,7 @@ export async function startObservingObelisk (): Promise<void> {
 export async function stopObservingObelisk (): Promise<void> {
   const result = await callAzureFunction('stopObservingObelisk')
   if (!result) {
-    console.log('ERROR: Failed to stop observing obelisk notes')
+    console.error('Failed to stop observing obelisk notes')
   }
 }
 
@@ -467,15 +464,13 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
     },
     chatMessage: (messageId: string, otherId: string, message: string) => {
       // We use otherId/name basically interchangably here.
-      console.log('Received chat', otherId, message)
-      console.log(otherId, message, userId)
+      console.log('Received chat', userId, otherId, message, messageId)
       if (otherId === userId) return
 
       dispatch(ChatMessageAction(messageId, otherId, message))
     },
     caption: (messageId: string, otherId: string, message: string) => {
-      console.log('Received caption', otherId, message)
-      console.log(otherId, message, userId)
+      console.log('Received caption', otherId, message, messageId)
       if (otherId === userId) return
 
       dispatch(CaptionMessageAction(messageId, otherId, message))
@@ -510,7 +505,7 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
       dispatch(PlayerLeftAction(name, toId, toName))
     },
     usernameMap: (map: UserMap) => {
-      console.log('Received map', map)
+      console.log('Received UserMap', map)
       dispatch(UserMapAction(map))
     },
     playerBanned: (user: MinimalUser) => {
@@ -556,15 +551,15 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
       dispatch(SpaceOpenedOrClosedAction(status))
     },
     ping: () => {
-      console.log('Received heartbeat ping')
       callAzureFunction('pong')
     },
     unlockBadge: (badge: Badge[]) => {
-      if (badge.length !== 1) {
-        console.log(
-          'ERROR: Expected one badge to unlock, got multiple:',
-          badge
-        )
+      if (badge.length > 1) {
+        console.error('unlockBadge: Expected one badge to unlock, got multiple ' +
+          `(${badge.length}). Only unlocking first one. Badges:`, badge)
+      } else if (badge.length === 0) {
+        console.error('unlockBadge: Got a list of zero badges to unlock.')
+        return
       }
       dispatch(UnlockBadgeAction(badge[0]))
     }
@@ -592,9 +587,9 @@ export async function connectPubSub (eventMapping: PubSubEventMapping): Promise<
   */
   // negotiate
   const result = await callAzureFunctionGet('negotiatePubSub')
-  console.log('Connected pubsub', result)
+  console.log('Connected PubSub', result)
   if (!result.url) {
-    console.error('Did not get URL', result)
+    console.error('Did not get URL from PubSub connection result', result)
     return
   }
 
@@ -602,7 +597,7 @@ export async function connectPubSub (eventMapping: PubSubEventMapping): Promise<
   const ws = new WebSocket(result.url)
   // TODO: Handle error and close
   ws.addEventListener('open', () => {
-    console.log('Connected to PubSub Service')
+    console.log('Opened websocket connection to PubSub Service')
     // Note status
   })
   ws.addEventListener('message', (event) => {
@@ -627,10 +622,9 @@ async function callAzureFunctionGet (endpoint: string): Promise<any> {
         userId: myUserId
       }
     })
-    console.log(r)
     return r.data
   } catch (e) {
-    console.log('Error', e)
+    console.error(`Failed calling AzFn ${endpoint} (with HTTP GET)`, e)
     return undefined
   }
 }
@@ -649,10 +643,9 @@ async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
         }
       }
     )
-    console.log(r)
     return r.data
   } catch (e) {
-    console.log('Error', e)
+    console.error(`Failed calling AzFn ${endpoint}`, e)
     return undefined
   }
 }

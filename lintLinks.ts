@@ -40,7 +40,7 @@ Object.values(staticRoomData).forEach(async (room) => {
 if (failures.length === 0) {
   process.exit(0)
 } else {
-  console.log('Some rooms failed validation!')
+  console.error('Some rooms failed validation!')
   failures.forEach(f => {
     console.log(`${f[0]}: ${f[1]}`)
   })
