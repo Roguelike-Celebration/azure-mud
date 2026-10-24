@@ -24,7 +24,6 @@ const App = function () {
     reducer,
     defaultState
   )
-  console.log('In app', state)
 
   useEffect(() => {
     // Auth is simple: you log in, we check if you're a mod, and only set the 'logged in' flag if so
