@@ -16,7 +16,7 @@ export type Message =
   | ModMessage
   | ErrorMessage
   | CommandMessage
-  | CaptionMessage;
+  | CaptionMessage
 
 /** Member of Message union type whose `type` is T. */
 export type MessageOfType<T extends MessageType> = Extract<Message, { type: T }>

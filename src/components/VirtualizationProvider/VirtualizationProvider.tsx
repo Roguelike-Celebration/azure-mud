@@ -14,7 +14,7 @@ import '../../../style/chat.css'
 import { Message } from '../../message/index.js'
 import { PayloadAction } from '../../types.js'
 
-type VerticalPosition = Pick<Message, 'id'> & Pick<DOMRect, 'top' | 'height'>;
+type VerticalPosition = Pick<Message, 'id'> & Pick<DOMRect, 'top' | 'height'>
 
 interface VirtualizationState {
   messagePositions: Record<string, VerticalPosition>;
@@ -25,19 +25,19 @@ interface VirtualizationState {
 type SetMessagePositionAction = PayloadAction<
   'setMessagePosition',
   VerticalPosition
->;
+>
 type SetViewportScrollHeightAction = PayloadAction<
   'setViewportScrollHeight',
   number
->;
-type SetViewportScrollTopAction = PayloadAction<'setViewportScrollTop', number>;
+>
+type SetViewportScrollTopAction = PayloadAction<'setViewportScrollTop', number>
 
 type VirtualizationAction =
   | SetMessagePositionAction
   | SetViewportScrollHeightAction
-  | SetViewportScrollTopAction;
+  | SetViewportScrollTopAction
 
-type VirtualizationReducer = Reducer<VirtualizationState, VirtualizationAction>;
+type VirtualizationReducer = Reducer<VirtualizationState, VirtualizationAction>
 
 const initialState: VirtualizationState = {
   messagePositions: {},

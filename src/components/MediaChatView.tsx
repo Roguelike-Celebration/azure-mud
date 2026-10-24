@@ -150,7 +150,7 @@ export default function MediaChatView (props: MediaProps) {
 // via https://github.com/facebook/react/issues/11163
 type PropsType = VideoHTMLAttributes<HTMLVideoElement> & {
   srcObject: MediaStream;
-};
+}
 
 export function HtmlVideo ({ srcObject, ...props }: PropsType) {
   const refVideo = useRef<HTMLVideoElement>(null)

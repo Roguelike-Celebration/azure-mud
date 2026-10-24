@@ -8,7 +8,7 @@ import { UpdateAndShowRoomAction } from '../actions.js'
 import { DispatchContext } from './App.js'
 import '../../../style/nav.css'
 
-export default function (props: {roomIds: string[]}) {
+export default function (props: { roomIds: string[] }) {
   const dispatch = useContext(DispatchContext)
 
   const roomIds = _.sortBy(props.roomIds || [])

@@ -123,7 +123,7 @@ const handleDeleteMessage = (e: MenuItemEvent, data: DeleteMessageMenuData) => {
 type DeletableMessageViewProps = {
   messageId: string;
   messageText: string;
-};
+}
 
 const linkDecorator = (href: string, text: string, key: number): React.ReactElement => (
   <a href={href} key={key} target="_blank" rel="noopener noreferrer">

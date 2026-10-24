@@ -7,7 +7,7 @@ const THREE_MINUTES = 1_000 * 60 * 3
 type ShouldHideTimestamp = (
   message: Message,
   previousMessage: Message | undefined
-) => boolean;
+) => boolean
 
 export const useShouldHideTimestamp = (): ShouldHideTimestamp =>
   useCallback<ShouldHideTimestamp>(

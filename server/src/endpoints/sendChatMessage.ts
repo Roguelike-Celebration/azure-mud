@@ -1,4 +1,3 @@
-
 import { MESSAGE_MAX_LENGTH } from '../config.js'
 import { dance } from '../dance.js'
 import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint.js'

@@ -15,8 +15,8 @@ import {
 import { DispatchContext } from '../../../App.js'
 import { VirtualizationContext } from '../../VirtualizationProvider/index.js'
 
-type ScrollContainerRef = MutableRefObject<HTMLOListElement>;
-type ScrollHandler = UIEventHandler<HTMLOListElement>;
+type ScrollContainerRef = MutableRefObject<HTMLOListElement>
+type ScrollHandler = UIEventHandler<HTMLOListElement>
 
 export const useAutoscroll = (
   autoscrollChat: boolean

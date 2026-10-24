@@ -28,7 +28,7 @@ export default function Publication ({ publication, isLocalParticipant, videoOnl
     case 'video':
       return (
         <VideoTrack
-          track={track as LocalVideoTrack|RemoteVideoTrack}
+          track={track as LocalVideoTrack | RemoteVideoTrack}
           priority={videoPriority}
           isLocal={track.name.includes('camera') && isLocalParticipant}
         />
