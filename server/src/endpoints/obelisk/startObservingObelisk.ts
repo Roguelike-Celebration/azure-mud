@@ -1,6 +1,6 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../../endpoint'
-import DB from '../../redis'
-import { User } from '../../user'
+import { AuthenticatedEndpointFunction, LogFn } from '../../endpoint.js'
+import DB from '../../redis.js'
+import { User } from '../../user.js'
 
 const startObservingObelisk: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   // The DB just knows there's a single obelisk, and doesn't distinguish between sidebar and the room

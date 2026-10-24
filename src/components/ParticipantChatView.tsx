@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { FaUser, FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from 'react-icons/fa'
 import * as Twilio from 'twilio-video'
 
-import ParticipantTracks from '../videochat/twilio/ParticipantTracks'
+import ParticipantTracks from '../videochat/twilio/ParticipantTracks.js'
 
-import NameView from './NameView'
+import NameView from './NameView.js'
 
 import '../../style/videoChat.css'
 

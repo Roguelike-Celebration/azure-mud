@@ -1,13 +1,13 @@
 import { Context, HttpRequest } from '@azure/functions'
 
-import authenticate, { AuthenticationOptions } from './authenticate'
+import authenticate, { AuthenticationOptions } from './authenticate.js'
 import {
   AuthenticatedEndpointFunction,
   EndpointFunction,
   isGroupMessage,
   isPrivateMessage,
   Result
-} from './endpoint'
+} from './endpoint.js'
 
 /**
  * Each Azure Functions endpoint is basically a wrapper around an existing

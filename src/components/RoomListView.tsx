@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { FaVideo } from 'react-icons/fa'
 
-import { UserMapContext } from '../App'
-import { moveToRoom } from '../networking'
-import { Room } from '../room'
+import { UserMapContext } from '../App.js'
+import { moveToRoom } from '../networking.js'
+import { Room } from '../room.js'
 
 interface Props {
     rooms: Room[]

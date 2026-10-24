@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { equipBadge, minimizeUser, User } from '../user'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
+import { equipBadge, minimizeUser, User } from '../user.js'
 
 const equipBadgeFunction: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const { badge, index } = inputs

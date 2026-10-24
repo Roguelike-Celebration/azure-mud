@@ -1,7 +1,7 @@
-import { FreeBadges } from '../badges'
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import DB from '../redis'
-import { minimizeUser, User } from '../user'
+import { FreeBadges } from '../badges.js'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
+import DB from '../redis.js'
+import { minimizeUser, User } from '../user.js'
 
 const resetBadgeData: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   user.unlockedBadges = []

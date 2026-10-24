@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 import '../../style/profileEditView.css'
-import { Badge } from '../../server/src/badges'
-import { SetCaptionsEnabledAction, SetUseSimpleNamesAction } from '../Actions'
-import { DispatchContext, SettingsContext } from '../App'
-import { currentTheme, setTheme } from '../storage'
+import { Badge } from '../../server/src/badges.js'
+import { SetCaptionsEnabledAction, SetUseSimpleNamesAction } from '../Actions.js'
+import { DispatchContext, SettingsContext } from '../App.js'
+import { currentTheme, setTheme } from '../storage.js'
 
-import VideoAudioSettingsView from './VideoAudioSettingsView'
+import VideoAudioSettingsView from './VideoAudioSettingsView.js'
 
 interface Props {
   keepCameraWhenMoving: boolean;

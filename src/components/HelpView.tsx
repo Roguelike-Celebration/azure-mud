@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SlashCommands } from '../SlashCommands'
+import { SlashCommands } from '../SlashCommands.js'
 
 export default function HelpView () {
   const rows = SlashCommands.map(command => {

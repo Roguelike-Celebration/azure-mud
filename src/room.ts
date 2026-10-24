@@ -4,10 +4,10 @@
 // (although this file will probably still exist to be the single point of importing
 // the Server room and just exporting a 'clean' definition)
 
-import { RoomNote } from '../server/src/roomNote'
-import * as Server from '../server/src/rooms'
+import { RoomNote } from '../server/src/roomNote.js'
+import * as Server from '../server/src/rooms/index.js'
 
-import type { RoomDataMap } from './reducer'
+import type { RoomDataMap } from './reducer.js'
 
 export interface Room {
   displayName: string;

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { HideModalAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { connect } from '../networking'
+import { HideModalAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { connect } from '../networking.js'
 
 export default function DisconnectModalView (props: { userId: string }) {
   const [reconnecting, setReconnecting] = useState(false)

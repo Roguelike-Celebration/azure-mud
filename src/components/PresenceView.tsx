@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { FaVideo, FaVolumeUp } from 'react-icons/fa'
 
-import { UserMapContext } from '../App'
-import { useMediaChatContext } from '../videochat/mediaChatContext'
+import { UserMapContext } from '../App.js'
+import { useMediaChatContext } from '../videochat/mediaChatContext.js'
 
-import HeldItemView from './HeldItemView'
-import NameView from './NameView'
+import HeldItemView from './HeldItemView.js'
+import NameView from './NameView.js'
 
 // https://stackoverflow.com/questions/23618744/rendering-comma-separated-list-of-links
 /* intersperse: Return an array with the separator interspersed between

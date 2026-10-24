@@ -1,4 +1,4 @@
-export { MessageType } from './enums'
+export { MessageType } from './enums.js'
 export {
   CaptionMessage,
   ChatMessage,
@@ -17,7 +17,7 @@ export {
   SameRoomMessage,
   ShoutMessage,
   WhisperMessage
-} from './types'
+} from './types.js'
 export {
   createCaptionMessage,
   createChatMessage,
@@ -37,4 +37,4 @@ export {
   isCaptionMessage,
   isDeletableMessage,
   isMovementMessage
-} from './utils'
+} from './utils.js'

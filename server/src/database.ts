@@ -1,8 +1,8 @@
-import Redis from './redis'
-import { RoomNote } from './roomNote'
-import { Room } from './rooms'
-import { PresenceListMap, ServerSettings } from './types'
-import { User } from './user'
+import Redis from './redis.js'
+import { RoomNote } from './roomNote.js'
+import { Room } from './rooms/index.js'
+import { PresenceListMap, ServerSettings } from './types.js'
+import { User } from './user.js'
 
 interface Database {
   // -----------------------------------------------------------------

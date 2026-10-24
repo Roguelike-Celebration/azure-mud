@@ -1,6 +1,6 @@
-import { DB } from './database'
-import { Result } from './endpoint'
-import { User } from './user'
+import { DB } from './database.js'
+import { Result } from './endpoint.js'
+import { User } from './user.js'
 
 export async function shout (user: User, messageId: string, message: string): Promise<Result> {
   // Currently hardcode a 2-minute shout cooldown

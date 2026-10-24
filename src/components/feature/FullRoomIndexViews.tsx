@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 
-import { ShowModalAction } from '../../Actions'
-import { DispatchContext } from '../../App'
-import { Modal } from '../../modals'
-import { Room } from '../../room'
+import { ShowModalAction } from '../../Actions.js'
+import { DispatchContext } from '../../App.js'
+import { Modal } from '../../modals.js'
+import { Room } from '../../room.js'
 
 export const FullRoomIndexRoomView = () => {
   const dispatch = useContext(DispatchContext)

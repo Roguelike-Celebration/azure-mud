@@ -1,7 +1,7 @@
 import { AzureFunction, Context } from '@azure/functions'
 
-import { azureWrap } from '../src/azureWrap'
-import heartbeat from '../src/endpoints/heartbeat'
+import { azureWrap } from '../src/azureWrap.js'
+import heartbeat from '../src/endpoints/heartbeat.js'
 
 const timerTrigger: AzureFunction = async function (
   context: Context,

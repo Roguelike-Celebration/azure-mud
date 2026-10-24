@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid'
 
-import { AuthenticatedEndpointFunction, LogFn, Message } from '../../endpoint'
-import DB from '../../redis'
-import { isMod, User } from '../../user'
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../../endpoint.js'
+import DB from '../../redis.js'
+import { isMod, User } from '../../user.js'
 
 const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const noteId = inputs.noteId
