@@ -69,7 +69,7 @@ export async function updateModStatus (userId: string): Promise<void> {
   const profile = await DB.getUser(userId)
 
   if (!profile) {
-    console.log('ERROR: Could not find user ', userId)
+    console.error('updateModStatus: Could not find user:', userId)
     return
   }
 
@@ -101,21 +101,16 @@ function sanitizeUsername (s: string): string {
 }
 
 export async function updateUserProfile (userId: string, data: Partial<User>, isNew: boolean = false): Promise<User> {
-  console.log('In updateUserProfile', data, isNew)
-
   const profile: Partial<User> = (await DB.getUser(userId)) || {}
   let username = profile.username
   if (data.username) { username = sanitizeUsername(data.username) }
   // If someone's trying to set a new username, validate it
   if (data.username && profile.username !== username) {
-    console.log('Validating username', username)
     const userIdForNewUsername = await getUserIdForUsername(username)
-    console.log('userIdForUsername result:', userIdForNewUsername)
     if (userIdForNewUsername && userIdForNewUsername !== userId) {
       throw new Error(`Username '${username}' is already taken`)
     }
   }
-  console.log('Past existing username check')
 
   // Limit other field lengths
   if (data.realName) { data.realName = sanitizeString(data.realName, 200) }
@@ -132,12 +127,10 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
     username,
     isMod: profile.isMod
   } as User // TODO: Could use real validation here?
-  console.log('New profile data', newProfile)
 
   const allDbUsers = await DB.getAllUserIds()
   const isFirstUser = allDbUsers.length === 0 || (allDbUsers.length === 1 && allDbUsers[0] === userId && !profile.isMod)
 
-  console.log('Is first DB user?', isFirstUser, allDbUsers)
   if (isFirstUser) {
     newProfile.isMod = true
     await resetRoomData(newProfile, {}, console.log)
@@ -146,11 +139,11 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
   const result = await DB.setUserProfile(userId, newProfile)
 
   if (isFirstUser) {
-    console.log('First user, making them an admin')
+    console.log('First user created! Making them a mod automatically.', userId)
     await DB.setModStatus(userId, true)
   }
 
-  console.log('Update user result', result)
+  console.log('updateUserProfile result', userId, result)
   return newProfile
 }
 
