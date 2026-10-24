@@ -11,8 +11,8 @@
     "typecheck": "rc=0; npm run typecheck-frontend || rc=1; npm run typecheck-server || rc=1; exit $rc",
     "typecheck-frontend": "tsc --noEmit",
     "typecheck-server": "tsc --noEmit -p server",
-    "lint": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\"",
-    "lint-fix": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" --fix",
+    "lint": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" lintLinks.ts",
+    "lint-fix": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" lintLinks.ts --fix",
     "lint-rooms": "ts-node lintLinks.ts"
   },
   "author": "",

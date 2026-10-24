@@ -1,4 +1,4 @@
-import { uniqWith } from 'lodash'
+import _ from 'lodash'
 
 import { Badge, FreeBadges } from './badges'
 import { DB } from './database'
@@ -159,7 +159,7 @@ export async function awardUserBadge (userId: string, badge: Badge): Promise<Use
   // And maybe has to happen at the caller instead of in here
   const profile: User = await DB.getUser(userId)
   const newBadgeList = (profile.unlockedBadges || []).concat(badge)
-  profile.unlockedBadges = uniqWith(newBadgeList, (a, b) => a.emoji === b.emoji)
+  profile.unlockedBadges = _.uniqWith(newBadgeList, (a, b) => a.emoji === b.emoji)
   return await DB.setUserProfile(userId, profile)
 }
 
