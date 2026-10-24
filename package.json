@@ -20,8 +20,8 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "dependencies": {
