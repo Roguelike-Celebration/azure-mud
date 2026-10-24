@@ -3,7 +3,7 @@ import generators from '../generators'
 import { User } from '../user'
 
 const displayMessage: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  let displayMessage: string
+  let message: string
   let actionMessage: string
 
   if (inputs.list) {
@@ -18,9 +18,9 @@ const displayMessage: AuthenticatedEndpointFunction = async (user: User, inputs:
       }
     }
 
-    displayMessage = generator.generate()
-    actionMessage = generator.actionString(displayMessage)
-    log(displayMessage)
+    message = generator.generate()
+    actionMessage = generator.actionString(message)
+    log(message)
     log(actionMessage)
   } else if (inputs.message) {
     actionMessage = inputs.message

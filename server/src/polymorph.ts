@@ -16,9 +16,9 @@ export async function polymorph (user: User, messageId: string): Promise<Result>
   }
 
   const actionText = generator.generate()
-  const polymorph = generator.actionString(actionText)
+  const polymorphText = generator.actionString(actionText)
 
-  const newProfile = await updateUserProfile(user.id, { polymorph })
+  const newProfile = await updateUserProfile(user.id, { polymorph: polymorphText })
 
   return {
     messages: [
@@ -41,8 +41,8 @@ export async function polymorph (user: User, messageId: string): Promise<Result>
 }
 
 export async function cancellation (user: User, messageId: string): Promise<Result> {
-  const polymorph = ''
-  const newProfile = await updateUserProfile(user.id, { polymorph })
+  const polymorphText = ''
+  const newProfile = await updateUserProfile(user.id, { polymorph: polymorphText })
 
   return {
     messages: [
