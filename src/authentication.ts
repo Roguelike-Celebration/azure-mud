@@ -52,15 +52,16 @@ const firebaseUserToAuthenticatedUser = (fb: firebase.User): AuthenticatedUser |
 }
 
 export function sendSignInLinkToEmail (email: string): void {
+  const url = window.location.href
   const actionCodeSettings = {
     // This URL should be changed to the frontend location for production. It must also be added to the authorized
     // domains list in the Firebase Console.
-    url: window.location.href,
+    url: url,
     // This must be true, you'll get an error if it's not.
     handleCodeInApp: true
   }
 
   firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings).then(() => {
-    console.log(`Sign-in email sent to ${email}!`)
+    console.log(`Sign-in email sent to ${email}! URL=${url}`)
   })
 }

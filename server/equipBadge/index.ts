@@ -7,7 +7,6 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  console.log('In equipBadge??')
   await authenticatedAzureWrap(context, req, equipBadgeFunction, { audit: true })
 }
 

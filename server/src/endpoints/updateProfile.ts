@@ -36,8 +36,9 @@ const updateProfile: EndpointFunction = async (inputs: any, log: LogFn) => {
       }
     }
   } catch (e) {
+    log('ERROR: updateProfile: error:', e)
     // Should be status 409
-    // the client doesnt currently have a good way to handle non-200 status codes :(
+    // the client doesn't currently have a good way to handle non-200 status codes :(
     return {
       httpResponse: {
         status: 200,
