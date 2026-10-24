@@ -4,7 +4,7 @@ import type firebaseui from 'firebaseui'
 import React from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
-import { currentUser, sendSignInLinkToEmail } from '../../authentication'
+import { currentUser, sendSignInLinkToEmail } from '../../authentication.js'
 import 'firebase/auth'
 
 const uiConfig: firebaseui.auth.Config = {

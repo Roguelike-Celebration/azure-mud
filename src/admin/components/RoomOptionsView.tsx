@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 
-import { deleteRoom } from '../../networking'
+import { deleteRoom } from '../../networking.js'
 
 export default function (props: {roomId: string, updateRoom: () => void, createRoom: (name: string) => void}) {
   const clickedNew = () => {

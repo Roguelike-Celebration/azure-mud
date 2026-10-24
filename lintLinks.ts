@@ -1,8 +1,8 @@
 import _ from 'lodash'
 
-import allowedItems from './server/src/allowedItems'
-import { staticRoomData } from './server/src/rooms'
-import { linkActions } from './src/linkActions'
+import allowedItems from './server/src/allowedItems.js'
+import { staticRoomData } from './server/src/rooms/index.js'
+import { linkActions } from './src/linkActions.js'
 
 const failures: string[][] = []
 Object.values(staticRoomData).forEach(async (room) => {

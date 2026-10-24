@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { authenticatedAzureWrap } from '../src/azureWrap'
-import pong from '../src/endpoints/pong'
+import { authenticatedAzureWrap } from '../src/azureWrap.js'
+import pong from '../src/endpoints/pong.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

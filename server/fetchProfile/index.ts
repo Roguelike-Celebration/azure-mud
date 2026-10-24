@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { azureWrap } from '../src/azureWrap'
-import fetchProfile from '../src/endpoints/fetchProfile'
+import { azureWrap } from '../src/azureWrap.js'
+import fetchProfile from '../src/endpoints/fetchProfile.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

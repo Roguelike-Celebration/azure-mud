@@ -2,15 +2,15 @@ import firebase from 'firebase/app'
 import { current, original, produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Badge } from '../server/src/badges'
-import { MESSAGE_MAX_LENGTH } from '../server/src/config'
-import { RoomNote } from '../server/src/roomNote'
-import { DEFAULT_SERVER_SETTINGS, ServerSettings } from '../server/src/types'
-import { MinimalUser, PublicUser, User } from '../server/src/user'
+import { Badge } from '../server/src/badges.js'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
+import { RoomNote } from '../server/src/roomNote.js'
+import { DEFAULT_SERVER_SETTINGS, ServerSettings } from '../server/src/types.js'
+import { MinimalUser, PublicUser, User } from '../server/src/user.js'
 
-import { Action, ActionType } from './Actions'
-import Config from './config'
-import { Deferred } from './Deferred'
+import { Action, ActionType } from './Actions.js'
+import Config from './config.js'
+import { Deferred } from './Deferred.js'
 import {
   createCaptionMessage,
   createChatMessage,
@@ -32,8 +32,8 @@ import {
   isMovementMessage,
   Message,
   WhisperMessage
-} from './message'
-import { Modal } from './modals'
+} from './message/index.js'
+import { Modal } from './modals.js'
 import {
   fetchProfile,
   sendCaption,
@@ -42,11 +42,11 @@ import {
   toggleUserMod,
   updateFontReward,
   updateProfileColor
-} from './networking'
-import { Room } from './room'
-import { matchingSlashCommand, SlashCommandType } from './SlashCommands'
-import * as Storage from './storage'
-import { EntityState } from './types'
+} from './networking.js'
+import { Room } from './room.js'
+import { matchingSlashCommand, SlashCommandType } from './SlashCommands.js'
+import * as Storage from './storage.js'
+import { EntityState } from './types.js'
 
 export interface State {
   firebaseApp: firebase.app.App;

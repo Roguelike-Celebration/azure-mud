@@ -3,7 +3,7 @@ import { Dispatch } from 'react'
 import {
   Action,
   MediaReceivedSpeakingDataAction
-} from './Actions'
+} from './Actions.js'
 */
 
 /* "Who's speaking" implementation notes

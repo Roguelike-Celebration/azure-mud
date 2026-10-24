@@ -1,8 +1,8 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import Redis from '../redis'
-import { Room } from '../rooms'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
+import Redis from '../redis.js'
 import roomData from '../rooms/data/roomData.json'
-import { User } from '../user'
+import { Room } from '../rooms/index.js'
+import { User } from '../user.js'
 
 const resetRoomData: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   // TODO: Allow this to just wipe a specific room

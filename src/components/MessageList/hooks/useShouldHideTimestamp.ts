@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Message } from '../../../message'
+import { Message } from '../../../message/index.js'
 
 const THREE_MINUTES = 1_000 * 60 * 3
 

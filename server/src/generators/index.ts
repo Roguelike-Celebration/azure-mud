@@ -1,11 +1,11 @@
-import * as artifacts from './artifacts'
-import * as balls from './balls'
-import * as boba from './boba'
-import * as rules from './calvinBallRules'
-import * as hotDog from './nathansHotDogs'
-import * as popcorn from './orvillePopcorn'
-import * as polymorph from './polymorph'
-import * as transcendenceItems from './transcendenceItems'
+import * as artifacts from './artifacts.js'
+import * as balls from './balls.js'
+import * as boba from './boba.js'
+import * as rules from './calvinBallRules.js'
+import * as hotDog from './nathansHotDogs.js'
+import * as popcorn from './orvillePopcorn.js'
+import * as polymorph from './polymorph.js'
+import * as transcendenceItems from './transcendenceItems.js'
 
 interface Generator {
   generate(): string

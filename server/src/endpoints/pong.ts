@@ -1,6 +1,6 @@
-import { DB } from '../database'
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { User } from '../user'
+import { DB } from '../database.js'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
+import { User } from '../user.js'
 
 const pong: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   await DB.setUserHeartbeat(user)

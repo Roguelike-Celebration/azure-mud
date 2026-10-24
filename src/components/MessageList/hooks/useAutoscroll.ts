@@ -11,9 +11,9 @@ import {
   ActivateAutoscrollAction,
   ChatReadyAction,
   DeactivateAutoscrollAction
-} from '../../../Actions'
-import { DispatchContext } from '../../../App'
-import { VirtualizationContext } from '../../VirtualizationProvider'
+} from '../../../Actions.js'
+import { DispatchContext } from '../../../App.js'
+import { VirtualizationContext } from '../../VirtualizationProvider/index.js'
 
 type ScrollContainerRef = MutableRefObject<HTMLOListElement>;
 type ScrollHandler = UIEventHandler<HTMLOListElement>;
