@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# grin - 'grep -rIn', discriminating
+#
+# Does a 'grep -rIn', with exclusions for node_modules (external libs), git files, and other
+# "accessory" files, so you're just looking through "our own" files in the repo.
+
+# This code is Bash 3.x, for compatibility with macOS's system /bin/bash, which is stuck on
+# the old Bash 3.x for licensing reasons.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ ${TRACE:-0} == "1" ]]; then set -o xtrace; fi
+
+# Load RLC bash lib
+_tools_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+source "${_tools_dir}/lib/bash/lib-rlc.sh"
+# Load grin-specific shared definitions
+source "${_tools_dir}/lib/bash/grin-excludes.sh"
+
+function _grep_nogitandstuff() {
+  local -a _excl_dirs _excl_files
+  rlc::strsplit _excl_dirs "${RLC_GRIN_EXCLUDE_DIRS:-}"
+  rlc::strsplit _excl_files "${RLC_GRIN_EXCLUDE_FILES:-}"
+  grep -r ${_excl_dirs[@]+"${_excl_dirs[@]/#/--exclude-dir=}"} \
+      ${_excl_files[@]+"${_excl_files[@]/#/--exclude=}"} "$@"
+}
+
+function main() {
+  _grep_nogitandstuff -rIn "$@"
+}
+
+# ========== Main script ==========
+
+main "$@"
