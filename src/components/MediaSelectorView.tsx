@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-onchange */
 import React, { useContext, useEffect } from 'react'
 
 import { HideModalAction } from '../Actions.js'

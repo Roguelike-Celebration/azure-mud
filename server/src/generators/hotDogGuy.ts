@@ -1,5 +1,3 @@
-/* eslint-disable @stylistic/quotes */
-
 import tracery from 'tracery-grammar'
 
 export const actionString = (hotDogGuy: string) => {
@@ -23,4 +21,3 @@ export const generate = () => {
 
   return grammar.flatten('#origin#')
 }
-/* eslint-enable @stylistic/quotes */

@@ -1,5 +1,3 @@
-/* eslint-disable @stylistic/quotes */
-
 import tracery from 'tracery-grammar'
 
 export const actionString = (chadSilverbow: string) => {
@@ -33,4 +31,3 @@ export const generate = () => {
   grammar.addModifiers(tracery.baseEngModifiers)
   return grammar.flatten('#origin#')
 }
-/* eslint-enable @stylistic/quotes */
