@@ -202,5 +202,3 @@ export const generate = () => {
   grammar.addModifiers(tracery.baseEngModifiers)
   return grammar.flatten('#origin#')
 }
-
-/* eslint-disable @stylistic/quotes */

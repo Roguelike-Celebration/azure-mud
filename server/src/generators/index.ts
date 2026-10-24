@@ -12,7 +12,7 @@ interface Generator {
   actionString(item: string): string
 }
 
-const generators: {[name: string]: Generator} = {
+const generators: { [name: string]: Generator } = {
   polymorph,
   popcorn,
   hotDog,

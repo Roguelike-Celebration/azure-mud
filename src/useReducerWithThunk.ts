@@ -7,12 +7,12 @@
  */
 import { Reducer, useReducer } from 'react'
 
-export type ThunkDispatch<A, S> = (action: A | Thunk<A, S>) => void;
-type GetState<S> = () => S;
+export type ThunkDispatch<A, S> = (action: A | Thunk<A, S>) => void
+type GetState<S> = () => S
 export type Thunk<A, S> = (
   dispatch: ThunkDispatch<A, S>,
   getState: GetState<S>
-) => void;
+) => void
 
 const isFunction = <A, S>(a: A | Thunk<A, S>): a is Thunk<A, S> =>
   typeof a === 'function'

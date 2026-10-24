@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { LocalTrackPublication, Participant, RemoteTrackPublication } from 'twilio-video'
 
-export type TrackPublication = LocalTrackPublication | RemoteTrackPublication;
+export type TrackPublication = LocalTrackPublication | RemoteTrackPublication
 
 export default function usePublications (participant: Participant): TrackPublication[] {
   const [publications, setPublications] = useState<TrackPublication[]>([])

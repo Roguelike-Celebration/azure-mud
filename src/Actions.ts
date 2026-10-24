@@ -80,7 +80,7 @@ export type Action =
   | EquipBadgeAction
   | UpdateUnlockableBadgesAction
   | UnlockBadgeAction
-  | SetUnlockedBadgesAction;
+  | SetUnlockedBadgesAction
 
 export enum ActionType {
   // Server-driven action

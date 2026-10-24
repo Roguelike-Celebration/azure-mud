@@ -29,7 +29,7 @@ type AnyDeletableMessage =
   | ChatMessage
   | EmoteMessage
   | ShoutMessage
-  | DanceMessage;
+  | DanceMessage
 
 const deletableMessageTypes = [
   MessageType.Chat,
@@ -48,7 +48,7 @@ type AnyMovementMessage =
   | ConnectedMessage
   | DisconnectedMessage
   | EnteredMessage
-  | LeftMessage;
+  | LeftMessage
 
 const movementMessageTypes = [
   MessageType.Connected,
