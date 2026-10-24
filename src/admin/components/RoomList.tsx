@@ -6,6 +6,7 @@ import { getAllRooms, getRoom, resetRoomData } from '../../networking.js'
 import { UpdateAndShowRoomAction } from '../actions.js'
 
 import { DispatchContext } from './App.js'
+import '../../../style/nav.css'
 
 export default function (props: {roomIds: string[]}) {
   const dispatch = useContext(DispatchContext)
