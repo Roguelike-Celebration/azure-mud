@@ -1,6 +1,6 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../../endpoint'
-import DB from '../../redis'
-import { User } from '../../user'
+import { AuthenticatedEndpointFunction, LogFn } from '../../endpoint.js'
+import DB from '../../redis.js'
+import { User } from '../../user.js'
 
 const likeRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const noteId = inputs.noteId

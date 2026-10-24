@@ -1,7 +1,7 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import DB from '../redis'
-import type { RoomDataMap } from '../types'
-import { User } from '../user'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
+import DB from '../redis.js'
+import type { RoomDataMap } from '../types.js'
+import { User } from '../user.js'
 
 const getRoomIds: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const roomIds = await DB.getRoomIds()

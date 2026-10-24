@@ -2,14 +2,14 @@ import React, { useContext, useEffect } from 'react'
 import Linkify from 'react-linkify'
 import ReactTooltip from 'react-tooltip'
 
-import { PublicUser } from '../../server/src/user'
-import { HideProfileAction, SendMessageAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { WhisperMessage } from '../message'
+import { PublicUser } from '../../server/src/user.js'
+import { HideProfileAction, SendMessageAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { WhisperMessage } from '../message/index.js'
 
-import BadgeView from './BadgeView'
-import InputView from './InputView'
-import NameView from './NameView'
+import BadgeView from './BadgeView.js'
+import InputView from './InputView.js'
+import NameView from './NameView.js'
 
 import '../../style/profileView.css'
 

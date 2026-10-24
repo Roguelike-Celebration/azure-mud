@@ -2,12 +2,12 @@ import _ from 'lodash'
 import React, { useContext, useEffect } from 'react'
 import ReactTooltip from 'react-tooltip'
 
-import { RoomNote } from '../../server/src/roomNote'
-import { PublicUser } from '../../server/src/user'
-import { UserMapContext } from '../App'
-import { addNoteToObelisk, deleteRoomNote, startObservingObelisk, stopObservingObelisk } from '../networking'
+import { RoomNote } from '../../server/src/roomNote.js'
+import { PublicUser } from '../../server/src/user.js'
+import { UserMapContext } from '../App.js'
+import { addNoteToObelisk, deleteRoomNote, startObservingObelisk, stopObservingObelisk } from '../networking.js'
 
-import { NoteView } from './NoteView'
+import { NoteView } from './NoteView.js'
 import '../../style/noteWall.css'
 
 interface Props {

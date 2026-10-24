@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import * as Twilio from 'twilio-video'
 
-import { HideModalAction, MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { fetchTwilioToken } from '../networking'
-import { setUpSpeechRecognizer, stopSpeechRecognizer } from '../speechRecognizer'
+import { HideModalAction, MediaReceivedSpeakingDataAction, RefreshReactAction, StartVideoChatAction, StopVideoChatAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { fetchTwilioToken } from '../networking.js'
+import { setUpSpeechRecognizer, stopSpeechRecognizer } from '../speechRecognizer.js'
 
-import { DeviceInfo, MediaChatContext } from './mediaChatContext'
-import ParticipantTracks from './twilio/ParticipantTracks'
-import VideoTrack from './twilio/VideoTrack'
+import { DeviceInfo, MediaChatContext } from './mediaChatContext.js'
+import ParticipantTracks from './twilio/ParticipantTracks.js'
+import VideoTrack from './twilio/VideoTrack.js'
 
 export const TwilioChatContextProvider = (props: {
   active: boolean;

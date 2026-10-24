@@ -1,1 +1,1 @@
-export { MessageItem } from './MessageItem'
+export { MessageItem } from './MessageItem.js'

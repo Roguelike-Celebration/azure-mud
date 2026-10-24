@@ -1,4 +1,4 @@
-import { EndpointFunction, LogFn } from '../endpoint'
+import { EndpointFunction, LogFn } from '../endpoint.js'
 
 const clientDeployedWebhook: EndpointFunction = async (inputs: any, log: LogFn) => {
   const inputtedKey = inputs.key

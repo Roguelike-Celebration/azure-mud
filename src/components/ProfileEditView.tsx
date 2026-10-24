@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react'
 
-import { PublicUser } from '../../server/src/user'
-import config from '../config'
-import { updateProfile } from '../networking'
+import { PublicUser } from '../../server/src/user.js'
+import config from '../config.js'
+import { updateProfile } from '../networking.js'
 import '../../style/profileEditView.css'
 
 interface Props {

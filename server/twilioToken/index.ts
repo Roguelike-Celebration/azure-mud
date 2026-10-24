@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import Twilio from 'twilio'
 
-import { getUserIdFromHeaders } from '../src/authenticate'
+import { getUserIdFromHeaders } from '../src/authenticate.js'
 
 const VideoGrant = Twilio.jwt.AccessToken.VideoGrant
 const MAX_ALLOWED_SESSION_DURATION = 14400

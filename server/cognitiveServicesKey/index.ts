@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { getUserIdFromHeaders } from '../src/authenticate'
-import { CognitiveServicesKeyResponse } from '../src/types'
+import { getUserIdFromHeaders } from '../src/authenticate.js'
+import { CognitiveServicesKeyResponse } from '../src/types.js'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   const userId = await getUserIdFromHeaders(context, req)

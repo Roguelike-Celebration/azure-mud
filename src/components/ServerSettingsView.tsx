@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-import { HappeningNowEntry, ServerSettings, toServerSettings } from '../../server/src/types'
-import { moveAllUsersToEntryway, resetBadgeData, resetRoomData, updateServerSettings } from '../networking'
-import { RoomDataMap } from '../reducer'
+import { HappeningNowEntry, ServerSettings, toServerSettings } from '../../server/src/types.js'
+import { moveAllUsersToEntryway, resetBadgeData, resetRoomData, updateServerSettings } from '../networking.js'
+import { RoomDataMap } from '../reducer.js'
 
 export default function ServerSettingsView (props: { serverSettings: ServerSettings, roomData: RoomDataMap }) {
   const [newSettings, setNewSettings] = useState(JSON.stringify(props.serverSettings, null, 2))

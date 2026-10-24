@@ -1,5 +1,5 @@
-import { EndpointFunction, LogFn } from '../endpoint'
-import DB from '../redis'
+import { EndpointFunction, LogFn } from '../endpoint.js'
+import DB from '../redis.js'
 
 const isRegistered: EndpointFunction = async (inputs: any, log: LogFn) => {
   if (!inputs.userId) {

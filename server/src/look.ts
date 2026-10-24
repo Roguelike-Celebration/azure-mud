@@ -1,5 +1,5 @@
-import { DB } from './database'
-import { Result } from './endpoint'
+import { DB } from './database.js'
+import { Result } from './endpoint.js'
 
 export async function look (target: string): Promise<Result> {
   const profile = await DB.getUser(target)

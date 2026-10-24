@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { authenticatedAzureWrap } from '../src/azureWrap'
-import banUser from '../src/endpoints/banUser'
+import { authenticatedAzureWrap } from '../src/azureWrap.js'
+import banUser from '../src/endpoints/banUser.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
