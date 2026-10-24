@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { authenticatedAzureWrap } from '../src/azureWrap'
-import deleteMessage from '../src/endpoints/deleteMessage'
+import { authenticatedAzureWrap } from '../src/azureWrap.js'
+import deleteMessage from '../src/endpoints/deleteMessage.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

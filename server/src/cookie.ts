@@ -1,7 +1,7 @@
-import generators from '../src/generators'
+import generators from '../src/generators/index.js'
 
-import { Result } from './endpoint'
-import { User } from './user'
+import { Result } from './endpoint.js'
+import { User } from './user.js'
 
 export function cookie (user: User, messageId: string): Result {
   const generator = generators.fortuneCookies

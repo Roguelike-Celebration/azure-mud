@@ -1,4 +1,4 @@
-import { MessageType } from './enums'
+import { MessageType } from './enums.js'
 
 /** A message, as a union type of all our particular message types. */
 export type Message =

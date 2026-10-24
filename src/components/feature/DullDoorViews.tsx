@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { ShowModalAction, UpdateProfileColorAction } from '../../Actions'
-import { DispatchContext } from '../../App'
-import { Modal } from '../../modals'
-import * as Storage from '../../storage'
+import { ShowModalAction, UpdateProfileColorAction } from '../../Actions.js'
+import { DispatchContext } from '../../App.js'
+import { Modal } from '../../modals.js'
+import * as Storage from '../../storage.js'
 
 // When you pass through the rainbow door enough times, you get a randomly colored username.
 // This undoes that.

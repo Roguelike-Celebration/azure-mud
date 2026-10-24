@@ -2,13 +2,13 @@ import _ from 'lodash'
 import React, { useContext, useLayoutEffect, useReducer, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 
-import { Badge } from '../../server/src/badges'
-import { BadgeCategory } from '../../server/src/types'
-import { EquipBadgeAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { equipBadge } from '../networking'
+import { Badge } from '../../server/src/badges.js'
+import { BadgeCategory } from '../../server/src/types.js'
+import { EquipBadgeAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { equipBadge } from '../networking.js'
 
-import BadgeView from './BadgeView'
+import BadgeView from './BadgeView.js'
 
 import '../../style/badges.css'
 

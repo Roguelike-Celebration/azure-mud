@@ -1,10 +1,10 @@
 import React, { FC, ReactNode, useContext } from 'react'
 
-import { MessagesContext } from '../../App'
-import { MessageItem } from '../MessageItem'
-import { VirtualizationContext } from '../VirtualizationProvider'
+import { MessagesContext } from '../../App.js'
+import { MessageItem } from '../MessageItem/index.js'
+import { VirtualizationContext } from '../VirtualizationProvider/index.js'
 
-import { useAutoscroll, useShouldHideTimestamp } from './hooks'
+import { useAutoscroll, useShouldHideTimestamp } from './hooks/index.js'
 import './MessageList.css'
 
 interface MessageListProps {

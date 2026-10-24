@@ -1,9 +1,9 @@
 import React, { FC, memo, useContext, useEffect, useRef } from 'react'
 
-import { MessagesContext } from '../../App'
-import { MessageType } from '../../message'
-import MessageView from '../MessageView'
-import { VirtualizationContext } from '../VirtualizationProvider'
+import { MessagesContext } from '../../App.js'
+import { MessageType } from '../../message/index.js'
+import MessageView from '../MessageView.js'
+import { VirtualizationContext } from '../VirtualizationProvider/index.js'
 import './MessageItem.css'
 
 interface MessageItemProps {

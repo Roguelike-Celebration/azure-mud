@@ -1,5 +1,5 @@
-import { EndpointFunction, LogFn } from '../endpoint'
-import { minimizeUser, updateUserProfile, User } from '../user'
+import { EndpointFunction, LogFn } from '../endpoint.js'
+import { minimizeUser, updateUserProfile, User } from '../user.js'
 
 const updateProfile: EndpointFunction = async (inputs: any, log: LogFn) => {
   if (!inputs.userId) {

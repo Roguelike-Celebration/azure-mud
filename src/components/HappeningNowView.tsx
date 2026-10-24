@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 
-import { HappeningNowEntry } from '../../server/src/types'
-import { HideModalAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { moveToRoom } from '../networking'
-import { RoomDataMap } from '../reducer'
+import { HappeningNowEntry } from '../../server/src/types.js'
+import { HideModalAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { moveToRoom } from '../networking.js'
+import { RoomDataMap } from '../reducer.js'
 
-import { nowDate, ScheduleEntries } from './ScheduleView'
+import { nowDate, ScheduleEntries } from './ScheduleView.js'
 
 // Apparently reverse() does an actual reversal! WELL. All right then, Javascript.
 const ReversedScheduleEntries = [...ScheduleEntries].reverse()

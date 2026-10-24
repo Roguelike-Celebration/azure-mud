@@ -1,4 +1,4 @@
 export {
   VirtualizationContext,
   VirtualizationProvider
-} from './VirtualizationProvider'
+} from './VirtualizationProvider.js'

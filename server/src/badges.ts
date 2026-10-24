@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { BadgeCategory } from './types'
+import { BadgeCategory } from './types.js'
 
 // See server/src/moveToRoom.ts for the badge-awarding logic, including the setting for
 // which is the current-event badge.
