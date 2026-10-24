@@ -106,14 +106,16 @@ export default function MediaChatView (props: MediaProps) {
     )
   })
 
-  const audioParticipants = audioParticipantIds
-    .map((p) => {
+  const audioParticipants = audioParticipantIds.map((p) => {
+    return (
       <ParticipantChatView
+        key={`participant-chat-view-${p.identity}`}
         participant={p}
         isDominant={props.currentSpeaker === p.identity}
         renderAsFace={false}
       />
-    })
+    )
+  })
 
   // TODO: This will eventually need to check for speakers as well
   // It's unclear to me if this logic should live here

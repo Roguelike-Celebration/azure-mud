@@ -21,8 +21,11 @@ Object.values(staticRoomData).forEach(async (room) => {
   // but shrug, copy/pasting from RoomView.tsx is fine.
   description = description.replace(complexLinkRegex, (match, text, roomId) => {
     if (_.includes(roomIds, roomId)) {
+      // valid
     } else if (roomId === 'item' && allowedItems.includes(text)) {
+      // valid
     } else if (linkActions[roomId]) {
+      // valid
     } else {
       failures.push([room.id, match])
     }
