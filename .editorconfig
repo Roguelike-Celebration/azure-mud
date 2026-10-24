@@ -15,7 +15,7 @@ indent_size = 2
 tab_width = 2
 trim_trailing_whitespace = true
 
-[{tools/grin,tools/findd}]
+[{tools/grin,tools/findd,tools/deploy}]
 indent_size = 2
 tab_width = 2
 trim_trailing_whitespace = true

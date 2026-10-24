@@ -1,0 +1,109 @@
+#!/bin/bash
+#
+# deploy - Deploy the server-side components (Function app and SWA) to an instance
+#
+# This is used for manual deployment to a dev instance from a local repo. It's not
+# used by our normal prod or staging deployments, which are done with GitHub Actions.
+#
+# It's controlled by env vars. Typically you'll set those by sourcing a .env file.
+#
+# This is a development tool, not for use on prod instances.
+#
+# Env vars:
+#
+# FUNCAPP_NAME - Name of your Azure Function app. (Not its full hostname or URL.)
+# SWA_CLI_DEPLOYMENT_TOKEN - Deployment token for the Azure SWA
+
+# This code is Bash 3.x, for compatibility with macOS's system /bin/bash, which is stuck on
+# the old Bash 3.x for licensing reasons.
+
+# TODO: Maybe get the SWA deployment token with `az staticwebapp secrets` instead of
+# an env var.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ ${TRACE:-0} == "1" ]]; then set -o xtrace; fi
+
+# Load RLC bash lib
+_tools_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+source "${_tools_dir}/lib/bash/lib-rlc.sh"
+REPO_DIR=$(dirname "${_tools_dir}")
+
+SERVER_PRUNED=0
+
+function main() {
+  local var
+  trap on_exit EXIT
+  for var in FUNCAPP_NAME SWA_CLI_DEPLOYMENT_TOKEN \
+      SERVER_HOSTNAME FRONTEND_URL FIREBASE_API_KEY FIREBASE_AUTH_DOMAIN FIREBASE_PROJECT_ID \
+      FIREBASE_STORAGE_BUCKET FIREBASE_MESSAGING_SENDER_ID FIREBASE_APP_ID; do
+    rlc::need_env_var "$var"
+  done
+  if echo "$FUNCAPP_NAME" | grep prod > /dev/null \
+        || echo "$FUNCAPP_NAME" | grep roguelikecelebration > /dev/null; then
+    rlc::die "Refusing to run against prod: FUNCAPP_NAME = ${FUNCAPP_NAME}"
+  fi
+  cd "$REPO_DIR"
+  # Validate and build all first so if one part is bad, no parts get deployed
+  build_server
+  build_frontend
+  deploy_server
+  deploy_frontend
+}
+
+function build_server() {
+  pushd server > /dev/null
+  local need_file="firebase-admin.json"
+  if [[ ! -f "$need_file" ]]; then
+    rlc::die "Required file missing: ${need_file}"
+  fi
+  npm ci
+  npm run build
+  SERVER_PRUNED=1
+  npm prune --omit=dev
+  popd > /dev/null
+}
+
+function deploy_server() {
+  pushd server > /dev/null
+  func azure functionapp publish "$FUNCAPP_NAME" --no-build
+  # Restore dev-only dependencies
+  npm ci
+  SERVER_PRUNED=0
+  popd > /dev/null
+}
+
+function build_frontend() {
+  npm ci
+  npm run build
+}
+
+function deploy_frontend() {
+  # "production" just means the main slot within the SWA instance; it doesn't mean our
+  # production SWA instance.
+  swa deploy ./dist --env production
+}
+
+function on_exit() {
+  local rc=$?
+  if [[ $SERVER_PRUNED = 1 ]]; then
+    rlc::info "Exiting mid-deployment; restoring server npm dependencies"
+    restore_server_deps || rlc::warning "Failed restoring server npm dependencies"
+  fi
+  exit $rc
+}
+
+function restore_server_deps() {
+  (
+    cd "${REPO_DIR}/server"
+    npm ci
+    SERVER_PRUNED=0
+  )
+}
+
+
+
+# ========== Main script ==========
+
+main "$@"
