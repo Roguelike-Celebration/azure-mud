@@ -13,7 +13,7 @@ import NameView from './NameView.js'
 
 import '../../style/profileView.css'
 
-const ProfileWhisperView = (props: WhisperMessage & {id: string, otherUser: PublicUser}) => {
+const ProfileWhisperView = (props: WhisperMessage & { id: string, otherUser: PublicUser }) => {
   const { otherUser } = props
 
   if (props.senderIsSelf) {

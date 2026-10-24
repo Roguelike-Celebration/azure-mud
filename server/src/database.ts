@@ -123,6 +123,5 @@ interface Database {
   getRoomIdFromFuzzySearch (search: string): Promise<string | undefined>;
 }
 
-// eslint-disable-next-line no-undef
 export default Database
 export { Redis as DB }

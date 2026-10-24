@@ -3,7 +3,7 @@ import React from 'react'
 
 import { deleteRoom } from '../../networking.js'
 
-export default function (props: {roomId: string, updateRoom: () => void, createRoom: (name: string) => void}) {
+export default function (props: { roomId: string, updateRoom: () => void, createRoom: (name: string) => void }) {
   const clickedNew = () => {
     const name = prompt('What would you like the room to be called?')
     if (!name) return

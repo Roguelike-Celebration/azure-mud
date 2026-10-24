@@ -1,5 +1,3 @@
-/* eslint-disable @stylistic/quotes */
-
 import tracery from 'tracery-grammar'
 
 export const actionString = (bodyWorksCharacter: string) => {
@@ -22,4 +20,3 @@ export const generate = () => {
 
   return grammar.flatten('#origin#')
 }
-/* eslint-enable @stylistic/quotes */
