@@ -34,11 +34,6 @@ export function ObeliskView (props: Props) {
   }
 
   const saveNotes = async () => {
-    interface ExportedNote {
-      authorId: string,
-      authorName: string
-    }
-
     const mappedNotes = props.notes.map((v) => {
       return {
         id: v.id,
