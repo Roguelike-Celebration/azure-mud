@@ -5,8 +5,8 @@
 import React, { useContext, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
-import { HideModalAction } from '../Actions'
-import { DispatchContext } from '../App'
+import { HideModalAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
 
 interface Props {
     fullScreen: boolean,

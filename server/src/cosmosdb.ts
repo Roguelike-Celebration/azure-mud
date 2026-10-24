@@ -1,8 +1,8 @@
 import { CosmosClient } from '@azure/cosmos'
 
-import { Room } from './rooms'
-import { DEFAULT_SERVER_SETTINGS, PresenceListMap, RoomDataMap, ServerSettings } from './types'
-import { User } from './user'
+import { Room } from './rooms/index.js'
+import { DEFAULT_SERVER_SETTINGS, PresenceListMap, RoomDataMap, ServerSettings } from './types.js'
+import { User } from './user.js'
 
 // TODO: Partition key issues
 

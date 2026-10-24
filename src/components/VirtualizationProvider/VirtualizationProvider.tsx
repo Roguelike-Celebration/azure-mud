@@ -11,8 +11,8 @@ import React, {
 } from 'react'
 
 import '../../../style/chat.css'
-import { Message } from '../../message'
-import { PayloadAction } from '../../types'
+import { Message } from '../../message/index.js'
+import { PayloadAction } from '../../types.js'
 
 type VerticalPosition = Pick<Message, 'id'> & Pick<DOMRect, 'top' | 'height'>;
 

@@ -1,6 +1,6 @@
-import { DB } from './database'
-import { HeartbeatMap } from './types'
-import { User } from './user'
+import { DB } from './database.js'
+import { HeartbeatMap } from './types.js'
+import { User } from './user.js'
 
 /** All of these store heartbeats as Unix timestamps as numbers.
  * When I stored either a timestamp number or a ISO8601 string,

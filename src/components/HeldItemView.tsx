@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
-import { UserMapContext } from '../App'
-import { dropItem } from '../networking'
+import { UserMapContext } from '../App.js'
+import { dropItem } from '../networking.js'
 
 const HeldItemView = () => {
   const { userMap, myId } = useContext(UserMapContext)

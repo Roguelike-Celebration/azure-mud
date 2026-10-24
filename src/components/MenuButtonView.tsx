@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
 import { FaCog } from 'react-icons/fa'
 
-import { ShowModalAction } from '../Actions'
-import { DispatchContext, UserMapContext } from '../App'
-import { signOut } from '../authentication'
-import { Modal } from '../modals'
-import { disconnect, fetchProfile, openOrCloseSpace } from '../networking'
+import { ShowModalAction } from '../Actions.js'
+import { DispatchContext, UserMapContext } from '../App.js'
+import { signOut } from '../authentication.js'
+import { Modal } from '../modals.js'
+import { disconnect, fetchProfile, openOrCloseSpace } from '../networking.js'
 
-import NameView from './NameView'
+import NameView from './NameView.js'
 
 export default function MenuButtonView (props: { username: string, spaceIsClosed: boolean }) {
   const dispatch = useContext(DispatchContext)

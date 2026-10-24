@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { authenticatedAzureWrap } from '../src/azureWrap'
-import resetBadgeData from '../src/endpoints/resetBadgeData'
+import { authenticatedAzureWrap } from '../src/azureWrap.js'
+import resetBadgeData from '../src/endpoints/resetBadgeData.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

@@ -1,7 +1,7 @@
-import { DB } from '../database'
-import { EndpointFunction, GroupManagementTask, LogFn } from '../endpoint'
-import { getHeartbeatData } from '../heartbeat'
-import { getFullUser } from '../user'
+import { DB } from '../database.js'
+import { EndpointFunction, GroupManagementTask, LogFn } from '../endpoint.js'
+import { getHeartbeatData } from '../heartbeat.js'
+import { getFullUser } from '../user.js'
 
 const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
   const thresholdSeconds = 90

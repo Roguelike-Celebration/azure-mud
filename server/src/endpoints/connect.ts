@@ -1,12 +1,12 @@
-import { UnlockableBadges } from '../badges'
-import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint'
-import { globalPresenceMessage } from '../globalPresenceMessage'
-import { userHeartbeatReceived } from '../heartbeat'
-import DB from '../redis'
-import { minimalRoomData } from '../rooms'
-import setUpRoomsForUser from '../setUpRoomsForUser'
-import { MinimalUserMap, RoomDataMap, RoomResponse } from '../types'
-import { isMod, minimizeUser, User } from '../user'
+import { UnlockableBadges } from '../badges.js'
+import { AuthenticatedEndpointFunction, LogFn, Result } from '../endpoint.js'
+import { globalPresenceMessage } from '../globalPresenceMessage.js'
+import { userHeartbeatReceived } from '../heartbeat.js'
+import DB from '../redis.js'
+import { minimalRoomData } from '../rooms/index.js'
+import setUpRoomsForUser from '../setUpRoomsForUser.js'
+import { MinimalUserMap, RoomDataMap, RoomResponse } from '../types.js'
+import { isMod, minimizeUser, User } from '../user.js'
 
 // TODO: We are currently including all static room data in this initial request
 // That may not be eventually what we want

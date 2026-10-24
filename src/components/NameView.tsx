@@ -2,18 +2,18 @@ import React, { useContext } from 'react'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
 import ReactTooltip from 'react-tooltip'
 
-import { MinimalUser } from '../../server/src/user'
+import { MinimalUser } from '../../server/src/user.js'
 import {
   BanToggleAction,
   HideModalAction,
   ModToggleAction,
   ShowModalAction
-} from '../Actions'
-import { DispatchContext, SettingsContext, UserMapContext } from '../App'
-import { Modal } from '../modals'
-import { fetchProfile, toggleUserSpeaker } from '../networking'
+} from '../Actions.js'
+import { DispatchContext, SettingsContext, UserMapContext } from '../App.js'
+import { Modal } from '../modals.js'
+import { fetchProfile, toggleUserSpeaker } from '../networking.js'
 
-import BadgeView from './BadgeView'
+import BadgeView from './BadgeView.js'
 import '../../style/nameView.css'
 
 // TODO: In this code, "user" might refer to the user whose name we clicked on to get a menu (the

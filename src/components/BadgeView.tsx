@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { customEmojiMap, reservedEmojiMap } from '../emoji'
+import { customEmojiMap, reservedEmojiMap } from '../emoji/index.js'
 
 interface Props {
   emoji?: string

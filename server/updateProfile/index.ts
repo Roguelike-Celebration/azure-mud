@@ -1,9 +1,9 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { getUserIdFromHeaders } from '../src/authenticate'
-import { azureWrap } from '../src/azureWrap'
-import { DB } from '../src/database'
-import updateProfile from '../src/endpoints/updateProfile'
+import { getUserIdFromHeaders } from '../src/authenticate.js'
+import { azureWrap } from '../src/azureWrap.js'
+import { DB } from '../src/database.js'
+import updateProfile from '../src/endpoints/updateProfile.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
