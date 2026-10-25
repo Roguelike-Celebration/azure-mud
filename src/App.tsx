@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { createContext, useEffect } from 'react'
 import { IconContext } from 'react-icons/lib'
 import ReactTooltip from 'react-tooltip'
@@ -10,10 +9,6 @@ import {
   LoadMessageArchiveAction,
   PlayerBannedAction,
   SendMessageAction,
-  SetCaptionsEnabledAction,
-  SetKeepCameraWhenMovingAction,
-  SetNumberOfFacesAction,
-  SetTextOnlyModeAction,
   SetUseSimpleNamesAction,
   ShowSideMenuAction,
   SpaceIsClosedAction
@@ -34,8 +29,6 @@ import HelpView from './components/HelpView.js'
 import InputView from './components/InputView.js'
 import LoggedOutView from './components/LoggedOutView.js'
 import MapModalView from './components/MapModalView.js'
-import MediaChatView from './components/MediaChatView.js'
-import MediaSelectorView from './components/MediaSelectorView.js'
 import { MessageList } from './components/MessageList/index.js'
 import { ModalView } from './components/ModalView.js'
 import { NoteWallView } from './components/NoteWallView.js'
@@ -59,7 +52,6 @@ import { checkIsRegistered, connect } from './networking.js'
 import reducer, { defaultState, RoomDataMap, State, UserMap } from './reducer.js'
 import * as Storage from './storage.js'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk.js'
-import { TwilioChatContextProvider } from './videochat/twilioChatContext.js'
 
 interface UserMapContextValue {
   userMap: UserMap
@@ -151,47 +143,15 @@ const App = () => {
 
         const useSimpleNames = await Storage.getUseSimpleNames()
         dispatch(SetUseSimpleNamesAction(useSimpleNames))
-        const keepCameraWhenMoving = await Storage.getKeepCameraWhenMoving()
-        dispatch(SetKeepCameraWhenMovingAction(keepCameraWhenMoving))
-        const textOnlyMode = await Storage.getTextOnlyMode()
-        dispatch(SetTextOnlyModeAction(textOnlyMode, false))
-        const captionsEnabled = await Storage.getCaptionsEnabled()
-        dispatch(SetCaptionsEnabledAction(captionsEnabled))
 
         dispatch(IsRegisteredAction())
         connect(userId, dispatch)
 
-        // WARNING: Prior to the "calculate number of faces for videochat" code,
-        // there was a no-op resize handler here.
-        // window.addEventListener('resize', () => {})
-        // I frankly have no idea what this was doing,
-        // and worry my changes will cause unexpected errors
-        // -Em, 10/12/2021
+        // WARNING: I don't know what this does.
+        // When videochat existed, we had a warning that this no-op existed prior to videochat
+        // So when I removed videochat, I left it here
+        // (-Emilia)
         window.addEventListener('resize', () => {})
-        const onResize = () => {
-          // It seems like a smell to do this in here and have to grab into #main,
-          // but I think it's fine?
-          const VideoWidth = 180
-          const $main = document.getElementById('main')
-          // Addendum: in Firefox on Windows sometimes we get into this function with 'main' as null!
-          if ($main) {
-            const numberOfFaces =
-              Math.floor($main.clientWidth / VideoWidth) - 1
-            dispatch(SetNumberOfFacesAction(numberOfFaces))
-          } else {
-            console.warn(
-              "Attempted to call onResize when 'main' element was null; will default to show no faces"
-            )
-          }
-        }
-
-        // Our initial paint time is stupid slow
-        // but waiting a long time seems to ensure that #main exists
-        setTimeout(onResize, 2000)
-        window.addEventListener(
-          'resize',
-          _.throttle(onResize, 100, { trailing: true })
-        )
       }
     })
   }, [])
@@ -246,28 +206,6 @@ const App = () => {
     return <YouAreBannedView />
   }
 
-  // It's slightly weird we now construct this here and pass it as a prop to
-  // RoomView instead of constructing it there. Shrug, the conf is in 2 days.
-  let videoChatView: React.ReactElement | undefined
-  if (
-    state.roomData &&
-    state.roomId &&
-    state.roomData[state.roomId] &&
-    state.roomData[state.roomId].mediaChat
-  ) {
-    videoChatView = (
-      <MediaChatView
-        visibleSpeakers={state.visibleSpeakers}
-        currentSpeaker={state.currentSpeaker}
-        numberOfFaces={state.numberOfFaces}
-        inMediaChat={state.inMediaChat}
-        textOnlyMode={state.textOnlyMode}
-        audioOnlyMode={state.audioOnlyMode}
-        currentUser={state.userMap[state.userId]}
-      />
-    )
-  }
-
   let innerModalView: React.ReactElement | undefined
   let modalView: React.ReactElement | undefined
 
@@ -303,25 +241,7 @@ const App = () => {
     case Modal.Settings: {
       innerModalView = (
         <SettingsView
-          keepCameraWhenMoving={state.keepCameraWhenMoving}
-          captionsEnabled={state.captionsEnabled}
           unlockedBadges={state.profileData?.unlockedBadges}
-        />
-      )
-      break
-    }
-    case Modal.MediaSelector: {
-      console.log('Opening media selector')
-      // TODO: Fix this userIsSpeaking (it was...broken in the first place but if we're bordering we should do it here)
-      innerModalView = (
-        <MediaSelectorView
-          showJoinButton={
-            !state.inMediaChat || state.activeModalOptions.showJoinButton
-          }
-          hideVideo={state.activeModalOptions.hideVideo}
-          userIsSpeaking={false}
-          roomId={state.roomId}
-          keepCameraWhenMoving={state.keepCameraWhenMoving}
         />
       )
       break
@@ -445,7 +365,6 @@ const App = () => {
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <DispatchContext.Provider value={dispatch}>
         <MessagesContext.Provider value={state.messages}>
-          <TwilioChatContextProvider active={!state.textOnlyMode}>
             <IsMobileContext.Provider value={isMobile}>
               <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
                 <UserMapContext.Provider value={{ userMap: state.userMap, myId: state.userId }}>
@@ -469,51 +388,46 @@ const App = () => {
                           {/* Once we moved the sidebar to be position:fixed, we still
                       needed something to take up its space in the CSS grid.
                       This should be fixable via CSS, but sigh, it's 3 days before the event */}
-                          <div id="side-nav-placeholder" />
-                        </span>
-                      ) : (
-                        <button id="show-menu" onClick={showMenu}>
-                          <span role="img" aria-label="menu">
+                        <div id="side-nav-placeholder" />
+                      </span>
+                    ) : (
+                      <button id="show-menu" onClick={showMenu}>
+                        <span role="img" aria-label="menu">
                             🍔
-                          </span>
-                        </button>
-                      )}
-                      {modalView}
-                      <div id="main" role="main">
-                        {state.roomData[state.roomId] ? (
-                          <RoomView
-                            room={state.roomData[state.roomId]}
-                            userId={state.userId}
-                            roomData={state.roomData}
-                            presenceData={state.presenceData}
-                            inMediaChat={state.inMediaChat}
-                            keepCameraWhenMoving={state.keepCameraWhenMoving}
-                            textOnlyMode={state.textOnlyMode}
-                            mediaChatView={videoChatView}
-                            hasDismissedAModal={state.hasDismissedAModal}
-                          />
-                        ) : null}
-                        <VirtualizationProvider>
-                          <MessageList
-                            autoscrollChat={state.autoscrollChat}
-                            messagesLoadProgress={state.messagesLoadProgress}
-                          />
-                        </VirtualizationProvider>
-                        <InputView
-                          prepopulated={state.prepopulatedInput}
-                          sendMessage={(message) =>
-                            dispatch(SendMessageAction(message))
-                          }
-                          usersInRoom={state.roomData[state.roomId]?.users}
+                        </span>
+                      </button>
+                    )}
+                    {modalView}
+                    <div id="main" role="main">
+                      {state.roomData[state.roomId] ? (
+                        <RoomView
+                          room={state.roomData[state.roomId]}
+                          userId={state.userId}
+                          roomData={state.roomData}
+                          presenceData={state.presenceData}
+                          hasDismissedAModal={state.hasDismissedAModal}
                         />
-                      </div>
-                      {profile}
+                      ) : null}
+                      <VirtualizationProvider>
+                        <MessageList
+                          autoscrollChat={state.autoscrollChat}
+                          messagesLoadProgress={state.messagesLoadProgress}
+                        />
+                      </VirtualizationProvider>
+                      <InputView
+                        prepopulated={state.prepopulatedInput}
+                        sendMessage={(message) =>
+                          dispatch(SendMessageAction(message))
+                        }
+                        usersInRoom={state.roomData[state.roomId]?.users}
+                      />
                     </div>
-                  </RoomDataContext.Provider>
-                </UserMapContext.Provider>
-              </SettingsContext.Provider>
-            </IsMobileContext.Provider>
-          </TwilioChatContextProvider>
+                    {profile}
+                  </div>
+                </RoomDataContext.Provider>
+              </UserMapContext.Provider>
+            </SettingsContext.Provider>
+          </IsMobileContext.Provider>
         </MessagesContext.Provider>
       </DispatchContext.Provider>
     </IconContext.Provider>

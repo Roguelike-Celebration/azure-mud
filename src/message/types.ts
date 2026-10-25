@@ -16,7 +16,6 @@ export type Message =
   | ModMessage
   | ErrorMessage
   | CommandMessage
-  | CaptionMessage
 
 /** Member of Message union type whose `type` is T. */
 export type MessageOfType<T extends MessageType> = Extract<Message, { type: T }>
@@ -71,11 +70,6 @@ export interface SameRoomMessage extends BaseMessage<MessageType.SameRoom> {
 }
 
 export interface ChatMessage extends BaseMessage<MessageType.Chat> {
-  userId: string;
-  message: string;
-}
-
-export interface CaptionMessage extends BaseMessage<MessageType.Caption> {
   userId: string;
   message: string;
 }
