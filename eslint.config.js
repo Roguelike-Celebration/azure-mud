@@ -63,5 +63,12 @@ export default [
     // Exempt React components: explicit-module-boundary-types can't recognize them
     files: ['src/**/*.ts'],
     rules: { '@typescript-eslint/explicit-module-boundary-types': 'warn' }
+  },
+  {
+    // Require deployable code to only use non-dev deps.
+    // This is file-scoped, because there are exceptions: tools/* and top-level *.ts like lintLinks.ts,
+    // which are for local execution in dev environments.
+    files: ['src/**/*.ts', 'src/**/*.tsx', 'server/**/*.ts'],
+    rules: { 'import/no-extraneous-dependencies': ['error', { devDependencies: false }] }
   }
 ]

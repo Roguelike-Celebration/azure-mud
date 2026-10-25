@@ -15,9 +15,11 @@
     "node": ">=24.0.0",
     "npm": ">=11.0.0"
   },
+  "main": "dist/src/endpointFunctions.js",
   "dependencies": {
     "@azure/communication-administration": "^1.0.0-beta.3",
     "@azure/cosmos": "^3.9.5",
+    "@azure/functions": "^4.16.5",
     "firebase-admin": "^9.11.1",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
@@ -27,7 +29,6 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@azure/functions": "^1.0.2-beta2",
     "@types/lodash": "4.14.182",
     "@types/node": "^24",
     "@types/redis": "^2.8.25",
