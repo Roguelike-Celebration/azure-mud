@@ -193,21 +193,6 @@ export default produce((draft: State, action: Action) => {
         addMessage(draft, createSameRoomMessage(room.shortName))
       }
     }
-
-    /** Here lies a giant hack.
-     * So, the WebRTC connection handshake lives outside of Flux.
-     * The set of peer connections are long-lived objects that shouldn't live inside React components,
-     * but they also need access to a `dispatch` function, so having them separate seems easiest.
-     *
-     * HOWEVER!
-     * When a new peer says "hey, you can connect to me", we need some state data.
-     * Specifically, we need to know if you're currently in a videocall.
-     * This means we need to do some state-munging to actively remove you from a call once you've left the room.
-     *
-     * TODO: There may be cases other than moving rooms where we want to disconnect you.
-     * If so, we need to dupe this logic there.
-     */
-    // (action as Action).type = ActionType.StopVideoChat
   }
 
   if (action.type === ActionType.UpdatedRoomData) {

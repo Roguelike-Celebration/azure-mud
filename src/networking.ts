@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid'
 import { Badge } from '../server/src/badges.js'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
 import {
-  CognitiveServicesKeyResponse,
   RoomResponse,
   ServerSettings
 } from '../server/src/types.js'
@@ -383,11 +382,6 @@ export async function getAllRooms (): Promise<RoomDataMap | undefined> {
 // "Real" HTTP Functions
 // used just as an HTTP request, do not refactor to WS
 // ---------------------------------------------------------------
-
-// TODO: Delete this as part of Twilio removal in 2026-10?
-export async function fetchCognitiveServicesKey (): Promise<CognitiveServicesKeyResponse | undefined> {
-  return await callAzureFunction('cognitiveServicesKey')
-}
 
 // If isNewUser is true, a successful update will refresh the entire page instead of dismissing a modal
 export async function updateProfile (user: Partial<User>, isNew: boolean): Promise<void> {

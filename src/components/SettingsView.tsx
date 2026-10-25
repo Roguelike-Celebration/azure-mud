@@ -162,20 +162,6 @@ export default function SettingsView (props: Props) {
           </label>
         </div>
       </div>
-      <div className="form" id="captionsEnabled">
-        <label
-          htmlFor="captionsEnabled"
-          className="form-header"
-          style={{ marginBottom: 0 }}
-        >
-          Enable Captions (Experimental):
-        </label>
-        <span style={{ marginBottom: '1em' }}>
-          This will automatically transcribe spoken audio as messages in the
-          text chat.
-        </span>
-
-      </div>
     </div>
   )
 }
