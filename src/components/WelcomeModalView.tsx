@@ -16,8 +16,7 @@ export default function WelcomeModalView (props: {}) {
         you a fun and playful space to explore with your fellow attendees.
       </p>
       <p>
-        Happy wandering, and be wary of reading scrolls without identifying them
-        first! ;)
+        Happy wandering, and be wary of reading scrolls without identifying them first! ;)
       </p>
       <p>-The Roguelike Celebration team</p>
     </div>
