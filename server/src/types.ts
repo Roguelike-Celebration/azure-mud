@@ -112,8 +112,3 @@ export enum BadgeCategory {
   Year2026 = 'YEAR_2026',
   Talk2026 = 'TALK_2026'
 }
-
-export interface CognitiveServicesKeyResponse {
-  cognitiveServicesKey: string
-  cognitiveServicesRegion: string
-}
