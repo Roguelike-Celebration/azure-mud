@@ -1,6 +1,5 @@
 export { MessageType } from './enums.js'
 export {
-  CaptionMessage,
   ChatMessage,
   CommandMessage,
   ConnectedMessage,
@@ -19,7 +18,6 @@ export {
   WhisperMessage
 } from './types.js'
 export {
-  createCaptionMessage,
   createChatMessage,
   createCommandMessage,
   createConnectedMessage,
@@ -34,7 +32,6 @@ export {
   createSameRoomMessage,
   createShoutMessage,
   createWhisperMessage,
-  isCaptionMessage,
   isDeletableMessage,
   isMovementMessage
 } from './utils.js'

@@ -48,7 +48,6 @@
     "react-tooltip": "^4.2.8",
     "request": "^2.88.2",
     "ts-node": "^10",
-    "twilio-video": "^2.8.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -61,7 +60,6 @@
     "@types/react-page-visibility": "6.4.1",
     "@types/redis": "^2.8.25",
     "@types/tracery-grammar": "^2.7.4",
-    "@types/twilio-video": "^2.7.3",
     "@types/uuid": "^8.3.4",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",

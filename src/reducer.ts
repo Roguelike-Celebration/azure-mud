@@ -12,7 +12,6 @@ import { Action, ActionType } from './Actions.js'
 import Config from './config.js'
 import { Deferred } from './Deferred.js'
 import {
-  createCaptionMessage,
   createChatMessage,
   createCommandMessage,
   createConnectedMessage,
@@ -27,7 +26,6 @@ import {
   createSameRoomMessage,
   createShoutMessage,
   createWhisperMessage,
-  isCaptionMessage,
   isDeletableMessage,
   isMovementMessage,
   Message,
@@ -36,7 +34,6 @@ import {
 import { Modal } from './modals.js'
 import {
   fetchProfile,
-  sendCaption,
   sendChatMessage,
   toggleUserBan,
   toggleUserMod,
@@ -80,22 +77,6 @@ export interface State {
 
   // Settings data
   useSimpleNames?: boolean;
-
-  /** This is poorly named, but being "in media chat" means "is publishing audio and/or video" */
-  inMediaChat: boolean;
-  keepCameraWhenMoving?: boolean;
-  captionsEnabled: boolean;
-
-  /** text-only mode functionally overrides audio-only mode, since we don't even connect to Twilio */
-  textOnlyMode?: boolean;
-  audioOnlyMode?: boolean;
-
-  /** Tuples of userId and when they were last the visible speaker */
-  visibleSpeakers: [string, Date][];
-  currentSpeaker?: string;
-
-  // How many people (other than you) to show in media chat
-  numberOfFaces: number;
 
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
@@ -146,18 +127,14 @@ export const defaultState: State = {
     ids: []
   },
   whispers: [],
-  visibleSpeakers: [],
   autoscrollChat: true,
   userMap: {},
   roomData: {},
   presenceData: {},
-  inMediaChat: false,
   activeModal: Modal.None,
   activeModalOptions: {},
   isBanned: false,
   serverSettings: DEFAULT_SERVER_SETTINGS,
-  numberOfFaces: 5,
-  captionsEnabled: false,
   hasDismissedAModal: false,
   unlockableBadges: [],
   obeliskNotes: []
@@ -320,17 +297,6 @@ export default produce((draft: State, action: Action) => {
     )
   }
 
-  if (action.type === ActionType.CaptionMessage) {
-    addMessage(
-      draft,
-      createCaptionMessage(
-        action.value.messageId,
-        action.value.name,
-        action.value.message
-      )
-    )
-  }
-
   if (action.type === ActionType.Whisper) {
     const whisperMessage = createWhisperMessage(
       action.value.name,
@@ -467,43 +433,6 @@ export default produce((draft: State, action: Action) => {
     addMessage(draft, createErrorMessage(action.value))
   }
 
-  if (action.type === ActionType.MediaReceivedSpeakingData) {
-    draft.currentSpeaker = action.value
-    if (action.value !== null && action.value !== draft.userId) {
-      if (
-        !draft.visibleSpeakers.find(([userId, _]) => userId === action.value)
-      ) {
-        if (draft.visibleSpeakers.length < draft.numberOfFaces) {
-          draft.visibleSpeakers.push([action.value, new Date()])
-        } else {
-          // Find the oldest speaker and replace them
-          let oldestIndex = -1
-          let oldestTime = new Date()
-          for (let i = 0; i < draft.visibleSpeakers.length; i++) {
-            if (draft.visibleSpeakers[i][1] < oldestTime) {
-              oldestTime = draft.visibleSpeakers[i][1]
-              oldestIndex = i
-            }
-          }
-          draft.visibleSpeakers[oldestIndex] = [action.value, new Date()]
-        }
-      }
-    }
-  }
-
-  if (action.type === ActionType.SetNumberOfFaces) {
-    draft.numberOfFaces = action.value
-  }
-
-  if (action.type === ActionType.StartVideoChat) {
-    draft.inMediaChat = true
-  }
-
-  if (action.type === ActionType.StopVideoChat) {
-    // stopAudioAnalyserLoop()
-    draft.inMediaChat = false
-  }
-
   // UI Actions
   if (action.type === ActionType.SendMessage) {
     const messageId: string = uuidv4()
@@ -581,15 +510,6 @@ export default produce((draft: State, action: Action) => {
     }
   }
 
-  if (action.type === ActionType.SendCaption) {
-    const messageId: string = uuidv4()
-    sendCaption(messageId, action.value)
-    addMessage(
-      draft,
-      createCaptionMessage(messageId, draft.userId, action.value)
-    )
-  }
-
   if (action.type === ActionType.StartWhisper) {
     draft.prepopulatedInput = `/whisper ${action.value} `
   }
@@ -637,36 +557,6 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.SetUseSimpleNames) {
     draft.useSimpleNames = action.value
     Storage.setUseSimpleNames(action.value)
-  }
-
-  if (action.type === ActionType.SetKeepCameraWhenMoving) {
-    draft.keepCameraWhenMoving = action.value
-    Storage.setKeepCameraWhenMoving(action.value)
-  }
-
-  if (action.type === ActionType.SetCaptionsEnabled) {
-    draft.captionsEnabled = action.value
-
-    if (original(draft).captionsEnabled !== current(draft).captionsEnabled) {
-      draft.messages.ids = filteredMessageIds(draft)
-    }
-
-    Storage.setCaptionsEnabled(action.value)
-  }
-
-  if (action.type === ActionType.SetTextOnlyMode) {
-    draft.textOnlyMode = action.textOnlyMode
-    if (!action.refresh) {
-      Storage.setTextOnlyMode(action.textOnlyMode)
-    } else {
-      Storage.setTextOnlyMode(action.textOnlyMode).then(() =>
-        window.location.reload()
-      )
-    }
-  }
-
-  if (action.type === ActionType.SetAudioOnlyMode) {
-    draft.audioOnlyMode = action.value
   }
 
   if (action.type === ActionType.Authenticate) {
@@ -885,8 +775,7 @@ const shouldShowMessage = (
     serverSettings: {
       movementMessagesHideRoomIds,
       movementMessagesHideThreshold
-    },
-    captionsEnabled
+    }
   }: State,
   message: Message
 ): boolean =>
@@ -898,8 +787,7 @@ const shouldShowMessage = (
       (isHiddenRoom(movementMessagesHideRoomIds, message.roomId) ||
         isBusyRoom(movementMessagesHideThreshold, message.numUsersInRoom))
     )
-  ) || // or it's a caption message and captions are not enabled
-  (isCaptionMessage(message) && !captionsEnabled)
+  )
 
 const filteredMessageIds = (state: State) =>
   Object.entries(state.messages.entities).reduce((acc, [id, message]) => {

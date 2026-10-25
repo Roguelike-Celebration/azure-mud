@@ -14,7 +14,11 @@ export interface Room {
   shortName: string
   description: string
 
-  /** If true, webRTC audio/video chat is enabled */
+  /**
+   * If true, video chat is enabled.
+   * This currently does nothing (bc we currently have no video chat feature), but leaving in place
+   * for hypothetical Zoom integration.
+   */
   mediaChat?: boolean
 
   // As we add more pieces of one-off functionality,
@@ -30,11 +34,6 @@ export interface Room {
   // TODO: Put this in JSON schema
   // 'RAINBOW_DOOR'|'DULL_DOOR'|'FULL_ROOM_INDEX'|'VENDING_MACHINE'
   specialFeatures?: string[]
-
-  // This should hopefully eventually be auto-generated and mandatory
-  // but hand-coding for testing purposes now
-  /** GUID for a corresponding ACS videochat room */
-  chatGuid?: string
 
   riddles?: string[]
 
