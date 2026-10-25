@@ -82,7 +82,6 @@ export enum ActionType {
   PlayerConnected = 'PLAYER_CONNECTED',
   PlayerDisconnected = 'PLAYER_DISCONNECTED',
   ChatMessage = 'CHAT_MESSAGE',
-  CaptionMessage = 'CAPTION_MESSAGE',
   ModMessage = 'MOD_MESSAGE',
   DeleteMessage = 'DELETE_MESSAGE',
   Whisper = 'WHISPER',
@@ -100,7 +99,6 @@ export enum ActionType {
   UpdateFontReward = 'UPDATE_FONT_REWARD',
   // UI actions
   SendMessage = 'SEND_MESSAGE',
-  SendCaption = 'SEND_CAPTION',
   SetName = 'SET_NAME',
   StartWhisper = 'START_WHISPER',
   ShowProfile = 'SHOW_PROFILE',
