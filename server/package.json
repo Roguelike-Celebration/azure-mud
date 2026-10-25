@@ -19,6 +19,7 @@
     "@azure/communication-administration": "^1.0.0-beta.3",
     "@azure/cosmos": "^3.9.5",
     "firebase-admin": "^9.11.1",
+    "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
     "redis": "^3.0.2",
     "storyboard-engine": "0.0.5",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
+    "@types/lodash": "4.14.182",
     "@types/node": "^24",
     "@types/redis": "^2.8.25",
     "recursive-readdir": "^2.2.2",
