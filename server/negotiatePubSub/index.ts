@@ -6,7 +6,6 @@ import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest, connection: any
 ): Promise<void> {
   context.res = { body: connection }
-  context.done()
 }
 
 export default httpTrigger
