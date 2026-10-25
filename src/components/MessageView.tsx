@@ -189,7 +189,7 @@ const EnteredView = (props: EnteredMessage) => {
 
   if (roomData[props.fromId]) {
     const fromButton: JSX.Element = roomData[props.fromId].hidden ? (
-      <text>somewhere...</text>
+      <span>somewhere...</span>
     ) : (
       <button onClick={onClick} className="link-styled-button">
         {props.fromName}.
@@ -213,7 +213,7 @@ const LeftView = (props: LeftMessage) => {
 
   if (roomData[props.toId]) {
     const toButton: JSX.Element = roomData[props.toId].hidden ? (
-      <text>somewhere...</text>
+      <span>somewhere...</span>
     ) : (
       <button onClick={onClick} className="link-styled-button">
         {props.toName}.
