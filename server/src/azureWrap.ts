@@ -105,7 +105,7 @@ function outputToAzure (context: InvocationContext, req: HttpRequest, result: Re
 
     actions.push(
       ...(result.groupManagementTasks ?? []).map((t) => {
-        // PubSub has a 'RemoveUserFromAllGroups' action we can eventually use here
+        // WebPubSub has a 'RemoveUserFromAllGroups' action we can eventually use here
         // GroupManagementTasks has a "removeAll" option we don't currently use in favor of "setUpRoomsFor user"
         // It's only called from 'connect'.
         // We'd want make connect return a 'removeAll' and then an 'add' for the current room

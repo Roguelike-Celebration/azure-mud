@@ -29,7 +29,7 @@ const likeRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs: a
     }
   ]
 
-  // The sidebar obelisk and obelisk room share a noteWall, but have different pubsub groups to notify
+  // The sidebar obelisk and obelisk room share a noteWall, but have different webpubsub groups to notify
   // Liking an obelisk note from the sidebar is a different function, this is just the obelisk room case
   if (user.roomId === 'obelisk') {
     messages.push({
