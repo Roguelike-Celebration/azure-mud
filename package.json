@@ -33,7 +33,7 @@
     "firebaseui": "^5.0.0",
     "immer": "^9.0.15",
     "localforage": "^1.9.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "node-emoji": "^1.10.0",
     "react": "^17",
     "react-ace": "^10.1.0",
@@ -50,7 +50,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.182",
+    "@types/lodash": "^4.17.27",
     "@types/node": "^24.19.2",
     "@types/node-emoji": "1.8.1",
     "@types/react": "^17",
