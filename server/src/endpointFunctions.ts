@@ -62,23 +62,17 @@ interface NormalEndpoint {
   methods?: HttpMethod[]
   /** Register Web PubSub output for this endpoint? Defaults to true. */
   webPubSub?: boolean
-  /** Register audit-log table output for this endpoint? See authenticate(). */
-  auditLog?: boolean
 }
 
 function registerNormalEndpoints (): void {
   for (const e of NORMAL_ENDPOINTS) {
     const auth = { ...DEFAULT_AUTH, ...e.auth }
-    if (auth.audit && !e.auditLog) {
-      throw new Error(`${e.name}: BUG in endpoint definition: auth.audit=true requires auditLog=true ` +
-        'but it is false (authenticate() would return 501)')
-    }
     app.http(e.name, {
       methods: e.methods ?? DEFAULT_METHODS,
       authLevel: 'anonymous',
       extraOutputs: [
         ...((e.webPubSub ?? true) ? [webPubSubOutput] : []),
-        ...(e.auditLog ? [auditLogOutput] : [])
+        ...(auth.audit ? [auditLogOutput] : [])
       ],
       handler: (req, context) => authenticatedAzureWrap(context, req, e.fn, auth)
     })
@@ -86,37 +80,37 @@ function registerNormalEndpoints (): void {
 }
 
 const NORMAL_ENDPOINTS: NormalEndpoint[] = [
-  { name: 'addObeliskNote', fn: addObeliskNote, auditLog: true },
-  { name: 'addRoomNote', fn: addRoomNote, auditLog: true },
-  { name: 'banUser', fn: banUser, auth: { mod: true }, auditLog: true },
-  { name: 'connect', fn: connect, auditLog: true },
-  { name: 'deleteMessage', fn: deleteMessage, auth: { mod: true }, methods: ['POST'], auditLog: true },
-  { name: 'deleteObeliskNote', fn: deleteObeliskNote, auditLog: true },
+  { name: 'addObeliskNote', fn: addObeliskNote },
+  { name: 'addRoomNote', fn: addRoomNote },
+  { name: 'banUser', fn: banUser, auth: { mod: true } },
+  { name: 'connect', fn: connect },
+  { name: 'deleteMessage', fn: deleteMessage, auth: { mod: true }, methods: ['POST'] },
+  { name: 'deleteObeliskNote', fn: deleteObeliskNote },
   { name: 'deleteRoom', fn: deleteRoom, auth: { audit: false, mod: true }, webPubSub: false },
-  { name: 'deleteRoomNote', fn: deleteRoomNote, auditLog: true },
-  { name: 'disconnect', fn: disconnect, auditLog: true },
+  { name: 'deleteRoomNote', fn: deleteRoomNote },
+  { name: 'disconnect', fn: disconnect },
   { name: 'displayMessage', fn: displayMessage, auth: { audit: false } },
-  { name: 'equipBadge', fn: equipBadgeFunction, auditLog: true },
+  { name: 'equipBadge', fn: equipBadgeFunction },
   { name: 'getAllRooms', fn: getAllRooms, auth: { audit: false, mod: true }, webPubSub: false },
   { name: 'getRoom', fn: getRoom, auth: { audit: false, mod: true }, webPubSub: false },
   { name: 'getRoomIds', fn: getRoomIds, auth: { audit: false, mod: true }, webPubSub: false },
   { name: 'likeObeliskNote', fn: likeObeliskNote, auth: { audit: false } },
   { name: 'likeRoomNote', fn: likeRoomNote, auth: { audit: false } },
-  { name: 'moveAllUsersToEntryway', fn: moveAllUsersToEntryway, auth: { audit: false, mod: true }, methods: ['POST'], auditLog: true },
-  { name: 'moveRoom', fn: moveRoom, auth: { audit: false }, auditLog: true },
-  { name: 'openOrCloseSpace', fn: openOrCloseSpace, auth: { mod: true }, auditLog: true },
-  { name: 'orderNewDrink', fn: orderNewDrink, auditLog: true },
+  { name: 'moveAllUsersToEntryway', fn: moveAllUsersToEntryway, auth: { audit: false, mod: true }, methods: ['POST'] },
+  { name: 'moveRoom', fn: moveRoom, auth: { audit: false } },
+  { name: 'openOrCloseSpace', fn: openOrCloseSpace, auth: { mod: true } },
+  { name: 'orderNewDrink', fn: orderNewDrink },
   { name: 'pickUpItem', fn: pickUpItem, auth: { audit: false } },
   { name: 'pong', fn: pong, auth: { audit: false }, webPubSub: false },
   { name: 'resetBadgeData', fn: resetBadgeData, auth: { audit: false, mod: true } },
   { name: 'resetRoomData', fn: resetRoomData, auth: { audit: false, mod: true }, webPubSub: false },
-  { name: 'sendChatMessage', fn: sendChatMessage, auditLog: true },
-  { name: 'startObservingObelisk', fn: startObservingObelisk, auth: { audit: false }, auditLog: true },
-  { name: 'stopObservingObelisk', fn: stopObservingObelisk, auth: { audit: false }, auditLog: true },
-  { name: 'toggleModStatus', fn: toggleModStatus, auth: { mod: true }, auditLog: true },
-  { name: 'toggleSpeakerStatus', fn: toggleSpeakerStatus, auth: { mod: true }, auditLog: true },
-  { name: 'updateFontReward', fn: updateFontReward, methods: ['POST'], auditLog: true },
-  { name: 'updateProfileColor', fn: updateProfileColor, methods: ['POST'], auditLog: true },
+  { name: 'sendChatMessage', fn: sendChatMessage },
+  { name: 'startObservingObelisk', fn: startObservingObelisk, auth: { audit: false } },
+  { name: 'stopObservingObelisk', fn: stopObservingObelisk, auth: { audit: false } },
+  { name: 'toggleModStatus', fn: toggleModStatus, auth: { mod: true } },
+  { name: 'toggleSpeakerStatus', fn: toggleSpeakerStatus, auth: { mod: true } },
+  { name: 'updateFontReward', fn: updateFontReward, methods: ['POST'] },
+  { name: 'updateProfileColor', fn: updateProfileColor, methods: ['POST'] },
   { name: 'updateRoom', fn: updateRoom, auth: { audit: false, mod: true }, webPubSub: false }
 ]
 
