@@ -1,7 +1,6 @@
 import axios from 'axios'
 import firebase from 'firebase/app'
 import { Dispatch } from 'react'
-import { v4 as uuid } from 'uuid'
 
 import { Badge } from '../server/src/badges.js'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
@@ -10,6 +9,7 @@ import {
   ServerSettings
 } from '../server/src/types.js'
 import { MinimalUser, User } from '../server/src/user.js'
+import { uuid } from '../server/src/utils.js'
 
 import {
   Action,
