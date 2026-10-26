@@ -11,9 +11,6 @@ export interface AuthenticationOptions {
   mod?: boolean;
 }
 
-/** This wraps an HTTP function and calls it with a hydrated authenticated user.
- * Returns true if execution should continue. */
-
 export async function getUserIdFromHeaders (
   context: InvocationContext,
   req: HttpRequest
@@ -119,27 +116,5 @@ export default async function authenticate (
     }
   }
 
-  const handled = await handler(user)
-
-  // TODO: Restore or trash
-  // This is commented out because the upgrade from Functions 3 -> 4 broke something, somehow
-  // if (options.audit) {
-  //   context.log(`Auditing for user '${user.id}'`);
-  //   context.bindings.tableBinding = [
-  //     {
-  //       PartitionKey: user.id,
-  //       RowKey: uuid(),
-  //       // The object comes loaded with a Timestamp by default as well
-  //       userId: user.id,
-  //       username: user.username,
-  //       endpoint: req.url.replace(
-  //         "https://" + process.env.WEBSITE_HOSTNAME,
-  //         ""
-  //       ),
-  //       request: req.body, // Assumes that all the relevant information will be in the body and not in, like...headers, or something
-  //     },
-  //   ];
-  // }
-
-  return handled
+  return await handler(user)
 }
