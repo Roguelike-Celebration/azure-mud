@@ -14,6 +14,7 @@
     "strictFunctionTypes": true,
     "noImplicitReturns": true,
     "alwaysStrict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"]
   }
 }
