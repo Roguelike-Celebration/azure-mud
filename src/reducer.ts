@@ -1,12 +1,12 @@
 import firebase from 'firebase/app'
 import { current, original, produce } from 'immer'
-import { v4 as uuidv4 } from 'uuid'
 
 import { Badge } from '../server/src/badges.js'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
 import { RoomNote } from '../server/src/roomNote.js'
 import { DEFAULT_SERVER_SETTINGS, ServerSettings } from '../server/src/types.js'
 import { MinimalUser, PublicUser, User } from '../server/src/user.js'
+import { uuid } from '../server/src/utils.js'
 
 import { Action, ActionType } from './Actions.js'
 import Config from './config.js'
@@ -420,7 +420,7 @@ export default produce((draft: State, action: Action) => {
 
   // UI Actions
   if (action.type === ActionType.SendMessage) {
-    const messageId: string = uuidv4()
+    const messageId: string = uuid()
     const trimmedMessage = action.value.trim()
     const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
     const matching = beginsWithSlash
