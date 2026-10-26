@@ -8,7 +8,7 @@ import { app, HttpMethod } from '@azure/functions'
 
 import { AuthenticationOptions, getUserIdFromHeaders } from './authenticate.js'
 import { authenticatedAzureWrap, azureWrap, readJsonBody } from './azureWrap.js'
-import { auditLogOutput, pubSubConnectionInput, signalRConnectionInput, webPubSubOutput } from './bindings.js'
+import { auditLogOutput, signalRConnectionInput, webPubSubConnectionInput, webPubSubOutput } from './bindings.js'
 import { DB } from './database.js'
 import { AuthenticatedEndpointFunction } from './endpoint.js'
 import banUser from './endpoints/banUser.js'
@@ -51,7 +51,7 @@ import updateProfileColor from './endpoints/updateProfileColor.js'
 import updateRoom from './endpoints/updateRoom.js'
 
 const DEFAULT_METHODS: HttpMethod[] = ['GET', 'POST']
-const DEFAULT_AUTH: AuthenticationOptions = { audit: true, mod: false }
+const DEFAULT_AUTH: AuthenticationOptions = { doAudit: true, needsMod: false }
 
 /** Our typical endpoint function, using authenticatedAzureWrap() and no special handling. */
 interface NormalEndpoint {
@@ -72,7 +72,7 @@ function registerNormalEndpoints (): void {
       authLevel: 'anonymous',
       extraOutputs: [
         ...((e.webPubSub ?? true) ? [webPubSubOutput] : []),
-        ...(auth.audit ? [auditLogOutput] : [])
+        ...(auth.doAudit ? [auditLogOutput] : [])
       ],
       handler: (req, context) => authenticatedAzureWrap(context, req, e.fn, auth)
     })
@@ -82,36 +82,36 @@ function registerNormalEndpoints (): void {
 const NORMAL_ENDPOINTS: NormalEndpoint[] = [
   { name: 'addObeliskNote', fn: addObeliskNote },
   { name: 'addRoomNote', fn: addRoomNote },
-  { name: 'banUser', fn: banUser, auth: { mod: true } },
+  { name: 'banUser', fn: banUser, auth: { needsMod: true } },
   { name: 'connect', fn: connect },
-  { name: 'deleteMessage', fn: deleteMessage, auth: { mod: true }, methods: ['POST'] },
+  { name: 'deleteMessage', fn: deleteMessage, auth: { needsMod: true }, methods: ['POST'] },
   { name: 'deleteObeliskNote', fn: deleteObeliskNote },
-  { name: 'deleteRoom', fn: deleteRoom, auth: { audit: false, mod: true }, webPubSub: false },
+  { name: 'deleteRoom', fn: deleteRoom, auth: { doAudit: false, needsMod: true }, webPubSub: false },
   { name: 'deleteRoomNote', fn: deleteRoomNote },
   { name: 'disconnect', fn: disconnect },
-  { name: 'displayMessage', fn: displayMessage, auth: { audit: false } },
+  { name: 'displayMessage', fn: displayMessage, auth: { doAudit: false } },
   { name: 'equipBadge', fn: equipBadgeFunction },
-  { name: 'getAllRooms', fn: getAllRooms, auth: { audit: false, mod: true }, webPubSub: false },
-  { name: 'getRoom', fn: getRoom, auth: { audit: false, mod: true }, webPubSub: false },
-  { name: 'getRoomIds', fn: getRoomIds, auth: { audit: false, mod: true }, webPubSub: false },
-  { name: 'likeObeliskNote', fn: likeObeliskNote, auth: { audit: false } },
-  { name: 'likeRoomNote', fn: likeRoomNote, auth: { audit: false } },
-  { name: 'moveAllUsersToEntryway', fn: moveAllUsersToEntryway, auth: { audit: false, mod: true }, methods: ['POST'] },
-  { name: 'moveRoom', fn: moveRoom, auth: { audit: false } },
-  { name: 'openOrCloseSpace', fn: openOrCloseSpace, auth: { mod: true } },
+  { name: 'getAllRooms', fn: getAllRooms, auth: { doAudit: false, needsMod: true }, webPubSub: false },
+  { name: 'getRoom', fn: getRoom, auth: { doAudit: false, needsMod: true }, webPubSub: false },
+  { name: 'getRoomIds', fn: getRoomIds, auth: { doAudit: false, needsMod: true }, webPubSub: false },
+  { name: 'likeObeliskNote', fn: likeObeliskNote, auth: { doAudit: false } },
+  { name: 'likeRoomNote', fn: likeRoomNote, auth: { doAudit: false } },
+  { name: 'moveAllUsersToEntryway', fn: moveAllUsersToEntryway, auth: { doAudit: false, needsMod: true }, methods: ['POST'] },
+  { name: 'moveRoom', fn: moveRoom, auth: { doAudit: false } },
+  { name: 'openOrCloseSpace', fn: openOrCloseSpace, auth: { needsMod: true } },
   { name: 'orderNewDrink', fn: orderNewDrink },
-  { name: 'pickUpItem', fn: pickUpItem, auth: { audit: false } },
-  { name: 'pong', fn: pong, auth: { audit: false }, webPubSub: false },
-  { name: 'resetBadgeData', fn: resetBadgeData, auth: { audit: false, mod: true } },
-  { name: 'resetRoomData', fn: resetRoomData, auth: { audit: false, mod: true }, webPubSub: false },
+  { name: 'pickUpItem', fn: pickUpItem, auth: { doAudit: false } },
+  { name: 'pong', fn: pong, auth: { doAudit: false }, webPubSub: false },
+  { name: 'resetBadgeData', fn: resetBadgeData, auth: { doAudit: false, needsMod: true } },
+  { name: 'resetRoomData', fn: resetRoomData, auth: { doAudit: false, needsMod: true }, webPubSub: false },
   { name: 'sendChatMessage', fn: sendChatMessage },
-  { name: 'startObservingObelisk', fn: startObservingObelisk, auth: { audit: false } },
-  { name: 'stopObservingObelisk', fn: stopObservingObelisk, auth: { audit: false } },
-  { name: 'toggleModStatus', fn: toggleModStatus, auth: { mod: true } },
-  { name: 'toggleSpeakerStatus', fn: toggleSpeakerStatus, auth: { mod: true } },
+  { name: 'startObservingObelisk', fn: startObservingObelisk, auth: { doAudit: false } },
+  { name: 'stopObservingObelisk', fn: stopObservingObelisk, auth: { doAudit: false } },
+  { name: 'toggleModStatus', fn: toggleModStatus, auth: { needsMod: true } },
+  { name: 'toggleSpeakerStatus', fn: toggleSpeakerStatus, auth: { needsMod: true } },
   { name: 'updateFontReward', fn: updateFontReward, methods: ['POST'] },
   { name: 'updateProfileColor', fn: updateProfileColor, methods: ['POST'] },
-  { name: 'updateRoom', fn: updateRoom, auth: { audit: false, mod: true }, webPubSub: false }
+  { name: 'updateRoom', fn: updateRoom, auth: { doAudit: false, needsMod: true }, webPubSub: false }
 ]
 
 /** Endpoints with special cases like trigger, bindings, handlers, or other logic. */
@@ -153,22 +153,22 @@ function registerSpecialEndpoints (): void {
 
   app.http('negotiatePubSub', {
     authLevel: 'anonymous',
-    extraInputs: [pubSubConnectionInput],
-    handler: async (req, context) => ({ jsonBody: context.extraInputs.get(pubSubConnectionInput) })
+    extraInputs: [webPubSubConnectionInput],
+    handler: async (req, context) => ({ jsonBody: context.extraInputs.get(webPubSubConnectionInput) })
   })
 
   app.http('serverSettings', {
     authLevel: 'anonymous',
     extraOutputs: [webPubSubOutput, auditLogOutput],
     handler: (req, context) => req.method === 'POST'
-      ? authenticatedAzureWrap(context, req, postServerSettings, { mod: true })
+      ? authenticatedAzureWrap(context, req, postServerSettings, { needsMod: true })
       : azureWrap(context, req, getServerSettings)
   })
 
   app.http('startPonderingOrbs', {
     methods: ['GET'],
     authLevel: 'anonymous',
-    extraInputs: [pubSubConnectionInput],
+    extraInputs: [webPubSubConnectionInput],
     extraOutputs: [webPubSubOutput],
     handler: async (req, context) => {
       const userId = req.headers.get('userId')
@@ -178,7 +178,7 @@ function registerSpecialEndpoints (): void {
         return { status: 401, body: 'Unauthorized' }
       }
       context.log(`valid orb ponderer: userId ${userId}`)
-      return { jsonBody: context.extraInputs.get(pubSubConnectionInput) }
+      return { jsonBody: context.extraInputs.get(webPubSubConnectionInput) }
     }
   })
 

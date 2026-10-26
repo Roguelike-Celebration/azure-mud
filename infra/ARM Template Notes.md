@@ -6,7 +6,7 @@ Some scrambled notes on deployment, for future-Emilia or anyone else who touches
 
 I tried to unify our ASWA and Functions set up.
 
-- We can't use the built-in magical functions because they only support HTTP triggers (and we need SignalR triggers, timer triggers, and likely soon PubSub triggers).
+- We can't use the built-in magical functions because they only support HTTP triggers (and we need SignalR triggers, timer triggers, and likely soon Web PubSub triggers).
 - The "byo functions" option where you link a function app would work, but requires all dev accounts to use a paid plan, which is annoying.
 - For now, we just manually add CORS entries based on the completed URL of the ASWA. This means getting the dependency chain right.
 
