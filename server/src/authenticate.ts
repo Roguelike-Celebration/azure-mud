@@ -7,8 +7,8 @@ import { auditLogOutput } from './bindings.js'
 import { getFullUser, isMod, User } from './user.js'
 
 export interface AuthenticationOptions {
-  audit?: boolean;
-  mod?: boolean;
+  doAudit?: boolean;
+  needsMod?: boolean;
 }
 
 export async function getUserIdFromHeaders (
@@ -87,7 +87,7 @@ export default async function authenticate (
   }
 
   if (
-    options.audit &&
+    options.doAudit &&
     !context.options.extraOutputs.some((out) => out.name === auditLogOutput.name)
   ) {
     context.log('Failed to configure audit endpoint with the proper tableBinding')
@@ -99,7 +99,7 @@ export default async function authenticate (
 
   const user = await getFullUser(userId)
 
-  if (options.mod) {
+  if (options.needsMod) {
     if (!(await isMod(user.id))) {
       return {
         status: 403,
