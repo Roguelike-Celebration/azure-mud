@@ -102,7 +102,7 @@ const NORMAL_ENDPOINTS: NormalEndpoint[] = [
   { name: 'getRoomIds', fn: getRoomIds, auth: { audit: false, mod: true }, webPubSub: false },
   { name: 'likeObeliskNote', fn: likeObeliskNote, auth: { audit: false } },
   { name: 'likeRoomNote', fn: likeRoomNote, auth: { audit: false } },
-  { name: 'moveAllUsersToEntryway', fn: moveAllUsersToEntryway, auth: { audit: false }, methods: ['POST'], auditLog: true },
+  { name: 'moveAllUsersToEntryway', fn: moveAllUsersToEntryway, auth: { audit: false, mod: true }, methods: ['POST'], auditLog: true },
   { name: 'moveRoom', fn: moveRoom, auth: { audit: false }, auditLog: true },
   { name: 'openOrCloseSpace', fn: openOrCloseSpace, auth: { mod: true }, auditLog: true },
   { name: 'orderNewDrink', fn: orderNewDrink, auditLog: true },
