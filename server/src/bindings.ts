@@ -16,7 +16,7 @@ export const auditLogOutput = output.table({
   connection: 'AzureWebJobsStorage'
 })
 
-export const pubSubConnectionInput = input.webPubSubConnection({
+export const webPubSubConnectionInput = input.webPubSubConnection({
   name: 'connection',
   hub: 'chat',
   userId: '{headers.userid}'
