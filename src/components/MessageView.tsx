@@ -347,7 +347,7 @@ const ModMessageView = (props: ModMessage) => {
             ❗
           </span>
           <NameView userId={props.userId} id={props.id} /> says to the{' '}
-          <strong>mods</strong>:{props.message}
+          <strong>mods</strong>: {props.message}
           <span role="img" aria-label="red exclamation point">
             ❗
           </span>
