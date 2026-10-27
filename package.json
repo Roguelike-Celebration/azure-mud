@@ -44,7 +44,6 @@
     "react-mentions": "^4.4.7",
     "react-page-visibility": "^6.4.0",
     "react-tooltip": "^4.2.8",
-    "request": "^2.88.2",
     "ts-node": "^10"
   },
   "devDependencies": {
