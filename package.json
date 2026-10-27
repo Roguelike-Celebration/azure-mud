@@ -26,7 +26,6 @@
   "dependencies": {
     "@microsoft/signalr": "^6.0.10",
     "ace-builds": "^1.5.3",
-    "axios": "^0.21.2",
     "confetti-js": "^0.0.18",
     "firebase": "8.10.0",
     "firebaseui": "^5.0.0",
