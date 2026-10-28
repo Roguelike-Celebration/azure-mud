@@ -10,3 +10,4 @@ dist
 .idea
 **/.DS_Store
 .vs/
+/local/

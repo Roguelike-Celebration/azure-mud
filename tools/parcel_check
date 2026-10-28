@@ -1,0 +1,151 @@
+#!/bin/bash
+#
+# parcel_check - Check our parcel build for things
+#
+#   parcel_check unused-polyfills - Find unused polyfill packages that are candidates for removal
+#   parcel_check checksum - Checksum of parcel content, for detecting changes
+#
+# Dev tool for miscellaneous work with looking at the parcel bundle. Must be run from the root
+# directory of the repo. (Or another directory that's the root of a package that uses Parcel.)
+#
+# Subcommands:
+#
+# unused-polyfills
+#
+# Detects polyfill packages that the frontend has declared dependencies on, but aren't
+# actually used in the Parcel bundle. These are candidates for removal from package.json.
+#
+# Must do 'npm run build' first, because this inspects the parcel package in dist/.
+#
+# This is for the frontend only, irrelevant for the backend. Polyfills are browser-side
+# substitutes for Node functionality.
+#
+# checksum
+#
+# Writes a checksum file of the files in the parcel bundle, for detecting diffs in builds.
+# Useful for verifying that a suspected unused dependency (like a polyfill) was not actually
+# used in the bundle, and removing it had no effect.
+#
+# The checksum file is a characteristic checksum of all the files in the parcel bundle. If
+# you run it before a change (i.e. to the package.json deps) and after the change, and the
+# checksum files are identical, then the bundles are identical and the change didn't affect
+# the produced bundle.
+
+# This code is Bash 3.x, for compatibility with macOS's system /bin/bash, which is stuck on
+# the old Bash 3.x for licensing reasons.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ ${TRACE:-0} == "1" ]]; then set -o xtrace; fi
+
+# Load RLC bash lib
+_tools_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+source "${_tools_dir}/lib/bash/lib-rlc.sh"
+
+PROGRAM_NAME=$(basename "$0")
+_RLC_EMIT_PROGNAME=1
+
+SUBCMD=''
+
+HELP_SCREEN="${PROGRAM_NAME} - Check the parcel build for things
+
+  ${PROGRAM_NAME} unused-polyfills
+  ${PROGRAM_NAME} checksum
+
+See the source code for details.
+"
+
+function parse_cli() {
+  local arg
+
+  while [[ $# -ge 1 ]]; do
+    arg="$1"; shift
+    case "$arg" in
+      --help | -h | '-?')   printf '%s' "$HELP_SCREEN"; exit 0 ;;
+      -*)                 rlc::die "Unknown option: ${arg}. See '${PROGRAM_NAME} --help'" ;;
+      *)
+        if [[ -n "$SUBCMD" ]]; then
+          rlc::die "Unexpected argument: ${arg}"
+        else
+          SUBCMD="$arg"
+        fi ;;
+    esac
+  done
+  if [[ -z "$SUBCMD" ]]; then
+    rlc::die "Subcommand argument is required"
+  fi
+  readonly SUBCMD
+}
+
+function main() {
+  parse_cli "$@"
+  case "$SUBCMD" in
+    unused-polyfills)  find_unused_polyfills ;;
+    checksum)          bundle_checksum ;;
+    *)
+      rlc::die "Invalid subcommand: ${SUBCMD}"
+  esac
+}
+
+# Compare our declared (package.json) dependencies against packages actually bundled by
+# parcel to find unused ones. Those are candidates for removal from package.json deps.
+function find_unused_polyfills() {
+
+  local builtins_file polyfills all_declared declared_polyfills bundled unused_polyfills list_str
+
+  need_node_modules_to_exist
+  need_dist_to_exist
+
+  # parcel's polyfill packages
+  builtins_file='node_modules/@parcel/node-resolver-core/lib/builtins.js'
+  if [[ ! -f $builtins_file ]]; then
+    rlc::die "Missing parcel polyfill file: ${builtins_file}. Maybe parcel is not installed, or" \
+        "its internal implementation has changed?"
+  fi
+  polyfills=$(grep -o "^  [a-z_]*: '[a-z0-9_-]*'" "$builtins_file" \
+    | sed -E "s/.*'(.*)'/\1/" | sort -u)
+  # deps the frontend declares
+  all_declared=$(jq -r '(.dependencies // {}) + (.devDependencies // {}) | keys[]' package.json | sort -u)
+  # deps the frontend declares that are polyfills
+  declared_polyfills=$(comm -12 <(echo "$polyfills") <(echo "$all_declared"))
+  # deps that got bundled by parcel
+  bundled=$(cat dist/*.map | jq -r '.sources[]' \
+    | sed -nE 's#.*node_modules/((@[^/]+/)?[^/]+)/.*#\1#p' | sort -u)
+  # polyfill deps that are declared but don't go in to the parcel bundle
+  unused_polyfills=$(comm -23 <(echo "$declared_polyfills") <(echo "$bundled") | tr '\n' ' ')
+  if [[ -n $unused_polyfills ]]; then list_str="$unused_polyfills"; else list_str='(none)'; fi
+  echo "unused polyfill deps: ${list_str}"
+}
+
+# Produce a characteristic checksum file of the current parcel bundle state.
+function bundle_checksum() {
+  local timestamp outfile
+  need_dist_to_exist
+  timestamp=$(date -u +%Y-%m-%d_%H-%M-%S)
+  outfile="./local/parcel_shas_${timestamp}"
+  mkdir -p "$(dirname "$outfile")"
+  (
+    export LC_ALL=C
+    cd dist
+    find . -type f -print0 | sort -z | xargs -0 shasum -a 256
+  ) > "$outfile"
+  rlc::info "Wrote parcel SHA list to ${outfile}"
+}
+
+function need_dist_to_exist() {
+  if [[ ! -d dist ]]; then
+    rlc::die "The dist/ dir is required for this, but missing. Run 'npm run build' to create it."
+  fi
+}
+
+function need_node_modules_to_exist() {
+  if [[ ! -d node_modules ]]; then
+    rlc::die "The node_modules/ dir is required for this, but missing. Run 'npm install' to create it."
+  fi
+}
+
+
+# ========== Main script ==========
+
+main "$@"
