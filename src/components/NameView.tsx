@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
+import ReactDOM from 'react-dom'
 import ReactTooltip from 'react-tooltip'
 
 import { MinimalUser } from '../../server/src/user.js'
@@ -203,19 +204,23 @@ export default function NameView (props: Props) {
     const menu = <><ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
       {nameEl}
     </ContextMenuTrigger>
-    <ContextMenu id={props.id}>
-      <MenuItem onClick={showBadges}>
-            Show Badges
-      </MenuItem>
+    {/* Portal to main <body> to avoid inheriting message line's styling like dimming */}
+    {ReactDOM.createPortal(
+      <ContextMenu id={props.id}>
+        <MenuItem onClick={showBadges}>
+              Show Badges
+        </MenuItem>
 
-      <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
-            View Profile
-      </MenuItem>
-      <MenuItem onClick={showProfileEdit}>
-            Edit Profile
-      </MenuItem>
-      {pastSpeakerButton}
-    </ContextMenu></>
+        <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
+              View Profile
+        </MenuItem>
+        <MenuItem onClick={showProfileEdit}>
+              Edit Profile
+        </MenuItem>
+        {pastSpeakerButton}
+      </ContextMenu>,
+      document.body
+    )}</>
 
     return (
       <span className={className} style={customStyle} >
@@ -227,18 +232,21 @@ export default function NameView (props: Props) {
       <ContextMenuTrigger id={props.id} renderTag="span" holdToDisplay={0}>
         {nameEl}
       </ContextMenuTrigger>
-      <ContextMenu id={props.id}>
-        <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
-      Profile
-        </MenuItem>
-        <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
-      Whisper
-        </MenuItem>
-        {banButton}
-        {modButtons}
-        {pastSpeakerButton}
-      </ContextMenu>
-    </>
+      {/* Portal to main <body> to avoid inheriting message line's styling like dimming */}
+      {ReactDOM.createPortal(
+        <ContextMenu id={props.id}>
+          <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
+        Profile
+          </MenuItem>
+          <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
+        Whisper
+          </MenuItem>
+          {banButton}
+          {modButtons}
+          {pastSpeakerButton}
+        </ContextMenu>,
+        document.body
+      )}</>
 
     return (
       <span className={className} style={customStyle} >
