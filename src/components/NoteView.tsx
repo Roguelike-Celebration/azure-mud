@@ -1,11 +1,12 @@
+import Linkify from 'linkify-react'
 import React, { useContext } from 'react'
 import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
-import Linkify from 'react-linkify'
 import ReactTooltip from 'react-tooltip'
 
 import { RoomNote } from '../../server/src/roomNote.js'
 import { MinimalUser } from '../../server/src/user.js'
 import { UserMapContext } from '../App.js'
+import { linkifyOpts } from '../linkifyOptions.js'
 import { deleteObeliskNote, deleteRoomNote, likeObeliskNote, likeRoomNote, unlikeObeliskNote, unlikeRoomNote } from '../networking.js'
 
 import NameView from './NameView.js'
@@ -42,14 +43,8 @@ export function NoteView (props: { note: RoomNote, isObelisk?: boolean }) {
     }
   }
 
-  const linkDecorator = (href: string, text: string, key: number): React.ReactElement => (
-    <a href={href} key={key} target="_blank" rel="noopener noreferrer">
-      {text}
-    </a>
-  )
-
   return (
-    <Linkify componentDecorator={linkDecorator}>
+    <Linkify options={linkifyOpts}>
       <div className='note'>
         {canDelete ? <button onClick={onClickDelete} className='link-styled-button note-delete'>X</button> : ''}
         {n.message} <br/>
