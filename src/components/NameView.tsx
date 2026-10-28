@@ -208,14 +208,13 @@ export default function NameView (props: Props) {
     {ReactDOM.createPortal(
       <ContextMenu id={props.id}>
         <MenuItem onClick={showBadges}>
-              Show Badges
+          Show Badges
         </MenuItem>
-
         <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
-              View Profile
+          View Profile
         </MenuItem>
         <MenuItem onClick={showProfileEdit}>
-              Edit Profile
+          Edit Profile
         </MenuItem>
         {pastSpeakerButton}
       </ContextMenu>,
@@ -236,10 +235,10 @@ export default function NameView (props: Props) {
       {ReactDOM.createPortal(
         <ContextMenu id={props.id}>
           <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
-        Profile
+            Profile
           </MenuItem>
           <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
-        Whisper
+            Whisper
           </MenuItem>
           {banButton}
           {modButtons}
