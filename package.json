@@ -13,7 +13,7 @@
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" lintLinks.ts",
     "lint-fix": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" lintLinks.ts --fix",
     "lint-rooms": "ts-node lintLinks.ts",
-    "lint-bash": "cd tools && shellcheck grin findd lib/bash/*.sh"
+    "lint-bash": "./tools/lint-bash"
   },
   "author": "",
   "license": "MIT",

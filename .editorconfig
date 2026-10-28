@@ -15,7 +15,7 @@ indent_size = 2
 tab_width = 2
 trim_trailing_whitespace = true
 
-[{tools/grin,tools/findd,tools/deploy}]
+[{tools/grin,tools/findd,tools/deploy,tools/lint-bash,tools/parcel_check}]
 indent_size = 2
 tab_width = 2
 trim_trailing_whitespace = true
