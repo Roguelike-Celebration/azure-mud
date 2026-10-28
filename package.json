@@ -4,8 +4,9 @@
   "description": "",
   "homepage": "https://github.com/Roguelike-Celebration/azure-mud",
   "scripts": {
-    "dev": "parcel --no-autoinstall *.html",
-    "build": "rm -rf ./dist && parcel build --no-autoinstall *.html --public-url ./ --dist-dir ./dist && rsync -r images dist",
+    "dev": "npm run copy-images-dist && parcel --no-autoinstall *.html",
+    "build": "rm -rf ./dist && parcel build --no-autoinstall *.html --public-url ./ --dist-dir ./dist && npm run copy-images-dist",
+    "copy-images-dist": "rsync -r --delete images dist",
     "deploy": "echo \"ERROR: 'npm run deploy' is retired. (It used the old GH Pages deployment.) Use GitHub Actions instead now.\"; exit 1",
     "typecheck": "rc=0; npm run typecheck-frontend || rc=1; npm run typecheck-server || rc=1; exit $rc",
     "typecheck-frontend": "tsc --noEmit",
