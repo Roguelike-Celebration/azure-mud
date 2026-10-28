@@ -119,17 +119,17 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
             })}
           </section>
           <section className="profile-details">
-            <p>
+            <div className="profile-details-group">
               {realName}
               <div id="profile-pronouns">{user.pronouns}</div>
               <i>{description}</i>
-            </p>
+            </div>
 
-            <p>
+            <div className="profile-details-group">
               {socialLink}
               {url}
               {askMeAbout}
-            </p>
+            </div>
 
             {noInformation &&
               <i>{user.username} has no further information. How mysterious!</i>
