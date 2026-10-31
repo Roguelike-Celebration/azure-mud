@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import '../../style/profileEditView.css'
 import { Badge } from '../../server/src/badges'
@@ -19,7 +19,7 @@ export default function SettingsView (props: Props) {
   const { useSimpleNames } = useContext(SettingsContext)
 
   // Set the selection of the radio group upon opening the modal
-  const [selectedTheme, setSelectedTheme] = React.useState('default')
+  const [selectedTheme, setSelectedTheme] = useState('default')
 
   useEffect(() => {
     (async () => {

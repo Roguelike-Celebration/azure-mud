@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import _, { isUndefined } from 'lodash'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
@@ -68,7 +68,7 @@ export default function MapView (props: Props) {
   // Scroll to make sure that the user's location is visible
   // The empty array at the end means we only run this on first render, not every time it re-renders
   // This ensures it only scrolls on load, not every time new presence data comes in
-  React.useEffect(() => {
+  useEffect(() => {
     // console.log('Attempting to scroll', `${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}`)
     const location = document.querySelector(`[id^="${props.isMiniMap ? 'minimap-' : ''}clickable-room-${currentRoomId}"]`)
     if (location) {
