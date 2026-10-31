@@ -7,10 +7,8 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
   const thresholdSeconds = 90
 
   const timeStamp = new Date().toISOString()
-  log('Timer function ran!', timeStamp)
 
   const data = await getHeartbeatData()
-  log('HEARTBEAT DATA', data)
 
   const now = new Date()
   const nowValue = now.valueOf()
@@ -32,20 +30,20 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
     }
   })
 
-  log(usersToRemove)
+  log(`heartbeat: Updating data. Timestamp=${timeStamp}, ${activeUsers.length} active, ` +
+    `${usersToRemove.length} to remove`)
 
   const groupManagementTasks: GroupManagementTask[] = []
   for (let i = 0; i < usersToRemove.length; i++) {
-    log('Trying to index into usersToRemove', i)
-    log(usersToRemove[i])
     const userId: string = usersToRemove[i]
     const user = await getFullUser(userId)
-    log('Got user?', user)
 
-    if (!user) continue
-
+    if (!user) {
+      log(`WARNING: heartbeat: removal requested for userId=${userId}, but could not find FullUser data`)
+      continue
+    }
     await DB.setUserAsActive(user, false)
-    log('Set user as inactive')
+    log(`heartbeat: Set user as inactive: userId=${userId}, username=${user.username}`)
     groupManagementTasks.push(
       {
         userId,
@@ -56,9 +54,7 @@ const heartbeat: EndpointFunction = async (inputs: any, log: LogFn) => {
   }
 
   if (usersToRemove.length > 0) {
-    log(
-      `Removing the following inactive users: ${usersToRemove.join(', ')}`
-    )
+    log(`heartbeat: Will remove inactive users from groups: ${usersToRemove.join(', ')}`)
   }
 
   return {
