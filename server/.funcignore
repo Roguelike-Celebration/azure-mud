@@ -5,3 +5,5 @@
 local.settings.json
 test
 tsconfig.json
+# Credentials for *other* instances that devs might have here
+firebase-admin.*.json

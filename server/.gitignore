@@ -95,11 +95,12 @@ typings/
 dist
 out
 
-# Azure Functions artifacts
+# Azure Functions artifacts and local configuration
 bin
 obj
 appsettings.json
 local.settings.json
+server.zip
 
 # Firebase
 firebase-admin.json

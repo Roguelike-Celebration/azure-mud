@@ -10,6 +10,7 @@
   },
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "files.associations": {
-    ".shellcheckrc": "properties"
+    ".shellcheckrc": "properties",
+    ".funcignore": "ignore"
   }
 }
