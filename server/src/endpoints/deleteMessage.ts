@@ -1,5 +1,5 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { User } from '../user'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
+import { User } from '../user.js'
 
 const deleteMessage: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const messageId = inputs.messageId

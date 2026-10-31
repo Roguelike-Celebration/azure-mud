@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { authenticatedAzureWrap } from '../src/azureWrap'
-import sendChatMessage from '../src/endpoints/sendChatMessage'
+import { authenticatedAzureWrap } from '../src/azureWrap.js'
+import sendChatMessage from '../src/endpoints/sendChatMessage.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

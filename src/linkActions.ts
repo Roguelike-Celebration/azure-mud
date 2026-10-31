@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { displayMessage, displayMessageFromList, orderNewDrink, pickUpItem, pickUpRandomItemFromList, sendChatMessage, updateFontReward } from './networking'
+import { displayMessage, displayMessageFromList, orderNewDrink, pickUpItem, pickUpRandomItemFromList, sendChatMessage, updateFontReward } from './networking.js'
 
 /** A function run when a `[[text->action]]` link is clicked in a room description. */
 type LinkAction = (roomId: string) => void

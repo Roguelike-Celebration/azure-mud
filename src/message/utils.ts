@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 
-import { MessageType } from './enums'
+import { MessageType } from './enums.js'
 import {
   BaseMessage,
   CaptionMessage,
@@ -19,7 +19,7 @@ import {
   SameRoomMessage,
   ShoutMessage,
   WhisperMessage
-} from './types'
+} from './types.js'
 
 /**
  * type predicates (e.g. "is message x one of type y")

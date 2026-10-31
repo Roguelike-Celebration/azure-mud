@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React, { useContext, useEffect } from 'react'
 
-import { HideModalAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { DeviceInfo, useMediaChatContext } from '../videochat/mediaChatContext'
+import { HideModalAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { DeviceInfo, useMediaChatContext } from '../videochat/mediaChatContext.js'
 
-import LocalMediaView from './LocalMediaView'
-import VideoAudioSettingsView from './VideoAudioSettingsView'
+import LocalMediaView from './LocalMediaView.js'
+import VideoAudioSettingsView from './VideoAudioSettingsView.js'
 
 interface Props {
   initialVideoDeviceId?: string;

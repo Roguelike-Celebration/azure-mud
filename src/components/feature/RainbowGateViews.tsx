@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { ValidColor } from '../../../server/src/types'
-import { ShowModalAction, UpdateProfileColorAction } from '../../Actions'
-import { DispatchContext, UserMapContext } from '../../App'
-import { Modal } from '../../modals'
-import { getGateVisits, incrementGateVisits } from '../../storage'
+import { ValidColor } from '../../../server/src/types.js'
+import { ShowModalAction, UpdateProfileColorAction } from '../../Actions.js'
+import { DispatchContext, UserMapContext } from '../../App.js'
+import { Modal } from '../../modals.js'
+import { getGateVisits, incrementGateVisits } from '../../storage.js'
 
 // When you pass through the ranbow door enough times, you get a randomly colored username
 export const RainbowGateRoomView = () => {

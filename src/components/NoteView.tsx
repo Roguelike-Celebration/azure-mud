@@ -3,12 +3,12 @@ import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
 import Linkify from 'react-linkify'
 import ReactTooltip from 'react-tooltip'
 
-import { RoomNote } from '../../server/src/roomNote'
-import { MinimalUser } from '../../server/src/user'
-import { UserMapContext } from '../App'
-import { deleteObeliskNote, deleteRoomNote, likeObeliskNote, likeRoomNote, unlikeObeliskNote, unlikeRoomNote } from '../networking'
+import { RoomNote } from '../../server/src/roomNote.js'
+import { MinimalUser } from '../../server/src/user.js'
+import { UserMapContext } from '../App.js'
+import { deleteObeliskNote, deleteRoomNote, likeObeliskNote, likeRoomNote, unlikeObeliskNote, unlikeRoomNote } from '../networking.js'
 
-import NameView from './NameView'
+import NameView from './NameView.js'
 
 export function NoteView (props: { note: RoomNote, isObelisk?: boolean }) {
   const { userMap, myId } = useContext(UserMapContext)

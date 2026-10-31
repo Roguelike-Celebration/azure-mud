@@ -2,15 +2,15 @@ import _ from 'lodash'
 import React, { useContext } from 'react'
 import ReactTooltip from 'react-tooltip'
 
-import { RoomNote } from '../../server/src/roomNote'
-import { NoteWallData } from '../../server/src/rooms'
-import { HappeningNowEntry, ServerSettings } from '../../server/src/types'
-import { PublicUser } from '../../server/src/user'
-import { UserMapContext } from '../App'
-import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networking'
-import { RoomDataMap } from '../reducer'
+import { RoomNote } from '../../server/src/roomNote.js'
+import { NoteWallData } from '../../server/src/rooms/index.js'
+import { HappeningNowEntry, ServerSettings } from '../../server/src/types.js'
+import { PublicUser } from '../../server/src/user.js'
+import { UserMapContext } from '../App.js'
+import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networking.js'
+import { RoomDataMap } from '../reducer.js'
 
-import { NoteView } from './NoteView'
+import { NoteView } from './NoteView.js'
 import '../../style/noteWall.css'
 
 // TODO: We hardcode room names for the 'auto-assign topics to unconference rooms' feature

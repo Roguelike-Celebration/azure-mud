@@ -1,5 +1,5 @@
-import { Result } from './endpoint'
-import { getUserIdForOnlineUsername, getUserIdForUsername, User } from './user'
+import { Result } from './endpoint.js'
+import { getUserIdForOnlineUsername, getUserIdForUsername, User } from './user.js'
 
 export async function whisper (
   from: User,

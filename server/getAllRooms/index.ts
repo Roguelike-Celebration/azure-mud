@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { authenticatedAzureWrap } from '../src/azureWrap'
-import getAllRooms from '../src/endpoints/getAllRooms'
+import { authenticatedAzureWrap } from '../src/azureWrap.js'
+import getAllRooms from '../src/endpoints/getAllRooms.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

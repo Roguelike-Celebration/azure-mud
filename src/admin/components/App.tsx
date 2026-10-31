@@ -5,15 +5,15 @@ import 'ace-builds/src-noconflict/mode-json'
 import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
-import { onAuthenticationStateChange, signOut } from '../../authentication'
-import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking'
-import { useReducerWithThunk } from '../../useReducerWithThunk'
-import { Action, LoggedInAction, UpdateAndShowRoomAction, UpdateRoomIds } from '../actions'
-import reducer, { defaultState, State } from '../reducer'
+import { onAuthenticationStateChange, signOut } from '../../authentication.js'
+import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking.js'
+import { useReducerWithThunk } from '../../useReducerWithThunk.js'
+import { Action, LoggedInAction, UpdateAndShowRoomAction, UpdateRoomIds } from '../actions.js'
+import reducer, { defaultState, State } from '../reducer.js'
 
-import LoggedOutView from './LoggedOutView'
-import RoomList from './RoomList'
-import RoomOptionsView from './RoomOptionsView'
+import LoggedOutView from './LoggedOutView.js'
+import RoomList from './RoomList.js'
+import RoomOptionsView from './RoomOptionsView.js'
 
 export const DispatchContext = createContext(null)
 
