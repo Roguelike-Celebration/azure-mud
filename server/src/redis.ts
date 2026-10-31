@@ -1,6 +1,4 @@
-import { promisify } from 'util'
-
-import redis from 'redis'
+import { createClient } from '@redis/client'
 
 import Database from './database.js'
 import { RoomNote } from './roomNote.js'
@@ -11,41 +9,47 @@ import { isMod, User } from './user.js'
 // Use TLS port by default; that's what our Azure Redis uses
 const DEFAULT_REDIS_PORT = 6380
 
-/** Async-style adapter object for the callback-style client from the redis library. */
-class AsyncRedisClient {
-  // Field initializers run in order - keep client at the top so promisify can use it
-  private readonly client = connectRedisCallbackClient()
+type RedisClient = ReturnType<typeof newRedisClient>
 
-  // Types on these adapter methods are checked because strictBindCallApply is enabled.
-  readonly getCache: (key: string) => Promise<string | null> = promisify(this.client.get).bind(this.client)
-  readonly setCache: (key: string, value: string) => Promise<'OK'> = promisify<string, string, 'OK'>(this.client.set).bind(this.client)
-  readonly expireAt: (key: string, timestamp: number) => Promise<number> = promisify(this.client.expireat).bind(this.client)
-  readonly del: (key: string) => Promise<number> = promisify(this.client.del).bind(this.client)
+let cachedClientPromise: Promise<RedisClient> | undefined
 
-  readonly addToSet: (key: string, member: string) => Promise<number> = promisify(this.client.sadd).bind(this.client)
-  readonly removeFromSet: (key: string, member: string) => Promise<number> = promisify(this.client.srem).bind(this.client)
-  readonly getSet: (key: string) => Promise<string[]> = promisify(this.client.smembers).bind(this.client)
-
-  constructor () {
-    // Log any errors to the console using event listener; absent this they'd crash process due
-    // to unhandled errors.
-    this.client.on('error', (err) => {
-      console.error('Redis client error:', err)
+/** Lazy-get singleton Redis client. */
+function getClient (): Promise<RedisClient> {
+  if (cachedClientPromise === undefined) {
+    cachedClientPromise = connectRedisClient().catch((err) => {
+      // Don't cache failure; let next call try again.
+      cachedClientPromise = undefined
+      throw err
     })
   }
+  return cachedClientPromise
 }
 
-function connectRedisCallbackClient (): redis.RedisClient {
+/** Async client creation, for use by lazy singleton getter. */
+async function connectRedisClient (): Promise<RedisClient> {
+  const client = newRedisClient()
+  client.on('error', (err) => {
+    console.error('Redis client connection error:', err)
+  })
+  await client.connect()
+  return client
+}
+
+/** Synchronous client creation. */
+function newRedisClient () {
   const host = requiredEnvVarSetting('RedisHostname')
   const portStr = process.env.RedisPort?.trim()
   const key = requiredEnvVarSetting('RedisKey')
   // Use Number() instead of parseInt() for strict parsing, e.g. failing on '6380bogus'
   const port = portStr ? Number(portStr) : DEFAULT_REDIS_PORT
   if (!Number.isInteger(port)) {
-    throw new Error(`Invalid RedisPort env var: '${portStr}' is not an integer.`)
+    throw new Error(`Invalid RedisPort env var: "${portStr}" is not an integer.`)
   }
 
-  return redis.createClient(port, host, { auth_pass: key, tls: { servername: host } })
+  return createClient({
+    socket: { host, port, tls: true, servername: host },
+    password: key
+  })
 }
 
 function requiredEnvVarSetting (name: string): string {
@@ -57,23 +61,16 @@ function requiredEnvVarSetting (name: string): string {
   return val
 }
 
-let client: AsyncRedisClient | undefined
-
-function getClient (): AsyncRedisClient {
-  if (client === undefined) {
-    client = new AsyncRedisClient()
-  }
-  return client
+// This "as ..." cast can be dropped once strictNullChecks is enabled.
+const getCache = async (key: string) => (await getClient()).get(key) as Promise<string | null>
+const setCache = async (key: string, value: string): Promise<void> => {
+  await (await getClient()).set(key, value)
 }
-
-const getCache = (key: string) => getClient().getCache(key)
-const setCache = (key: string, value: string) => getClient().setCache(key, value)
-const expireAt = (key: string, timestamp: number) => getClient().expireAt(key, timestamp)
-const del = (key: string) => getClient().del(key)
-
-const addToSet = (key: string, member: string) => getClient().addToSet(key, member)
-const removeFromSet = (key: string, member: string) => getClient().removeFromSet(key, member)
-const getSet = (key: string) => getClient().getSet(key)
+const expireAt = async (key: string, timestamp: number) => (await getClient()).expireAt(key, timestamp)
+const del = async (key: string) => (await getClient()).del(key)
+const addToSet = async (key: string, member: string) => (await getClient()).sAdd(key, member)
+const removeFromSet = async (key: string, member: string) => (await getClient()).sRem(key, member)
+const getSet = async (key: string) => (await getClient()).sMembers(key)
 
 interface RedisInternal extends Database {
   addOccupantToRoom (roomId: string, userId: string): Promise<void>
