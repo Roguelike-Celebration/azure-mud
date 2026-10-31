@@ -7,7 +7,6 @@ import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
 import {
   CognitiveServicesKeyResponse,
-  ErrorResponse,
   RoomResponse,
   ServerSettings
 } from '../server/src/types'
@@ -64,8 +63,6 @@ import 'firebase/auth'
 
 let myUserId: string
 let myDispatch: ThunkDispatch<Action, State>
-
-const inMediaChat: boolean = false
 
 // "Safe" functions (HTTP result not used)
 // Can immediately swap these out to use PubSub
@@ -234,9 +231,7 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
 export async function moveToRoom (roomId: string): Promise<void> {
   // We used to use the result, but we now use PubSub instead, receiving updatedCurrentRoom.
   // A lot of other stuff still uses HTTP results - ideally we'd just use PubSub.
-  const result: RoomResponse | ErrorResponse | any = await callAzureFunction(
-    'moveRoom', { to: roomId }
-  )
+  await callAzureFunction('moveRoom', { to: roomId })
 }
 
 export async function sendChatMessage (id: string, text: string, currentRoomId: string): Promise<void> {

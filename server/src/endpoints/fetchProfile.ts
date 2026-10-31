@@ -3,7 +3,7 @@ import { EndpointFunction, LogFn } from '../endpoint'
 
 const fetchProfile: EndpointFunction = async (inputs: any, log: LogFn) => {
   const userId = inputs.userId
-  if (!inputs.userId) {
+  if (!userId) {
     return {
       httpResponse: {
         status: 200,
@@ -12,7 +12,7 @@ const fetchProfile: EndpointFunction = async (inputs: any, log: LogFn) => {
     }
   }
 
-  const user = await DB.getUser(inputs.userId)
+  const user = await DB.getUser(userId)
   return {
     httpResponse: {
       status: 200,

@@ -25,8 +25,6 @@ import PresenceView from './PresenceView'
 
 import '../../style/room.css'
 
-const VIDEO_CHAT_MAX_SIZE = 8
-
 interface Props {
   room: Room;
   userId: string;
