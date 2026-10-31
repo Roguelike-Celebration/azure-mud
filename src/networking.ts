@@ -63,7 +63,7 @@ let myUserId: string
 let myDispatch: ThunkDispatch<Action, State>
 
 // "Safe" functions (HTTP result not used)
-// Can immediately swap these out to use PubSub
+// Can immediately swap these out to use WebPubSub
 // ---------------------------------------
 
 export async function pickUpRandomItemFromList (listName: string): Promise<void> {
@@ -176,7 +176,7 @@ export async function updateRoom (roomId: string, roomData: Room): Promise<void>
 
 // "Unsafe" functions using HTTP result.
 // We can leave these as-is for now, but they will need refactoring
-// in order to switch them over to 100% PubSub
+// in order to switch them over to 100% WebPubSub
 // --------------------------------------------------------------
 
 // HACK WARNING! this is used to resync the presence data after loading
@@ -194,10 +194,10 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
   myUserId = userId
   myDispatch = dispatch
 
-  // connectPubSub must be called before AFA connect/, because it auto-creates the PubSub
+  // connectWebPubSub must be called before AFA connect/, because it auto-creates the WebPubSub
   // user that connect/ and other azureWrap-ed functions depend on.
   const eventMapping = generateEventMapping(userId, dispatch)
-  await connectPubSub(eventMapping)
+  await connectWebPubSub(eventMapping)
   const result: RoomResponse = await callAzureFunction('connect')
 
   console.log(`Called connect() AzFn for userId=${userId}. Result:`, result)
@@ -227,8 +227,8 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
 }
 
 export async function moveToRoom (roomId: string): Promise<void> {
-  // We used to use the result, but we now use PubSub instead, receiving updatedCurrentRoom.
-  // A lot of other stuff still uses HTTP results - ideally we'd just use PubSub.
+  // We used to use the result, but we now use WebPubSub instead, receiving updatedCurrentRoom.
+  // A lot of other stuff still uses HTTP results - ideally we'd just use WebPubSub.
   await callAzureFunction('moveRoom', { to: roomId })
 }
 
@@ -532,12 +532,10 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
 
 // Can't do narrower than `any[]` here, bc the args come from JSON.parse(), so it's the
 // only rest type every handler matches.
-type PubSubEventHandler = (...args: any[]) => void
-type PubSubEventMapping = { [event: string]: PubSubEventHandler }
-// Fancy alternate form we might switch to in some cases:
-// type PubSubEventMapping = ReturnType<typeof generateEventMapping>
+type WebPubSubEventHandler = (...args: any[]) => void
+type WebPubSubEventMapping = { [event: string]: WebPubSubEventHandler }
 
-export async function connectPubSub (eventMapping: PubSubEventMapping): Promise<void> {
+export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Promise<void> {
   /*
   const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
       request.headers = {
@@ -551,9 +549,9 @@ export async function connectPubSub (eventMapping: PubSubEventMapping): Promise<
   */
   // negotiate
   const result = await callAzureFunctionGet('negotiatePubSub')
-  console.log('Connected PubSub', result)
+  console.log('Connected WebPubSub', result)
   if (!result.url) {
-    console.error('Did not get URL from PubSub connection result', result)
+    console.error('Did not get URL from WebPubSub connection result', result)
     return
   }
 
@@ -561,7 +559,7 @@ export async function connectPubSub (eventMapping: PubSubEventMapping): Promise<
   const ws = new WebSocket(result.url)
   // TODO: Handle error and close
   ws.addEventListener('open', () => {
-    console.log('Opened websocket connection to PubSub Service')
+    console.log('Opened websocket connection to WebPubSub Service')
     // Note status
   })
   ws.addEventListener('message', (event) => {

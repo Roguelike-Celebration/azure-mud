@@ -1,11 +1,13 @@
-import { Context, HttpRequest } from '@azure/functions'
+import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions'
 
 import authenticate, { AuthenticationOptions } from './authenticate.js'
+import { webPubSubOutput } from './bindings.js'
 import {
   AuthenticatedEndpointFunction,
   EndpointFunction,
   isGroupMessage,
   isPrivateMessage,
+  LogFn,
   Result
 } from './endpoint.js'
 
@@ -18,36 +20,65 @@ import {
  */
 
 export async function azureWrap (
-  context: Context,
+  context: InvocationContext,
   req: HttpRequest | undefined,
   fn: EndpointFunction,
   extraInputs: any = {}
-): Promise<void> {
-  const result = await fn(
-    { ...((req && req.body) || {}), ...extraInputs },
-    context.log
-  )
-  outputToAzure(context, req, result)
+): Promise<HttpResponseInit> {
+  const body = req ? await readJsonBody(req) : {}
+  if (body === undefined) {
+    return invalidJsonResponse(context)
+  }
+  const result = await fn({ ...body, ...extraInputs }, logFn(context))
+  return outputToAzure(context, req, result)
 }
 
 export async function authenticatedAzureWrap (
-  context: Context,
+  context: InvocationContext,
   req: HttpRequest,
   fn: AuthenticatedEndpointFunction,
   opts: AuthenticationOptions = {}
-): Promise<void> {
-  await authenticate(context, req, opts, async (user) => {
-    const result = await fn(user, req.body || {}, context.log)
-    outputToAzure(context, req, result)
+): Promise<HttpResponseInit> {
+  return await authenticate(context, req, opts, async (user) => {
+    const body = await readJsonBody(req)
+    if (body === undefined) {
+      return invalidJsonResponse(context)
+    }
+    const result = await fn(user, body, logFn(context))
+    return outputToAzure(context, req, result)
   })
 }
 
-function outputToAzure (context: Context, req: HttpRequest, result: Result): void {
-  context.log(`outputToAzure: ${context.executionContext.functionName}: ` +
+export async function readJsonBody (request: HttpRequest): Promise<any> {
+  const text = await request.text()
+  if (!text) {
+    // Special case for empty input, which technically isn't valid JSON, or might be undefined
+    return {}
+  }
+  try {
+    return JSON.parse(text) ?? {}
+  } catch {
+    return undefined
+  }
+}
+
+function invalidJsonResponse (context: InvocationContext): HttpResponseInit {
+  context.warn(`${context.functionName}: bad request: request body is not valid JSON`)
+  return { status: 400, body: 'Request body was not valid JSON' }
+}
+
+/** Curry a Functions v4 log method (which uses its 'this') into a regular function */
+function logFn (context: InvocationContext): LogFn {
+  return (...args) => context.log(...args)
+}
+
+function outputToAzure (context: InvocationContext, req: HttpRequest, result: Result): HttpResponseInit {
+  context.log(`outputToAzure: ${context.functionName}: ` +
     `status=${result.httpResponse?.status ?? 'none'}, ${result.messages?.length ?? 0} messages, ` +
     `${result.groupManagementTasks?.length ?? 0} group mgmt tasks`)
-  if (result.messages) {
-    context.bindings.actions = result.messages.map((m) => {
+
+  if (result.messages || result.groupManagementTasks) {
+    const actions: object[] = (result.messages ?? []).map((m) => {
       const actionJson = JSON.stringify({ type: m.target, value: m.arguments })
       if (isPrivateMessage(m)) {
         return {
@@ -71,14 +102,10 @@ function outputToAzure (context: Context, req: HttpRequest, result: Result): voi
         }
       }
     })
-  }
 
-  if (result.groupManagementTasks) {
-    if (!context.bindings.actions) { context.bindings.actions = [] }
-
-    context.bindings.actions.push(
-      ...result.groupManagementTasks.map((t) => {
-        // PubSub has a 'RemoveUserFromAllGroups' action we can eventually use here
+    actions.push(
+      ...(result.groupManagementTasks ?? []).map((t) => {
+        // WebPubSub has a 'RemoveUserFromAllGroups' action we can eventually use here
         // GroupManagementTasks has a "removeAll" option we don't currently use in favor of "setUpRoomsFor user"
         // It's only called from 'connect'.
         // We'd want make connect return a 'removeAll' and then an 'add' for the current room
@@ -93,13 +120,12 @@ function outputToAzure (context: Context, req: HttpRequest, result: Result): voi
         }
       })
     )
+
+    context.extraOutputs.set(webPubSubOutput, actions)
   }
 
-  // TimerTriggers don't have a res obj. This seems like an okay, if imperfect, guard.
-  if (context.res) {
-    context.res.status =
-      (result.httpResponse && result.httpResponse.status) || 200
-    context.res.body =
-      result.httpResponse && JSON.stringify(result.httpResponse.body)
+  return {
+    status: result.httpResponse?.status || 200,
+    jsonBody: result.httpResponse?.body
   }
 }
