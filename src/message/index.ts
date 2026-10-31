@@ -11,6 +11,7 @@ export {
   ErrorMessage,
   LeftMessage,
   Message,
+  MessageOfType,
   ModMessage,
   MovedRoomMessage,
   SameRoomMessage,

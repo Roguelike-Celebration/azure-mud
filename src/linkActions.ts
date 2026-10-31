@@ -1,7 +1,10 @@
 import { pickUpRandomItemFromList, pickUpItem, sendChatMessage, displayMessageFromList, updateFontReward, displayMessage, orderNewDrink } from './networking'
 import { v4 as uuidv4 } from 'uuid'
 
-export const linkActions = {
+/** A function run when a `[[text->action]]` link is clicked in a room description. */
+type LinkAction = (roomId: string) => void
+
+export const linkActions: { [actionName: string]: LinkAction | undefined } = {
   // ------------------------------------------- PICK UP ITEMS -------------------------------------------
   generateFood: () => {
     pickUpRandomItemFromList('vendingMachineFood')

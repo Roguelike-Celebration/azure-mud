@@ -53,7 +53,7 @@ import WelcomeModalView from './components/WelcomeModalView'
 import YouAreBannedView from './components/YouAreBannedView'
 import { Modal } from './modals'
 import { checkIsRegistered, connect } from './networking'
-import reducer, { defaultState, State } from './reducer'
+import reducer, { defaultState, RoomDataMap, State, UserMap } from './reducer'
 import * as Storage from './storage'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk'
 import { TwilioChatContextProvider } from './videochat/twilioChatContext'
@@ -61,13 +61,21 @@ import SpecialTextModalView from './components/SpecialTextModalView'
 import ReactTooltip from 'react-tooltip'
 import { ObeliskView } from './components/ObeliskView'
 
-export const DispatchContext =
-  createContext<ThunkDispatch<Action, State>>(null)
+interface UserMapContextValue {
+  userMap: UserMap
+  myId: string
+}
+
+interface SettingsContextValue {
+  useSimpleNames: boolean
+}
+
+export const DispatchContext = createContext<ThunkDispatch<Action, State>>(null)
 export const MessagesContext = createContext<State['messages']>(null)
-export const UserMapContext = createContext(null)
-export const SettingsContext = createContext(null)
-export const IsMobileContext = createContext(null)
-export const RoomDataContext = createContext(null)
+export const UserMapContext = createContext<UserMapContextValue>(null)
+export const SettingsContext = createContext<SettingsContextValue>(null)
+export const IsMobileContext = createContext<boolean>(null)
+export const RoomDataContext = createContext<RoomDataMap>(null)
 
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(
@@ -241,7 +249,7 @@ const App = () => {
 
   // It's slightly weird we now construct this here and pass it as a prop to
   // RoomView instead of constructing it there. Shrug, the conf is in 2 days.
-  let videoChatView
+  let videoChatView: React.ReactElement | undefined
   if (
     state.roomData &&
     state.roomId &&
@@ -261,7 +269,8 @@ const App = () => {
     )
   }
 
-  let innerModalView, modalView
+  let innerModalView: React.ReactElement | undefined
+  let modalView: React.ReactElement | undefined
 
   // TODO: If we get more modal options than just a size boolean, make this an options object.
   let modalIsFullScreen = false
@@ -439,12 +448,8 @@ const App = () => {
         <MessagesContext.Provider value={state.messages}>
           <TwilioChatContextProvider active={!state.textOnlyMode}>
             <IsMobileContext.Provider value={isMobile}>
-              <SettingsContext.Provider
-                value={{ useSimpleNames: state.useSimpleNames }}
-              >
-                <UserMapContext.Provider
-                  value={{ userMap: state.userMap, myId: state.userId }}
-                >
+              <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
+                <UserMapContext.Provider value={{ userMap: state.userMap, myId: state.userId }}>
                   <RoomDataContext.Provider value={state.roomData}>
                     <div
                       id={

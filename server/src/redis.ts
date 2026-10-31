@@ -1,13 +1,11 @@
 import { promisify } from 'util'
 import { User, isMod } from './user'
-import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings } from './types'
+import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings, PresenceListMap } from './types'
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
 import Database from './database'
-console.log('HIII?')
 // eslint-disable-next-line import/first
 import redis from 'redis'
-console.log('redis', redis)
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),
@@ -18,26 +16,27 @@ const cache = redis.createClient(
   }
 )
 
-const getCache = promisify(cache.get).bind(cache)
-const setCache = promisify(cache.set).bind(cache)
-const expireAt = promisify(cache.expireat).bind(cache)
-const del = promisify(cache.del).bind(cache)
+// Types on these helper functions are checked because strictBindCallApply is enabled.
+const getCache: (key: string) => Promise<string | null> = promisify(cache.get).bind(cache)
+const setCache: (key: string, value: string) => Promise<'OK'> = promisify<string, string, 'OK'>(cache.set).bind(cache)
+const expireAt: (key: string, timestamp: number) => Promise<number> = promisify(cache.expireat).bind(cache)
+const del: (key: string) => Promise<number> = promisify(cache.del).bind(cache)
 
-const addToSet = promisify(cache.sadd).bind(cache)
-const removeFromSet: (key: string, member: string) => void = promisify(cache.srem).bind(cache)
-const getSet = promisify(cache.smembers).bind(cache)
+const addToSet: (key: string, member: string) => Promise<number> = promisify(cache.sadd).bind(cache)
+const removeFromSet: (key: string, member: string) => Promise<number> = promisify(cache.srem).bind(cache)
+const getSet: (key: string) => Promise<string[]> = promisify(cache.smembers).bind(cache)
 
-const redisKeys = promisify(cache.keys).bind(cache)
+const redisKeys: (pattern: string) => Promise<string[]> = promisify(cache.keys).bind(cache)
 
 interface RedisInternal extends Database {
-  addOccupantToRoom (roomId: string, userId: string),
-  removeOccupantFromRoom (roomId: string, userId: string)
+  addOccupantToRoom (roomId: string, userId: string): Promise<void>
+  removeOccupantFromRoom (roomId: string, userId: string): Promise<void>
 
-  addMod (userId: string)
-  removeMod (userId: string)
+  addMod (userId: string): Promise<void>
+  removeMod (userId: string): Promise<void>
 
-  addSpeaker (userId: string)
-  removeSpeaker (userId: string)
+  addSpeaker (userId: string): Promise<void>
+  removeSpeaker (userId: string): Promise<void>
 }
 
 const Redis: RedisInternal = {
@@ -71,10 +70,10 @@ const Redis: RedisInternal = {
     }))
   },
 
-  async allRoomOccupants (): Promise<{[roomId: string]: string[]}> {
+  async allRoomOccupants (): Promise<PresenceListMap> {
     // TODO: Run "KEYS room_ to get all dynamic rooms"
     const allRoomIds = await Redis.getRoomIds()
-    const data = {}
+    const data: PresenceListMap = {}
     await Promise.all(allRoomIds.map(async id => {
       const occupants = await Redis.roomOccupants(id)
       data[id] = occupants
@@ -99,10 +98,10 @@ const Redis: RedisInternal = {
 
   async setUserAsActive (user: User, isActive: boolean = true) {
     if (isActive) {
-      return await addToSet(activeUsersKey, user.id)
+      await addToSet(activeUsersKey, user.id)
     } else {
       await Redis.removeOccupantFromRoom(user.roomId, user.id)
-      return await removeFromSet(activeUsersKey, user.id)
+      await removeFromSet(activeUsersKey, user.id)
     }
   },
 
@@ -128,7 +127,7 @@ const Redis: RedisInternal = {
     await Redis.setPartialUserProfile(userId, { roomId })
 
     const presenceKey = roomPresenceKey(roomId)
-    return await addToSet(presenceKey, userId)
+    await addToSet(presenceKey, userId)
   },
 
   async removeOccupantFromRoom (roomId: string, userId: string) {
@@ -140,7 +139,7 @@ const Redis: RedisInternal = {
     // so that we can remember where they are.
     // TODO: Fetching presence data should just filter by active users instead.
     const presenceKey = roomPresenceKey(roomId)
-    return await removeFromSet(presenceKey, userId)
+    await removeFromSet(presenceKey, userId)
   },
 
   async setCurrentRoomForUser (user: User, roomId: string) {
@@ -202,6 +201,7 @@ const Redis: RedisInternal = {
     if (date) {
       return new Date(JSON.parse(date))
     }
+    return undefined
   },
 
   async userJustShouted (user: User) {
@@ -364,7 +364,7 @@ const Redis: RedisInternal = {
   },
 
   async setWebhookDeployKey (key: string) {
-    return await setCache('deployWebhookKey', key)
+    await setCache('deployWebhookKey', key)
   },
 
   //
@@ -377,7 +377,9 @@ const Redis: RedisInternal = {
     await setCache(roomFuzzySearchKey(room.displayName.replace(' ', '').toUpperCase()), room.id)
 
     await addToSet(roomIdsKey, room.id)
-    return await setCache(roomDataKey(room.id), JSON.stringify(room))
+    await setCache(roomDataKey(room.id), JSON.stringify(room))
+
+    return room
   },
 
   async getRoomData (roomId: string): Promise<Room> {
@@ -391,7 +393,7 @@ const Redis: RedisInternal = {
 
   async deleteRoomData (roomId: string): Promise<void> {
     await removeFromSet(roomIdsKey, roomId)
-    return await del(roomDataKey(roomId))
+    await del(roomDataKey(roomId))
   },
 
   async getRoomIds (): Promise<string[]> {

@@ -16,11 +16,11 @@ export default function ParticipantChatView (props: Props) {
   const [playVideo, setPlayVideo] = React.useState<boolean>(props.renderAsFace)
   const [playAudio, setPlayAudio] = React.useState<boolean>(true)
 
-  const onChangeVideo = (e) => {
+  const toggleVideo = () => {
     setPlayVideo(!playVideo)
   }
 
-  const onChangeAudio = (e) => {
+  const toggleAudio = () => {
     setPlayAudio(!playAudio)
   }
 
@@ -56,7 +56,7 @@ export default function ParticipantChatView (props: Props) {
       <ParticipantTracks participant={props.participant} displayVideo={playVideo} displayAudio={playAudio} />
       {hasVideoTracks
         ? <button id='play-video'
-          onClick={onChangeVideo}
+          onClick={toggleVideo}
           className={`link-styled-button video-button ${playVideo ? 'enabled' : 'disabled'}`}
           aria-label={`Toggle Video ${props.participant.identity}`}>
           {playVideo ? <FaVideo /> : <FaVideoSlash />}
@@ -64,7 +64,7 @@ export default function ParticipantChatView (props: Props) {
         : null}
       {placeholderAvatar}
       <button id='play-audio'
-        onClick={onChangeAudio}
+        onClick={toggleAudio}
         className={`link-styled-button video-button ${playAudio ? 'enabled' : 'disabled'}`}
         aria-label={`Toggle Audio ${props.participant.identity}`}>
         {playAudio ? <FaVolumeUp /> : <FaVolumeMute />}

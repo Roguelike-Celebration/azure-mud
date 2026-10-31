@@ -4,8 +4,9 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import type firebaseui from 'firebaseui'
 
-const uiConfig = {
+const uiConfig: firebaseui.auth.Config = {
   callbacks: {
     // The documentation on the firebaseui README appears somewhat borked at time of writing; the structure of
     // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.

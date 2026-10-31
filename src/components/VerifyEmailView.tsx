@@ -1,11 +1,13 @@
 import React from 'react'
 import PageVisibility from 'react-page-visibility'
-import { AuthenticateAction } from '../Actions'
+import { Action, AuthenticateAction } from '../Actions'
 import { currentUser, sendSignInLinkToEmail, signOut } from '../authentication'
+import { ThunkDispatch } from '../useReducerWithThunk'
+import { State } from '../reducer'
 
 interface Props {
   userEmail: string;
-  dispatch: any;
+  dispatch: ThunkDispatch<Action, State>;
 }
 
 export default function VerifyEmailView (props: Props) {
@@ -14,9 +16,9 @@ export default function VerifyEmailView (props: Props) {
   // const dispatch = useContext(DispatchContext)
   const dispatch = props.dispatch
 
-  const handleVisibilityChange = (visibility) => {
+  const handleVisibilityChange = (isVisible: boolean) => {
     const user = currentUser()
-    if (visibility && user && !user.shouldVerifyEmail) {
+    if (isVisible && user && !user.shouldVerifyEmail) {
       dispatch(AuthenticateAction(user.id, user.id, user.providerId, false))
     }
   }

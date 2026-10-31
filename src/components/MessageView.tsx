@@ -26,6 +26,7 @@ import {
   ErrorMessage,
   LeftMessage,
   Message,
+  MessageOfType,
   MessageType,
   ModMessage,
   MovedRoomMessage,
@@ -35,12 +36,21 @@ import {
 } from '../message'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
 import NameView from './NameView'
-import { MinimalUser } from '../../server/src/user'
+import { UserMap } from '../reducer'
+
+type MenuItemEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>
 
 const formatter = new Intl.DateTimeFormat('en', {
   hour: 'numeric',
   minute: 'numeric'
 })
+
+/** Maps every MessageType to a component that renders it.
+ *
+ * This typing enforces that the map has a renderer for every message type, including
+ * ones added in the future.
+ */
+type MessageViewMap = { [T in MessageType]: React.ComponentType<MessageOfType<T>> }
 
 export default memo(function MessageView (props: {
   message: Message;
@@ -52,7 +62,7 @@ export default memo(function MessageView (props: {
     return <div />
   }
 
-  const messageMap = {
+  const messageMap: MessageViewMap = {
     [MessageType.Connected]: ConnectedMessageView,
     [MessageType.Disconnected]: DisconnectedMessageView,
     [MessageType.Entered]: EnteredView,
@@ -70,7 +80,10 @@ export default memo(function MessageView (props: {
     [MessageType.Command]: CommandView
   }
 
-  const component = messageMap[message.type]
+  // Cast because TS can't establish this type pairing itself.
+  const component = messageMap[message.type] as React.ComponentType<Message>
+  // Keep this `if (!component)` guard despite the type check, because message.type comes from
+  // external data at run time, so unexpected message.types could still sneak through.
   if (!component) {
     console.log('Unexpected message type', message.type)
     return <div />
@@ -95,7 +108,12 @@ export default memo(function MessageView (props: {
   )
 })
 
-const handleDeleteMessage = (e, data) => {
+interface DeleteMessageMenuData {
+  messageId: string
+  messageText: string
+}
+
+const handleDeleteMessage = (e: MenuItemEvent, data: DeleteMessageMenuData) => {
   const doDelete = confirm(
     `Are you sure you would like to delete the message '${data.messageText}'?`
   )
@@ -109,7 +127,7 @@ type DeletableMessageViewProps = {
   messageText: string;
 };
 
-const linkDecorator = (href, text, key) => (
+const linkDecorator = (href: string, text: string, key: number): React.ReactElement => (
   <a href={href} key={key} target="_blank" rel="noopener noreferrer">
     {text}
   </a>
@@ -221,7 +239,7 @@ const SameView = (props: SameRoomMessage) => (
   <div className="message">You are already in {props.roomId}.</div>
 )
 
-const parseUserIdOrDisplay = (messageFragment): string => {
+const parseUserIdOrDisplay = (messageFragment: string): string => {
   const userId = messageFragment.match(/``(.*?)``/)
 
   if (!userId) {
@@ -238,7 +256,7 @@ const parseUserIdOrDisplay = (messageFragment): string => {
   return 'Malformed Mention'
 }
 
-function renderChatMessageWithUsernames (message: string, id: string, userMap: { [userId: string]: MinimalUser }) {
+function renderChatMessageWithUsernames (message: string, id: string, userMap: UserMap) {
   const splitMessage = message.split(/(@@.*?@@)/)
   return splitMessage.reduce<JSX.Element>(
     (acc, fragment, idx) => {
