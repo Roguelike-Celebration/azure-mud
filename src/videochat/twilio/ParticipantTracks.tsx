@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { Participant, Track } from 'twilio-video'
 

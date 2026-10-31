@@ -66,7 +66,7 @@ export async function getUserIdFromHeaders (
       await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
       return userId
     })
-    .catch((error) => {
+    .catch((error): undefined => {
       context.log('Error authenticating token: ' + clientIdToken + ' error: ' + error)
       return undefined
     })

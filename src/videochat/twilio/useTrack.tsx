@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 import { LocalTrack, LocalTrackPublication, RemoteTrack, RemoteTrackPublication } from 'twilio-video'
 

@@ -26,8 +26,8 @@ interface VisibilityAction {
 }
 
 export default function BadgesModalView (props: Props) {
-  const [selectedEquippedIndex, setSelectedEquippedIndex] = useState<number|undefined>(undefined)
-  const [selectedBadge, setSelectedBadge] = useState<Badge|undefined>(undefined)
+  const [selectedEquippedIndex, setSelectedEquippedIndex] = useState<number | undefined>(undefined)
+  const [selectedBadge, setSelectedBadge] = useState<Badge | undefined>(undefined)
 
   const initialState = Object.fromEntries(
     Object.values(BadgeCategory).map(c => [c, true])
@@ -258,7 +258,7 @@ export default function BadgesModalView (props: Props) {
     return (<button className="toggle-badge-category" onClick={toggle} onKeyDown={keyboardToggle}>{localState[category] ? '(hide)' : '(show)'}</button>)
   }
 
-  const BadgeCategoryView = ({ title, badgeCategory }: { title: string, badgeCategory: BadgeCategory}) => {
+  const BadgeCategoryView = ({ title, badgeCategory }: { title: string, badgeCategory: BadgeCategory }) => {
     return (<section>
       <h2>{title} <ToggleVisible category={badgeCategory} /></h2>
       {localState[badgeCategory] &&

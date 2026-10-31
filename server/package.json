@@ -11,6 +11,10 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
+  },
   "dependencies": {
     "@azure/communication-administration": "^1.0.0-beta.3",
     "@azure/cosmos": "^3.9.5",
@@ -24,8 +28,9 @@
   },
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
+    "@types/node": "^24",
     "@types/redis": "^2.8.25",
     "recursive-readdir": "^2.2.2",
-    "typescript": "5.3.3"
+    "typescript": "6.0.3"
   }
 }

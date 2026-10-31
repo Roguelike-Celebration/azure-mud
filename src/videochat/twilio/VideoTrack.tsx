@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react'
 import { LocalVideoTrack, RemoteVideoTrack, Track } from 'twilio-video'
 

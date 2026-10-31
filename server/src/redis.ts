@@ -434,7 +434,7 @@ const Redis: RedisInternal = {
     return JSON.parse(await getCache(roomDataKey(roomId)))
   },
 
-  async getRoomIdFromFuzzySearch (search: string): Promise<string|undefined> {
+  async getRoomIdFromFuzzySearch (search: string): Promise<string | undefined> {
     return await getCache(roomFuzzySearchKey(search))
   },
 

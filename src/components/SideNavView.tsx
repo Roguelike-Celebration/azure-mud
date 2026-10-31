@@ -59,7 +59,7 @@ export default function SideNavView (props: Props) {
   )
 }
 
-const MenuItem = (props: {title: string, modal: Modal, img?: string, imgAlt?: string}) => {
+const MenuItem = (props: { title: string, modal: Modal, img?: string, imgAlt?: string }) => {
   const dispatch = useContext(DispatchContext)
 
   const handler = () => {
