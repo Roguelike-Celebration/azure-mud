@@ -33,5 +33,8 @@ jobs:
       # - name: lintRooms
       #   run: npm run lint-rooms
 
+      - name: lint-bash
+        run: npm run lint-bash
+
       - name: typecheck
         run: cd server && npm ci && cd ..; npm run typecheck
