@@ -1,10 +1,10 @@
 import Linkify from 'linkify-react'
 import React, { useContext, useEffect } from 'react'
-import ReactTooltip from 'react-tooltip'
 
 import { PublicUser } from '../../server/src/user.js'
 import { HideProfileAction, SendMessageAction } from '../Actions.js'
 import { DispatchContext } from '../App.js'
+import { tooltipAttrs } from '../display.js'
 import { linkifyOpts } from '../linkifyOptions.js'
 import { WhisperMessage } from '../message/index.js'
 
@@ -30,7 +30,7 @@ const ProfileWhisperView = (props: WhisperMessage & { id: string, otherUser: Pub
     return (
       <div className="whisper-message">
         <em>
-          <span data-tip={otherUser?.pronouns}>
+          <span {...tooltipAttrs(otherUser?.pronouns)}>
             {otherUser.username}
           </span>:{' '}
           {props.message}
@@ -100,7 +100,6 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
   const noInformation = !realName && !user.pronouns && !description && !socialLink && !url && !askMeAbout
 
   return (<>
-    <ReactTooltip />
     <Linkify options={linkifyOpts}>
       <div id="profile" style={{ overflowWrap: 'anywhere' }}>
         <div className='fixed'>

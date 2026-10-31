@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { tooltipAttrs } from '../display.js'
 import { customEmojiMap, reservedEmojiMap } from '../emoji/index.js'
 
 interface Props {
@@ -23,7 +24,7 @@ function BadgeView (props: Props) {
   // See the dragstart event handler in BadgesModalView.tsx for context
   return (
     <>
-      <span className='badge' data-tip={description}>
+      <span className='badge' {...tooltipAttrs(description)}>
         {content}
       </span>
     </>
