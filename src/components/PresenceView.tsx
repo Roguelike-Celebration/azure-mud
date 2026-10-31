@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { FaVideo, FaVolumeUp } from 'react-icons/fa'
 
 import { UserMapContext } from '../App.js'
-import { useMediaChatContext } from '../videochat/mediaChatContext.js'
 
 import HeldItemView from './HeldItemView.js'
 import NameView from './NameView.js'
@@ -34,16 +32,7 @@ const PresenceView = (props: {
 }) => {
   const { userMap } = useContext(UserMapContext)
   let { users, userId } = props
-  const { callParticipants } = useMediaChatContext()
   const [summarizeUsersInRoom, setSummarizeUsersInRoom] = useState(false)
-
-  let audioUsers: string[] = []
-  let videoUsers: string[] = []
-  if (callParticipants) {
-    const mediaUsers = Array.from(callParticipants.values())
-    audioUsers = mediaUsers.filter(p => p.audioTracks.size > 0).map(p => p.identity)
-    videoUsers = mediaUsers.filter((p) => p.videoTracks.size > 0).map((p) => p.identity)
-  }
 
   // Shep: Issue 43, reminder to myself that this is the code making sure users don't appear in their own client lists.
   if (users && userId) {
@@ -88,12 +77,6 @@ const PresenceView = (props: {
       return (
         <span key={`room-presence-${id}`}>
           <NameView userId={u} id={id} key={id} />
-          {audioUsers && audioUsers.includes(user.id) ? (
-            <FaVolumeUp className="has-audio" />
-          ) : null}
-          {videoUsers && videoUsers.includes(user.id) ? (
-            <FaVideo className="has-video" />
-          ) : null}
           {user.item ? ` (holding ${user.item})` : null}
         </span>
       )

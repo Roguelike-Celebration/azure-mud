@@ -2,15 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import '../../style/profileEditView.css'
 import { Badge } from '../../server/src/badges.js'
-import { SetCaptionsEnabledAction, SetUseSimpleNamesAction } from '../Actions.js'
+import { SetUseSimpleNamesAction } from '../Actions.js'
 import { DispatchContext, SettingsContext } from '../App.js'
 import { currentTheme, setTheme } from '../storage.js'
 
-import VideoAudioSettingsView from './VideoAudioSettingsView.js'
-
 interface Props {
-  keepCameraWhenMoving: boolean;
-  captionsEnabled: boolean;
   unlockedBadges: Badge[];
 }
 
@@ -39,14 +35,6 @@ export default function SettingsView (props: Props) {
 
   const handleSimpleNamesSelection = (simple: boolean) => {
     dispatch(SetUseSimpleNamesAction(simple))
-  }
-
-  const handleCaptionChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === 'captions-enabled') {
-      dispatch(SetCaptionsEnabledAction(true))
-    } else if (e.target.value === 'captions-disabled') {
-      dispatch(SetCaptionsEnabledAction(false))
-    }
   }
 
   return (
@@ -174,42 +162,6 @@ export default function SettingsView (props: Props) {
           </label>
         </div>
       </div>
-      <div className="form" id="captionsEnabled">
-        <label
-          htmlFor="captionsEnabled"
-          className="form-header"
-          style={{ marginBottom: 0 }}
-        >
-          Enable Captions (Experimental):
-        </label>
-        <span style={{ marginBottom: '1em' }}>
-          This will automatically transcribe spoken audio as messages in the
-          text chat.
-        </span>
-        <div className="radio">
-          <input
-            type="radio"
-            id="captions-enabled"
-            value="captions-enabled"
-            checked={props.captionsEnabled}
-            onChange={handleCaptionChoice}
-          />
-          <label htmlFor="captions-enabled">Enabled</label>
-        </div>
-        <div className="radio">
-          <input
-            type="radio"
-            id="captions-disabled"
-            value="captions-disabled"
-            checked={!props.captionsEnabled}
-            onChange={handleCaptionChoice}
-          />
-          <label htmlFor="captions-disabled">Disabled</label>
-        </div>
-      </div>
-      <VideoAudioSettingsView
-        keepCameraWhenMoving={props.keepCameraWhenMoving}
-      />
     </div>
   )
 }
