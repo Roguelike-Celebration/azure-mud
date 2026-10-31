@@ -1,7 +1,9 @@
 import React, { FC, ReactNode, useContext } from 'react'
+
 import { MessagesContext } from '../../App'
 import { MessageItem } from '../MessageItem'
 import { VirtualizationContext } from '../VirtualizationProvider'
+
 import { useAutoscroll, useShouldHideTimestamp } from './hooks'
 import './MessageList.css'
 

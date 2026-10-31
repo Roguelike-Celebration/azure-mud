@@ -26,7 +26,12 @@ module.exports = {
   rules: {
     'no-unused-vars': 0,
     'react/prop-types': 0,
-    '@typescript-eslint/await-thenable': 'error'
+    '@typescript-eslint/await-thenable': 'error',
+    'import/order': ['error', {
+      'newlines-between': 'always',
+      alphabetize: { order: 'asc', caseInsensitive: true }
+    }],
+    'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: true }]
   },
   // use override to exempt React components; v3 of the rule can't exempt React per se
   overrides: [

@@ -1,4 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+
 import { azureWrap } from '../src/azureWrap'
 import fetchProfile from '../src/endpoints/fetchProfile'
 

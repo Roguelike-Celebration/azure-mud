@@ -1,11 +1,13 @@
+import { every, includes } from 'lodash'
+
+import Redis from '../src/redis'
+
+import { Badge, UnlockableBadgeMap } from './badges'
+import { DB } from './database'
+import { Message, Result } from './endpoint'
+import { globalPresenceMessage } from './globalPresenceMessage'
 import { RoomResponse } from './types'
 import { awardUserBadge, User } from './user'
-import { globalPresenceMessage } from './globalPresenceMessage'
-import { DB } from './database'
-import Redis from '../src/redis'
-import { Result, Message } from './endpoint'
-import { every, includes } from 'lodash'
-import { Badge, UnlockableBadgeMap } from './badges'
 
 export async function moveToRoom (
   user: User,

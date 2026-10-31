@@ -1,11 +1,12 @@
 import { promisify } from 'util'
-import { User, isMod } from './user'
-import { ServerSettings, DEFAULT_SERVER_SETTINGS, toServerSettings, PresenceListMap } from './types'
+
+import redis from 'redis'
+
+import Database from './database'
 import { RoomNote } from './roomNote'
 import { Room } from './rooms'
-import Database from './database'
-// eslint-disable-next-line import/first
-import redis from 'redis'
+import { DEFAULT_SERVER_SETTINGS, PresenceListMap, ServerSettings, toServerSettings } from './types'
+import { isMod, User } from './user'
 
 const cache = redis.createClient(
   parseInt(process.env.RedisPort),

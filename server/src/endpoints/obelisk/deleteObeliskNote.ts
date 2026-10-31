@@ -1,7 +1,8 @@
-import { AuthenticatedEndpointFunction, LogFn, Message } from '../../endpoint'
-import { isMod, User } from '../../user'
-import DB from '../../redis'
 import { v4 as uuid } from 'uuid'
+
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../../endpoint'
+import DB from '../../redis'
+import { isMod, User } from '../../user'
 
 const deleteObeliskNote: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const noteId = inputs.noteId

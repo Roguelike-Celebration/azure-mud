@@ -1,7 +1,8 @@
-import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
-import { minimizeUser, updateUserProfile, User } from '../user'
-import generators from '../generators'
 import { v4 as uuid } from 'uuid'
+
+import { AuthenticatedEndpointFunction, LogFn, Message } from '../endpoint'
+import generators from '../generators'
+import { minimizeUser, updateUserProfile, User } from '../user'
 
 const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   let thisDrinkSkeleton: string
