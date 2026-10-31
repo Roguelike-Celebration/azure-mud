@@ -199,10 +199,10 @@ const CosmosDB = {
     }
   },
 
-  async setModStatus (user: User, isMod: boolean) {
+  async setModStatus (user: User, newModness: boolean) {
     try {
       const container = getContainer('users')
-      await container.item(user.id, partitionKey).replace({ ...user, isMod })
+      await container.item(user.id, partitionKey).replace({ ...user, isMod: newModness })
     } catch (e) {
       console.log('ERROR: Could not update user mod status', user.id, e)
     }
