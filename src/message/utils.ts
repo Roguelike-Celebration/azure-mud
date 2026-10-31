@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid'
+import { uuid } from '../../server/src/utils.js'
 
 import { MessageType } from './enums.js'
 import {

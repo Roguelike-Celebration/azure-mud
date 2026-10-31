@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import React, { useContext, useEffect } from 'react'
-import ReactTooltip from 'react-tooltip'
 
 import { RoomNote } from '../../server/src/roomNote.js'
 import { PublicUser } from '../../server/src/user.js'
@@ -87,7 +86,6 @@ export function ObeliskView (props: Props) {
 
   return (
     <div>
-      <ReactTooltip />
       {saveButton}
       {massDeleteButton}
       <div className='note-wall-description'>

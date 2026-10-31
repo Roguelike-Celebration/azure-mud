@@ -1,10 +1,11 @@
+import Linkify from 'linkify-react'
 import React, { useContext, useEffect } from 'react'
-import Linkify from 'react-linkify'
-import ReactTooltip from 'react-tooltip'
 
 import { PublicUser } from '../../server/src/user.js'
 import { HideProfileAction, SendMessageAction } from '../Actions.js'
 import { DispatchContext } from '../App.js'
+import { tooltipAttrs } from '../display.js'
+import { linkifyOpts } from '../linkifyOptions.js'
 import { WhisperMessage } from '../message/index.js'
 
 import BadgeView from './BadgeView.js'
@@ -29,7 +30,7 @@ const ProfileWhisperView = (props: WhisperMessage & { id: string, otherUser: Pub
     return (
       <div className="whisper-message">
         <em>
-          <span data-tip={otherUser?.pronouns}>
+          <span {...tooltipAttrs(otherUser?.pronouns)}>
             {otherUser.username}
           </span>:{' '}
           {props.message}
@@ -96,17 +97,10 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
     null
   )
 
-  const linkDecorator = (href: string, text: string, key: number): React.ReactElement => (
-    <a href={href} key={key} target="_blank" rel="noopener noreferrer">
-      {text}
-    </a>
-  )
-
   const noInformation = !realName && !user.pronouns && !description && !socialLink && !url && !askMeAbout
 
   return (<>
-    <ReactTooltip />
-    <Linkify componentDecorator={linkDecorator}>
+    <Linkify options={linkifyOpts}>
       <div id="profile" style={{ overflowWrap: 'anywhere' }}>
         <div className='fixed'>
           <div id="header">
@@ -119,17 +113,17 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
             })}
           </section>
           <section className="profile-details">
-            <p>
+            <div className="profile-details-group">
               {realName}
               <div id="profile-pronouns">{user.pronouns}</div>
               <i>{description}</i>
-            </p>
+            </div>
 
-            <p>
+            <div className="profile-details-group">
               {socialLink}
               {url}
               {askMeAbout}
-            </p>
+            </div>
 
             {noInformation &&
               <i>{user.username} has no further information. How mysterious!</i>

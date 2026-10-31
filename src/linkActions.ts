@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
+import { uuid } from '../server/src/utils.js'
 
 import { displayMessage, displayMessageFromList, orderNewDrink, pickUpItem, pickUpRandomItemFromList, sendChatMessage, updateFontReward } from './networking.js'
 
@@ -61,13 +61,13 @@ export const linkActions: { [actionName: string]: LinkAction | undefined } = {
   // ------------------------------------------- SEND CHAT MESSAGE SECTION -------------------------------------------
   // Ideally we would not have variable signatures in these functions.
   drinkPolymorph: (roomId: string) => { // Listen. Is this the correct way? No. Does it save me needing to write a new httpTrigger? Yes.
-    sendChatMessage(uuidv4(), '/get colourful potion', roomId)
+    sendChatMessage(uuid(), '/get colourful potion', roomId)
   },
   drinkCancellation: (roomId: string) => {
-    sendChatMessage(uuidv4(), '/get clear potion', roomId)
+    sendChatMessage(uuid(), '/get clear potion', roomId)
   },
   getFortune: (roomId: string) => {
-    sendChatMessage(uuidv4(), '/get fortune cookie', roomId)
+    sendChatMessage(uuid(), '/get fortune cookie', roomId)
   },
 
   // ------------------------------------------- DISPLAY MESSAGE SECTION -------------------------------------------
@@ -162,8 +162,8 @@ export const linkActions: { [actionName: string]: LinkAction | undefined } = {
 }
 
 const pentagramAction = function (font: string, roomId: string) {
-  updateFontReward(uuidv4(), font)
-  sendChatMessage(uuidv4(), '/go ASCII', roomId)
+  updateFontReward(uuid(), font)
+  sendChatMessage(uuid(), '/go ASCII', roomId)
   displayMessage('You feel changed by your journey through the pentagram...')
 }
 

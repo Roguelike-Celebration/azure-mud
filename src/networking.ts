@@ -1,7 +1,5 @@
-import axios from 'axios'
 import firebase from 'firebase/app'
 import { Dispatch } from 'react'
-import { v4 as uuid } from 'uuid'
 
 import { Badge } from '../server/src/badges.js'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
@@ -10,6 +8,7 @@ import {
   ServerSettings
 } from '../server/src/types.js'
 import { MinimalUser, User } from '../server/src/user.js'
+import { uuid } from '../server/src/utils.js'
 
 import {
   Action,
@@ -573,41 +572,43 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
   })
 }
 
-/** Call an Azure Function using a GET instead of the usual POST. */
-async function callAzureFunctionGet (endpoint: string): Promise<any> {
-  try {
-    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
-    const r = await axios.get(`${Config.SERVER_HOSTNAME}/api/${endpoint}`, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${firebaseToken}`,
-        userId: myUserId
-      }
-    })
-    return r.data
-  } catch (e) {
-    console.error(`Failed calling AzFn ${endpoint} (with HTTP GET)`, e)
-    return undefined
-  }
+/** Call an Azure Function using HTTP POST. */
+async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
+  return await callAzureFunctionWith('POST', endpoint, body)
 }
 
-/** Call an Azure Function using a POST. */
-async function callAzureFunction (endpoint: string, body?: any): Promise<any> {
+/** Call an Azure Function using a GET instead of the usual POST. */
+async function callAzureFunctionGet (endpoint: string): Promise<any> {
+  return await callAzureFunctionWith('GET', endpoint, undefined, { userId: myUserId })
+}
+
+/** Call an Azure Function using method specified in an argument. */
+async function callAzureFunctionWith (method: string, endpoint: string,
+  body?: any, moreHeaders: Record<string, string> = {}): Promise<any> {
+  const methodDescr = method === 'POST' ? '' : ` (with HTTP ${method})`
   try {
     const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
-    const r = await axios.post(
-      `${Config.SERVER_HOSTNAME}/api/${endpoint}`,
-      body,
-      {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${firebaseToken}`
-        }
-      }
-    )
-    return r.data
+    const rsp = await fetch(`${Config.SERVER_HOSTNAME}/api/${endpoint}`, {
+      method,
+      credentials: 'include',
+      headers: {
+        Authorization: `Bearer ${firebaseToken}`,
+        ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
+        ...moreHeaders
+      },
+      body: body === undefined ? undefined : JSON.stringify(body)
+    })
+    const rspText = await rsp.text()
+    if (!rsp.ok) {
+      throw new Error(`HTTP ${rsp.status} ${rsp.statusText}: ${rspText}`)
+    }
+    try {
+      return JSON.parse(rspText)
+    } catch {
+      return rspText
+    }
   } catch (e) {
-    console.error(`Failed calling AzFn ${endpoint}`, e)
+    console.error(`Failed calling AzFn ${endpoint}${methodDescr}`, e)
     return undefined
   }
 }

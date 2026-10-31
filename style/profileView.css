@@ -31,6 +31,10 @@
   margin-top: 0;
 }
 
+#profile .profile-details-group {
+  margin: 1em 0;
+}
+
 #profile {
   background-color: var(--main-background);
   border-left: 1px solid var(--main-font);

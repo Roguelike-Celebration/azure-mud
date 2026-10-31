@@ -1,7 +1,7 @@
 /* background-color different than 'main' background, dropdown by username
 'default' #333333
 'light' base2 #eee8d5
-'dark' base02 #073642 
+'dark' base02 #073642
 
 'border' matches text
 'default' white
@@ -35,11 +35,6 @@ nav.react-contextmenu {
 
 span.name {
   cursor: pointer;
-}
-
-.name .react-contextmenu {
-  color: var(--main-font);
-  font-style: normal;
 }
 
 .name.Blue {

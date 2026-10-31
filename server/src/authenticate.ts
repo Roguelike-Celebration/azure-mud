@@ -1,5 +1,6 @@
 import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions'
-import admin from 'firebase-admin'
+import { applicationDefault, getApps, initializeApp } from 'firebase-admin/app'
+import { getAuth } from 'firebase-admin/auth'
 
 import { DB } from '../src/database.js'
 
@@ -15,12 +16,12 @@ export async function getUserIdFromHeaders (
   context: InvocationContext,
   req: HttpRequest
 ): Promise<string | undefined> {
-  // Apparently, the initialization persists across function calls (!?) which I didn't realize was something that
-  // could happen! Clearly I don't quite understand 'serverless' (gosh I resent that term! it's still on somebody's
-  // server!)
-  if (admin.apps.length === 0) {
-    admin.initializeApp({
-      credential: admin.credential.applicationDefault()
+  // AzFn workers can be reused across function calls, and their module state persists in
+  // that case, so the app might already be initialized, though it is not guaranteed. -apj
+  // See: https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node?pivots=nodejs-model-v4#programming-model
+  if (getApps().length === 0) {
+    initializeApp({
+      credential: applicationDefault()
     })
   }
 
@@ -44,13 +45,12 @@ export async function getUserIdFromHeaders (
     return cachedUserId
   }
 
-  return await admin
-    .auth()
+  return await getAuth()
     .verifyIdToken(clientIdToken)
     .then(async (decoded) => {
       const userId = decoded.uid
 
-      const userRecord = await admin.auth().getUser(userId)
+      const userRecord = await getAuth().getUser(userId)
       const providers = userRecord.providerData
       // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
       // email address.
