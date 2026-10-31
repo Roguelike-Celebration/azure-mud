@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import React, { useContext } from 'react'
-import ReactTooltip from 'react-tooltip'
 
 import { RoomNote } from '../../server/src/roomNote.js'
 import { NoteWallData } from '../../server/src/rooms/index.js'
@@ -123,7 +122,6 @@ export function NoteWallView (props: Props) {
 
   return (
     <div>
-      <ReactTooltip />
       {saveButton}
       {massDeleteButton}
       {setAsUnconferencingTopicsButton}

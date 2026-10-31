@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
 import ReactDOM from 'react-dom'
-import ReactTooltip from 'react-tooltip'
 
 import { MinimalUser } from '../../server/src/user.js'
 import {
@@ -11,6 +10,7 @@ import {
   ShowModalAction
 } from '../Actions.js'
 import { DispatchContext, SettingsContext, UserMapContext } from '../App.js'
+import { tooltipAttrs } from '../display.js'
 import { Modal } from '../modals.js'
 import { fetchProfile, toggleUserSpeaker } from '../networking.js'
 
@@ -44,8 +44,6 @@ export default function NameView (props: Props) {
   const dispatch = useContext(DispatchContext)
   const { useSimpleNames } = useContext(SettingsContext)
   const { userMap, myId } = useContext(UserMapContext)
-
-  ReactTooltip.rebuild()
 
   const isSelf = props.userId === myId
 
@@ -185,7 +183,7 @@ export default function NameView (props: Props) {
   const customStyle: React.CSSProperties = { whiteSpace: props.nowrap ? 'nowrap' : undefined }
 
   const nameEl = (
-    <strong data-tip={!useSimpleNames && (user?.pronouns ?? '')} className={isMod ? 'mod' : ''}>
+    <strong {...tooltipAttrs(!useSimpleNames && (user?.pronouns ?? ''))} className={isMod ? 'mod' : ''}>
       {(!useSimpleNames && user && user.polymorph) || ''}
       {username || 'unknown'}
       {useSimpleNames ? '' : badges}

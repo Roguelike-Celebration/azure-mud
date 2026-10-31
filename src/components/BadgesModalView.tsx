@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import React, { useContext, useLayoutEffect, useReducer, useState } from 'react'
-import ReactTooltip from 'react-tooltip'
 
 import { Badge } from '../../server/src/badges.js'
 import { BadgeCategory } from '../../server/src/types.js'
@@ -271,7 +270,6 @@ export default function BadgesModalView (props: Props) {
   }
 
   return (<>
-    <ReactTooltip/>
     <div id='badges'>
       <h1>Your Badges</h1>
       <div className="badge-sections">
