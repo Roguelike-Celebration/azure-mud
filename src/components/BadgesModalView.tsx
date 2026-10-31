@@ -1,4 +1,4 @@
-import { isNumber, uniq } from 'lodash'
+import _ from 'lodash'
 import React, { useContext, useLayoutEffect, useReducer, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 
@@ -96,7 +96,7 @@ export default function BadgesModalView (props: Props) {
 
     setSelectedEquippedIndex(index)
 
-    if (isNumber(index) && selectedBadge) {
+    if (_.isNumber(index) && selectedBadge) {
       dispatch(EquipBadgeAction(selectedBadge, index))
       equipBadge(selectedBadge, index)
       setSelectedBadge(undefined)
@@ -109,7 +109,7 @@ export default function BadgesModalView (props: Props) {
     const index = parseInt(e.currentTarget.dataset.index)
     setSelectedEquippedIndex(undefined)
 
-    if (isNumber(index)) {
+    if (_.isNumber(index)) {
       dispatch(EquipBadgeAction(undefined, index))
       equipBadge(undefined, index)
       setSelectedBadge(undefined)
@@ -128,7 +128,7 @@ export default function BadgesModalView (props: Props) {
 
     setSelectedBadge(badge)
 
-    if (isNumber(selectedEquippedIndex) && badge) {
+    if (_.isNumber(selectedEquippedIndex) && badge) {
       dispatch(EquipBadgeAction(badge, selectedEquippedIndex))
       equipBadge(badge, selectedEquippedIndex)
       setSelectedBadge(undefined)
@@ -139,7 +139,7 @@ export default function BadgesModalView (props: Props) {
   const keyDownOnEquipped = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
       selectEquippedBadge(e)
-    } else if ((e.key === 'Backspace' || e.key === 'Delete') && isNumber(selectedEquippedIndex)) {
+    } else if ((e.key === 'Backspace' || e.key === 'Delete') && _.isNumber(selectedEquippedIndex)) {
       dispatch(EquipBadgeAction(undefined, selectedEquippedIndex))
       equipBadge(undefined, selectedEquippedIndex)
     }
@@ -154,7 +154,7 @@ export default function BadgesModalView (props: Props) {
   // If there's a badge in the right position but not the left, a[0] is undefined
   // Running array.map on an array with undefined values skips the undefineds
   // This means we need a for loop instead of a map.
-  const rawEquippedBadges = uniq(props.equippedBadges || [])
+  const rawEquippedBadges = _.uniq(props.equippedBadges || [])
   const equippedBadges = []
   for (let i = 0; i < Math.max(rawEquippedBadges.length, 2); i++) {
     const b = rawEquippedBadges[i]
@@ -207,7 +207,7 @@ export default function BadgesModalView (props: Props) {
 
   // TODO: Can you see description with screen reader?
   const lockedBadgesByCategory = new Map<BadgeCategory, JSX.Element[]>()
-  uniq(props.unlockableBadges || []).filter(b => {
+  _.uniq(props.unlockableBadges || []).filter(b => {
     return !unlockedBadgesSet.has(b.emoji)
   }).forEach((b) => {
     if (!lockedBadgesByCategory.has(b.category)) {

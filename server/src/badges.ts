@@ -1,4 +1,4 @@
-import { keyBy } from 'lodash'
+import _ from 'lodash'
 
 import { BadgeCategory } from './types'
 
@@ -614,4 +614,4 @@ export const UnlockableBadges: Badge[] = [
 *   }
 *  This lets us index into UnlockableBadgeMap['🤖'] when checking for existence
 */
-export const UnlockableBadgeMap = keyBy(UnlockableBadges, 'emoji')
+export const UnlockableBadgeMap = _.keyBy(UnlockableBadges, 'emoji')
