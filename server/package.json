@@ -28,5 +28,8 @@
     "@types/lodash": "^4.17.27",
     "@types/node": "^24.19.2",
     "typescript": "6.0.3"
+  },
+  "allowScripts": {
+    "@firebase/util@1.15.3": true
   }
 }
