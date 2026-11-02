@@ -590,9 +590,19 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
   })
   // ws.send(message);
 
-  window.addEventListener('beforeunload', (e) => {
-    callAzureFunction('disconnect')
-  })
+  window.addEventListener('beforeunload', disconnectOnUnload)
+}
+
+// A module-level function instead of inline function, so repeated connects (like logout+login
+// without a page reload) don't stack up duplicate listeners. Dedup is done by function
+// identity, but inline anon functions have distinct identity.
+function disconnectOnUnload (): void {
+  // Skip if already logged out: the menu's Log Out already calls disconnect itself before
+  // signOut().
+  if (!firebase.auth().currentUser) {
+    return
+  }
+  callAzureFunction('disconnect')
 }
 
 /**
