@@ -16,6 +16,8 @@ const uiConfig: firebaseui.auth.Config = {
       if (user.shouldVerifyEmail) {
         sendSignInLinkToEmail(user.email)
       }
+      // false = don't redirect. We don't use sign-in redirect URLs, so returning true just causes
+      // the firebase widget to show a "No redirect URL has been found" error message.
       return false
     }
   },
