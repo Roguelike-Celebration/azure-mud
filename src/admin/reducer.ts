@@ -7,6 +7,7 @@ import { Action, ActionType } from './actions.js'
 
 export interface State {
   firebaseApp: firebase.app.App
+  checkedAuthentication: boolean
   isLoggedIn: boolean
 
   roomIds?: string[]
@@ -17,6 +18,7 @@ export interface State {
 
 export const defaultState: State = {
   firebaseApp: firebase.initializeApp(Config.FIREBASE_CONFIG),
+  checkedAuthentication: false,
   isLoggedIn: false,
   roomData: {}
 }
@@ -26,7 +28,13 @@ export default (oldState: State, action: Action): State => {
   const state: State = JSON.parse(JSON.stringify(oldState))
 
   if (action.type === ActionType.LoggedIn) {
+    state.checkedAuthentication = true
     state.isLoggedIn = true
+  }
+
+  if (action.type === ActionType.LoggedOut) {
+    state.checkedAuthentication = true
+    state.isLoggedIn = false
   }
 
   if (action.type === ActionType.UpdateRoomIds) {
