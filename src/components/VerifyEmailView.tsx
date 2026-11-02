@@ -3,6 +3,7 @@ import PageVisibility from 'react-page-visibility'
 
 import { Action, AuthenticateAction } from '../Actions.js'
 import { currentUser, sendSignInLinkToEmail, signOut } from '../authentication.js'
+import Config from '../config.js'
 import { State } from '../reducer.js'
 import { ThunkDispatch } from '../useReducerWithThunk.js'
 
@@ -17,6 +18,9 @@ export default function VerifyEmailView (props: Props) {
   // const dispatch = useContext(DispatchContext)
   const dispatch = props.dispatch
 
+  // Firebases's sender for auth emails, tied to the Firebase project domain. Assumes no custom
+  // sender domain has been set up in the Firebase project.
+  const firebaseSenderEmail = `noreply@${Config.FIREBASE_CONFIG.projectId}.firebaseapp.com`
   const handleVisibilityChange = (isVisible: boolean) => {
     const user = currentUser()
     if (isVisible && user && !user.shouldVerifyEmail) {
@@ -47,7 +51,7 @@ export default function VerifyEmailView (props: Props) {
         <main role="main">
           <p>
             You&apos;re currently attempting to log in as <strong>{props.userEmail}</strong>, but your email is not yet
-            verified. Please follow the link in your email from noreply@roguelike-celebration-prod.firebaseapp.com to
+            verified. Please follow the link in your email from {firebaseSenderEmail} to
             complete the registration process. If you don&apos;t see an email, please check your spam, since
             they&apos;ve been getting flagged by gmail.
 
