@@ -12,7 +12,7 @@ import { isMod, minimizeUser, User } from '../user.js'
 // That may not be eventually what we want
 
 const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  log('We have a user!', user.id)
+  log(`connect: User connecting: ${user.id} (${user.username}), room ${user.roomId}`)
   const result: Result = {}
 
   let room = await DB.getRoomData(user.roomId)
@@ -98,9 +98,8 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
     await globalPresenceMessage([user.roomId])
   ]
 
-  log('Finished all of "connect"')
-  log(result)
-
+  log(`connect: Finished. ${user.id} (${user.username}), room ${user.roomId}. Result:`,
+    result)
   return result
 }
 
