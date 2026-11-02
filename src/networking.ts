@@ -249,7 +249,12 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
   // So we should just automatically send this down on `connect`
   // (This used to be a separate call, but it's only made right after `connect`)
   const settings: ServerSettings = await callAzureFunctionGet('serverSettings')
-  dispatch(ReceivedServerSettingsAction(settings))
+  if (settings) {
+    dispatch(ReceivedServerSettingsAction(settings))
+  } else {
+    // Keep the defaults on failure: reducer reads fields of whatever it's given
+    console.error('Failed fetching server settings. (AzFn serverSettings failed.)')
+  }
 }
 
 export async function moveToRoom (roomId: string): Promise<void> {
@@ -297,8 +302,12 @@ function tooLongMsgLogMsg (msgLen: number, maxLen: number, msgType: string): str
 
 export async function fetchProfile (userId: string): Promise<void> {
   const result = await callAzureFunction('fetchProfile', { userId })
+  if (!result) {
+    console.error(`Failed fetching profile: userId=${userId}. (AzFn fetchProfile failed.)`)
+    return
+  }
   if (result.error) {
-    console.error('Could not fetch profile', result.error)
+    console.error(`Could not fetch profile: userId=${userId}. Error:`, result.error)
   } else {
     myDispatch(ShowProfileAction(result.user))
   }
@@ -306,7 +315,7 @@ export async function fetchProfile (userId: string): Promise<void> {
 
 export async function resetRoomData (isFromAdminPanel: boolean): Promise<void> {
   const response = await callAzureFunction('resetRoomData')
-  if (response.roomData) {
+  if (response?.roomData) {
     if (isFromAdminPanel) {
       // Admin panel doesn't have the same state tracking and you can't dispatch
       window.location.reload()
@@ -328,6 +337,9 @@ export async function moveAllUsersToEntryway (): Promise<void> {
 
 export async function resetBadgeData (): Promise<void> {
   const response = await callAzureFunction('resetBadgeData')
+  if (!response) {
+    return
+  }
 
   if (response.unlockedBadges) {
     myDispatch(SetUnlockedBadgesAction(response.unlockedBadges))
@@ -395,17 +407,17 @@ interface UserRegistrationStatus {
 // These 3 functions are only used by admin.
 export async function getRoomIds (): Promise<string[] | undefined> {
   const result = await callAzureFunction('getRoomIds')
-  return result.roomIds
+  return result?.roomIds
 }
 
 export async function getRoom (roomId: string): Promise<Room | undefined> {
   const result = await callAzureFunction('getRoom', { roomId })
-  return result.room
+  return result?.room
 }
 
 export async function getAllRooms (): Promise<RoomDataMap | undefined> {
   const result = await callAzureFunction('getAllRooms')
-  return result.roomData
+  return result?.roomData
 }
 
 // "Real" HTTP Functions
@@ -415,6 +427,10 @@ export async function getAllRooms (): Promise<RoomDataMap | undefined> {
 // If isNewUser is true, a successful update will refresh the entire page instead of dismissing a modal
 export async function updateProfile (user: Partial<User>, isNew: boolean): Promise<void> {
   const result = await callAzureFunction('updateProfile', { user, isNew })
+  if (!result) {
+    alert("Couldn't save your profile. (AzFn updateProfile failed.) Please try again.")
+    return
+  }
   if (result.valid) {
     if (isNew) {
       window.location.reload()
