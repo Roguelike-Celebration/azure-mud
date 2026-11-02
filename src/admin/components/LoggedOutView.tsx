@@ -16,7 +16,6 @@ const uiConfig: firebaseui.auth.Config = {
       if (user.shouldVerifyEmail) {
         sendSignInLinkToEmail(user.email)
       }
-      window.location.reload()
       return false
     }
   },
