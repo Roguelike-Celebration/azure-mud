@@ -21,6 +21,10 @@ export default function (props: { roomIds: string[] }) {
 
   const clickedDownloadData = async () => {
     const rooms = await getAllRooms()
+    if (!rooms) {
+      alert('Failed fetching room data to download. (AzFn getAllRooms failed.)')
+      return
+    }
     const roomJSON = JSON.stringify(rooms, null, 2)
 
     // via https://stackoverflow.com/questions/34156282/how-do-i-save-json-to-local-text-file
@@ -37,6 +41,10 @@ export default function (props: { roomIds: string[] }) {
       // TODO: This is bad compared to handling this async better
       // The cobbler's children have no shoes.
       const roomData = await getRoom(roomId)
+      if (!roomData) {
+        alert(`Failed fetching room data for room ${roomId}. (AzFn getRoom failed.)`)
+        return
+      }
       console.log('got room data', roomId, roomData)
       dispatch(UpdateAndShowRoomAction(roomId, roomData))
     }
