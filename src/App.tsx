@@ -92,8 +92,12 @@ const App = () => {
         const userId = user.id
         const providerId = user.providerId
 
-        const { registeredUsername, spaceIsClosed, isMod, isBanned } =
-          await checkIsRegistered()
+        const registrationStatus = await checkIsRegistered()
+        if (!registrationStatus) {
+          alert("Couldn't reach the MUD server to finish login. (Failed AzFn call.) Try reloading the page.")
+          return
+        }
+        const { registeredUsername, spaceIsClosed, isMod, isBanned } = registrationStatus
         if (!registeredUsername) {
           // If email, use ID to not leak, otherwise use service's default display name (for Twitter, their handle)
           const defaultDisplayName = user.email ? userId : user.displayName
