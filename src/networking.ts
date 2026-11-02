@@ -189,6 +189,9 @@ export async function updateRoom (roomId: string, roomData: Room): Promise<void>
 // and there's no system of recourse. but! that already existed!
 export async function connectRoomData (dispatch: ThunkDispatch<Action, State>): Promise<void> {
   const result: RoomResponse = await callAzureFunction('connect')
+  if (!result) {
+    return
+  }
   if (result.presenceData) {
     dispatch(UpdatedPresenceAction(result.presenceData))
   }
@@ -213,6 +216,10 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
   }
   const result: RoomResponse = await callAzureFunction('connect')
   console.log(`Called connect() AzFn for userId=${userId}. Result:`, result)
+  if (!result) {
+    dispatch(ErrorAction("Couldn't connect to MUD server. (AzFn connect failed.) Try reloading the page."))
+    return
+  }
 
   dispatch(
     ConnectAction(
@@ -637,6 +644,7 @@ async function callAzureFunctionGet (endpoint: string): Promise<any> {
 async function callAzureFunctionWith (method: string, endpoint: string,
   body?: any, moreHeaders: Record<string, string> = {}): Promise<any> {
   const methodDescr = method === 'POST' ? '' : ` (with HTTP ${method})`
+  const startTime = new Date()
   try {
     const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
     const rsp = await fetch(`${Config.SERVER_HOSTNAME}/api/${endpoint}`, {
@@ -651,7 +659,10 @@ async function callAzureFunctionWith (method: string, endpoint: string,
     })
     const rspText = await rsp.text()
     if (!rsp.ok) {
-      throw new Error(`HTTP ${rsp.status} ${rsp.statusText}: ${rspText}`)
+      const bodyDescr = rspText
+        ? `body: ${rspText}`
+        : 'empty body (failure in AzFn host or output binding, not MUD Function code?)'
+      throw new Error(`HTTP ${rsp.status} ${rsp.statusText}: ${bodyDescr}`)
     }
     try {
       return JSON.parse(rspText)
@@ -659,7 +670,21 @@ async function callAzureFunctionWith (method: string, endpoint: string,
       return rspText
     }
   } catch (e) {
-    console.error(`Failed calling AzFn ${endpoint}${methodDescr}`, e)
+    // Put details in message string, bc Parcel's dev error display shows only the message
+    console.error(`Failed calling AzFn ${endpoint}${methodDescr}: [${e}]. ` +
+      `userId=${firebase.auth().currentUser?.uid ?? '(not logged in)'}, ` +
+      `started ${startTime.toISOString()}, WebPubSub socket state ${describePubSubSocket()}.`, e)
     return undefined
+  }
+}
+
+function describePubSubSocket (): string {
+  switch (pubSubSocket?.readyState) {
+    case undefined: return 'none'
+    case WebSocket.CONNECTING: return 'CONNECTING'
+    case WebSocket.OPEN: return 'OPEN'
+    case WebSocket.CLOSING: return 'CLOSING'
+    case WebSocket.CLOSED: return 'CLOSED'
+    default: return `readyState=${pubSubSocket.readyState}`
   }
 }
