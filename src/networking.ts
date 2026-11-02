@@ -201,17 +201,23 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
   myUserId = userId
   myDispatch = dispatch
 
-  // connectWebPubSub must be called before AFA connect/, because it auto-creates the WebPubSub
-  // user that connect/ and other azureWrap-ed functions depend on.
+  // connectWebPubSub must be called (and finish) before AFA connect/, because it
+  // auto-creates the WebPubSub user that connect/ and other azureWrap-ed functions depend on.
   const eventMapping = generateEventMapping(userId, dispatch)
   const genBeforeConnect = pubSubGeneration
-  await connectWebPubSub(eventMapping)
+  const pubSubOpened = await connectWebPubSub(eventMapping)
   if (pubSubGeneration !== genBeforeConnect) {
     // User logged out concurrently - skip state setup that would be stale/leaked
     console.log('connect: User logged out concurrently during connectWebPubSub().',
       'Aborted connect to avoid setting presence state for logged-out user.',
       `(gen before = ${genBeforeConnect}, gen after = ${pubSubGeneration})`
     )
+    return
+  }
+  if (!pubSubOpened) {
+    console.error('connect: No open WebPubSub websocket; not calling AzFn connect. ' +
+      `Socket state ${describePubSubSocket()}.`)
+    dispatch(ErrorAction("Couldn't connect to MUD server. (WebPubSub connection failed.) Try reloading the page."))
     return
   }
   const result: RoomResponse = await callAzureFunction('connect')
@@ -558,7 +564,12 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
 type WebPubSubEventHandler = (...args: any[]) => void
 type WebPubSubEventMapping = { [event: string]: WebPubSubEventHandler }
 
-export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Promise<void> {
+/**
+ * Open the WebPubSub websocket.
+ *
+ * Returns resulting socket status: true if socket is opened, or false if opening failed or was aborted.
+ */
+export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Promise<boolean> {
   /*
   const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
       request.headers = {
@@ -575,11 +586,11 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
   const result = await callAzureFunctionGet('negotiatePubSub')
   if (genBeforeNegotiate !== pubSubGeneration) {
     console.log('connectWebPubSub: User logged out while negotiating WebPubSub. Aborted websocket creation.')
-    return
+    return false
   }
   if (!result?.url) {
     console.error('connectWebPubSub: Did not get URL from WebPubSub connection result. Cannot create websocket.', result)
-    return
+    return false
   }
   console.log('connectWebPubSub: Negotiated WebPubSub', result)
 
@@ -589,15 +600,18 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
   // TODO: Handle error and close
   ws.addEventListener('open', () => {
     console.log('Opened websocket connection to WebPubSub Service')
-    // Note status
   })
   ws.addEventListener('message', (event) => {
     const { type, value } = JSON.parse(event.data)
     eventMapping[type](...value)
   })
-  // ws.send(message);
 
   window.addEventListener('beforeunload', disconnectOnUnload)
+
+  return await new Promise<boolean>((resolve) => {
+    ws.addEventListener('open', () => resolve(true), { once: true })
+    ws.addEventListener('close', () => resolve(false), { once: true })
+  })
 }
 
 // A module-level function instead of inline function, so repeated connects (like logout+login
