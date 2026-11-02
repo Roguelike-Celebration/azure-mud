@@ -179,8 +179,9 @@ const App = () => {
     return <EmailVerifiedView />
   }
 
+  // Covers both Firebase auth check and isRegistered call.
   if (!state.checkedAuthentication) {
-    return <div />
+    return <p role="status">Logging in...</p>
   }
 
   if (state.checkedAuthentication && state.mustVerifyEmail) {
