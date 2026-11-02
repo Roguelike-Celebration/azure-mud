@@ -49,7 +49,7 @@ import WelcomeModalView from './components/WelcomeModalView.js'
 import YouAreBannedView from './components/YouAreBannedView.js'
 import { MUD_TOOLTIP_ID } from './display.js'
 import { Modal } from './modals.js'
-import { checkIsRegistered, connect } from './networking.js'
+import { checkIsRegistered, connect, disconnectWebPubSub } from './networking.js'
 import reducer, { defaultState, RoomDataMap, State, UserMap } from './reducer.js'
 import * as Storage from './storage.js'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk.js'
@@ -77,10 +77,12 @@ const App = () => {
   )
 
   useEffect(() => {
+    // Note that auth-changed can be fired due to a logout in another tab, not just this one.
     // TODO: This flow has a lot of confusing, potentially duplicated messages that I'm not sure are necessary
     // I (Em) started a refactor at one point, but abandoned it since it became too irrelevant from my task
     onAuthenticationStateChange(async (user) => {
       if (!user) {
+        disconnectWebPubSub()
         dispatch(
           AuthenticateAction(undefined, undefined, undefined, undefined)
         )

@@ -60,6 +60,11 @@ import 'firebase/auth'
 
 let myUserId: string
 let myDispatch: ThunkDispatch<Action, State>
+let pubSubSocket: WebSocket | undefined
+// Counter tracking disconnectWebPubSub calls.
+// Used by in-progress connect to detect if a logout happened during the connect and thus it
+// should abort instead of opening a socket that would be leaked.
+let pubSubGeneration = 0
 
 // "Safe" functions (HTTP result not used)
 // Can immediately swap these out to use WebPubSub
@@ -196,10 +201,19 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
   // connectWebPubSub must be called before AFA connect/, because it auto-creates the WebPubSub
   // user that connect/ and other azureWrap-ed functions depend on.
   const eventMapping = generateEventMapping(userId, dispatch)
+  const genBeforeConnect = pubSubGeneration
   await connectWebPubSub(eventMapping)
+  if (pubSubGeneration !== genBeforeConnect) {
+    // User logged out concurrently - skip state setup that would be stale/leaked
+    console.log('connect: User logged out concurrently during connectWebPubSub().',
+      'Aborted connect to avoid setting presence state for logged-out user.',
+      `(gen before = ${genBeforeConnect}, gen after = ${pubSubGeneration})`
+    )
+    return
+  }
   const result: RoomResponse = await callAzureFunction('connect')
-
   console.log(`Called connect() AzFn for userId=${userId}. Result:`, result)
+
   dispatch(
     ConnectAction(
       result.roomId,
@@ -550,15 +564,21 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
 
   */
   // negotiate
+  const genBeforeNegotiate = pubSubGeneration
   const result = await callAzureFunctionGet('negotiatePubSub')
-  console.log('Connected WebPubSub', result)
-  if (!result.url) {
-    console.error('Did not get URL from WebPubSub connection result', result)
+  if (genBeforeNegotiate !== pubSubGeneration) {
+    console.log('connectWebPubSub: User logged out while negotiating WebPubSub. Aborted websocket creation.')
     return
   }
+  if (!result?.url) {
+    console.error('connectWebPubSub: Did not get URL from WebPubSub connection result. Cannot create websocket.', result)
+    return
+  }
+  console.log('connectWebPubSub: Negotiated WebPubSub', result)
 
   // connect
   const ws = new WebSocket(result.url)
+  pubSubSocket = ws
   // TODO: Handle error and close
   ws.addEventListener('open', () => {
     console.log('Opened websocket connection to WebPubSub Service')
@@ -573,6 +593,24 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
   window.addEventListener('beforeunload', (e) => {
     callAzureFunction('disconnect')
   })
+}
+
+/**
+ * Close the WebPubSub connection websocket, if any.
+ *
+ * Call this when user logs out. Otherwise the websocket stays open, and we will continue to
+ * call pong in response to user pings, but with no authenticated Firebase user. Logging out
+ * in another tab logs out this one too, so this can happen without any action in this tab.
+ * Also stops any in-progress concurrent connect from opening a websocket.
+ */
+export function disconnectWebPubSub (): void {
+  // pubSubGeneration bump must happen outside the if, to handle logouts that happen during
+  // negotiatePubSub before the socket exists to be closed.
+  pubSubGeneration++
+  if (pubSubSocket) {
+    pubSubSocket.close()
+    pubSubSocket = undefined
+  }
 }
 
 /** Call an Azure Function using HTTP POST. */
