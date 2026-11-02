@@ -763,6 +763,11 @@ export const LoadMessageArchiveAction =
         ))
 
       dispatch(LoadMessageArchiveActionEnd())
+      // connectRoomData() calls AzFn connect which needs an open websocket, so wait until
+      // connect() has finished. (See #1086.) Order matters: this wait must come after
+      // LoadMessageArchiveActionEnd, or it can deadlock with ConnectAction, which waits on
+      // the archive load.
+      await getState().connected.promise
       connectRoomData(dispatch)
     }
 
