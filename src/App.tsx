@@ -209,9 +209,9 @@ const App = () => {
   }
 
   if (state.isClosed && !state.userMap[state.userId].isMod) {
-    return <GoHomeView />
+    return <GoHomeView user={state.userMap[state.userId]} email={currentUser().email} />
   } else if (state.isBanned) {
-    return <YouAreBannedView />
+    return <YouAreBannedView user={state.userMap[state.userId]} email={currentUser().email} />
   }
 
   let innerModalView: React.ReactElement | undefined
