@@ -62,9 +62,8 @@ function requiredEnvVarSetting (name: string): string {
   return val
 }
 
-// This "as ..." cast can be dropped once strictNullChecks is enabled.
 const getCache = async (key: string): Promise<string | undefined> =>
-  (await ((await getClient()).get(key) as Promise<string | null>)) ?? undefined
+  (await ((await getClient()).get(key))) ?? undefined
 const setCache = async (key: string, value: string): Promise<void> => {
   await (await getClient()).set(key, value)
 }
