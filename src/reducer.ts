@@ -103,6 +103,25 @@ export interface State {
   obeliskNotes: RoomNote[]
 }
 
+/** Logged-in user's ID, required, for code that only runs after login. Throws otherwise.
+ *  Reducer event handlers must not use this, because events can arrive before login finishes. */
+export function myUserId (state: State): string {
+  if (!state.userId) {
+    throw new Error('No userId in State: not logged in yet')
+  }
+  return state.userId
+}
+
+/** Logged-in user's MinimalUser, required, for code that only runs after login. Throws otherwise.
+ *  Reducer event handlers must not use this, because events can arrive before login finishes. */
+export function myUser (state: State): MinimalUser {
+  const user = state.userMap[myUserId(state)]
+  if (!user) {
+    throw new Error("No MinimalUser entry (in State's userMap) for logged-in user")
+  }
+  return user
+}
+
 export type UserMap = { [userId: string]: MinimalUser }
 
 export type RoomDataMap = { [roomId: string]: Room }
@@ -156,9 +175,9 @@ export default produce((draft: State, action: Action) => {
     draft.serverSettings = action.value
 
     if (
-      original(draft).serverSettings.movementMessagesHideRoomIds !==
+      original(draft)!.serverSettings.movementMessagesHideRoomIds !==
         current(draft).serverSettings.movementMessagesHideRoomIds ||
-      original(draft).serverSettings.movementMessagesHideThreshold !==
+      original(draft)!.serverSettings.movementMessagesHideThreshold !==
         current(draft).serverSettings.movementMessagesHideThreshold
     ) {
       draft.messages.ids = filteredMessageIds(draft)
@@ -185,7 +204,7 @@ export default produce((draft: State, action: Action) => {
     if (current(draft).roomData?.[action.value.roomId]) {
       const room = current(draft).roomData[action.value.roomId]
 
-      if (current(draft).roomId !== original(draft).roomId) {
+      if (current(draft).roomId !== original(draft)!.roomId) {
         addMessage(draft, createMovedRoomMessage(room.shortName))
       } else {
         addMessage(draft, createSameRoomMessage(room.shortName))
@@ -208,62 +227,62 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.PlayerConnected) {
     const user = action.value
-    const roomData = draft.roomData[draft.roomId]
-    if (roomData && roomData.users && !roomData?.users.includes(user.id)) {
-      roomData.users.push(user.id)
+    const currRoom = knownCurrentRoom(draft)
+    if (currRoom?.room.users && !currRoom.room.users.includes(user.id)) {
+      currRoom.room.users.push(user.id)
       addMessage(
         draft,
-        createConnectedMessage(user.id, draft.roomId, roomData.users.length)
+        createConnectedMessage(user.id, currRoom.roomId, currRoom.room.users.length)
       )
-    }
     draft.userMap[user.id] = user
+    }
   }
 
   if (action.type === ActionType.PlayerDisconnected) {
-    const roomData = draft.roomData[draft.roomId]
-    if (roomData && roomData.users) {
-      roomData.users = roomData.users.filter((u) => u !== action.value)
+    const currRoom = knownCurrentRoom(draft)
+    if (currRoom?.room.users) {
+      currRoom.room.users = currRoom.room.users.filter((u) => u !== action.value)
       addMessage(
         draft,
         createDisconnectedMessage(
           action.value,
-          draft.roomId,
-          roomData.users.length
+          currRoom.roomId,
+          currRoom.room.users.length
         )
       )
     }
   }
 
   if (action.type === ActionType.PlayerEntered) {
-    const roomData = draft.roomData[draft.roomId]
-    if (roomData.users && !roomData.users.includes(action.value.name)) {
-      roomData.users.push(action.value.name)
+    const currRoom = knownCurrentRoom(draft)
+    if (currRoom?.room.users && !currRoom.room.users.includes(action.value.name)) {
+      currRoom.room.users.push(action.value.name)
       addMessage(
         draft,
         createEnteredMessage(
           action.value.name,
           action.value.fromId,
           action.value.fromName,
-          draft.roomId,
-          roomData.users.length
+          currRoom.roomId,
+          currRoom.room.users.length
         )
       )
     }
   }
 
   if (action.type === ActionType.PlayerLeft) {
-    const roomData = draft.roomData[draft.roomId]
+    const currRoom = knownCurrentRoom(draft)
     // You can get messages for players leaving before your loading finishes - hence the ignore guard here.
-    if (roomData && roomData.users) {
-      roomData.users = roomData.users.filter((u) => u !== action.value.name)
+    if (currRoom?.room.users) {
+      currRoom.room.users = currRoom.room.users.filter((u) => u !== action.value.name)
       addMessage(
         draft,
         createLeftMessage(
           action.value.name,
           action.value.toId,
           action.value.toName,
-          draft.roomId,
-          roomData.users.length
+          currRoom.roomId,
+          currRoom.room.users.length
         )
       )
     }
@@ -370,7 +389,7 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.UpdateProfileColor) {
-    draft.userMap[draft.userId].nameColor = action.color
+    myUser(draft).nameColor = action.color
 
     if (action.color) {
       addMessage(
@@ -386,11 +405,11 @@ export default produce((draft: State, action: Action) => {
       )
     }
 
-    updateProfileColor(draft.userId, action.color)
+    updateProfileColor(myUserId(draft), action.color)
   }
 
   if (action.type === ActionType.UpdateFontReward) {
-    draft.userMap[draft.userId].fontReward = action.font
+    myUser(draft).fontReward = action.font
 
     // I'm following the pattern of the set colour but... I don't think the user sees these message, and they aren't errors, why do we do this?
     if (action.font) {
@@ -409,7 +428,7 @@ export default produce((draft: State, action: Action) => {
       )
     }
 
-    updateFontReward(draft.userId, action.font)
+    updateFontReward(myUserId(draft), action.font)
   }
 
   if (action.type === ActionType.Error) {
@@ -442,8 +461,10 @@ export default produce((draft: State, action: Action) => {
           } is not a registered slash command!`
         )
       )
-    } else if (beginsWithSlash && matching.type === SlashCommandType.Whisper) {
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Whisper) {
+      // Can't be null, by construction: matchingSlashCommand will only match when it's
+      // followed by a space and an argument.
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
       const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
 
       if (!parsedUsernameMessage) {
@@ -465,7 +486,7 @@ export default produce((draft: State, action: Action) => {
           saveWhisper(draft, whisperMessage)
         }
       }
-    } else if (beginsWithSlash && matching.type === SlashCommandType.Help) {
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Help) {
       draft.activeModal = Modal.Help
       addMessage(
         draft,
@@ -473,8 +494,10 @@ export default produce((draft: State, action: Action) => {
           'You consult the help docs. (You can also find them in sidebar!)'
         )
       )
-    } else if (beginsWithSlash && matching.type === SlashCommandType.Look) {
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Look) {
+      // Can't be null, by construction: matchingSlashCommand will only match when it's
+      // followed by a space and an argument.
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
       addMessage(
         draft,
         createCommandMessage(
@@ -488,7 +511,7 @@ export default produce((draft: State, action: Action) => {
       sendChatMessage(messageId, action.value, draft.roomId)
       addMessage(
         draft,
-        createChatMessage(messageId, draft.userId, action.value)
+        createChatMessage(messageId, myUserId(draft), action.value)
       )
     }
   }
@@ -507,7 +530,7 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.HideProfile) {
-    draft.visibleProfile = null
+    draft.visibleProfile = undefined
   }
 
   if (action.type === ActionType.ShowModal) {
@@ -559,7 +582,7 @@ export default produce((draft: State, action: Action) => {
         username: action.value.name
       }
     } else {
-      draft.authenticated = undefined
+      draft.authenticated = false
       draft.userId = undefined
     }
   }
@@ -664,7 +687,7 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.SpaceOpenedOrClosed) {
-    if (draft.userMap[draft.userId].isMod) {
+    if (myUser(draft).isMod) {
       draft.isClosed = action.value
       addMessage(
         draft,
@@ -684,20 +707,29 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.EquipBadge) {
-    if (!draft.profileData.equippedBadges) {
-      draft.profileData.equippedBadges = []
+    // Badge actions can arrive before profile is available by connect(); ignore until then
+    if (draft.profileData) {
+      if (!draft.profileData.equippedBadges) {
+        draft.profileData.equippedBadges = []
+      }
+      draft.profileData.equippedBadges[action.value.index] = action.value.badge
     }
-    draft.profileData.equippedBadges[action.value.index] = action.value.badge
   }
 
   if (action.type === ActionType.UnlockBadge) {
-    draft.profileData.unlockedBadges.push(action.value)
-    draft.justUnlockedBadge = action.value
-    draft.activeModal = Modal.BadgeUnlock
+    // Badge actions can arrive before profile is available by connect(); ignore until then
+    if (draft.profileData) {
+      draft.profileData.unlockedBadges.push(action.value)
+      draft.justUnlockedBadge = action.value
+      draft.activeModal = Modal.BadgeUnlock
+    }
   }
 
   if (action.type === ActionType.SetUnlockedBadges) {
-    draft.profileData.unlockedBadges = action.value
+    // Badge actions can arrive before profile is available by connect(); ignore until then
+    if (draft.profileData) {
+      draft.profileData.unlockedBadges = action.value
+    }
   }
 
   if (action.type === ActionType.UpdateUnlockableBadges) {
@@ -748,10 +780,19 @@ async function addMessage (state: State, message: Message) {
 
 const isHiddenRoom = (movementMessagesHideRoomIds: string[], roomId: string) =>
   movementMessagesHideRoomIds.includes(roomId)
+
 const isBusyRoom = (
   movementMessagesHideThreshold: number,
   numUsersInRoom: number
 ) => numUsersInRoom > movementMessagesHideThreshold
+
+function knownCurrentRoom (state: State): { roomId: string, room: Room } | undefined {
+  if (state.roomId === undefined) {
+    return undefined
+  }
+  const room = state.roomData[state.roomId]
+  return room ? { roomId: state.roomId, room } : undefined
+}
 
 const shouldShowMessage = (
   {
@@ -773,11 +814,10 @@ const shouldShowMessage = (
   )
 
 const filteredMessageIds = (state: State) =>
-  Object.entries(state.messages.entities).reduce((acc, [id, message]) => {
+  Object.entries(state.messages.entities).reduce<string[]>((acc, [id, message]) => {
     if (shouldShowMessage(state, message)) {
       acc.push(id)
     }
-
     return acc
   }, [])
 

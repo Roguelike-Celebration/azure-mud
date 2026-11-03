@@ -1,11 +1,13 @@
 import firebase from 'firebase/app'
 import React from 'react'
+
 import 'firebase/auth'
+import { getRequiredCurrentUser } from '../authentication.js'
 
 export default function EmailVerifiedView () {
-  const user = firebase.auth().currentUser
+  const user = getRequiredCurrentUser()
 
-  if (!user.emailVerified) {
+  if (!user.emailVerified && user.email) {
     firebase.auth().signInWithEmailLink(user.email, window.location.href).then(() => {
       // A crude way of forcing a rerender, because I don't want to go through the trouble of making an action.
       window.location.reload()

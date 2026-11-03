@@ -46,7 +46,7 @@ export default function HappeningNowView (props: { roomData: RoomDataMap, entrie
       const socialTimeOptions: React.ReactElement[] = []
       while (ReversedScheduleEntries[i] && ReversedScheduleEntries[i].breakoutRoomId) {
         const breakoutEntry = ReversedScheduleEntries[i]
-        const breakoutRoomId = breakoutEntry.breakoutRoomId
+        const breakoutRoomId = breakoutEntry.breakoutRoomId!
         const discussString = `Discuss ${breakoutEntry.text} in `
         socialTimeOptions.push(
           <li key={breakoutRoomId}>
@@ -87,9 +87,10 @@ export default function HappeningNowView (props: { roomData: RoomDataMap, entrie
       <ul>
         {
           props.entries.map((e) => {
-            if (e.roomId) {
+            const roomId = e.roomId
+            if (roomId) {
               return <li key={e.text}>
-                <button id={`button-${e.text}`} onClick={() => moveAndClose(e.roomId)} className='link-styled-button'>{e.text}</button>
+                <button id={`button-${e.text}`} onClick={() => moveAndClose(roomId)} className='link-styled-button'>{e.text}</button>
               </li>
             } else if (e.externalLink) {
               return <li key={e.text}>

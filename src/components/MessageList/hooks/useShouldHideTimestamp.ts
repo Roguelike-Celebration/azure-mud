@@ -12,7 +12,7 @@ type ShouldHideTimestamp = (
 export const useShouldHideTimestamp = (): ShouldHideTimestamp =>
   useCallback<ShouldHideTimestamp>(
     (message, previousMessage) =>
-      previousMessage &&
+      (previousMessage !== undefined) &&
       'userId' in previousMessage &&
       'userId' in message &&
       previousMessage.userId === message.userId &&

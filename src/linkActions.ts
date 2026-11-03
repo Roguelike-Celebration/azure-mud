@@ -168,8 +168,8 @@ const pentagramAction = function (font: string, roomId: string) {
 }
 
 const spinTheRoom = () => {
-  document.querySelector('#main').classList.add('spin')
+  document.querySelector('#main')?.classList.add('spin')
   setTimeout(() => {
-    document.querySelector('#main').classList.remove('spin')
+    document.querySelector('#main')?.classList.remove('spin')
   }, 1600)
 }

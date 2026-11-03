@@ -11,7 +11,7 @@ export const DullDoorRoomView = () => {
   const dispatch = useContext(DispatchContext)
 
   const pullTheCleanRope = () => {
-    dispatch(UpdateProfileColorAction(null))
+    dispatch(UpdateProfileColorAction(undefined))
     dispatch(ShowModalAction(Modal.FeatureDullDoor))
   }
 

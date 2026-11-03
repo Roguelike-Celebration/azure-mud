@@ -14,7 +14,11 @@ export function renderCustomEmojiString (string: string): JSX.Element {
   const emojiComponent = stringParts.reduce<JSX.Element>((newComponent, stringPart) => {
     if (stringPart.startsWith(':') && stringPart.endsWith(':')) {
       const emojiIdRegex = /:(.*):/
-      const [, emojiId] = emojiIdRegex.exec(stringPart)
+      const match = emojiIdRegex.exec(stringPart)
+      if (!match) {
+        return <>{newComponent}{stringPart}</>
+      }
+      const [, emojiId] = match
 
       if (customEmojiMap[emojiId]) {
         return <>{newComponent} {<img className="inline-custom-emoji" alt={':' + emojiId + ':'} src={customEmojiMap[emojiId]}/>}</>

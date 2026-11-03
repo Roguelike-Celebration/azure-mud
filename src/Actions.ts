@@ -487,11 +487,11 @@ export const PlayerUnbannedAction = (
 
 interface UpdateProfileColorAction {
   type: ActionType.UpdateProfileColor;
-  color: string;
+  color: string | undefined;
 }
 
 export const UpdateProfileColorAction = (
-  color: string
+  color: string | undefined
 ): UpdateProfileColorAction => {
   return {
     type: ActionType.UpdateProfileColor,
@@ -618,16 +618,6 @@ export const HideModalAction = (): HideModalAction => {
   return { type: ActionType.HideModalAction }
 }
 
-interface AuthenticateAction {
-  type: ActionType.Authenticate;
-  value: {
-    name: string;
-    userId: string;
-    provider: string;
-    mustVerifyEmail: boolean;
-  };
-}
-
 interface ShowSideMenuAction {
   type: ActionType.ShowSideMenu;
 }
@@ -669,6 +659,16 @@ export const SetUseSimpleNamesAction = (
   useSimpleNames: boolean
 ): SetUseSimpleNamesAction => {
   return { type: ActionType.SetUseSimpleNames, value: useSimpleNames }
+}
+
+interface AuthenticateAction {
+  type: ActionType.Authenticate;
+  value: {
+    name: string | undefined;
+    userId: string | undefined;
+    provider: string | undefined;
+    mustVerifyEmail: boolean | undefined;
+  };
 }
 
 export const AuthenticateAction = (
@@ -737,7 +737,7 @@ export const LoadMessageArchiveAction =
     async (dispatch, getState) => {
       await getState().chatReady.promise
 
-      dispatch(LoadMessageArchiveActionStart(whispers))
+      dispatch(LoadMessageArchiveActionStart(whispers ?? []))
 
       await (messages?.length
         ? messages.reduce(
@@ -916,11 +916,11 @@ export const CommandMessageAction = (message: string): CommandMessageAction => {
 
 interface EquipBadgeAction {
   type: ActionType.EquipBadge;
-  value: { badge: Badge; index: number };
+  value: { badge: Badge | undefined; index: number };
 }
 
 export const EquipBadgeAction = (
-  badge: Badge,
+  badge: Badge | undefined,
   index: number
 ): EquipBadgeAction => {
   return {
