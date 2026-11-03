@@ -20,8 +20,13 @@ const connect: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
   // WARNING: For now, checking the existence of a roomId in roomData is a good safeguard
   // But this may bite us when/if we ever have programmatic room creation
   if (user.roomId === undefined || !room) {
-    user.roomId = 'entryway'
+    const entryRoomId = 'entryway'
+    user.roomId = entryRoomId
     room = await DB.getRoomData(user.roomId)
+    if (!room) {
+      throw new Error(`No room data for '${entryRoomId}': room data hasn't been loaded or ` +
+        `is missing ${entryRoomId} definition`)
+    }
   }
 
   await DB.setCurrentRoomForUser(user, user.roomId)

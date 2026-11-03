@@ -14,8 +14,17 @@ const deleteObeliskNote: AuthenticatedEndpointFunction = async (user: User, inpu
     }
   }
 
-  const notes = await DB.getRoomNotes('obelisk')
+  const obeliskRoomId = 'obelisk'
+  const notes = await DB.getRoomNotes(obeliskRoomId)
   const note = notes.find(n => n.id === noteId)
+  if (!note) {
+    return {
+      httpResponse: {
+        status: 404,
+        body: `Obelisk note not found: id ${noteId} in room ${obeliskRoomId}`
+      }
+    }
+  }
 
   if (note.authorId !== user.id && !(await isMod(user.id))) {
     return {

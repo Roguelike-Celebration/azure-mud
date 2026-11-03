@@ -102,13 +102,16 @@ function sanitizeUsername (s: string): string {
 export async function updateUserProfile (userId: string, data: Partial<User>, isNew: boolean = false): Promise<User> {
   const profile: Partial<User> = (await DB.getUser(userId)) || {}
   let username = profile.username
-  if (data.username) { username = sanitizeUsername(data.username) }
-  // If someone's trying to set a new username, validate it
-  if (data.username && profile.username !== username) {
-    const userIdForNewUsername = await getUserIdForUsername(username)
-    if (userIdForNewUsername && userIdForNewUsername !== userId) {
-      throw new Error(`Username '${username}' is already taken`)
+  if (data.username) {
+    const newUsername = sanitizeUsername(data.username)
+    // If someone's trying to set a new username, validate it
+    if (newUsername !== profile.username) {
+      const userIdForNewUsername = await getUserIdForUsername(newUsername)
+      if (userIdForNewUsername && userIdForNewUsername !== userId) {
+        throw new Error(`Username '${newUsername}' is already taken`)
+      }
     }
+    username = newUsername
   }
 
   // Limit other field lengths
@@ -149,28 +152,28 @@ export async function updateUserProfile (userId: string, data: Partial<User>, is
 export async function awardUserBadge (userId: string, badge: Badge): Promise<User> {
   // TODO: This will need to notify the player
   // And maybe has to happen at the caller instead of in here
-  const profile: User = await DB.getUser(userId)
+  const profile: User = await getRequiredUser(userId)
   const newBadgeList = (profile.unlockedBadges || []).concat(badge)
   profile.unlockedBadges = _.uniqWith(newBadgeList, (a, b) => a.emoji === b.emoji)
   return await DB.setUserProfile(userId, profile)
 }
 
 export async function equipBadge (userId: string, badge: Badge, index: number): Promise<User> {
-  const profile: User = await DB.getUser(userId)
+  const profile: User = await getRequiredUser(userId)
   profile.equippedBadges = (profile.equippedBadges || [])
   profile.equippedBadges[index] = badge
   return await DB.setUserProfile(userId, profile)
 }
 
 export async function updateUserProfileColor (userId: string, color: string): Promise<MinimalUser> {
-  const profile: User = await DB.getUser(userId)
+  const profile: User = await getRequiredUser(userId)
   profile.nameColor = color
   await DB.setUserProfile(userId, profile)
   return minimizeUser(profile)
 }
 
 export async function updateUserFontReward (userId: string, font: string): Promise<MinimalUser> {
-  const profile: User = await DB.getUser(userId)
+  const profile: User = await getRequiredUser(userId)
   profile.fontReward = font
   await DB.setUserProfile(userId, profile)
   return minimizeUser(profile)
@@ -192,6 +195,15 @@ export async function getFullUser (userId: string): Promise<User | undefined> {
     ...profile,
     id: userId
   }
+}
+
+/** Get a user, requiring it to exist. Throws if there's no profile. */
+export async function getRequiredUser (userId: string): Promise<User> {
+  const user = await DB.getUser(userId)
+  if (!user) {
+    throw new Error(`No profile found for user ${userId}`)
+  }
+  return user
 }
 
 // TODO: We could make this slightly more network-efficient by removing optional undefined fields
