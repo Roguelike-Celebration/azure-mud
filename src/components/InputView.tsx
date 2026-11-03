@@ -39,7 +39,7 @@ export default function InputView (props: {
   }
 
   useEffect(() => {
-    document.getElementById('chat-input').focus()
+    document.getElementById('chat-input')?.focus()
     if (props.prepopulated) {
       setInput(props.prepopulated)
     }
