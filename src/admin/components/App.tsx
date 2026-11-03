@@ -7,7 +7,7 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 
 import { onAuthenticationStateChange, signOut } from '../../authentication.js'
 import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking.js'
-import { useReducerWithThunk } from '../../useReducerWithThunk.js'
+import { ThunkDispatch, useReducerWithThunk } from '../../useReducerWithThunk.js'
 import { Action, LoggedInAction, LoggedOutAction, UpdateAndShowRoomAction, UpdateRoomIds } from '../actions.js'
 import reducer, { defaultState, State } from '../reducer.js'
 
@@ -15,10 +15,14 @@ import LoggedOutView from './LoggedOutView.js'
 import RoomList from './RoomList.js'
 import RoomOptionsView from './RoomOptionsView.js'
 
-export const DispatchContext = createContext(null)
+/** Placeholder default for a context with no meaningful value. */
+const noDefault = <T,>(): T => null as unknown as T
+
+// No meaningful default
+export const DispatchContext = createContext<ThunkDispatch<Action, State>>(noDefault())
 
 const App = function () {
-  const aceRef = useRef(null)
+  const aceRef = useRef<AceEditor>(null)
 
   const [state, dispatch] = useReducerWithThunk<Action, State>(
     reducer,
@@ -64,11 +68,17 @@ const App = function () {
     if (!state.isLoggedIn) return
     (async () => {
       const roomIds = await getRoomIds()
-      dispatch(UpdateRoomIds(roomIds))
+      if (roomIds) {
+        dispatch(UpdateRoomIds(roomIds))
+      }
     })()
   }, [state.isLoggedIn])
 
   const saveRoom = () => {
+    if (!aceRef.current || !state.displayedRoomId) {
+      alert('No room selected to save.')
+      return
+    }
     const code = aceRef.current.editor.getValue()
     updateRoom(state.displayedRoomId, JSON.parse(code))
   }
@@ -95,7 +105,7 @@ const App = function () {
             editorProps={{ $blockScrolling: true }}
             height={'100%'}
             ref={aceRef}
-            value={JSON.stringify(state.roomData[state.displayedRoomId] || '', null, 2)}
+            value={JSON.stringify((state.displayedRoomId && state.roomData[state.displayedRoomId]) || '', null, 2)}
             wrapEnabled={true}
             width={'70vw'}
           />

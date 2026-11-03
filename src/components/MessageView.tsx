@@ -241,7 +241,7 @@ const parseUserIdOrDisplay = (messageFragment: string): string => {
     return userId[1]
   }
   const display = messageFragment.match(/\[\[(.*?)\]\]/)
-  if (display.length === 2) {
+  if (display && display.length === 2) {
     return display[1]
   }
   return 'Malformed Mention'

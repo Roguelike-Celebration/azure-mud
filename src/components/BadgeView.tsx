@@ -5,7 +5,7 @@ import { customEmojiMap, reservedEmojiMap } from '../emoji/index.js'
 
 interface Props {
   emoji?: string
-  description: string
+  description?: string
   isCustom?: boolean
 }
 

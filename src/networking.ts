@@ -94,7 +94,7 @@ export async function orderNewDrink (): Promise<void> {
   await callAzureFunction('orderNewDrink')
 }
 
-export async function updateProfileColor (userId: string, color: string): Promise<void> {
+export async function updateProfileColor (userId: string, color: string | undefined): Promise<void> {
   await callAzureFunction('updateProfileColor', {
     userId: userId,
     color: color
@@ -230,12 +230,12 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
   dispatch(
     ConnectAction(
       result.roomId,
-      convertServerRoomData(result.roomData),
+      convertServerRoomData(result.roomData ?? {}),
       result.presenceData,
       result.roomNotes
     )
   )
-  dispatch(UserMapAction(result.users))
+  dispatch(UserMapAction(result.users ?? {}))
 
   if (result.profile) {
     dispatch(ReceivedMyProfileAction(result.profile))
@@ -263,7 +263,7 @@ export async function moveToRoom (roomId: string): Promise<void> {
   await callAzureFunction('moveRoom', { to: roomId })
 }
 
-export async function sendChatMessage (id: string, text: string, currentRoomId: string): Promise<void> {
+export async function sendChatMessage (id: string, text: string, currentRoomId: string | undefined): Promise<void> {
   if (text.length > MESSAGE_MAX_LENGTH) {
     console.error(tooLongMsgLogMsg(text.length, MESSAGE_MAX_LENGTH, 'chat'))
     return
@@ -282,7 +282,8 @@ export async function sendChatMessage (id: string, text: string, currentRoomId: 
   // You can reproduce by having one user account logged in on two computers, adding a delay into the server, then
   // having it switch rooms & cutting the internet on one, so that only one gets the websockets move. After you go back
   // online type something. Until you do that, it won't be able to see any messages.
-  if (result && result.roomId && !result.moved && result.roomId !== currentRoomId) {
+  if (result && result.roomId && !result.moved && currentRoomId !== undefined &&
+      result.roomId !== currentRoomId) {
     console.error(`Client/server room desync! Client roomId: ${currentRoomId} - Server roomId: ${result.roomId}.`)
     await moveToRoom(currentRoomId) // Sync the server
     window.location.reload() // Unless you do this, the client can't see chat - I'm not sure on the exact reason.
@@ -352,7 +353,7 @@ export async function resetBadgeData (): Promise<void> {
   }
 }
 
-export async function equipBadge (badge: Badge, index: number): Promise<void> {
+export async function equipBadge (badge: Badge | undefined, index: number): Promise<void> {
   const result = await callAzureFunction('equipBadge', { badge, index })
   if (!result || !result.badges) {
     console.error('Server did not return badges from an equipBadge call')
@@ -467,7 +468,7 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
       myDispatch(
         UpdatedCurrentRoomAction(
           data.roomId,
-          convertServerRoomData(data.roomData)
+          convertServerRoomData(data.roomData ?? {})
         )
       )
       if (data.roomNotes) {
@@ -676,7 +677,11 @@ async function callAzureFunctionWith (method: string, endpoint: string,
   const methodDescr = method === 'POST' ? '' : ` (with HTTP ${method})`
   const startTime = new Date()
   try {
-    const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
+    const fbUser = firebase.auth().currentUser
+    if (!fbUser) {
+      throw new Error('No logged-in Firebase user to auth AzFn call with')
+    }
+    const firebaseToken = await fbUser.getIdToken(false)
     const rsp = await fetch(`${Config.SERVER_HOSTNAME}/api/${endpoint}`, {
       method,
       credentials: 'include',
@@ -709,8 +714,10 @@ async function callAzureFunctionWith (method: string, endpoint: string,
 }
 
 function describePubSubSocket (): string {
-  switch (pubSubSocket?.readyState) {
-    case undefined: return 'none'
+  if (!pubSubSocket) {
+    return 'none'
+  }
+  switch (pubSubSocket.readyState) {
     case WebSocket.CONNECTING: return 'CONNECTING'
     case WebSocket.OPEN: return 'OPEN'
     case WebSocket.CLOSING: return 'CLOSING'
