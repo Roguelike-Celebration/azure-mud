@@ -5,8 +5,8 @@ import { minimizeUser, updateUserProfile, User } from '../user.js'
 import { uuid } from '../utils.js'
 
 const pickUpItem: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
-  let item: string
-  let privateActionString: string
+  let item: string | undefined
+  let privateActionString: string | undefined
 
   const oldItem = user.item
 
@@ -26,8 +26,8 @@ const pickUpItem: AuthenticatedEndpointFunction = async (user: User, inputs: any
     privateActionString = generator.actionString(item)
     log(privateActionString)
   } else if (inputs.item) {
-    item = inputs.item
-    if (!allowedItems.map(it => it.toUpperCase()).includes(item.toUpperCase())) {
+    const requestedItem: string = inputs.item
+    if (!allowedItems.map(it => it.toUpperCase()).includes(requestedItem.toUpperCase())) {
       return {
         httpResponse: {
           status: 400,
@@ -35,6 +35,7 @@ const pickUpItem: AuthenticatedEndpointFunction = async (user: User, inputs: any
         }
       }
     }
+    item = requestedItem
   } else if (inputs.drop) {
     item = undefined
   } else {

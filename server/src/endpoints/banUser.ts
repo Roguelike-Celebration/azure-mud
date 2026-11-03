@@ -15,7 +15,14 @@ const banUser: AuthenticatedEndpointFunction = async (user: User, inputs: any, l
   }
 
   const target = await getFullUser(targetId)
-
+  if (!target) {
+    return {
+      httpResponse: {
+        status: 404,
+        body: { error: `User not found: id ${targetId}` }
+      }
+    }
+  }
   if (target.isMod) {
     return {
       httpResponse: {
