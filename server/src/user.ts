@@ -33,7 +33,6 @@ export interface MinimalUser {
 // A user profile. Users may fetch this about other users.
 export interface PublicUser extends MinimalUser {
   realName?: string;
-  pronouns?: string;
   description?: string;
   askMeAbout?: string;
   twitterHandle?: string;
