@@ -16,7 +16,14 @@ const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs:
 
   const notes = await DB.getRoomNotes(user.roomId)
   const note = notes.find(n => n.id === noteId)
-
+  if (!note) {
+    return {
+      httpResponse: {
+        status: 404,
+        body: `Room note not found: id ${noteId} in room ${user.roomId}`
+      }
+    }
+  }
   if (note.authorId !== user.id && !(await isMod(user.id))) {
     return {
       httpResponse: {
@@ -38,10 +45,12 @@ const deleteRoomNote: AuthenticatedEndpointFunction = async (user: User, inputs:
 
   if (note.authorId !== user.id) {
     const room = await DB.getRoomData(user.roomId)
+    // Room data *should* always exist; this bad-data fallback keeps typecheck happy
+    const roomDescr = room ? room.shortName : user.roomId
     messages.push({
       userId: note.authorId,
       target: 'emote',
-      arguments: [uuid(), user.id, `has removed a note of yours from ${room.shortName} wall`]
+      arguments: [uuid(), user.id, `has removed a note of yours from ${roomDescr} wall`]
     })
   }
 

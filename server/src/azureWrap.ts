@@ -72,7 +72,7 @@ function logFn (context: InvocationContext): LogFn {
   return (...args) => context.log(...args)
 }
 
-function outputToAzure (context: InvocationContext, req: HttpRequest, result: Result): HttpResponseInit {
+function outputToAzure (context: InvocationContext, req: HttpRequest | undefined, result: Result): HttpResponseInit {
   context.log(`outputToAzure: ${context.functionName}: ` +
     `status=${result.httpResponse?.status ?? 'none'}, ${result.messages?.length ?? 0} messages, ` +
     `${result.groupManagementTasks?.length ?? 0} group mgmt tasks`)

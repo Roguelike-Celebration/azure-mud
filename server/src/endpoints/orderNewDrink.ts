@@ -22,7 +22,7 @@ const orderNewDrink: AuthenticatedEndpointFunction = async (user: User, inputs: 
   thisDrinkSkeleton = thisDrinkSkeleton.replace('-drinkVessel-', thisDrinkVessel)
   thisDrinkSkeleton = thisDrinkSkeleton.replace('-drinkContent-', thisDrinkContent)
   thisDrinkSkeleton = thisDrinkSkeleton.replace('-drinkName-', thisDrinkName)
-  thisDrinkSkeleton = thisDrinkSkeleton.replace('-userName-', user.realName)
+  thisDrinkSkeleton = thisDrinkSkeleton.replace('-userName-', user.realName ?? user.username)
 
   const item = thisDrinkName
 

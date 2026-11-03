@@ -1,6 +1,6 @@
 import { DB } from '../database.js'
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
-import { isMod, minimizeUser, User } from '../user.js'
+import { getFullUser, getRequiredUser, isMod, minimizeUser, User } from '../user.js'
 
 const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const userIdToToggle: string = inputs.userId
@@ -9,6 +9,15 @@ const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs
       httpResponse: {
         status: 400,
         body: { error: 'You did not include a user to mod/unmod' }
+      }
+    }
+  }
+  const target = await getFullUser(userIdToToggle)
+  if (!target) {
+    return {
+      httpResponse: {
+        status: 404,
+        body: { error: `User not found: id ${userIdToToggle}` }
       }
     }
   }
@@ -22,7 +31,7 @@ const toggleModStatus: AuthenticatedEndpointFunction = async (user: User, inputs
   }
 
   // Update mod status for everyone else
-  const toggledUser: User = await DB.getUser(userIdToToggle)
+  const toggledUser: User = await getRequiredUser(userIdToToggle)
   return {
     messages: [{
       target: 'usernameMap',

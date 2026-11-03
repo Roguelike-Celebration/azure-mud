@@ -109,7 +109,7 @@ interface Database {
   // -----------------------------------------------------------------
   setRoomData(room: Room): Promise<Room>;
   deleteRoomData(roomId: string): Promise<void>;
-  getRoomData(roomId: string): Promise<Room>;
+  getRoomData(roomId: string): Promise<Room | undefined>;
   getRoomIds(): Promise<string[]>;
 
   // When someone types /move [room], we generously try to interpret that
