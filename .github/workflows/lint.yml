@@ -20,32 +20,32 @@ jobs:
             package-lock.json
             server/package-lock.json
 
-      - name: show tool versions
+      - name: Show tool versions
         run: |
           for cmd in node npm; do echo "${cmd}:"; ${cmd} --version; done
 
-      - name: npm setup frontend
+      - name: NPM install - frontend
         run: npm ci
 
-      - name: npm setup server
+      - name: NPM install - backend
         run: cd server && npm ci
 
-      # This produces compiled.json, which needs to exist for lint-rooms to work
-      - name: build server
-        run: cd server && npm run build
-
-      - name: build frontend
+      - name: Build frontend
         run: npm run build
 
-      - name: lint
+      # This produces compiled.json, which needs to exist for lint-rooms to work
+      - name: Build backend
+        run: cd server && npm run build
+
+      - name: Lint
         if: ${{ !cancelled() }}
         run: npm run lint
 
-      - name: typecheck
+      - name: Typecheck
         if: ${{ !cancelled() }}
         run: npm run typecheck
 
-      # - name: lintRooms
+      # - name: Lint rooms
       #   run: npm run lint-rooms
 
   check-lockfile:
@@ -56,15 +56,15 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: show tool versions
+      - name: Show tool versions
         run: |
           for cmd in node npm; do echo -n "${cmd}: "; ${cmd} --version; done
 
-      - name: regenerate frontend lockfile
+      - name: Regenerate frontend lockfile
         run: npm install --package-lock-only --ignore-scripts
 
-      - name: regenerate backend lockfile
+      - name: Regenerate backend lockfile
         run: cd server && npm install --package-lock-only --ignore-scripts
 
-      - name: compare lockfiles to git
+      - name: Compare lockfiles to git
         run: git diff --exit-code package-lock.json server/package-lock.json
