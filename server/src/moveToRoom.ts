@@ -4,8 +4,8 @@ import { globalPresenceMessage } from './globalPresenceMessage'
 import { DB } from './database'
 import Redis from '../src/redis'
 import { Result, Message } from './endpoint'
-import { every, includes } from 'lodash'
-import { Badge, UnlockableBadgeMap } from './badges'
+import { every } from 'lodash'
+import { Badge, hasBadge, UnlockableBadgeMap } from './badges'
 
 export async function moveToRoom (
   user: User,
@@ -189,7 +189,7 @@ function awardBadges (user: User, roomId: string) {
   // Just change the emoji, the month, and the year.
   const currentEventBadge = UnlockableBadgeMap['⏸️'] // "11" = Year2026 badge
   const today = new Date()
-  if (!includes(user.unlockedBadges, currentEventBadge) &&
+  if (!hasBadge(user.unlockedBadges, currentEventBadge) &&
     today.getMonth() === 9 && // getMonth is 0-indexed, not 1-indexed
     today.getFullYear() === 2026) {
     // We handle this differently than others because we want it to be quietly added
@@ -202,7 +202,7 @@ function awardBadges (user: User, roomId: string) {
 
   roomBadges.forEach(([room, emoji]) => {
     if (roomId === room &&
-    !includes(user.unlockedBadges.map(b => b.emoji), emoji)) {
+        !hasBadge(user.unlockedBadges, UnlockableBadgeMap[emoji])) {
       console.log('Awarding badge', emoji, UnlockableBadgeMap[emoji])
       awardUserBadge(user.id, UnlockableBadgeMap[emoji])
       unlockedEmoji.push(UnlockableBadgeMap[emoji])
@@ -211,7 +211,7 @@ function awardBadges (user: User, roomId: string) {
 
   if (unlockedEmoji.length > 0) {
     if (every(roomBadges, ([_, emoji]) => {
-      return includes(user.unlockedBadges, UnlockableBadgeMap[emoji])
+      return hasBadge(user.unlockedBadges, UnlockableBadgeMap[emoji])
     })) {
       awardUserBadge(user.id, UnlockableBadgeMap['🌎'])
       unlockedEmoji.push(UnlockableBadgeMap['🌎'])

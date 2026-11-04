@@ -98,7 +98,7 @@ export default function NameView (props: Props) {
       }
       onClick={handlePastSpeaker}
     >
-    Make Past Speaker
+      Toggle Past Speaker
     </MenuItem>
   ) : (
     ''
