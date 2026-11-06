@@ -189,6 +189,9 @@ export async function updateRoom (roomId: string, roomData: Room): Promise<void>
 // and there's no system of recourse. but! that already existed!
 export async function connectRoomData (dispatch: ThunkDispatch<Action, State>): Promise<void> {
   const result: RoomResponse = await callAzureFunction('connect')
+  if (!result) {
+    return
+  }
   if (result.presenceData) {
     dispatch(UpdatedPresenceAction(result.presenceData))
   }
@@ -198,11 +201,11 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
   myUserId = userId
   myDispatch = dispatch
 
-  // connectWebPubSub must be called before AFA connect/, because it auto-creates the WebPubSub
-  // user that connect/ and other azureWrap-ed functions depend on.
+  // connectWebPubSub must be called (and finish) before AFA connect/, because it
+  // auto-creates the WebPubSub user that connect/ and other azureWrap-ed functions depend on.
   const eventMapping = generateEventMapping(userId, dispatch)
   const genBeforeConnect = pubSubGeneration
-  await connectWebPubSub(eventMapping)
+  const pubSubOpened = await connectWebPubSub(eventMapping)
   if (pubSubGeneration !== genBeforeConnect) {
     // User logged out concurrently - skip state setup that would be stale/leaked
     console.log('connect: User logged out concurrently during connectWebPubSub().',
@@ -211,8 +214,18 @@ export async function connect (userId: string, dispatch: ThunkDispatch<Action, S
     )
     return
   }
+  if (!pubSubOpened) {
+    console.error('connect: No open WebPubSub websocket; not calling AzFn connect. ' +
+      `Socket state ${describePubSubSocket()}.`)
+    dispatch(ErrorAction("Couldn't connect to MUD server. (WebPubSub connection failed.) Try reloading the page."))
+    return
+  }
   const result: RoomResponse = await callAzureFunction('connect')
   console.log(`Called connect() AzFn for userId=${userId}. Result:`, result)
+  if (!result) {
+    dispatch(ErrorAction("Couldn't connect to MUD server. (AzFn connect failed.) Try reloading the page."))
+    return
+  }
 
   dispatch(
     ConnectAction(
@@ -551,7 +564,12 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
 type WebPubSubEventHandler = (...args: any[]) => void
 type WebPubSubEventMapping = { [event: string]: WebPubSubEventHandler }
 
-export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Promise<void> {
+/**
+ * Open the WebPubSub websocket.
+ *
+ * Returns resulting socket status: true if socket is opened, or false if opening failed or was aborted.
+ */
+export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Promise<boolean> {
   /*
   const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
       request.headers = {
@@ -568,11 +586,11 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
   const result = await callAzureFunctionGet('negotiatePubSub')
   if (genBeforeNegotiate !== pubSubGeneration) {
     console.log('connectWebPubSub: User logged out while negotiating WebPubSub. Aborted websocket creation.')
-    return
+    return false
   }
   if (!result?.url) {
     console.error('connectWebPubSub: Did not get URL from WebPubSub connection result. Cannot create websocket.', result)
-    return
+    return false
   }
   console.log('connectWebPubSub: Negotiated WebPubSub', result)
 
@@ -582,15 +600,18 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
   // TODO: Handle error and close
   ws.addEventListener('open', () => {
     console.log('Opened websocket connection to WebPubSub Service')
-    // Note status
   })
   ws.addEventListener('message', (event) => {
     const { type, value } = JSON.parse(event.data)
     eventMapping[type](...value)
   })
-  // ws.send(message);
 
   window.addEventListener('beforeunload', disconnectOnUnload)
+
+  return await new Promise<boolean>((resolve) => {
+    ws.addEventListener('open', () => resolve(true), { once: true })
+    ws.addEventListener('close', () => resolve(false), { once: true })
+  })
 }
 
 // A module-level function instead of inline function, so repeated connects (like logout+login
@@ -637,6 +658,7 @@ async function callAzureFunctionGet (endpoint: string): Promise<any> {
 async function callAzureFunctionWith (method: string, endpoint: string,
   body?: any, moreHeaders: Record<string, string> = {}): Promise<any> {
   const methodDescr = method === 'POST' ? '' : ` (with HTTP ${method})`
+  const startTime = new Date()
   try {
     const firebaseToken = await firebase.auth().currentUser.getIdToken(false)
     const rsp = await fetch(`${Config.SERVER_HOSTNAME}/api/${endpoint}`, {
@@ -651,7 +673,10 @@ async function callAzureFunctionWith (method: string, endpoint: string,
     })
     const rspText = await rsp.text()
     if (!rsp.ok) {
-      throw new Error(`HTTP ${rsp.status} ${rsp.statusText}: ${rspText}`)
+      const bodyDescr = rspText
+        ? `body: ${rspText}`
+        : 'empty body (failure in AzFn host or output binding, not MUD Function code?)'
+      throw new Error(`HTTP ${rsp.status} ${rsp.statusText}: ${bodyDescr}`)
     }
     try {
       return JSON.parse(rspText)
@@ -659,7 +684,21 @@ async function callAzureFunctionWith (method: string, endpoint: string,
       return rspText
     }
   } catch (e) {
-    console.error(`Failed calling AzFn ${endpoint}${methodDescr}`, e)
+    // Put details in message string, bc Parcel's dev error display shows only the message
+    console.error(`Failed calling AzFn ${endpoint}${methodDescr}: [${e}]. ` +
+      `userId=${firebase.auth().currentUser?.uid ?? '(not logged in)'}, ` +
+      `started ${startTime.toISOString()}, WebPubSub socket state ${describePubSubSocket()}.`, e)
     return undefined
+  }
+}
+
+function describePubSubSocket (): string {
+  switch (pubSubSocket?.readyState) {
+    case undefined: return 'none'
+    case WebSocket.CONNECTING: return 'CONNECTING'
+    case WebSocket.OPEN: return 'OPEN'
+    case WebSocket.CLOSING: return 'CLOSING'
+    case WebSocket.CLOSED: return 'CLOSED'
+    default: return `readyState=${pubSubSocket.readyState}`
   }
 }
