@@ -461,9 +461,15 @@ export default produce((draft: State, action: Action) => {
           } is not a registered slash command!`
         )
       )
+    } else if (matching && !matching.singleParameter && !trimmedMessage.includes(' ')) {
+      // Bare command with no argument, like just "/whisper"
+      addMessage(
+        draft,
+        createErrorMessage(`Usage: ${trimmedMessage} ${matching.usageMsgArgs}`)
+      )
     } else if (beginsWithSlash && matching?.type === SlashCommandType.Whisper) {
-      // Can't be null, by construction: matchingSlashCommand will only match when it's
-      // followed by a space and an argument.
+      // Can't be null, by construction: bare command with no arg was caught by usage-hint
+      // branch above.
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
       const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
 
@@ -495,8 +501,8 @@ export default produce((draft: State, action: Action) => {
         )
       )
     } else if (beginsWithSlash && matching?.type === SlashCommandType.Look) {
-      // Can't be null, by construction: matchingSlashCommand will only match when it's
-      // followed by a space and an argument.
+      // Can't be null, by construction: bare command with no arg was caught by usage-hint
+      // branch above.
       const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
       addMessage(
         draft,
