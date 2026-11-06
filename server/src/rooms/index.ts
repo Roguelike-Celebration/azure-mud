@@ -1,5 +1,6 @@
 import DB from '../redis.js'
 import type { MinimalRoomDataMap, RoomDataMap } from '../types.js'
+import { defineds } from '../utils.js'
 
 import json from './data/roomData.json'
 
@@ -64,14 +65,14 @@ function minimizeRoom (room: Room): MinimalRoom {
     id: room.id,
     displayName: room.displayName,
     shortName: room.shortName,
-    hidden: room.hidden
+    hidden: room.hidden ?? false
   }
 }
 
 export async function minimalRoomData (): Promise<MinimalRoomDataMap> {
   const roomIds = await DB.getRoomIds()
-  const roomData: MinimalRoomDataMap = {};
-  (await Promise.all(roomIds.map(DB.getRoomData)))
+  const roomData: MinimalRoomDataMap = {}
+  defineds(await Promise.all(roomIds.map(DB.getRoomData)))
     .map(minimizeRoom)
     .forEach((r) => {
       roomData[r.id] = r

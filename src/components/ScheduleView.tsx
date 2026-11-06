@@ -14,7 +14,7 @@ export type ScheduleDayIndex = 0 | 1 | 2 | 3 | 4
 export interface ScheduleEntry {
   time: Date,
   text: string,
-  roomIds: string[]
+  roomIds?: string[]
   breakoutRoomId?: string,
   day: ScheduleDayIndex
 }

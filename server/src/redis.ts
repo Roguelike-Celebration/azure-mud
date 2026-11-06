@@ -4,7 +4,8 @@ import Database from './database.js'
 import { RoomNote } from './roomNote.js'
 import { Room } from './rooms/index.js'
 import { DEFAULT_SERVER_SETTINGS, PresenceListMap, ServerSettings, toServerSettings } from './types.js'
-import { isMod, User } from './user.js'
+import { getRequiredUser, isMod, User } from './user.js'
+import { defineds } from './utils.js'
 
 // Use TLS port by default; that's what our Azure Redis uses
 const DEFAULT_REDIS_PORT = 6380
@@ -61,8 +62,8 @@ function requiredEnvVarSetting (name: string): string {
   return val
 }
 
-// This "as ..." cast can be dropped once strictNullChecks is enabled.
-const getCache = async (key: string) => (await getClient()).get(key) as Promise<string | null>
+const getCache = async (key: string): Promise<string | undefined> =>
+  (await ((await getClient()).get(key))) ?? undefined
 const setCache = async (key: string, value: string): Promise<void> => {
   await (await getClient()).set(key, value)
 }
@@ -109,9 +110,8 @@ const Redis: RedisInternal = {
   // but I'm not sure we can key our JSONified blobs in a set
   async getAllUsers () {
     const allUserIds: string[] = await getSet(allUserIdsKey)
-    return await Promise.all(allUserIds.map(async u => {
-      return await Redis.getUser(u)
-    }))
+    // Reading ID set and then profiles isn't atomic; just ignore missing ones.
+    return defineds(await Promise.all(allUserIds.map(u => Redis.getUser(u))))
   },
 
   async allRoomOccupants (): Promise<PresenceListMap> {
@@ -151,6 +151,9 @@ const Redis: RedisInternal = {
 
   async getUserIdForUsername (username: string, onlineUsersOnly: boolean) {
     const userId = await getCache(userIdKeyForUsername(username))
+    if (userId === undefined) {
+      return undefined
+    }
     if (onlineUsersOnly) {
       const activeUsers = await Redis.getActiveUsers()
       if (!activeUsers.includes(userId)) {
@@ -212,7 +215,7 @@ const Redis: RedisInternal = {
   },
 
   async setPartialUserProfile (userId: string, user: Partial<User>): Promise<User> {
-    const existingUser = await Redis.getUser(userId)
+    const existingUser = await getRequiredUser(userId)
     const data = { ...existingUser, ...user }
     return await Redis.setUserProfile(userId, data)
   },
@@ -241,7 +244,7 @@ const Redis: RedisInternal = {
   // TODO: this used to set some now-deprecated presence data
   // make sure this actually works
   async banUser (user: User, isBanned: boolean = true) {
-    const profile = await Redis.getUser(user.id)
+    const profile = await getRequiredUser(user.id)
     profile.isBanned = isBanned
     await Redis.setUserProfile(user.id, profile)
   },
@@ -260,7 +263,7 @@ const Redis: RedisInternal = {
     } else {
       await Redis.removeMod(userId)
     }
-    const profile = await Redis.getUser(userId)
+    const profile = await getRequiredUser(userId)
     profile.isMod = newModness
     await Redis.setUserProfile(userId, profile)
   },
@@ -279,7 +282,7 @@ const Redis: RedisInternal = {
     } else {
       await Redis.removeSpeaker(userId)
     }
-    const profile = await Redis.getUser(userId)
+    const profile = await getRequiredUser(userId)
     profile.isSpeaker = isSpeaker
     await Redis.setUserProfile(userId, profile)
     return profile
@@ -296,11 +299,14 @@ const Redis: RedisInternal = {
   // Server settings
   async getServerSettings (): Promise<ServerSettings> {
     const rawServerSettings = await getCache(serverSettingsKey)
-    if (rawServerSettings) {
-      return toServerSettings(JSON.parse(rawServerSettings))
-    } else {
+    if (!rawServerSettings) {
       return DEFAULT_SERVER_SETTINGS
     }
+    // TODO: toServerSettings returns null for invalid input, so this passes along null
+    // despite the return type. Kept this way during the strictNullChecks cleanup. Real
+    // fix is to throw on invalid input or add '| null' to return type; to be done as a
+    // separate change.
+    return toServerSettings(JSON.parse(rawServerSettings))!
   },
 
   async setServerSettings (serverSettings: ServerSettings): Promise<ServerSettings> {
@@ -412,9 +418,10 @@ const Redis: RedisInternal = {
     return room
   },
 
-  async getRoomData (roomId: string): Promise<Room> {
+  async getRoomData (roomId: string): Promise<Room | undefined> {
     // TODO: Also fetch note wall data
-    return JSON.parse(await getCache(roomDataKey(roomId)))
+    const raw = await getCache(roomDataKey(roomId))
+    return raw === undefined ? undefined : JSON.parse(raw)
   },
 
   async getRoomIdFromFuzzySearch (search: string): Promise<string | undefined> {

@@ -1,7 +1,7 @@
 import { UnlockableBadgeMap } from '../badges.js'
 import { DB } from '../database.js'
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
-import { awardUserBadge, isSpeaker, minimizeUser, User } from '../user.js'
+import { awardUserBadge, getFullUser, getRequiredUser, isSpeaker, minimizeUser, User } from '../user.js'
 
 const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const userIdToToggle: string = inputs.userId
@@ -15,6 +15,15 @@ const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, in
       }
     }
   }
+  const target = await getFullUser(userIdToToggle)
+  if (!target) {
+    return {
+      httpResponse: {
+        status: 404,
+        body: { error: `User not found: id ${userIdToToggle}` }
+      }
+    }
+  }
 
   let toggledUser: User
 
@@ -22,7 +31,7 @@ const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, in
   if (isForPastYear) {
     const pastSpeakerBadge = UnlockableBadgeMap['🎙️']
 
-    const profile = await DB.getUser(userIdToToggle)
+    const profile = await getRequiredUser(userIdToToggle)
 
     if (profile.unlockedBadges.includes(pastSpeakerBadge)) {
       const remainingUnlockedBadges = profile.unlockedBadges.filter(badge => badge !== pastSpeakerBadge)

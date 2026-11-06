@@ -36,7 +36,7 @@ export const ModalView: React.FunctionComponent<Props> = (props) => {
   // instead of as part of our view hierarchy
   return ReactDOM.createPortal(
     <div id='modal-wrapper' onClick={close} role='dialog' aria-modal={true}>
-      <div id='modal' className={props.fullScreen ? 'full-screen' : null}>
+      <div id='modal' className={props.fullScreen ? 'full-screen' : undefined}>
         {!props.unclosable ? (
           <button
             onClick={close}

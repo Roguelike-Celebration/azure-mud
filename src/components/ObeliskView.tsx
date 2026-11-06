@@ -29,6 +29,10 @@ export function ObeliskView (props: Props) {
   const addNote = () => {
     const promptText = 'What would you like to link to?'
     const message = prompt(promptText)
+    if (!message) {
+      alert("Can't post empty string as a note.")
+      return
+    }
     addNoteToObelisk(message)
   }
 

@@ -54,7 +54,7 @@ export default function MapView (props: Props) {
   const { presenceData, currentRoomId } = props
 
   // Pixel size of one ASCII character in the rendered map
-  let w: number; let h: number
+  let w: number = 0; let h: number = 0
   if (props.isMiniMap) {
     w = 8
     h = 13
@@ -87,7 +87,7 @@ export default function MapView (props: Props) {
         setPreHeight(pre.clientHeight)
       }
     }
-  }, (props.isMiniMap ? null : []))
+  }, (props.isMiniMap ? undefined : []))
 
   if (!presenceData) { return <div/> }
 

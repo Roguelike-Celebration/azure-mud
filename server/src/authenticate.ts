@@ -99,6 +99,13 @@ export default async function authenticate (
 
   const user = await getFullUser(userId)
 
+  if (!user) {
+    return {
+      status: 404,
+      jsonBody: { error: `User not found: id ${userId}` }
+    }
+  }
+
   if (options.needsMod) {
     if (!(await isMod(user.id))) {
       return {

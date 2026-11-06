@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "strict": false,
+    "strictNullChecks": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictBindCallApply": true,

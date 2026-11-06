@@ -9,7 +9,10 @@ const getRoomIds: AuthenticatedEndpointFunction = async (user: User, inputs: any
 
   await Promise.all(roomIds.map(async (roomId) => {
     const room = await DB.getRoomData(roomId)
-    roomData[roomId] = room
+    // Non-atomic reads mean room data can disappear by this time; ignore
+    if (room) {
+      roomData[roomId] = room
+    }
   }))
   return {
     httpResponse: {

@@ -37,6 +37,10 @@ export function NoteWallView (props: Props) {
   const addNote = () => {
     const promptText = props.noteWallData ? props.noteWallData.addNotePrompt : 'What do you type on the note wall?'
     const message = prompt(promptText)
+    if (!message) {
+      // Cancelled, or empty input
+      return
+    }
     addNoteToWall(message)
   }
 
