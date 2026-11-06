@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaUser, FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from 'react-icons/fa'
 import * as Twilio from 'twilio-video'
 
@@ -15,8 +15,8 @@ interface Props {
 }
 
 export default function ParticipantChatView (props: Props) {
-  const [playVideo, setPlayVideo] = React.useState<boolean>(props.renderAsFace)
-  const [playAudio, setPlayAudio] = React.useState<boolean>(true)
+  const [playVideo, setPlayVideo] = useState<boolean>(props.renderAsFace)
+  const [playAudio, setPlayAudio] = useState<boolean>(true)
 
   const toggleVideo = () => {
     setPlayVideo(!playVideo)

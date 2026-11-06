@@ -5,7 +5,6 @@ import { v4 as uuid } from 'uuid'
 
 import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
-import { RoomNote } from '../server/src/roomNote'
 import {
   CognitiveServicesKeyResponse,
   ErrorResponse,
@@ -59,7 +58,7 @@ import {
 import Config from './config'
 import { Modal } from './modals'
 import { PresenceListMap, RoomDataMap, State, UserMap } from './reducer'
-import { convertServerRoomData, Room, ServerRoomDataMap } from './room'
+import { convertServerRoomData, Room } from './room'
 import { ThunkDispatch } from './useReducerWithThunk'
 import 'firebase/auth'
 
@@ -457,7 +456,7 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
       console.log('Player left!', otherId)
       dispatch(PlayerDisconnectedAction(otherId))
     },
-    updatedCurrentRoom: (data: { roomId: string; roomData: ServerRoomDataMap; roomNotes?: RoomNote[]; }) => {
+    updatedCurrentRoom: (data: RoomResponse) => {
       myDispatch(
         UpdatedCurrentRoomAction(
           data.roomId,
@@ -577,6 +576,8 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
   }
 }
 
+// Can't do narrower than `any[]` here, bc the args come from JSON.parse(), so it's the
+// only rest type every handler matches.
 type PubSubEventHandler = (...args: any[]) => void
 type PubSubEventMapping = { [event: string]: PubSubEventHandler }
 // Fancy alternate form we might switch to in some cases:
