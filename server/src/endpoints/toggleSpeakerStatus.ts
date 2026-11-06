@@ -1,7 +1,7 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import { awardUserBadge, isSpeaker, minimizeUser, User } from '../user'
 import { DB } from '../database'
-import { UnlockableBadgeMap } from '../badges'
+import { hasBadge, sameBadge, UnlockableBadgeMap } from '../badges'
 
 const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const userIdToToggle: string = inputs.userId
@@ -24,11 +24,15 @@ const toggleSpeakerStatus: AuthenticatedEndpointFunction = async (user: User, in
 
     const profile = await DB.getUser(userIdToToggle)
 
-    if (profile.unlockedBadges.includes(pastSpeakerBadge)) {
-      const remainingUnlockedBadges = profile.unlockedBadges.filter(badge => badge !== pastSpeakerBadge)
+    /* Can't use === or includes() for badges; see sameBadge() doco */
+    if (hasBadge(profile.unlockedBadges, pastSpeakerBadge)) {
+      const remainingUnlockedBadges = profile.unlockedBadges.filter(
+        badge => !sameBadge(badge, pastSpeakerBadge))
       toggledUser = await DB.setPartialUserProfile(userIdToToggle, { unlockedBadges: remainingUnlockedBadges })
+      log(`[MOD] Removed past-speaker badge from user ${userIdToToggle}`)
     } else {
       toggledUser = await awardUserBadge(userIdToToggle, pastSpeakerBadge)
+      log(`[MOD] Awarded past-speaker badge to user ${userIdToToggle}`)
     }
   /* toggle current speaker */
   } else {

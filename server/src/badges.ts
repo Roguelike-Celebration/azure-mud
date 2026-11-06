@@ -614,3 +614,20 @@ export const UnlockableBadges: Badge[] = [
 *  This lets us index into UnlockableBadgeMap['🤖'] when checking for existence
 */
 export const UnlockableBadgeMap = keyBy(UnlockableBadges, 'emoji')
+
+/**
+ * Whether two badges are the same badge.
+ *
+ * Keys by emoji, which we treat as a badge's identity. Regular === comparison on Badge
+ * objects doesn't work right, because their field contents may differ by object identity
+ * even if they have the same value. That happens when it takes a trip through JSON
+ * serialization, like when it's stored in a user profile in Redis.
+ */
+export function sameBadge (a: Badge, b: Badge): boolean {
+  return a.emoji === b.emoji
+}
+
+/** Whether an array of badges includes a given badge. See sameBadge() doco. */
+export function hasBadge (badges: Badge[], badge: Badge): boolean {
+  return badges.some(b => sameBadge(b, badge))
+}
