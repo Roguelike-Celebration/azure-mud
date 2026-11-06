@@ -6,6 +6,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "deploy": "func azure functionapp publish roguelike-celebration-mud",
+    "typecheck": "tsc --noEmit",
     "prestart": "npm run build",
     "start": "func start",
     "test": "echo \"No tests yet...\""
@@ -23,8 +24,8 @@
   },
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
-    "@types/redis": "^2.8.24",
+    "@types/redis": "^2.8.25",
     "recursive-readdir": "^2.2.2",
-    "typescript": "^3.3.3"
+    "typescript": "3.9.5"
   }
 }

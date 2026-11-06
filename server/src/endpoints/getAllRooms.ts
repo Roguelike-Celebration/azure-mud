@@ -1,11 +1,11 @@
 import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
 import DB from '../redis'
-import { Room } from '../rooms'
 import { User } from '../user'
+import type { RoomDataMap } from '../types'
 
 const getRoomIds: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const roomIds = await DB.getRoomIds()
-  const roomData: {[roomId: string]: Room} = {}
+  const roomData: RoomDataMap = {}
 
   await Promise.all(roomIds.map(async (roomId) => {
     const room = await DB.getRoomData(roomId)

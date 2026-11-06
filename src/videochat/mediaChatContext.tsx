@@ -40,8 +40,8 @@ export const MediaChatContext = React.createContext<MediaChatContextProps>({
 
 type MediaChatContextProps = {
     // Request media permissions, also do any token handshaking needed
-    prepareForMediaChat: () => Promise<any>
-    prepareMediaDevices: () => Promise<any>
+    prepareForMediaChat: () => Promise<void>
+    prepareMediaDevices: () => Promise<void>
 
     publishingCamera: boolean
     publishingMic: boolean
@@ -91,4 +91,4 @@ export type DeviceInfo = {
     name: string
 }
 
-export const useMediaChatContext = () => useContext(MediaChatContext)
+export const useMediaChatContext = (): MediaChatContextProps => useContext(MediaChatContext)

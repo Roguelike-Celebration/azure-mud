@@ -8,7 +8,7 @@ type ShouldHideTimestamp = (
   previousMessage: Message | undefined
 ) => boolean;
 
-export const useShouldHideTimestamp = () =>
+export const useShouldHideTimestamp = (): ShouldHideTimestamp =>
   useCallback<ShouldHideTimestamp>(
     (message, previousMessage) =>
       previousMessage &&

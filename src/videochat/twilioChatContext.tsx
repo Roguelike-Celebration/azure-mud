@@ -46,15 +46,15 @@ export const TwilioChatContextProvider = (props: {
 
   const fetchLocalAudioTrack = async () => {
     if (localAudioTrack) {
-      return localAudioTrack
+      return
     }
 
-    const trackObj: any = {}
+    const options: Twilio.CreateLocalTrackOptions = {}
     if (currentMic) {
-      trackObj.audio = { deviceId: currentMic.id }
+      options.deviceId = currentMic.id
     }
 
-    const track = await Twilio.createLocalAudioTrack(trackObj)
+    const track = await Twilio.createLocalAudioTrack(options)
     setLocalAudioTrack(track)
   }
 

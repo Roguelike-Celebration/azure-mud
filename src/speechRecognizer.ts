@@ -65,6 +65,6 @@ export async function setUpSpeechRecognizer (
   recognizer.startContinuousRecognitionAsync()
 }
 
-export async function stopSpeechRecognizer () {
+export async function stopSpeechRecognizer (): Promise<void> {
   await recognizer.stopContinuousRecognitionAsync()
 }

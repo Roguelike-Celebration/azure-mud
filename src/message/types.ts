@@ -1,5 +1,6 @@
 import { MessageType } from './enums'
 
+/** A message, as a union type of all our particular message types. */
 export type Message =
   | ConnectedMessage
   | DisconnectedMessage
@@ -16,6 +17,9 @@ export type Message =
   | ErrorMessage
   | CommandMessage
   | CaptionMessage;
+
+/** Member of Message union type whose `type` is T. */
+export type MessageOfType<T extends MessageType> = Extract<Message, { type: T }>
 
 export interface BaseMessage<T extends MessageType> {
   type: T;

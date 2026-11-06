@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-export function onAuthenticationStateChange (handler: (user: AuthenticatedUser) => void) {
+export function onAuthenticationStateChange (handler: (user: AuthenticatedUser | undefined) => void): void {
   firebase.auth().onAuthStateChanged((fbUser: firebase.User) => {
     const user = firebaseUserToAuthenticatedUser(fbUser)
     handler(user)
@@ -51,7 +51,7 @@ const firebaseUserToAuthenticatedUser = (fb: firebase.User): AuthenticatedUser |
   }
 }
 
-export function sendSignInLinkToEmail (email: string) {
+export function sendSignInLinkToEmail (email: string): void {
   const actionCodeSettings = {
     // This URL should be changed to the frontend location for production. It must also be added to the authorized
     // domains list in the Firebase Console.

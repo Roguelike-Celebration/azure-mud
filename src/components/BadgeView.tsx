@@ -1,8 +1,13 @@
 import React from 'react'
-import customEmojiMap from '../emoji/customEmojiMap.json'
-import reservedEmojiMap from '../emoji/reservedEmojiMap.json'
+import { customEmojiMap, reservedEmojiMap } from '../emoji'
 
-function BadgeView (props: {emoji: string, description: string, isCustom?: boolean}) {
+interface Props {
+  emoji?: string
+  description: string
+  isCustom?: boolean
+}
+
+function BadgeView (props: Props) {
   const { emoji, description, isCustom } = props
 
   if (!(description && emoji)) {

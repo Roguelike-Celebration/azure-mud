@@ -5,7 +5,7 @@ import sendChatMessage from '../src/endpoints/sendChatMessage'
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
-): Promise<any> {
+): Promise<void> {
   await authenticatedAzureWrap(context, req, sendChatMessage, { audit: true })
 }
 

@@ -3,7 +3,7 @@ import localforage from 'localforage'
 
 // Message cache
 
-export async function getMessages (): Promise<{messages: Message[], whispers: WhisperMessage[]}|undefined> {
+export async function getMessages (): Promise<{messages: Message[], whispers: WhisperMessage[]} | undefined> {
   try {
     const timestamp: Date = await localforage.getItem(messageTimestampKey)
     const messages: Message[] = await localforage.getItem(messagesKey)
@@ -19,14 +19,15 @@ export async function getMessages (): Promise<{messages: Message[], whispers: Wh
   } catch (err) {
     console.log('Storage error', err)
   }
+  return undefined
 }
 
-export async function setMessages (messages: Message[], timestamp?: Date) {
+export async function setMessages (messages: Message[], timestamp?: Date): Promise<void> {
   await localforage.setItem(messagesKey, messages)
   await localforage.setItem(messageTimestampKey, timestamp || new Date())
 }
 
-export async function setWhispers (whispers: WhisperMessage[]) {
+export async function setWhispers (whispers: WhisperMessage[]): Promise<void> {
   await localforage.setItem(whisperKey, whispers)
 }
 
@@ -36,7 +37,7 @@ export async function getGateVisits (): Promise<number> {
   return await localforage.getItem(rainbowGateKey) || 0
 }
 
-export async function incrementGateVisits () {
+export async function incrementGateVisits (): Promise<number> {
   const visits = await getGateVisits() + 1
   await localforage.setItem(rainbowGateKey, visits)
   return visits
@@ -48,12 +49,12 @@ export async function getWasColoredEntering (): Promise<boolean> {
   return await localforage.getItem(wasColoredEnteringKey) || false
 }
 
-export async function setWasColoredEntering (value: boolean) {
+export async function setWasColoredEntering (value: boolean): Promise<void> {
   await localforage.setItem(wasColoredEnteringKey, value)
 }
 
 // Settings page
-export async function setTheme (theme: string) {
+export async function setTheme (theme: string): Promise<void> {
   await localforage.setItem(themeKey, theme)
 }
 
@@ -61,7 +62,7 @@ export async function currentTheme (): Promise<string> {
   return await localforage.getItem(themeKey) || 'default'
 }
 
-export async function setUseSimpleNames (useSimpleNames: boolean) {
+export async function setUseSimpleNames (useSimpleNames: boolean): Promise<void> {
   await localforage.setItem(useSimpleNamesKey, useSimpleNames)
 }
 
@@ -70,7 +71,7 @@ export async function getUseSimpleNames (): Promise<boolean> {
 }
 
 // Video chat settings
-export async function setKeepCameraWhenMoving (keepCameraWhenMoving: boolean) {
+export async function setKeepCameraWhenMoving (keepCameraWhenMoving: boolean): Promise<void> {
   await localforage.setItem(keepCameraWhenMovingKey, keepCameraWhenMoving)
 }
 
@@ -79,7 +80,7 @@ export async function getKeepCameraWhenMoving (): Promise<boolean> {
   return keepCameraWhenMoving === null ? false : keepCameraWhenMoving
 }
 
-export async function setTextOnlyMode (textOnlyMode: boolean) {
+export async function setTextOnlyMode (textOnlyMode: boolean): Promise<void> {
   await localforage.setItem(textOnlyModeKey, textOnlyMode)
 }
 
@@ -88,7 +89,7 @@ export async function getTextOnlyMode (): Promise<boolean> {
   return textOnlyMode == null ? false : textOnlyMode
 }
 
-export async function setCaptionsEnabled (enabled: boolean) {
+export async function setCaptionsEnabled (enabled: boolean): Promise<void> {
   await localforage.setItem(captionsEnabledKey, enabled)
 }
 

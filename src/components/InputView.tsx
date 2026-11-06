@@ -3,7 +3,7 @@ import { MentionsInput, Mention } from 'react-mentions'
 import { DispatchContext, UserMapContext } from '../App'
 
 import '../../style/input.css'
-import { PublicUser } from '../../server/src/user'
+import { MinimalUser, PublicUser } from '../../server/src/user'
 import { emojiMentionsData } from '../emoji'
 const emojifier = require('node-emoji')
 
@@ -17,7 +17,7 @@ export default function InputView (props: {
 
   const SUGGESTIONS_LIMIT = 10
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: { target: { value: string } }) => {
     if (e.target.value === '\n') {
       return
     }
@@ -25,13 +25,13 @@ export default function InputView (props: {
     setInput(result)
   }
 
-  const checkEnter = (e) => {
+  const checkEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      onClick()
+      sendInput()
     }
   }
 
-  const onClick = () => {
+  const sendInput = () => {
     if (input.trim() !== '') {
       props.sendMessage(input)
     }
@@ -51,7 +51,7 @@ export default function InputView (props: {
     const upperCaseSearch = search.toUpperCase()
     const suggestionIds = []
     for (const userId of props.usersInRoom) {
-      const user: PublicUser = userMap[userId]
+      const user: MinimalUser = userMap[userId]
       if (user && (!search || user.username.toUpperCase().startsWith(upperCaseSearch))) {
         suggestionIds.push({ id: user.id, display: user.username })
       }
@@ -102,7 +102,7 @@ export default function InputView (props: {
           }}
         />
       </MentionsInput>
-      <button id="send" onClick={onClick}>
+      <button id="send" onClick={sendInput}>
         Send
       </button>
     </div>

@@ -15,11 +15,11 @@ export default function LocalMediaView (props: Props) {
   const dispatch = useContext(DispatchContext)
   const { localStreamView, setMicEnabled, setCameraEnabled, cameraEnabled, micEnabled } = useMediaChatContext()
 
-  const onChangeVideo = (e) => {
+  const toggleVideo = () => {
     setCameraEnabled(!cameraEnabled)
   }
 
-  const onChangeAudio = (e) => {
+  const toggleAudio = () => {
     setMicEnabled(!micEnabled)
   }
 
@@ -49,7 +49,7 @@ export default function LocalMediaView (props: Props) {
         <div>
           <button
             id="send-video"
-            onClick={onChangeVideo}
+            onClick={toggleVideo}
             className={`link-styled-button video-button ${
               cameraEnabled ? 'enabled' : 'disabled'
             }`}
@@ -59,7 +59,7 @@ export default function LocalMediaView (props: Props) {
           </button>
           <button
             id="send-audio"
-            onClick={onChangeAudio}
+            onClick={toggleAudio}
             className={`link-styled-button video-button ${
               micEnabled ? 'enabled' : 'disabled'
             }`}

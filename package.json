@@ -8,7 +8,9 @@
     "build": "parcel build *.html --public-url ./ --dist-dir ./dist; cp CNAME dist; rsync -r images dist",
     "deploy": "npm run build; cp CNAME dist; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "rc=0; npm run typecheck-frontend || rc=1; npm run typecheck-server || rc=1; exit $rc",
+    "typecheck-frontend": "tsc --noEmit",
+    "typecheck-server": "tsc --noEmit -p server",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\"",
     "lint-fix": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" \"server/**/*.ts\" --fix",
     "lint-rooms": "ts-node lintLinks.ts"
@@ -49,10 +51,14 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.158",
-    "@types/react": "^16.9.43",
-    "@types/react-dom": "^16.9.8",
+    "@types/lodash": "4.14.182",
+    "@types/react": "^17",
+    "@types/react-dom": "^17",
+    "@types/react-linkify": "1.0.1",
+    "@types/react-mentions": "4.1.6",
+    "@types/react-page-visibility": "6.4.1",
     "@types/redis": "^2.8.25",
+    "@types/tracery-grammar": "^2.7.4",
     "@types/twilio-video": "^2.7.3",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
@@ -75,7 +81,7 @@
     "querystring-es3": "^0.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "typescript": "^3.9.2",
+    "typescript": "3.9.5",
     "url": "^0.11.0",
     "util": "^0.12.4"
   }

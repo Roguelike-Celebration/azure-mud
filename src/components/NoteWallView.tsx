@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { RoomNote } from '../../server/src/roomNote'
-import { ServerSettings } from '../../server/src/types'
+import { HappeningNowEntry, ServerSettings } from '../../server/src/types'
 import { addNoteToWall, deleteRoomNote, updateServerSettings } from '../networking'
 import { NoteView } from './NoteView'
 import ReactTooltip from 'react-tooltip'
@@ -11,6 +11,7 @@ import '../../style/noteWall.css'
 import { NoteWallData } from '../../server/src/rooms'
 import { PublicUser } from '../../server/src/user'
 import { sortBy } from 'lodash'
+import { RoomDataMap } from '../reducer'
 
 // TODO: We hardcode room names for the 'auto-assign topics to unconference rooms' feature
 // This is silly, and we almost missed this in 2022 AND 2023. AND 2026.
@@ -28,7 +29,7 @@ interface Props {
   noteWallData?: NoteWallData,
   user: PublicUser,
   serverSettings: ServerSettings,
-  roomData: { [roomId: string]: Room }
+  roomData: RoomDataMap
 }
 
 export function NoteWallView (props: Props) {
@@ -83,7 +84,7 @@ export function NoteWallView (props: Props) {
     if (confirmation && props.notes.length > 0) {
       const settingsCopy: ServerSettings = JSON.parse(JSON.stringify(props.serverSettings))
       const sortedDescending = [...props.notes].sort((a, b) => numLikes(a) < numLikes(b) ? 1 : -1)
-      const newEntries = []
+      const newEntries: HappeningNowEntry[] = []
       for (var i = 0; i < Math.min(sortedDescending.length, UNCONFERENCING_ROOM_IDS.length); i++) {
         const { displayName } = props.roomData[UNCONFERENCING_ROOM_IDS[i]]
         newEntries.push({

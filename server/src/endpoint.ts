@@ -38,7 +38,7 @@ interface GlobalMessage {
     arguments: any[]
 }
 
-export type LogFn = (...string) => void
+export type LogFn = (...args: unknown[]) => void
 export type EndpointFunction = (inputs: any, log: LogFn) => Promise<Result>
 export type AuthenticatedEndpointFunction = (user: User, inputs: any, log: LogFn) => Promise<Result>
 

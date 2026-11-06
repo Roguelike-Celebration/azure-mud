@@ -25,6 +25,15 @@ module.exports = {
     'no-unused-vars': 0,
     'react/prop-types': 0
   },
+  // use override to exempt React components; v3 of the rule can't exempt React per se
+  overrides: [
+    {
+      files: ['src/**/*.ts'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 'warn'
+      }
+    }
+  ],
   settings: {
     react: {
       version: 'detect'

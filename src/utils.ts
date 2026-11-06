@@ -14,4 +14,4 @@ export const nie = <T extends unknown>(_: T): void => {
  * @param frames the number of frames per second
  * @returns the number of milliseconds per frame
  */
-export const fps = (frames: number) => frames <= 0 ? 0 : 1e3 / frames
+export const fps = (frames: number): number => frames <= 0 ? 0 : 1e3 / frames
