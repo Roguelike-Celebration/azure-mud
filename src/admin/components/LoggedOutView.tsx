@@ -1,30 +1,11 @@
 // Note - we're doing firebase 8 because the firebaseui stuff doesn't work with 9, big F
 import firebase from 'firebase/app'
-import type firebaseui from 'firebaseui'
 import React from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
-import { currentUser, sendSignInLinkToEmail } from '../../authentication.js'
 import 'firebase/auth'
 
-const uiConfig: firebaseui.auth.Config = {
-  callbacks: {
-    // The documentation on the firebaseui README appears somewhat borked at time of writing; the structure of
-    // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
-    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      const user = currentUser()
-      if (user.shouldVerifyEmail) {
-        sendSignInLinkToEmail(user.email)
-      }
-      window.location.reload()
-      return false
-    }
-  },
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID
-  ]
-}
+import { firebaseUiConfig } from '../../authentication.js'
 
 export default function LoggedOutView () {
   return (
@@ -36,7 +17,7 @@ export default function LoggedOutView () {
         <p>
           If you&apos;re not a Roguelike Celebration admin, this isn&apos;t for you. If you should be an admin, but can&apos;t log in, ask in our other chat.
         </p>
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        <StyledFirebaseAuth uiConfig={firebaseUiConfig} firebaseAuth={firebase.auth()} />
       </main>
     </div>
   )

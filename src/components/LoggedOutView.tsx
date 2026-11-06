@@ -1,28 +1,11 @@
 // Note - we're doing firebase 8 because the firebaseui stuff doesn't work with 9, big F
 import firebase from 'firebase/app'
-import type firebaseui from 'firebaseui'
 import React from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
-import { currentUser, sendSignInLinkToEmail } from '../authentication.js'
 import 'firebase/auth'
 
-const uiConfig: firebaseui.auth.Config = {
-  callbacks: {
-    // The documentation on the firebaseui README appears somewhat borked at time of writing; the structure of
-    // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
-    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      const user = currentUser()
-      if (user.shouldVerifyEmail) {
-        sendSignInLinkToEmail(user.email)
-      }
-      return true
-    }
-  },
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ]
-}
+import { firebaseUiConfig } from '../authentication.js'
 
 export default function LoggedOutView () {
   return (
@@ -39,7 +22,7 @@ export default function LoggedOutView () {
           game design. It&apos;s for fans, players, developers, scholars, and
           everyone else!
         </p>
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        <StyledFirebaseAuth uiConfig={firebaseUiConfig} firebaseAuth={firebase.auth()} />
         <p>
           <strong>Sign-in or password reset problems?</strong> If you&apos;re having trouble signing in to the MUD using this
           page, please email us at <a href="mailto:contact@roguelike.club">contact@roguelike.club</a> for support. Including
