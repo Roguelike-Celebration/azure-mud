@@ -1,15 +1,17 @@
 import React, { useContext } from 'react'
 import Linkify from 'react-linkify'
-import { PublicUser } from '../../server/src/user'
-import { HideProfileAction, SendMessageAction, ReceivedMyProfileAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { Message, WhisperMessage, MessageType } from '../message'
-import InputView from './InputView'
-import NameView from './NameView'
 import ReactTooltip from 'react-tooltip'
 
-import '../../style/profileView.css'
+import { PublicUser } from '../../server/src/user'
+import { HideProfileAction, SendMessageAction } from '../Actions'
+import { DispatchContext } from '../App'
+import { WhisperMessage } from '../message'
+
 import BadgeView from './BadgeView'
+import InputView from './InputView'
+import NameView from './NameView'
+
+import '../../style/profileView.css'
 
 const ProfileWhisperView = (props: WhisperMessage & {id: string, otherUser: PublicUser}) => {
   const { otherUser } = props

@@ -1,4 +1,4 @@
-import { current, produce } from 'immer'
+import { produce } from 'immer'
 import React, {
   createContext,
   Dispatch,
@@ -9,6 +9,7 @@ import React, {
   StrictMode,
   useReducer
 } from 'react'
+
 import '../../../style/chat.css'
 import { Message } from '../../message'
 import { PayloadAction } from '../../types'

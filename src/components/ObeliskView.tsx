@@ -1,16 +1,14 @@
-import React, { useContext, useEffect } from 'react'
-import { RoomNote } from '../../server/src/roomNote'
-import { ServerSettings } from '../../server/src/types'
-import { addNoteToObelisk, addNoteToWall, deleteRoomNote, startObservingObelisk, stopObservingObelisk, updateServerSettings } from '../networking'
-import { NoteView } from './NoteView'
-import ReactTooltip from 'react-tooltip'
-import { UserMapContext } from '../App'
-import { Room } from '../room'
-
-import '../../style/noteWall.css'
-import { NoteWallData } from '../../server/src/rooms'
-import { PublicUser } from '../../server/src/user'
 import { sortBy } from 'lodash'
+import React, { useContext, useEffect } from 'react'
+import ReactTooltip from 'react-tooltip'
+
+import { RoomNote } from '../../server/src/roomNote'
+import { PublicUser } from '../../server/src/user'
+import { UserMapContext } from '../App'
+import { addNoteToObelisk, deleteRoomNote, startObservingObelisk, stopObservingObelisk } from '../networking'
+
+import { NoteView } from './NoteView'
+import '../../style/noteWall.css'
 
 function numLikes (roomNote: RoomNote) {
   return !roomNote.likes ? 0 : roomNote.likes.length

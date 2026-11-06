@@ -3,9 +3,10 @@
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useEffect } from 'react'
+import ReactDOM from 'react-dom'
+
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
-import ReactDOM from 'react-dom'
 
 interface Props {
     fullScreen: boolean,

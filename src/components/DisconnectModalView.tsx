@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+
 import { HideModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { connect } from '../networking'

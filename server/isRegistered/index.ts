@@ -1,7 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+
+import { getUserIdFromHeaders } from '../src/authenticate'
 import { azureWrap } from '../src/azureWrap'
 import isRegistered from '../src/endpoints/isRegistered'
-import { getUserIdFromHeaders } from '../src/authenticate'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

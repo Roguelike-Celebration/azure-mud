@@ -1,8 +1,10 @@
 import React, { useContext } from 'react'
+
 import { Badge } from '../../server/src/badges'
 import { ShowModalAction } from '../Actions'
 import { DispatchContext } from '../App'
 import { Modal } from '../modals'
+
 import BadgeView from './BadgeView'
 
 export default function BadgeUnlockModal (props: { badge: Badge }) {

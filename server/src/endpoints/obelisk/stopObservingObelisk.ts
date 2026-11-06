@@ -1,5 +1,5 @@
-import { User } from '../../user'
 import { AuthenticatedEndpointFunction, LogFn } from '../../endpoint'
+import { User } from '../../user'
 
 const stopObservingObelisk: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   return {

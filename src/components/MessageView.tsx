@@ -2,14 +2,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
 import React, { FunctionComponent, memo, useContext } from 'react'
-import Linkify from 'react-linkify'
-import ReactTooltip from 'react-tooltip'
-
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
+import Linkify from 'react-linkify'
 
 import {
-  DispatchContext,
-  MessagesContext,
   RoomDataContext,
   UserMapContext
 } from '../App'
@@ -35,8 +31,9 @@ import {
   WhisperMessage
 } from '../message'
 import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
-import NameView from './NameView'
 import { UserMap } from '../reducer'
+
+import NameView from './NameView'
 
 type MenuItemEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>
 

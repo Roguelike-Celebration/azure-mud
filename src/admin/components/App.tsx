@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useRef } from 'react'
+import React, { createContext, useEffect, useRef } from 'react'
 import AceEditor from 'react-ace'
 
 import 'ace-builds/src-noconflict/mode-json'
@@ -7,9 +7,10 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 
 import { onAuthenticationStateChange, signOut } from '../../authentication'
 import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking'
-import reducer, { defaultState, State } from '../reducer'
 import { useReducerWithThunk } from '../../useReducerWithThunk'
-import { Action, LoggedInAction, UpdateRoomIds, UpdateAndShowRoomAction } from '../actions'
+import { Action, LoggedInAction, UpdateAndShowRoomAction, UpdateRoomIds } from '../actions'
+import reducer, { defaultState, State } from '../reducer'
+
 import LoggedOutView from './LoggedOutView'
 import RoomList from './RoomList'
 import RoomOptionsView from './RoomOptionsView'

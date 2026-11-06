@@ -1,6 +1,7 @@
-import { User } from './user'
 import generators from '../src/generators'
+
 import { Result } from './endpoint'
+import { User } from './user'
 
 export function cookie (user: User, messageId: string): Result {
   const generator = generators.fortuneCookies

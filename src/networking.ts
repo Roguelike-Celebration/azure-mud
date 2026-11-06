@@ -1,11 +1,11 @@
-import { v4 as uuid } from 'uuid'
-
 import axios from 'axios'
 import firebase from 'firebase/app'
-import 'firebase/auth'
 import { Dispatch } from 'react'
+import { v4 as uuid } from 'uuid'
+
 import { Badge } from '../server/src/badges'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config'
+import { RoomNote } from '../server/src/roomNote'
 import {
   CognitiveServicesKeyResponse,
   ErrorResponse,
@@ -13,6 +13,7 @@ import {
   ServerSettings
 } from '../server/src/types'
 import { MinimalUser, User } from '../server/src/user'
+
 import {
   Action,
   CaptionMessageAction,
@@ -57,10 +58,10 @@ import {
 } from './Actions'
 import Config from './config'
 import { Modal } from './modals'
+import { PresenceListMap, RoomDataMap, State, UserMap } from './reducer'
 import { convertServerRoomData, Room, ServerRoomDataMap } from './room'
 import { ThunkDispatch } from './useReducerWithThunk'
-import { PresenceListMap, RoomDataMap, State, UserMap } from './reducer'
-import { RoomNote } from '../server/src/roomNote'
+import 'firebase/auth'
 
 let myUserId: string
 let myDispatch: ThunkDispatch<Action, State>

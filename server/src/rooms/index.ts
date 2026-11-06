@@ -1,6 +1,7 @@
-import json from './data/roomData.json'
 import DB from '../redis'
 import type { MinimalRoomDataMap, RoomDataMap } from '../types'
+
+import json from './data/roomData.json'
 
 export const staticRoomData: RoomDataMap = json
 
