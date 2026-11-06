@@ -61,7 +61,8 @@ function build_server() {
   npm ci
   npm run build
   SERVER_PRUNED=1
-  npm prune --omit=dev
+  # Command-line --omit *replaces* an .npmrc omit list, so do --omit=optional to match .npmrc
+  npm prune --omit=dev --omit=optional
   popd > /dev/null
 }
 

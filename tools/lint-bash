@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# lint-bash - Lint the bash scripts in this repo
+
+# This code is Bash 3.x, for compatibility with macOS's system /bin/bash, which is stuck on
+# the old Bash 3.x for licensing reasons.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ ${TRACE:-0} == "1" ]]; then set -o xtrace; fi
+
+# ========== Main script ==========
+
+NOEXTN_BASH_SCRIPTS=(grin findd deploy parcel_check lint-bash)
+
+_tools_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+
+cd "$_tools_dir"
+shellcheck "${NOEXTN_BASH_SCRIPTS[@]}" lib/bash/*.sh
