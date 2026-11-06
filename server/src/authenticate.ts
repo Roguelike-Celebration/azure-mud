@@ -70,6 +70,7 @@ export async function getUserIdFromHeaders (
     providers[0].providerId === 'password' &&
     !userRecord.emailVerified
   ) {
+    context.log('Rejected auth attempt with unverified email. User: %s', userId)
     return undefined
   }
 
@@ -85,10 +86,10 @@ export default async function authenticate (
 ): Promise<HttpResponseInit> {
   const userId = await getUserIdFromHeaders(context, req)
   if (!userId) {
-    context.log('Failed to include a user ID in authenticate() call')
+    context.log('%s: Failed authenticating request; responding 401', context.functionName)
     return {
-      status: 400,
-      body: 'You did not include a user ID'
+      status: 401,
+      body: 'Not authenticated: missing or bad login token, or unverified email'
     }
   }
 
@@ -124,7 +125,7 @@ export default async function authenticate (
   if (user.isBanned) {
     context.log('Banned user was blocked:', user.id, user.username)
     return {
-      status: 401,
+      status: 403,
       body: 'You are banned!'
     }
   }
