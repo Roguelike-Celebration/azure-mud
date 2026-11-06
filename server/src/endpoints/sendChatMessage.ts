@@ -55,7 +55,7 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
     }
   }
 
-  const danceMatch = /^\/(dance)(.*)/.exec(message)
+  const danceMatch = /^\/(dance)( |$)/.exec(message)
   if (danceMatch) {
     return dance(user, inputs.id)
   }
