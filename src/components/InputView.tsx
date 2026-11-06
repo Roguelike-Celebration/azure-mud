@@ -1,3 +1,4 @@
+import { emojify } from 'node-emoji'
 import React, { useContext, useEffect, useState } from 'react'
 import { Mention, MentionsInput } from 'react-mentions'
 
@@ -5,8 +6,6 @@ import { MinimalUser } from '../../server/src/user'
 import { UserMapContext } from '../App'
 import { emojiMentionsData } from '../emoji'
 import '../../style/input.css'
-
-const emojifier = require('node-emoji')
 
 export default function InputView (props: {
   sendMessage: (message: string) => void,
@@ -22,7 +21,7 @@ export default function InputView (props: {
     if (e.target.value === '\n') {
       return
     }
-    const result = emojifier.emojify(e.target.value)
+    const result = emojify(e.target.value)
     setInput(result)
   }
 
