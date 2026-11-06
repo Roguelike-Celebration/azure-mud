@@ -7,29 +7,64 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-and-lint:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2.1.0
-      - run: npm install
-      
-      # This produces compiled.json, which needs to exist for lint-rooms to work
-      - name: server build
-        run: |
-          cd server
-          npm install
-          npm run build
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            server/package-lock.json
 
-      - name: build
+      - name: Show tool versions
+        run: |
+          for cmd in node npm; do echo -n "${cmd}: "; ${cmd} --version; done
+
+      - name: NPM install - frontend
+        run: npm ci
+
+      - name: NPM install - backend
+        run: cd server && npm ci
+
+      - name: Build frontend
         run: npm run build
 
-      - name: lint
+      # This produces compiled.json, which needs to exist for lint-rooms to work
+      - name: Build backend
+        run: cd server && npm run build
+
+      - name: Lint
+        if: ${{ !cancelled() }}
         run: npm run lint
 
-      # - name: lintRooms
+      - name: Typecheck
+        if: ${{ !cancelled() }}
+        run: npm run typecheck
+
+      # - name: Lint rooms
       #   run: npm run lint-rooms
 
-      - name: typecheck
-        run: cd server && npm install && cd ..; npm run typecheck
+  check-lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Show tool versions
+        run: |
+          for cmd in node npm; do echo -n "${cmd}: "; ${cmd} --version; done
+
+      - name: Regenerate frontend lockfile
+        run: npm install --package-lock-only --ignore-scripts
+
+      - name: Regenerate backend lockfile
+        run: cd server && npm install --package-lock-only --ignore-scripts
+
+      - name: Compare lockfiles to git
+        run: git diff --exit-code package-lock.json server/package-lock.json
