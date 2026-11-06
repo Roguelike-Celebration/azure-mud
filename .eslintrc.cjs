@@ -25,6 +25,7 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 0,
+    '@typescript-eslint/no-unused-vars': ['error', { vars: 'all', args: 'none', ignoreRestSiblings: true }],
     'react/prop-types': 0,
     '@typescript-eslint/await-thenable': 'error',
     'import/order': ['error', {
