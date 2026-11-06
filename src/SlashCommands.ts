@@ -43,9 +43,7 @@ export const SlashCommands: SlashCommand[] = [
 export function matchingSlashCommand (message: String): SlashCommand | undefined {
   return SlashCommands.find((command) =>
     command.invocations.find((invocation) =>
-      command.singleParameter
-        ? message.startsWith(invocation)
-        : message === invocation || message.startsWith(invocation + ' ')
+      message === invocation || message.startsWith(invocation + ' ')
     )
   )
 }
