@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf ./dist && tsc",
     "watch": "tsc -w",
     "deploy": "func azure functionapp publish roguelike-celebration-mud",
     "typecheck": "tsc --noEmit",
