@@ -44,37 +44,36 @@ export async function getUserIdFromHeaders (
   }
 
   const clientIdToken = authHeaderParts[1]
-  var cachedUserId = await DB.userIdForFirebaseToken(clientIdToken)
+  const cachedUserId = await DB.userIdForFirebaseToken(clientIdToken)
   if (cachedUserId) {
     return cachedUserId
   }
 
-  return await getAuth()
-    .verifyIdToken(clientIdToken)
-    .then(async (decoded) => {
-      const userId = decoded.uid
+  const fbAuth = getAuth()
+  try {
+    const decoded = await fbAuth.verifyIdToken(clientIdToken)
+    const userId = decoded.uid
 
-      const userRecord = await getAuth().getUser(userId)
-      const providers = userRecord.providerData
-      // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
-      // email address.
-      if (
-        providers.length === 1 &&
-        providers[0].providerId === 'password' &&
-        !userRecord.emailVerified
-      ) {
-        return undefined
-      }
-
-      await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
-      return userId
-    })
-    .catch((error): undefined => {
-      // Don't log token in plaintext; just summarize, with characteristic suffix
-      context.log('Error authenticating token: "...%s" (length %d): %s',
-        clientIdToken.slice(-6), clientIdToken.length, String(error))
+    const userRecord = await fbAuth.getUser(userId)
+    const providers = userRecord.providerData
+    // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
+    // email address.
+    if (
+      providers.length === 1 &&
+      providers[0].providerId === 'password' &&
+      !userRecord.emailVerified
+    ) {
       return undefined
-    })
+    }
+
+    await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
+    return userId
+  } catch (error) {
+    // Don't log token in plaintext; just summarize, with characteristic suffix
+    context.log('Error authenticating token: "...%s" (length %d): %s',
+      clientIdToken.slice(-6), clientIdToken.length, String(error))
+    return undefined
+  }
 }
 
 export default async function authenticate (
