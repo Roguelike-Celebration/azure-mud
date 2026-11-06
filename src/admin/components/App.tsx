@@ -38,8 +38,12 @@ const App = function () {
         return
       }
 
-      const { isMod, isBanned } = await checkIsRegistered()
-
+      const registrationStatus = await checkIsRegistered()
+      if (!registrationStatus) {
+        alert("Couldn't reach the MUD server to check mod status. Try reloading the page.")
+        return
+      }
+      const { isMod, isBanned } = registrationStatus
       if (isMod && !isBanned) {
         dispatch(LoggedInAction())
       } else {
