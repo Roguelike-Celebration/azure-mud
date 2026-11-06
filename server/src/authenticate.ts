@@ -35,7 +35,11 @@ export async function getUserIdFromHeaders (
   const authHeaderParts = authHeader.split(' ')
   // I think 'Bearer' is technically OAuth 2.0 and I don't know if that's precisely what we're using
   if (authHeaderParts.length !== 2 || authHeaderParts[0] !== 'Bearer') {
-    context.log(`Error authenticating auth header: header not formatted as Bearer: "${authHeader}`)
+    // Don't log full header - might still contain a token. Redact it. First 20 chars should be safe
+    // even if scheme is missing and first word is a token; a JWT's leading 20 chars are just a header.
+    const shortScheme = authHeaderParts[0].slice(0, 20)
+    context.log('Error authenticating auth header: header not formatted as Bearer: ' +
+      'scheme "%s", %d parts, length %d chars', shortScheme, authHeaderParts.length, authHeader.length)
     return undefined
   }
 
@@ -66,7 +70,9 @@ export async function getUserIdFromHeaders (
       return userId
     })
     .catch((error): undefined => {
-      context.log('Error authenticating token: ' + clientIdToken + ' error: ' + error)
+      // Don't log token in plaintext; just summarize, with characteristic suffix
+      context.log('Error authenticating token: "...%s" (length %d): %s',
+        clientIdToken.slice(-6), clientIdToken.length, String(error))
       return undefined
     })
 }
