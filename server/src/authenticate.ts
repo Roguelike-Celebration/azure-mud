@@ -1,6 +1,6 @@
 import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions'
 import { applicationDefault, getApps, initializeApp } from 'firebase-admin/app'
-import { getAuth } from 'firebase-admin/auth'
+import { DecodedIdToken, getAuth } from 'firebase-admin/auth'
 
 import { DB } from '../src/database.js'
 
@@ -50,30 +50,31 @@ export async function getUserIdFromHeaders (
   }
 
   const fbAuth = getAuth()
+  let decoded: DecodedIdToken
   try {
-    const decoded = await fbAuth.verifyIdToken(clientIdToken)
-    const userId = decoded.uid
-
-    const userRecord = await fbAuth.getUser(userId)
-    const providers = userRecord.providerData
-    // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
-    // email address.
-    if (
-      providers.length === 1 &&
-      providers[0].providerId === 'password' &&
-      !userRecord.emailVerified
-    ) {
-      return undefined
-    }
-
-    await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
-    return userId
+    decoded = await fbAuth.verifyIdToken(clientIdToken)
   } catch (error) {
     // Don't log token in plaintext; just summarize, with characteristic suffix
     context.log('Error authenticating token: "...%s" (length %d): %s',
       clientIdToken.slice(-6), clientIdToken.length, String(error))
     return undefined
   }
+  const userId = decoded.uid
+
+  const userRecord = await fbAuth.getUser(userId)
+  const providers = userRecord.providerData
+  // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
+  // email address.
+  if (
+    providers.length === 1 &&
+    providers[0].providerId === 'password' &&
+    !userRecord.emailVerified
+  ) {
+    return undefined
+  }
+
+  await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
+  return userId
 }
 
 export default async function authenticate (
