@@ -63,11 +63,10 @@ const CosmosDB = {
 
   async setUserAsActive (user: User, isActive: boolean) {
     const container = getContainer('users')
-    console.log('Trying to set user as active?', user.id, isActive)
     try {
       await container.item(user.id, partitionKey).replace({ ...user, isActive })
     } catch (e) {
-      console.log('ERROR: Could not set user active state', user.id, e)
+      console.error('Could not set user active state', user.id, e)
     }
   },
 
@@ -78,7 +77,7 @@ const CosmosDB = {
     try {
       await container.item(user.id, partitionKey).replace({ ...user, heartbeat: new Date().valueOf() })
     } catch (e) {
-      console.log('ERROR: Could not update user heartbeat', user.id, e)
+      console.error('Could not update user heartbeat', user.id, e)
     }
   },
 
@@ -96,7 +95,7 @@ const CosmosDB = {
 
       return result
     } catch (e) {
-      console.log('Error fetching all room occupants', e)
+      console.error('Error fetching all room occupants', e)
     }
 
     return {}
@@ -116,7 +115,7 @@ const CosmosDB = {
       const { resources: users } = await container.items.query(query, { partitionKey }).fetchAll()
       return users
     } catch (e) {
-      console.log('Error fetching room occupants', roomId, e)
+      console.error('Error fetching room occupants', roomId, e)
     }
 
     return []
@@ -130,7 +129,7 @@ const CosmosDB = {
       const container = getContainer('users')
       await container.item(user.id, partitionKey).replace(data)
     } catch (e) {
-      console.log('ERROR: Could not update user', user.id, roomId, e)
+      console.error('Could not update user', user.id, roomId, e)
     }
   },
 
@@ -144,7 +143,7 @@ const CosmosDB = {
       await container.item(user.id, partitionKey).replace(data)
       return []
     } catch (e) {
-      console.log('ERROR: Could not update user video presence', user.id, isActive, e)
+      console.error('Could not update user video presence', user.id, isActive, e)
       return []
     }
   },
@@ -186,7 +185,7 @@ const CosmosDB = {
     try {
       await container.item(user.id, partitionKey).replace({ ...user, lastShouted: new Date().valueOf() })
     } catch (e) {
-      console.log('ERROR: Could not update user shout timestamp', user.id, e)
+      console.error('Could not update user shout timestamp', user.id, e)
     }
   },
 
@@ -195,7 +194,7 @@ const CosmosDB = {
       const container = getContainer('users')
       await container.item(user.id, partitionKey).replace({ ...user, isBanned })
     } catch (e) {
-      console.log('ERROR: Could not update user ban status', user.id, e)
+      console.error('Could not update user ban status', user.id, e)
     }
   },
 
@@ -204,7 +203,7 @@ const CosmosDB = {
       const container = getContainer('users')
       await container.item(user.id, partitionKey).replace({ ...user, isMod: newModness })
     } catch (e) {
-      console.log('ERROR: Could not update user mod status', user.id, e)
+      console.error('Could not update user mod status', user.id, e)
     }
   },
 

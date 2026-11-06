@@ -130,7 +130,7 @@ export type PresenceCountMap = { [roomId: string]: number }
 
 export type PresenceListMap = { [roomId: string]: string[] }
 
-console.log(Config.FIREBASE_CONFIG)
+console.log('Firebase configuration:', Config.FIREBASE_CONFIG)
 
 export const defaultState: State = {
   firebaseApp: firebase.initializeApp(Config.FIREBASE_CONFIG),
@@ -165,8 +165,6 @@ export const defaultState: State = {
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
 export default produce((draft: State, action: Action) => {
-  console.log('In reducer', action)
-
   draft.prepopulatedInput = undefined
 
   if (action.type === ActionType.Connected) {
@@ -613,7 +611,7 @@ export default produce((draft: State, action: Action) => {
   }
 
   if (action.type === ActionType.ShowModalWithOptions) {
-    console.log('Showing', action)
+    console.log('Showing ModalWithOptions', action)
     draft.activeModal = action.value.modal
     draft.activeModalOptions = action.value.options
   }

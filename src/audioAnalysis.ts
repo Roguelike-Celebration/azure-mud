@@ -43,7 +43,7 @@ function setUpAnalyser (stream: MediaStream): AnalyserNode {
 
 let shouldStopAnalysing = false
 function startAnalyserLoop (dispatch: Dispatch<Action>) {
-  console.log('Starting analyser loop')
+  console.log('Starting audioAnalysis analyser loop')
 
   const average = (ns: Uint8Array) => {
     let sum = 0

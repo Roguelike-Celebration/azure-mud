@@ -43,9 +43,9 @@ export async function authenticatedAzureWrap (
 }
 
 function outputToAzure (context: Context, req: HttpRequest, result: Result): void {
-  context.log('outputting to azure')
-  context.log('context: ', JSON.stringify(context))
-  context.log('result: ', JSON.stringify(result))
+  context.log(`outputToAzure: ${context.executionContext.functionName}: ` +
+    `status=${result.httpResponse?.status ?? 'none'}, ${result.messages?.length ?? 0} messages, ` +
+    `${result.groupManagementTasks?.length ?? 0} group mgmt tasks`)
   if (result.messages) {
     context.bindings.actions = result.messages.map((m) => {
       const actionJson = JSON.stringify({ type: m.target, value: m.arguments })
@@ -94,8 +94,6 @@ function outputToAzure (context: Context, req: HttpRequest, result: Result): voi
       })
     )
   }
-
-  console.log('actions', JSON.stringify(context.bindings.actions))
 
   // TimerTriggers don't have a res obj. This seems like an okay, if imperfect, guard.
   if (context.res) {
