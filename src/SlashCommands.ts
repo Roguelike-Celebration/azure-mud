@@ -2,7 +2,7 @@ interface SlashCommand {
     type: string;
     description: string;
     invocations: string[];
-    singleParameter: boolean;
+    noArgs: boolean;
     usageMsgArgs: string;
 }
 
@@ -10,9 +10,9 @@ const SlashCommand = (
   name: string,
   description: string,
   invocations: string[],
-  singleParameter: boolean,
+  noArgs: boolean,
   usageMsgArgs: string = ''
-): SlashCommand => { return { type: name, description: description, invocations: invocations, singleParameter: singleParameter, usageMsgArgs: usageMsgArgs } }
+): SlashCommand => { return { type: name, description: description, invocations: invocations, noArgs: noArgs, usageMsgArgs: usageMsgArgs } }
 
 export enum SlashCommandType {
   Help = 'HELP',

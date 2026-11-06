@@ -461,7 +461,7 @@ export default produce((draft: State, action: Action) => {
           } is not a registered slash command!`
         )
       )
-    } else if (matching && !matching.singleParameter && !trimmedMessage.includes(' ')) {
+    } else if (matching && !matching.noArgs && !trimmedMessage.includes(' ')) {
       // Bare command with no argument, like just "/whisper"
       addMessage(
         draft,
