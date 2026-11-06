@@ -10,7 +10,12 @@ indent_style = space
 end_of_line = lf
 insert_final_newline = true
 
-[*.{ts,tsx,js,cjs,py,json,yml,html,css}]
+[*.{ts,tsx,js,cjs,py,json,yml,html,css,sh,bash,zsh}]
+indent_size = 2
+tab_width = 2
+trim_trailing_whitespace = true
+
+[{tools/grin,tools/findd}]
 indent_size = 2
 tab_width = 2
 trim_trailing_whitespace = true
