@@ -22,7 +22,7 @@ export default function MenuButtonView (props: { username: string, spaceIsClosed
     // TODO: When a user disconnects via the /disconnect endpoint, it still shows that user as in the room. I suspect
     // the same is true for banned users. Check on that.
     if (prompt) {
-      disconnect(myId).then(() => {
+      disconnect().then(() => {
         signOut().then(() => {
           window.location.reload()
         })
