@@ -19,7 +19,7 @@ export interface MinimalUser {
   username: string;
   pronouns?: string;
   isMod?: boolean;
-  isSpeaker?: boolean // TODO: Currently never set
+  isSpeaker?: boolean;
   isBanned?: boolean;
   // From https://www.w3schools.com/colors/colors_names.asp
   nameColor?: string;
@@ -45,10 +45,8 @@ export interface PublicUser extends MinimalUser {
 export interface User extends PublicUser {
   roomId: string;
   lastShouted?: Date;
-
   // Currently only exists to give CosmosDB a partitionKey
   hostname: string;
-
   heartbeat: number;
 }
 

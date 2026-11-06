@@ -2,7 +2,7 @@ import { DB } from './database.js'
 import { Message } from './endpoint.js'
 import { PresenceListMap } from './types.js'
 
-/** Fetches presence data for a set of rooms and returns a SignalR message
+/** Fetches presence data for a set of rooms and returns a message
  * to broadcast current presence data to all users */
 export async function globalPresenceMessage (roomIds: string[]): Promise<Message> {
   // TODO: This could be written as a single DB query for all rooms, instead of n queries for n rooms
@@ -11,7 +11,6 @@ export async function globalPresenceMessage (roomIds: string[]): Promise<Message
 
   const data: PresenceListMap = {}
 
-  console.log(roomIds)
   await Promise.all(
     roomIds.map(async (id) => {
       const occupants = await DB.roomOccupants(id)
