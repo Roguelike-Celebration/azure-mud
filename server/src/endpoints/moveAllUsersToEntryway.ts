@@ -1,7 +1,7 @@
-import { AuthenticatedEndpointFunction, GroupManagementTask, LogFn, Message } from '../endpoint'
-import { moveToRoom } from '../moveToRoom'
-import DB from '../redis'
-import { User } from '../user'
+import { AuthenticatedEndpointFunction, GroupManagementTask, LogFn, Message } from '../endpoint.js'
+import { moveToRoom } from '../moveToRoom.js'
+import DB from '../redis.js'
+import { User } from '../user.js'
 
 /* Moves all users to entryway. Should be used ONLY as an administrative command while the space is unpopulated,
  * because it  will not properly resolve the clients which are currently logged in and is gonna look buggy until

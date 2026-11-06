@@ -1,7 +1,7 @@
-import generators from '../src/generators'
+import generators from '../src/generators/index.js'
 
-import { Result } from './endpoint'
-import { minimizeUser, updateUserProfile, User } from './user'
+import { Result } from './endpoint.js'
+import { minimizeUser, updateUserProfile, User } from './user.js'
 
 export async function polymorph (user: User, messageId: string): Promise<Result> {
   const generator = generators.polymorph

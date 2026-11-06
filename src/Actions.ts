@@ -1,14 +1,14 @@
-import { Badge } from '../server/src/badges'
-import { RoomNote } from '../server/src/roomNote'
-import { ServerSettings } from '../server/src/types'
-import { MinimalUser, PublicUser, User } from '../server/src/user'
+import { Badge } from '../server/src/badges.js'
+import { RoomNote } from '../server/src/roomNote.js'
+import { ServerSettings } from '../server/src/types.js'
+import { MinimalUser, PublicUser, User } from '../server/src/user.js'
 
-import { Message, WhisperMessage } from './message'
-import { Modal } from './modals'
-import { connectRoomData } from './networking'
-import { ModalOptions, PresenceListMap, RoomDataMap, State, UserMap } from './reducer'
-import { Thunk } from './useReducerWithThunk'
-import { fps } from './utils'
+import { Message, WhisperMessage } from './message/index.js'
+import { Modal } from './modals.js'
+import { connectRoomData } from './networking.js'
+import { ModalOptions, PresenceListMap, RoomDataMap, State, UserMap } from './reducer.js'
+import { Thunk } from './useReducerWithThunk.js'
+import { fps } from './utils.js'
 
 export type Action =
   | ReceivedMyProfileAction

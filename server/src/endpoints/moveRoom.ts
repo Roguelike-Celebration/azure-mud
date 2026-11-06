@@ -1,6 +1,6 @@
-import { AuthenticatedEndpointFunction, LogFn } from '../endpoint'
-import { moveToRoom } from '../moveToRoom'
-import { User } from '../user'
+import { AuthenticatedEndpointFunction, LogFn } from '../endpoint.js'
+import { moveToRoom } from '../moveToRoom.js'
+import { User } from '../user.js'
 
 const moveRoom: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const toId = inputs.to

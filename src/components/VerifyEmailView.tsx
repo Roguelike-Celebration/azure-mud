@@ -1,10 +1,10 @@
 import React from 'react'
 import PageVisibility from 'react-page-visibility'
 
-import { Action, AuthenticateAction } from '../Actions'
-import { currentUser, sendSignInLinkToEmail, signOut } from '../authentication'
-import { State } from '../reducer'
-import { ThunkDispatch } from '../useReducerWithThunk'
+import { Action, AuthenticateAction } from '../Actions.js'
+import { currentUser, sendSignInLinkToEmail, signOut } from '../authentication.js'
+import { State } from '../reducer.js'
+import { ThunkDispatch } from '../useReducerWithThunk.js'
 
 interface Props {
   userEmail: string;

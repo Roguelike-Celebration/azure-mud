@@ -8,9 +8,9 @@ import {
   Track
 } from 'twilio-video'
 
-import AudioTrack from './AudioTrack'
-import useTrack from './useTrack'
-import VideoTrack from './VideoTrack'
+import AudioTrack from './AudioTrack.js'
+import useTrack from './useTrack.js'
+import VideoTrack from './VideoTrack.js'
 
 interface PublicationProps {
   publication: LocalTrackPublication | RemoteTrackPublication;

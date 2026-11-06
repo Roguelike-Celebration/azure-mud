@@ -8,8 +8,8 @@ import Linkify from 'react-linkify'
 import {
   RoomDataContext,
   UserMapContext
-} from '../App'
-import { renderCustomEmojiString } from '../emoji'
+} from '../App.js'
+import { renderCustomEmojiString } from '../emoji/index.js'
 import {
   CaptionMessage,
   ChatMessage,
@@ -29,11 +29,11 @@ import {
   SameRoomMessage,
   ShoutMessage,
   WhisperMessage
-} from '../message'
-import { deleteMessage, fetchProfile, moveToRoom } from '../networking'
-import { UserMap } from '../reducer'
+} from '../message/index.js'
+import { deleteMessage, fetchProfile, moveToRoom } from '../networking.js'
+import { UserMap } from '../reducer.js'
 
-import NameView from './NameView'
+import NameView from './NameView.js'
 
 type MenuItemEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>
 

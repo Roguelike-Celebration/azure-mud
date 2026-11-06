@@ -1,6 +1,6 @@
 import localforage from 'localforage'
 
-import { Message, WhisperMessage } from './message'
+import { Message, WhisperMessage } from './message/index.js'
 
 // Message cache
 

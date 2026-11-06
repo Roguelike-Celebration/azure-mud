@@ -3,14 +3,14 @@ import firebase from 'firebase/app'
 import { Dispatch } from 'react'
 import { v4 as uuid } from 'uuid'
 
-import { Badge } from '../server/src/badges'
-import { MESSAGE_MAX_LENGTH } from '../server/src/config'
+import { Badge } from '../server/src/badges.js'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
 import {
   CognitiveServicesKeyResponse,
   RoomResponse,
   ServerSettings
-} from '../server/src/types'
-import { MinimalUser, User } from '../server/src/user'
+} from '../server/src/types.js'
+import { MinimalUser, User } from '../server/src/user.js'
 
 import {
   Action,
@@ -53,12 +53,12 @@ import {
   UpdateUnlockableBadgesAction,
   UserMapAction,
   WhisperAction
-} from './Actions'
-import Config from './config'
-import { Modal } from './modals'
-import { PresenceListMap, RoomDataMap, State, UserMap } from './reducer'
-import { convertServerRoomData, Room } from './room'
-import { ThunkDispatch } from './useReducerWithThunk'
+} from './Actions.js'
+import Config from './config.js'
+import { Modal } from './modals.js'
+import { PresenceListMap, RoomDataMap, State, UserMap } from './reducer.js'
+import { convertServerRoomData, Room } from './room.js'
+import { ThunkDispatch } from './useReducerWithThunk.js'
 import 'firebase/auth'
 
 let myUserId: string

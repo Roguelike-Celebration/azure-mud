@@ -2,11 +2,11 @@ import { promisify } from 'util'
 
 import redis from 'redis'
 
-import Database from './database'
-import { RoomNote } from './roomNote'
-import { Room } from './rooms'
-import { DEFAULT_SERVER_SETTINGS, PresenceListMap, ServerSettings, toServerSettings } from './types'
-import { isMod, User } from './user'
+import Database from './database.js'
+import { RoomNote } from './roomNote.js'
+import { Room } from './rooms/index.js'
+import { DEFAULT_SERVER_SETTINGS, PresenceListMap, ServerSettings, toServerSettings } from './types.js'
+import { isMod, User } from './user.js'
 
 // Use TLS port by default; that's what our Azure Redis uses
 const DEFAULT_REDIS_PORT = 6380

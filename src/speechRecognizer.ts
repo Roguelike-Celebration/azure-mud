@@ -5,8 +5,8 @@ import {
 } from 'microsoft-cognitiveservices-speech-sdk'
 import { Dispatch } from 'react'
 
-import { Action, SendCaptionAction } from './Actions'
-import { fetchCognitiveServicesKey } from './networking'
+import { Action, SendCaptionAction } from './Actions.js'
+import { fetchCognitiveServicesKey } from './networking.js'
 
 let recognizer: sdk.SpeechRecognizer | undefined
 let speechConfig: sdk.SpeechConfig | undefined

@@ -2,8 +2,8 @@
 import React from 'react'
 import { Participant, Track } from 'twilio-video'
 
-import Publication from './Publication'
-import usePublications, { TrackPublication } from './usePublications'
+import Publication from './Publication.js'
+import usePublications, { TrackPublication } from './usePublications.js'
 
 interface ParticipantTracksProps {
   participant: Participant;
