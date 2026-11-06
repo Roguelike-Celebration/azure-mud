@@ -22,7 +22,7 @@ jobs:
 
       - name: Show tool versions
         run: |
-          for cmd in node npm; do echo "${cmd}:"; ${cmd} --version; done
+          for cmd in node npm; do echo -n "${cmd}: "; ${cmd} --version; done
 
       - name: NPM install - frontend
         run: npm ci
