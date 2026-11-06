@@ -23,6 +23,7 @@ export default [
       '@typescript-eslint/no-unused-vars': ['error', { vars: 'all', args: 'none', ignoreRestSiblings: true }],
       'react/prop-types': 'off',
       '@typescript-eslint/await-thenable': 'error',
+      'import/no-extraneous-dependencies': 'error',
       'import/order': ['error', {
         'newlines-between': 'always',
         alphabetize: { order: 'asc', caseInsensitive: true }
