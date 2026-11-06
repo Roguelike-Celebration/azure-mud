@@ -82,7 +82,7 @@ const PresenceView = (props: {
     const userViews = users.map((u, idx) => {
       const user = userMap[u]
       if (!user) {
-        return <span />
+        return <span key={`room-presence-missing-${idx}`} />
       }
       const id = `presence-${idx}`
       return (

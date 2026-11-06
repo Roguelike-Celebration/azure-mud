@@ -133,7 +133,7 @@ export default function RoomView (props: Props) {
 
   // TODO: Don't hard-code order of features
   /* eslint-disable jsx-a11y/click-events-have-key-events */
-  /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
+
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
     <div id="room">

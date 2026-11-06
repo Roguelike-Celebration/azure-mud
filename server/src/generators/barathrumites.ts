@@ -1,5 +1,3 @@
-/* eslint-disable quotes */
-
 import tracery from 'tracery-grammar'
 
 export const actionString = (barathrumites: string) => {
@@ -19,4 +17,3 @@ export const generate = () => {
   grammar.addModifiers(tracery.baseEngModifiers)
   return grammar.flatten('#origin#')
 }
-/* eslint-enable quotes */

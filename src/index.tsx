@@ -1,3 +1,6 @@
+// Import global styles here instead on in index.html to work right with Parcel 2.16,
+// which seems to put component CSS first.
+import '../style/style.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
