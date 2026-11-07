@@ -33,7 +33,6 @@ jobs:
       - name: Build frontend
         run: npm run build
 
-      # This produces compiled.json, which needs to exist for lint-rooms to work
       - name: Build backend
         run: cd server && npm run build
 
