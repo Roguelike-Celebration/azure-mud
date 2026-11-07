@@ -1,0 +1,9 @@
+# Commits for `git blame` to skip. GitHub uses this file automatically. To enable
+# use with local `git blame`, run:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Normalize file line endings to LF (dos2unix) - PR #1054
+b0bc2e9399c3281a849467cded7a65e648a190c1
+
+# Sort imports using eslint rules ('npm run lint-fix')
+788416f4057a2f59f1db2047dc6d65d8acce5105
