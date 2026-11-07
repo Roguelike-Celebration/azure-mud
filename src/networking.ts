@@ -609,7 +609,12 @@ export async function connectWebPubSub (eventMapping: WebPubSubEventMapping): Pr
     console.error('connectWebPubSub: Did not get URL from WebPubSub connection result. Cannot create websocket.', result)
     return false
   }
-  console.log('connectWebPubSub: Negotiated WebPubSub', result)
+  const tok: string | undefined = result.accessToken
+  const rsltSummary = {
+    baseUrl: result.baseUrl,
+    ...(tok ? { accessToken: `"...${tok.slice(-6)}" (${tok.length} chars)` } : {})
+  }
+  console.log('connectWebPubSub: Negotiated WebPubSub', rsltSummary)
 
   // connect
   const ws = new WebSocket(result.url)

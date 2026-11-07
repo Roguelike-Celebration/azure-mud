@@ -1,6 +1,6 @@
 import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions'
 import { applicationDefault, getApps, initializeApp } from 'firebase-admin/app'
-import { getAuth } from 'firebase-admin/auth'
+import { DecodedIdToken, getAuth } from 'firebase-admin/auth'
 
 import { DB } from '../src/database.js'
 
@@ -35,40 +35,47 @@ export async function getUserIdFromHeaders (
   const authHeaderParts = authHeader.split(' ')
   // I think 'Bearer' is technically OAuth 2.0 and I don't know if that's precisely what we're using
   if (authHeaderParts.length !== 2 || authHeaderParts[0] !== 'Bearer') {
-    context.log(`Error authenticating auth header: header not formatted as Bearer: "${authHeader}`)
+    // Don't log full header - might still contain a token. Redact it. First 20 chars should be safe
+    // even if scheme is missing and first word is a token; a JWT's leading 20 chars are just a header.
+    const shortScheme = authHeaderParts[0].slice(0, 20)
+    context.log('Error authenticating auth header: header not formatted as Bearer: ' +
+      'scheme "%s", %d parts, length %d chars', shortScheme, authHeaderParts.length, authHeader.length)
     return undefined
   }
 
   const clientIdToken = authHeaderParts[1]
-  var cachedUserId = await DB.userIdForFirebaseToken(clientIdToken)
+  const cachedUserId = await DB.userIdForFirebaseToken(clientIdToken)
   if (cachedUserId) {
     return cachedUserId
   }
 
-  return await getAuth()
-    .verifyIdToken(clientIdToken)
-    .then(async (decoded) => {
-      const userId = decoded.uid
+  const fbAuth = getAuth()
+  let decoded: DecodedIdToken
+  try {
+    decoded = await fbAuth.verifyIdToken(clientIdToken)
+  } catch (error) {
+    // Don't log token in plaintext; just summarize, with characteristic suffix
+    context.log('Error authenticating token: "...%s" (length %d): %s',
+      clientIdToken.slice(-6), clientIdToken.length, String(error))
+    return undefined
+  }
+  const userId = decoded.uid
 
-      const userRecord = await getAuth().getUser(userId)
-      const providers = userRecord.providerData
-      // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
-      // email address.
-      if (
-        providers.length === 1 &&
-        providers[0].providerId === 'password' &&
-        !userRecord.emailVerified
-      ) {
-        return undefined
-      }
+  const userRecord = await fbAuth.getUser(userId)
+  const providers = userRecord.providerData
+  // If I were trying to make the API nice, I would want to return to the user that the reason was an unverified
+  // email address.
+  if (
+    providers.length === 1 &&
+    providers[0].providerId === 'password' &&
+    !userRecord.emailVerified
+  ) {
+    context.log('Rejected auth attempt with unverified email. User: %s', userId)
+    return undefined
+  }
 
-      await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
-      return userId
-    })
-    .catch((error): undefined => {
-      context.log('Error authenticating token: ' + clientIdToken + ' error: ' + error)
-      return undefined
-    })
+  await DB.addFirebaseTokenToCache(clientIdToken, userId, decoded.exp)
+  return userId
 }
 
 export default async function authenticate (
@@ -79,10 +86,10 @@ export default async function authenticate (
 ): Promise<HttpResponseInit> {
   const userId = await getUserIdFromHeaders(context, req)
   if (!userId) {
-    context.log('Failed to include a user ID in authenticate() call')
+    context.log('%s: Failed authenticating request; responding 401', context.functionName)
     return {
-      status: 400,
-      body: 'You did not include a user ID'
+      status: 401,
+      body: 'Not authenticated: missing or bad login token, or unverified email'
     }
   }
 
@@ -118,7 +125,7 @@ export default async function authenticate (
   if (user.isBanned) {
     context.log('Banned user was blocked:', user.id, user.username)
     return {
-      status: 401,
+      status: 403,
       body: 'You are banned!'
     }
   }
