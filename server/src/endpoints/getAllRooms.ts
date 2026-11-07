@@ -3,7 +3,7 @@ import DB from '../redis.js'
 import type { RoomDataMap } from '../types.js'
 import { User } from '../user.js'
 
-const getRoomIds: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
+const getAllRooms: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const roomIds = await DB.getRoomIds()
   const roomData: RoomDataMap = {}
 
@@ -22,4 +22,4 @@ const getRoomIds: AuthenticatedEndpointFunction = async (user: User, inputs: any
   }
 }
 
-export default getRoomIds
+export default getAllRooms
