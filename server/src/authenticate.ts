@@ -1,20 +1,18 @@
-import { Context, HttpRequest } from '@azure/functions'
+import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions'
 import admin from 'firebase-admin'
 
 import { DB } from '../src/database.js'
 
+import { auditLogOutput } from './bindings.js'
 import { getFullUser, isMod, User } from './user.js'
 
 export interface AuthenticationOptions {
-  audit?: boolean;
-  mod?: boolean;
+  doAudit?: boolean;
+  needsMod?: boolean;
 }
 
-/** This wraps an HTTP function and calls it with a hydrated authenticated user.
- * Returns true if execution should continue. */
-
 export async function getUserIdFromHeaders (
-  context: Context,
+  context: InvocationContext,
   req: HttpRequest
 ): Promise<string | undefined> {
   // Apparently, the initialization persists across function calls (!?) which I didn't realize was something that
@@ -26,16 +24,17 @@ export async function getUserIdFromHeaders (
     })
   }
 
-  // Gah! One thing to note - server sees all headers as all lowercase.
-  if (!req.headers.authorization) {
+  // Header names are case-insensitive if you use headers.get()
+  const authHeader = req.headers.get('authorization')
+  if (!authHeader) {
     context.log('Authorization header not found.')
     return undefined
   }
 
-  const authHeaderParts = req.headers.authorization.split(' ')
+  const authHeaderParts = authHeader.split(' ')
   // I think 'Bearer' is technically OAuth 2.0 and I don't know if that's precisely what we're using
   if (authHeaderParts.length !== 2 || authHeaderParts[0] !== 'Bearer') {
-    context.log(`Error authenticating auth headers: ${req.headers.authorization} - were not formatted as Bearer.`)
+    context.log(`Error authenticating auth header: header not formatted as Bearer: "${authHeader}`)
     return undefined
   }
 
@@ -73,75 +72,49 @@ export async function getUserIdFromHeaders (
 }
 
 export default async function authenticate (
-  context: Context,
+  context: InvocationContext,
   req: HttpRequest,
   options: AuthenticationOptions = {},
-  handler: (user: User) => Promise<void>
-): Promise<void> {
+  handler: (user: User) => Promise<HttpResponseInit>
+): Promise<HttpResponseInit> {
   const userId = await getUserIdFromHeaders(context, req)
   if (!userId) {
-    context.res = {
+    context.log('Failed to include a user ID in authenticate() call')
+    return {
       status: 400,
       body: 'You did not include a user ID'
     }
-    context.log('Failed to include a user ID in authenticate() call')
-    return
   }
 
   if (
-    options.audit &&
-    !context.bindingDefinitions.find((def) => def.name === 'tableBinding')
+    options.doAudit &&
+    !context.options.extraOutputs.some((out) => out.name === auditLogOutput.name)
   ) {
-    context.res = {
+    context.log('Failed to configure audit endpoint with the proper tableBinding')
+    return {
       status: 501,
       body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
     }
-    context.log('Failed to configure audit endpoint with the proper tableBinding')
-    return
   }
 
   const user = await getFullUser(userId)
 
-  if (options.mod) {
+  if (options.needsMod) {
     if (!(await isMod(user.id))) {
-      context.res = {
+      return {
         status: 403,
-        body: { error: 'This action requires moderator privileges.' }
+        jsonBody: { error: 'This action requires moderator privileges.' }
       }
-      return
     }
   }
 
   if (user.isBanned) {
-    context.res = {
+    context.log('Banned user was blocked:', user.id, user.username)
+    return {
       status: 401,
       body: 'You are banned!'
     }
-    context.log('Banned user was blocked:', user.id, user.username)
-    return
   }
 
-  const handled = await handler(user)
-
-  // TODO: Restore or trash
-  // This is commented out because the upgrade from Functions 3 -> 4 broke something, somehow
-  // if (options.audit) {
-  //   context.log(`Auditing for user '${user.id}'`);
-  //   context.bindings.tableBinding = [
-  //     {
-  //       PartitionKey: user.id,
-  //       RowKey: uuid(),
-  //       // The object comes loaded with a Timestamp by default as well
-  //       userId: user.id,
-  //       username: user.username,
-  //       endpoint: req.url.replace(
-  //         "https://" + process.env.WEBSITE_HOSTNAME,
-  //         ""
-  //       ),
-  //       request: req.body, // Assumes that all the relevant information will be in the body and not in, like...headers, or something
-  //     },
-  //   ];
-  // }
-
-  return handled
+  return await handler(user)
 }
