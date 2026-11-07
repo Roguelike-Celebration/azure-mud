@@ -345,8 +345,11 @@ export async function stopObservingObelisk (): Promise<void> {
   }
 }
 
-export async function checkIsRegistered (): Promise<UserRegistrationStatus> {
+export async function checkIsRegistered (): Promise<UserRegistrationStatus | undefined> {
   const result = await callAzureFunction('isRegistered')
+  if (!result) {
+    return undefined
+  }
   return {
     registeredUsername: result.registered,
     spaceIsClosed: result.spaceIsClosed,
