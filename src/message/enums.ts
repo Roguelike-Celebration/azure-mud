@@ -13,5 +13,4 @@ export enum MessageType {
   Mod = 'MOD',
   Error = 'ERROR',
   Command = 'COMMAND',
-  Caption = 'CAPTION'
 }

@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid'
 import { Badge } from '../server/src/badges.js'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
 import {
-  CognitiveServicesKeyResponse,
   RoomResponse,
   ServerSettings
 } from '../server/src/types.js'
@@ -14,7 +13,6 @@ import { MinimalUser, User } from '../server/src/user.js'
 
 import {
   Action,
-  CaptionMessageAction,
   ChatMessageAction,
   CommandMessageAction,
   ConnectAction,
@@ -267,26 +265,6 @@ export async function sendChatMessage (id: string, text: string, currentRoomId: 
   }
 }
 
-export async function sendCaption (id: string, text: string): Promise<void> {
-  // TODO: This may or may not be problematic
-  if (text.length > MESSAGE_MAX_LENGTH) {
-    console.error(tooLongMsgLogMsg(text.length, MESSAGE_MAX_LENGTH, 'caption'))
-    return
-  }
-
-  const result: RoomResponse | Error | any = await callAzureFunction(
-    'sendCaption',
-    {
-      id: id,
-      text: text
-    }
-  )
-
-  if (result && result.error) {
-    myDispatch(ErrorAction(result.error))
-  }
-}
-
 function tooLongMsgLogMsg (msgLen: number, maxLen: number, msgType: string): string {
   return `Sorry, can't send ${msgType} messages over ${maxLen} characters. Msg length: ${msgLen} chars.`
 }
@@ -405,14 +383,6 @@ export async function getAllRooms (): Promise<RoomDataMap | undefined> {
 // used just as an HTTP request, do not refactor to WS
 // ---------------------------------------------------------------
 
-export async function fetchTwilioToken (): Promise<string | undefined> {
-  return await callAzureFunction('twilioToken')
-}
-
-export async function fetchCognitiveServicesKey (): Promise<CognitiveServicesKeyResponse | undefined> {
-  return await callAzureFunction('cognitiveServicesKey')
-}
-
 // If isNewUser is true, a successful update will refresh the entire page instead of dismissing a modal
 export async function updateProfile (user: Partial<User>, isNew: boolean): Promise<void> {
   const result = await callAzureFunction('updateProfile', { user, isNew })
@@ -468,12 +438,6 @@ function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
       if (otherId === userId) return
 
       dispatch(ChatMessageAction(messageId, otherId, message))
-    },
-    caption: (messageId: string, otherId: string, message: string) => {
-      console.log('Received caption', otherId, message, messageId)
-      if (otherId === userId) return
-
-      dispatch(CaptionMessageAction(messageId, otherId, message))
     },
     mods: (otherId: string, message: string) => {
       dispatch(ModMessageAction(otherId, message))
