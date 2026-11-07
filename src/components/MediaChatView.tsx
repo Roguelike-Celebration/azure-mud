@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, VideoHTMLAttributes } from 'react'
+import React, { useContext, useEffect, useRef, VideoHTMLAttributes } from 'react'
 
 import { MinimalUser } from '../../server/src/user'
 import { SetTextOnlyModeAction } from '../Actions'
@@ -23,7 +23,7 @@ interface MediaProps {
 
 export default function MediaChatView (props: MediaProps) {
   const { publishingCamera, callParticipants, inCall, joinCallFailed } = useMediaChatContext()
-  const dispatch = React.useContext(DispatchContext)
+  const dispatch = useContext(DispatchContext)
 
   // TODO: props.visibleSpeakers should never be undefined, but it is?!
   const visibleSpeakers = (props.visibleSpeakers || []).map(x => x[0])
