@@ -64,5 +64,14 @@
     "parcel": "2.16.4",
     "typescript": "6.0.3",
     "typescript-eslint": "^8.72.0"
+  },
+  "allowScripts": {
+    "core-js": false,
+    "@parcel/watcher@2.6.0": true,
+    "@swc/core@1.16.20": true,
+    "lmdb@2.8.5": true,
+    "msgpackr-extract@3.0.4": true,
+    "protobufjs@6.11.3": true,
+    "protobufjs@7.6.6": true
   }
 }
