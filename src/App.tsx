@@ -13,7 +13,7 @@ import {
   ShowSideMenuAction,
   SpaceIsClosedAction
 } from './Actions.js'
-import { currentUser, onAuthenticationStateChange } from './authentication.js'
+import { currentUser, getRequiredCurrentUser, onAuthenticationStateChange } from './authentication.js'
 import BadgesModalView from './components/BadgesModalView.js'
 import BadgeUnlockModal from './components/BadgeUnlockModal.js'
 import ClientDeployedModal from './components/ClientDeployedModal.js'
@@ -50,7 +50,7 @@ import YouAreBannedView from './components/YouAreBannedView.js'
 import { MUD_TOOLTIP_ID } from './display.js'
 import { Modal } from './modals.js'
 import { checkIsRegistered, connect, disconnectWebPubSub } from './networking.js'
-import reducer, { defaultState, RoomDataMap, State, UserMap } from './reducer.js'
+import reducer, { defaultState, myUser, myUserId, RoomDataMap, State, UserMap } from './reducer.js'
 import * as Storage from './storage.js'
 import { ThunkDispatch, useReducerWithThunk } from './useReducerWithThunk.js'
 
@@ -63,12 +63,17 @@ interface SettingsContextValue {
   useSimpleNames: boolean
 }
 
-export const DispatchContext = createContext<ThunkDispatch<Action, State>>(null)
-export const MessagesContext = createContext<State['messages']>(null)
-export const UserMapContext = createContext<UserMapContextValue>(null)
-export const SettingsContext = createContext<SettingsContextValue>(null)
-export const IsMobileContext = createContext<boolean>(null)
-export const RoomDataContext = createContext<RoomDataMap>(null)
+/** Placeholder default for a context with no meaningful value. */
+const noDefault = <T,>(): T => null as unknown as T
+// These next three have no meaningful default - they're only valid inside App's providers below.
+// Reading one outside them gets null despite the typing. We just hacked them to satisfy strict-null
+// type checking here. Real logic fixes need to be added later.
+export const DispatchContext = createContext<ThunkDispatch<Action, State>>(noDefault())
+export const MessagesContext = createContext<State['messages']>(noDefault())
+export const UserMapContext = createContext<UserMapContextValue>(noDefault())
+export const SettingsContext = createContext<SettingsContextValue>({ useSimpleNames: false })
+export const IsMobileContext = createContext<boolean>(false)
+export const RoomDataContext = createContext<RoomDataMap>({})
 
 const App = () => {
   const [state, dispatch] = useReducerWithThunk<Action, State>(
@@ -102,7 +107,8 @@ const App = () => {
         const { registeredUsername, spaceIsClosed, isMod, isBanned } = registrationStatus
         if (!registeredUsername) {
           // If email, use ID to not leak, otherwise use service's default display name (for Twitter, their handle)
-          const defaultDisplayName = user.email ? userId : user.displayName
+          // (As of ~2024, we only support email, so this behavior isn't readily testable.)
+          const defaultDisplayName = user.email ? userId : (user.displayName ?? userId)
           dispatch(
             AuthenticateAction(userId, defaultDisplayName, providerId, false)
           )
@@ -171,10 +177,8 @@ const App = () => {
     ''
   )
 
-  // This is kind of janky!
   if (
-    currentUser() &&
-    currentUser().isSignInWithEmailLink(window.location.href)
+    currentUser()?.isSignInWithEmailLink(window.location.href)
   ) {
     return <EmailVerifiedView />
   }
@@ -186,7 +190,7 @@ const App = () => {
 
   if (state.checkedAuthentication && state.mustVerifyEmail) {
     return (
-      <VerifyEmailView userEmail={currentUser().email} dispatch={dispatch} />
+      <VerifyEmailView userEmail={getRequiredCurrentUser().email ?? '(no email)'} dispatch={dispatch} />
     )
   }
 
@@ -199,7 +203,7 @@ const App = () => {
     return (
       <ProfileEditView
         isFTUE={true}
-        defaultHandle={state.userMap[state.userId].username}
+        defaultHandle={myUser(state).username}
         user={state.profileData}
         prepopulateTwitterWithDefaultHandle={
           state.authenticationProvider === 'twitter'
@@ -208,11 +212,14 @@ const App = () => {
     )
   }
 
-  if (state.isClosed && !state.userMap[state.userId].isMod) {
-    return <GoHomeView user={state.userMap[state.userId]} email={currentUser().email} />
+  const meUser = myUser(state)
+  if (state.isClosed && !meUser.isMod) {
+    return <GoHomeView user={meUser} email={getRequiredCurrentUser().email ?? '(no email)'} />
   } else if (state.isBanned) {
-    return <YouAreBannedView user={state.userMap[state.userId]} email={currentUser().email} />
+    return <YouAreBannedView user={meUser} email={getRequiredCurrentUser().email ?? '(no email)'} />
   }
+
+  const currentRoom = state.roomId !== undefined ? state.roomData[state.roomId] : undefined
 
   let innerModalView: React.ReactElement | undefined
   let modalView: React.ReactElement | undefined
@@ -226,18 +233,22 @@ const App = () => {
       innerModalView = (
         <ProfileEditView
           isFTUE={false}
-          defaultHandle={state.userMap[state.userId].username}
+          defaultHandle={myUser(state).username}
           user={state.profileData}
         />
       )
       break
     }
     case Modal.NoteWall: {
-      const room = state.roomData[state.roomId]
+      const room = currentRoom
+      if (!room || !state.profileData) {
+        // Room and/or profile data waiting on connect() completion
+        break
+      }
       innerModalView = (
         <NoteWallView
           roomDisplayName={room.displayName}
-          notes={room.notes}
+          notes={room.notes ?? []}
           noteWallData={room.noteWallData}
           roomData={state.roomData}
           user={state.profileData}
@@ -249,7 +260,7 @@ const App = () => {
     case Modal.Settings: {
       innerModalView = (
         <SettingsView
-          unlockedBadges={state.profileData?.unlockedBadges}
+          unlockedBadges={state.profileData?.unlockedBadges ?? []}
         />
       )
       break
@@ -257,14 +268,17 @@ const App = () => {
     case Modal.Badges: {
       innerModalView = (
         <BadgesModalView
-          equippedBadges={state.profileData?.equippedBadges}
-          unlockedBadges={state.profileData?.unlockedBadges}
+          equippedBadges={state.profileData?.equippedBadges ?? []}
+          unlockedBadges={state.profileData?.unlockedBadges ?? []}
           unlockableBadges={state.unlockableBadges}
         />
       )
       break
     }
     case Modal.BadgeUnlock: {
+      if (!state.justUnlockedBadge) {
+        break
+      }
       innerModalView = <BadgeUnlockModal badge={state.justUnlockedBadge} />
       break
     }
@@ -277,6 +291,9 @@ const App = () => {
       break
     }
     case Modal.Map: {
+      if (state.roomId === undefined) {
+        break
+      }
       modalIsFullScreen = true
       innerModalView = (
         <MapModalView
@@ -313,7 +330,7 @@ const App = () => {
     }
     case Modal.Disconnected: {
       modalIsUnclosable = true
-      innerModalView = <DisconnectModalView userId={state.userId} />
+      innerModalView = <DisconnectModalView userId={myUserId(state)} />
       break
     }
     case Modal.HappeningNow: {
@@ -340,17 +357,27 @@ const App = () => {
       break
     }
     case Modal.Riddles: {
-      const room = state.roomData[state.roomId]
-      innerModalView = <RiddleModalView riddles={room.riddles} />
+      const room = currentRoom
+      if (!room) {
+        break
+      }
+      innerModalView = <RiddleModalView riddles={room.riddles ?? []} />
       break
     }
     case Modal.SpecialFeatureText: {
-      const room = state.roomData[state.roomId]
+      const room = currentRoom
+      if (!room || !room.specialFeatureText) {
+        break
+      }
       innerModalView = <SpecialTextModalView text={room.specialFeatureText} />
       break
     }
     case Modal.Obelisk: {
+      if (!state.profileData) {
+        break
+      }
       innerModalView = <ObeliskView notes={state.obeliskNotes} user={state.profileData} />
+      break
     }
   }
 
@@ -374,8 +401,8 @@ const App = () => {
       <DispatchContext.Provider value={dispatch}>
         <MessagesContext.Provider value={state.messages}>
             <IsMobileContext.Provider value={isMobile}>
-              <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames }}>
-                <UserMapContext.Provider value={{ userMap: state.userMap, myId: state.userId }}>
+              <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames ?? false }}>
+                <UserMapContext.Provider value={{ userMap: state.userMap, myId: myUserId(state) }}>
                   <RoomDataContext.Provider value={state.roomData}>
                     <div
                       id={
@@ -397,7 +424,7 @@ const App = () => {
                           <SideNavView
                             presenceData={state.presenceData}
                             currentRoomId={state.roomId}
-                            username={state.userMap[state.userId].username}
+                            username={myUser(state).username}
                             spaceIsClosed={state.isClosed}
                           />
                           {/* Once we moved the sidebar to be position:fixed, we still
@@ -414,10 +441,10 @@ const App = () => {
                     )}
                     {modalView}
                     <div id="main" role="main">
-                      {state.roomData[state.roomId] ? (
+                      {currentRoom ? (
                         <RoomView
-                          room={state.roomData[state.roomId]}
-                          userId={state.userId}
+                          room={currentRoom}
+                          userId={myUserId(state)}
                           roomData={state.roomData}
                           presenceData={state.presenceData}
                           hasDismissedAModal={state.hasDismissedAModal}
@@ -434,7 +461,7 @@ const App = () => {
                         sendMessage={(message) =>
                           dispatch(SendMessageAction(message))
                         }
-                        usersInRoom={state.roomData[state.roomId]?.users}
+                        usersInRoom={currentRoom?.users}
                       />
                     </div>
                     {profile}

@@ -13,9 +13,9 @@ const ONE_HOUR_IN_MS = 1000 * 60 * 60
 
 export async function getMessages (): Promise<MessageArchiveData | undefined> {
   try {
-    const timestamp: Date = await localforage.getItem(messageTimestampKey)
-    const messages: Message[] = await localforage.getItem(messagesKey)
-    const whispers: WhisperMessage[] = await localforage.getItem(whisperKey)
+    const timestamp: Date | null = await localforage.getItem(messageTimestampKey)
+    const messages: Message[] = (await localforage.getItem(messagesKey)) ?? []
+    const whispers: WhisperMessage[] = (await localforage.getItem(whisperKey)) || []
 
     if (timestamp && ((new Date().getTime() - timestamp.getTime()) < ONE_HOUR_IN_MS)) {
       console.log(`Retrieved fresh message archive from browser storage (timestamp ${timestamp})`,

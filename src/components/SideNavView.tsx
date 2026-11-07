@@ -11,7 +11,7 @@ import '../../style/nav.css'
 
 interface Props {
   presenceData: PresenceCountMap;
-  currentRoomId: string
+  currentRoomId: string | undefined
   username: string;
   spaceIsClosed?: boolean;
 }
@@ -39,7 +39,7 @@ export default function SideNavView (props: Props) {
         id='close-button'
         className='close'
       >x</button> : ''}
-      <MenuButtonView username={props.username} spaceIsClosed={props.spaceIsClosed} />
+      <MenuButtonView username={props.username} spaceIsClosed={props.spaceIsClosed ?? false} />
       <button id='happening-now-button' onClick={showHappeningNow}>Happening Now</button>
       <button id='nav-map-button' onClick={showMap}>Map</button>
       <ul>

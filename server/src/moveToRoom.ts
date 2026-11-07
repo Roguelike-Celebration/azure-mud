@@ -35,7 +35,7 @@ export async function moveToRoom (
     }
   }
 
-  if (!to) {
+  if (!to && currentRoom) {
     // If we STILL haven't found a room, it's possible the user typed the
     // green-colored link text in the scene, which might be unique.
     // Let's try to parse that out of the current room
@@ -114,7 +114,7 @@ export async function moveToRoom (
       {
         groupId: to.id,
         target: 'playerEntered',
-        arguments: [user.id, user.roomId, currentRoom.shortName || 'undefined']
+        arguments: [user.id, user.roomId, currentRoom?.shortName || user.roomId]
       },
       {
         userId: user.id,

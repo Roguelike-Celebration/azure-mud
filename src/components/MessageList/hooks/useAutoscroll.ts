@@ -1,5 +1,5 @@
 import {
-  MutableRefObject,
+  RefObject,
   UIEventHandler,
   useCallback,
   useContext,
@@ -15,7 +15,7 @@ import {
 import { DispatchContext } from '../../../App.js'
 import { VirtualizationContext } from '../../VirtualizationProvider/index.js'
 
-type ScrollContainerRef = MutableRefObject<HTMLOListElement>
+type ScrollContainerRef = RefObject<HTMLOListElement>
 type ScrollHandler = UIEventHandler<HTMLOListElement>
 
 export const useAutoscroll = (
@@ -24,7 +24,7 @@ export const useAutoscroll = (
   const [{ viewportScrollHeight, viewportScrollTop }, virtualizaitonDispatch] =
     useContext(VirtualizationContext)
   const dispatch = useContext(DispatchContext)
-  const scrollContainerRef = useRef<HTMLOListElement>()
+  const scrollContainerRef = useRef<HTMLOListElement>(null)
 
   const viewportScrollHeightRef = useRef(viewportScrollHeight)
   viewportScrollHeightRef.current = viewportScrollHeight

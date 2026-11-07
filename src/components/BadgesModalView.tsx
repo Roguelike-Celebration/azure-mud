@@ -13,7 +13,7 @@ import '../../style/badges.css'
 
 interface Props {
   unlockedBadges: Badge[]
-  equippedBadges: Badge[]
+  equippedBadges: (Badge | undefined)[]
   unlockableBadges?: Badge[]
 }
 
@@ -72,7 +72,7 @@ export default function BadgesModalView (props: Props) {
     try {
       data = e.dataTransfer.getData('text/plain')
       const badge = JSON.parse(data)
-      const index = parseInt(e.currentTarget.dataset.index)
+      const index = parseInt(e.currentTarget.dataset.index ?? '')
       dispatch(EquipBadgeAction(badge, index))
       equipBadge(badge, index)
 
@@ -86,7 +86,7 @@ export default function BadgesModalView (props: Props) {
   }
 
   const selectEquippedBadge = (e: React.SyntheticEvent<HTMLDivElement>) => {
-    const index = parseInt(e.currentTarget.dataset.index)
+    const index = parseInt(e.currentTarget.dataset.index ?? '')
     if (selectedEquippedIndex === index) {
       setSelectedEquippedIndex(undefined)
       return
@@ -104,7 +104,7 @@ export default function BadgesModalView (props: Props) {
 
   const rightClickUnequipBadge = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
-    const index = parseInt(e.currentTarget.dataset.index)
+    const index = parseInt(e.currentTarget.dataset.index ?? '')
     setSelectedEquippedIndex(undefined)
 
     if (_.isNumber(index)) {
@@ -116,7 +116,7 @@ export default function BadgesModalView (props: Props) {
   }
 
   const selectUnlockedBadge = (e: React.SyntheticEvent<HTMLSpanElement>) => {
-    const index = parseInt(e.currentTarget.dataset.index)
+    const index = parseInt(e.currentTarget.dataset.index ?? '')
     const badge = props.unlockedBadges[index]
 
     if (selectedBadge === badge) {
@@ -170,7 +170,7 @@ export default function BadgesModalView (props: Props) {
         onKeyDown={keyDownOnEquipped}
         role='button'
         tabIndex={0}>
-        {rawEquippedBadges[i] && <BadgeView key={`equipped-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />}
+        {b && <BadgeView key={`equipped-${i}`} emoji={b.emoji} description={b.description} isCustom={b.isCustom} />}
       </div>
     )
   }
@@ -179,12 +179,13 @@ export default function BadgesModalView (props: Props) {
 
   const unlockedBadgesByCategory = new Map<BadgeCategory, JSX.Element[]>()
   props.unlockedBadges.forEach((b, i) => {
-    if (!unlockedBadgesByCategory.has(b.category)) {
-      unlockedBadgesByCategory.set(b.category, [])
-    }
-
     unlockedBadgesSet.add(b.emoji)
-    unlockedBadgesByCategory.get(b.category).push(
+    let categoryBadges = unlockedBadgesByCategory.get(b.category)
+    if (!categoryBadges) {
+      categoryBadges = []
+      unlockedBadgesByCategory.set(b.category, categoryBadges)
+    }
+    categoryBadges.push(
       (
         <span
           aria-pressed={selectedBadge === b}
@@ -208,11 +209,12 @@ export default function BadgesModalView (props: Props) {
   _.uniq(props.unlockableBadges || []).filter(b => {
     return !unlockedBadgesSet.has(b.emoji)
   }).forEach((b) => {
-    if (!lockedBadgesByCategory.has(b.category)) {
-      lockedBadgesByCategory.set(b.category, [])
+    let categoryBadges = lockedBadgesByCategory.get(b.category)
+    if (!categoryBadges) {
+      categoryBadges = []
+      lockedBadgesByCategory.set(b.category, categoryBadges)
     }
-
-    lockedBadgesByCategory.get(b.category).push(
+    categoryBadges.push(
       (
         <span
           aria-pressed={selectedBadge === b}
