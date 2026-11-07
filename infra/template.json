@@ -85,6 +85,7 @@
             ],
             "supportCredentials": true
           },
+          "use32BitWorkerProcess": false,
           "appSettings": [{
               "name": "FUNCTIONS_EXTENSION_VERSION",
               "value": "~4"
@@ -95,7 +96,7 @@
             },
             {
               "name": "WEBSITE_NODE_DEFAULT_VERSION",
-              "value": "~14"
+              "value": "~24"
             },
             {
               "name": "WEBSITE_RUN_FROM_PACKAGE",

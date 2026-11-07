@@ -1,4 +1,4 @@
-/* eslint-disable quotes */
+/* eslint-disable @stylistic/quotes */
 
 import tracery from 'tracery-grammar'
 
@@ -202,5 +202,3 @@ export const generate = () => {
   grammar.addModifiers(tracery.baseEngModifiers)
   return grammar.flatten('#origin#')
 }
-
-/* eslint-disable quotes */

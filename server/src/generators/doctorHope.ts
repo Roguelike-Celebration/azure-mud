@@ -1,5 +1,3 @@
-/* eslint-disable quotes */
-
 import tracery from 'tracery-grammar'
 
 export const actionString = (doctorHope: string) => {
@@ -44,4 +42,3 @@ export const generate = () => {
   grammar.addModifiers(tracery.baseEngModifiers)
   return grammar.flatten('#origin#')
 }
-/* eslint-enable quotes */

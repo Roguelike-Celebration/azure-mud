@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "module": "commonjs",
+    "target": "ES2020",
     "lib": ["es2019", "DOM"],
     "strict": false,
     "noImplicitAny": true,
@@ -13,8 +14,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "jsx": "react",
-    "downlevelIteration": true,
+    "jsx": "react"
   },
   "ts-node": {
     "esm": true

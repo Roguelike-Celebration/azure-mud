@@ -4,8 +4,8 @@
   "description": "",
   "homepage": "https://github.com/Roguelike-Celebration/azure-mud",
   "scripts": {
-    "dev": "parcel *.html",
-    "build": "rm -rf ./dist && parcel build *.html --public-url ./ --dist-dir ./dist && cp CNAME dist && rsync -r images dist",
+    "dev": "parcel --no-autoinstall *.html",
+    "build": "rm -rf ./dist && parcel build --no-autoinstall *.html --public-url ./ --dist-dir ./dist && cp CNAME dist && rsync -r images dist",
     "deploy": "npm run build; cp CNAME dist; gh-pages -d dist",
     "deploy-server": "pushd ./functions; npm run deploy; popd",
     "typecheck": "rc=0; npm run typecheck-frontend || rc=1; npm run typecheck-server || rc=1; exit $rc",
@@ -20,8 +20,8 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "dependencies": {
@@ -63,32 +63,25 @@
     "@types/tracery-grammar": "^2.7.4",
     "@types/twilio-video": "^2.7.3",
     "@types/uuid": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
-    "eslint": "^7.6.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.20.5",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint": "^9.39.5",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
     "events": "^3.3.0",
     "gh-pages": "^3.1.0",
     "https-browserify": "^1.0.0",
-    "parcel": "2.12.0",
+    "neostandard": "0.14.1",
+    "parcel": "2.16.4",
     "process": "^0.11.10",
     "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "typescript": "5.3.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.72.0",
     "url": "^0.11.0",
     "util": "^0.12.4"
-  },
-  "overrides": {
-    "node-releases": "2.0.44"
   }
 }
