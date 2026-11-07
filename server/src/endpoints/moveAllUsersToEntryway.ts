@@ -4,8 +4,8 @@ import DB from '../redis.js'
 import { User } from '../user.js'
 
 /* Moves all users to entryway. Should be used ONLY as an administrative command while the space is unpopulated,
- * because it  will not properly resolve the clients which are currently logged in and is gonna look buggy until
-* the user manually moves. */
+ * because it will not properly resolve the clients which are currently logged in and is gonna look buggy until
+ * the user manually moves. */
 const moveAllUsersToEntryway: AuthenticatedEndpointFunction = async (user: User, inputs: any, log: LogFn) => {
   const start = Math.round(Date.now() / 1000)
 
@@ -35,14 +35,10 @@ const moveAllUsersToEntryway: AuthenticatedEndpointFunction = async (user: User,
       }
     }
   } catch (e) {
-    const err = e as Error
-    log('ERROR!')
-    log(err.message)
-    if (err.stack) { log(err.stack) }
+    log('ERROR: moveAllUsersToEntryway: Error while moving users:', e)
   }
-
-  log(allMessages)
-  log(managementTasks)
+  log(`moveAllUsersToEntryway results: ${allUsers.length} users, ${allMessages.length} messages, ` +
+    `${managementTasks.length} group mgmt tasks`, { allMessages, managementTasks })
 
   return {
     httpResponse: {

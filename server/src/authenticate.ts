@@ -35,11 +35,7 @@ export async function getUserIdFromHeaders (
   const authHeaderParts = req.headers.authorization.split(' ')
   // I think 'Bearer' is technically OAuth 2.0 and I don't know if that's precisely what we're using
   if (authHeaderParts.length !== 2 || authHeaderParts[0] !== 'Bearer') {
-    context.log(
-      'Error authenticating auth headers: ' +
-        req.headers.authorization +
-        ' - were not formatted as Bearer.'
-    )
+    context.log(`Error authenticating auth headers: ${req.headers.authorization} - were not formatted as Bearer.`)
     return undefined
   }
 
@@ -71,9 +67,7 @@ export async function getUserIdFromHeaders (
       return userId
     })
     .catch((error) => {
-      context.log(
-        'Error authenticating token: ' + clientIdToken + ' error: ' + error
-      )
+      context.log('Error authenticating token: ' + clientIdToken + ' error: ' + error)
       return undefined
     })
 }
@@ -90,7 +84,7 @@ export default async function authenticate (
       status: 400,
       body: 'You did not include a user ID'
     }
-    context.log('Failed to include a user ID')
+    context.log('Failed to include a user ID in authenticate() call')
     return
   }
 
@@ -102,9 +96,7 @@ export default async function authenticate (
       status: 501,
       body: 'Action was selected for auditing, but audit was not properly set up; action blocked until auditing configured.'
     }
-    context.log(
-      'Failed to configure audit endpoint with the proper tableBinding'
-    )
+    context.log('Failed to configure audit endpoint with the proper tableBinding')
     return
   }
 

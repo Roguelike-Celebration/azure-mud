@@ -82,7 +82,8 @@ export default memo(function MessageView (props: {
   // Keep this `if (!component)` guard despite the type check, because message.type comes from
   // external data at run time, so unexpected message.types could still sneak through.
   if (!component) {
-    console.log('Unexpected message type', message.type)
+    console.error('Unexpected message type. Indicates mismatch between client code and server data.',
+      message.type)
     return <div />
   }
 
