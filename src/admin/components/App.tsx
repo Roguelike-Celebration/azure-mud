@@ -8,7 +8,7 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 import { onAuthenticationStateChange, signOut } from '../../authentication.js'
 import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking.js'
 import { useReducerWithThunk } from '../../useReducerWithThunk.js'
-import { Action, LoggedInAction, UpdateAndShowRoomAction, UpdateRoomIds } from '../actions.js'
+import { Action, LoggedInAction, LoggedOutAction, UpdateAndShowRoomAction, UpdateRoomIds } from '../actions.js'
 import reducer, { defaultState, State } from '../reducer.js'
 
 import LoggedOutView from './LoggedOutView.js'
@@ -34,7 +34,10 @@ const App = function () {
       // The shouldVerifyEmail check shouldn't be necessary,
       // but I'm not convinced we won't have an exploit where someone can make a new account with an existing admin email.
       // This 20 characters is easier to type than manually testing.
+      //
+      // Also reached when a logout in another tab happens.
       if (!user || user.shouldVerifyEmail) {
+        dispatch(LoggedOutAction())
         return
       }
 
@@ -72,6 +75,10 @@ const App = function () {
 
   const createRoom = (name: string) => {
     dispatch(UpdateAndShowRoomAction(name, { displayName: name, shortName: name, id: name, description: '' }))
+  }
+
+  if (!state.checkedAuthentication) {
+    return <p role="status">Logging in...</p>
   }
 
   if (state.isLoggedIn) {
