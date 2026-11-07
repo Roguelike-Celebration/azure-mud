@@ -2,8 +2,8 @@
 import React, { useEffect, useRef } from 'react'
 import { LocalVideoTrack, RemoteVideoTrack, Track } from 'twilio-video'
 
-import useMediaStreamTrack from './useMediaStreamTrack'
-import useVideoTrackDimensions from './useVideoTrackDimensions'
+import useMediaStreamTrack from './useMediaStreamTrack.js'
+import useVideoTrackDimensions from './useVideoTrackDimensions.js'
 
 interface VideoTrackProps {
   track: LocalVideoTrack | RemoteVideoTrack;

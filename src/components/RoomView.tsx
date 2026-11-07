@@ -5,23 +5,23 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import {
   ShowModalAction,
   StopVideoChatAction
-} from '../Actions'
-import { DispatchContext } from '../App'
-import { linkActions } from '../linkActions'
-import { Modal } from '../modals'
+} from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { linkActions } from '../linkActions.js'
+import { Modal } from '../modals.js'
 import {
   moveToRoom,
   pickUpItem
-} from '../networking'
-import { PresenceCountMap, RoomDataMap } from '../reducer'
-import { Room } from '../room'
-import { useMediaChatContext } from '../videochat/mediaChatContext'
+} from '../networking.js'
+import { PresenceCountMap, RoomDataMap } from '../reducer.js'
+import { Room } from '../room.js'
+import { useMediaChatContext } from '../videochat/mediaChatContext.js'
 
-import { ConfettiRoomView } from './feature/ConfettiRoomView'
-import { DullDoorRoomView } from './feature/DullDoorViews'
-import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews'
-import { RainbowGateRoomView } from './feature/RainbowGateViews'
-import PresenceView from './PresenceView'
+import { ConfettiRoomView } from './feature/ConfettiRoomView.js'
+import { DullDoorRoomView } from './feature/DullDoorViews.js'
+import { FullRoomIndexRoomView } from './feature/FullRoomIndexViews.js'
+import { RainbowGateRoomView } from './feature/RainbowGateViews.js'
+import PresenceView from './PresenceView.js'
 
 import '../../style/room.css'
 

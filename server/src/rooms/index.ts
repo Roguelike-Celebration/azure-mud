@@ -1,5 +1,5 @@
-import DB from '../redis'
-import type { MinimalRoomDataMap, RoomDataMap } from '../types'
+import DB from '../redis.js'
+import type { MinimalRoomDataMap, RoomDataMap } from '../types.js'
 
 import json from './data/roomData.json'
 

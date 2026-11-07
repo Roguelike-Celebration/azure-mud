@@ -1,6 +1,6 @@
-import { DB } from './database'
-import { Message } from './endpoint'
-import { PresenceListMap } from './types'
+import { DB } from './database.js'
+import { Message } from './endpoint.js'
+import { PresenceListMap } from './types.js'
 
 /** Fetches presence data for a set of rooms and returns a SignalR message
  * to broadcast current presence data to all users */

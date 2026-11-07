@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 
-import { authenticatedAzureWrap, azureWrap } from '../src/azureWrap'
-import { getServerSettings, postServerSettings } from '../src/endpoints/serverSettings'
+import { authenticatedAzureWrap, azureWrap } from '../src/azureWrap.js'
+import { getServerSettings, postServerSettings } from '../src/endpoints/serverSettings.js'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

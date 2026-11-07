@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
-import { SetKeepCameraWhenMovingAction } from '../Actions'
-import { DispatchContext } from '../App'
+import { SetKeepCameraWhenMovingAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
 
 interface Props {
   keepCameraWhenMoving: boolean;

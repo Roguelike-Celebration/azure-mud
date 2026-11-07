@@ -1,13 +1,13 @@
 import _ from 'lodash'
 
-import Redis from '../src/redis'
+import Redis from '../src/redis.js'
 
-import { Badge, UnlockableBadgeMap } from './badges'
-import { DB } from './database'
-import { Message, Result } from './endpoint'
-import { globalPresenceMessage } from './globalPresenceMessage'
-import { RoomResponse } from './types'
-import { awardUserBadge, User } from './user'
+import { Badge, UnlockableBadgeMap } from './badges.js'
+import { DB } from './database.js'
+import { Message, Result } from './endpoint.js'
+import { globalPresenceMessage } from './globalPresenceMessage.js'
+import { RoomResponse } from './types.js'
+import { awardUserBadge, User } from './user.js'
 
 export async function moveToRoom (
   user: User,

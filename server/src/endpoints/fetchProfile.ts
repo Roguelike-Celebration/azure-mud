@@ -1,5 +1,5 @@
-import { DB } from '../database'
-import { EndpointFunction, LogFn } from '../endpoint'
+import { DB } from '../database.js'
+import { EndpointFunction, LogFn } from '../endpoint.js'
 
 const fetchProfile: EndpointFunction = async (inputs: any, log: LogFn) => {
   const userId = inputs.userId

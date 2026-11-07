@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { FaCog, FaUser, FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from 'react-icons/fa'
 
-import { ShowModalAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { Modal } from '../modals'
-import { useMediaChatContext } from '../videochat/mediaChatContext'
+import { ShowModalAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { Modal } from '../modals.js'
+import { useMediaChatContext } from '../videochat/mediaChatContext.js'
 
 interface Props {
   speaking: boolean

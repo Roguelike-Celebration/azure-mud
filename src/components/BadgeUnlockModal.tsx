@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 
-import { Badge } from '../../server/src/badges'
-import { ShowModalAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { Modal } from '../modals'
+import { Badge } from '../../server/src/badges.js'
+import { ShowModalAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { Modal } from '../modals.js'
 
-import BadgeView from './BadgeView'
+import BadgeView from './BadgeView.js'
 
 export default function BadgeUnlockModal (props: { badge: Badge }) {
   const { badge } = props

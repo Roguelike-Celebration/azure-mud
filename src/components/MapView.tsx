@@ -3,10 +3,10 @@
 import _ from 'lodash'
 import React, { useContext, useEffect, useState } from 'react'
 
-import { HideModalAction } from '../Actions'
-import { DispatchContext } from '../App'
-import { moveToRoom } from '../networking'
-import { PresenceCountMap } from '../reducer'
+import { HideModalAction } from '../Actions.js'
+import { DispatchContext } from '../App.js'
+import { moveToRoom } from '../networking.js'
+import { PresenceCountMap } from '../reducer.js'
 
 /**
  * This renders a clickable ASCII map!

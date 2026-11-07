@@ -1,8 +1,8 @@
 import _ from 'lodash'
 
-import { Badge, FreeBadges } from './badges'
-import { DB } from './database'
-import resetRoomData from './endpoints/resetRoomData'
+import { Badge, FreeBadges } from './badges.js'
+import { DB } from './database.js'
+import resetRoomData from './endpoints/resetRoomData.js'
 
 // TODO: If we have tooltip popups showing profile info,
 // the distinction between a 'full' and 'minimal' user is no longer useful

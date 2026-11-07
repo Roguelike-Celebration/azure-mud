@@ -1,4 +1,4 @@
-import { User } from './user'
+import { User } from './user.js'
 
 /**
  * Instead of being tied to a single server implementation (e.g. Azure Functions + Azure SignalR Service),
