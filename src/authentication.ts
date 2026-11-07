@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import type firebaseui from 'firebaseui'
 
 export function onAuthenticationStateChange (handler: (user: AuthenticatedUser | undefined) => void): void {
   firebase.auth().onAuthStateChanged((fbUser: firebase.User) => {
@@ -64,4 +65,23 @@ export function sendSignInLinkToEmail (email: string): void {
   firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings).then(() => {
     console.log(`Sign-in email sent to ${email}! URL=${url}`)
   })
+}
+
+export const firebaseUiConfig: firebaseui.auth.Config = {
+  callbacks: {
+    // The documentation on the firebaseui README appears somewhat borked at time of writing; the structure of
+    // AuthResult doesn't line up with itself! If you go back to that README treat it with caution.
+    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+      const user = currentUser()
+      if (user.shouldVerifyEmail) {
+        sendSignInLinkToEmail(user.email)
+      }
+      // false = don't redirect. We don't use sign-in redirect URLs, so returning true just causes
+      // the firebase widget to show a "No redirect URL has been found" error message.
+      return false
+    }
+  },
+  signInOptions: [
+    firebase.auth.EmailAuthProvider.PROVIDER_ID
+  ]
 }
