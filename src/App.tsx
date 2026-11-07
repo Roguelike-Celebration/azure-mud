@@ -1,6 +1,6 @@
 import React, { createContext, useEffect } from 'react'
 import { IconContext } from 'react-icons/lib'
-import ReactTooltip from 'react-tooltip'
+import { Tooltip } from 'react-tooltip'
 
 import {
   Action,
@@ -47,6 +47,7 @@ import VerifyEmailView from './components/VerifyEmailView.js'
 import { VirtualizationProvider } from './components/VirtualizationProvider/index.js'
 import WelcomeModalView from './components/WelcomeModalView.js'
 import YouAreBannedView from './components/YouAreBannedView.js'
+import { MUD_TOOLTIP_ID } from './display.js'
 import { Modal } from './modals.js'
 import { checkIsRegistered, connect } from './networking.js'
 import reducer, { defaultState, RoomDataMap, State, UserMap } from './reducer.js'
@@ -376,7 +377,14 @@ const App = () => {
                           : 'app'
                       }
                     >
-                      <ReactTooltip />
+                      <Tooltip
+                        id={MUD_TOOLTIP_ID}
+                        portalRoot={document.body}
+                        positionStrategy="fixed"
+                        float
+                        /* High z-index so tooltip sits above modals */
+                        style={{ zIndex: 100001 }}
+                      />
                       {shouldShowMenu ? (
                         <span>
                           <SideNavView

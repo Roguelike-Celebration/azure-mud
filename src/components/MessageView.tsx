@@ -1,15 +1,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
+import Linkify from 'linkify-react'
 import React, { FunctionComponent, memo, useContext } from 'react'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
-import Linkify from 'react-linkify'
 
 import {
   RoomDataContext,
   UserMapContext
 } from '../App.js'
 import { renderCustomEmojiString } from '../emoji/index.js'
+import { linkifyOpts } from '../linkifyOptions.js'
 import {
   ChatMessage,
   CommandMessage,
@@ -123,12 +124,6 @@ type DeletableMessageViewProps = {
   messageText: string;
 }
 
-const linkDecorator = (href: string, text: string, key: number): React.ReactElement => (
-  <a href={href} key={key} target="_blank" rel="noopener noreferrer">
-    {text}
-  </a>
-)
-
 const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
   props
 ) => {
@@ -138,13 +133,13 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
 
   if (!playerIsMod) {
     return (
-      <Linkify componentDecorator={linkDecorator}>{props.children}</Linkify>
+      <Linkify options={linkifyOpts}>{props.children}</Linkify>
     )
   } else {
     const key: string = `${props.messageId}-name`
 
     return (
-      <Linkify componentDecorator={linkDecorator}>
+      <Linkify options={linkifyOpts}>
         <span className="deleteMenu">
           <ContextMenuTrigger id={key} mouseButton={2} renderTag="span">
             {props.children}
@@ -347,7 +342,7 @@ const ModMessageView = (props: ModMessage) => {
             ❗
           </span>
           <NameView userId={props.userId} id={props.id} /> says to the{' '}
-          <strong>mods</strong>:{props.message}
+          <strong>mods</strong>: {props.message}
           <span role="img" aria-label="red exclamation point">
             ❗
           </span>
