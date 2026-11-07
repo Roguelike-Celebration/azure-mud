@@ -1,0 +1,15 @@
+# shellcheck configuration for bash linting
+
+# Resolve `source` paths relative to each script's location, not cwd.
+source-path=SCRIPTDIR
+
+# Check sourced files that aren't explicitly listed as inputs, too.
+external-sources=true
+
+# SC2181 - "check exit code directly with e.g. 'if mycmd;'".
+#
+# Deliberate style choice: I like doing a command on one line followed by a separate
+# `if [[ $? != 0 ]]` check. Keeps the command unindented, and error checking subordinate
+# to the important stuff, reading-wise. SC2155 is still enabled, and will catch the
+# cases where this is actually unsafe. -apj
+disable=SC2181

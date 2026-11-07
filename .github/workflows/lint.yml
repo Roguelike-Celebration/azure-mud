@@ -41,6 +41,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run lint
 
+      - name: Lint bash
+        if: ${{ !cancelled() }}
+        run: npm run lint-bash
+
       - name: Typecheck
         if: ${{ !cancelled() }}
         run: npm run typecheck
