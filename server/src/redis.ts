@@ -271,14 +271,14 @@ const Redis: RedisInternal = {
     return await getSet(speakerListKey) || []
   },
 
-  async setModStatus (userId: string, isMod: boolean) {
-    if (isMod) {
+  async setModStatus (userId: string, newModness: boolean) {
+    if (newModness) {
       await Redis.addMod(userId)
     } else {
       await Redis.removeMod(userId)
     }
     const profile = await Redis.getUser(userId)
-    profile.isMod = isMod
+    profile.isMod = newModness
     await Redis.setUserProfile(userId, profile)
   },
 
