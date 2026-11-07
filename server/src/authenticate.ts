@@ -1,5 +1,5 @@
 import { Context, HttpRequest } from '@azure/functions'
-import * as admin from 'firebase-admin'
+import admin from 'firebase-admin'
 
 import { DB } from '../src/database'
 
