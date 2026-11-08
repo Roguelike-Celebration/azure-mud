@@ -452,6 +452,11 @@ export default produce((draft: State, action: Action) => {
     Storage.setShowDebugControls(action.value)
   }
 
+  if (action.type === ActionType.ClearWhisperHistory) {
+    draft.whispers = draft.whispers.filter((m) => m.userId !== action.value)
+    Storage.setWhispers(current(draft).whispers)
+  }
+
   if (action.type === ActionType.Authenticate) {
     draft.checkedAuthentication = true
 
