@@ -4,7 +4,7 @@ import React, { useContext } from 'react'
 
 import { getAllRooms, getRoom, resetRoomData } from '../../networking.js'
 import { UpdateAndShowRoomAction } from '../actions.js'
-import { formatRoomDataJson } from '../roomDataJson.js'
+import { formatRoomDataJson, roomDataFileName } from '../roomDataJson.js'
 
 import { DispatchContext } from './App.js'
 import '../../../style/nav.css'
@@ -32,7 +32,9 @@ export default function (props: { roomIds: string[] | undefined }) {
     var a = document.createElement('a')
     var file = new Blob([roomJSON], { type: 'application/json' })
     a.href = URL.createObjectURL(file)
-    a.download = 'roomData.json'
+    // Use download time as timestamp. TODO: Use time of last edit instead. That time is
+    // not available through the backend API yet.
+    a.download = roomDataFileName(new Date())
     a.click()
   }
 

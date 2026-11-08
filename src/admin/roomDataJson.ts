@@ -11,6 +11,16 @@
 
 type RoomMap<T> = { [roomId: string]: T }
 
+/** File name for downloaded room data, with a timestamp. */
+export function roomDataFileName (time: Date): string {
+  // e.g.: "2026-11-08_18-30-05Z"; "Z" for UTC
+  const timestamp = time.toISOString()
+    .replace(/\.\d+Z$/, 'Z')
+    .replace('T', '_')
+    .replace(/:/g, '-')
+  return `roomData_${timestamp}.json`
+}
+
 /** Format room data in canonical roomData.json file format. */
 export function formatRoomDataJson<T extends object> (rooms: RoomMap<T>): string {
   return JSON.stringify(canonicalizeRoomData(rooms), null, 2) + '\n'
