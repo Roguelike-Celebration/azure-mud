@@ -82,6 +82,12 @@
   height: 40vh;
 }
 
+/* Distinguish system "empty chat" message from regular whispers. */
+.whisper-chat-empty {
+  color: var(--gray-text);
+  font-style: italic;
+}
+
 #input {
   display: flex;
   align-items: center;
