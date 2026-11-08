@@ -617,7 +617,10 @@ function deleteMessage (state: State, messageId: string) {
   const target = state.messages.entities[messageId]
 
   if (isDeletableMessage(target)) {
-    target.message = 'message was removed by moderator'
+    target.deleted = true
+    // Still overwrite the text, to remove from state and cache, and for older client code
+    // that doesn't support the deleted prop.
+    target.message = '[message was removed by moderator]'
 
     /**
      * need to use `current` here because `deleteMessage` is called by the

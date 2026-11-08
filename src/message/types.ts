@@ -32,6 +32,12 @@ export interface BaseMessage<T extends MessageType> {
   timestamp: string;
 }
 
+// Must be kept in sync with deletableMessageTypes/isDeletableMessage in message/utils.ts.
+export interface DeletableMessage<T extends MessageType> extends BaseMessage<T> {
+  // Optional because field was added 2026-11 and old cached messages lack it.
+  deleted?: boolean;
+}
+
 export interface ConnectedMessage extends BaseMessage<MessageType.Connected> {
   userId: string;
   roomId: string;
@@ -71,7 +77,7 @@ export interface SameRoomMessage extends BaseMessage<MessageType.SameRoom> {
   roomId: string;
 }
 
-export interface ChatMessage extends BaseMessage<MessageType.Chat> {
+export interface ChatMessage extends DeletableMessage<MessageType.Chat> {
   userId: string;
   message: string;
 }
@@ -88,17 +94,17 @@ export interface ModMessage extends BaseMessage<MessageType.Mod> {
   senderIsSelf: boolean;
 }
 
-export interface ShoutMessage extends BaseMessage<MessageType.Shout> {
+export interface ShoutMessage extends DeletableMessage<MessageType.Shout> {
   userId: string;
   message: string;
 }
 
-export interface EmoteMessage extends BaseMessage<MessageType.Emote> {
+export interface EmoteMessage extends DeletableMessage<MessageType.Emote> {
   userId: string;
   message: string;
 }
 
-export interface DanceMessage extends BaseMessage<MessageType.Dance> {
+export interface DanceMessage extends DeletableMessage<MessageType.Dance> {
   userId: string;
   message: string;
 }
