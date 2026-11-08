@@ -78,6 +78,7 @@ export default function InputView (props: {
           className="mentions__mentions"
           markup="@@[[__display__]]``__id__``@@"
           data={usersInRoom}
+          displayTransform={(id, display) => display || id}
           renderSuggestion={(suggestion, search, highlightedDisplay) => {
             return (
               <div>{highlightedDisplay}</div>
