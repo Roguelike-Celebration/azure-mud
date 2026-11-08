@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu-rlc'
 import ReactDOM from 'react-dom'
 
 import { MinimalUser } from '../../server/src/user.js'
@@ -17,45 +17,31 @@ import { fetchProfile, toggleUserSpeaker } from '../networking.js'
 import BadgeView from './BadgeView.js'
 import '../../style/nameView.css'
 
-// TODO: In this code, "user" might refer to the user whose name we clicked on to get a menu (the
-// target user), or the operating user who did the clicking (like in the case of `userIsMod`). Would
-// be nice to disambiguate that.
-
 interface Props {
   /** Id of the user being viewed (not necessarily the user of this session viewing it). */
   userId: string
-  nowrap?: boolean
   /** A contextMenu ID */
   id: string
   /** If true, don't render a clickable menu */
   skipMenu?: boolean
 }
 
-/** A context name menu item selection event, from either touch or mouse click. */
-type MenuItemEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>
-
-/** Data prop for a click on a user context menu. */
-interface UserMenuData {
-  id: string
-  username: string
-}
-
 export default function NameView (props: Props) {
   const dispatch = useContext(DispatchContext)
   const { useSimpleNames } = useContext(SettingsContext)
   const { userMap, myId } = useContext(UserMapContext)
+  // isMod = the user whose name is being rendered (target) is a mod
+  // myIsMod = the user who is logged in (operator) is a mod
+  // More generally here, "blah" = target user, "myBlah" = operating user
+  const myIsMod = userMap[myId].isMod
 
-  const isSelf = props.userId === myId
-
-  const user: MinimalUser = userMap[props.userId]
+  const userId = props.userId
+  const isSelf = userId === myId
+  const user: MinimalUser = userMap[userId]
   const username = user && user.username
   const isMod = user && user.isMod
   const isSpeaker = user && user.isSpeaker
   const isBanned = user && user.isBanned
-
-  // isMod = the user whose name being rendered is a mod
-  // userIsMod = the user who is logged in is a mod
-  const userIsMod = userMap[myId].isMod
 
   // This sometimes gets called before `connect` returns any users
   // That itself is a bug to fix, but this can at least guard against it.
@@ -63,82 +49,66 @@ export default function NameView (props: Props) {
     return <div />
   }
 
-  const handleProfile = (e: MenuItemEvent, data: UserMenuData) => {
+  const handleProfile = () => {
     dispatch(HideModalAction())
-    fetchProfile(data.id)
+    fetchProfile(userId)
   }
 
-  const handleBan = (e: MenuItemEvent, data: UserMenuData) => {
+  const handleWhisper = () => {
+    // Whisper history shows in profile, so Whisper just uses the profile view.
+    handleProfile()
+  }
+
+  const handleBan = () => {
     const doBan = confirm(
-      `Are you sure you would like to ${isBanned ? 'unban' : 'ban'} the user '${
-        data.username
-      }'?`
+      `Are you sure you would like to ${isBanned ? 'unban' : 'ban'} the user '${username}'?`
     )
     if (doBan) {
-      dispatch(BanToggleAction(data.id))
+      dispatch(BanToggleAction(userId))
     }
   }
 
-  const handleMod = (e: MenuItemEvent, data: UserMenuData) => {
+  const handleMod = () => {
     const doMod = confirm(
-      `Are you sure you would like to ${isMod ? 'remove' : 'add'} the user '${
-        data.username
-      }' ${isMod ? 'from' : 'to'} the mod list?`
+      `Are you sure you would like to ${isMod ? 'remove' : 'add'} the user '${username}' ` +
+      `${isMod ? 'from' : 'to'} the mod list?`
     )
     if (doMod) {
-      dispatch(ModToggleAction(data.id))
+      dispatch(ModToggleAction(userId))
     }
   }
 
-  const handleSpeaker = (e: MenuItemEvent, data: UserMenuData) => {
+  const handleSpeaker = () => {
     const doSpeaker = confirm(
-      `Are you sure you would like to ${isSpeaker ? 'remove' : 'add'} the user '${
-        data.username
-      }' ${isSpeaker ? 'from' : 'to'} the speaker list?`
+      `Are you sure you would like to ${isSpeaker ? 'remove' : 'add'} the user ` +
+      `'${username}' ${isSpeaker ? 'from' : 'to'} the speaker list?`
     )
     if (doSpeaker) {
-      toggleUserSpeaker(data.id, '2026')
+      toggleUserSpeaker(userId, '2026')
     }
   }
 
-  const handlePastSpeaker = (e: MenuItemEvent, data: UserMenuData) => {
-    toggleUserSpeaker(data.id, '2025')
+  const handlePastSpeaker = () => {
+    toggleUserSpeaker(userId, '2025')
   }
 
-  const pastSpeakerButton = userIsMod ? (
-    <MenuItem
-      data={{ id: props.userId, username: username }}
-      onClick={handlePastSpeaker}
-    >
-    Make Past Speaker
+  const pastSpeakerButton = myIsMod ? (
+    <MenuItem onClick={handlePastSpeaker}>
+      Make Past Speaker
     </MenuItem>
   ) : (
     ''
   )
 
-  const banButton = userIsMod ? (
-    <MenuItem
-      data={{ id: props.userId, username: username }}
-      onClick={handleBan}
-    >
-      {isBanned ? 'Unban' : 'Ban'}
-    </MenuItem>
-  ) : (
-    ''
-  )
-
-  const modButtons = userIsMod ? (
+  const modButtons = myIsMod ? (
     <>
-      <MenuItem
-        data={{ id: props.userId, username: username }}
-        onClick={handleMod}
-      >
+      <MenuItem onClick={handleBan}>
+        {isBanned ? 'Unban' : 'Ban'}
+      </MenuItem>
+      <MenuItem onClick={handleMod}>
         {isMod ? 'Remove Mod' : 'Make Mod'}
       </MenuItem>
-      <MenuItem
-        data={{ id: props.userId, username: username }}
-        onClick={handleSpeaker}
-      >
+      <MenuItem onClick={handleSpeaker}>
         {isSpeaker ? 'Remove Speaker' : 'Make Speaker'}
       </MenuItem>
     </>
@@ -159,28 +129,24 @@ export default function NameView (props: Props) {
   if (!useSimpleNames && user && user.fontReward) {
     className = className + ' font-' + user.fontReward
   }
-  if (userIsMod) {
+  if (myIsMod) {
     className += ' mod'
   }
 
   const badges = (user.equippedBadges || [])
     .map((b, i) => <BadgeView key={`badge-${i}`} emoji={b?.emoji} description={b?.description} isCustom={b?.isCustom} />)
 
-  // TODO: This is not yet being set anywhere
-  if (user.isSpeaker) {
+  if (isSpeaker) {
     badges.unshift(
       <BadgeView key='badge-speaker' isCustom={true} emoji='speaker' description='Speaker' />
     )
   }
 
-  if (user.isMod) {
+  if (isMod) {
     badges.unshift(
       <BadgeView key='badge-mod' isCustom={true} emoji='mod' description='Moderator' />
     )
   }
-
-  // TODO: should be best handled via css
-  const customStyle: React.CSSProperties = { whiteSpace: props.nowrap ? 'nowrap' : undefined }
 
   const nameEl = (
     <strong {...tooltipAttrs(!useSimpleNames && (user?.pronouns ?? ''))} className={isMod ? 'mod' : ''}>
@@ -208,7 +174,7 @@ export default function NameView (props: Props) {
         <MenuItem onClick={showBadges}>
           Show Badges
         </MenuItem>
-        <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
+        <MenuItem onClick={handleProfile}>
           View Profile
         </MenuItem>
         <MenuItem onClick={showProfileEdit}>
@@ -220,7 +186,7 @@ export default function NameView (props: Props) {
     )}</>
 
     return (
-      <span className={className} style={customStyle} >
+      <span className={className} >
         {props.skipMenu ? nameEl : menu}
       </span>
     )
@@ -232,13 +198,12 @@ export default function NameView (props: Props) {
       {/* Portal to main <body> to avoid inheriting message line's styling like dimming */}
       {ReactDOM.createPortal(
         <ContextMenu id={props.id}>
-          <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
+          <MenuItem onClick={handleProfile}>
             Profile
           </MenuItem>
-          <MenuItem data={{ id: props.userId, username: username }} onClick={handleProfile}>
+          <MenuItem onClick={handleWhisper}>
             Whisper
           </MenuItem>
-          {banButton}
           {modButtons}
           {pastSpeakerButton}
         </ContextMenu>,
@@ -246,7 +211,7 @@ export default function NameView (props: Props) {
       )}</>
 
     return (
-      <span className={className} style={customStyle} >
+      <span className={className} >
         {props.skipMenu ? nameEl : menu}
       </span>
     )

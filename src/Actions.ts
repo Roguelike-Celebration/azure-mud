@@ -39,7 +39,6 @@ export type Action =
   | ErrorAction
   | SendMessageAction
   | SetNameAction
-  | StartWhisperAction
   | ShowProfileAction
   | ShowModalAction
   | ShowModalWithOptionsAction
@@ -100,7 +99,6 @@ export enum ActionType {
   // UI actions
   SendMessage = 'SEND_MESSAGE',
   SetName = 'SET_NAME',
-  StartWhisper = 'START_WHISPER',
   ShowProfile = 'SHOW_PROFILE',
   HideProfile = 'HIDE_PROFILE',
   ShowModal = 'SHOW_MODAL',
@@ -549,15 +547,6 @@ export const SetNameAction = (name: string): SetNameAction => {
     type: ActionType.SetName,
     value: name
   }
-}
-
-interface StartWhisperAction {
-  type: ActionType.StartWhisper;
-  value: string;
-}
-
-export const StartWhisperAction = (name: string): StartWhisperAction => {
-  return { type: ActionType.StartWhisper, value: name }
 }
 
 interface HideProfileAction {

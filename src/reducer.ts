@@ -73,8 +73,6 @@ export interface State {
   whispers: WhisperMessage[];
   autoscrollChat: boolean;
 
-  prepopulatedInput?: string;
-
   // Settings data
   useSimpleNames?: boolean;
 
@@ -161,8 +159,6 @@ export const defaultState: State = {
 
 // TODO: Split this out into separate reducers based on worldstate actions vs UI actions?
 export default produce((draft: State, action: Action) => {
-  draft.prepopulatedInput = undefined
-
   if (action.type === ActionType.Connected) {
     draft.connected.resolve()
   }
@@ -520,10 +516,6 @@ export default produce((draft: State, action: Action) => {
         createChatMessage(messageId, myUserId(draft), action.value)
       )
     }
-  }
-
-  if (action.type === ActionType.StartWhisper) {
-    draft.prepopulatedInput = `/whisper ${action.value} `
   }
 
   if (action.type === ActionType.HideModalAction) {
