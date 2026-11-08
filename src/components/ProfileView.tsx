@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom'
 
 import { PublicUser } from '../../server/src/user.js'
 import { ClearWhisperHistoryAction, HideProfileAction, SendMessageAction } from '../Actions.js'
-import { DispatchContext, SettingsContext } from '../App.js'
+import { DispatchContext, SettingsContext, UserMapContext } from '../App.js'
+import { currentUser } from '../authentication.js'
 import { tooltipAttrs } from '../display.js'
 import { linkifyOpts } from '../linkifyOptions.js'
 import { WhisperMessage } from '../message/index.js'
@@ -46,6 +47,8 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
   const { user, whispers } = props
   const dispatch = useContext(DispatchContext)
   const { showDebugControls } = useContext(SettingsContext)
+  const { userMap, myId } = useContext(UserMapContext)
+  const myIsMod = userMap[myId]?.isMod
 
   useEffect(() => {
     const lastMessage = document.querySelector<HTMLElement>(
@@ -113,6 +116,15 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
 
   const noInformation = !realName && !user.pronouns && !description && !socialLink && !url && !askMeAbout
 
+  const isSelf = user.id === myId
+  // Email comes from Firebase, so mods only see ID.
+  const accountInfo = isSelf || myIsMod ? (
+    <div className="profile-details-group" id="profile-account"
+      {...tooltipAttrs('Email is shown only to yourself and moderators.')}>
+      {isSelf && <div><strong>Email:</strong> {currentUser()?.email ?? '(none)'}</div>}
+      <div><strong>ID:</strong> {user.id}</div>
+    </div>
+  ) : null
   // Have debug menu's trigger wrap #chat from the outside, because scroll-to-latest effect needs #chat
   // to be the messages' direct parent.
   const whisperMenuId = `whisper-history-menu-${user.id}`
@@ -160,6 +172,8 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
             }
 
             {user.item && <p>{user.username} is currently holding {user.item}</p>}
+
+            {accountInfo}
 
           </section>
 
