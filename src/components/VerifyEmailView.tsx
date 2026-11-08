@@ -12,8 +12,8 @@ interface Props {
 }
 
 export default function VerifyEmailView (props: Props) {
-  // For some reason, this doesn't work - dispatch ends up as null. So I injected it into props. This is weird and if
-  // whoever's reading this has a good explanation I'd love to hear it! -Travis
+  // This won't work because DispatchContext.Provider doesn't start till later in the App
+  // after VerifyEmailView is used.
   // const dispatch = useContext(DispatchContext)
   const dispatch = props.dispatch
 
