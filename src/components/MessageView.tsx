@@ -170,7 +170,7 @@ const EnteredView = (props: EnteredMessage) => {
   const roomData = useContext(RoomDataContext)
 
   if (roomData[props.fromId]) {
-    const fromButton: JSX.Element = roomData[props.fromId].hidden ? (
+    const fromButton: React.JSX.Element = roomData[props.fromId].hidden ? (
       <span>somewhere...</span>
     ) : (
       <button onClick={onClick} className="link-styled-button">
@@ -194,7 +194,7 @@ const LeftView = (props: LeftMessage) => {
   const roomData = useContext(RoomDataContext)
 
   if (roomData[props.toId]) {
-    const toButton: JSX.Element = roomData[props.toId].hidden ? (
+    const toButton: React.JSX.Element = roomData[props.toId].hidden ? (
       <span>somewhere...</span>
     ) : (
       <button onClick={onClick} className="link-styled-button">
@@ -238,7 +238,7 @@ const parseUserIdOrDisplay = (messageFragment: string): string => {
 
 function renderChatMessageWithUsernames (message: string, id: string, userMap: UserMap) {
   const splitMessage = message.split(/(@@.*?@@)/)
-  return splitMessage.reduce<JSX.Element>(
+  return splitMessage.reduce<React.JSX.Element>(
     (acc, fragment, idx) => {
       if (fragment.startsWith('@@') && fragment.endsWith('@@')) {
         const userIdOrDisplay = parseUserIdOrDisplay(fragment)

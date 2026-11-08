@@ -5,7 +5,6 @@ import React, {
   FC,
   ReactNode,
   Reducer,
-  ReducerAction,
   ReducerState,
   StrictMode,
   useReducer
@@ -71,7 +70,7 @@ const reducer: VirtualizationReducer = produce((state, action) => {
 export const VirtualizationContext = createContext<
   [
     ReducerState<VirtualizationReducer>,
-    Dispatch<ReducerAction<VirtualizationReducer>>
+    Dispatch<VirtualizationAction>
   ]
 >([initialState, () => {}])
 const { Provider } = VirtualizationContext

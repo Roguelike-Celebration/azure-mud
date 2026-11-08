@@ -177,7 +177,7 @@ export default function BadgesModalView (props: Props) {
 
   const unlockedBadgesSet = new Set<string>()
 
-  const unlockedBadgesByCategory = new Map<BadgeCategory, JSX.Element[]>()
+  const unlockedBadgesByCategory = new Map<BadgeCategory, React.JSX.Element[]>()
   props.unlockedBadges.forEach((b, i) => {
     unlockedBadgesSet.add(b.emoji)
     let categoryBadges = unlockedBadgesByCategory.get(b.category)
@@ -205,7 +205,7 @@ export default function BadgesModalView (props: Props) {
   })
 
   // TODO: Can you see description with screen reader?
-  const lockedBadgesByCategory = new Map<BadgeCategory, JSX.Element[]>()
+  const lockedBadgesByCategory = new Map<BadgeCategory, React.JSX.Element[]>()
   _.uniq(props.unlockableBadges || []).filter(b => {
     return !unlockedBadgesSet.has(b.emoji)
   }).forEach((b) => {

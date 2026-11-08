@@ -9,9 +9,9 @@ type EmojiMap = { [emojiId: string]: string | undefined }
 export const customEmojiMap: EmojiMap = customEmojiMapJson
 export const reservedEmojiMap: EmojiMap = reservedEmojiMapJson
 
-export function renderCustomEmojiString (string: string): JSX.Element {
+export function renderCustomEmojiString (string: string): React.JSX.Element {
   const stringParts = string.split(/(:.*?:)/)
-  const emojiComponent = stringParts.reduce<JSX.Element>((newComponent, stringPart) => {
+  const emojiComponent = stringParts.reduce<React.JSX.Element>((newComponent, stringPart) => {
     if (stringPart.startsWith(':') && stringPart.endsWith(':')) {
       const emojiIdRegex = /:(.*):/
       const match = emojiIdRegex.exec(stringPart)

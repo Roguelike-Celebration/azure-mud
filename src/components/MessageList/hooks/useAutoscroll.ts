@@ -15,7 +15,7 @@ import {
 import { DispatchContext } from '../../../App.js'
 import { VirtualizationContext } from '../../VirtualizationProvider/index.js'
 
-type ScrollContainerRef = RefObject<HTMLOListElement>
+type ScrollContainerRef = RefObject<HTMLOListElement | null>
 type ScrollHandler = UIEventHandler<HTMLOListElement>
 
 export const useAutoscroll = (
