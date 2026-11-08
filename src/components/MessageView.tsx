@@ -106,6 +106,7 @@ export default memo(function MessageView (props: {
 type DeletableMessageViewProps = {
   messageId: string;
   messageText: string;
+  deleted?: boolean;
   children: React.ReactNode;
 }
 
@@ -125,7 +126,9 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
     }
   }
 
-  if (!myIsMod) {
+  if (props.deleted) {
+    return <DeletedMessageText />
+  } else if (!myIsMod) {
     return (
       <Linkify options={linkifyOpts}>{props.children}</Linkify>
     )
@@ -150,6 +153,11 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
     )
   }
 }
+
+// Deleted messages show distinctly so they don't read as regular user msg text
+const DeletedMessageText = () => (
+  <span className="deleted-message">[message removed by moderator]</span>
+)
 
 const ConnectedMessageView = (props: ConnectedMessage) => (
   <div className="message">
@@ -212,7 +220,7 @@ const LeftView = (props: LeftMessage) => {
 }
 
 const MovedView = (props: MovedRoomMessage) => (
-  <div className="message">You have moved to {props.to}.</div>
+  <div className="message">You have {props.spawned ? 'spawned in' : 'moved to'} {props.to}.</div>
 )
 
 const SameView = (props: SameRoomMessage) => (
@@ -278,7 +286,7 @@ const ChatMessageView = (props: ChatMessage) => {
   return (
     <div className="message">
       <NameView userId={props.userId} id={props.id} />:{' '}
-      <DeletableMessageView messageId={props.id} messageText={props.message}>
+      <DeletableMessageView messageId={props.id} messageText={props.message} deleted={props.deleted}>
         {joinedMessage}
       </DeletableMessageView>
     </div>
@@ -345,7 +353,7 @@ const ShoutView = (props: ShoutMessage) => {
   return (
     <div className="message">
       <NameView userId={props.userId} id={props.id} /> shouts:{' '}
-      <DeletableMessageView messageId={props.id} messageText={props.message}>
+      <DeletableMessageView messageId={props.id} messageText={props.message} deleted={props.deleted}>
         {props.message}
       </DeletableMessageView>
     </div>
@@ -360,7 +368,7 @@ const EmoteView = (props: EmoteMessage) => {
     <div className="message">
       <em>
         <NameView userId={props.userId} id={props.id} />{' '}
-        <DeletableMessageView messageId={props.id} messageText={props.message}>
+        <DeletableMessageView messageId={props.id} messageText={props.message} deleted={props.deleted}>
           {message}
         </DeletableMessageView>
       </em>
@@ -373,7 +381,9 @@ const DanceView = (props: DanceMessage) => {
     <div className="message">
       <em>
         <NameView userId={props.userId} id={props.id} />{' '}
-        <span dangerouslySetInnerHTML={{ __html: props.message }}></span>
+        {props.deleted
+          ? <DeletedMessageText />
+          : <span dangerouslySetInnerHTML={{ __html: props.message }}></span>}
       </em>
     </div>
   )

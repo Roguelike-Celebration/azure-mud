@@ -139,7 +139,11 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
               {whisperMessages.length > 0 ? whisperMessages.map((m, idx) => {
                 const id = `whisper-message-${idx}`
                 return <ProfileWhisperView {...m} key={id} id={id} otherUser={user} />
-              }) : <em>{`This is the beginning of your whisper chat with ${user.username}`}</em>}
+              }) : (
+                <div className="whisper-chat-empty">
+                  [This is the beginning of your whisper chat with {user.username}.]
+                </div>
+              )}
             </div>
             <InputView sendMessage={(message) => dispatch(SendMessageAction(`/whisper ${user.username} ${message}`))}/>
           </div>

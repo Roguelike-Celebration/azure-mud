@@ -96,7 +96,7 @@ const sendChatMessage: AuthenticatedEndpointFunction = async (user: User, inputs
       return {
         httpResponse: {
           status: 400,
-          body: { error: `Could not find the user ${lookMatch[2]}` }
+          body: { error: `Could not find the user ${lookMatch[2]}.` }
         }
       }
     }

@@ -73,8 +73,8 @@ span.name {
 }
 
 .name .badge {
-  margin-left: 3px;
-  margin-right: 1px;
+  padding-left: 3px;
+  padding-right: 1px;
 }
 
 .custom-badge {

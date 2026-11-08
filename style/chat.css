@@ -32,6 +32,11 @@
   opacity: 0.5;
 }
 
+.deleted-message {
+  color: var(--gray-text);
+  font-style: italic;
+}
+
 .inline-custom-emoji {
   height: 1.3rem;
   position: relative;

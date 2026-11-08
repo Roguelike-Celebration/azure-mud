@@ -174,15 +174,18 @@ interface UpdatedCurrentRoomAction {
   value: {
     roomId: string;
     roomData: RoomDataMap;
+    /** Whether user just spawned from an initial connection. */
+    isSpawn: boolean;
   };
 }
 
 export const UpdatedCurrentRoomAction = (
   roomId: string,
-  roomData: RoomDataMap
+  roomData: RoomDataMap,
+  isSpawn = false
 ): UpdatedCurrentRoomAction => ({
   type: ActionType.UpdatedCurrentRoom,
-  value: { roomId, roomData }
+  value: { roomId, roomData, isSpawn }
 })
 
 interface ConnectedAction {
@@ -210,7 +213,7 @@ export const ConnectAction =
   ): Thunk<Action, State> =>
     async (dispatch, getState) => {
       await getState().messageArchiveLoaded.promise
-      dispatch(UpdatedCurrentRoomAction(roomId, roomData))
+      dispatch(UpdatedCurrentRoomAction(roomId, roomData, true))
       if (presenceData) {
         dispatch(UpdatedPresenceAction(presenceData))
       }
@@ -592,7 +595,7 @@ export const SendMessageAction = (message: string): Thunk<Action, State> =>
       }
     } else if (beginsWithSlash && matching?.type === SlashCommandType.Help) {
       dispatch(ShowModalAction(Modal.Help))
-      dispatch(CommandMessageAction('You consult the help docs. (You can also find them in sidebar!)'))
+      dispatch(CommandMessageAction('You consult the help docs. (You can also find them in the sidebar!)'))
     } else if (beginsWithSlash && matching?.type === SlashCommandType.Look) {
       // Can't be null, by construction: bare command with no arg was caught by usage-hint
       // branch above.

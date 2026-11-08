@@ -130,6 +130,11 @@ export const createMovedRoomMessage = (to: string): MovedRoomMessage => ({
   to
 })
 
+export const createSpawnedMessage = (to: string): MovedRoomMessage => ({
+  ...createMovedRoomMessage(to),
+  spawned: true
+})
+
 export const createSameRoomMessage = (roomId: string): SameRoomMessage => ({
   ...createBaseMessage(MessageType.SameRoom),
   roomId

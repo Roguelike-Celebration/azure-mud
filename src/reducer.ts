@@ -23,6 +23,7 @@ import {
   createMovedRoomMessage,
   createSameRoomMessage,
   createShoutMessage,
+  createSpawnedMessage,
   createWhisperMessage,
   isDeletableMessage,
   isMovementMessage,
@@ -167,14 +168,19 @@ export default produce((draft: State, action: Action) => {
     }
 
     // Add a local "you have moved to X room" message
-    // Don't display if we're in the same room (issue 162)
+    // Customize if we're in the same room (issue 162) or just spawned
     if (current(draft).roomData?.[action.value.roomId]) {
       const room = current(draft).roomData[action.value.roomId]
 
-      if (current(draft).roomId !== original(draft)!.roomId) {
-        addMessage(draft, createMovedRoomMessage(room.shortName))
-      } else {
+      // Check spawn first, otherwise it'd hit the other cases bc roomId comparison
+      // doesn't indicate initial connects.
+      if (action.value.isSpawn) {
+        addMessage(draft, createSpawnedMessage(room.shortName))
+      } else if (current(draft).roomId === original(draft)!.roomId) {
         addMessage(draft, createSameRoomMessage(room.shortName))
+      } else {
+        // General case: moved between rooms
+        addMessage(draft, createMovedRoomMessage(room.shortName))
       }
     }
   }
@@ -357,7 +363,7 @@ export default produce((draft: State, action: Action) => {
     if (action.color) {
       addMessage(
         draft,
-        createErrorMessage('Your name color was changed to ' + action.color)
+        createErrorMessage('Your name color was changed to ' + action.color + '.')
       )
     } else {
       addMessage(
@@ -377,7 +383,7 @@ export default produce((draft: State, action: Action) => {
       addMessage(
         draft,
         createErrorMessage(
-          "You feel invigorated, and like you've become more... " + action.font
+          "You feel invigorated, and like you've become more... " + action.font + '.'
         )
       )
     } else {
@@ -559,7 +565,7 @@ export default produce((draft: State, action: Action) => {
       addMessage(
         draft,
         createCommandMessage(
-          `The space is now ${action.value ? 'closed' : 'open'}`
+          `The space is now ${action.value ? 'closed' : 'open'}.`
         )
       )
     } else {
@@ -611,7 +617,10 @@ function deleteMessage (state: State, messageId: string) {
   const target = state.messages.entities[messageId]
 
   if (isDeletableMessage(target)) {
-    target.message = 'message was removed by moderator'
+    target.deleted = true
+    // Still overwrite the text, to remove from state and cache, and for older client code
+    // that doesn't support the deleted prop.
+    target.message = '[message was removed by moderator]'
 
     /**
      * need to use `current` here because `deleteMessage` is called by the
