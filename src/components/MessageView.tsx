@@ -35,8 +35,6 @@ import { UserMap } from '../reducer.js'
 
 import NameView from './NameView.js'
 
-type MenuItemEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>
-
 const formatter = new Intl.DateTimeFormat('en', {
   hour: 'numeric',
   minute: 'numeric'
@@ -105,20 +103,6 @@ export default memo(function MessageView (props: {
   )
 })
 
-interface DeleteMessageMenuData {
-  messageId: string
-  messageText: string
-}
-
-const handleDeleteMessage = (e: MenuItemEvent, data: DeleteMessageMenuData) => {
-  const doDelete = confirm(
-    `Are you sure you would like to delete the message '${data.messageText}'?`
-  )
-  if (doDelete) {
-    deleteMessage(data.messageId)
-  }
-}
-
 type DeletableMessageViewProps = {
   messageId: string;
   messageText: string;
@@ -129,9 +113,18 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
 ) => {
   const { userMap, myId } = useContext(UserMapContext)
 
-  const playerIsMod = userMap[myId] && userMap[myId].isMod
+  const myIsMod = userMap[myId] && userMap[myId].isMod
 
-  if (!playerIsMod) {
+  const handleDeleteMessage = () => {
+    const doDelete = confirm(
+      `Are you sure you would like to delete the message '${props.messageText}'?`
+    )
+    if (doDelete) {
+      deleteMessage(props.messageId)
+    }
+  }
+
+  if (!myIsMod) {
     return (
       <Linkify options={linkifyOpts}>{props.children}</Linkify>
     )
@@ -146,11 +139,6 @@ const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
           </ContextMenuTrigger>
           <ContextMenu id={key}>
             <MenuItem
-              data={{
-                messageId: props.messageId,
-                message: props.children,
-                messageText: props.messageText
-              }}
               onClick={handleDeleteMessage}
             >
               {'Delete Message?'}
