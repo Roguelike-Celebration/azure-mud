@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu-rlc'
 import ReactDOM from 'react-dom'
 
 import { MinimalUser } from '../../server/src/user.js'

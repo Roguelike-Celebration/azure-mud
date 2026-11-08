@@ -3,7 +3,7 @@
 
 import Linkify from 'linkify-react'
 import React, { FunctionComponent, memo, useContext } from 'react'
-import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu-rlc'
 
 import {
   RoomDataContext,

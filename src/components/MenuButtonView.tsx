@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu-rlc'
 import { FaCog } from 'react-icons/fa'
 
 import { ShowModalAction } from '../Actions.js'
