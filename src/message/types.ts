@@ -63,6 +63,8 @@ export interface LeftMessage extends BaseMessage<MessageType.Left> {
 
 export interface MovedRoomMessage extends BaseMessage<MessageType.MovedRoom> {
   to: string;
+  // Optional because field was added 2026-11 and old cached messages lack it
+  spawned?: boolean;
 }
 
 export interface SameRoomMessage extends BaseMessage<MessageType.SameRoom> {

@@ -23,6 +23,7 @@ import {
   createMovedRoomMessage,
   createSameRoomMessage,
   createShoutMessage,
+  createSpawnedMessage,
   createWhisperMessage,
   isDeletableMessage,
   isMovementMessage,
@@ -167,14 +168,19 @@ export default produce((draft: State, action: Action) => {
     }
 
     // Add a local "you have moved to X room" message
-    // Don't display if we're in the same room (issue 162)
+    // Customize if we're in the same room (issue 162) or just spawned
     if (current(draft).roomData?.[action.value.roomId]) {
       const room = current(draft).roomData[action.value.roomId]
 
-      if (current(draft).roomId !== original(draft)!.roomId) {
-        addMessage(draft, createMovedRoomMessage(room.shortName))
-      } else {
+      // Check spawn first, otherwise it'd hit the other cases bc roomId comparison
+      // doesn't indicate initial connects.
+      if (action.value.isSpawn) {
+        addMessage(draft, createSpawnedMessage(room.shortName))
+      } else if (current(draft).roomId === original(draft)!.roomId) {
         addMessage(draft, createSameRoomMessage(room.shortName))
+      } else {
+        // General case: moved between rooms
+        addMessage(draft, createMovedRoomMessage(room.shortName))
       }
     }
   }

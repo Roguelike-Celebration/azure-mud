@@ -212,7 +212,7 @@ const LeftView = (props: LeftMessage) => {
 }
 
 const MovedView = (props: MovedRoomMessage) => (
-  <div className="message">You have moved to {props.to}.</div>
+  <div className="message">You have {props.spawned ? 'spawned in' : 'moved to'} {props.to}.</div>
 )
 
 const SameView = (props: SameRoomMessage) => (

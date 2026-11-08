@@ -174,15 +174,18 @@ interface UpdatedCurrentRoomAction {
   value: {
     roomId: string;
     roomData: RoomDataMap;
+    /** Whether user just spawned from an initial connection. */
+    isSpawn: boolean;
   };
 }
 
 export const UpdatedCurrentRoomAction = (
   roomId: string,
-  roomData: RoomDataMap
+  roomData: RoomDataMap,
+  isSpawn = false
 ): UpdatedCurrentRoomAction => ({
   type: ActionType.UpdatedCurrentRoom,
-  value: { roomId, roomData }
+  value: { roomId, roomData, isSpawn }
 })
 
 interface ConnectedAction {
@@ -210,7 +213,7 @@ export const ConnectAction =
   ): Thunk<Action, State> =>
     async (dispatch, getState) => {
       await getState().messageArchiveLoaded.promise
-      dispatch(UpdatedCurrentRoomAction(roomId, roomData))
+      dispatch(UpdatedCurrentRoomAction(roomId, roomData, true))
       if (presenceData) {
         dispatch(UpdatedPresenceAction(presenceData))
       }

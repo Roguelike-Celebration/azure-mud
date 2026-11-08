@@ -31,6 +31,7 @@ export {
   createMovedRoomMessage,
   createSameRoomMessage,
   createShoutMessage,
+  createSpawnedMessage,
   createWhisperMessage,
   isDeletableMessage,
   isMovementMessage
