@@ -9,6 +9,7 @@ import {
   LoadMessageArchiveAction,
   PlayerBannedAction,
   SendMessageAction,
+  SetShowDebugControlsAction,
   SetUseSimpleNamesAction,
   ShowSideMenuAction,
   SpaceIsClosedAction
@@ -62,6 +63,7 @@ interface UserMapContextValue {
 
 interface SettingsContextValue {
   useSimpleNames: boolean
+  showDebugControls: boolean
 }
 
 /** Placeholder default for a context with no meaningful value. */
@@ -72,7 +74,10 @@ const noDefault = <T,>(): T => null as unknown as T
 export const DispatchContext = createContext<ThunkDispatch<Action, State>>(noDefault())
 export const MessagesContext = createContext<State['messages']>(noDefault())
 export const UserMapContext = createContext<UserMapContextValue>(noDefault())
-export const SettingsContext = createContext<SettingsContextValue>({ useSimpleNames: false })
+export const SettingsContext = createContext<SettingsContextValue>({
+  useSimpleNames: false,
+  showDebugControls: false
+})
 export const IsMobileContext = createContext<boolean>(false)
 export const RoomDataContext = createContext<RoomDataMap>({})
 
@@ -158,6 +163,8 @@ const App = () => {
 
         const useSimpleNames = await Storage.getUseSimpleNames()
         dispatch(SetUseSimpleNamesAction(useSimpleNames))
+        const showDebugControls = await Storage.getShowDebugControls()
+        dispatch(SetShowDebugControlsAction(showDebugControls))
 
         dispatch(IsRegisteredAction())
         connect(userId, dispatch)
@@ -403,7 +410,10 @@ const App = () => {
       <DispatchContext.Provider value={dispatch}>
         <MessagesContext.Provider value={state.messages}>
             <IsMobileContext.Provider value={isMobile}>
-              <SettingsContext.Provider value={{ useSimpleNames: state.useSimpleNames ?? false }}>
+              <SettingsContext.Provider value={{
+                useSimpleNames: state.useSimpleNames ?? false,
+                showDebugControls: state.showDebugControls ?? false
+              }}>
                 <UserMapContext.Provider value={{ userMap: state.userMap, myId: myUserId(state) }}>
                   <RoomDataContext.Provider value={state.roomData}>
                     <div

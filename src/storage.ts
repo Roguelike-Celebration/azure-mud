@@ -78,6 +78,14 @@ export async function getUseSimpleNames (): Promise<boolean> {
   return await localforage.getItem(useSimpleNamesKey) || false
 }
 
+export async function setShowDebugControls (showDebugControls: boolean): Promise<void> {
+  await localforage.setItem(showDebugControlsKey, showDebugControls)
+}
+
+export async function getShowDebugControls (): Promise<boolean> {
+  return await localforage.getItem(showDebugControlsKey) || false
+}
+
 // Keys
 
 const messagesKey = 'messages'
@@ -87,3 +95,4 @@ const rainbowGateKey = 'FeatureRainbowGateVisited'
 const wasColoredEnteringKey = 'WasColoredEntering'
 const themeKey = 'UserSelectedTheme'
 const useSimpleNamesKey = 'UseSimpleNames'
+const showDebugControlsKey = 'ShowDebugControls'

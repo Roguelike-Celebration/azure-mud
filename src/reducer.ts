@@ -66,6 +66,7 @@ export interface State {
 
   // Settings data
   useSimpleNames?: boolean;
+  showDebugControls?: boolean;
 
   // If this is set to something other than Modal.None, that will indicate
   // which modal view should be rendered on top of the chat view
@@ -444,6 +445,16 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.SetUseSimpleNames) {
     draft.useSimpleNames = action.value
     Storage.setUseSimpleNames(action.value)
+  }
+
+  if (action.type === ActionType.SetShowDebugControls) {
+    draft.showDebugControls = action.value
+    Storage.setShowDebugControls(action.value)
+  }
+
+  if (action.type === ActionType.ClearWhisperHistory) {
+    draft.whispers = draft.whispers.filter((m) => m.userId !== action.value)
+    Storage.setWhispers(current(draft).whispers)
   }
 
   if (action.type === ActionType.Authenticate) {

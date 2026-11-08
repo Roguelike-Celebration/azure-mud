@@ -62,6 +62,8 @@ export type Action =
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
   | SetUseSimpleNamesAction
+  | SetShowDebugControlsAction
+  | ClearWhisperHistoryAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
@@ -108,6 +110,8 @@ export enum ActionType {
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
   SetUseSimpleNames = 'SET_USE_SIMPLE_NAMES',
+  SetShowDebugControls = 'SET_SHOW_DEBUG_CONTROLS',
+  ClearWhisperHistory = 'CLEAR_WHISPER_HISTORY',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -723,6 +727,27 @@ export const SetUseSimpleNamesAction = (
   useSimpleNames: boolean
 ): SetUseSimpleNamesAction => {
   return { type: ActionType.SetUseSimpleNames, value: useSimpleNames }
+}
+
+interface SetShowDebugControlsAction {
+  type: ActionType.SetShowDebugControls;
+  value: boolean;
+}
+
+export const SetShowDebugControlsAction = (
+  showDebugControls: boolean
+): SetShowDebugControlsAction => {
+  return { type: ActionType.SetShowDebugControls, value: showDebugControls }
+}
+
+interface ClearWhisperHistoryAction {
+  type: ActionType.ClearWhisperHistory;
+  value: string;
+}
+
+/** Clears the local whisper history with the given user. */
+export const ClearWhisperHistoryAction = (otherUserId: string): ClearWhisperHistoryAction => {
+  return { type: ActionType.ClearWhisperHistory, value: otherUserId }
 }
 
 interface AuthenticateAction {
