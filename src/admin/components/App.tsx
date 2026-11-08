@@ -94,9 +94,11 @@ const App = function () {
   if (state.isLoggedIn) {
     return (
       <DispatchContext.Provider value={dispatch}>
-        <div>
-          <h1>Room Editor:  {state.displayedRoomId || 'no room selected'}</h1>
-          <RoomOptionsView roomId={state.displayedRoomId} updateRoom={saveRoom} createRoom={createRoom}/>
+        <div id='admin-app'>
+          <header id='admin-header'>
+            <h1>Room Editor:  {state.displayedRoomId || 'no room selected'}</h1>
+            <RoomOptionsView roomId={state.displayedRoomId} updateRoom={saveRoom} createRoom={createRoom}/>
+          </header>
           <RoomList roomIds={state.roomIds}/>
           <AceEditor
             mode="json"
@@ -107,7 +109,7 @@ const App = function () {
             ref={aceRef}
             value={JSON.stringify((state.displayedRoomId && state.roomData[state.displayedRoomId]) || '', null, 2)}
             wrapEnabled={true}
-            width={'70vw'}
+            width={'100%'}
           />
         </div>
       </DispatchContext.Provider>
