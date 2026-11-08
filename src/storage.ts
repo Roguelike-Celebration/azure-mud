@@ -11,11 +11,19 @@ export interface MessageArchiveData {
 
 const ONE_HOUR_IN_MS = 1000 * 60 * 60
 
-export async function getMessages (): Promise<MessageArchiveData | undefined> {
+/** Cache key for per-MUD-user cached items. */
+function userKey (key: string, userId: string) {
+  return `uid_${userId}/${key}`
+}
+
+export async function getMessages (userId: string): Promise<MessageArchiveData | undefined> {
   try {
-    const timestamp: Date | null = await localforage.getItem(messageTimestampKey)
-    const messages: Message[] = (await localforage.getItem(messagesKey)) ?? []
-    const whispers: WhisperMessage[] = (await localforage.getItem(whisperKey)) || []
+    // TODO: Enable this cache cleanup once the user-keyed cache has been deployed a while. It
+    // went out in 2026-11, so this can be enabled in 2026-12 or 2027-01.
+    // await removeOldUnkeyedMessageCache()
+    const timestamp: Date | null = await localforage.getItem(userKey(messageTimestampKey, userId))
+    const messages: Message[] = (await localforage.getItem(userKey(messagesKey, userId))) ?? []
+    const whispers: WhisperMessage[] = (await localforage.getItem(userKey(whisperKey, userId))) || []
 
     if (timestamp && ((new Date().getTime() - timestamp.getTime()) < ONE_HOUR_IN_MS)) {
       console.log(`Retrieved fresh message archive from browser storage (timestamp ${timestamp})`,
@@ -30,13 +38,25 @@ export async function getMessages (): Promise<MessageArchiveData | undefined> {
   return undefined
 }
 
-export async function setMessages (messages: Message[], timestamp?: Date): Promise<void> {
-  await localforage.setItem(messagesKey, messages)
-  await localforage.setItem(messageTimestampKey, timestamp || new Date())
+export async function setMessages (userId: string, messages: Message[], timestamp?: Date): Promise<void> {
+  await localforage.setItem(userKey(messagesKey, userId), messages)
+  await localforage.setItem(userKey(messageTimestampKey, userId), timestamp || new Date())
 }
 
-export async function setWhispers (whispers: WhisperMessage[]): Promise<void> {
-  await localforage.setItem(whisperKey, whispers)
+export async function setWhispers (userId: string, whispers: WhisperMessage[]): Promise<void> {
+  await localforage.setItem(userKey(whisperKey, userId), whispers)
+}
+
+/** Cleans up leftover non-user-keyed message cache, from before they became per-user in 2026-11. */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- call in getMessages() is commented out for now
+async function removeOldUnkeyedMessageCache (): Promise<void> {
+  const oldKeys = [messagesKey, messageTimestampKey, whisperKey]
+  const foundKeys = (await localforage.keys()).filter((key) => oldKeys.includes(key))
+  if (foundKeys.length === 0) {
+    return
+  }
+  await Promise.all(foundKeys.map((key) => localforage.removeItem(key)))
+  console.log('Removed old non-per-user message cache entries: %s', foundKeys.join(', '))
 }
 
 // Rainbow gate

@@ -149,7 +149,7 @@ const App = () => {
           }
         }
 
-        const messageArchive = await Storage.getMessages()
+        const messageArchive = await Storage.getMessages(userId)
         // I'm styling it like a constant but it's just here; look it's late and the conf is in two days
         const MAX_MESSAGES_TO_LOAD = 400
         dispatch(

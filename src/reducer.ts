@@ -454,7 +454,7 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.ClearWhisperHistory) {
     draft.whispers = draft.whispers.filter((m) => m.userId !== action.value)
-    Storage.setWhispers(current(draft).whispers)
+    cacheWhispers(draft)
   }
 
   if (action.type === ActionType.Authenticate) {
@@ -632,21 +632,13 @@ function deleteMessage (state: State, messageId: string) {
     // Still overwrite the text, to remove from state and cache, and for older client code
     // that doesn't support the deleted prop.
     target.message = '[message was removed by moderator]'
-
-    /**
-     * need to use `current` here because `deleteMessage` is called by the
-     * reducer which means its state is a proxied draft, which won't serialize
-     * to localForage correctly
-     *
-     * @see https://immerjs.github.io/immer/current
-     */
-    Storage.setMessages(Object.values(current(state).messages.entities))
+    cacheMessages(state)
   }
 }
 
 async function saveWhisper (state: State, message: WhisperMessage) {
   state.whispers.push(message)
-  Storage.setWhispers(current(state).whispers)
+  cacheWhispers(state)
 }
 
 async function addMessage (state: State, message: Message) {
@@ -654,7 +646,14 @@ async function addMessage (state: State, message: Message) {
   if (shouldShowMessage(state, message)) {
     state.messages.ids.push(message.id)
   }
+  cacheMessages(state)
+}
 
+function cacheMessages (state: State) {
+  if (!state.userId) {
+    // No userId means we are logged out, and there's no user to cache for.
+    return
+  }
   /**
    * need to use `current` here because `addMessage` is called by the reducer
    * which means its state is a proxied draft, which won't serialize to
@@ -662,7 +661,15 @@ async function addMessage (state: State, message: Message) {
    *
    * @see https://immerjs.github.io/immer/current
    */
-  Storage.setMessages(Object.values(current(state).messages.entities))
+  Storage.setMessages(state.userId, Object.values(current(state).messages.entities))
+}
+
+function cacheWhispers (state: State) {
+  // Same as cacheMessages() behavior, for the separate whisper cache
+  if (!state.userId) {
+    return
+  }
+  Storage.setWhispers(state.userId, current(state).whispers)
 }
 
 const isHiddenRoom = (movementMessagesHideRoomIds: string[], roomId: string) =>
