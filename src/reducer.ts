@@ -363,7 +363,7 @@ export default produce((draft: State, action: Action) => {
     if (action.color) {
       addMessage(
         draft,
-        createErrorMessage('Your name color was changed to ' + action.color)
+        createErrorMessage('Your name color was changed to ' + action.color + '.')
       )
     } else {
       addMessage(
@@ -383,7 +383,7 @@ export default produce((draft: State, action: Action) => {
       addMessage(
         draft,
         createErrorMessage(
-          "You feel invigorated, and like you've become more... " + action.font
+          "You feel invigorated, and like you've become more... " + action.font + '.'
         )
       )
     } else {
@@ -565,7 +565,7 @@ export default produce((draft: State, action: Action) => {
       addMessage(
         draft,
         createCommandMessage(
-          `The space is now ${action.value ? 'closed' : 'open'}`
+          `The space is now ${action.value ? 'closed' : 'open'}.`
         )
       )
     } else {

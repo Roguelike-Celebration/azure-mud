@@ -595,7 +595,7 @@ export const SendMessageAction = (message: string): Thunk<Action, State> =>
       }
     } else if (beginsWithSlash && matching?.type === SlashCommandType.Help) {
       dispatch(ShowModalAction(Modal.Help))
-      dispatch(CommandMessageAction('You consult the help docs. (You can also find them in sidebar!)'))
+      dispatch(CommandMessageAction('You consult the help docs. (You can also find them in the sidebar!)'))
     } else if (beginsWithSlash && matching?.type === SlashCommandType.Look) {
       // Can't be null, by construction: bare command with no arg was caught by usage-hint
       // branch above.
