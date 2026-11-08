@@ -147,11 +147,13 @@ export default function NameView (props: Props) {
   }
 
   const nameEl = (
-    <strong {...tooltipAttrs(!useSimpleNames && (user?.pronouns ?? ''))} className={isMod ? 'mod' : ''}>
-      {(!useSimpleNames && user && user.polymorph) || ''}
-      {username || 'unknown'}
+    <>
+      <strong {...tooltipAttrs(!useSimpleNames && (user?.pronouns ?? ''))} className={isMod ? 'mod' : ''}>
+        {(!useSimpleNames && user && user.polymorph) || ''}
+        {username || 'unknown'}
+      </strong>
       {useSimpleNames ? '' : badges}
-    </strong>
+    </>
   )
 
   if (isSelf) {
