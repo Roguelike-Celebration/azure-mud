@@ -1,5 +1,4 @@
 import firebase from 'firebase/app'
-import { Dispatch } from 'react'
 
 import { Badge } from '../server/src/badges.js'
 import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
@@ -454,7 +453,7 @@ export async function updateServerSettings (serverSettings: ServerSettings): Pro
 
 // Setup
 
-function generateEventMapping (userId: string, dispatch: Dispatch<Action>) {
+function generateEventMapping (userId: string, dispatch: ThunkDispatch<Action, State>) {
   return {
     playerConnected: (user: MinimalUser) => {
       console.log('Player joined!', user)

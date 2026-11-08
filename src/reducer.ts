@@ -32,10 +32,7 @@ import {
   WhisperMessage
 } from './message/index.js'
 import { Modal } from './modals.js'
-import {
-  fetchProfile,
-  sendChatMessage
-} from './networking.js'
+import { sendChatMessage } from './networking.js'
 import { Room } from './room.js'
 import { myUser, myUserId } from './selectors.js'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands.js'
@@ -332,11 +329,6 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.UserMap) {
     draft.userMap = { ...draft.userMap, ...action.value }
-
-    // If the actively-viewed profile updated, do a clean fetch
-    if (draft.visibleProfile && draft.userMap[draft.visibleProfile.id]) {
-      fetchProfile(draft.visibleProfile.id)
-    }
   }
 
   if (action.type === ActionType.PlayerBanned) {

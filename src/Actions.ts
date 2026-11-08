@@ -5,7 +5,7 @@ import { MinimalUser, PublicUser, User } from '../server/src/user.js'
 
 import { Message, WhisperMessage } from './message/index.js'
 import { Modal } from './modals.js'
-import { connectRoomData, updateFontReward, updateProfileColor } from './networking.js'
+import { connectRoomData, fetchProfile, updateFontReward, updateProfileColor } from './networking.js'
 import { ModalOptions, PresenceListMap, RoomDataMap, State, UserMap } from './reducer.js'
 import { myUserId } from './selectors.js'
 import { Thunk } from './useReducerWithThunk.js'
@@ -33,7 +33,7 @@ export type Action =
   | DanceAction
   | PlayerEnteredAction
   | PlayerLeftAction
-  | UserMapAction
+  | UserMapLocalAction
   | PlayerBannedAction
   | PlayerUnbannedAction
   | UpdateProfileColorLocalAction
@@ -442,17 +442,28 @@ export const PlayerLeftAction = (
   }
 }
 
-interface UserMapAction {
+interface UserMapLocalAction {
   type: ActionType.UserMap;
   value: UserMap;
 }
 
-export const UserMapAction = (map: UserMap): UserMapAction => {
+const UserMapLocalAction = (map: UserMap): UserMapLocalAction => {
   return {
     type: ActionType.UserMap,
     value: map
   }
 }
+
+export const UserMapAction = (map: UserMap): Thunk<Action, State> =>
+  (dispatch, getState) => {
+    dispatch(UserMapLocalAction(map))
+
+    // If the actively-viewed profile updated, do a clean fetch
+    const { visibleProfile, userMap } = getState()
+    if (visibleProfile && (map[visibleProfile.id] ?? userMap[visibleProfile.id])) {
+      fetchProfile(visibleProfile.id)
+    }
+  }
 
 interface PlayerBannedAction {
   type: ActionType.PlayerBanned;
