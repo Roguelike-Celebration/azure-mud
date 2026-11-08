@@ -1,13 +1,16 @@
 import { Badge } from '../server/src/badges.js'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
 import { RoomNote } from '../server/src/roomNote.js'
 import { ServerSettings } from '../server/src/types.js'
 import { MinimalUser, PublicUser, User } from '../server/src/user.js'
+import { uuid } from '../server/src/utils.js'
 
 import { Message, WhisperMessage } from './message/index.js'
 import { Modal } from './modals.js'
-import { connectRoomData, fetchProfile, updateFontReward, updateProfileColor } from './networking.js'
+import { connectRoomData, fetchProfile, sendChatMessage, updateFontReward, updateProfileColor } from './networking.js'
 import { ModalOptions, PresenceListMap, RoomDataMap, State, UserMap } from './reducer.js'
 import { myUserId } from './selectors.js'
+import { matchingSlashCommand, SlashCommandType } from './SlashCommands.js'
 import { Thunk } from './useReducerWithThunk.js'
 import { fps } from './utils.js'
 
@@ -38,7 +41,6 @@ export type Action =
   | PlayerUnbannedAction
   | UpdateProfileColorLocalAction
   | ErrorAction
-  | SendMessageAction
   | SetNameAction
   | ShowProfileAction
   | ShowModalAction
@@ -96,7 +98,6 @@ export enum ActionType {
   UpdateProfileColor = 'UPDATE_PROFILE_COLOR',
   UpdateFontReward = 'UPDATE_FONT_REWARD',
   // UI actions
-  SendMessage = 'SEND_MESSAGE',
   SetName = 'SET_NAME',
   ShowProfile = 'SHOW_PROFILE',
   HideProfile = 'HIDE_PROFILE',
@@ -296,13 +297,14 @@ interface WhisperAction {
   value: {
     name: string;
     message: string;
+    senderIsSelf: boolean;
   };
 }
 
-export const WhisperAction = (name: string, message: string): WhisperAction => {
+export const WhisperAction = (name: string, message: string, senderIsSelf = false): WhisperAction => {
   return {
     type: ActionType.Whisper,
-    value: { name, message }
+    value: { name, message, senderIsSelf }
   }
 }
 
@@ -548,17 +550,64 @@ export const ErrorAction = (error: string): ErrorAction => {
 
 // UI Actions
 
-interface SendMessageAction {
-  type: ActionType.SendMessage;
-  value: string;
-}
+/** Sends a chat message or slash command typed by the user, and shows its local results. */
+export const SendMessageAction = (message: string): Thunk<Action, State> =>
+  (dispatch, getState) => {
+    const state = getState()
+    const messageId: string = uuid()
+    const trimmedMessage = message.trim()
+    const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
+    const matching = beginsWithSlash
+      ? matchingSlashCommand(trimmedMessage)
+      : undefined
 
-export const SendMessageAction = (message: string): SendMessageAction => {
-  return {
-    type: ActionType.SendMessage,
-    value: message
+    if (trimmedMessage.length > MESSAGE_MAX_LENGTH) {
+      dispatch(ErrorAction('Your message is too long! Please try to keep it under ~600 characters!'))
+    } else if (beginsWithSlash && matching === undefined) {
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+      dispatch(ErrorAction(
+        `Your command ${commandStr ? commandStr[1] : message} is not a registered slash command!`
+      ))
+    } else if (matching && !matching.noArgs && !trimmedMessage.includes(' ')) {
+      // Bare command with no argument, like just "/whisper"
+      dispatch(ErrorAction(`Usage: ${trimmedMessage} ${matching.usageMsgArgs}`))
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Whisper) {
+      // Can't be null, by construction: bare command with no arg was caught by usage-hint
+      // branch above.
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
+      const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
+
+      if (!parsedUsernameMessage) {
+        dispatch(ErrorAction(`Your whisper to ${commandStr[2]} had no message!`))
+      } else {
+        sendChatMessage(messageId, trimmedMessage, state.roomId)
+
+        const [, username, whisperText] = parsedUsernameMessage
+        const user = Object.values(state.userMap).find(
+          (u) => u.username === username
+        )
+        if (user) {
+          dispatch(WhisperAction(user.id, whisperText, true))
+        }
+      }
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Help) {
+      dispatch(ShowModalAction(Modal.Help))
+      dispatch(CommandMessageAction('You consult the help docs. (You can also find them in sidebar!)'))
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Look) {
+      // Can't be null, by construction: bare command with no arg was caught by usage-hint
+      // branch above.
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
+      dispatch(CommandMessageAction(
+        `You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`
+      ))
+      sendChatMessage(messageId, trimmedMessage, state.roomId)
+    } else if (beginsWithSlash) {
+      sendChatMessage(messageId, trimmedMessage, state.roomId)
+    } else {
+      sendChatMessage(messageId, message, state.roomId)
+      dispatch(ChatMessageAction(messageId, myUserId(state), message))
+    }
   }
-}
 
 interface SetNameAction {
   type: ActionType.SetName;

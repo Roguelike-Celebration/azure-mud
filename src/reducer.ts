@@ -2,11 +2,9 @@ import firebase from 'firebase/app'
 import { current, original, produce } from 'immer'
 
 import { Badge } from '../server/src/badges.js'
-import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
 import { RoomNote } from '../server/src/roomNote.js'
 import { DEFAULT_SERVER_SETTINGS, ServerSettings } from '../server/src/types.js'
 import { MinimalUser, PublicUser, User } from '../server/src/user.js'
-import { uuid } from '../server/src/utils.js'
 
 import { Action, ActionType } from './Actions.js'
 import Config from './config.js'
@@ -32,10 +30,8 @@ import {
   WhisperMessage
 } from './message/index.js'
 import { Modal } from './modals.js'
-import { sendChatMessage } from './networking.js'
 import { Room } from './room.js'
-import { myUser, myUserId } from './selectors.js'
-import { matchingSlashCommand, SlashCommandType } from './SlashCommands.js'
+import { myUser } from './selectors.js'
 import * as Storage from './storage.js'
 import { EntityState } from './types.js'
 
@@ -273,7 +269,8 @@ export default produce((draft: State, action: Action) => {
   if (action.type === ActionType.Whisper) {
     const whisperMessage = createWhisperMessage(
       action.value.name,
-      action.value.message
+      action.value.message,
+      action.value.senderIsSelf
     )
     addMessage(draft, whisperMessage)
     saveWhisper(draft, whisperMessage)
@@ -398,92 +395,6 @@ export default produce((draft: State, action: Action) => {
   }
 
   // UI Actions
-  if (action.type === ActionType.SendMessage) {
-    const messageId: string = uuid()
-    const trimmedMessage = action.value.trim()
-    const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
-    const matching = beginsWithSlash
-      ? matchingSlashCommand(trimmedMessage)
-      : undefined
-
-    if (trimmedMessage.length > MESSAGE_MAX_LENGTH) {
-      addMessage(
-        draft,
-        createErrorMessage(
-          'Your message is too long! Please try to keep it under ~600 characters!'
-        )
-      )
-    } else if (beginsWithSlash && matching === undefined) {
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
-      addMessage(
-        draft,
-        createErrorMessage(
-          `Your command ${
-            commandStr ? commandStr[1] : action.value
-          } is not a registered slash command!`
-        )
-      )
-    } else if (matching && !matching.noArgs && !trimmedMessage.includes(' ')) {
-      // Bare command with no argument, like just "/whisper"
-      addMessage(
-        draft,
-        createErrorMessage(`Usage: ${trimmedMessage} ${matching.usageMsgArgs}`)
-      )
-    } else if (beginsWithSlash && matching?.type === SlashCommandType.Whisper) {
-      // Can't be null, by construction: bare command with no arg was caught by usage-hint
-      // branch above.
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
-      const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
-
-      if (!parsedUsernameMessage) {
-        addMessage(
-          draft,
-          createErrorMessage(`Your whisper to ${commandStr[2]} had no message!`)
-        )
-      } else {
-        sendChatMessage(messageId, trimmedMessage, draft.roomId)
-
-        const [, username, message] = parsedUsernameMessage
-        const user = Object.values(draft.userMap).find(
-          (u) => u.username === username
-        )
-        const userId = user && user.id
-        if (userId) {
-          const whisperMessage = createWhisperMessage(userId, message, true)
-          addMessage(draft, whisperMessage)
-          saveWhisper(draft, whisperMessage)
-        }
-      }
-    } else if (beginsWithSlash && matching?.type === SlashCommandType.Help) {
-      draft.activeModal = Modal.Help
-      addMessage(
-        draft,
-        createCommandMessage(
-          'You consult the help docs. (You can also find them in sidebar!)'
-        )
-      )
-    } else if (beginsWithSlash && matching?.type === SlashCommandType.Look) {
-      // Can't be null, by construction: bare command with no arg was caught by usage-hint
-      // branch above.
-      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
-      addMessage(
-        draft,
-        createCommandMessage(
-          `You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`
-        )
-      )
-      sendChatMessage(messageId, trimmedMessage, draft.roomId)
-    } else if (beginsWithSlash) {
-      sendChatMessage(messageId, trimmedMessage, draft.roomId)
-    } else {
-      sendChatMessage(messageId, action.value, draft.roomId)
-      addMessage(
-        draft,
-        createChatMessage(messageId, myUserId(draft), action.value)
-      )
-    }
-  }
-
   if (action.type === ActionType.HideModalAction) {
     draft.activeModal = Modal.None
     draft.hasDismissedAModal = true
