@@ -85,7 +85,8 @@ const App = () => {
     // Note that auth-changed can be fired due to a logout in another tab, not just this one.
     // TODO: This flow has a lot of confusing, potentially duplicated messages that I'm not sure are necessary
     // I (Em) started a refactor at one point, but abandoned it since it became too irrelevant from my task
-    onAuthenticationStateChange(async (user) => {
+    // Return the unsubscribe as cleanup, so a remount doesn't leave an extra listener behind.
+    return onAuthenticationStateChange(async (user) => {
       if (!user) {
         disconnectWebPubSub()
         dispatch(
