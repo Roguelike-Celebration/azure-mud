@@ -62,6 +62,7 @@ export type Action =
   | DeactivateAutoscrollAction
   | ActivateAutoscrollAction
   | SetUseSimpleNamesAction
+  | SetShowDebugControlsAction
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
@@ -108,6 +109,7 @@ export enum ActionType {
   DeactivateAutoscroll = 'DEACTIVATE_AUTOSCROLL',
   ActivateAutoscroll = 'ACTIVATE_AUTOSCROLL',
   SetUseSimpleNames = 'SET_USE_SIMPLE_NAMES',
+  SetShowDebugControls = 'SET_SHOW_DEBUG_CONTROLS',
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
@@ -723,6 +725,17 @@ export const SetUseSimpleNamesAction = (
   useSimpleNames: boolean
 ): SetUseSimpleNamesAction => {
   return { type: ActionType.SetUseSimpleNames, value: useSimpleNames }
+}
+
+interface SetShowDebugControlsAction {
+  type: ActionType.SetShowDebugControls;
+  value: boolean;
+}
+
+export const SetShowDebugControlsAction = (
+  showDebugControls: boolean
+): SetShowDebugControlsAction => {
+  return { type: ActionType.SetShowDebugControls, value: showDebugControls }
 }
 
 interface AuthenticateAction {

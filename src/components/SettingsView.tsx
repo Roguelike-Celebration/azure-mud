@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import '../../style/profileEditView.css'
 import { Badge } from '../../server/src/badges.js'
-import { SetUseSimpleNamesAction } from '../Actions.js'
+import { SetShowDebugControlsAction, SetUseSimpleNamesAction } from '../Actions.js'
 import { DispatchContext, SettingsContext } from '../App.js'
 import { currentTheme, setTheme } from '../storage.js'
 
@@ -12,7 +12,7 @@ interface Props {
 
 export default function SettingsView (props: Props) {
   const dispatch = useContext(DispatchContext)
-  const { useSimpleNames } = useContext(SettingsContext)
+  const { useSimpleNames, showDebugControls } = useContext(SettingsContext)
 
   // Set the selection of the radio group upon opening the modal
   const [selectedTheme, setSelectedTheme] = useState('default')
@@ -159,6 +159,20 @@ export default function SettingsView (props: Props) {
               onChange={() => handleSimpleNamesSelection(true)}
             />
             Use Simple Names (text only)
+          </label>
+        </div>
+      </div>
+      <div className="form" id="debugControlsForm">
+        <label htmlFor="debugControlsForm" className='form-header'>Debugging:</label>
+        <div className="checkbox">
+          <label>
+            <input
+              type="checkbox"
+              id="showDebugControls"
+              checked={showDebugControls}
+              onChange={(e) => dispatch(SetShowDebugControlsAction(e.currentTarget.checked))}
+            />
+            Show debug controls
           </label>
         </div>
       </div>

@@ -87,7 +87,7 @@
   --violet: #ee82ee;
   --yellow: #ffff00;
   --link-decoration: underline;
-  --link-style: dotted; 
+  --link-style: dotted;
   --active: #FFA300;
   --link: #FFA300;
   }
@@ -112,7 +112,7 @@
   --violet: #ee82ee;
   --yellow: #ffff00;
   --link-decoration: underline;
-  --link-style: dotted; 
+  --link-style: dotted;
   --active: #66FF66;
   --link: #66FF66;
   }
@@ -136,11 +136,11 @@
   --violet: #ee82ee;
   --yellow: #ffff00;
   --link-decoration: underline;
-  --link-style: wavy; 
+  --link-style: wavy;
   --active: #1e1c4f;
-  --link: #ee82ee; 
+  --link: #ee82ee;
   }
-  
+
 .hotdogstand {
   --main-background: #ff0000 ;
   --main-font:#000000;
@@ -159,13 +159,11 @@
   --violet: #ee82ee;
   --yellow: #ffff00;
   --link-decoration: underline;
-  --link-style: dotted; 
+  --link-style: dotted;
   --active: #ffff00;
-  --link: #ffffff; 
-}  
+  --link: #ffffff;
+}
 
-
-  
 .summer-camp {
   --main-background: #F5EFE6;
   --main-font:#213220;
@@ -184,10 +182,10 @@
   --violet: #584B58;
   --yellow: #968C03;
   --link-decoration: underline;
-  --link-style: dotted; 
+  --link-style: dotted;
   --active: #027975;
   --link: #87351D;
-}  
+}
 
 .summer-camp-dark {
   --main-background: #213220;
@@ -207,11 +205,11 @@
   --violet: #cf0dcf;
   --yellow: #d2c50d;
   --link-decoration: underline;
-  --link-style: dotted; 
+  --link-style: dotted;
   --active: #027975;
   --link: #02D4CD;
 }
-  
+
 body {
   background-color: var(--main-background);
   color: var(--main-font);
@@ -279,7 +277,7 @@ a:visited {
   border: none;
   color: var(--link);
   cursor: pointer;
-  display: inline; 
+  display: inline;
   font-family: "IBM Plex Mono", "Consolas", "Courier New", Courier, monospace;
   font-size: 1.0em;
   margin: 0;
@@ -298,7 +296,8 @@ button {
   padding: 0.5rem 1rem;
 }
 
-input[type=radio] {
+input[type=radio],
+input[type=checkbox] {
   vertical-align: baseline;
   margin-right: 1em;
   max-width: 20px;
@@ -308,7 +307,8 @@ input[type=radio] {
   display: block
 }
 
-.settingsContainer .radio {
+.settingsContainer .radio,
+.settingsContainer .checkbox {
   margin-left: 1em;
 }
 
