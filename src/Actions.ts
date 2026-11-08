@@ -5,8 +5,9 @@ import { MinimalUser, PublicUser, User } from '../server/src/user.js'
 
 import { Message, WhisperMessage } from './message/index.js'
 import { Modal } from './modals.js'
-import { connectRoomData } from './networking.js'
+import { connectRoomData, updateFontReward, updateProfileColor } from './networking.js'
 import { ModalOptions, PresenceListMap, RoomDataMap, State, UserMap } from './reducer.js'
+import { myUserId } from './selectors.js'
 import { Thunk } from './useReducerWithThunk.js'
 import { fps } from './utils.js'
 
@@ -35,7 +36,7 @@ export type Action =
   | UserMapAction
   | PlayerBannedAction
   | PlayerUnbannedAction
-  | UpdateProfileColorAction
+  | UpdateProfileColorLocalAction
   | ErrorAction
   | SendMessageAction
   | SetNameAction
@@ -44,8 +45,6 @@ export type Action =
   | ShowModalWithOptionsAction
   | AuthenticateAction
   | IsRegisteredAction
-  | BanToggleAction
-  | ModToggleAction
   | NoteAddAction
   | NoteRemoveAction
   | NoteUpdateLikesAction
@@ -64,7 +63,7 @@ export type Action =
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
-  | UpdateFontRewardAction
+  | UpdateFontRewardLocalAction
   | EquipBadgeAction
   | UpdateUnlockableBadgesAction
   | UnlockBadgeAction
@@ -111,8 +110,6 @@ export enum ActionType {
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
-  BanToggle = 'BAN_TOGGLE',
-  ModToggle = 'MOD_TOGGLE',
   ChatReady = 'CHAT_READY',
   LoadMessageArchiveStart = 'LOAD_MESSAGE_ARCHIVE_START',
   LoadMessageArchiveEnd = 'LOAD_MESSAGE_ARCHIVE_END',
@@ -483,33 +480,48 @@ export const PlayerUnbannedAction = (
   }
 }
 
-interface UpdateProfileColorAction {
+// *LocalAction actions update only local state, for the reducer. The exported thunks
+// also update the server; reducers must be pure and not make network calls themselves.
+
+interface UpdateProfileColorLocalAction {
   type: ActionType.UpdateProfileColor;
   color: string | undefined;
 }
 
-export const UpdateProfileColorAction = (
+const UpdateProfileColorLocalAction = (
   color: string | undefined
-): UpdateProfileColorAction => {
+): UpdateProfileColorLocalAction => {
   return {
     type: ActionType.UpdateProfileColor,
     color: color
   }
 }
 
-interface UpdateFontRewardAction {
+export const UpdateProfileColorAction = (color: string | undefined): Thunk<Action, State> =>
+  (dispatch, getState) => {
+    dispatch(UpdateProfileColorLocalAction(color))
+    updateProfileColor(myUserId(getState()), color)
+  }
+
+interface UpdateFontRewardLocalAction {
   type: ActionType.UpdateFontReward;
   font: string;
 }
 
-export const UpdateFontRewardAction = (
+const UpdateFontRewardLocalAction = (
   font: string
-): UpdateFontRewardAction => {
+): UpdateFontRewardLocalAction => {
   return {
     type: ActionType.UpdateFontReward,
     font: font
   }
 }
+
+export const UpdateFontRewardAction = (font: string): Thunk<Action, State> =>
+  (dispatch, getState) => {
+    dispatch(UpdateFontRewardLocalAction(font))
+    updateFontReward(myUserId(getState()), font)
+  }
 
 interface ErrorAction {
   type: ActionType.Error;
@@ -678,24 +690,6 @@ interface IsRegisteredAction {
 
 export const IsRegisteredAction = (): IsRegisteredAction => {
   return { type: ActionType.IsRegistered }
-}
-
-interface BanToggleAction {
-  type: ActionType.BanToggle;
-  value: string;
-}
-
-export const BanToggleAction = (userId: string): BanToggleAction => {
-  return { type: ActionType.BanToggle, value: userId }
-}
-
-interface ModToggleAction {
-  type: ActionType.ModToggle;
-  value: string;
-}
-
-export const ModToggleAction = (userId: string): ModToggleAction => {
-  return { type: ActionType.ModToggle, value: userId }
 }
 
 interface LoadMessageArchiveActionStart {

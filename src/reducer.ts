@@ -34,13 +34,10 @@ import {
 import { Modal } from './modals.js'
 import {
   fetchProfile,
-  sendChatMessage,
-  toggleUserBan,
-  toggleUserMod,
-  updateFontReward,
-  updateProfileColor
+  sendChatMessage
 } from './networking.js'
 import { Room } from './room.js'
+import { myUser, myUserId } from './selectors.js'
 import { matchingSlashCommand, SlashCommandType } from './SlashCommands.js'
 import * as Storage from './storage.js'
 import { EntityState } from './types.js'
@@ -99,25 +96,6 @@ export interface State {
   justUnlockedBadge?: Badge;
 
   obeliskNotes: RoomNote[]
-}
-
-/** Logged-in user's ID, required, for code that only runs after login. Throws otherwise.
- *  Reducer event handlers must not use this, because events can arrive before login finishes. */
-export function myUserId (state: State): string {
-  if (!state.userId) {
-    throw new Error('No userId in State: not logged in yet')
-  }
-  return state.userId
-}
-
-/** Logged-in user's MinimalUser, required, for code that only runs after login. Throws otherwise.
- *  Reducer event handlers must not use this, because events can arrive before login finishes. */
-export function myUser (state: State): MinimalUser {
-  const user = state.userMap[myUserId(state)]
-  if (!user) {
-    throw new Error("No MinimalUser entry (in State's userMap) for logged-in user")
-  }
-  return user
 }
 
 export type UserMap = { [userId: string]: MinimalUser }
@@ -400,8 +378,6 @@ export default produce((draft: State, action: Action) => {
         )
       )
     }
-
-    updateProfileColor(myUserId(draft), action.color)
   }
 
   if (action.type === ActionType.UpdateFontReward) {
@@ -423,8 +399,6 @@ export default produce((draft: State, action: Action) => {
         )
       )
     }
-
-    updateFontReward(myUserId(draft), action.font)
   }
 
   if (action.type === ActionType.Error) {
@@ -587,14 +561,6 @@ export default produce((draft: State, action: Action) => {
 
   if (action.type === ActionType.IsRegistered) {
     draft.hasRegistered = true
-  }
-
-  if (action.type === ActionType.BanToggle) {
-    toggleUserBan(action.value)
-  }
-
-  if (action.type === ActionType.ModToggle) {
-    toggleUserMod(action.value)
   }
 
   if (action.type === ActionType.ChatReady) {
