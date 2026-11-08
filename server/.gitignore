@@ -3,8 +3,11 @@
 
 src/rooms/compiled.json
 
-# This is a secret injected at build-time
+# Firebase
+# This is a secret injected at build-time, or manually added for local dev use
 firebase-admin.json
+# And developers might have alternate copies of it
+firebase-admin.*.json
 
 # Logs
 logs
@@ -100,6 +103,3 @@ bin
 obj
 appsettings.json
 local.settings.json
-
-# Firebase
-firebase-admin.json
