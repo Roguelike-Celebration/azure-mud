@@ -106,6 +106,7 @@ export default memo(function MessageView (props: {
 type DeletableMessageViewProps = {
   messageId: string;
   messageText: string;
+  children: React.ReactNode;
 }
 
 const DeletableMessageView: FunctionComponent<DeletableMessageViewProps> = (
