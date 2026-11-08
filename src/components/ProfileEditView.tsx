@@ -2,8 +2,12 @@
 import React, { useState } from 'react'
 
 import { PublicUser } from '../../server/src/user.js'
+import { getRequiredCurrentUser } from '../authentication.js'
 import config from '../config.js'
 import { updateProfile } from '../networking.js'
+
+import { AccountIdentity } from './NameView.js'
+
 import '../../style/profileEditView.css'
 
 interface Props {
@@ -26,6 +30,8 @@ function sanitizeUsername (s: string) : string {
 
 export default function ProfileEditView (props: Props) {
   const { defaultHandle, user, prepopulateTwitterWithDefaultHandle } = props
+  // Show account ID, because handle alone doesn't identify it.
+  const account = getRequiredCurrentUser()
 
   const [handle, setHandle] = useState(
     (user && user.username) || defaultHandle || ''
@@ -61,9 +67,10 @@ export default function ProfileEditView (props: Props) {
         <h1>{`${props.isFTUE ? 'Create' : 'Edit'} Name Badge`}</h1>
         <div style={{ marginTop: '2em', marginBottom: '2em' }}>
           This is your virtual conference badge!<br/>
-        Whatever you enter will be visible to other attendees.<br/>
-        You can come back and change this at any time.
+          Whatever you enter will be visible to other attendees.<br/>
+          You can come back and change this at any time.
         </div>
+        <p>Account: <AccountIdentity id={account.id} email={account.email}/></p>
         <div className="grid">
           <div className="field">
             <label htmlFor="username">Chat Handle</label>

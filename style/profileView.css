@@ -51,6 +51,10 @@
   word-break: break-all;
 }
 
+#profile-account > div {
+  font-size: 70%;
+}
+
 #profile-close {
   background-color: var(--main-background);
   border: none;

@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { MinimalUser } from '../../server/src/user.js'
 import { signOut } from '../authentication.js'
+
+import { UserIdentity, UserIdentityProps } from './NameView.js'
 
 /**
  * A link-styled "Log out" button, for pages that are otherwise dead ends and have no menu.
@@ -17,16 +18,6 @@ export function LogOutLinkButton () {
   }
 
   return <button className='link-styled-button' onClick={logOut}>Log Out</button>
-}
-
-interface UserIdentityProps {
-  user: MinimalUser
-  email: string
-}
-
-export function UserIdentity (props: UserIdentityProps) {
-  const { user, email } = props
-  return <><b>{user.username}</b> ({email}, id {user.id})</>
 }
 
 export function LoggedInLine (props: UserIdentityProps) {

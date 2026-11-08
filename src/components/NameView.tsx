@@ -217,3 +217,25 @@ export default function NameView (props: Props) {
     )
   }
 }
+
+export interface UserIdentityProps {
+  user: MinimalUser
+  email: string
+}
+
+/** Username plus account email and ID, for telling accounts apart. */
+export function UserIdentity (props: UserIdentityProps) {
+  const { user, email } = props
+  return <><b>{user.username}</b> ({email}, id {user.id})</>
+}
+
+interface AccountIdentityProps {
+  id: string
+  email: string | null
+}
+
+/** Like UserIdentity, but without username, e.g. for before profile is filled out. */
+export function AccountIdentity (props: AccountIdentityProps) {
+  const { id, email } = props
+  return <><b>{email ?? '(no email)'}</b> (id {id})</>
+}
