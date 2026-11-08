@@ -1,11 +1,8 @@
-// Note - we're doing firebase 8 because the firebaseui stuff doesn't work with 9, big F
-import firebase from 'firebase/app'
 import React from 'react'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-
-import 'firebase/auth'
 
 import { firebaseUiConfig } from '../authentication.js'
+
+import FirebaseAuthWidget from './FirebaseAuthWidget.js'
 
 export default function LoggedOutView () {
   return (
@@ -22,7 +19,7 @@ export default function LoggedOutView () {
           game design. It&apos;s for fans, players, developers, scholars, and
           everyone else!
         </p>
-        <StyledFirebaseAuth uiConfig={firebaseUiConfig} firebaseAuth={firebase.auth()} />
+        <FirebaseAuthWidget uiConfig={firebaseUiConfig} />
         <p>
           <strong>Sign-in or password reset problems?</strong> If you&apos;re having trouble signing in to the MUD using this
           page, please email us at <a href="mailto:contact@roguelike.club">contact@roguelike.club</a> for support. Including

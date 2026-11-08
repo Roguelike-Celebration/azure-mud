@@ -9,7 +9,8 @@ import { DispatchContext } from '../App.js'
 
 interface Props {
     fullScreen: boolean,
-    unclosable: boolean
+    unclosable: boolean,
+    children: React.ReactNode
 }
 
 export const ModalView: React.FunctionComponent<Props> = (props) => {

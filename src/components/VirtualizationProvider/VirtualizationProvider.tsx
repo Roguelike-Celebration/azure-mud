@@ -3,6 +3,7 @@ import React, {
   createContext,
   Dispatch,
   FC,
+  ReactNode,
   Reducer,
   ReducerAction,
   ReducerState,
@@ -48,6 +49,11 @@ const initialState: VirtualizationState = {
 const reducer: VirtualizationReducer = produce((state, action) => {
   switch (action.type) {
     case 'setMessagePosition':
+      // Record each message only once, to avoid double-counting its height under
+      // React 18's StrictMode.
+      if (Object.prototype.hasOwnProperty.call(state.messagePositions, action.payload.id)) {
+        break
+      }
       state.messagePositions[action.payload.id] = action.payload
       state.viewportScrollHeight += action.payload.height
       break
@@ -70,7 +76,7 @@ export const VirtualizationContext = createContext<
 >([initialState, () => {}])
 const { Provider } = VirtualizationContext
 
-export const VirtualizationProvider: FC = ({ children }) => {
+export const VirtualizationProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
