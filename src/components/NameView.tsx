@@ -20,7 +20,6 @@ import '../../style/nameView.css'
 interface Props {
   /** Id of the user being viewed (not necessarily the user of this session viewing it). */
   userId: string
-  nowrap?: boolean
   /** A contextMenu ID */
   id: string
   /** If true, don't render a clickable menu */
@@ -149,9 +148,6 @@ export default function NameView (props: Props) {
     )
   }
 
-  // TODO: should be best handled via CSS
-  const customStyle: React.CSSProperties = { whiteSpace: props.nowrap ? 'nowrap' : undefined }
-
   const nameEl = (
     <strong {...tooltipAttrs(!useSimpleNames && (user?.pronouns ?? ''))} className={isMod ? 'mod' : ''}>
       {(!useSimpleNames && user && user.polymorph) || ''}
@@ -190,7 +186,7 @@ export default function NameView (props: Props) {
     )}</>
 
     return (
-      <span className={className} style={customStyle} >
+      <span className={className} >
         {props.skipMenu ? nameEl : menu}
       </span>
     )
@@ -215,7 +211,7 @@ export default function NameView (props: Props) {
       )}</>
 
     return (
-      <span className={className} style={customStyle} >
+      <span className={className} >
         {props.skipMenu ? nameEl : menu}
       </span>
     )
