@@ -457,7 +457,6 @@ const App = () => {
                         />
                       </VirtualizationProvider>
                       <InputView
-                        prepopulated={state.prepopulatedInput}
                         sendMessage={(message) =>
                           dispatch(SendMessageAction(message))
                         }

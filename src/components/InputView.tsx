@@ -9,7 +9,6 @@ import '../../style/input.css'
 
 export default function InputView (props: {
   sendMessage: (message: string) => void,
-  prepopulated?: string,
   usersInRoom?: string[]
 }) {
   const { userMap } = useContext(UserMapContext)
@@ -40,10 +39,7 @@ export default function InputView (props: {
 
   useEffect(() => {
     document.getElementById('chat-input')?.focus()
-    if (props.prepopulated) {
-      setInput(props.prepopulated)
-    }
-  }, [props.prepopulated])
+  }, [])
 
   const usersInRoom = (search: string) => {
     if (!props.usersInRoom) { return [] }
