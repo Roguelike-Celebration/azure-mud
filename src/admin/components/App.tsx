@@ -34,7 +34,7 @@ const App = function () {
     // I don't think we (currently) care about knowing WHO you are, or connecting to SignalR infra
     // SignalR may change if we want to enable real-time collab, but WOOF.
 
-    onAuthenticationStateChange(async (user) => {
+    return onAuthenticationStateChange(async (user) => {
       // The shouldVerifyEmail check shouldn't be necessary,
       // but I'm not convinced we won't have an exploit where someone can make a new account with an existing admin email.
       // This 20 characters is easier to type than manually testing.

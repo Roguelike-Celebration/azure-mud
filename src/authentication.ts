@@ -2,8 +2,11 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import type firebaseui from 'firebaseui'
 
-export function onAuthenticationStateChange (handler: (user: AuthenticatedUser | undefined) => void): void {
-  firebase.auth().onAuthStateChanged((fbUser: firebase.User | null) => {
+/** Registers handler for Firebase auth state change. Returns function to unregister it. */
+export function onAuthenticationStateChange (
+  handler: (user: AuthenticatedUser | undefined) => void
+): firebase.Unsubscribe {
+  return firebase.auth().onAuthStateChanged((fbUser: firebase.User | null) => {
     const user = firebaseUserToAuthenticatedUser(fbUser)
     handler(user)
   })

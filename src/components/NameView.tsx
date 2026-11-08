@@ -4,15 +4,13 @@ import ReactDOM from 'react-dom'
 
 import { MinimalUser } from '../../server/src/user.js'
 import {
-  BanToggleAction,
   HideModalAction,
-  ModToggleAction,
   ShowModalAction
 } from '../Actions.js'
 import { DispatchContext, SettingsContext, UserMapContext } from '../App.js'
 import { tooltipAttrs } from '../display.js'
 import { Modal } from '../modals.js'
-import { fetchProfile, toggleUserSpeaker } from '../networking.js'
+import { fetchProfile, toggleUserBan, toggleUserMod, toggleUserSpeaker } from '../networking.js'
 
 import BadgeView from './BadgeView.js'
 import '../../style/nameView.css'
@@ -64,7 +62,7 @@ export default function NameView (props: Props) {
       `Are you sure you would like to ${isBanned ? 'unban' : 'ban'} the user '${username}'?`
     )
     if (doBan) {
-      dispatch(BanToggleAction(userId))
+      toggleUserBan(userId)
     }
   }
 
@@ -74,7 +72,7 @@ export default function NameView (props: Props) {
       `${isMod ? 'from' : 'to'} the mod list?`
     )
     if (doMod) {
-      dispatch(ModToggleAction(userId))
+      toggleUserMod(userId)
     }
   }
 

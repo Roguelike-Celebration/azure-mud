@@ -6,7 +6,6 @@ import React, {
   ReactNode,
   Reducer,
   ReducerState,
-  StrictMode,
   useReducer
 } from 'react'
 
@@ -77,10 +76,5 @@ const { Provider } = VirtualizationContext
 
 export const VirtualizationProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-
-  return (
-    <StrictMode>
-      <Provider value={[state, dispatch]}>{children}</Provider>
-    </StrictMode>
-  )
+  return <Provider value={[state, dispatch]}>{children}</Provider>
 }

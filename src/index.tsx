@@ -8,6 +8,9 @@ import App from './App.js'
 import { currentTheme } from './storage.js'
 
 window.addEventListener('DOMContentLoaded', async () => {
-  createRoot(document.getElementById('root') as HTMLElement).render(<App />)
+  createRoot(document.getElementById('root') as HTMLElement).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>)
   document.body.classList.add(await currentTheme())
 })

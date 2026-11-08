@@ -1,12 +1,16 @@
 import { Badge } from '../server/src/badges.js'
+import { MESSAGE_MAX_LENGTH } from '../server/src/config.js'
 import { RoomNote } from '../server/src/roomNote.js'
 import { ServerSettings } from '../server/src/types.js'
 import { MinimalUser, PublicUser, User } from '../server/src/user.js'
+import { uuid } from '../server/src/utils.js'
 
 import { Message, WhisperMessage } from './message/index.js'
 import { Modal } from './modals.js'
-import { connectRoomData } from './networking.js'
+import { connectRoomData, fetchProfile, sendChatMessage, updateFontReward, updateProfileColor } from './networking.js'
 import { ModalOptions, PresenceListMap, RoomDataMap, State, UserMap } from './reducer.js'
+import { myUserId } from './selectors.js'
+import { matchingSlashCommand, SlashCommandType } from './SlashCommands.js'
 import { Thunk } from './useReducerWithThunk.js'
 import { fps } from './utils.js'
 
@@ -32,20 +36,17 @@ export type Action =
   | DanceAction
   | PlayerEnteredAction
   | PlayerLeftAction
-  | UserMapAction
+  | UserMapLocalAction
   | PlayerBannedAction
   | PlayerUnbannedAction
-  | UpdateProfileColorAction
+  | UpdateProfileColorLocalAction
   | ErrorAction
-  | SendMessageAction
   | SetNameAction
   | ShowProfileAction
   | ShowModalAction
   | ShowModalWithOptionsAction
   | AuthenticateAction
   | IsRegisteredAction
-  | BanToggleAction
-  | ModToggleAction
   | NoteAddAction
   | NoteRemoveAction
   | NoteUpdateLikesAction
@@ -64,7 +65,7 @@ export type Action =
   | SpaceIsClosedAction
   | SpaceOpenedOrClosedAction
   | CommandMessageAction
-  | UpdateFontRewardAction
+  | UpdateFontRewardLocalAction
   | EquipBadgeAction
   | UpdateUnlockableBadgesAction
   | UnlockBadgeAction
@@ -97,7 +98,6 @@ export enum ActionType {
   UpdateProfileColor = 'UPDATE_PROFILE_COLOR',
   UpdateFontReward = 'UPDATE_FONT_REWARD',
   // UI actions
-  SendMessage = 'SEND_MESSAGE',
   SetName = 'SET_NAME',
   ShowProfile = 'SHOW_PROFILE',
   HideProfile = 'HIDE_PROFILE',
@@ -111,8 +111,6 @@ export enum ActionType {
   //
   Authenticate = 'AUTHENTICATE',
   IsRegistered = 'IS_REGISTERED',
-  BanToggle = 'BAN_TOGGLE',
-  ModToggle = 'MOD_TOGGLE',
   ChatReady = 'CHAT_READY',
   LoadMessageArchiveStart = 'LOAD_MESSAGE_ARCHIVE_START',
   LoadMessageArchiveEnd = 'LOAD_MESSAGE_ARCHIVE_END',
@@ -299,13 +297,14 @@ interface WhisperAction {
   value: {
     name: string;
     message: string;
+    senderIsSelf: boolean;
   };
 }
 
-export const WhisperAction = (name: string, message: string): WhisperAction => {
+export const WhisperAction = (name: string, message: string, senderIsSelf = false): WhisperAction => {
   return {
     type: ActionType.Whisper,
-    value: { name, message }
+    value: { name, message, senderIsSelf }
   }
 }
 
@@ -445,17 +444,28 @@ export const PlayerLeftAction = (
   }
 }
 
-interface UserMapAction {
+interface UserMapLocalAction {
   type: ActionType.UserMap;
   value: UserMap;
 }
 
-export const UserMapAction = (map: UserMap): UserMapAction => {
+const UserMapLocalAction = (map: UserMap): UserMapLocalAction => {
   return {
     type: ActionType.UserMap,
     value: map
   }
 }
+
+export const UserMapAction = (map: UserMap): Thunk<Action, State> =>
+  (dispatch, getState) => {
+    dispatch(UserMapLocalAction(map))
+
+    // If the actively-viewed profile updated, do a clean fetch
+    const { visibleProfile, userMap } = getState()
+    if (visibleProfile && (map[visibleProfile.id] ?? userMap[visibleProfile.id])) {
+      fetchProfile(visibleProfile.id)
+    }
+  }
 
 interface PlayerBannedAction {
   type: ActionType.PlayerBanned;
@@ -483,33 +493,48 @@ export const PlayerUnbannedAction = (
   }
 }
 
-interface UpdateProfileColorAction {
+// *LocalAction actions update only local state, for the reducer. The exported thunks
+// also update the server; reducers must be pure and not make network calls themselves.
+
+interface UpdateProfileColorLocalAction {
   type: ActionType.UpdateProfileColor;
   color: string | undefined;
 }
 
-export const UpdateProfileColorAction = (
+const UpdateProfileColorLocalAction = (
   color: string | undefined
-): UpdateProfileColorAction => {
+): UpdateProfileColorLocalAction => {
   return {
     type: ActionType.UpdateProfileColor,
     color: color
   }
 }
 
-interface UpdateFontRewardAction {
+export const UpdateProfileColorAction = (color: string | undefined): Thunk<Action, State> =>
+  (dispatch, getState) => {
+    dispatch(UpdateProfileColorLocalAction(color))
+    updateProfileColor(myUserId(getState()), color)
+  }
+
+interface UpdateFontRewardLocalAction {
   type: ActionType.UpdateFontReward;
   font: string;
 }
 
-export const UpdateFontRewardAction = (
+const UpdateFontRewardLocalAction = (
   font: string
-): UpdateFontRewardAction => {
+): UpdateFontRewardLocalAction => {
   return {
     type: ActionType.UpdateFontReward,
     font: font
   }
 }
+
+export const UpdateFontRewardAction = (font: string): Thunk<Action, State> =>
+  (dispatch, getState) => {
+    dispatch(UpdateFontRewardLocalAction(font))
+    updateFontReward(myUserId(getState()), font)
+  }
 
 interface ErrorAction {
   type: ActionType.Error;
@@ -525,17 +550,64 @@ export const ErrorAction = (error: string): ErrorAction => {
 
 // UI Actions
 
-interface SendMessageAction {
-  type: ActionType.SendMessage;
-  value: string;
-}
+/** Sends a chat message or slash command typed by the user, and shows its local results. */
+export const SendMessageAction = (message: string): Thunk<Action, State> =>
+  (dispatch, getState) => {
+    const state = getState()
+    const messageId: string = uuid()
+    const trimmedMessage = message.trim()
+    const beginsWithSlash = /^\/.+?/.exec(trimmedMessage)
+    const matching = beginsWithSlash
+      ? matchingSlashCommand(trimmedMessage)
+      : undefined
 
-export const SendMessageAction = (message: string): SendMessageAction => {
-  return {
-    type: ActionType.SendMessage,
-    value: message
+    if (trimmedMessage.length > MESSAGE_MAX_LENGTH) {
+      dispatch(ErrorAction('Your message is too long! Please try to keep it under ~600 characters!'))
+    } else if (beginsWithSlash && matching === undefined) {
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)
+      dispatch(ErrorAction(
+        `Your command ${commandStr ? commandStr[1] : message} is not a registered slash command!`
+      ))
+    } else if (matching && !matching.noArgs && !trimmedMessage.includes(' ')) {
+      // Bare command with no argument, like just "/whisper"
+      dispatch(ErrorAction(`Usage: ${trimmedMessage} ${matching.usageMsgArgs}`))
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Whisper) {
+      // Can't be null, by construction: bare command with no arg was caught by usage-hint
+      // branch above.
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
+      const parsedUsernameMessage = /^(.+?) (.+)/.exec(commandStr[2])
+
+      if (!parsedUsernameMessage) {
+        dispatch(ErrorAction(`Your whisper to ${commandStr[2]} had no message!`))
+      } else {
+        sendChatMessage(messageId, trimmedMessage, state.roomId)
+
+        const [, username, whisperText] = parsedUsernameMessage
+        const user = Object.values(state.userMap).find(
+          (u) => u.username === username
+        )
+        if (user) {
+          dispatch(WhisperAction(user.id, whisperText, true))
+        }
+      }
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Help) {
+      dispatch(ShowModalAction(Modal.Help))
+      dispatch(CommandMessageAction('You consult the help docs. (You can also find them in sidebar!)'))
+    } else if (beginsWithSlash && matching?.type === SlashCommandType.Look) {
+      // Can't be null, by construction: bare command with no arg was caught by usage-hint
+      // branch above.
+      const commandStr = /^(\/.+?) (.+)/.exec(trimmedMessage)!
+      dispatch(CommandMessageAction(
+        `You attempt to examine ${commandStr[2]}. (You can also click on their username and select Profile!)`
+      ))
+      sendChatMessage(messageId, trimmedMessage, state.roomId)
+    } else if (beginsWithSlash) {
+      sendChatMessage(messageId, trimmedMessage, state.roomId)
+    } else {
+      sendChatMessage(messageId, message, state.roomId)
+      dispatch(ChatMessageAction(messageId, myUserId(state), message))
+    }
   }
-}
 
 interface SetNameAction {
   type: ActionType.SetName;
@@ -678,24 +750,6 @@ interface IsRegisteredAction {
 
 export const IsRegisteredAction = (): IsRegisteredAction => {
   return { type: ActionType.IsRegistered }
-}
-
-interface BanToggleAction {
-  type: ActionType.BanToggle;
-  value: string;
-}
-
-export const BanToggleAction = (userId: string): BanToggleAction => {
-  return { type: ActionType.BanToggle, value: userId }
-}
-
-interface ModToggleAction {
-  type: ActionType.ModToggle;
-  value: string;
-}
-
-export const ModToggleAction = (userId: string): ModToggleAction => {
-  return { type: ActionType.ModToggle, value: userId }
 }
 
 interface LoadMessageArchiveActionStart {
