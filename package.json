@@ -48,7 +48,7 @@
     "react-firebaseui": "^5.0.2",
     "react-icons": "^3.10.0",
     "react-mentions": "^4.4.7",
-    "react-page-visibility": "^6.4.0",
+    "react-page-visibility": "^7.0.0",
     "react-tooltip": "^6.0.9",
     "ts-node": "^10"
   },
