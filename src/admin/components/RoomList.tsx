@@ -4,6 +4,7 @@ import React, { useContext } from 'react'
 
 import { getAllRooms, getRoom, resetRoomData } from '../../networking.js'
 import { UpdateAndShowRoomAction } from '../actions.js'
+import { formatRoomDataJson } from '../roomDataJson.js'
 
 import { DispatchContext } from './App.js'
 import '../../../style/nav.css'
@@ -25,7 +26,7 @@ export default function (props: { roomIds: string[] | undefined }) {
       alert('Failed fetching room data to download. (AzFn getAllRooms failed.)')
       return
     }
-    const roomJSON = JSON.stringify(rooms, null, 2)
+    const roomJSON = formatRoomDataJson(rooms)
 
     // via https://stackoverflow.com/questions/34156282/how-do-i-save-json-to-local-text-file
     var a = document.createElement('a')
