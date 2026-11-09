@@ -7,6 +7,7 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 
 import { onAuthenticationStateChange, signOut } from '../../authentication.js'
 import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking.js'
+import { Room } from '../../room.js'
 import { ThunkDispatch, useReducerWithThunk } from '../../useReducerWithThunk.js'
 import { Action, LoggedInAction, LoggedOutAction, UpdateAndShowRoomAction, UpdateRoomIds } from '../actions.js'
 import reducer, { defaultState, State } from '../reducer.js'
@@ -62,29 +63,55 @@ const App = function () {
   }, [])
 
   // This could probably previously run in the login useEffect block--
-  // this is gated on firebase.auth() being valid, not state.isLoggedIn
+  // this is gated on firebase.auth() being valid, not state.isLoggedIn.
   // Shrug.
   useEffect(() => {
     if (!state.isLoggedIn) return
-    (async () => {
-      const roomIds = await getRoomIds()
-      if (roomIds) {
-        dispatch(UpdateRoomIds(roomIds))
-      }
-    })()
+    refreshRoomList()
   }, [state.isLoggedIn])
 
-  const saveRoom = () => {
-    if (!aceRef.current || !state.displayedRoomId) {
+  const refreshRoomList = async () => {
+    const roomIds = await getRoomIds()
+    if (roomIds) {
+      dispatch(UpdateRoomIds(roomIds))
+    }
+  }
+
+  const saveRoom = async () => {
+    const roomId = state.displayedRoomId
+    if (!aceRef.current || !roomId) {
       alert('No room selected to save.')
       return
     }
-    const code = aceRef.current.editor.getValue()
-    updateRoom(state.displayedRoomId, JSON.parse(code))
+    let roomData: Room
+    try {
+      roomData = JSON.parse(aceRef.current.editor.getValue())
+    } catch (e) {
+      alert(`Couldn't save room ${roomId}: invalid JSON: ${e}`)
+      return
+    }
+    const result = await updateRoom(roomId, roomData)
+    if (!result.ok) {
+      alert(`Failed saving room ${roomId}: ${result.error}`)
+      return
+    }
+    const { room } = result.value
+    const isNew = !state.roomIds?.includes(room.id)
+    // Re-renders reset the editor text to the state's copy of the room, so update that first
+    dispatch(UpdateAndShowRoomAction(room.id, room))
+    alert(isNew ? `Created room ${room.id} on the server.` : `Saved room ${room.id}.`)
+    if (isNew) {
+      await refreshRoomList()
+    }
   }
 
   const createRoom = (name: string) => {
+    if (state.roomIds?.includes(name)) {
+      alert(`Couldn't create room ${name}: a room with that ID already exists.`)
+      return
+    }
     dispatch(UpdateAndShowRoomAction(name, { displayName: name, shortName: name, id: name, description: '' }))
+    alert(`New room ${name} is ready to edit. It isn't on the server until you click Save.`)
   }
 
   if (!state.checkedAuthentication) {

@@ -16,8 +16,14 @@ export default function (props: { roomIds: string[] | undefined }) {
 
   const clickedResetData = async () => {
     if (!confirm("Are you sure you'd like to reset room data? This may cause irrevocable data loss. (Will also force a page refresh, sorry.)")) return
-    await resetRoomData(true)
-    await getAllRooms()
+    const result = await resetRoomData(true)
+    if (!result.ok) {
+      alert(`Failed resetting room data: ${result.error}`)
+      return
+    }
+    const roomCount = Object.keys(result.value.roomData ?? {}).length
+    alert(`Reset room data to the disk copy (${roomCount} rooms).`)
+    window.location.reload()
   }
 
   const clickedDownloadData = async () => {

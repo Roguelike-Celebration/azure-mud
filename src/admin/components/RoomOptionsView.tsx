@@ -20,7 +20,12 @@ export default function (props: { roomId: string | undefined, updateRoom: () => 
       'cause a page refresh)')) {
         return
     }
-    await deleteRoom(props.roomId)
+    const result = await deleteRoom(props.roomId)
+    if (!result.ok) {
+      alert(`Failed deleting room ${props.roomId}: ${result.error}`)
+      return
+    }
+    alert(`Deleted room ${props.roomId}.`)
     // TODO: Remove roomId from local list in a less silly way
     window.location.reload()
   }
