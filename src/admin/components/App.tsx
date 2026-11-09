@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useRef } from 'react'
+import React, { createContext, useEffect } from 'react'
 import AceEditor from 'react-ace'
 import { Tooltip } from 'react-tooltip'
 
@@ -11,8 +11,15 @@ import { MUD_TOOLTIP_ID, MUD_TOOLTIP_Z_INDEX } from '../../display.js'
 import { checkIsRegistered, getAllRooms, updateRoom } from '../../networking.js'
 import { Room } from '../../room.js'
 import { ThunkDispatch, useReducerWithThunk } from '../../useReducerWithThunk.js'
-import { Action, LoggedInAction, LoggedOutAction, UpdateAllRoomsAction, UpdateAndShowRoomAction } from '../actions.js'
-import reducer, { defaultState, State } from '../reducer.js'
+import {
+  Action,
+  LoggedInAction,
+  LoggedOutAction,
+  SetEditorTextAction,
+  UpdateAllRoomsAction,
+  UpdateAndShowRoomAction
+} from '../actions.js'
+import reducer, { defaultState, hasUnsavedChanges, State } from '../reducer.js'
 
 import LoggedOutView from './LoggedOutView.js'
 import RoomList from './RoomList.js'
@@ -25,8 +32,6 @@ const noDefault = <T,>(): T => null as unknown as T
 export const DispatchContext = createContext<ThunkDispatch<Action, State>>(noDefault())
 
 const App = function () {
-  const aceRef = useRef<AceEditor>(null)
-
   const [state, dispatch] = useReducerWithThunk<Action, State>(
     reducer,
     defaultState
@@ -81,13 +86,13 @@ const App = function () {
 
   const saveRoom = async () => {
     const roomId = state.displayedRoomId
-    if (!aceRef.current || !roomId) {
+    if (!roomId) {
       alert('No room selected to save.')
       return
     }
     let roomData: Room
     try {
-      roomData = JSON.parse(aceRef.current.editor.getValue())
+      roomData = JSON.parse(state.editorText)
     } catch (e) {
       alert(`Couldn't save room ${roomId}: invalid JSON: ${e}`)
       return
@@ -99,7 +104,6 @@ const App = function () {
     }
     const { room } = result.value
     const isNew = !state.roomIds?.includes(room.id)
-    // Re-renders reset the editor text to the state's copy of the room, so update that first
     dispatch(UpdateAndShowRoomAction(room.id, room))
     alert(isNew ? `Created room ${room.id} on the server.` : `Saved room ${room.id}.`)
     if (isNew) {
@@ -107,9 +111,18 @@ const App = function () {
     }
   }
 
+  /** Before switching rooms: if there are unsaved changes, ask whether to discard them. */
+  const okToLeaveRoom = (): boolean => {
+    return !hasUnsavedChanges(state) ||
+      confirm(`Room ${state.displayedRoomId} has unsaved changes. Discard them?`)
+  }
+
   const createRoom = (name: string) => {
     if (state.roomIds?.includes(name)) {
       alert(`Couldn't create room ${name}: a room with that ID already exists.`)
+      return
+    }
+    if (!okToLeaveRoom()) {
       return
     }
     dispatch(UpdateAndShowRoomAction(name, { displayName: name, shortName: name, id: name, description: '' }))
@@ -133,18 +146,21 @@ const App = function () {
         />
         <div id='admin-app'>
           <header id='admin-header'>
-            <h1>Room Editor:  {state.displayedRoomId || 'no room selected'}</h1>
+            <h1>
+              Room Editor:  {state.displayedRoomId || 'no room selected'}
+              {hasUnsavedChanges(state) && ' \u{270E}' /* pencil */}
+            </h1>
             <RoomOptionsView roomId={state.displayedRoomId} updateRoom={saveRoom} createRoom={createRoom}/>
           </header>
-          <RoomList roomIds={state.roomIds} roomData={state.roomData}/>
+          <RoomList roomIds={state.roomIds} roomData={state.roomData} okToLeaveRoom={okToLeaveRoom}/>
           <AceEditor
             mode="json"
             theme="solarized_dark"
             name="editor"
             editorProps={{ $blockScrolling: true }}
             height={'100%'}
-            ref={aceRef}
-            value={JSON.stringify((state.displayedRoomId && state.roomData[state.displayedRoomId]) || '', null, 2)}
+            value={state.editorText}
+            onChange={(text) => dispatch(SetEditorTextAction(text))}
             wrapEnabled={true}
             width={'100%'}
           />

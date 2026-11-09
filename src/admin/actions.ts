@@ -6,12 +6,14 @@ export type Action =
   | LoggedOutAction
   | UpdateAllRoomsAction
   | UpdateAndShowRoomAction
+  | SetEditorTextAction
 
 export enum ActionType {
   LoggedIn = 'LOGGED_IN',
   LoggedOut = 'LOGGED_OUT',
   UpdateAllRooms = 'UPDATE_ALL_ROOMS',
-  UpdateAndShowRoom = 'UPDATE_AND_SHOW_ROOM'
+  UpdateAndShowRoom = 'UPDATE_AND_SHOW_ROOM',
+  SetEditorText = 'SET_EDITOR_TEXT'
 }
 
 interface LoggedInAction {
@@ -62,5 +64,17 @@ export const UpdateAndShowRoomAction = (roomId: string, roomData: Room): UpdateA
   return {
     type: ActionType.UpdateAndShowRoom,
     value: { roomId, roomData }
+  }
+}
+
+interface SetEditorTextAction {
+  type: ActionType.SetEditorText;
+  value: string;
+}
+
+export const SetEditorTextAction = (text: string): SetEditorTextAction => {
+  return {
+    type: ActionType.SetEditorText,
+    value: text
   }
 }

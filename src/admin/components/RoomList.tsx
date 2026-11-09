@@ -20,7 +20,11 @@ const roomDataOnDisk: RoomDataMap = diskRoomData
 const DIFFERS_FROM_DISK_MARK = '\u{1F7E1}' // large yellow circle
 const DIFFERS_FROM_DISK_TEXT = 'Differs from the disk copy. Reset Room Data would overwrite it.'
 
-export default function (props: { roomIds: string[] | undefined, roomData: RoomDataMap }) {
+export default function (props: {
+  roomIds: string[] | undefined,
+  roomData: RoomDataMap,
+  okToLeaveRoom: () => boolean
+}) {
   const dispatch = useContext(DispatchContext)
 
   const roomIds = _.sortBy(props.roomIds || [])
@@ -75,7 +79,7 @@ export default function (props: { roomIds: string[] | undefined, roomData: RoomD
 
   const clickedRoom = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const roomId = e.currentTarget.getAttribute('data-room')
-    if (roomId && confirm('Did you save your changes?')) {
+    if (roomId && props.okToLeaveRoom()) {
       // TODO: This is bad compared to handling this async better
       // The cobbler's children have no shoes.
       const roomData = await getRoom(roomId)
