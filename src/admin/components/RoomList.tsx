@@ -3,6 +3,7 @@ import _ from 'lodash'
 import React, { useContext } from 'react'
 
 import diskRoomData from '../../../server/src/rooms/data/roomData.json'
+import { tooltipAttrs } from '../../display.js'
 import { getAllRooms, getRoom, resetRoomData } from '../../networking.js'
 import { RoomDataMap } from '../../reducer.js'
 import { UpdateAndShowRoomAction } from '../actions.js'
@@ -27,6 +28,19 @@ export default function (props: { roomIds: string[] | undefined, roomData: RoomD
   const differsFromDisk = (roomId: string): boolean => {
     const room = props.roomData[roomId]
     return room !== undefined && !_.isEqual(room, roomDataOnDisk[roomId])
+  }
+
+  const roomTooltip = (roomId: string): string => {
+    const room = props.roomData[roomId]
+    const lines = [
+      room?.displayName ?? '?',
+      room?.shortName ?? '?',
+      roomId
+    ]
+    if (differsFromDisk(roomId)) {
+      lines.push('', DIFFERS_FROM_DISK_TEXT)
+    }
+    return lines.join('\n')
   }
 
   const clickedResetData = async () => {
@@ -83,10 +97,11 @@ export default function (props: { roomIds: string[] | undefined, roomData: RoomD
               data-room={id}
               className='nav-item'
               onClick={clickedRoom}
+              {...tooltipAttrs(roomTooltip(id))}
             >
               {id}
               {differsFromDisk(id) &&
-                <span className='room-status-mark' role='img' aria-label={DIFFERS_FROM_DISK_TEXT} title={DIFFERS_FROM_DISK_TEXT}>
+                <span className='room-status-mark' role='img' aria-label={DIFFERS_FROM_DISK_TEXT}>
                   {DIFFERS_FROM_DISK_MARK}
                 </span>}
             </button>

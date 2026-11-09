@@ -48,7 +48,7 @@ import VerifyEmailView from './components/VerifyEmailView.js'
 import { VirtualizationProvider } from './components/VirtualizationProvider/index.js'
 import WelcomeModalView from './components/WelcomeModalView.js'
 import YouAreBannedView from './components/YouAreBannedView.js'
-import { MUD_TOOLTIP_ID } from './display.js'
+import { MUD_TOOLTIP_ID, MUD_TOOLTIP_Z_INDEX } from './display.js'
 import { Modal } from './modals.js'
 import { checkIsRegistered, connect, disconnectWebPubSub } from './networking.js'
 import reducer, { defaultState, RoomDataMap, State, UserMap } from './reducer.js'
@@ -428,8 +428,7 @@ const App = () => {
                         portalRoot={document.body}
                         positionStrategy="fixed"
                         float
-                        /* High z-index so tooltip sits above modals */
-                        style={{ zIndex: 100001 }}
+                        style={{ zIndex: MUD_TOOLTIP_Z_INDEX }}
                       />
                       {shouldShowMenu ? (
                         <span>

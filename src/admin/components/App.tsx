@@ -1,11 +1,13 @@
 import React, { createContext, useEffect, useRef } from 'react'
 import AceEditor from 'react-ace'
+import { Tooltip } from 'react-tooltip'
 
 import 'ace-builds/src-noconflict/mode-json'
 import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
 import { onAuthenticationStateChange, signOut } from '../../authentication.js'
+import { MUD_TOOLTIP_ID, MUD_TOOLTIP_Z_INDEX } from '../../display.js'
 import { checkIsRegistered, getAllRooms, updateRoom } from '../../networking.js'
 import { Room } from '../../room.js'
 import { ThunkDispatch, useReducerWithThunk } from '../../useReducerWithThunk.js'
@@ -121,6 +123,14 @@ const App = function () {
   if (state.isLoggedIn) {
     return (
       <DispatchContext.Provider value={dispatch}>
+        <Tooltip
+          id={MUD_TOOLTIP_ID}
+          portalRoot={document.body}
+          place='right'
+          delayShow={300}
+          /* pre-line, so tooltip text can have line breaks */
+          style={{ whiteSpace: 'pre-line', zIndex: MUD_TOOLTIP_Z_INDEX }}
+        />
         <div id='admin-app'>
           <header id='admin-header'>
             <h1>Room Editor:  {state.displayedRoomId || 'no room selected'}</h1>
