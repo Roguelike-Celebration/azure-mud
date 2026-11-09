@@ -35,6 +35,13 @@ li {
   list-style: none;
 }
 
+/* Smaller than the text, so emoji glyphs don't make their rows taller */
+.room-status-mark {
+  margin-left: 0.4em;
+  font-size: 0.75em;
+  line-height: 1;
+}
+
 #editor {
   grid-area: editor;
 }

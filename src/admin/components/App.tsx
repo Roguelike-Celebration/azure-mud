@@ -6,10 +6,10 @@ import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
 import { onAuthenticationStateChange, signOut } from '../../authentication.js'
-import { checkIsRegistered, getRoomIds, updateRoom } from '../../networking.js'
+import { checkIsRegistered, getAllRooms, updateRoom } from '../../networking.js'
 import { Room } from '../../room.js'
 import { ThunkDispatch, useReducerWithThunk } from '../../useReducerWithThunk.js'
-import { Action, LoggedInAction, LoggedOutAction, UpdateAndShowRoomAction, UpdateRoomIds } from '../actions.js'
+import { Action, LoggedInAction, LoggedOutAction, UpdateAllRoomsAction, UpdateAndShowRoomAction } from '../actions.js'
 import reducer, { defaultState, State } from '../reducer.js'
 
 import LoggedOutView from './LoggedOutView.js'
@@ -71,9 +71,9 @@ const App = function () {
   }, [state.isLoggedIn])
 
   const refreshRoomList = async () => {
-    const roomIds = await getRoomIds()
-    if (roomIds) {
-      dispatch(UpdateRoomIds(roomIds))
+    const roomData = await getAllRooms()
+    if (roomData) {
+      dispatch(UpdateAllRoomsAction(roomData))
     }
   }
 
@@ -126,7 +126,7 @@ const App = function () {
             <h1>Room Editor:  {state.displayedRoomId || 'no room selected'}</h1>
             <RoomOptionsView roomId={state.displayedRoomId} updateRoom={saveRoom} createRoom={createRoom}/>
           </header>
-          <RoomList roomIds={state.roomIds}/>
+          <RoomList roomIds={state.roomIds} roomData={state.roomData}/>
           <AceEditor
             mode="json"
             theme="solarized_dark"

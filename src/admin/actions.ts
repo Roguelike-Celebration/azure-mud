@@ -1,15 +1,16 @@
+import { RoomDataMap } from '../reducer.js'
 import { Room } from '../room.js'
 
 export type Action =
   | LoggedInAction
   | LoggedOutAction
-  | UpdateRoomIdsAction
+  | UpdateAllRoomsAction
   | UpdateAndShowRoomAction
 
 export enum ActionType {
   LoggedIn = 'LOGGED_IN',
   LoggedOut = 'LOGGED_OUT',
-  UpdateRoomIds = 'UPDATE_ROOM_IDS',
+  UpdateAllRooms = 'UPDATE_ALL_ROOMS',
   UpdateAndShowRoom = 'UPDATE_AND_SHOW_ROOM'
 }
 
@@ -37,15 +38,15 @@ export const LoggedOutAction = (): LoggedOutAction => {
   }
 }
 
-interface UpdateRoomIdsAction {
-  type: ActionType.UpdateRoomIds;
-  value: string[];
+interface UpdateAllRoomsAction {
+  type: ActionType.UpdateAllRooms;
+  value: RoomDataMap;
 }
 
-export const UpdateRoomIds = (roomIds: string[]): UpdateRoomIdsAction => {
+export const UpdateAllRoomsAction = (roomData: RoomDataMap): UpdateAllRoomsAction => {
   return {
-    type: ActionType.UpdateRoomIds,
-    value: roomIds
+    type: ActionType.UpdateAllRooms,
+    value: roomData
   }
 }
 

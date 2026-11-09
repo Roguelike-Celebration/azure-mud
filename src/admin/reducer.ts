@@ -11,6 +11,7 @@ export interface State {
   isLoggedIn: boolean
 
   roomIds?: string[]
+  /** Live room data, as last fetched from or saved to the server. */
   roomData: RoomDataMap
 
   displayedRoomId?: string
@@ -37,8 +38,10 @@ export default (oldState: State, action: Action): State => {
     state.isLoggedIn = false
   }
 
-  if (action.type === ActionType.UpdateRoomIds) {
-    state.roomIds = action.value
+  if (action.type === ActionType.UpdateAllRooms) {
+    state.roomIds = Object.keys(action.value)
+    // Merge, so an unsaved new room in the editor isn't dropped
+    state.roomData = { ...state.roomData, ...action.value }
   }
 
   if (action.type === ActionType.UpdateAndShowRoom) {

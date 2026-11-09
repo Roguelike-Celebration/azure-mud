@@ -2,17 +2,32 @@
 import _ from 'lodash'
 import React, { useContext } from 'react'
 
+import diskRoomData from '../../../server/src/rooms/data/roomData.json'
 import { getAllRooms, getRoom, resetRoomData } from '../../networking.js'
+import { RoomDataMap } from '../../reducer.js'
 import { UpdateAndShowRoomAction } from '../actions.js'
 import { formatRoomDataJson, roomDataFileName } from '../roomDataJson.js'
 
 import { DispatchContext } from './App.js'
 import '../../../style/nav.css'
 
-export default function (props: { roomIds: string[] | undefined }) {
+// The copy of roomData.json built into this app, standing in for the backend's copy that
+// Reset loads. Will match as long as frontend and backend are deployed from the same version.
+// (Which we do for prod and staging. Not necessarily dev; that depends on the operator.)
+const roomDataOnDisk: RoomDataMap = diskRoomData
+
+const DIFFERS_FROM_DISK_MARK = '\u{1F7E1}' // large yellow circle
+const DIFFERS_FROM_DISK_TEXT = 'Differs from the disk copy. Reset Room Data would overwrite it.'
+
+export default function (props: { roomIds: string[] | undefined, roomData: RoomDataMap }) {
   const dispatch = useContext(DispatchContext)
 
   const roomIds = _.sortBy(props.roomIds || [])
+
+  const differsFromDisk = (roomId: string): boolean => {
+    const room = props.roomData[roomId]
+    return room !== undefined && !_.isEqual(room, roomDataOnDisk[roomId])
+  }
 
   const clickedResetData = async () => {
     if (!confirm("Are you sure you'd like to reset room data? This may cause irrevocable data loss. (Will also force a page refresh, sorry.)")) return
@@ -70,6 +85,10 @@ export default function (props: { roomIds: string[] | undefined }) {
               onClick={clickedRoom}
             >
               {id}
+              {differsFromDisk(id) &&
+                <span className='room-status-mark' role='img' aria-label={DIFFERS_FROM_DISK_TEXT} title={DIFFERS_FROM_DISK_TEXT}>
+                  {DIFFERS_FROM_DISK_MARK}
+                </span>}
             </button>
           </li>)
       })}
