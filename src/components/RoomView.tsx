@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { useContext, useRef, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 
@@ -12,6 +11,7 @@ import {
 } from '../networking.js'
 import { PresenceCountMap, RoomDataMap } from '../reducer.js'
 import { Room } from '../room.js'
+import { defaultRoomWallDescription, parseDescription } from '../roomDescription.js'
 
 import { ConfettiRoomView } from './feature/ConfettiRoomView.js'
 import { DullDoorRoomView } from './feature/DullDoorViews.js'
@@ -98,7 +98,7 @@ export default function RoomView (props: Props) {
     } else {
       noteWallView = (
         <div>
-          One of the walls has space for attendees to put up sticky notes.{' '}
+          {defaultRoomWallDescription + ' '}
           <button onClick={showNoteWall}>View note wall</button>
         </div>
       )
@@ -140,7 +140,7 @@ export default function RoomView (props: Props) {
           onClick={descriptionClick}
           dangerouslySetInnerHTML={{
             __html: room
-              ? parseDescription(room.description, props.roomData, props.presenceData)
+              ? parseDescription(room, props.roomData, props.presenceData)
               : 'Loading current room...'
           }}
         />
@@ -191,48 +191,6 @@ export default function RoomView (props: Props) {
       )}
     </div>
   )
-}
-
-function parseDescription (
-  description: string,
-  roomData: RoomDataMap,
-  presenceData: PresenceCountMap
-): string {
-  // This code used to get room = roomData[roomId], but now that room data is JIT, it
-  // is normal for that to be absent. The links don't actually use data from roomData, so
-  // that is now skipped.
-
-  // Complex "[[text->target]]" links
-  const complexLinkRegex = /\[\[([^\]]*?)->([^\]]*?)\]\]/g
-  description = description.replace(complexLinkRegex, (match: string, text: string, roomId: string) => {
-    const userCount = presenceData[roomId]
-    const textEsc = _.escape(text)
-    const roomIdEsc = _.escape(roomId)
-    if (roomId === 'item') {
-      return `<a class='room-link' href='#' data-item='${textEsc}'>${textEsc}</a>`
-    } else if (roomId === 'showModal') {
-      return `<a class='room-link' href='#' data-modal='${roomId}'>${textEsc}</a>`
-    } else if (linkActions[roomId]) {
-      return `<a class='room-link' href='#' data-action='${roomId}'>${textEsc}</a>`
-    } else {
-      // With room data being JIT, it's now expected that roomData[roomId] might be empty,
-      // even for valid rooms. So, assume that any roomId that isn't a match for some other
-      // sort of link target is indeed a room ID.
-      const userCountString = userCount > 0 ? ` (${userCount})` : ''
-      return `<a class='room-link' href='#' data-room='${roomIdEsc}'>${textEsc}${userCountString}</a>`
-    }
-  })
-
-  // Simple "[[roomId]]" links
-  // TODO: Escape roomId here, but be careful about doing it! Some of our links currently (2026)
-  // might only work due to accidents of the truncation of unescaped room long-names matching the roomId.
-  const simpleLinkRegex = /\[\[(.+?)\]\]/g
-  description = description.replace(simpleLinkRegex, (match: string, roomId: string) => {
-    const userCount = presenceData[roomId]
-    const userCountString = userCount > 0 ? ` (${userCount})` : ''
-    return `<a class='room-link' href='#' data-room='${roomId}'>${roomId}${userCountString}</a>`
-  })
-  return description
 }
 
 // The youtube embed needs to be updated each event after the upcoming live youtube stream is created. The captions shouldn't need changing.

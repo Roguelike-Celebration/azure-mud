@@ -1,7 +1,5 @@
-/*
- * Grid layout exactly filling the viewport, so the page itself never scrolls, list
- * and editor scroll internally instead.
- */
+/* Grid layout exactly filling the viewport, so the page itself never scrolls, list
+ * and editor scroll internally instead. */
 body {
   margin: 0;
 }
@@ -16,6 +14,16 @@ body {
   grid-template-areas:
     "header header"
     "rooms  editor";
+}
+
+/* Preview below the editor, with the room list spanning both. The editor pane's height
+ * sets the split, and the preview gets the rest. */
+#admin-app.with-preview {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "header header"
+    "rooms  editor"
+    "rooms  preview";
 }
 
 #admin-header {
@@ -42,8 +50,45 @@ li {
   line-height: 1;
 }
 
-#editor {
+#editor-pane {
   grid-area: editor;
+}
+
+/* With the preview, the user can drag the editor pane's bottom-right corner to resize it.
+ * The bottom padding keeps that resize grip clear of the Ace editor, which would cover it. */
+#admin-app.with-preview #editor-pane {
+  box-sizing: border-box;
+  height: 60vh;
+  min-height: 100px;
+  max-height: 80vh;
+  padding-bottom: 12px;
+  overflow: hidden;
+  resize: vertical;
+}
+
+/* Resizing sets an inline height; ignore it while the preview is hidden, to fill the column */
+#admin-app:not(.with-preview) #editor-pane {
+  height: auto !important;
+}
+
+#room-preview {
+  grid-area: preview;
+  overflow-y: auto;
+  padding: 0 1em;
+  border-top: 1px solid var(--highlight-line);
+}
+
+.room-preview-note {
+  color: var(--gray-text);
+  font-style: italic;
+}
+
+#room-preview a.broken-link {
+  text-decoration: var(--red) wavy underline;
+}
+
+#room-preview .broken-link-count {
+  color: var(--red);
 }
 
 #room-options-view button {

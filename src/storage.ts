@@ -82,6 +82,7 @@ export async function setWasColoredEntering (value: boolean): Promise<void> {
 }
 
 // Settings page
+
 export async function setTheme (theme: string): Promise<void> {
   await localforage.setItem(themeKey, theme)
 }
@@ -106,6 +107,17 @@ export async function getShowDebugControls (): Promise<boolean> {
   return await localforage.getItem(showDebugControlsKey) || false
 }
 
+// Other things
+
+export async function setShowRoomEditorPreview (show: boolean): Promise<void> {
+  await localforage.setItem(showRoomEditorPreviewKey, show)
+}
+
+/** Whether to show the room editor's preview pane. Defaults to true. */
+export async function getShowRoomEditorPreview (): Promise<boolean> {
+  return (await localforage.getItem<boolean>(showRoomEditorPreviewKey)) ?? true
+}
+
 // Keys
 
 const messagesKey = 'messages'
@@ -116,3 +128,4 @@ const wasColoredEnteringKey = 'WasColoredEntering'
 const themeKey = 'UserSelectedTheme'
 const useSimpleNamesKey = 'UseSimpleNames'
 const showDebugControlsKey = 'ShowDebugControls'
+const showRoomEditorPreviewKey = 'ShowRoomEditorPreview'
