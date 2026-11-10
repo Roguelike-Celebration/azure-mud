@@ -125,6 +125,8 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
       <div><strong>ID:</strong> {user.id}</div>
     </div>
   ) : null
+  // Whispering yourself is weird; only show the UI if you've actually got a history.
+  const showWhisperChat = !isSelf || whisperMessages.length > 0
   // Have debug menu's trigger wrap #chat from the outside, because scroll-to-latest effect needs #chat
   // to be the messages' direct parent.
   const whisperMenuId = `whisper-history-menu-${user.id}`
@@ -177,22 +179,27 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
 
           </section>
 
-          <div id="chat-container">
-            <div id="chat-header">Whisper Chat</div>
-            {showDebugControls ? (
-              <ContextMenuTrigger id={whisperMenuId}>{whisperHistoryDiv}</ContextMenuTrigger>
-            ) : whisperHistoryDiv}
-            {/* Portal the menu to main <body> to avoid inheriting profile pane's styling. */}
-            {showDebugControls && ReactDOM.createPortal(
-              <ContextMenu id={whisperMenuId}>
-                <MenuItem onClick={clearWhisperHistory} disabled={whisperMessages.length === 0}>
-                  Clear Whisper History
-                </MenuItem>
-              </ContextMenu>,
-              document.body
-            )}
-            <InputView sendMessage={(message) => dispatch(SendMessageAction(`/whisper ${user.username} ${message}`))}/>
-          </div>
+          {showWhisperChat && (
+            <div id="chat-container">
+              <div id="chat-header">Whisper Chat</div>
+              {showDebugControls ? (
+                <ContextMenuTrigger id={whisperMenuId}>{whisperHistoryDiv}</ContextMenuTrigger>
+              ) : whisperHistoryDiv}
+              {/* Portal the menu to main <body> to avoid inheriting profile pane's styling. */}
+              {showDebugControls && ReactDOM.createPortal(
+                <ContextMenu id={whisperMenuId}>
+                  <MenuItem onClick={clearWhisperHistory} disabled={whisperMessages.length === 0}>
+                    Clear Whisper History
+                  </MenuItem>
+                </ContextMenu>,
+                document.body
+              )}
+              <InputView
+                inputId='whisper-input'
+                sendMessage={(message) => dispatch(SendMessageAction(`/whisper ${user.username} ${message}`))}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Linkify>

@@ -27,7 +27,7 @@ import RainbowGateModalView from './components/feature/RainbowGateViews.js'
 import GoHomeView from './components/GoHomeView.js'
 import HappeningNowView from './components/HappeningNowView.js'
 import HelpView from './components/HelpView.js'
-import InputView from './components/InputView.js'
+import InputView, { MAIN_CHAT_INPUT_ID } from './components/InputView.js'
 import LoggedOutView from './components/LoggedOutView.js'
 import MapModalView from './components/MapModalView.js'
 import { MessageList } from './components/MessageList/index.js'
@@ -468,6 +468,7 @@ const App = () => {
                         />
                       </VirtualizationProvider>
                       <InputView
+                        inputId={MAIN_CHAT_INPUT_ID}
                         sendMessage={(message) =>
                           dispatch(SendMessageAction(message))
                         }
