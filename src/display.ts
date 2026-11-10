@@ -4,6 +4,10 @@
  * put 'data-tooltip-id=MUD_TOOLTIP_ID' in their attrs. */
 export const MUD_TOOLTIP_ID = 'mud-tooltip'
 
+/** z-index for our tooltips, so they sit above everything else, including modals
+ * (#modal-wrapper in style/modal.css is 100000) and the admin app's Ace editor. */
+export const MUD_TOOLTIP_Z_INDEX = 100001
+
 // Needed because eslint explicit-module-boundary-types requires explicit interface types
 /** Data attrs to put on an element to attach our tooltip to it. */
 export interface TooltipAttrs {

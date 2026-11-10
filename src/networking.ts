@@ -53,7 +53,7 @@ import {
 import Config from './config.js'
 import { Modal } from './modals.js'
 import { PresenceListMap, RoomDataMap, State, UserMap } from './reducer.js'
-import { convertServerRoomData, Room } from './room.js'
+import { convertServerRoomData, Room, ServerRoomDataMap } from './room.js'
 import { ThunkDispatch } from './useReducerWithThunk.js'
 import 'firebase/auth'
 
@@ -169,12 +169,14 @@ export async function deleteMessage (messageId: string): Promise<void> {
   await callAzureFunction('deleteMessage', { messageId })
 }
 
-export async function deleteRoom (roomId: string): Promise<void> {
-  await callAzureFunction('deleteRoom', { roomId })
+export type AzFnResult<T> = { ok: true, value: T } | { ok: false, error: string }
+
+export async function deleteRoom (roomId: string): Promise<AzFnResult<unknown>> {
+  return await callAzureFunctionWithResult('deleteRoom', { roomId })
 }
 
-export async function updateRoom (roomId: string, roomData: Room): Promise<void> {
-  await callAzureFunction('updateRoom', { roomId, roomData })
+export async function updateRoom (roomId: string, roomData: Room): Promise<AzFnResult<{ room: Room }>> {
+  return await callAzureFunctionWithResult('updateRoom', { roomId, roomData })
 }
 
 // "Unsafe" functions using HTTP result.
@@ -313,16 +315,13 @@ export async function fetchProfile (userId: string): Promise<void> {
   }
 }
 
-export async function resetRoomData (isFromAdminPanel: boolean): Promise<void> {
-  const response = await callAzureFunction('resetRoomData')
-  if (response?.roomData) {
-    if (isFromAdminPanel) {
-      // Admin panel doesn't have the same state tracking and you can't dispatch
-      window.location.reload()
-    } else {
-      myDispatch(UpdatedRoomDataAction(convertServerRoomData(response.roomData)))
-    }
+export async function resetRoomData (isFromAdminPanel: boolean): Promise<AzFnResult<{ roomData: ServerRoomDataMap }>> {
+  const result = await callAzureFunctionWithResult('resetRoomData')
+  // Admin panel doesn't have the same state tracking and you can't dispatch; it reloads instead
+  if (result.ok && result.value.roomData && !isFromAdminPanel) {
+    myDispatch(UpdatedRoomDataAction(convertServerRoomData(result.value.roomData)))
   }
+  return result
 }
 
 export async function moveAllUsersToEntryway (): Promise<void> {
@@ -675,9 +674,26 @@ async function callAzureFunctionGet (endpoint: string): Promise<any> {
   return await callAzureFunctionWith('GET', endpoint, undefined, { userId: myUserId })
 }
 
+/** Call an Azure Function using HTTP POST, returning error details on failure. */
+async function callAzureFunctionWithResult (endpoint: string, body?: any): Promise<AzFnResult<any>> {
+  const result = await callAzureFunctionWithResultWith('POST', endpoint, body)
+  // Many endpoints report errors as HTTP 200 with an error field in the body
+  if (result.ok && result.value?.error) {
+    return { ok: false, error: String(result.value.error) }
+  }
+  return result
+}
+
 /** Call an Azure Function using method specified in an argument. */
 async function callAzureFunctionWith (method: string, endpoint: string,
   body?: any, moreHeaders: Record<string, string> = {}): Promise<any> {
+  const result = await callAzureFunctionWithResultWith(method, endpoint, body, moreHeaders)
+  return result.ok ? result.value : undefined
+}
+
+/** Like callAzureFunctionWith(), but returns error details on failure instead of undefined. */
+async function callAzureFunctionWithResultWith (method: string, endpoint: string,
+  body?: any, moreHeaders: Record<string, string> = {}): Promise<AzFnResult<any>> {
   const methodDescr = method === 'POST' ? '' : ` (with HTTP ${method})`
   const startTime = new Date()
   try {
@@ -704,16 +720,16 @@ async function callAzureFunctionWith (method: string, endpoint: string,
       throw new Error(`HTTP ${rsp.status} ${rsp.statusText}: ${bodyDescr}`)
     }
     try {
-      return JSON.parse(rspText)
+      return { ok: true, value: JSON.parse(rspText) }
     } catch {
-      return rspText
+      return { ok: true, value: rspText }
     }
   } catch (e) {
     // Put details in message string, bc Parcel's dev error display shows only the message
     console.error(`Failed calling AzFn ${endpoint}${methodDescr}: [${e}]. ` +
       `userId=${firebase.auth().currentUser?.uid ?? '(not logged in)'}, ` +
       `started ${startTime.toISOString()}, WebPubSub socket state ${describePubSubSocket()}.`, e)
-    return undefined
+    return { ok: false, error: e instanceof Error ? e.message : String(e) }
   }
 }
 

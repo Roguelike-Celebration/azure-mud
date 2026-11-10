@@ -65,7 +65,13 @@ export default function ServerSettingsView (props: { serverSettings: ServerSetti
 
   const clickedResetRoomData = async () => {
     if (!confirm("Are you sure you'd like to reset room data? This may cause irrevocable data loss.")) return
-    await resetRoomData(false)
+    const result = await resetRoomData(false)
+    if (!result.ok) {
+      alert(`Failed resetting room data: ${result.error}`)
+      return
+    }
+    const roomCount = Object.keys(result.value.roomData ?? {}).length
+    alert(`Reset room data to the disk copy (${roomCount} rooms).`)
   }
 
   const clickedResetBadges = async () => {

@@ -1,23 +1,49 @@
+/*
+ * Grid layout exactly filling the viewport, so the page itself never scrolls, list
+ * and editor scroll internally instead.
+ */
+body {
+  margin: 0;
+}
+
+#admin-app {
+  box-sizing: border-box;
+  height: 100vh;
+  padding: 0 8px 24px;
+  display: grid;
+  grid-template-columns: 400px minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "header header"
+    "rooms  editor";
+}
+
+#admin-header {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 #room-list {
-  overflow: scroll;
-  height: 95vh;
+  grid-area: rooms;
+  overflow-y: auto;
+  margin: 0;
 }
 
 li {
   list-style: none;
 }
 
-#editor {
-  position: absolute;
-  top: 80px;
-  left: 400px;
-  height: 100vh;
+/* Smaller than the text, so emoji glyphs don't make their rows taller */
+.room-status-mark {
+  margin-left: 0.4em;
+  font-size: 0.75em;
+  line-height: 1;
 }
 
-#room-options-view {
-  position: absolute;
-  top: 10px; 
-  right: 20px;
+#editor {
+  grid-area: editor;
 }
 
 #room-options-view button {
