@@ -69,6 +69,8 @@ export default function InputView (props: {
         value={input}
         aria-label="Chat text input box"
         autoComplete="off"
+        /* Keep 1Password autofill from popping up; it ignores autoComplete="off". */
+        data-1p-ignore
         forceSuggestionsAboveCursor={true}
         singleLine={true}
       >
