@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import AceEditor from 'react-ace'
 import { Tooltip } from 'react-tooltip'
 
@@ -10,6 +10,7 @@ import { onAuthenticationStateChange, signOut } from '../../authentication.js'
 import { MUD_TOOLTIP_ID, MUD_TOOLTIP_Z_INDEX } from '../../display.js'
 import { checkIsRegistered, getAllRooms, updateRoom } from '../../networking.js'
 import { Room } from '../../room.js'
+import { getShowRoomEditorPreview, setShowRoomEditorPreview } from '../../storage.js'
 import { ThunkDispatch, useReducerWithThunk } from '../../useReducerWithThunk.js'
 import {
   Action,
@@ -24,6 +25,7 @@ import reducer, { defaultState, hasUnsavedChanges, State } from '../reducer.js'
 import LoggedOutView from './LoggedOutView.js'
 import RoomList from './RoomList.js'
 import RoomOptionsView from './RoomOptionsView.js'
+import RoomPreview from './RoomPreview.js'
 
 /** Placeholder default for a context with no meaningful value. */
 const noDefault = <T,>(): T => null as unknown as T
@@ -36,6 +38,17 @@ const App = function () {
     reducer,
     defaultState
   )
+  const [showPreview, setShowPreview] = useState(true)
+
+  // The preview setting is remembered per browser
+  useEffect(() => {
+    getShowRoomEditorPreview().then(setShowPreview)
+  }, [])
+
+  const changeShowPreview = (show: boolean) => {
+    setShowPreview(show)
+    setShowRoomEditorPreview(show)
+  }
 
   useEffect(() => {
     // Auth is simple: you log in, we check if you're a mod, and only set the 'logged in' flag if so
@@ -144,7 +157,7 @@ const App = function () {
           /* pre-line, so tooltip text can have line breaks */
           style={{ whiteSpace: 'pre-line', zIndex: MUD_TOOLTIP_Z_INDEX }}
         />
-        <div id='admin-app'>
+        <div id='admin-app' className={showPreview ? 'with-preview' : undefined}>
           <header id='admin-header'>
             <h1>
               Room Editor:  {state.displayedRoomId || 'no room selected'}
@@ -152,18 +165,30 @@ const App = function () {
             </h1>
             <RoomOptionsView roomId={state.displayedRoomId} updateRoom={saveRoom} createRoom={createRoom}/>
           </header>
-          <RoomList roomIds={state.roomIds} roomData={state.roomData} okToLeaveRoom={okToLeaveRoom}/>
-          <AceEditor
-            mode="json"
-            theme="solarized_dark"
-            name="editor"
-            editorProps={{ $blockScrolling: true }}
-            height={'100%'}
-            value={state.editorText}
-            onChange={(text) => dispatch(SetEditorTextAction(text))}
-            wrapEnabled={true}
-            width={'100%'}
+          <RoomList
+            roomIds={state.roomIds}
+            roomData={state.roomData}
+            okToLeaveRoom={okToLeaveRoom}
+            showPreview={showPreview}
+            setShowPreview={changeShowPreview}
           />
+          {/* Wrapper that the user can resize, to move the editor/preview split */}
+          <div id='editor-pane'>
+            <AceEditor
+              mode="json"
+              theme="solarized_dark"
+              name="editor"
+              editorProps={{ $blockScrolling: true }}
+              /* So the editor re-lays-out when its pane is resized */
+              setOptions={{ useResizeObserver: true }}
+              height={'100%'}
+              value={state.editorText}
+              onChange={(text) => dispatch(SetEditorTextAction(text))}
+              wrapEnabled={true}
+              width={'100%'}
+            />
+          </div>
+          {showPreview && <RoomPreview editorText={state.editorText} roomData={state.roomData}/>}
         </div>
       </DispatchContext.Provider>
     )

@@ -23,7 +23,9 @@ const DIFFERS_FROM_DISK_TEXT = 'Differs from the disk copy. Reset Room Data woul
 export default function (props: {
   roomIds: string[] | undefined,
   roomData: RoomDataMap,
-  okToLeaveRoom: () => boolean
+  okToLeaveRoom: () => boolean,
+  showPreview: boolean,
+  setShowPreview: (show: boolean) => void
 }) {
   const dispatch = useContext(DispatchContext)
 
@@ -111,6 +113,16 @@ export default function (props: {
             </button>
           </li>)
       })}
+      <li style={{ marginTop: '1em' }}>
+        <label>
+          <input
+            type='checkbox'
+            checked={props.showPreview}
+            onChange={(e) => props.setShowPreview(e.target.checked)}
+          />
+          Show preview
+        </label>
+      </li>
       <button
         onClick={clickedResetData}
         style={{ marginTop: '1em' }}>
