@@ -194,7 +194,10 @@ export default function ProfileView (props: { user: PublicUser, whispers: Whispe
                 </ContextMenu>,
                 document.body
               )}
-              <InputView sendMessage={(message) => dispatch(SendMessageAction(`/whisper ${user.username} ${message}`))}/>
+              <InputView
+                inputId='whisper-input'
+                sendMessage={(message) => dispatch(SendMessageAction(`/whisper ${user.username} ${message}`))}
+              />
             </div>
           )}
         </div>

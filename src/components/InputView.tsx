@@ -7,7 +7,13 @@ import { UserMapContext } from '../App.js'
 import { emojiMentionsData } from '../emoji/index.js'
 import '../../style/input.css'
 
+/** id of the main chat's text input. */
+export const MAIN_CHAT_INPUT_ID = 'chat-input'
+
 export default function InputView (props: {
+  /** id for the text input. Must be unique on the page: there can be more than one
+   * InputView at a time, like the main chat's and a profile's whisper chat's. */
+  inputId: string,
   sendMessage: (message: string) => void,
   usersInRoom?: string[]
 }) {
@@ -38,7 +44,9 @@ export default function InputView (props: {
   }
 
   useEffect(() => {
-    document.getElementById('chat-input')?.focus()
+    // Focus the main chat, even when this is another InputView, like a profile's whisper
+    // chat, so opening a profile leaves you typing in the main chat
+    document.getElementById(MAIN_CHAT_INPUT_ID)?.focus()
   }, [])
 
   const usersInRoom = (search: string) => {
@@ -62,7 +70,7 @@ export default function InputView (props: {
   return (
     <div id="input">
       <MentionsInput
-        id="chat-input"
+        id={props.inputId}
         className="mentions main-input"
         onChange={handleInputChange}
         onKeyPress={checkEnter}
