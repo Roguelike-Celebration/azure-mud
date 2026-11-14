@@ -63,7 +63,17 @@ const App = function () {
 
   const saveRoom = () => {
     const code = aceRef.current.editor.getValue()
-    updateRoom(state.displayedRoomId, JSON.parse(code))
+    const roomData = JSON.parse(code)
+    if (roomData?.id === undefined) {
+      // Editor doesn't validate the JSON. Holler if it looks bad for debugging. But don't abort.
+      // (It will probably fail downstream anyway.)
+      console.log(`Room data has no id field! saving '${state.displayedRoomId}' with it as-is`)
+    } else if (roomData.id !== state.displayedRoomId) {
+      // Changing the room id effectively copies the room to a new one. That's not an error, just
+      // an unusual situation a dev might want to know about when debugging, so log it.
+      console.log(`Room id changed in room data! Saving '${state.displayedRoomId}' under new id '${roomData.id}'`)
+    }
+    updateRoom(state.displayedRoomId, roomData)
   }
 
   const createRoom = (name: string) => {
